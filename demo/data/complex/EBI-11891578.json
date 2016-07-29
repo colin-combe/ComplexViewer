@@ -1,0 +1,207 @@
+{
+    "data": [
+        {
+            "id": "uniprotkb_P05121", 
+            "identifier": {
+                "db": "uniprotkb", 
+                "id": "P05121"
+            }, 
+            "label": "pai1_human", 
+            "object": "interactor", 
+            "organism": {
+                "common": "human", 
+                "scientific": "Homo sapiens", 
+                "taxid": "9606"
+            }, 
+            "sequence": "MQMSPALTCLVLGLALVFGEGSAVHHPPSYVAHLASDFGVRVFQQVAQASKDRNVVFSPYGVASVLAMLQLTTGGETQQQIQAAMGFKIDDKGMAPALRHLYKELMGPWNKDEISTTDAIFVQRDLKLVQGFMPHFFRLFRSTVKQVDFSEVERARFIINDWVKTHTKGMISNLLGKGAVDQLTRLVLVNALYFNGQWKTPFPDSSTHRRLFHKSDGSTVSVPMMAQTNKFNYTEFTTPDGHYYDILELPYHGDTLSMFIAAPYEKEVPLSALTNILSAQLISHWKGNMTRLPRLLVLPKFSLETEVDLRKPLENLGMTDMFRQFQADFTSLSDQEPLHVAQALQKVKIEVNESGTVASSSTAVIVSARMAPEEIIMDRPFLFVVRHNPTGTVLFMGQVMEP", 
+            "type": {
+                "id": "MI:0326", 
+                "name": "protein"
+            }
+        }, 
+        {
+            "id": "uniprotkb_P00750-PRO_0000028351", 
+            "identifier": {
+                "db": "uniprotkb", 
+                "id": "P00750-PRO_0000028351"
+            }, 
+            "label": "p00750-pro_0000028351", 
+            "object": "interactor", 
+            "organism": {
+                "common": "human", 
+                "scientific": "Homo sapiens", 
+                "taxid": "9606"
+            }, 
+            "sequence": "SYQVICRDEKTQMIYQQHQSWLRPVLRSNRVEYCWCNSGRAQCHSVPVKSCSEPRCFNGGTCQQALYFSDFVCQCPEGFAGKCCEIDTRATCYEDQGISYRGTWSTAESGAECTNWNSSALAQKPYSGRRPDAIRLGLGNHNYCRNPDRDSKPWCYVFKAGKYSSEFCSTPACSEGNSDCYFGNGSAYRGTHSLTESGASCLPWNSMILIGKVYTAQNPSAQALGLGKHNYCRNPDGDAKPWCHVLKNRRLTWEYCDVPSCSTCGLRQYSQPQFR", 
+            "type": {
+                "id": "MI:0326", 
+                "name": "protein"
+            }
+        }, 
+        {
+            "id": "uniprotkb_P00750-PRO_0000028352", 
+            "identifier": {
+                "db": "uniprotkb", 
+                "id": "P00750-PRO_0000028352"
+            }, 
+            "label": "p00750-pro_0000028352", 
+            "object": "interactor", 
+            "organism": {
+                "common": "human", 
+                "scientific": "Homo sapiens", 
+                "taxid": "9606"
+            }, 
+            "sequence": "IKGGLFADIASHPWQAAIFAKHRRSPGERFLCGGILISSCWILSAAHCFQERFPPHHLTVILGRTYRVVPGEEEQKFEVEKYIVHKEFDDDTYDNDIALLQLKSDSSRCAQESSVVRTVCLPPADLQLPDWTECELSGYGKHEALSPFYSERLKEAHVRLYPSSRCTSQHLLNRTVTDNMLCAGDTRSGGPQANLHDACQGDSGGPLVCLNDGRMTLVGIISWGLGCGQKDVPGVYTKVTNYLDWIRDNMRP", 
+            "type": {
+                "id": "MI:0326", 
+                "name": "protein"
+            }
+        }, 
+        {
+            "complexType": {
+                "id": "MI:1302", 
+                "name": "stable complex"
+            }, 
+            "evidenceType": {
+                "id": "ECO:0000353", 
+                "name": "physical interaction evidence used in manual assertion"
+            }, 
+            "id": "intact_EBI-11893419", 
+            "identifiers": [
+                {
+                    "db": "intact", 
+                    "id": "EBI-11893419"
+                }
+            ], 
+            "interactionType": {
+                "id": "MI:0407", 
+                "name": "direct interaction"
+            }, 
+            "object": "interaction", 
+            "organism": {
+                "common": "human", 
+                "scientific": "Homo sapiens", 
+                "taxid": "9606"
+            }, 
+            "participants": [
+                {
+                    "bioRole": {
+                        "id": "MI:0499", 
+                        "name": "unspecified role"
+                    }, 
+                    "id": "1", 
+                    "interactorRef": "uniprotkb_P00750-PRO_0000028351", 
+                    "stoichiometry": "1"
+                }, 
+                {
+                    "bioRole": {
+                        "id": "MI:0499", 
+                        "name": "unspecified role"
+                    }, 
+                    "id": "2", 
+                    "interactorRef": "uniprotkb_P00750-PRO_0000028352", 
+                    "stoichiometry": "1"
+                }
+            ]
+        }, 
+        {
+            "complexType": {
+                "id": "MI:1302", 
+                "name": "stable complex"
+            }, 
+            "evidenceType": {
+                "id": "ECO:0000353", 
+                "name": "physical interaction evidence used in manual assertion"
+            }, 
+            "id": "efo_EFO:1000883", 
+            "identifiers": [
+                {
+                    "db": "efo", 
+                    "id": "EFO:1000883"
+                }, 
+                {
+                    "db": "wwpdb", 
+                    "id": "5brr"
+                }, 
+                {
+                    "db": "intenz", 
+                    "id": "3.4.21.68"
+                }, 
+                {
+                    "db": "intact", 
+                    "id": "EBI-11891578"
+                }
+            ], 
+            "interactionType": {
+                "id": "MI:0407", 
+                "name": "direct interaction"
+            }, 
+            "object": "interaction", 
+            "organism": {
+                "common": "human", 
+                "scientific": "Homo sapiens", 
+                "taxid": "9606"
+            }, 
+            "participants": [
+                {
+                    "bioRole": {
+                        "id": "MI:0499", 
+                        "name": "unspecified role"
+                    }, 
+                    "features": [
+                        {
+                            "category": "bindingSites", 
+                            "id": "4", 
+                            "linkedFeatures": [
+                                "5"
+                            ], 
+                            "name": "tPA binding region", 
+                            "sequenceData": [
+                                {
+                                    "interactorRef": "uniprotkb_P05121", 
+                                    "participantRef": "3", 
+                                    "pos": "24-402"
+                                }
+                            ], 
+                            "type": {
+                                "id": "MI:0117", 
+                                "name": "binding-associated region"
+                            }
+                        }
+                    ], 
+                    "id": "3", 
+                    "interactorRef": "uniprotkb_P05121", 
+                    "stoichiometry": "1"
+                }, 
+                {
+                    "bioRole": {
+                        "id": "MI:0501", 
+                        "name": "enzyme"
+                    }, 
+                    "features": [
+                        {
+                            "category": "bindingSites", 
+                            "id": "5", 
+                            "linkedFeatures": [
+                                "4"
+                            ], 
+                            "name": "PAI-1 binding region", 
+                            "sequenceData": [
+                                {
+                                    "pos": "311-562"
+                                }
+                            ], 
+                            "type": {
+                                "id": "MI:0117", 
+                                "name": "binding-associated region"
+                            }
+                        }
+                    ], 
+                    "id": "6", 
+                    "interactorRef": "intact_EBI-11893419", 
+                    "stoichiometry": "1"
+                }
+            ]
+        }
+    ]
+}

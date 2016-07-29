@@ -22,7 +22,7 @@ var BioactiveEntity = require('../model/interactor/BioactiveEntity');
 var Gene = require('../model/interactor/Gene');
 var DNA = require('../model/interactor/DNA');
 var RNA = require('../model/interactor/RNA');
-var Complex = require('../model/interactor/Complex');
+var Complex = require('../model/interactor/Complex_symbol');
 var MoleculeSet = require('../model/interactor/MoleculeSet');
 var Link = require('../model/link/Link');
 var NaryLink = require('../model/link/NaryLink');
@@ -203,7 +203,7 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
     var self = this;
 	self.features = d3.map();
 
-	var complexes = d3.map();
+	//var complexes = d3.map();
 	var needsSequence = d3.set();//things that need seq looked up
 	expand? readStoichExpanded() : readStoichUnexpanded();
 
@@ -258,17 +258,19 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
 								toSequenceData = toSequenceData_indexedByNodeId.values()[n];
 								var fromMolecule = getNode(fromSequenceData[0]);
 								var toMolecule = getNode(toSequenceData[0]);
-								var link;
-								if (fromMolecule === toMolecule){
-									link = getUnaryLink(fromMolecule, interaction);
+								if (fromMolecule && toMolecule) {
+									var link;
+									if (fromMolecule === toMolecule){
+										link = getUnaryLink(fromMolecule, interaction);
+									}
+									else {
+										link = getBinaryLink(fromMolecule, toMolecule, interaction);
+									}
+									var sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, interaction);
+									fromMolecule.sequenceLinks.set(sequenceLink.id, sequenceLink);
+									toMolecule.sequenceLinks.set(sequenceLink.id, sequenceLink);
+									link.sequenceLinks.set(sequenceLink.id, sequenceLink);
 								}
-								else {
-									link = getBinaryLink(fromMolecule, toMolecule, interaction);
-								}
-								var sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, interaction);
-								fromMolecule.sequenceLinks.set(sequenceLink.id, sequenceLink);
-								toMolecule.sequenceLinks.set(sequenceLink.id, sequenceLink);
-								link.sequenceLinks.set(sequenceLink.id, sequenceLink);
 							}							
 							
 						}// end for each linked feature
@@ -280,7 +282,7 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
 	}
 
 	//init complexes
-	var complexes = complexes.values()
+	/*var complexes = complexes.values()
 	for (var c = 0; c < complexes.length; c++) {
 		var interactionId;
 		if (expand) {
@@ -299,7 +301,7 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
 		}
 		complexes[c].initMolecule(naryLink);
 		naryLink.complex = complexes[c];
-	}
+	}*/
 	self.checkLinks();
 	self.initLayout();
 
@@ -328,21 +330,23 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
 			for (var sdi = 0; sdi < seqDataCount; sdi++) {
 				var seqDatum = seqData[sdi];
 				var mID = seqDatum.interactorRef;
-				if (expand)	{
-					mID = mID	+ "(" + seqDatum.participantRef + ")";
-				}
-				var molecule = self.molecules.get(mID);
-				var sequenceRegex = /(.+)-(.+)/;
-				var match = sequenceRegex.exec(seqDatum.pos);
-				var startRes = match[1] * 1;
-				var endRes = match[2] * 1;
-				if (isNaN(startRes) === false && isNaN(endRes) === false) {
-					var annotation = new Annotation(annotName, startRes, endRes);
-					if (molecule.miFeatures == null) {
-						molecule.miFeatures = new Array();
+				if (mID) {
+					if (expand)	{
+						mID = mID	+ "(" + seqDatum.participantRef + ")";
 					}
-					molecule.miFeatures.push(annotation);
-	//				console.log(molecule.id);
+					var molecule = self.molecules.get(mID);
+					var sequenceRegex = /(.+)-(.+)/;
+					var match = sequenceRegex.exec(seqDatum.pos);
+					var startRes = match[1] * 1;
+					var endRes = match[2] * 1;
+					if (isNaN(startRes) === false && isNaN(endRes) === false) {
+						var annotation = new Annotation(annotName, startRes, endRes);
+						if (molecule.miFeatures == null) {
+							molecule.miFeatures = new Array();
+						}
+						molecule.miFeatures.push(annotation);
+		//				console.log(molecule.id);
+					}
 				}
 			}
 		}
@@ -428,7 +432,7 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
 					var participant = self.molecules.get(participantId);
 					if (typeof participant === 'undefined'){
 						var interactor = interactors.get(intRef);
-						participant = newMolecule(interactor, participantId);
+						participant = newMolecule(interactor, participantId, intRef);
 						self.molecules.set(participantId, participant);
 					}
 
@@ -447,13 +451,13 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
 		}
 	};
 
-	function newMolecule(interactor, participantId){
+	function newMolecule(interactor, participantId, interactorRef){
 		var participant;
 		if (typeof interactor === 'undefined') {
 			//must be a previously unencountered complex -
 			// MI:0314 - interaction?, MI:0317 - complex? and its many subclasses
-			participant = new Complex(participantId, self);
-			complexes.set(participantId, participant);
+			participant = new Complex(participantId, self, interactorRef);
+			//complexes.set(participantId, participant);
 		}
 		//molecule sets
 		else if (interactor.type.id === 'MI:1304' //molecule set
@@ -549,44 +553,6 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
 				var interactor = data[n];
 				var participant;
 				var participantId = interactor.id;
-						//~ if (interactor.type.name === 'molecule set') {
-							//~ participant = new MoleculeSet(participantId, self, interactor); //doesn't really work yet
-						//~ }
-						//~ else if (interactor.type.name === 'small molecule') {
-							//~ participant = new BioactiveEntity(participantId, self, interactor, interactor.label);
-						//~ }
-						//~ else if (interactor.type.name === 'protein' || interactor.type.name === 'peptide') {
-							//~ participant = new Protein(participantId, self, interactor, interactor.label);
-							//~ if (typeof interactor.sequence !== 'undefined') {
-								//~ participant.setSequence(interactor.sequence);
-							//~ }
-							//~ else {
-								//~ //should look it up using accession number
-								//~ if (participantId.indexOf('uniprotkb') === 0){
-									//~ needsSequence.add(participantId);
-								//~ } else {
-									//~ participant.setSequence("SEQUENCEMISSING");
-								//~ }
-							//~ }
-						//~ }
-						//~ else if (interactor.type.name === 'peptide') {
-							//~ participant = new Protein(participantId, self, interactor, interactor.label);
-						//~ }
-						//~ else if (interactor.type.name === 'gene') {
-							//~ //its a small mol
-							//~ participant = new Gene(participantId, self, interactor, interactor.label);
-							//~ //participant.initMolecule(interactor.label);// + ' (' + partRef + ')');
-						//~ }else if (interactor.type.name === 'ribonucleic acid') {
-							//~ //its a small mol
-							//~ participant = new RNA(participantId, self, interactor, interactor.label);
-							//~ //participant.initMolecule(interactor.label);// + ' (' + partRef + ')');
-						//~ }else if (interactor.type.name === 'deoxyribonucleic acid') {
-							//~ //its a small mol
-							//~ participant = new DNA(participantId, self, interactor, interactor.label);
-							//~ //participant.initMolecule(interactor.label);// + ' (' + partRef + ')');
-						//~ } else {
-							//~ alert("Unrecognised type:" + interactor.type.name);
-						//~ }
 				participant = newMolecule (interactor, participantId);
 				self.molecules.set(participantId, participant);
 			}
@@ -621,7 +587,7 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
 					if (typeof participant === 'undefined'){
 						//must be a previously unencountered complex
 						participant = new Complex(participantId, self);
-						complexes.set(participantId, participant);
+						//complexes.set(participantId, participant);
 						self.molecules.set(participantId, participant);
 					}
 
