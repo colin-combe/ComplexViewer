@@ -73,7 +73,7 @@ function Complex(id, xlvController, interactorRef){ //, json, name) {
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
     d3.select(this.labelSVG).attr("transform", 
-		"translate( -" + (15) + " " + Molecule.labelY + ")");
+		"translate( -" + (20) + " " + Molecule.labelY + ")"); // the hexagon has slightly bigger diameter
     this.upperGroup.appendChild(this.labelSVG);
    	 
 	//make blob
