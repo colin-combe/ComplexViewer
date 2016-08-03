@@ -44,7 +44,11 @@ xiNET_Storage.getUniProtTxt = function (id, callback){
 		d3.text(url, function (txt){
 			//~ console.log(accession + " retrieved from UniProt.");
 			if(typeof(Storage) !== "undefined") {
-				localStorage.setItem(xiNET_Storage.ns  + "UniProtKB."+ accession, txt);
+
+				//disabling use of local storage,
+				// can cause problems one localStorage exceeds quota 
+				/*localStorage.setItem(xiNET_Storage.ns  + "UniProtKB."+ accession, txt);*/
+
 				//~ console.log(accession + " UniProt added to local storage.");
 			}
 			callback(id, txt)
