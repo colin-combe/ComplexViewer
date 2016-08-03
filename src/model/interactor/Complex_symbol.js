@@ -18,6 +18,7 @@ Complex.prototype = new Molecule();
 function Complex(id, xlvController, interactorRef){ //, json, name) {
     this.id = id; // id may not be accession (multiple Segments with same accesssion)
     this.controller = xlvController;
+    this.isComplexSymbol = true;
     //this.json = json;  
     //links
     this.naryLinks = d3.map();
@@ -92,7 +93,6 @@ function Complex(id, xlvController, interactorRef){ //, json, name) {
     //    this.upperGroup.setAttribute('pointer-events','all');
     this.upperGroup.onmousedown = function(evt) {
 		self.mouseDown(evt);
-		//self.showData();
     };
     this.upperGroup.onmouseover = function(evt) {
 		self.mouseOver(evt);
@@ -103,12 +103,14 @@ function Complex(id, xlvController, interactorRef){ //, json, name) {
      
     this.upperGroup.ontouchstart = function(evt) {
 		self.touchStart(evt);
-    	//self.showData();
     };
+
+    
     this.isSelected = false;
 };
 
 Complex.prototype.showData = function(evt) {
+	alert("yo");
 	if (this.name.startsWith("intact_")) {
 		var url = "http://www.ebi.ac.uk/intact/complex/details/" + this.name.substr(7);
 		//~ alert (url);
