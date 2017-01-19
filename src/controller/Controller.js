@@ -11,6 +11,7 @@
 "use strict";
 
 var xiNET = {}; //crosslinkviewer's javascript namespace
+var RGBColor = require('rgbcolor');
 var d3 = require('d3');
 var colorbrewer = require('colorbrewer');
 var xiNET_Storage = require('./xiNET_Storage');

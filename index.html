@@ -16,8 +16,8 @@
         <!--libraries-->
         <script type="text/javascript" src="./build/complexviewer.js"></script>
 
-        <script type="text/javascript" src="./bower_components/d3/d3.js"></script>
-		<script type="text/javascript" src="./bower_components/rgb-color/rgb-color.js"></script>
+        <!--<script type="text/javascript" src="./bower_components/d3/d3.js"></script>-->
+		<!--<script type="text/javascript" src="./bower_components/rgb-color/rgb-color.js"></script>-->
 		<script type="text/javascript" src="./demo/legend.js"></script>
 
     </head>
@@ -155,7 +155,7 @@
 						coloursKeyDiv.innerHTML = table;					
 						*/
 						//d3 svg legend
-						verticalLegend = d3.svg.legend().labelFormat("none").cellPadding(5).orientation("vertical").units(xlv.annotationChoice).cellWidth(25).cellHeight(18).inputScale(colourAssignment);
+//						verticalLegend = d3.svg.legend().labelFormat("none").cellPadding(5).orientation("vertical").units(xlv.annotationChoice).cellWidth(25).cellHeight(18).inputScale(colourAssignment);
 						legend.selectAll("*").remove();
 						legend.attr("transform", "translate(20,40)").attr("class", "legend").call(verticalLegend);
 					}
