@@ -74,6 +74,15 @@ xiNET.Controller = function(targetDiv) {
     this.container = document.createElementNS(Config.svgns, "g");
     this.container.setAttribute("id", "container");
 
+    this.acknowledgement =  document.createElementNS(Config.svgns, "g");
+    var ackText = document.createElementNS(Config.svgns, "text");
+    ackText.innerHTML = "<a xlink:href='https://academic.oup.com/bioinformatics/article/33/22/3673/4061280' target='_blank'><tspan x='0' dy='1.2em' style='text-decoration: underline'>ComplexViewer</tspan></a><tspan x='0' dy='1.2em'>by <a xlink:href='http://rappsilberlab.org/' target='_blank'>Rappsilber Laboratory</a></tspan>"
+
+    this.acknowledgement.appendChild(ackText);
+    ackText.setAttribute("font-size", "12px");
+    this.container.appendChild(this.acknowledgement);
+
+
     this.naryLinks = document.createElementNS(Config.svgns, "g");
     this.naryLinks.setAttribute("id", "naryLinks");
     this.container.appendChild(this.naryLinks);
@@ -793,6 +802,8 @@ xiNET.Controller.prototype.autoLayout = function() {
 
     var width = this.svgElement.parentNode.clientWidth;
     var height = this.svgElement.parentNode.clientHeight;
+
+    this.acknowledgement.setAttribute("transform", "translate(5, "+ (height - 40)+")");
 
     var molCount = this.molecules.keys().length;
     var self = this;
