@@ -24,7 +24,7 @@ var BioactiveEntity = require('../model/interactor/BioactiveEntity');
 var Gene = require('../model/interactor/Gene');
 var DNA = require('../model/interactor/DNA');
 var RNA = require('../model/interactor/RNA');
-var Complex = require('../model/interactor/Complex_symbol');
+var Complex = require('../model/interactor/Complex');
 var MoleculeSet = require('../model/interactor/MoleculeSet');
 var Link = require('../model/link/Link');
 var NaryLink = require('../model/link/NaryLink');
@@ -214,7 +214,7 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
     var self = this;
     self.features = d3.map();
 
-    //var complexes = d3.map();
+    var complexes = d3.map();
     var needsSequence = d3.set();//things that need seq looked up
 
     //get interactors
@@ -305,7 +305,7 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
     }
 
     //init complexes
-    /*var complexes = complexes.values()
+    var complexes = complexes.values()
     for (var c = 0; c < complexes.length; c++) {
         var interactionId;
         if (expand) {
@@ -317,14 +317,14 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
         var naryLink;
         for (var l = 0; l < dataElementCount; l++) {
             var interaction = data[l];
-            if (interaction.id == interactionId) {
+            if (interaction.object == "interaction" && interaction.id == interactionId) {
                 var nLinkId = getNaryLinkIdFromInteraction(interaction);
                 naryLink = self.allNaryLinks.get(nLinkId);
             }
         }
         complexes[c].initMolecule(naryLink);
         naryLink.complex = complexes[c];
-    }*/
+    }
     self.checkLinks();
     self.initLayout();
 
@@ -465,11 +465,11 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
 
     function newMolecule(interactor, participantId, interactorRef){
         var participant;
-        if (typeof interactor === 'undefined') {
+        if (interactor.type.id === 'MI:1302') {
             //must be a previously unencountered complex -
             // MI:0314 - interaction?, MI:0317 - complex? and its many subclasses
             participant = new Complex(participantId, self, interactorRef);
-            //complexes.set(participantId, participant);
+            complexes.set(participantId, participant);
         }
         //molecule sets
         else if (interactor.type.id === 'MI:1304' //molecule set
