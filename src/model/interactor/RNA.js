@@ -3,8 +3,8 @@
 //
 //    	This product includes software developed at
 //    	the Rappsilber Laboratory (http://www.rappsilberlab.org/).
-//		
-//		RNA.js		
+//
+//		RNA.js
 //
 //		authors: Colin Combe
 
@@ -18,7 +18,7 @@ RNA.prototype = new Molecule();
 function RNA(id, xlvController, json, name) {
     this.id = id; // id may not be accession (multiple Segments with same accesssion)
     this.controller = xlvController;
-    this.json = json;  
+    this.json = json;
     //links
     this.naryLinks = d3.map();
     this.binaryLinks = d3.map();
@@ -35,29 +35,29 @@ function RNA(id, xlvController, json, name) {
     this.form = 0;//null; // 0 = blob, 1 = stick
     this.isParked = false;
     this.isSelected = false;
-    
+
     this.size = 10;//hack, layout is using this
-       
+
      /*
      * Upper group
      * svg group for elements that appear above links
 	 */
-     
+
     this.upperGroup = document.createElementNS(Config.svgns, "g");
     this.upperGroup.setAttribute("class", "upperGroup");
-    
+
     //for polygon
  	var points = "0, -10  10, 0 0, 10 -10, 0";
  	//make highlight
     this.highlight = document.createElementNS(Config.svgns, "polygon");
     this.highlight.setAttribute("points", points);
     this.highlight.setAttribute("stroke", Config.highlightColour);
-	this.highlight.setAttribute("stroke-width", "5");   
-    this.highlight.setAttribute("fill", "none");   
-    //this.highlight.setAttribute("fill-opacity", 1);   
+	this.highlight.setAttribute("stroke-width", "5");
+    this.highlight.setAttribute("fill", "none");
+    //this.highlight.setAttribute("fill-opacity", 1);
     //attributes that may change
     d3.select(this.highlight).attr("stroke-opacity", 0);
-	this.upperGroup.appendChild(this.highlight);   
+	this.upperGroup.appendChild(this.highlight);
 
     //create label - we will move this svg element around when protein form changes
     this.labelSVG = document.createElementNS(Config.svgns, "text");
@@ -68,18 +68,18 @@ function RNA(id, xlvController, json, name) {
     this.labelSVG.setAttribute("class", "xlv_text proteinLabel");
     this.labelSVG.setAttribute('font-family', 'Arial');
     this.labelSVG.setAttribute('font-size', '16');
-    
+
     this.labelText = this.name;
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
-    d3.select(this.labelSVG).attr("transform", 
+    d3.select(this.labelSVG).attr("transform",
 		"translate( -" + (15) + " " + Molecule.labelY + ")");
     this.upperGroup.appendChild(this.labelSVG);
-     
+
 	//make blob
 	this.outline = document.createElementNS(Config.svgns, "polygon");
 	this.outline.setAttribute("points", points);
-   
+
     this.outline.setAttribute("stroke", "black");
     this.outline.setAttribute("stroke-width", "1");
     d3.select(this.outline).attr("stroke-opacity", 1).attr("fill-opacity", 1)
@@ -99,11 +99,22 @@ function RNA(id, xlvController, json, name) {
     this.upperGroup.onmouseout = function(evt) {
 		self.mouseOut(evt);
     };
-     
+
     this.upperGroup.ontouchstart = function(evt) {
 		self.touchStart(evt);
     };
     this.isSelected = false;
+    //TODO - this wastes a bit memory because the property is not on the prototype, fix
+    Object.defineProperty(this, "width", {
+        get: function width() {
+            return this.upperGroup.getBBox().width;
+        }
+    });
+    Object.defineProperty(this, "height", {
+        get: function height() {
+            return this.upperGroup.getBBox().height;
+        }
+    });
 };
 
 RNA.prototype.showData = function(evt) {

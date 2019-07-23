@@ -3,8 +3,8 @@
 //
 //    	This product includes software developed at
 //    	the Rappsilber Laboratory (http://www.rappsilberlab.org/).
-//		
-//		Complex.js		
+//
+//		Complex.js
 //
 //		authors: Colin Combe
 
@@ -16,7 +16,7 @@ var Config = require('../../controller/Config');
 Complex.prototype = new Molecule();
 
 function Complex(id, xlvController) {
-    this.id = id; 
+    this.id = id;
     this.ctrl = xlvController;
     //links
     this.naryLinks = d3.map();
@@ -25,6 +25,17 @@ function Complex(id, xlvController) {
     this.sequenceLinks = d3.map();
     this.form = 0;
     this.type = 'complex';
+    //TODO - this wastes a bit memory because the property is not on the prototype, fix
+    Object.defineProperty(this, "width", {
+        get: function width() {
+            return this.naryLink.path.getBBox().width;
+        }
+    });
+    Object.defineProperty(this, "height", {
+        get: function height() {
+            return this.naryLink.path.getBBox().height;
+        }
+    });
 }
 
 Complex.prototype.initMolecule = function(naryLink)

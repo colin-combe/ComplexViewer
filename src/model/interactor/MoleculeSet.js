@@ -148,6 +148,17 @@ function MoleculeSet(id, xlvController, json, name) {
     	//~ self.mouseOut(evt);
     //~ };
     this.isSelected = false;
+    //TODO - this wastes a bit memory because the property is not on the prototype, fix
+    Object.defineProperty(this, "width", {
+        get: function width() {
+            return this.upperGroup.getBBox().width;
+        }
+    });
+    Object.defineProperty(this, "height", {
+        get: function height() {
+            return this.upperGroup.getBBox().height;
+        }
+    });
 };
 
 MoleculeSet.prototype.getBlobRadius = function() {

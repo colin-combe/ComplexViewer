@@ -3,8 +3,8 @@
 //
 //    	This product includes software developed at
 //    	the Rappsilber Laboratory (http://www.rappsilberlab.org/).
-//		
-//		Protein.js		
+//
+//		Protein.js
 //
 //		authors: Lutz Fischer, Colin Combe
 
@@ -20,7 +20,7 @@ Protein.prototype = new Polymer();
 function Protein(id, xinetController, json, name) {
     this.id = id; // id may not be accession (multiple Segments with same accesssion)
     this.controller = xinetController;
-    this.json = json;  
+    this.json = json;
   	this.name = name;
     this.tooltip = this.name + ' [' + this.id + ']';// + this.accession;
     //links
@@ -40,22 +40,22 @@ function Protein(id, xinetController, json, name) {
     //rotators
 /*	this.lowerRotator = new Rotator(this, 0, this.controller);
 	this.upperRotator = new Rotator(this, 1, this.controller); */
-     
+
     this.upperGroup = document.createElementNS(Config.svgns, "g");
     this.upperGroup.setAttribute("class", "protein upperGroup");
-      	
+
  	//make highlight
     this.highlight = document.createElementNS(Config.svgns, "rect");
     this.highlight.setAttribute("stroke", Config.highlightColour);
-    this.highlight.setAttribute("stroke-width", "5");   
-    this.highlight.setAttribute("fill", "none");   
-    this.upperGroup.appendChild(this.highlight);   
-   	
+    this.highlight.setAttribute("stroke-width", "5");
+    this.highlight.setAttribute("fill", "none");
+    this.upperGroup.appendChild(this.highlight);
+
    	//make background
     //http://stackoverflow.com/questions/17437408/how-do-i-change-a-circle-to-a-square-using-d3
 	this.background = document.createElementNS(Config.svgns, "rect");
     this.background.setAttribute("fill", "#FFFFFF");
-    this.upperGroup.appendChild(this.background);     	
+    this.upperGroup.appendChild(this.background);
 	//create label - we will move this svg element around when protein form changes
     this.labelSVG = document.createElementNS(Config.svgns, "text");
     this.labelSVG.setAttribute("text-anchor", "end");
@@ -77,23 +77,23 @@ function Protein(id, xinetController, json, name) {
     }
 	this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
-    d3.select(this.labelSVG).attr("transform", 
+    d3.select(this.labelSVG).attr("transform",
 		"translate( -" + (5) + " " + Molecule.labelY + ") rotate(0) scale(1, 1)");
-    this.upperGroup.appendChild(this.labelSVG);   	
+    this.upperGroup.appendChild(this.labelSVG);
    	//ticks (and animo acid letters)
     this.ticks = document.createElementNS(Config.svgns, "g");
     //svg group for annotations
 	this.annotationsSvgGroup = document.createElementNS(Config.svgns, "g");
     this.annotationsSvgGroup.setAttribute("opacity", 1);
 	this.upperGroup.appendChild(this.annotationsSvgGroup);
-	 
+
 	//make outline
     this.outline = document.createElementNS(Config.svgns, "rect");
     this.outline.setAttribute("stroke", "black");
     this.outline.setAttribute("stroke-width", "1");
     this.outline.setAttribute("fill", "none");
     this.upperGroup.appendChild(this.outline);
- 
+
     this.scaleLabels = new Array();
 
     // events
@@ -112,7 +112,18 @@ function Protein(id, xinetController, json, name) {
 		self.touchStart(evt);
     };
     this.isSelected = false;
-	this.showHighlight(false);
+	  this.showHighlight(false);
+    //TODO - this wastes a bit memory because the property is not on the prototype, fix
+    Object.defineProperty(this, "width", {
+        get: function width() {
+            return this.upperGroup.getBBox().width;
+        }
+    });
+    Object.defineProperty(this, "height", {
+        get: function height() {
+            return this.upperGroup.getBBox().height;
+        }
+    });
 };
 
 Protein.prototype.showData = function(evt) {

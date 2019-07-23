@@ -14,6 +14,7 @@ var xiNET = {}; //crosslinkviewer's javascript namespace
 //var RGBColor = require('rgbcolor');
 var d3 = require('d3');
 var colorbrewer = require('colorbrewer');
+var cola = require('webcola');
 var Spinner = require('spin.js');
 var xiNET_Storage = require('./xiNET_Storage');
 var Annotation = require('../model/interactor/Annotation');
@@ -144,10 +145,10 @@ xiNET.Controller = function(targetDiv) {
 
 xiNET.Controller.prototype.clear = function() {
     this.sequenceInitComplete = false;
-    if (this.force) {
-        this.force.stop();
+    if (this.layout) {
+        this.layout.stop();
     }
-    this.force = null;
+    this.layout = null;
     this.emptyElement(this.naryLinks);
     this.emptyElement(this.p_pLinksWide);
     this.emptyElement(this.highlights);
@@ -172,6 +173,7 @@ xiNET.Controller.prototype.clear = function() {
     this.allBinaryLinks = d3.map();
     this.allUnaryLinks = d3.map();
     this.allSequenceLinks = d3.map();
+    this.complexes = [];
 
     this.proteinCount = 0;
     this.maxBlobRadius = 30;
@@ -305,14 +307,15 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
     }
 
     //init complexes
-    var complexes = complexes.values()
-    for (var c = 0; c < complexes.length; c++) {
+    this.complexes = complexes.values()
+    for (var c = 0; c < this.complexes.length; c++) {
+        var complex = this.complexes[c];
         var interactionId;
         if (expand) {
-            interactionId = complexes[c].id.substring(0, complexes[c].id.indexOf('('));
+            interactionId = complex.id.substring(0, complex.id.indexOf('('));
         }
         else {
-            interactionId = complexes[c].id;
+            interactionId = complex.id;
         }
         var naryLink;
         for (var l = 0; l < dataElementCount; l++) {
@@ -322,8 +325,8 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
                 naryLink = self.allNaryLinks.get(nLinkId);
             }
         }
-        complexes[c].initMolecule(naryLink);
-        naryLink.complex = complexes[c];
+        complex.initMolecule(naryLink);
+        naryLink.complex = complex;
     }
     self.checkLinks();
     self.initLayout();
@@ -790,82 +793,77 @@ xiNET.Controller.prototype.setAllLinkCoordinates = function() {
 };
 
 xiNET.Controller.prototype.autoLayout = function() {
-    if (this.force) {
-        this.force.stop();
+    if (this.layout) {
+        this.layout.stop();
     }
-
-    d3.select(this.svgElement).style("visibility","hidden");
-
-    var spinner = new Spinner({scale: 3}).spin(this.targetDiv);
-    var showIt = false;
-	setTimeout(function(){spinner.spin(false);showIt = true}, 2000);
-
+    //
+    // d3.select(this.svgElement).style("visibility","hidden");
+    //
+    // var spinner = new Spinner({scale: 3}).spin(this.targetDiv);
+    // var showIt = false;
+    // setTimeout(function(){spinner.spin(false);showIt = true}, 2000);
+    //
     var width = this.svgElement.parentNode.clientWidth;
     var height = this.svgElement.parentNode.clientHeight;
 
-    this.acknowledgement.setAttribute("transform", "translate(5, "+ (height - 40)+")");
+    this.acknowledgement.setAttribute("transform", "translate(5, " + (height - 40) + ")");
 
     var molCount = this.molecules.keys().length;
     var self = this;
     var nodes = this.molecules.values();
     var nodeCount = nodes.length;
     //if force is null choose starting points for nodes
-    if (typeof this.force === 'undefined' || this.force == null) {
-        for (var n = 0; n < nodeCount; n++) {
-            nodes[n].setPosition(Math.random() * width, Math.random() * height);
-        }
-    }
+    // if (typeof this.layout === 'undefined' || this.layout == null) {
+    //     for (var n = 0; n < nodeCount; n++) {
+    //         nodes[n].setPosition(Math.random() * width, Math.random() * height);
+    //     }
+    // }
 
     //do force directed layout
     var layoutObj = {};
-    layoutObj.nodes = [];
+    layoutObj.nodes = nodes;//[];
     layoutObj.links = [];
     var molLookUp = {};
     var mi = 0;
 
-    for (var n = 0; n < nodeCount; n++) {
-        var mol = nodes[n];
-        molLookUp[mol.id] = mi;
-        mi++;
-        var nodeObj = {};
-        nodeObj.id = mol.id;
-        nodeObj.x = mol.x;
-        nodeObj.y = mol.y;
-        nodeObj.px = mol.x;
-        nodeObj.py = mol.y;
-        layoutObj.nodes.push(nodeObj);
-    }
+    // for (var n = 0; n < nodeCount; n++) {
+    //     var mol = nodes[n];
+    //     molLookUp[mol.id] = mi;
+    //     mi++;
+    //     var nodeObj = {};
+    //     nodeObj.id = mol.id;
+    //     nodeObj.x = mol.x;
+    //     nodeObj.y = mol.y;
+    //     nodeObj.px = mol.x;
+    //     nodeObj.py = mol.y;
+    //     layoutObj.nodes.push(nodeObj);
+    // }
     var links = this.allBinaryLinks.values();
     var linkCount = links.length;
     for (var l = 0; l < linkCount; l++) {
         var link = links[l];
-            var fromMol = link.interactors[0];
-            var toMol = link.interactors[1];
-            var source = molLookUp[fromMol.id];
-            var target = molLookUp[toMol.id];
+        var fromMol = link.interactors[0];
+        var toMol = link.interactors[1];
+        var source = fromMol;//molLookUp[fromMol.id];
+        var target = toMol;//molLookUp[toMol.id];
 
-            if (source !== target) {
+        if (source !== target) {
 
-                if (typeof source !== 'undefined' && typeof target !== 'undefined') {
-                    var linkObj = {};
-                    linkObj.source = source;
-                    linkObj.target = target;
-                    linkObj.id = link.id;
-                    layoutObj.links.push(linkObj);
-                }
-                else {
-                    alert("NOT RIGHT");
-                }
+            if (typeof source !== 'undefined' && typeof target !== 'undefined') {
+                var linkObj = {};
+                linkObj.source = source;
+                linkObj.target = target;
+                linkObj.id = link.id;
+                layoutObj.links.push(linkObj);
+            } else {
+                alert("NOT RIGHT");
             }
+        }
     }
 
-    var k = Math.sqrt(layoutObj.nodes.length / (width * height));
-    // mike suggests:
-    //    .charge(-10 / k)
-    //    .gravity(100 * k)
-    //following are the parameters for the layout you can play around with
-    //see the documentation at https://github.com/mbostock/d3/wiki/Force-Layout
-    this.force = d3.layout.force()
+    if (false) { //this.complexes) {
+        var k = Math.sqrt(layoutObj.nodes.length / (width * height));
+        this.layout = d3.layout.force()
             .nodes(layoutObj.nodes)
             .links(layoutObj.links)
             .gravity(105 * k)
@@ -875,35 +873,194 @@ xiNET.Controller.prototype.autoLayout = function() {
             .friction(0.96) // 1 = frictionless
             .theta(0.99) //Barnes–Hut approximation criterion
             .size([width, height]);
-            //also .chargeDistance() and .alpha() // not used
 
-    this.force.on("tick", function(e) {
-		if (showIt) {
-				var nodes = self.force.nodes();
-				// console.log("nodes", nodes);
-				for (var n = 0; n < nodeCount; n++) {
-					var node = nodes[n];
-					var mol = self.molecules.get(node.id);
-					var nx = node.x;
-					var ny = node.y;
-					mol.setPosition(nx, ny);
-				}
-				self.setAllLinkCoordinates();
-				//spinner.stop();
-				d3.select(self.svgElement).style('visibility','visible');
-		}
-        //this could be improved, todo: check all possible over boundary possibilities
-        //~ var bBox = self.container.getBBox();
-        //console.log(bBox);
-        //~ //only dealing with the more common 'label over left edge' situation
-        //~ if (bBox.x < 0) {
+        this.layout.on("tick", function(e) {
+            // if (showIt) {
+                var nodes = self.layout.nodes();
+                // console.log("nodes", nodes);
+                for (var n = 0; n < nodeCount; n++) {
+                    var node = nodes[n];
+                    var mol = self.molecules.get(node.id);
+                    var nx = node.x;
+                    var ny = node.y;
+                    mol.setPosition(nx, ny);
+                }
+                self.setAllLinkCoordinates();
+                //spinner.stop();
+                //d3.select(self.svgElement).style('visibility', 'visible');
+            // }
+            //this could be improved, todo: check all possible over boundary possibilities
+            //~ var bBox = self.container.getBBox();
+            //console.log(bBox);
+            //~ //only dealing with the more common 'label over left edge' situation
+            //~ if (bBox.x < 0) {
             //~ //alert("bodge time");
             //~ self.setCTM(self.container, self.container.getCTM().translate(- bBox.x, 0));
-        //~ }
+            //~ }
+        });
+        this.layout.start();
+    } else {
+        var groups = [];
+        if (this.complexes) {
+            for (var c = 0; c < this.complexes.length; c++) {
+                var g = this.complexes[c];
+                // if (g.form == 1) {
+                    var leaves = [];
+                    for (var pi = 0; pi < g.naryLink.interactors.length; pi++) {
+                        //var rp = this.renderedProteins.get(p.id);
+                        var i = layoutObj.nodes.indexOf(g.naryLink.interactors[pi]);
+                        if (i != -1) {
+                            leaves.push(i);
+                        } else {
+                          alert("somethings gone wrong")
+                        }
+                    }
+                    groups.push({
+                        id: g.id,
+                        leaves: leaves
+                    });
+                // }
+            }
+        }
+        this.layout = cola.d3adaptor();
+
+        // delete this.layout._lastStress;
+        // delete this.layout._alpha;
+        // delete this.layout._descent;
+        // delete this.layout._rootGroup;
+
+        this.layout.nodes(layoutObj.nodes).groups(groups).avoidOverlaps(true).links(layoutObj.links);
+
+        var self = this;
+
+        var groupDebugSel = d3.select(this.svgElement).selectAll('.group')
+            .data(groups);
+
+        groupDebugSel.enter().append('rect')
+            .classed('group', true)
+            .attr({
+                rx: 5,
+                ry: 5
+            })
+            .style('stroke', "blue")
+            .style('fill', "none");
+
+        var participantDebugSel = d3.select(this.svgElement).selectAll('.node')
+            .data(layoutObj.nodes);
+
+        participantDebugSel.enter().append('rect')
+            .classed('node', true)
+            .attr({
+                rx: 5,
+                ry: 5
+            })
+            .style('stroke', "red")
+            .style('fill', "none");
+
+        groupDebugSel.exit().remove();
+        participantDebugSel.exit().remove();
+
+        this.layout.symmetricDiffLinkLengths(30).on("tick", function(e) {
+            var nodes = self.layout.nodes();
+            // console.log("nodes", nodes);
+            for (var n = 0; n < nodeCount; n++) {
+                var node = nodes[n];
+                var mol = self.molecules.get(node.id);
+                var nx = node.x + (width/2);
+                var ny = node.y + (height/2);
+                mol.setPosition(nx, ny);
+            }
+            self.setAllLinkCoordinates();
+
+            groupDebugSel.attr({
+                x: function(d) {
+                    return d.bounds.x + (width/2);
+                },
+                y: function(d) {
+                    return d.bounds.y + (height/2);
+                },
+                width: function(d) {
+                    return d.bounds.width()
+                },
+                height: function(d) {
+                    return d.bounds.height()
+                }
+            });
+
+            participantDebugSel.attr({
+                x: function(d) {
+                    return d.bounds.x + (width/2);
+                },
+                y: function(d) {
+                    return d.bounds.y + (height/2);
+                },
+                width: function(d) {
+                    return d.bounds.width()
+                },
+                height: function(d) {
+                    return d.bounds.height()
+                }
+            });
+
+            //spinner.stop();
+            //d3.select(self.svgElement).style('visibility', 'visible');
+        });
+        this.layout.start(10, 15, 20);
 
 
+    }
+
+
+    /*
+
+    var self = this;
+
+
+    this.d3cola.symmetricDiffLinkLengths(k).on("tick", function(e) {
+        // groupDebug.attr({
+        //     x: function(d) {
+        //         return d.bounds.x
+        //     },
+        //     y: function(d) {
+        //         return d.bounds.y
+        //     },
+        //     width: function(d) {
+        //         return d.bounds.width()
+        //     },
+        //     height: function(d) {
+        //         return d.bounds.height()
+        //     }
+        // });
+        //
+        // participantDebug.attr({
+        //     x: function(d) {
+        //         return d.bounds.x
+        //     },
+        //     y: function(d) {
+        //         return d.bounds.y
+        //     },
+        //     width: function(d) {
+        //         return d.bounds.width()
+        //     },
+        //     height: function(d) {
+        //         return d.bounds.height()
+        //     }
+        // });
+
+        var nodesArr = self.d3cola.nodes(); // these nodes are our RenderedProteins
+        var nCount = nodesArr.length;
+        for (var n = 0; n < nCount; n++) {
+            var node = nodesArr[n];
+            var offsetX = node.x; // + node.width / 2;
+            var offsetY = node.y; //- node.upperGroup.getBBox().y;
+            node.setPosition(offsetX, offsetY);
+            node.setAllLinkCoordinates();
+        }
     });
-    this.force.start();
+    this.d3cola.start(10, 15, 20);
+    */
+
+
 };
 
 xiNET.Controller.prototype.setCTM = function(element, matrix) {
