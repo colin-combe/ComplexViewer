@@ -118,19 +118,19 @@ Molecule.prototype.setSelected = function(select) {
 };
 
 Molecule.prototype.getPosition = function(){
-    return [this.x, this.y];
+    return [this.cx, this.cy];
 }
 
 // more accurately described as setting transform for top svg elements (sets scale also)
 Molecule.prototype.setPosition = function(x, y) {
-    this.x = x;
-    this.y = y;
+    this.cx = x;
+    this.cy = y;
     if (this.form === 1){
-        this.upperGroup.setAttribute("transform", "translate(" + this.x + " " + this.y + ")"
+        this.upperGroup.setAttribute("transform", "translate(" + this.cx + " " + this.cy + ")"
                 + " scale(" + (this.controller.z) + ") " + "rotate(" + this.rotation + ")");
     }
     else {
-        this.upperGroup.setAttribute("transform", "translate(" + this.x + " " + this.y + ")"
+        this.upperGroup.setAttribute("transform", "translate(" + this.cx + " " + this.cy + ")"
                 + " scale(" + (this.controller.z) + ") ");
     }
 };

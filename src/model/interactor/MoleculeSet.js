@@ -31,8 +31,8 @@ function MoleculeSet(id, xlvController, json, name) {
     this.tooltip = this.id;
 
     // layout info
-    this.x = 40;
-    this.y = 40;
+    this.cx = 40;
+    this.cy = 40;
     this.rotation = 0;
     this.previousRotation = this.rotation;
     this.stickZoom = 1;
@@ -151,12 +151,12 @@ function MoleculeSet(id, xlvController, json, name) {
     //TODO - this wastes a bit memory because the property is not on the prototype, fix
     Object.defineProperty(this, "width", {
         get: function width() {
-            return this.upperGroup.getBBox().width;
+            return this.upperGroup.getBBox().width + 5;
         }
     });
     Object.defineProperty(this, "height", {
         get: function height() {
-            return this.upperGroup.getBBox().height;
+            return this.upperGroup.getBBox().height + 5;
         }
     });
 };

@@ -61,7 +61,7 @@ UnaryLink.prototype.initSVG = function() {
 	this.highlightLine.setAttribute('d', path);
 	this.thickLine = document.createElementNS(Config.svgns, 'path');
 	this.thickLine.setAttribute('d', path);
-   
+
     this.line.setAttribute("class", "link");
     this.line.setAttribute("fill", "none");
     this.line.setAttribute("stroke", "black");
@@ -92,7 +92,7 @@ UnaryLink.prototype.initSVG = function() {
     this.line.ontouchstart = function(evt) {
         self.touchStart(evt);
     };
-    
+
     this.highlightLine.onmousedown = function(evt) {
         self.mouseDown(evt);
     };
@@ -105,7 +105,7 @@ UnaryLink.prototype.initSVG = function() {
     this.highlightLine.ontouchstart = function(evt) {
         self.touchStart(evt);
     };
-    
+
    this.thickLine.onmousedown = function(evt) {
         self.mouseDown(evt);
     };
@@ -118,7 +118,7 @@ UnaryLink.prototype.initSVG = function() {
 	this.thickLine.ontouchstart = function(evt) {
         self.touchStart(evt);
     };
-    
+
     this.isSelected = false;
 }
 
@@ -144,7 +144,7 @@ UnaryLink.prototype.showHighlight = function(show) {
 		//~ this.highlightLine.setAttribute("stroke", xiNET.selectedColour.toRGB());
 		//~ if (this.isSelected === false) {
 			this.highlightLine.setAttribute("stroke-opacity", "0");
-		//~ }			
+		//~ }
 	}
 };
 
@@ -172,13 +172,13 @@ UnaryLink.prototype.show = function() {
 UnaryLink.prototype.setLinkCoordinates = function() {
 	var interactor = this.interactors[0];
 	if (typeof this.thickLine !== 'undefined') {
-		this.thickLine.setAttribute("transform", "translate(" + interactor.x
-				+ " " + interactor.y + ")" + " scale(" + (this.controller.z) + ")");
+		this.thickLine.setAttribute("transform", "translate(" + interactor.cx
+				+ " " + interactor.cy + ")" + " scale(" + (this.controller.z) + ")");
 	}
-	this.line.setAttribute("transform", "translate(" + interactor.x
-			+ " " + interactor.y + ")" + " scale(" + (this.controller.z) + ")");
-	this.highlightLine.setAttribute("transform", "translate(" + interactor.x
-			+ " " + interactor.y + ")" + " scale(" + (this.controller.z) + ")");
+	this.line.setAttribute("transform", "translate(" + interactor.cx
+			+ " " + interactor.cy + ")" + " scale(" + (this.controller.z) + ")");
+	this.highlightLine.setAttribute("transform", "translate(" + interactor.cx
+			+ " " + interactor.cy + ")" + " scale(" + (this.controller.z) + ")");
 };
 
 module.exports = UnaryLink;

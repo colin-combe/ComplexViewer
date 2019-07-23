@@ -63,7 +63,7 @@ Polymer.prototype.setRotation = function(angle) {
     if (this.rotation < 0) {
         this.rotation += 360;
     }
-    this.upperGroup.setAttribute("transform", "translate(" + this.x + " " + this.y + ")"
+    this.upperGroup.setAttribute("transform", "translate(" + this.cx + " " + this.cy + ")"
             + " scale(" + (this.controller.z) + ") " + "rotate(" + this.rotation + ")");
 
     var svg = this.controller.svgElement;
@@ -113,13 +113,13 @@ Polymer.prototype.switchStickScale = function(svgP) {
         else {
             this.stickZoom = this.stickZoom * 3;
             //move stick so same residue is under mouse
-            var dx = this.x - (svgP.x);
-            var dy = this.y - (svgP.y);
+            var dx = this.cx - (svgP.x);
+            var dy = this.cy - (svgP.y);
             if (this.rotation === 0 || this.rotation === 180) {
                 dy = 0;
             }
             //            console.log(dx + ',' + dy);
-            this.setPosition(this.x + (dx * 2), this.y + (dy * 2));
+            this.setPosition(this.cx + (dx * 2), this.cy + (dy * 2));
         }
     }
     // when setting the form of prot's,
@@ -311,8 +311,8 @@ Polymer.prototype.toCircle = function(svgP) {
 
     var xInterpol = null, yInterpol = null;
     if (typeof svgP !== 'undefined' && svgP !== null) {
-        xInterpol = d3.interpolate(this.x, svgP.x);
-        yInterpol = d3.interpolate(this.y, svgP.y);
+        xInterpol = d3.interpolate(this.cx, svgP.x);
+        yInterpol = d3.interpolate(this.cy, svgP.y);
     }
 
     var self = this;
@@ -550,8 +550,8 @@ Polymer.prototype.getResidueCoordinates = function(r, yOff) {
     else {
         y = yOff;
     }
-    x = x + this.x;
-    y = y + this.y;
+    x = x + this.cx;
+    y = y + this.cy;
     return [x, y];
 };
 

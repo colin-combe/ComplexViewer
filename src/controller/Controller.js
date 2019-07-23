@@ -808,9 +808,10 @@ xiNET.Controller.prototype.autoLayout = function() {
 
     this.acknowledgement.setAttribute("transform", "translate(5, " + (height - 40) + ")");
 
-    var molCount = this.molecules.keys().length;
+    //var molCount = this.molecules.keys().length;
     var self = this;
     var nodes = this.molecules.values();
+    //nodes = nodes.filter(function (value){return value.type != "complex"});
     var nodeCount = nodes.length;
     //if force is null choose starting points for nodes
     // if (typeof this.layout === 'undefined' || this.layout == null) {
@@ -823,9 +824,9 @@ xiNET.Controller.prototype.autoLayout = function() {
     var layoutObj = {};
     layoutObj.nodes = nodes;//[];
     layoutObj.links = [];
-    var molLookUp = {};
-    var mi = 0;
 
+    // var molLookUp = {};
+    // var mi = 0;
     // for (var n = 0; n < nodeCount; n++) {
     //     var mol = nodes[n];
     //     molLookUp[mol.id] = mi;
@@ -838,6 +839,7 @@ xiNET.Controller.prototype.autoLayout = function() {
     //     nodeObj.py = mol.y;
     //     layoutObj.nodes.push(nodeObj);
     // }
+
     var links = this.allBinaryLinks.values();
     var linkCount = links.length;
     for (var l = 0; l < linkCount; l++) {
@@ -847,7 +849,7 @@ xiNET.Controller.prototype.autoLayout = function() {
         var source = fromMol;//molLookUp[fromMol.id];
         var target = toMol;//molLookUp[toMol.id];
 
-        if (source !== target) {
+        if (source !== target && nodes.indexOf(source) != -1 && nodes.indexOf(target) != -1) {
 
             if (typeof source !== 'undefined' && typeof target !== 'undefined') {
                 var linkObj = {};
@@ -902,28 +904,27 @@ xiNET.Controller.prototype.autoLayout = function() {
     } else {
         var groups = [];
         if (this.complexes) {
-            for (var c = 0; c < this.complexes.length; c++) {
-                var g = this.complexes[c];
-                // if (g.form == 1) {
-                    var leaves = [];
-                    for (var pi = 0; pi < g.naryLink.interactors.length; pi++) {
-                        //var rp = this.renderedProteins.get(p.id);
-                        var i = layoutObj.nodes.indexOf(g.naryLink.interactors[pi]);
-                        if (i != -1) {
-                            leaves.push(i);
-                        } else {
-                          alert("somethings gone wrong")
-                        }
-                    }
-                    groups.push({
-                        id: g.id,
-                        leaves: leaves
-                    });
-                // }
+          for (var c = 0; c < this.complexes.length; c++) {
+              var g = this.complexes[c];
+              // if (g.form == 1) {
+                  g.leaves = [];
+                  g.subGroups = [];
+                  for (var pi = 0; pi < g.naryLink.interactors.length; pi++) {
+                      //var rp = this.renderedProteins.get(p.id);
+                      var i = layoutObj.nodes.indexOf(g.naryLink.interactors[pi]);
+                      if (g.naryLink.interactors[pi].type != "complex") {
+                          g.leaves.push(i);
+                      }
+                      else {
+                         console.log("?",g.naryLink.interactors[pi])
+                         g.subGroups.push(g.naryLink.interactors[pi]);
+                      }
+                  }
+                  groups.push(g);
             }
         }
         this.layout = cola.d3adaptor();
-
+        console.log("groups", groups);
         // delete this.layout._lastStress;
         // delete this.layout._alpha;
         // delete this.layout._descent;
@@ -933,7 +934,7 @@ xiNET.Controller.prototype.autoLayout = function() {
 
         var self = this;
 
-        var groupDebugSel = d3.select(this.svgElement).selectAll('.group')
+    /*    var groupDebugSel = d3.select(this.svgElement).selectAll('.group')
             .data(groups);
 
         groupDebugSel.enter().append('rect')
@@ -958,7 +959,7 @@ xiNET.Controller.prototype.autoLayout = function() {
             .style('fill', "none");
 
         groupDebugSel.exit().remove();
-        participantDebugSel.exit().remove();
+        participantDebugSel.exit().remove();*/
 
         this.layout.symmetricDiffLinkLengths(30).on("tick", function(e) {
             var nodes = self.layout.nodes();
@@ -972,7 +973,7 @@ xiNET.Controller.prototype.autoLayout = function() {
             }
             self.setAllLinkCoordinates();
 
-            groupDebugSel.attr({
+            /*groupDebugSel.attr({
                 x: function(d) {
                     return d.bounds.x + (width/2);
                 },
@@ -1000,67 +1001,13 @@ xiNET.Controller.prototype.autoLayout = function() {
                 height: function(d) {
                     return d.bounds.height()
                 }
-            });
+            });*/
 
             //spinner.stop();
             //d3.select(self.svgElement).style('visibility', 'visible');
         });
         this.layout.start(10, 15, 20);
-
-
     }
-
-
-    /*
-
-    var self = this;
-
-
-    this.d3cola.symmetricDiffLinkLengths(k).on("tick", function(e) {
-        // groupDebug.attr({
-        //     x: function(d) {
-        //         return d.bounds.x
-        //     },
-        //     y: function(d) {
-        //         return d.bounds.y
-        //     },
-        //     width: function(d) {
-        //         return d.bounds.width()
-        //     },
-        //     height: function(d) {
-        //         return d.bounds.height()
-        //     }
-        // });
-        //
-        // participantDebug.attr({
-        //     x: function(d) {
-        //         return d.bounds.x
-        //     },
-        //     y: function(d) {
-        //         return d.bounds.y
-        //     },
-        //     width: function(d) {
-        //         return d.bounds.width()
-        //     },
-        //     height: function(d) {
-        //         return d.bounds.height()
-        //     }
-        // });
-
-        var nodesArr = self.d3cola.nodes(); // these nodes are our RenderedProteins
-        var nCount = nodesArr.length;
-        for (var n = 0; n < nCount; n++) {
-            var node = nodesArr[n];
-            var offsetX = node.x; // + node.width / 2;
-            var offsetY = node.y; //- node.upperGroup.getBBox().y;
-            node.setPosition(offsetX, offsetY);
-            node.setAllLinkCoordinates();
-        }
-    });
-    this.d3cola.start(10, 15, 20);
-    */
-
-
 };
 
 xiNET.Controller.prototype.setCTM = function(element, matrix) {
@@ -1336,13 +1283,13 @@ xiNET.Controller.prototype.mouseMove = function(evt) {
         if (this.state === MouseEventCodes.DRAGGING) {
             // we are currently dragging things around
             var ox, oy, nx, ny;
-            if (typeof this.dragElement.x === 'undefined') { // if not an Molecule
+            if (typeof this.dragElement.cx === 'undefined') { // if not an Molecule
                 var nodes = this.dragElement.interactors;
                 var nodeCount = nodes.length;
                 for (var i = 0; i < nodeCount; i++) {
                     var protein = nodes[i];
-                    ox = protein.x;
-                    oy = protein.y;
+                    ox = protein.cx;
+                    oy = protein.cy;
                     nx = ox - dx;
                     ny = oy - dy;
                     protein.setPosition(nx, ny);
@@ -1353,8 +1300,8 @@ xiNET.Controller.prototype.mouseMove = function(evt) {
                 }
             } else {
                 //its a protein - drag it TODO: DRAG SELECTED
-                ox = this.dragElement.x;
-                oy = this.dragElement.y;
+                ox = this.dragElement.cx;
+                oy = this.dragElement.cy;
                 nx = ox - dx;
                 ny = oy - dy;
                 this.dragElement.setPosition(nx, ny);
@@ -1365,9 +1312,9 @@ xiNET.Controller.prototype.mouseMove = function(evt) {
 
         else if (this.state === MouseEventCodes.ROTATING) {
             // Distance from mouse x and center of stick.
-            var _dx = c.x - this.dragElement.x
+            var _dx = c.x - this.dragElement.cx
             // Distance from mouse y and center of stick.
-            var _dy = c.y - this.dragElement.y;
+            var _dy = c.y - this.dragElement.cy;
             //see http://en.wikipedia.org/wiki/Atan2#Motivation
             var centreToMouseAngleRads = Math.atan2(_dy, _dx);
             if (this.whichRotator === 0) {
@@ -1429,7 +1376,7 @@ xiNET.Controller.prototype.mouseUp = function(evt) {
                     //can't be used? problem with IE (scroll thingy)
                 }
                 else { //left click; show matches for link, toggle form for protein, switch stick scale
-                    if (typeof this.dragElement.x === 'undefined') { //if not protein
+                    if (typeof this.dragElement.cx === 'undefined') { //if not protein
                         //~ this.dragElement.showData();
                     } else if (evt.shiftKey) { //if shift key
                         this.dragElement.switchStickScale(c);
@@ -1556,7 +1503,7 @@ xiNET.Controller.prototype.touchMove = function(evt) {
             if (this.state ===  MouseEventCodes.DRAGGING) {
                 // we are currently dragging things around
                 var ox, oy, nx, ny;
-                if (typeof this.dragElement.x === 'undefined') { // if not an Molecule
+                if (typeof this.dragElement.cx === 'undefined') { // if not an Molecule
                     var nodes = this.dragElement.interactors;
                     var nodeCount = nodes.length;
                     for (var i = 0; i < nodeCount; i++) {
@@ -1573,8 +1520,8 @@ xiNET.Controller.prototype.touchMove = function(evt) {
                     }
                 } else {
                     //its a protein - drag it TODO: DRAG SELECTED
-                    ox = this.dragElement.x;
-                    oy = this.dragElement.y;
+                    ox = this.dragElement.cx;
+                    oy = this.dragElement.cy;
                     nx = ox - dx;
                     ny = oy - dy;
                     this.dragElement.setPosition(nx, ny);
@@ -1585,9 +1532,9 @@ xiNET.Controller.prototype.touchMove = function(evt) {
 
             else if (this.state === MouseEventCodes.ROTATING) {
                 // Distance from mouse x and center of stick.
-                var _dx = c.x - this.dragElement.x
+                var _dx = c.x - this.dragElement.cx
                 // Distance from mouse y and center of stick.
-                var _dy = c.y - this.dragElement.y;
+                var _dy = c.y - this.dragElement.cy;
                 //see http://en.wikipedia.org/wiki/Atan2#Motivation
                 var centreToMouseAngleRads = Math.atan2(_dy, _dx);
                 if (this.whichRotator === 0) {
@@ -1629,7 +1576,7 @@ xiNET.Controller.prototype.touchEnd = function(evt) {
     this.preventDefaultsAndStopPropagation(evt);
     if (this.dragElement != null) {
         if (!(this.state === MouseEventCodes.DRAGGING || this.state === MouseEventCodes.ROTATING)) { //not dragging or rotating
-                if (typeof this.dragElement.x === 'undefined') { //if not protein
+                if (typeof this.dragElement.cx === 'undefined') { //if not protein
                     //this.dragElement.showID();
                 } else {
                     if (this.dragElement.form === 0) {

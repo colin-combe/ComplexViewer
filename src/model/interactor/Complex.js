@@ -26,16 +26,16 @@ function Complex(id, xlvController) {
     this.form = 0;
     this.type = 'complex';
     //TODO - this wastes a bit memory because the property is not on the prototype, fix
-    Object.defineProperty(this, "width", {
-        get: function width() {
-            return this.naryLink.path.getBBox().width;
-        }
-    });
-    Object.defineProperty(this, "height", {
-        get: function height() {
-            return this.naryLink.path.getBBox().height;
-        }
-    });
+    // Object.defineProperty(this, "width", {
+    //     get: function width() {
+    //         return this.naryLink.path.getBBox().width;
+    //     }
+    // });
+    // Object.defineProperty(this, "height", {
+    //     get: function height() {
+    //         return this.naryLink.path.getBBox().height;
+    //     }
+    // });
 }
 
 Complex.prototype.initMolecule = function(naryLink)
