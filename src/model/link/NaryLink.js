@@ -17,7 +17,7 @@ var Config = require('../../controller/Config');
 var Molecule = require('../interactor/Molecule');
 var d3 = require('d3');
 
-NaryLink.naryColours = d3.scale.ordinal().range(colorbrewer.Paired[6]);//d3.scale.category20c();//d3.scale.ordinal().range(colorbrewer.Paired[12]);//
+NaryLink.naryColours; // init'ed in clear function of controller
 NaryLink.orbitNodes = 16;
 NaryLink.orbitRadius = 20;
 
@@ -26,7 +26,7 @@ NaryLink.prototype = new Link();
 function NaryLink(id, xlvController) {
     this.id = id;
     this.evidences = d3.map();
-    this.interactors = new Array();
+    this.interactors = new Array(); // todo: rename to participants
     this.sequenceLinks = d3.map();
     this.binaryLinks = d3.map();
     this.unaryLinks = d3.map();
@@ -36,15 +36,30 @@ function NaryLink(id, xlvController) {
     this.initSVG();
 }
 
+NaryLink.prototype.getTotalParticipantCount = function() {
+    var result = 0;
+    var c = this.interactors.length;
+    for (var p = 0; p < c; p++) {
+        var participant = this.interactors[p];
+        //console.log("! " + typeof participant);
+        if (participant.type != "complex") {
+            result++;
+        } else {
+            result = result + participant.naryLink.getTotalParticipantCount();
+        }
+    }
+    return result;
+}
+
 NaryLink.prototype.initSVG = function() {
     this.path = document.createElementNS(Config.svgns, "path");
     //~ if (this.controller.expand === false){
-		//~ this.path.setAttribute('fill', NaryLink.naryColours(this.id));
+		this.path.setAttribute('fill', NaryLink.naryColours(this.id));
 	//~ }
 	//~ else {
-		this.path.setAttribute('fill', '#70BDBD');
+		  // this.path.setAttribute('fill', '#70BDBD');
 	//~ }
-    this.path.setAttribute('fill-opacity', 0.3);
+    //this.path.setAttribute('fill-opacity', 0);
 
     //set the events for it
     var self = this;
@@ -66,7 +81,6 @@ NaryLink.prototype.showHighlight = function(show) {
 	this.highlightMolecules(show);
 };
 
-
 NaryLink.prototype.check = function() {
     this.show();
     return true;
@@ -87,15 +101,15 @@ NaryLink.prototype.setLinkCoordinates = function() {
 		self.hull = calced;//hack?
 		return "M" + calced.join("L") + "Z";
     };
-	var self = this;// TODO: - tidy hack above?
-	var mapped = this.orbitNodes(this.getMappedCoordinates());
-	var hullValues = calculateHullPath(mapped);
-	if (hullValues) {
-		this.path.setAttribute('d', hullValues);
-	}
+  	var self = this;// TODO: - tidy hack above?
+  	var mapped = this.orbitNodes(this.getMappedCoordinates());
+  	var hullValues = calculateHullPath(mapped);
+  	if (hullValues) {
+  		  this.path.setAttribute('d', hullValues);
+  	}
     if (this.complex){
-		this.complex.setAllLinkCoordinates();
-	}
+  		  this.complex.setAllLinkCoordinates();
+  	}
 };
 
 NaryLink.prototype.getMappedCoordinates = function() {

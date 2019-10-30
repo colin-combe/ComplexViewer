@@ -149,6 +149,9 @@ xiNET.Controller.prototype.clear = function() {
         this.layout.stop();
     }
     this.layout = null;
+
+    NaryLink.naryColours = d3.scale.ordinal().range(colorbrewer.Pastel2[6]);
+
     this.emptyElement(this.naryLinks);
     this.emptyElement(this.p_pLinksWide);
     this.emptyElement(this.highlights);
@@ -505,7 +508,7 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
             }
         }
         //genes
-        else if (interactor.type.id === 'NI:0250') {
+        else if (interactor.type.id === 'MI:0250') {
             participant = new Gene(participantId, self, interactor, interactor.label);
         }
         //RNA
@@ -764,16 +767,36 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
 
 xiNET.Controller.prototype.checkLinks = function() {
     function checkAll(linkMap){
-        var links = linkMap.values();
+        var links = linkMap.values().reverse(); // reverse seems to make nLinks be added in right order, but may not be totally reliable
         var c = links.length;
         for (var l = 0; l < c; l++) {
             links[l].check();
         }
     }
+
     checkAll(this.allNaryLinks);
     checkAll(this.allBinaryLinks);
     checkAll(this.allUnaryLinks);
     checkAll(this.allSequenceLinks);
+
+    // console.log("I'm here");
+    var nLinkMap =  new Map();
+    var nLinkCount = this.allNaryLinks.size();
+    for (var n = 0; n < nLinkCount; n++) {
+        var nLink = this.allNaryLinks.values()[n];
+        var pCount = nLink.getTotalParticipantCount();
+        //console.log(nLink.id + " - " + pCount);
+        nLinkMap.set(pCount, nLink);
+    }
+
+    // var mapAsc = new Map(nLinkMap.entries().sort());
+    // console.log(nLinkMap);
+    // console.log(mapAsc);
+
+    //var nLinks = this.allNaryLinks.values();
+
+    //nLinks[3].check();
+
 };
 
 xiNET.Controller.prototype.setAllLinkCoordinates = function() {
@@ -811,7 +834,7 @@ xiNET.Controller.prototype.autoLayout = function() {
     //var molCount = this.molecules.keys().length;
     var self = this;
     var nodes = this.molecules.values();
-    //nodes = nodes.filter(function (value){return value.type != "complex"});
+    nodes = nodes.filter(function (value){return value.type != "complex"});
     var nodeCount = nodes.length;
     //if force is null choose starting points for nodes
     // if (typeof this.layout === 'undefined' || this.layout == null) {
@@ -908,19 +931,31 @@ xiNET.Controller.prototype.autoLayout = function() {
               var g = this.complexes[c];
               // if (g.form == 1) {
                   g.leaves = [];
-                  g.subGroups = [];
+                  g.groups = [];
                   for (var pi = 0; pi < g.naryLink.interactors.length; pi++) {
                       //var rp = this.renderedProteins.get(p.id);
                       var i = layoutObj.nodes.indexOf(g.naryLink.interactors[pi]);
                       if (g.naryLink.interactors[pi].type != "complex") {
                           g.leaves.push(i);
                       }
-                      else {
-                         console.log("?",g.naryLink.interactors[pi])
-                         g.subGroups.push(g.naryLink.interactors[pi]);
-                      }
+                      // else {
+                      //    console.log("?",g.naryLink.interactors[pi])
+                      //    g.groups.push(g.naryLink.interactors[pi]);
+                      // }
                   }
                   groups.push(g);
+            }
+          for (var c = 0; c < this.complexes.length; c++) {
+              var g = this.complexes[c];
+              // if (g.form == 1) {
+                  for (var pi = 0; pi < g.naryLink.interactors.length; pi++) {
+                      //var rp = this.renderedProteins.get(p.id);
+                      var i = groups.indexOf(g.naryLink.interactors[pi]);
+                      if (g.naryLink.interactors[pi].type == "complex") {
+                          g.groups.push(i);
+                      }
+                  }
+                  //groups.push(g);
             }
         }
         this.layout = cola.d3adaptor();
@@ -930,11 +965,11 @@ xiNET.Controller.prototype.autoLayout = function() {
         // delete this.layout._descent;
         // delete this.layout._rootGroup;
 
-        this.layout.nodes(layoutObj.nodes).groups(groups).avoidOverlaps(true).links(layoutObj.links);
+        this.layout.nodes(layoutObj.nodes).groups(groups).links(layoutObj.links).avoidOverlaps(true);
 
         var self = this;
 
-    /*    var groupDebugSel = d3.select(this.svgElement).selectAll('.group')
+        /*var groupDebugSel = d3.select(this.svgElement).selectAll('.group')
             .data(groups);
 
         groupDebugSel.enter().append('rect')
@@ -1249,8 +1284,8 @@ xiNET.Controller.prototype.mouseDown = function(evt) {
     evt.preventDefault();
     //evt.returnValue = false;
     //stop force layout
-    if (typeof this.force !== 'undefined' && this.force != null) {
-        this.force.stop();
+    if (typeof this.layout !== 'undefined' && this.layout != null) {
+        this.layout.stop();
     }
 
     var p = this.getEventPoint(evt);// seems to be correct, see below
@@ -1479,8 +1514,8 @@ xiNET.Controller.prototype.touchStart = function(evt) {
     //~ this.preventDefaultsAndStopPropagation(evt);
 
     //stop force layout
-    if (typeof this.force !== 'undefined' && this.force != null) {
-        this.force.stop();
+    if (typeof this.layout !== 'undefined' && this.layout != null) {
+        this.layout.stop();
     }
 
     var p = this.getTouchEventPoint(evt);// seems to be correct, see below
@@ -1685,6 +1720,10 @@ xiNET.Controller.prototype.hideTooltip = function(evt){
     this.tooltip.setAttribute("display","none");
     this.tooltip_bg.setAttribute("display","none");
     this.tooltip_subBg.setAttribute("display","none");
+};
+
+xiNET.Controller.prototype.getComplexColours = function(){
+    return NaryLink.naryColours;
 };
 
 module.exports = xiNET.Controller;

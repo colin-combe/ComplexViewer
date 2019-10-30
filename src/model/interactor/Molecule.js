@@ -28,8 +28,8 @@ Molecule.prototype.addStoichiometryLabel = function(stoich) {
 Molecule.prototype.mouseDown = function(evt) {
         this.controller.preventDefaultsAndStopPropagation(evt);//see MouseEvents.js
         //if a force layout exists then stop it
-        if (this.controller.force) {
-            this.controller.force.stop();
+        if (this.controller.layout) {
+            this.controller.layout.stop();
         }
 
         this.controller.dragElement = this;
@@ -49,8 +49,8 @@ Molecule.prototype.mouseDown = function(evt) {
 Molecule.prototype.touchStart = function(evt) {
            this.controller.preventDefaultsAndStopPropagation(evt);//see MouseEvents.js
         //if a force layout exists then stop it
-         if (this.controller.force !== undefined) {
-            this.controller.force.stop();
+         if (this.controller.layout !== undefined) {
+            this.controller.layout.stop();
         }
         this.controller.dragElement = this;
         //~ if (evt.controllerKey === false) {
@@ -163,7 +163,7 @@ Molecule.prototype.checkLinks = function() {
             links[l].check();
         }
     }
-    checkAll(this.naryLinks);
+    // checkAll(this.naryLinks); // hacked out to help fix ordering od nLinks
     checkAll(this.binaryLinks);
     checkAll(this.sequenceLinks);
     if (this.selfLink !== null) {

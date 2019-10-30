@@ -41,7 +41,7 @@ function Complex(id, xlvController) {
 Complex.prototype.initMolecule = function(naryLink)
 {
     this.naryLink = naryLink;
-	naryLink.path.setAttribute('stroke', 'black');
+	  naryLink.path.setAttribute('stroke', 'gray');
     naryLink.path.setAttribute('stroke-linejoin', 'round');
     naryLink.path.setAttribute('stroke-width', 8);
 };
