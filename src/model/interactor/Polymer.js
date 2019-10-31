@@ -361,6 +361,13 @@ Polymer.prototype.toCircle = function(svgP) {
                         }
                     }
                 );
+
+                if (anno.fuzzyStart) {
+                    self.annotationsSvgGroup.removeChild(anno.fuzzyStart);
+                }
+                if (anno.fuzzyEnd) {
+                    self.annotationsSvgGroup.removeChild(anno.fuzzyEnd);
+                }
         }
     }
 
@@ -506,6 +513,34 @@ Polymer.prototype.toStick = function() {
         self.setAllLinkCoordinates();
 
         if (interp ===  1){ // finished - tidy up
+          if (self.annotations) {
+              var annots = self.annotations;
+              var ca = annots.length;
+              for (var a = 0; a < ca; a++) {
+                  var anno = annots[a];
+                  if (anno.uncertainStart != null) {
+                     anno.fuzzyStart = document.createElementNS(Config.svgns, "path");
+                     anno.fuzzyStart.setAttribute("d", self.getAnnotationRectPath({begin: anno.uncertainStart, end: anno.begin}));
+                     anno.fuzzyStart.setAttribute("stroke-width", 1);
+                     anno.fuzzyStart.setAttribute("fill-opacity", "0.6");
+                     anno.fuzzyStart.setAttribute("fill", "#A01284");
+                     anno.fuzzyStart.setAttribute("stroke", "#A01284");
+                     self.annotationsSvgGroup.appendChild(anno.fuzzyStart);
+                  }
+                  if (anno.uncertainEnd != null) {
+                     anno.fuzzyEnd = document.createElementNS(Config.svgns, "path");
+                     anno.fuzzyEnd.setAttribute("d", self.getAnnotationRectPath({begin: anno.end, end: anno.uncertainEnd}));
+                     anno.fuzzyEnd.setAttribute("stroke-width", 1);
+                     anno.fuzzyEnd.setAttribute("fill-opacity", "0.6");
+                     anno.fuzzyEnd.setAttribute("fill", "#A01284");
+                     anno.fuzzyEnd.setAttribute("stroke", "#A01284");
+                     self.annotationsSvgGroup.appendChild(anno.fuzzyEnd);
+                  }
+              }
+          }
+
+
+
             self.busy = false;
             return true;
         } else if (interp > 1){

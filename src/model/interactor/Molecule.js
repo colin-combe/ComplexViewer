@@ -235,9 +235,27 @@ Molecule.prototype.setPositionalFeatures = function(posFeats) {
                 xlv.setTooltip(el.name, el.getAttribute('fill'));
                 self.showHighlight(true);
             };
-             if (this.annotationsSvgGroup) { //hack
-                 this.annotationsSvgGroup.appendChild(anno.pieSlice);
-             }
+            if (this.annotationsSvgGroup) { //hack
+               this.annotationsSvgGroup.appendChild(anno.pieSlice);
+               if (isNaN(anno.uncertainStart == false) && this.form == 1) {
+                  anno.fuzzyStart = document.createElementNS(Config.svgns, "path");
+                  anno.fuzzyStart.setAttribute("d", this.getAnnotationRectPath({begin: anno.uncertainStart, end: anno.begin}));
+                  anno.fuzzyStart.setAttribute("stroke-width", 1);
+                  anno.fuzzyStart.setAttribute("fill-opacity", "0.6");
+                  anno.fuzzyStart.setAttribute("fill", "#A01284");
+                  anno.fuzzyStart.setAttribute("stroke", "#A01284");
+                  this.annotationsSvgGroup.appendChild(anno.fuzzyStart);
+               }
+               if (isNaN(anno.uncertainEnd) == false && this.form == 1) {
+                  anno.fuzzyEnd = document.createElementNS(Config.svgns, "path");
+                  anno.fuzzyEnd.setAttribute("d", this.getAnnotationRectPath({begin: anno.end, end: anno.uncertainEnd}));
+                  anno.fuzzyEnd.setAttribute("stroke-width", 1);
+                  anno.fuzzyEnd.setAttribute("fill-opacity", "0.6");
+                  anno.fuzzyEnd.setAttribute("fill", "#A01284");
+                  anno.fuzzyEnd.setAttribute("stroke", "#A01284");
+                  this.annotationsSvgGroup.appendChild(anno.fuzzyEnd);
+               }
+            }
         }
     }
 };

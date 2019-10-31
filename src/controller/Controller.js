@@ -150,7 +150,7 @@ xiNET.Controller.prototype.clear = function() {
     }
     this.layout = null;
 
-    NaryLink.naryColours = d3.scale.ordinal().range(colorbrewer.Pastel2[6]);
+    NaryLink.naryColours = d3.scale.ordinal().range(colorbrewer.Pastel2[8]);
 
     this.emptyElement(this.naryLinks);
     this.emptyElement(this.p_pLinksWide);
@@ -353,7 +353,7 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
         //~ var colour = Molecule.domainColours(feature.name);
         // the id info we need is inside sequenceData att
         if (feature.sequenceData) {
-            //~ console.log(JSON.stringify(feature, null, '\t'));
+            //console.log(JSON.stringify(feature, null, '\t'));
             var seqData = feature.sequenceData;
             var seqDataCount = seqData.length;
             for (var sdi = 0; sdi < seqDataCount; sdi++) {
@@ -363,12 +363,14 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
                     mID = mID   + "(" + seqDatum.participantRef + ")";
                 }
                 var molecule = self.molecules.get(mID);
-                var sequenceRegex = /(.+)-(.+)/;
-                var match = sequenceRegex.exec(seqDatum.pos);
-                var startRes = match[1] * 1;
-                var endRes = match[2] * 1;
-                if (isNaN(startRes) === false && isNaN(endRes) === false) {
-                    var annotation = new Annotation(annotName, startRes, endRes);
+                var seqDatum = new SequenceDatum(molecule, seqDatum.pos)
+                // var sequenceRegex = /(.+)-(.+)/;
+                // var match = sequenceRegex.exec(seqDatum.pos);
+                // var startRes = match[1] * 1;
+                // var endRes = match[2] * 1;
+                if (isNaN(seqDatum.start) === false && isNaN(seqDatum.end) === false) {
+                    var annotation = new Annotation(annotName);
+                    annotation.initFromSeqDatum(seqDatum);
                     if (molecule.miFeatures == null) {
                         molecule.miFeatures = new Array();
                     }
