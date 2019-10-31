@@ -11,6 +11,12 @@ var exampleIndex = [
       "complexAssemblies": [],
       "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-297",
   },
+  {
+        "ac": "EBI-12598622",
+        "name": "EBI-12598622",
+        "complexAssemblies": [],
+        "url": "https://ebi-intact.github.io/intact-view/details/interaction/EBI-12598622",
+    },
     {
         "ac": "EBI-9691559",
         "complexAssemblies": [],

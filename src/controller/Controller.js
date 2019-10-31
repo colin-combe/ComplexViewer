@@ -428,7 +428,7 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
                 var participantCount = jsonParticipants.length
 
                 //init n-ary link
-                var nLinkId = getNaryLinkIdFromInteraction(interaction)
+                var nLinkId = interaction.id || getNaryLinkIdFromInteraction(interaction)
                 var nLink = self.allNaryLinks.get(nLinkId);
                 if (typeof nLink === 'undefined') {
                     //doesn't already exist, make new nLink
@@ -471,7 +471,7 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
 
     function newMolecule(interactor, participantId, interactorRef){
         var participant;
-        if (interactor.type.id === 'MI:1302') {
+        if (typeof interactor == "undefined" || interactor.type.id === 'MI:1302') {
             //must be a previously unencountered complex -
             // MI:0314 - interaction?, MI:0317 - complex? and its many subclasses
             participant = new Complex(participantId, self, interactorRef);
@@ -779,24 +779,18 @@ xiNET.Controller.prototype.checkLinks = function() {
     checkAll(this.allUnaryLinks);
     checkAll(this.allSequenceLinks);
 
-    // console.log("I'm here");
-    var nLinkMap =  new Map();
-    var nLinkCount = this.allNaryLinks.size();
-    for (var n = 0; n < nLinkCount; n++) {
-        var nLink = this.allNaryLinks.values()[n];
-        var pCount = nLink.getTotalParticipantCount();
-        //console.log(nLink.id + " - " + pCount);
-        nLinkMap.set(pCount, nLink);
-    }
+    // var nLinkMap =  new Map();
+    // var nLinkCount = this.allNaryLinks.size();
+    // for (var n = 0; n < nLinkCount; n++) {
+    //     var nLink = this.allNaryLinks.values()[n];
+    //     var pCount = nLink.getTotalParticipantCount();
+    //     //console.log(nLink.id + " - " + pCount);
+    //     nLinkMap.set(pCount, nLink);
+    // }
 
     // var mapAsc = new Map(nLinkMap.entries().sort());
     // console.log(nLinkMap);
     // console.log(mapAsc);
-
-    //var nLinks = this.allNaryLinks.values();
-
-    //nLinks[3].check();
-
 };
 
 xiNET.Controller.prototype.setAllLinkCoordinates = function() {
@@ -819,13 +813,7 @@ xiNET.Controller.prototype.autoLayout = function() {
     if (this.layout) {
         this.layout.stop();
     }
-    //
-    // d3.select(this.svgElement).style("visibility","hidden");
-    //
-    // var spinner = new Spinner({scale: 3}).spin(this.targetDiv);
-    // var showIt = false;
-    // setTimeout(function(){spinner.spin(false);showIt = true}, 2000);
-    //
+
     var width = this.svgElement.parentNode.clientWidth;
     var height = this.svgElement.parentNode.clientHeight;
 
@@ -836,14 +824,7 @@ xiNET.Controller.prototype.autoLayout = function() {
     var nodes = this.molecules.values();
     nodes = nodes.filter(function (value){return value.type != "complex"});
     var nodeCount = nodes.length;
-    //if force is null choose starting points for nodes
-    // if (typeof this.layout === 'undefined' || this.layout == null) {
-    //     for (var n = 0; n < nodeCount; n++) {
-    //         nodes[n].setPosition(Math.random() * width, Math.random() * height);
-    //     }
-    // }
 
-    //do force directed layout
     var layoutObj = {};
     layoutObj.nodes = nodes;//[];
     layoutObj.links = [];
@@ -863,6 +844,8 @@ xiNET.Controller.prototype.autoLayout = function() {
     //     layoutObj.nodes.push(nodeObj);
     // }
 
+    var linkedParticipants = new Set();
+
     var links = this.allBinaryLinks.values();
     var linkCount = links.length;
     for (var l = 0; l < linkCount; l++) {
@@ -880,13 +863,23 @@ xiNET.Controller.prototype.autoLayout = function() {
                 linkObj.target = target;
                 linkObj.id = link.id;
                 layoutObj.links.push(linkObj);
+
+                linkedParticipants.add(source);
+                linkedParticipants.add(target);
             } else {
                 alert("NOT RIGHT");
             }
         }
     }
 
-    if (false) { //this.complexes) {
+    if (this.complexes.length == 0 && nodes.length != linkedParticipants.size) {
+
+      d3.select(this.svgElement).style("visibility","hidden");
+
+      var spinner = new Spinner({scale: 3}).spin(this.targetDiv);
+      var showIt = false;
+      setTimeout(function(){spinner.spin(false);showIt = true}, 2000);
+
         var k = Math.sqrt(layoutObj.nodes.length / (width * height));
         this.layout = d3.layout.force()
             .nodes(layoutObj.nodes)
@@ -900,7 +893,7 @@ xiNET.Controller.prototype.autoLayout = function() {
             .size([width, height]);
 
         this.layout.on("tick", function(e) {
-            // if (showIt) {
+            if (showIt) {
                 var nodes = self.layout.nodes();
                 // console.log("nodes", nodes);
                 for (var n = 0; n < nodeCount; n++) {
@@ -911,9 +904,9 @@ xiNET.Controller.prototype.autoLayout = function() {
                     mol.setPosition(nx, ny);
                 }
                 self.setAllLinkCoordinates();
-                //spinner.stop();
-                //d3.select(self.svgElement).style('visibility', 'visible');
-            // }
+                spinner.stop();
+                d3.select(self.svgElement).style('visibility', 'visible');
+            }
             //this could be improved, todo: check all possible over boundary possibilities
             //~ var bBox = self.container.getBBox();
             //console.log(bBox);
