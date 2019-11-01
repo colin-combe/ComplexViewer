@@ -340,6 +340,7 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
     for (var f = 0; f < fCount; f++){
         var feature = features[f];
         // add features to interactors/participants/nodes
+        console.log("FEATURE:" + feature.name, feature.sequenceData);
         var annotName = "";
         if (typeof feature.name !== 'undefined') {
             annotName += feature.name + ' ';
@@ -954,7 +955,7 @@ xiNET.Controller.prototype.autoLayout = function() {
             }
         }
         this.layout = cola.d3adaptor();
-        console.log("groups", groups);
+        //console.log("groups", groups);
         // delete this.layout._lastStress;
         // delete this.layout._alpha;
         // delete this.layout._descent;
@@ -1160,7 +1161,7 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
                     if (anno.description == "No annotations") {
                         var c = "#cccccc";
                     } else {
-						console.log(">" + anno.description);
+						            //console.log(">" + anno.description);
                         var c = colourScheme(anno.description);
                     }
                     anno.pieSlice.setAttribute("fill", c);

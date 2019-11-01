@@ -21,7 +21,7 @@
 
 function SequenceDatum(node, sequenceDatumString) {
 	this.node = node;
-	sequenceDatumString = sequenceDatumString.trim();
+	this.sequenceDatumString = sequenceDatumString.trim();
 
     this.uncertainStart = null;
     this.start = '?';
@@ -49,15 +49,29 @@ function SequenceDatum(node, sequenceDatumString) {
         this.end = secondPart.substring(0, firstDotPosition) * 1;
         this.uncertainEnd = secondPart.substring(firstDotPosition + 2) * 1;
     }
+
+		if (this.start == 'n') {
+				this.start = 0;
+		}
+		if (this.start == 'c') {
+				this.start = node.size + 1;
+		}
+		if (this.end == 'n') {
+				this.end = -20;
+		}
+		if (this.end == 'c') {
+				this.end = node.size + 20;
+		}
+
 }
 
 SequenceDatum.prototype.toString = function(){
-	var string = "";
-	if (this.uncertainStart) string += this.uncertainStart + '..';
-	if (this.start) string += this.start + '-';
-	if (this.end) string += this.end;
-	if (this.uncertainEnd) string += '..' + this.uncertainEnd;
-	return string;
+	// var string = "";
+	// if (this.uncertainStart) string += this.uncertainStart + '..';
+	// if (this.start) string += this.start + '-';
+	// if (this.end) string += this.end;
+	// if (this.uncertainEnd) string += '..' + this.uncertainEnd;
+	return this.sequenceDatumString;
 }
 //On 06/06/13 09:22, marine@ebi.ac.uk wrote:
 //> Concerning the ranges, I think there was a confusion :

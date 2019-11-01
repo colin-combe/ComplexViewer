@@ -1,0 +1,208 @@
+{
+   "data":[
+      {
+         "object":"interactor",
+         "id":"uniprotkb_Q96EB6",
+         "sequence":"MADEAALALQPGGSPSAAGADREAASSPAGEPLRKRPRRDGPGLERSPGEPGGAAPEREVPAAARGCPGAAAAALWREAEAEAAAAGGEQEAQATAAAGEGDNGPGLQGPSREPPLADNLYDEDDDDEGEEEEEAAAAAIGYRDNLLFGDEIITNGFHSCESDEEDRASHASSSDWTPRPRIGPYTFVQQHLMIGTDPRTILKDLLPETIPPPELDDMTLWQIVINILSEPPKRKKRKDINTIEDAVKLLQECKKIIVLTGAGVSVSCGIPDFRSRDGIYARLAVDFPDLPDPQAMFDIEYFRKDPRPFFKFAKEIYPGQFQPSLCHKFIALSDKEGKLLRNYTQNIDTLEQVAGIQRIIQCHGSFATASCLICKYKVDCEAVRGDIFNQVVPRCPRCPADEPLAIMKPEIVFFGENLPEQFHRAMKYDKDEVDLLIVIGSSLKVRPVALIPSSIPHEVPQILINREPLPHLHFDVELLGDCDVIINELCHRLGGEYAKLCCNPVKLSEITEKPPRTQKELAYLSELPPTPLHVSEDSSSPERTSPPDSSVIVTLLDQAAKSNDDLDVSESKGCMEEKPQEVQTSRNVESIAEQMENPDLKNVGSSTGEKNERTSVAGTVRKCWPNRVAKEQISRRLDGNQYLFLPPNRYIFHGAEVYSDSEDDVLSSSSCGSNSDSGTCQSPSLEEPMEDESEIEEFYNGLEDEPDVPERAGGAGFGTDGDDQEAINEAISVKQEVTDMNYPSNKS",
+         "type":{
+            "id":"MI:0326",
+            "name":"protein"
+         },
+         "organism":{
+            "taxid":"9606",
+            "common":"human",
+            "scientific":"Homo sapiens"
+         },
+         "identifier":{
+            "db":"uniprotkb",
+            "id":"Q96EB6"
+         },
+         "label":"sir1_human"
+      },
+      {
+         "object":"interactor",
+         "id":"uniprotkb_Q60974",
+         "sequence":"MSSSGYPPNQGAFSTEQSRYPSHSVQYTFPSARHQQEFAVPDYRSSHLEVSQASQLLQQQQQQQLRRRPSLLSEFHPGSDRPQERRSGYEQFHPGPSPVDHDSLESKRPRLEQVSDSHFQRISAAVLPLVHTLPEGLRSSANAKKDPAFGVKHEAPSSPLSGQPCGDDQNASPSKLSKEELIQSMDRVDREIAKVEQQILKLKKKQQQLEEEAAKPPEPEKPVSPPPVEQKHRSIVQIIYDENRKKAEEAHKIFEGLGPKVELPLYNQPSDTKVYHENIKTNQVMRKKLILFFKRRNHARKQREQKICQRYDQLMEAWEKKVDRIENNPRRKAKESKTREYYEKQFPEIRKQREQQERFQRVGQRGAGLSATIARSEHEISEIIDGLSEQENNEKQMRQLSVIPPMMFDAEQRRVKFINMNGLMEDPMKVYKDRQFMNVWTDHEKEIFKDKFIQHPKNFGLIASYLERKSVPDCVLYYYLTKKNENYKALVRRNYGKRRGRNQQIARPSQEEKVEEKEEDKAEKTEKKEEEKKDDEEKDDKEDSKETTKEKDRTEATAEEPEEREQVTPRGRKTANSQGRGKGRVTRSMTSEAAAANAAAAATEEPPPPLPPPPEPISTEPVETSRWTEEEMEVAKKGLVEHGRNWAAIAKMVGTKSEAQCKNFYFNYKRRHNLDNLLQQHKQKASRKPREERDVSQCESVASTVSAQEDEDIEASNEEENPEDSEGAENSSDTESAPSPSPVEAAKSSEDSSENAASRGNTEPVAELEATTDPAPCASPSSAVPTTKPAERESVEAQVTDSASAETAEPMDVDHEECGAEGSSVLDPPAPTKADSVDPEMQVPENTASKGEGDAKERDLESTSEKTEARDEDVVVAEQIERPEPQSDDDSSATCSADEGVDGEPERQRVFPMDAKPSLLTPPGSILISSPIKPNLLDLPQLQHRAAVIPPMVSCTPCNIPIGTPVSGYALYQRHIKAMHESALLEEQRQRQEQVDLECRSSTSPCSTSKSPNREWEVLQPAPHQVITNLPEGVRLPTTRPTRPPPPLIPSSKTTVASEKPSFIMGGSISQGTPGTYLSSHNQAYPQEAPKPSVGSISLGLPRQQESTKAAPLTYIKQEEFSPRSQNSQPEGLLVRAQHEGVVRGTAGAVQEGSITRGTPASKISVETISSLRGSITQGTPALPQAGIPTEALVKGPVSRMPIEESSPEKVREEAASKGHVIYEGKSGHILSYDNIKNAREGTRSPRTAHEMSLKRSYEAVEGSIKQGMSMRESPVSAPLEGLICRALPRGSPHSDLKERTVLSGSIMQGTPRATAESFEDGLKYPKQIKRESPPIRAFEGAITKGKPYDGITTIKEMGRSIHEIPRQDILTQESRKTPEVVQSTRPIIEGSISQGTPIKFDNNSGQSAIKHNVKSLITGPSKLPRGMLEIVPENIKVVERGKYEDVKAGEPVRARHTSVVSSGPSVLRSTLHEAPKAQLSPGLYDDSSARRTPVSYQNTISRGSPMMNRTSDVSSSKSASHERKSTLTPTQRESIPAKSPVPGVDPIVSHSPFDPHHRSSAAGEVYRSHLPTHLDPAMPFHRALDPAAAYLLQRQLSPTPGYPSQYQLYAMENTRQTILNDYITSQQMQVNLRPDVTRGLSPREQPLGLPYPATRGIIDLTNMPPTILVPHAGGTSTPPMDRITYIPGTQVTFPPRPYNAASLSPGHPTHLAAAASAEREREREREKERERERERERERERERIAAAPADLYLRPGSEQPGRPGSHGYVRSPSPSVRTQETILQQRPSVFQGTNGTSVITPLDPTAQLRIMPLPSGGPSISQGLPASRYNTAADALAALVDAAASAPQMDVSKTKESKHEAARLEENLRSRSAAVSEQQQLEQKNLEVEKRSVQCVCTSSALPSGKAQPHASVVYSEAGKDKGPPPKSRYEEELRTRGKTTITAANFIDVIITRQIASDKDARERGSQSSDSSSSLSSHRYETASDAIEVISPASSPAPPQEKPQAYQPDMVKANQAENESTRQYEGPLHHYRSQQESPSPQQQPPLPPSSQSEGMGQVPRTHRLITLADHICQIITQDFARNQVPSQASTSTFQTSPSALSSTPVRTKTSSRYSPESQSQTVLHPRPGPRVSPENLVDKSRGSRPGKSPERSHIPSEPYEPISPPQGPAVHEKQDSMLLLSQRGVDPAEQRSDSRSPGSISYLPSFFTKLESTSPMVKSKKQEIFRKLNSSGGGDSDMAAAQPGTEIFNLPAVTTSGAVSSRSHSFADPASNLGLEDIIRKALMGSFDDKVEDHGVVMSHPVGIMPGSASTSVVTSSEARRDEGEPSPHAGVCKPKLINKSNSRKSKSPIPGQSYLGTERPSSVSSVHSEGDYHRQTPGWAWEDRPSSTGSTQFPYNPLTIRMLSSTPPTQIACAPSAITQAAPHQQNRIWEREPAPLLSAQYETLSDSDD",
+         "type":{
+            "id":"MI:0326",
+            "name":"protein"
+         },
+         "organism":{
+            "taxid":"10090",
+            "common":"mouse",
+            "scientific":"Mus musculus"
+         },
+         "identifier":{
+            "db":"uniprotkb",
+            "id":"Q60974"
+         },
+         "label":"ncor1_mouse"
+      },
+      {
+         "object":"interaction",
+         "id":"intact_EBI-5260847",
+         "interactionType":{
+            "id":"MI:0915",
+            "name":"physical association"
+         },
+         "experiment":{
+            "detmethod":{
+               "id":"MI:0096",
+               "name":"pull down"
+            },
+            "host":{
+               "taxid":"-1",
+               "common":"in vitro",
+               "scientific":"In vitro"
+            },
+            "pubid":[
+               {
+                  "db":"intact",
+                  "id":"EBI-5260688"
+               },
+               {
+                  "db":"pubmed",
+                  "id":"15175761"
+               },
+               {
+                  "db":"imex",
+                  "id":"IM-17204"
+               }
+            ],
+            "sourceDatabase":{
+               "id":"MI:0486",
+               "name":"UniProt"
+            },
+            "figures":[
+               "3f (and e)"
+            ]
+         },
+         "identifiers":[
+            {
+               "db":"intact",
+               "id":"EBI-5260847"
+            },
+            {
+               "db":"imex",
+               "id":"IM-17204-4"
+            }
+         ],
+         "participants":[
+            {
+               "id":"1",
+               "interactorRef":"uniprotkb_Q96EB6",
+               "bioRole":{
+                  "id":"MI:0499",
+                  "name":"unspecified role"
+               },
+               "expRole":{
+                  "id":"MI:0496",
+                  "name":"bait"
+               },
+               "identificationMethods":[
+                  {
+                     "id":"MI:0821",
+                     "name":"molecular weight estimation by autoradiography"
+                  }
+               ],
+               "expressedIn":{
+                  "taxid":"83333",
+                  "common":"ecoli",
+                  "scientific":"Escherichia coli (strain K12)"
+               },
+               "features":[
+                  {
+                     "id":"2",
+                     "name":"region",
+                     "category":"experimentalFeatures",
+                     "type":{
+                        "id":"MI:0519",
+                        "name":"glutathione s tranferase tag"
+                     },
+                     "sequenceData":[
+                        {
+                           "pos":"?-?",
+                           "interactorRef":"uniprotkb_Q96EB6",
+                           "participantRef":"1"
+                        }
+                     ]
+                  },
+                  {
+                     "id":"3",
+                     "name":"sirtuin homology domain",
+                     "category":"bindingSites",
+                     "type":{
+                        "id":"MI:0442",
+                        "name":"sufficient binding region"
+                     },
+                     "sequenceData":[
+                        {
+                           "pos":"214-541",
+                           "interactorRef":"uniprotkb_Q96EB6",
+                           "participantRef":"1"
+                        }
+                     ]
+                  }
+               ]
+            },
+            {
+               "id":"4",
+               "interactorRef":"uniprotkb_Q60974",
+               "bioRole":{
+                  "id":"MI:0499",
+                  "name":"unspecified role"
+               },
+               "expRole":{
+                  "id":"MI:0498",
+                  "name":"prey"
+               },
+               "identificationMethods":[
+                  {
+                     "id":"MI:0821",
+                     "name":"molecular weight estimation by autoradiography"
+                  }
+               ],
+               "expressedIn":{
+                  "taxid":"-1",
+                  "common":"in vitro",
+                  "scientific":"In vitro"
+               },
+               "features":[
+                  {
+                     "id":"5",
+                     "name":"region",
+                     "category":"experimentalFeatures",
+                     "type":{
+                        "id":"MI:0371",
+                        "name":"35s radiolabel"
+                     },
+                     "sequenceData":[
+                        {
+                           "pos":"?-?",
+                           "interactorRef":"uniprotkb_Q60974",
+                           "participantRef":"4"
+                        }
+                     ]
+                  },
+                  {
+                     "id":"6",
+                     "name":"cbf1\/su(h)",
+                     "category":"bindingSites",
+                     "type":{
+                        "id":"MI:0442",
+                        "name":"sufficient binding region"
+                     },
+                     "sequenceData":[
+                        {
+                           "pos":">1460-<1944",
+                           "interactorRef":"uniprotkb_Q60974",
+                           "participantRef":"4"
+                        }
+                     ]
+                  }
+               ]
+            }
+         ]
+      }
+   ]
+}
