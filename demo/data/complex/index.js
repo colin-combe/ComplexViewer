@@ -12,6 +12,12 @@ var exampleIndex = [
       "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-297",
   },
   {
+      "ac": "CPX-2020",
+      "name": "CPX-2020",
+      "complexAssemblies": [],
+      "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-2020",
+  },
+  {
         "ac": "EBI-12598622",
         "name": "EBI-12598622",
         "complexAssemblies": [],
