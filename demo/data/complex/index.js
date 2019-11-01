@@ -1,4 +1,28 @@
 var exampleIndex = [
+  {
+      "ac": "CPX-1556",
+      "name": "CMG-Pol epsilon complex",
+      "complexAssemblies": [],
+      "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-1556",
+  },
+  {
+      "ac": "CPX-297",
+      "name": "CPX-297",
+      "complexAssemblies": [],
+      "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-297",
+  },
+  {
+        "ac": "EBI-12598622",
+        "name": "EBI-12598622",
+        "complexAssemblies": [],
+        "url": "https://ebi-intact.github.io/intact-view/details/interaction/EBI-12598622",
+    },
+    {
+        "ac": "EBI-12734333",
+        "name": "EBI-12734333",
+        "complexAssemblies": [],
+        "url": "https://ebi-intact.github.io/intact-view/details/interaction/EBI-12734333",
+    },
     {
         "ac": "EBI-9691559",
         "complexAssemblies": [],
@@ -283,19 +307,12 @@ var exampleIndex = [
         "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-1599",
         "viewerNotes":"Includes molecule set.",
     },
-    {
-        "ac": "CPX-1556",
-        "name": "CMG-Pol epsilon complex",
+
+{
+        "ac": "EBI-6161327",
+        "name": "EBI-6161327",
         "complexAssemblies": [],
-        "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-1556",
-        "viewerNotes":"Includes molecule set.",
-    },
-    {
-        "ac": "CPX-1556-B",
-        "name": "CMG-Pol epsilon complex B",
-        "complexAssemblies": [],
-        "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-1556",
-        "viewerNotes":"Includes molecule set.",
+        "url": "https://wwwdev.ebi.ac.uk/intact/ws/graph/interaction/export/EBI-6161327",
     },
 
 ];

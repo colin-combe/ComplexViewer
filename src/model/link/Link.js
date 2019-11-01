@@ -46,8 +46,8 @@ Link.prototype.highlightMolecules = function(show){
 Link.prototype.mouseDown = function(evt) {
     this.controller.preventDefaultsAndStopPropagation(evt);//see MouseEvents.js
     //if a force layout exists then stop it
-    if (this.controller.force){
-        this.controller.force.stop();
+    if (this.controller.layout){
+        this.controller.layout.stop();
     }
     this.controller.dragElement = this;
     this.controller.clearSelection();
@@ -80,8 +80,8 @@ Link.prototype.mouseOut = function(evt){
 Link.prototype.touchStart = function(evt) {
     this.controller.preventDefaultsAndStopPropagation(evt);//see MouseEvents.js
     //if a force layout exists then stop it
-    if (this.controller.force !== undefined){
-        this.controller.force.stop();
+    if (this.controller.layout !== undefined){
+        this.controller.layout.stop();
     }
     this.controller.dragElement = this;
             this.controller.clearSelection();

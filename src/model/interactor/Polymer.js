@@ -63,7 +63,7 @@ Polymer.prototype.setRotation = function(angle) {
     if (this.rotation < 0) {
         this.rotation += 360;
     }
-    this.upperGroup.setAttribute("transform", "translate(" + this.x + " " + this.y + ")"
+    this.upperGroup.setAttribute("transform", "translate(" + this.cx + " " + this.cy + ")"
             + " scale(" + (this.controller.z) + ") " + "rotate(" + this.rotation + ")");
 
     var svg = this.controller.svgElement;
@@ -113,13 +113,13 @@ Polymer.prototype.switchStickScale = function(svgP) {
         else {
             this.stickZoom = this.stickZoom * 3;
             //move stick so same residue is under mouse
-            var dx = this.x - (svgP.x);
-            var dy = this.y - (svgP.y);
+            var dx = this.cx - (svgP.x);
+            var dy = this.cy - (svgP.y);
             if (this.rotation === 0 || this.rotation === 180) {
                 dy = 0;
             }
             //            console.log(dx + ',' + dy);
-            this.setPosition(this.x + (dx * 2), this.y + (dy * 2));
+            this.setPosition(this.cx + (dx * 2), this.cy + (dy * 2));
         }
     }
     // when setting the form of prot's,
@@ -141,6 +141,13 @@ Polymer.prototype.scale = function() {
             for (var a = 0; a < ca; a++){
                 var anno = this.annotations[a];
                 anno.pieSlice.setAttribute("d", this.getAnnotationRectPath(anno));
+
+                if (anno.uncertainStart != null) {
+                   anno.fuzzyStart.setAttribute("d", this.getAnnotationRectPath({begin: anno.uncertainStart, end: anno.begin}));
+                }
+                if (anno.uncertainEnd != null) {
+                   anno.fuzzyEnd.setAttribute("d", this.getAnnotationRectPath({begin: anno.end, end: anno.uncertainEnd}));
+                }
             }
         }
 
@@ -311,8 +318,8 @@ Polymer.prototype.toCircle = function(svgP) {
 
     var xInterpol = null, yInterpol = null;
     if (typeof svgP !== 'undefined' && svgP !== null) {
-        xInterpol = d3.interpolate(this.x, svgP.x);
-        yInterpol = d3.interpolate(this.y, svgP.y);
+        xInterpol = d3.interpolate(this.cx, svgP.x);
+        yInterpol = d3.interpolate(this.cy, svgP.y);
     }
 
     var self = this;
@@ -361,6 +368,13 @@ Polymer.prototype.toCircle = function(svgP) {
                         }
                     }
                 );
+
+                if (anno.fuzzyStart) {
+                    self.annotationsSvgGroup.removeChild(anno.fuzzyStart);
+                }
+                if (anno.fuzzyEnd) {
+                    self.annotationsSvgGroup.removeChild(anno.fuzzyEnd);
+                }
         }
     }
 
@@ -506,6 +520,34 @@ Polymer.prototype.toStick = function() {
         self.setAllLinkCoordinates();
 
         if (interp ===  1){ // finished - tidy up
+          if (self.annotations) {
+              var annots = self.annotations;
+              var ca = annots.length;
+              for (var a = 0; a < ca; a++) {
+                  var anno = annots[a];
+                  if (anno.uncertainStart != null) {
+                     anno.fuzzyStart = document.createElementNS(Config.svgns, "path");
+                     anno.fuzzyStart.setAttribute("d", self.getAnnotationRectPath({begin: anno.uncertainStart, end: anno.begin}));
+                     anno.fuzzyStart.setAttribute("stroke-width", 1);
+                     anno.fuzzyStart.setAttribute("fill-opacity", "0.6");
+                     anno.fuzzyStart.setAttribute("fill", "#A01284");
+                     anno.fuzzyStart.setAttribute("stroke", "#A01284");
+                     self.annotationsSvgGroup.appendChild(anno.fuzzyStart);
+                  }
+                  if (anno.uncertainEnd != null) {
+                     anno.fuzzyEnd = document.createElementNS(Config.svgns, "path");
+                     anno.fuzzyEnd.setAttribute("d", self.getAnnotationRectPath({begin: anno.end, end: anno.uncertainEnd}));
+                     anno.fuzzyEnd.setAttribute("stroke-width", 1);
+                     anno.fuzzyEnd.setAttribute("fill-opacity", "0.6");
+                     anno.fuzzyEnd.setAttribute("fill", "#A01284");
+                     anno.fuzzyEnd.setAttribute("stroke", "#A01284");
+                     self.annotationsSvgGroup.appendChild(anno.fuzzyEnd);
+                  }
+              }
+          }
+
+
+
             self.busy = false;
             return true;
         } else if (interp > 1){
@@ -550,8 +592,8 @@ Polymer.prototype.getResidueCoordinates = function(r, yOff) {
     else {
         y = yOff;
     }
-    x = x + this.x;
-    y = y + this.y;
+    x = x + this.cx;
+    y = y + this.cy;
     return [x, y];
 };
 

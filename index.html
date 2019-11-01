@@ -27,7 +27,7 @@
 
             <div class="page-header">
                     <i class="fa fa-github" onclick="window.location = 'https://github.com/MICommunity/ComplexViewer';" title="Go to GitHub project" style="margin-right:5px;"></i>
-                    <a target="_blank" href="https://doi.org/10.1093/bioinformatics/btx497"><h1>ComplexViewer: visualization of curated macromolecular complexes</h1></a>
+                    <a target="_blank" href="https://doi.org/10.1093/bioinformatics/btx497"><h1>ComplexViewer: dev. version</h1></a>
             </div>
 
             <div id="centre">
@@ -153,37 +153,51 @@
                 xlv = new xiNET(targetDiv);
                 xlv.svgElement.setAttribute("style", "display: -webkit-box;display: -moz-box;display: -ms-flexbox; display: -webkit-flex;display: flex;flex-grow:1;");
 
-
                 var legend = d3.select("svg").append("g");
                 xlv.legendCallbacks.push(function (colourAssignment) {
                     legend.selectAll("*").remove();
+                    var table = "<table background:#EEEEEE;>";
                     var coloursKeyDiv = document.getElementById('colours');
                     if (colourAssignment){
-
                         //html legend
-                    var dataSetsSelect = document.getElementById('dataSets');
+                        // var dataSetsSelect = document.getElementById('dataSets');
+                        // var example = exampleIndex[dataSetsSelect.selectedIndex];
+                        // var table = "<table background:#EEEEEE;><tr style='height:10px;'></tr><tr><td style='width:100px;margin:10px;"
+                        //             + "background:#70BDBD;opacity:0.3;border:none;'>"
+                        //             + "</td><td >"+example.ac+"</td></tr>";
 
-                    var example = exampleIndex[dataSetsSelect.selectedIndex];
+                        var complexColourScheme = xlv.getComplexColours();
+                        var ccDomain = complexColourScheme.domain();
+                        var ccRange = complexColourScheme.range();
+                        table += "<tr style='height:10px;'></tr>";
+                        for (var i = 0; i < ccDomain.length; i ++){
+                            //make transparent version of colour
+                            var temp = new RGBColor(ccRange[i%6]);
+                            //var trans = "rgba(" +temp.r+","+temp.g+","+temp.b+ ", 0.6)";
+                            table += "<tr><td style='width:75px;margin:10px;background:"
+                                    + ccRange[i%6] + ";border:1px solid "
+                                    + ccRange[i%6] + ";'></td><td>"
+                                    + ccDomain[i] +"</td></tr>";
+                            console.log(i + " "+ ccDomain[i] + " " + ccRange[i]);
+                        }
+                        table = table += "</table>";
+                        table = table += "<table background:#EEEEEE;>";
 
-
-                        var table = "<table background:#EEEEEE;><tr style='height:10px;'></tr><tr><td style='width:100px;margin:10px;"
-                                    + "background:#70BDBD;opacity:0.3;border:none;'>"
-                                    + "</td><td >"+example.ac+"</td></tr>";
-                                var domain = colourAssignment.domain();
-                            //~ //console.log("Domain:"+domain);
-                            var range = colourAssignment.range();
-                            //~ //console.log("Range:"+range);
-                            table += "<tr style='height:10px;'></tr>";
-                            for (var i = 0; i < domain.length; i ++){
-                                //make transparent version of colour
-                                var temp = new RGBColor(range[i%20]);
-                                var trans = "rgba(" +temp.r+","+temp.g+","+temp.b+ ", 0.6)";
-                                table += "<tr><td style='width:75px;margin:10px;background:"
-                                        + trans + ";border:1px solid "
-                                        + range[i%20] + ";'></td><td>"
-                                        + domain[i] +"</td></tr>";
-                                //~ //console.log(i + " "+ domain[i] + " " + range[i]);
-                            }
+                        var domain = colourAssignment.domain();
+                        //~ //console.log("Domain:"+domain);
+                        var range = colourAssignment.range();
+                        //~ //console.log("Range:"+range);
+                        table += "<tr style='height:10px;'></tr>";
+                        for (var i = 0; i < domain.length; i ++){
+                            //make transparent version of colour
+                            var temp = new RGBColor(range[i%20]);
+                            var trans = "rgba(" +temp.r+","+temp.g+","+temp.b+ ", 0.6)";
+                            table += "<tr><td style='width:75px;margin:10px;background:"
+                                    + trans + ";border:1px solid "
+                                    + range[i%20] + ";'></td><td>"
+                                    + domain[i] +"</td></tr>";
+                            //~ //console.log(i + " "+ domain[i] + " " + range[i]);
+                        }
 
                         table = table += "</table>";
                         coloursKeyDiv.innerHTML = table;

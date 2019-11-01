@@ -28,8 +28,8 @@ Molecule.prototype.addStoichiometryLabel = function(stoich) {
 Molecule.prototype.mouseDown = function(evt) {
         this.controller.preventDefaultsAndStopPropagation(evt);//see MouseEvents.js
         //if a force layout exists then stop it
-        if (this.controller.force) {
-            this.controller.force.stop();
+        if (this.controller.layout) {
+            this.controller.layout.stop();
         }
 
         this.controller.dragElement = this;
@@ -49,8 +49,8 @@ Molecule.prototype.mouseDown = function(evt) {
 Molecule.prototype.touchStart = function(evt) {
            this.controller.preventDefaultsAndStopPropagation(evt);//see MouseEvents.js
         //if a force layout exists then stop it
-         if (this.controller.force !== undefined) {
-            this.controller.force.stop();
+         if (this.controller.layout !== undefined) {
+            this.controller.layout.stop();
         }
         this.controller.dragElement = this;
         //~ if (evt.controllerKey === false) {
@@ -118,19 +118,19 @@ Molecule.prototype.setSelected = function(select) {
 };
 
 Molecule.prototype.getPosition = function(){
-    return [this.x, this.y];
+    return [this.cx, this.cy];
 }
 
 // more accurately described as setting transform for top svg elements (sets scale also)
 Molecule.prototype.setPosition = function(x, y) {
-    this.x = x;
-    this.y = y;
+    this.cx = x;
+    this.cy = y;
     if (this.form === 1){
-        this.upperGroup.setAttribute("transform", "translate(" + this.x + " " + this.y + ")"
+        this.upperGroup.setAttribute("transform", "translate(" + this.cx + " " + this.cy + ")"
                 + " scale(" + (this.controller.z) + ") " + "rotate(" + this.rotation + ")");
     }
     else {
-        this.upperGroup.setAttribute("transform", "translate(" + this.x + " " + this.y + ")"
+        this.upperGroup.setAttribute("transform", "translate(" + this.cx + " " + this.cy + ")"
                 + " scale(" + (this.controller.z) + ") ");
     }
 };
@@ -163,7 +163,7 @@ Molecule.prototype.checkLinks = function() {
             links[l].check();
         }
     }
-    checkAll(this.naryLinks);
+    // checkAll(this.naryLinks); // hacked out to help fix ordering od nLinks
     checkAll(this.binaryLinks);
     checkAll(this.sequenceLinks);
     if (this.selfLink !== null) {
@@ -225,7 +225,7 @@ Molecule.prototype.setPositionalFeatures = function(posFeats) {
             }
             anno.pieSlice.setAttribute("stroke-width", 1);
             anno.pieSlice.setAttribute("fill-opacity", "0.6");
-            var text = anno.description + " [" + anno.begin + " - " + anno.end + "]";
+            var text = anno.description + " [" +  (anno.seqDatum? anno.seqDatum.toString() : anno.begin + " - " + anno.end) + "]"; 
             anno.pieSlice.name = text;
             var xlv = this.controller;
             var self = this;
@@ -235,9 +235,27 @@ Molecule.prototype.setPositionalFeatures = function(posFeats) {
                 xlv.setTooltip(el.name, el.getAttribute('fill'));
                 self.showHighlight(true);
             };
-             if (this.annotationsSvgGroup) { //hack
-                 this.annotationsSvgGroup.appendChild(anno.pieSlice);
-             }
+            if (this.annotationsSvgGroup) { //hack
+               this.annotationsSvgGroup.appendChild(anno.pieSlice);
+               if (isNaN(anno.uncertainStart) == false && this.form == 1) {
+                  anno.fuzzyStart = document.createElementNS(Config.svgns, "path");
+                  anno.fuzzyStart.setAttribute("d", this.getAnnotationRectPath({begin: anno.uncertainStart, end: anno.begin}));
+                  anno.fuzzyStart.setAttribute("stroke-width", 1);
+                  anno.fuzzyStart.setAttribute("fill-opacity", "0.6");
+                  anno.fuzzyStart.setAttribute("fill", "#A01284");
+                  anno.fuzzyStart.setAttribute("stroke", "#A01284");
+                  this.annotationsSvgGroup.appendChild(anno.fuzzyStart);
+               }
+               if (isNaN(anno.uncertainEnd) == false && this.form == 1) {
+                  anno.fuzzyEnd = document.createElementNS(Config.svgns, "path");
+                  anno.fuzzyEnd.setAttribute("d", this.getAnnotationRectPath({begin: anno.end, end: anno.uncertainEnd}));
+                  anno.fuzzyEnd.setAttribute("stroke-width", 1);
+                  anno.fuzzyEnd.setAttribute("fill-opacity", "0.6");
+                  anno.fuzzyEnd.setAttribute("fill", "#A01284");
+                  anno.fuzzyEnd.setAttribute("stroke", "#A01284");
+                  this.annotationsSvgGroup.appendChild(anno.fuzzyEnd);
+               }
+            }
         }
     }
 };
