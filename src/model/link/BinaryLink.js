@@ -192,6 +192,9 @@ BinaryLink.prototype.hide = function() {
 };
 
 BinaryLink.prototype.setLinkCoordinates = function() {
+    if (typeof this.line === 'undefined') {
+      this.initSVG();
+    }
  		var pos1 = this.interactors[0].getPosition();
         var pos2 = this.interactors[1].getPosition();
 
