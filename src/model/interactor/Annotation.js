@@ -20,10 +20,12 @@ function Annotation(annotName, startRes, endRes, colour, notes) {
 }
 
 Annotation.prototype.initFromSeqDatum = function (seqDatum) {
+    // obviously, some of this couls be tidied up...
     this.begin = seqDatum.start;
     this.end = seqDatum.end;
     this.uncertainStart = seqDatum.uncertainStart;
     this.uncertainEnd = seqDatum.uncertainEnd;
+    this.seqDatum = seqDatum;
 }
 
 module.exports = Annotation;

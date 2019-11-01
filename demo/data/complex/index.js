@@ -18,6 +18,12 @@ var exampleIndex = [
         "url": "https://ebi-intact.github.io/intact-view/details/interaction/EBI-12598622",
     },
     {
+        "ac": "EBI-12734333",
+        "name": "EBI-12734333",
+        "complexAssemblies": [],
+        "url": "https://ebi-intact.github.io/intact-view/details/interaction/EBI-12734333",
+    },
+    {
         "ac": "EBI-9691559",
         "complexAssemblies": [],
         "diseases": [],

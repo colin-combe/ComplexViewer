@@ -225,7 +225,7 @@ Molecule.prototype.setPositionalFeatures = function(posFeats) {
             }
             anno.pieSlice.setAttribute("stroke-width", 1);
             anno.pieSlice.setAttribute("fill-opacity", "0.6");
-            var text = anno.description + " [" + anno.begin + " - " + anno.end + "]";
+            var text = anno.description + " [" +  (anno.seqDatum? anno.seqDatum.toString() : anno.begin + " - " + anno.end) + "]"; 
             anno.pieSlice.name = text;
             var xlv = this.controller;
             var self = this;
@@ -237,7 +237,7 @@ Molecule.prototype.setPositionalFeatures = function(posFeats) {
             };
             if (this.annotationsSvgGroup) { //hack
                this.annotationsSvgGroup.appendChild(anno.pieSlice);
-               if (isNaN(anno.uncertainStart == false) && this.form == 1) {
+               if (isNaN(anno.uncertainStart) == false && this.form == 1) {
                   anno.fuzzyStart = document.createElementNS(Config.svgns, "path");
                   anno.fuzzyStart.setAttribute("d", this.getAnnotationRectPath({begin: anno.uncertainStart, end: anno.begin}));
                   anno.fuzzyStart.setAttribute("stroke-width", 1);
