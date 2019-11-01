@@ -18,6 +18,18 @@ var exampleIndex = [
       "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-2020",
   },
   {
+        "ac": "EBI-4371590",
+        "name": "EBI-4371590",
+        "complexAssemblies": [],
+        "url": "https://ebi-intact.github.io/intact-view/details/interaction/EBI-4371590",
+    },
+    {
+        "ac": "EBI-5260847",
+        "name": "EBI-5260847",
+        "complexAssemblies": [],
+        "url": "https://ebi-intact.github.io/intact-view/details/interaction/EBI-5260847",
+    },
+    {
         "ac": "EBI-12598622",
         "name": "EBI-12598622",
         "complexAssemblies": [],
