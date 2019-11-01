@@ -141,6 +141,13 @@ Polymer.prototype.scale = function() {
             for (var a = 0; a < ca; a++){
                 var anno = this.annotations[a];
                 anno.pieSlice.setAttribute("d", this.getAnnotationRectPath(anno));
+
+                if (anno.uncertainStart != null) {
+                   anno.fuzzyStart.setAttribute("d", this.getAnnotationRectPath({begin: anno.uncertainStart, end: anno.begin}));
+                }
+                if (anno.uncertainEnd != null) {
+                   anno.fuzzyEnd.setAttribute("d", this.getAnnotationRectPath({begin: anno.end, end: anno.uncertainEnd}));
+                }
             }
         }
 
