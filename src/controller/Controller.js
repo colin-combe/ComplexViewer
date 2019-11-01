@@ -1721,4 +1721,19 @@ xiNET.Controller.prototype.getComplexColours = function(){
     return NaryLink.naryColours;
 };
 
+xiNET.Controller.prototype.expandAndCollapseSelection = function(moleculesSelected) {
+  const molecules = this.molecules.values();
+  for (var m = 0; m < molecules.length; m++) {
+    var molecule = molecules[m];
+    var molecule_id = molecule.json.identifier.id;
+    if (moleculesSelected.includes(molecule_id)) {
+      if (molecule.form === 0){
+        molecule.setForm(1);
+      }
+    } else if (molecule.form === 1){
+      molecule.setForm(0);
+    }
+  }
+};
+
 module.exports = xiNET.Controller;
