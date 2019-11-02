@@ -89,6 +89,72 @@ xiNET.Controller = function(targetDiv) {
     this.container = document.createElementNS(Config.svgns, "g");
     this.container.setAttribute("id", "container");
 
+    var svg = d3.select(this.svgElement);
+    var defs = svg.append('defs');
+    var pattern = defs.append('pattern')
+        .attr('id', 'checkers')
+        .attr('patternUnits', 'userSpaceOnUse')
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr('width', 10)
+        .attr('height', 10);
+    pattern.append('rect')
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("width", 5)
+        .attr("height", 5)
+        .style("fill", "#A01284");
+    pattern.append('rect')
+        .attr("x", 5)
+        .attr("y", 5)
+        .attr("width", 5)
+        .attr("height", 5)
+        .style("fill", "#A01284");
+
+    //markers
+    var data = [{
+        id: 1,
+        name: 'diamond',
+        path: 'M 0,-7.0710768 L  0,7.0710589 L 7.0710462,0  z',
+        viewbox: '-15 -15 25 25',
+        transform: 'scale(1.5) translate(-5,0)',
+        color: 'black'
+    }, {
+        id: 2,
+        name: 'arrow',
+        path: "M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z",
+        viewbox: '-5 -5 15 15',
+        transform: 'scale(1.1) translate(1,0)',
+        color: 'black'
+    }];
+
+    var marker = defs.selectAll('marker')
+        .data(data)
+        .enter()
+        .append('svg:marker')
+        .attr('id', function(d) {
+            return 'marker_' + d.name;
+        })
+        .attr('markerHeight', 15)
+        .attr('markerWidth', 15)
+        .attr('markerUnits', 'userSpaceOnUse')
+        .attr('orient', 'auto')
+        .attr('refX', 0)
+        .attr('refY', 0)
+        .attr('viewBox', function(d) {
+            return d.viewbox;
+        })
+        .append('svg:path')
+        .attr('d', function(d) {
+            return d.path;
+        })
+        .attr('fill', function(d) {
+            return d.color;
+        })
+        .attr('transform', function(d) {
+            return d.transform;
+        });
+
     this.acknowledgement = document.createElementNS(Config.svgns, "g");
     var ackText = document.createElementNS(Config.svgns, "text");
     ackText.innerHTML = "<a xlink:href='https://academic.oup.com/bioinformatics/article/33/22/3673/4061280' target='_blank'><tspan x='0' dy='1.2em' style='text-decoration: underline'>ComplexViewer</tspan></a><tspan x='0' dy='1.2em'>by <a xlink:href='http://rappsilberlab.org/' target='_blank'>Rappsilber Laboratory</a></tspan>"

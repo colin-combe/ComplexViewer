@@ -55,7 +55,7 @@ SequenceLink.prototype.initSVG = function() {
         this.glyph.setAttribute("stroke", "#A08214");
         this.glyph.setAttribute("stroke-width", "2");
         this.uncertainGlyph.setAttribute("class", "link");
-        this.uncertainGlyph.setAttribute("fill", "#A01284");
+        this.uncertainGlyph.setAttribute("fill", "url('#checkers')");//"#A01284");
         this.uncertainGlyph.setAttribute("stroke", "#A01284");
         this.uncertainGlyph.setAttribute("stroke-opacity", "0.7");
         this.uncertainGlyph.setAttribute("fill-opacity", "0.3");

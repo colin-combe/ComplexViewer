@@ -536,7 +536,7 @@ Polymer.prototype.toStick = function() {
                         }));
                         anno.fuzzyStart.setAttribute("stroke-width", 1);
                         anno.fuzzyStart.setAttribute("fill-opacity", "0.6");
-                        anno.fuzzyStart.setAttribute("fill", "#A01284");
+                        //  anno.fuzzyStart.setAttribute("fill", "#A01284");
                         anno.fuzzyStart.setAttribute("stroke", "#A01284");
                         self.annotationsSvgGroup.appendChild(anno.fuzzyStart);
                     }
@@ -548,7 +548,7 @@ Polymer.prototype.toStick = function() {
                         }));
                         anno.fuzzyEnd.setAttribute("stroke-width", 1);
                         anno.fuzzyEnd.setAttribute("fill-opacity", "0.6");
-                        anno.fuzzyEnd.setAttribute("fill", "#A01284");
+                        //anno.fuzzyEnd.setAttribute("fill", "#A01284");
                         anno.fuzzyEnd.setAttribute("stroke", "#A01284");
                         self.annotationsSvgGroup.appendChild(anno.fuzzyEnd);
                     }
@@ -657,5 +657,20 @@ Polymer.prototype.getAnnotationRectPath = function(annotation) {
         " Z";
     return rectPath;
 };
+
+Polymer.prototype.getAnnotationRect = function(annotation) {
+    var rect = document.createElementNS(Config.svgns, "rect");
+    var bottom = Polymer.STICKHEIGHT / 2,
+        top = -Polymer.STICKHEIGHT / 2;
+    var annotX = this.getResXwithStickZoom(annotation.begin - 0.5);
+    var annotSize = (1 + (annotation.end - annotation.begin));
+    var annotLength = annotSize * Polymer.UNITS_PER_RESIDUE * this.stickZoom;
+
+    rect.setAttribute("x", annotX);
+    rect.setAttribute("y", bottom);
+    rect.setAttribute("height", Polymer.STICKHEIGHT);
+    rect.setAttribute("width", annotLength);
+    return rect;
+}
 
 module.exports = Polymer;
