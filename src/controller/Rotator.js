@@ -15,11 +15,11 @@ var Config = require('./Config');
 
 var MouseEventCodes = {}
 
-MouseEventCodes.MOUSE_UP = 0;//start state, also set when mouse up on svgElement
-MouseEventCodes.PANNING = 1;//set by mouse down on svgElement - left button, no shift or ctrl
-MouseEventCodes.DRAGGING = 2;//set by mouse down on Protein or Link
-MouseEventCodes.ROTATING = 3;//set by mouse down on Rotator, drag?
-MouseEventCodes.SELECTING = 4;//set by mouse down on svgElement- right button or left button shift or ctrl, drag
+MouseEventCodes.MOUSE_UP = 0; //start state, also set when mouse up on svgElement
+MouseEventCodes.PANNING = 1; //set by mouse down on svgElement - left button, no shift or ctrl
+MouseEventCodes.DRAGGING = 2; //set by mouse down on Protein or Link
+MouseEventCodes.ROTATING = 3; //set by mouse down on Rotator, drag?
+MouseEventCodes.SELECTING = 4; //set by mouse down on svgElement- right button or left button shift or ctrl, drag
 
 
 function Rotator(proteinRegion, upperOrLower, xlvController) {
@@ -30,7 +30,7 @@ function Rotator(proteinRegion, upperOrLower, xlvController) {
     this.upperOrLower = upperOrLower;
 
     var RADIUS = 14;
-    var SYMBOL_RADIUS = 20;// not really, gets scaled down
+    var SYMBOL_RADIUS = 20; // not really, gets scaled down
 
     this.svg = document.createElementNS(Config.svgns, "g");
     this.rotatorSymbol = document.createElementNS(Config.svgns, "g");
@@ -70,7 +70,7 @@ function Rotator(proteinRegion, upperOrLower, xlvController) {
     this.rotatorSymbol.setAttribute("display", "none");
 
     this.inner = document.createElementNS(Config.svgns, "g");
-    this.inner.setAttribute("class","PV_rotator");
+    this.inner.setAttribute("class", "PV_rotator");
     this.inner.appendChild(this.rotatorSymbol);
 
     this.svg.appendChild(this.inner);
@@ -88,23 +88,23 @@ function Rotator(proteinRegion, upperOrLower, xlvController) {
     };
 }
 
-Rotator.prototype.rotatorMouseOver = function (evt) {
-//    console.log("rotator mouseover (this = " + this.toString() + ')');
+Rotator.prototype.rotatorMouseOver = function(evt) {
+    //    console.log("rotator mouseover (this = " + this.toString() + ')');
     if (!this.ctrl.rotating) {
         this.rotatorSymbol.setAttribute("display", "block");
     }
 }
 
-Rotator.prototype.rotatorMouseOut = function (evt) {
+Rotator.prototype.rotatorMouseOut = function(evt) {
     //if (!rotateEnabled) {
     this.rotatorSymbol.setAttribute("display", "none");
-//}
+    //}
 }
 
-Rotator.prototype.rotatorMouseDown = function (evt) {
+Rotator.prototype.rotatorMouseDown = function(evt) {
     this.ctrl.state = MouseEventCodes.ROTATING;
     this.ctrl.dragElement = this.proteinOrPartThereof;
-    var p = this.ctrl.getEventPoint(evt);// seems to be correct, see above
+    var p = this.ctrl.getEventPoint(evt); // seems to be correct, see above
     var c = this.ctrl.mouseToSVG(p.x, p.y);
     this.ctrl.whichRotator = this.upperOrLower;
     return false;

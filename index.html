@@ -18,7 +18,7 @@
         <script type="text/javascript" src="./demo/rgbcolor.js"></script>
         <script type="text/javascript" src="./demo/legend.js"></script>
         <!-- example data info -->
-        <script type="text/javascript" src="./demo/data/complex/index.js"></script>
+        <script type="text/javascript" src="./demo/data/miJson/index.js"></script>
     </head>
 
     <body>
@@ -120,7 +120,7 @@
                     <input checked onclick="loadData()" id="chkexpansion" value="expansion" type="checkbox">
                     </label>
                     &nbsp;&nbsp;
-                    <button class="btn btn-1 btn-1a" onclick="xlv.reset();" style="display:inline">Reset Layout</button>
+                    <button class="btn btn-1 btn-1a" onclick="xlv.autoLayout();" style="display:inline">Reset Layout</button>
                     <button class="btn btn-1 btn-1a" onclick="exportSVG();" style="display:inline">Export Graphic</button>
                 </div>
 
@@ -159,7 +159,7 @@
                     var table = "<table background:#EEEEEE;>";
                     var coloursKeyDiv = document.getElementById('colours');
                     if (colourAssignment){
-                        
+
                         var complexColourScheme = xlv.getComplexColours();
                         var ccDomain = complexColourScheme.domain();
                         var ccRange = complexColourScheme.range();
@@ -208,7 +208,7 @@
                     var example = exampleIndex[i];
                     var dataSetsSelect = document.getElementById('dataSets');
                     var opt = document.createElement('option');
-                    opt.value = "./demo/data/complex/" + example.ac + ".json";
+                    opt.value = "./demo/data/miJson/" + example.ac + ".json";
                     opt.innerHTML = example.name;
                     dataSetsSelect.appendChild(opt);
                 }
@@ -227,22 +227,10 @@
                     complexDetailsSel.selectAll("*").remove("*");
 
                     complexDetailsSel.append("a")
-                        .attr("href","http://www.ebi.ac.uk/complexportal/complex/"+example.ac)
+                        .attr("href", example.url)
                         .attr("target", "_blank")
-                        .html("<b>" + example.ac + "</b> - View on ComplexPortal");
-                    if (example.complexAssemblies[0]) {
-                        complexDetailsSel.append("p").html("<b>Type:</b> " + example.complexAssemblies[0]);
-                    }
+                        .html("<b>" + example.ac + "</b>");
 
-
-                    var innerSel = complexDetailsSel.append("div").classed("detailsInner", true);
-
-                    var detailsHtml = "<b>Properties:</b> " + example.properties;
-                    if (example.viewerNotes) {
-                        detailsHtml += "<br><b>Viewer Notes:</b> " + example.viewerNotes;
-                    }
-                    innerSel.append("p").html(detailsHtml);
-                    //~ innerSel.append("p").html("<b>Functions:</b> " + example.functions);
 
                     if (example.disableStoichExpand) {
                         d3.select("#chkexpansion").attr("disabled", "disabled");

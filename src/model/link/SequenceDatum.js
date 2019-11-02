@@ -20,11 +20,11 @@
  */
 
 function SequenceDatum(node, sequenceDatumString) {
-	this.node = node;
-	this.sequenceDatumString = sequenceDatumString.trim();
+    this.node = node;
+    this.sequenceDatumString = sequenceDatumString.trim();
 
-    this.uncertainStart = null;
-    this.start = '?';
+    this.uncertainBegin = null;
+    this.begin = '?';
     this.end = '?';
     this.uncertainEnd = null;
 
@@ -33,45 +33,65 @@ function SequenceDatum(node, sequenceDatumString) {
     var secondPart = sequenceDatumString.substring(dashPosition + 1);
 
     if (firstPart.indexOf('.') === -1) {
-        this.start = firstPart;
-    }
-    else {
+        this.begin = firstPart;
+    } else {
         var firstDotPosition = firstPart.indexOf('.');
-        this.uncertainStart = firstPart.substring(0, firstDotPosition) * 1;
-        this.start = firstPart.substring(firstDotPosition + 2) * 1;
+        this.uncertainBegin = firstPart.substring(0, firstDotPosition) * 1;
+        this.begin = firstPart.substring(firstDotPosition + 2) * 1;
     }
 
     if (secondPart.indexOf('.') === -1) {
         this.end = secondPart;
-    }
-    else {
+    } else {
         var firstDotPosition = secondPart.indexOf('.');
         this.end = secondPart.substring(0, firstDotPosition) * 1;
         this.uncertainEnd = secondPart.substring(firstDotPosition + 2) * 1;
     }
 
-		if (this.start == 'n') {
-				this.start = 0;
-		}
-		if (this.start == 'c') {
-				this.start = node.size + 1;
-		}
-		if (this.end == 'n') {
-				this.end = -20;
-		}
-		if (this.end == 'c') {
-				this.end = node.size + 20;
-		}
+    if (this.begin == 'n') {
+        this.begin = 0;
+    }
+    if (this.begin == 'c') {
+        this.begin = node.size + 1;
+    }
+    if (this.end == 'n') {
+        this.end = -20;
+    }
+    if (this.end == 'c') {
+        this.end = node.size + 20;
+    }
+
+    if (firstPart.indexOf('<') > -1) {
+        this.uncertainBegin = 0;
+        this.begin = firstPart.substring(1, firstPart.length);
+    }
+    if (secondPart.indexOf('>') > -1) {
+        this.end = secondPart.substring(1, firstPart.length);
+        this.uncertainEnd = node.size;
+    }
+
+    if (firstPart.indexOf('>') > -1 && secondPart.indexOf('<') > -1) {
+        this.uncertainBegin = firstPart.substring(1, firstPart.length);
+        this.begin = secondPart.substring(1, firstPart.length);
+        this.end = this.begin;
+    }
+
+    if (this.uncertainBegin == null) {
+        this.uncertainBegin = this.begin;
+    }
+    if (this.uncertainEnd == null) {
+        this.uncertainEnd = this.end;
+    }
 
 }
 
-SequenceDatum.prototype.toString = function(){
-	// var string = "";
-	// if (this.uncertainStart) string += this.uncertainStart + '..';
-	// if (this.start) string += this.start + '-';
-	// if (this.end) string += this.end;
-	// if (this.uncertainEnd) string += '..' + this.uncertainEnd;
-	return this.sequenceDatumString;
+SequenceDatum.prototype.toString = function() {
+    // var string = "";
+    // if (this.uncertainBegin) string += this.uncertainBegin + '..';
+    // if (this.start) string += this.begin+ '-';
+    // if (this.end) string += this.end;
+    // if (this.uncertainEnd) string += '..' + this.uncertainEnd;
+    return this.sequenceDatumString;
 }
 //On 06/06/13 09:22, marine@ebi.ac.uk wrote:
 //> Concerning the ranges, I think there was a confusion :

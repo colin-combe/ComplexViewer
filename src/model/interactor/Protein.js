@@ -21,8 +21,8 @@ function Protein(id, xinetController, json, name) {
     this.id = id; // id may not be accession (multiple Segments with same accesssion)
     this.controller = xinetController;
     this.json = json;
-  	this.name = name;
-    this.tooltip = this.name + ' [' + this.id + ']';// + this.accession;
+    this.name = name;
+    this.tooltip = this.name + ' [' + this.id + ']'; // + this.accession;
     //links
     this.naryLinks = d3.map();
     this.binaryLinks = d3.map();
@@ -35,28 +35,28 @@ function Protein(id, xinetController, json, name) {
     this.rotation = 0;
     this.previousRotation = this.rotation;
     this.stickZoom = 1;
-    this.form = 0;//null; // 0 = blob, 1 = stick
+    this.form = 0; //null; // 0 = blob, 1 = stick
     this.isSelected = false;
     //rotators
-/*	this.lowerRotator = new Rotator(this, 0, this.controller);
-	this.upperRotator = new Rotator(this, 1, this.controller); */
+    /*	this.lowerRotator = new Rotator(this, 0, this.controller);
+    	this.upperRotator = new Rotator(this, 1, this.controller); */
 
     this.upperGroup = document.createElementNS(Config.svgns, "g");
     this.upperGroup.setAttribute("class", "protein upperGroup");
 
- 	//make highlight
+    //make highlight
     this.highlight = document.createElementNS(Config.svgns, "rect");
     this.highlight.setAttribute("stroke", Config.highlightColour);
     this.highlight.setAttribute("stroke-width", "5");
     this.highlight.setAttribute("fill", "none");
     this.upperGroup.appendChild(this.highlight);
 
-   	//make background
+    //make background
     //http://stackoverflow.com/questions/17437408/how-do-i-change-a-circle-to-a-square-using-d3
-	this.background = document.createElementNS(Config.svgns, "rect");
+    this.background = document.createElementNS(Config.svgns, "rect");
     this.background.setAttribute("fill", "#FFFFFF");
     this.upperGroup.appendChild(this.background);
-	//create label - we will move this svg element around when protein form changes
+    //create label - we will move this svg element around when protein form changes
     this.labelSVG = document.createElementNS(Config.svgns, "text");
     this.labelSVG.setAttribute("text-anchor", "end");
     this.labelSVG.setAttribute("fill", "black")
@@ -68,26 +68,25 @@ function Protein(id, xinetController, json, name) {
     //choose label text
     if (this.name !== null & this.name !== "") {
         this.labelText = this.name;
+    } else {
+        this.labelText = this.id;
     }
-    else {
-		this.labelText  = this.id;
-	}
     if (this.labelText.length > 25) {
         this.labelText = this.labelText.substr(0, 16) + "...";
     }
-	this.labelTextNode = document.createTextNode(this.labelText);
+    this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
     d3.select(this.labelSVG).attr("transform",
-		"translate( -" + (5) + " " + Molecule.labelY + ") rotate(0) scale(1, 1)");
+        "translate( -" + (5) + " " + Molecule.labelY + ") rotate(0) scale(1, 1)");
     this.upperGroup.appendChild(this.labelSVG);
-   	//ticks (and animo acid letters)
+    //ticks (and animo acid letters)
     this.ticks = document.createElementNS(Config.svgns, "g");
     //svg group for annotations
-	this.annotationsSvgGroup = document.createElementNS(Config.svgns, "g");
+    this.annotationsSvgGroup = document.createElementNS(Config.svgns, "g");
     this.annotationsSvgGroup.setAttribute("opacity", 1);
-	this.upperGroup.appendChild(this.annotationsSvgGroup);
+    this.upperGroup.appendChild(this.annotationsSvgGroup);
 
-	//make outline
+    //make outline
     this.outline = document.createElementNS(Config.svgns, "rect");
     this.outline.setAttribute("stroke", "black");
     this.outline.setAttribute("stroke-width", "1");
@@ -100,19 +99,19 @@ function Protein(id, xinetController, json, name) {
     var self = this;
     //    this.upperGroup.setAttribute('pointer-events','all');
     this.upperGroup.onmousedown = function(evt) {
-		self.mouseDown(evt);
+        self.mouseDown(evt);
     };
     this.upperGroup.onmouseover = function(evt) {
-		self.mouseOver(evt);
+        self.mouseOver(evt);
     };
     this.upperGroup.onmouseout = function(evt) {
-		self.mouseOut(evt);
+        self.mouseOut(evt);
     };
     this.upperGroup.ontouchstart = function(evt) {
-		self.touchStart(evt);
+        self.touchStart(evt);
     };
     this.isSelected = false;
-	  this.showHighlight(false);
+    this.showHighlight(false);
 
     //TODO - this wastes a bit memory because the property is not on the prototype, fix
     Object.defineProperty(this, "width", {
@@ -129,8 +128,8 @@ function Protein(id, xinetController, json, name) {
 
 Protein.prototype.showData = function(evt) {
     var url = "http://www.uniprot.org/uniprot/" + this.json.identifier.id;
-	//~ alert (url);
-	var win = window.open(url, '_blank');
-	//~ win.focus();
+    //~ alert (url);
+    var win = window.open(url, '_blank');
+    //~ win.focus();
 }
 module.exports = Protein;
