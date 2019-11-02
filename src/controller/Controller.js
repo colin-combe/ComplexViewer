@@ -972,175 +972,123 @@ xiNET.Controller.prototype.autoLayout = function() {
         }
     }
 
-    if (this.complexes.length == 0 && nodes.length != linkedParticipants.size) {
-
-        d3.select(this.svgElement).style("visibility", "hidden");
-
-        var spinner = new Spinner({
-            scale: 3
-        }).spin(this.targetDiv);
-        var showIt = false;
-        setTimeout(function() {
-            spinner.spin(false);
-            showIt = true
-        }, 2000);
-
-        var k = Math.sqrt(layoutObj.nodes.length / (width * height));
-        this.layout = d3.layout.force()
-            .nodes(layoutObj.nodes)
-            .links(layoutObj.links)
-            .gravity(105 * k)
-            .linkDistance(70) //target distance between linked nodes
-            .linkStrength(0.8) //the strength (rigidity) of links
-            .charge(-18 / k)
-            .friction(0.96) // 1 = frictionless
-            .theta(0.99) //Barnes–Hut approximation criterion
-            .size([width, height]);
-
-        this.layout.on("tick", function(e) {
-            if (showIt) {
-                var nodes = self.layout.nodes();
-                // console.log("nodes", nodes);
-                for (var n = 0; n < nodeCount; n++) {
-                    var node = nodes[n];
-                    var mol = self.molecules.get(node.id);
-                    var nx = node.x;
-                    var ny = node.y;
-                    mol.setPosition(nx, ny);
+    var groups = [];
+    if (this.complexes) {
+        for (var c = 0; c < this.complexes.length; c++) {
+            var g = this.complexes[c];
+            // if (g.form == 1) {
+            g.leaves = [];
+            g.groups = [];
+            for (var pi = 0; pi < g.naryLink.interactors.length; pi++) {
+                //var rp = this.renderedProteins.get(p.id);
+                var i = layoutObj.nodes.indexOf(g.naryLink.interactors[pi]);
+                if (g.naryLink.interactors[pi].type != "complex") {
+                    g.leaves.push(i);
                 }
-                self.setAllLinkCoordinates();
-                spinner.stop();
-                d3.select(self.svgElement).style('visibility', 'visible');
+                // else {
+                //    console.log("?",g.naryLink.interactors[pi])
+                //    g.groups.push(g.naryLink.interactors[pi]);
+                // }
             }
-            //this could be improved, todo: check all possible over boundary possibilities
-            //~ var bBox = self.container.getBBox();
-            //console.log(bBox);
-            //~ //only dealing with the more common 'label over left edge' situation
-            //~ if (bBox.x < 0) {
-            //~ //alert("bodge time");
-            //~ self.setCTM(self.container, self.container.getCTM().translate(- bBox.x, 0));
-            //~ }
-        });
-        this.layout.start();
-    } else {
-        var groups = [];
-        if (this.complexes) {
-            for (var c = 0; c < this.complexes.length; c++) {
-                var g = this.complexes[c];
-                // if (g.form == 1) {
-                g.leaves = [];
-                g.groups = [];
-                for (var pi = 0; pi < g.naryLink.interactors.length; pi++) {
-                    //var rp = this.renderedProteins.get(p.id);
-                    var i = layoutObj.nodes.indexOf(g.naryLink.interactors[pi]);
-                    if (g.naryLink.interactors[pi].type != "complex") {
-                        g.leaves.push(i);
-                    }
-                    // else {
-                    //    console.log("?",g.naryLink.interactors[pi])
-                    //    g.groups.push(g.naryLink.interactors[pi]);
-                    // }
-                }
-                groups.push(g);
-            }
-            for (var c = 0; c < this.complexes.length; c++) {
-                var g = this.complexes[c];
-                // if (g.form == 1) {
-                for (var pi = 0; pi < g.naryLink.interactors.length; pi++) {
-                    //var rp = this.renderedProteins.get(p.id);
-                    var i = groups.indexOf(g.naryLink.interactors[pi]);
-                    if (g.naryLink.interactors[pi].type == "complex") {
-                        g.groups.push(i);
-                    }
-                }
-                //groups.push(g);
-            }
+            groups.push(g);
         }
-        this.layout = cola.d3adaptor();
-        //console.log("groups", groups);
-        // delete this.layout._lastStress;
-        // delete this.layout._alpha;
-        // delete this.layout._descent;
-        // delete this.layout._rootGroup;
-
-        this.layout.nodes(layoutObj.nodes).groups(groups).links(layoutObj.links).avoidOverlaps(true);
-
-        var self = this;
-
-        /*var groupDebugSel = d3.select(this.svgElement).selectAll('.group')
-            .data(groups);
-
-        groupDebugSel.enter().append('rect')
-            .classed('group', true)
-            .attr({
-                rx: 5,
-                ry: 5
-            })
-            .style('stroke', "blue")
-            .style('fill', "none");
-
-        var participantDebugSel = d3.select(this.svgElement).selectAll('.node')
-            .data(layoutObj.nodes);
-
-        participantDebugSel.enter().append('rect')
-            .classed('node', true)
-            .attr({
-                rx: 5,
-                ry: 5
-            })
-            .style('stroke', "red")
-            .style('fill', "none");
-
-        groupDebugSel.exit().remove();
-        participantDebugSel.exit().remove();*/
-
-        this.layout.symmetricDiffLinkLengths(30).on("tick", function(e) {
-            var nodes = self.layout.nodes();
-            // console.log("nodes", nodes);
-            for (var n = 0; n < nodeCount; n++) {
-                var node = nodes[n];
-                var mol = self.molecules.get(node.id);
-                var nx = node.x + (width / 2);
-                var ny = node.y + (height / 2);
-                mol.setPosition(nx, ny);
+        for (var c = 0; c < this.complexes.length; c++) {
+            var g = this.complexes[c];
+            // if (g.form == 1) {
+            for (var pi = 0; pi < g.naryLink.interactors.length; pi++) {
+                //var rp = this.renderedProteins.get(p.id);
+                var i = groups.indexOf(g.naryLink.interactors[pi]);
+                if (g.naryLink.interactors[pi].type == "complex") {
+                    g.groups.push(i);
+                }
             }
-            self.setAllLinkCoordinates();
-
-            /*groupDebugSel.attr({
-                x: function(d) {
-                    return d.bounds.x + (width/2);
-                },
-                y: function(d) {
-                    return d.bounds.y + (height/2);
-                },
-                width: function(d) {
-                    return d.bounds.width()
-                },
-                height: function(d) {
-                    return d.bounds.height()
-                }
-            });
-
-            participantDebugSel.attr({
-                x: function(d) {
-                    return d.bounds.x + (width/2);
-                },
-                y: function(d) {
-                    return d.bounds.y + (height/2);
-                },
-                width: function(d) {
-                    return d.bounds.width()
-                },
-                height: function(d) {
-                    return d.bounds.height()
-                }
-            });*/
-
-            //spinner.stop();
-            //d3.select(self.svgElement).style('visibility', 'visible');
-        });
-        this.layout.start(10, 15, 20);
+            //groups.push(g);
+        }
     }
+    this.layout = cola.d3adaptor();
+    //console.log("groups", groups);
+    // delete this.layout._lastStress;
+    // delete this.layout._alpha;
+    // delete this.layout._descent;
+    // delete this.layout._rootGroup;
+
+    this.layout.nodes(layoutObj.nodes).groups(groups).links(layoutObj.links).avoidOverlaps(true);
+
+    var self = this;
+
+    /*var groupDebugSel = d3.select(this.svgElement).selectAll('.group')
+        .data(groups);
+
+    groupDebugSel.enter().append('rect')
+        .classed('group', true)
+        .attr({
+            rx: 5,
+            ry: 5
+        })
+        .style('stroke', "blue")
+        .style('fill', "none");
+
+    var participantDebugSel = d3.select(this.svgElement).selectAll('.node')
+        .data(layoutObj.nodes);
+
+    participantDebugSel.enter().append('rect')
+        .classed('node', true)
+        .attr({
+            rx: 5,
+            ry: 5
+        })
+        .style('stroke', "red")
+        .style('fill', "none");
+
+    groupDebugSel.exit().remove();
+    participantDebugSel.exit().remove();*/
+
+    this.layout.symmetricDiffLinkLengths(30).on("tick", function(e) {
+        var nodes = self.layout.nodes();
+        // console.log("nodes", nodes);
+        for (var n = 0; n < nodeCount; n++) {
+            var node = nodes[n];
+            var mol = self.molecules.get(node.id);
+            var nx = node.x + (width / 2);
+            var ny = node.y + (height / 2);
+            mol.setPosition(nx, ny);
+        }
+        self.setAllLinkCoordinates();
+
+        /*groupDebugSel.attr({
+            x: function(d) {
+                return d.bounds.x + (width/2);
+            },
+            y: function(d) {
+                return d.bounds.y + (height/2);
+            },
+            width: function(d) {
+                return d.bounds.width()
+            },
+            height: function(d) {
+                return d.bounds.height()
+            }
+        });
+
+        participantDebugSel.attr({
+            x: function(d) {
+                return d.bounds.x + (width/2);
+            },
+            y: function(d) {
+                return d.bounds.y + (height/2);
+            },
+            width: function(d) {
+                return d.bounds.width()
+            },
+            height: function(d) {
+                return d.bounds.height()
+            }
+        });*/
+
+        //spinner.stop();
+        //d3.select(self.svgElement).style('visibility', 'visible');
+    });
+    this.layout.start(10, 15, 20);
 };
 
 xiNET.Controller.prototype.setCTM = function(element, matrix) {
@@ -1257,6 +1205,8 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
                 var anno = mol.annotations[a];
                 if (anno.description == "No annotations") {
                     var c = "#cccccc";
+                  } else if (anno.seqDatum && (anno.seqDatum.sequenceDatumString.indexOf('n') > -1 || anno.seqDatum.sequenceDatumString.indexOf('c') > -1)) {
+                        var c = "url('#checkers')";
                 } else {
                     //console.log(">" + anno.description);
                     var c = colourScheme(anno.description);
