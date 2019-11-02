@@ -429,7 +429,7 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
     for (var f = 0; f < fCount; f++) {
         var feature = features[f];
         // add features to interactors/participants/nodes
-        console.log("FEATURE:" + feature.name, feature.sequenceData);
+        //console.log("FEATURE:" + feature.name, feature.sequenceData);
         var annotName = "";
         if (typeof feature.name !== 'undefined') {
             annotName += feature.name + ' ';
