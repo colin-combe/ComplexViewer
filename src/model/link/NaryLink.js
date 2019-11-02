@@ -54,11 +54,11 @@ NaryLink.prototype.getTotalParticipantCount = function() {
 NaryLink.prototype.initSVG = function() {
     this.path = document.createElementNS(Config.svgns, "path");
     //~ if (this.controller.expand === false){
-		this.path.setAttribute('fill', NaryLink.naryColours(this.id));
-	//~ }
-	//~ else {
-		  // this.path.setAttribute('fill', '#70BDBD');
-	//~ }
+    this.path.setAttribute('fill', NaryLink.naryColours(this.id));
+    //~ }
+    //~ else {
+    // this.path.setAttribute('fill', '#70BDBD');
+    //~ }
     //this.path.setAttribute('fill-opacity', 0);
 
     //set the events for it
@@ -78,7 +78,7 @@ NaryLink.prototype.initSVG = function() {
 };
 
 NaryLink.prototype.showHighlight = function(show) {
-	this.highlightMolecules(show);
+    this.highlightMolecules(show);
 };
 
 NaryLink.prototype.check = function() {
@@ -87,9 +87,9 @@ NaryLink.prototype.check = function() {
 };
 
 NaryLink.prototype.show = function() {
-	this.path.setAttribute("stroke-width", this.controller.z * 1);
-	this.setLinkCoordinates();
-	this.controller.naryLinks.appendChild(this.path);
+    this.path.setAttribute("stroke-width", this.controller.z * 1);
+    this.setLinkCoordinates();
+    this.controller.naryLinks.appendChild(this.path);
 };
 
 NaryLink.prototype.hide = function() {};
@@ -97,60 +97,59 @@ NaryLink.prototype.hide = function() {};
 NaryLink.prototype.setLinkCoordinates = function() {
     // Uses d3.geom.hull to calculate a bounding path around an array of vertices
     var calculateHullPath = function(values) {
-		var calced = d3.geom.hull(values);
-		self.hull = calced;//hack?
-		return "M" + calced.join("L") + "Z";
+        var calced = d3.geom.hull(values);
+        self.hull = calced; //hack?
+        return "M" + calced.join("L") + "Z";
     };
-  	var self = this;// TODO: - tidy hack above?
-  	var mapped = this.orbitNodes(this.getMappedCoordinates());
-  	var hullValues = calculateHullPath(mapped);
-  	if (hullValues) {
-  		  this.path.setAttribute('d', hullValues);
-  	}
-    if (this.complex){
-  		  this.complex.setAllLinkCoordinates();
-  	}
+    var self = this; // TODO: - tidy hack above?
+    var mapped = this.orbitNodes(this.getMappedCoordinates());
+    var hullValues = calculateHullPath(mapped);
+    if (hullValues) {
+        this.path.setAttribute('d', hullValues);
+    }
+    if (this.complex) {
+        this.complex.setAllLinkCoordinates();
+    }
 };
 
 NaryLink.prototype.getMappedCoordinates = function() {
-	var interactors = this.interactors;
-	var mapped = new Array();
-	var ic = interactors.length;
-	for (var i = 0; i < ic; i ++) {
-		var interactor = interactors[i];
-		if (interactor.type == 'complex') {
-			mapped = mapped.concat(this.orbitNodes(interactor.naryLink.getMappedCoordinates()));
-		}
-		else if (interactor.form === 1){
-			var start = interactor.getResidueCoordinates(0);
-			var end = interactor.getResidueCoordinates(interactor.size);
-			if (!isNaN(start[0]) && !isNaN(start[1]) &&
-								!isNaN(end[0]) && !isNaN(end[1])){
-				mapped.push(start);
-				mapped.push(end);
-			} else {
-				mapped.push(interactor.getPosition());
-			}
-		} else {
-			mapped.push(interactor.getPosition());
-		}
-	}
-	return mapped;
+    var interactors = this.interactors;
+    var mapped = new Array();
+    var ic = interactors.length;
+    for (var i = 0; i < ic; i++) {
+        var interactor = interactors[i];
+        if (interactor.type == 'complex') {
+            mapped = mapped.concat(this.orbitNodes(interactor.naryLink.getMappedCoordinates()));
+        } else if (interactor.form === 1) {
+            var start = interactor.getResidueCoordinates(0);
+            var end = interactor.getResidueCoordinates(interactor.size);
+            if (!isNaN(start[0]) && !isNaN(start[1]) &&
+                !isNaN(end[0]) && !isNaN(end[1])) {
+                mapped.push(start);
+                mapped.push(end);
+            } else {
+                mapped.push(interactor.getPosition());
+            }
+        } else {
+            mapped.push(interactor.getPosition());
+        }
+    }
+    return mapped;
 }
 
 //'orbit' nodes - several nodes around interactor positions to give margin
 NaryLink.prototype.orbitNodes = function(mapped) {
-	var orbitNodes = new Array();
-	var mc = mapped.length;
-	for (var mi = 0; mi < mc; mi++){
-		var m = mapped[mi];
-		for (var o = 0; o < NaryLink.orbitNodes; o++){
-			var angle = (360 / NaryLink.orbitNodes) * o;
-			var p = [m[0] + NaryLink.orbitRadius, m[1]];
-			orbitNodes.push(Molecule.rotatePointAboutPoint(p, m, angle));
-		}
-	}
-	return orbitNodes;
+    var orbitNodes = new Array();
+    var mc = mapped.length;
+    for (var mi = 0; mi < mc; mi++) {
+        var m = mapped[mi];
+        for (var o = 0; o < NaryLink.orbitNodes; o++) {
+            var angle = (360 / NaryLink.orbitNodes) * o;
+            var p = [m[0] + NaryLink.orbitRadius, m[1]];
+            orbitNodes.push(Molecule.rotatePointAboutPoint(p, m, angle));
+        }
+    }
+    return orbitNodes;
 }
 
 

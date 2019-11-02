@@ -1,66 +1,66 @@
 {
     "data": [
         {
-            "id": "uniprotkb_P12004", 
+            "id": "uniprotkb_P12004",
             "identifier": {
-                "db": "uniprotkb", 
+                "db": "uniprotkb",
                 "id": "P12004"
-            }, 
-            "label": "pcna_human", 
-            "object": "interactor", 
+            },
+            "label": "pcna_human",
+            "object": "interactor",
             "organism": {
-                "common": "human", 
-                "scientific": "Homo sapiens", 
+                "common": "human",
+                "scientific": "Homo sapiens",
                 "taxid": "9606"
-            }, 
-            "sequence": "MFEARLVQGSILKKVLEALKDLINEACWDISSSGVNLQSMDSSHVSLVQLTLRSEGFDTYRCDRNLAMGVNLTSMSKILKCAGNEDIITLRAEDNADTLALVFEAPNQEKVSDYEMKLMDLDVEQLGIPEQEYSCVVKMPSGEFARICRDLSHIGDAVVISCAKDGVKFSASGELGNGNIKLSQTSNVDKEEEAVTIEMNEPVQLTFALRYLNFFTKATPLSSTVTLSMSADVPLVVEYKIADMGHLKYYLAPKIEDEEGS", 
+            },
+            "sequence": "MFEARLVQGSILKKVLEALKDLINEACWDISSSGVNLQSMDSSHVSLVQLTLRSEGFDTYRCDRNLAMGVNLTSMSKILKCAGNEDIITLRAEDNADTLALVFEAPNQEKVSDYEMKLMDLDVEQLGIPEQEYSCVVKMPSGEFARICRDLSHIGDAVVISCAKDGVKFSASGELGNGNIKLSQTSNVDKEEEAVTIEMNEPVQLTFALRYLNFFTKATPLSSTVTLSMSADVPLVVEYKIADMGHLKYYLAPKIEDEEGS",
             "type": {
-                "id": "MI:0326", 
+                "id": "MI:0326",
                 "name": "protein"
             }
-        }, 
+        },
         {
             "complexType": {
-                "id": "MI:1302", 
+                "id": "MI:1302",
                 "name": "stable complex"
-            }, 
+            },
             "evidenceType": {
-                "id": "ECO:0000353", 
+                "id": "ECO:0000353",
                 "name": "physical interaction evidence used in manual assertion"
-            }, 
-            "id": "protein ontology_PR:000026440", 
+            },
+            "id": "protein ontology_PR:000026440",
             "identifiers": [
                 {
-                    "db": "protein ontology", 
+                    "db": "protein ontology",
                     "id": "PR:000026440"
-                }, 
+                },
                 {
-                    "db": "reactome", 
+                    "db": "reactome",
                     "id": "R-HSA-68440"
-                }, 
+                },
                 {
-                    "db": "intact", 
+                    "db": "intact",
                     "id": "EBI-1202920"
                 }
-            ], 
+            ],
             "interactionType": {
-                "id": "MI:0407", 
+                "id": "MI:0407",
                 "name": "direct interaction"
-            }, 
-            "object": "interaction", 
+            },
+            "object": "interaction",
             "organism": {
-                "common": "human", 
-                "scientific": "Homo sapiens", 
+                "common": "human",
+                "scientific": "Homo sapiens",
                 "taxid": "9606"
-            }, 
+            },
             "participants": [
                 {
                     "bioRole": {
-                        "id": "MI:0499", 
+                        "id": "MI:0499",
                         "name": "unspecified role"
-                    }, 
-                    "id": "1", 
-                    "interactorRef": "uniprotkb_P12004", 
+                    },
+                    "id": "1",
+                    "interactorRef": "uniprotkb_P12004",
                     "stoichiometry": "3"
                 }
             ]

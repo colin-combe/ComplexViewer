@@ -19,7 +19,7 @@ function Annotation(annotName, startRes, endRes, colour, notes) {
     //~ this.description = notes;
 }
 
-Annotation.prototype.initFromSeqDatum = function (seqDatum) {
+Annotation.prototype.initFromSeqDatum = function(seqDatum) {
     // obviously, some of this couls be tidied up...
     this.begin = seqDatum.start;
     this.end = seqDatum.end;

@@ -38,27 +38,29 @@ function Complex(id, xlvController) {
     // });
 }
 
-Complex.prototype.initMolecule = function(naryLink)
-{
+Complex.prototype.initMolecule = function(naryLink) {
     this.naryLink = naryLink;
-	  naryLink.path.setAttribute('stroke', 'gray');
+    naryLink.path.setAttribute('stroke', 'gray');
     naryLink.path.setAttribute('stroke-linejoin', 'round');
     naryLink.path.setAttribute('stroke-width', 8);
 };
 
-Complex.prototype.getPosition = function(){
-	var mapped = this.naryLink.getMappedCoordinates();
-	var mc = mapped.length;
-	var xSum = 0, ySum = 0;
-	for (var m = 0; m < mc; m++){
-		xSum += mapped[m][0];
-		ySum += mapped[m][1];
-	}
-	return [xSum / mc, ySum / mc];
+Complex.prototype.getPosition = function() {
+    var mapped = this.naryLink.getMappedCoordinates();
+    var mc = mapped.length;
+    var xSum = 0,
+        ySum = 0;
+    for (var m = 0; m < mc; m++) {
+        xSum += mapped[m][0];
+        ySum += mapped[m][1];
+    }
+    return [xSum / mc, ySum / mc];
 };
 
 Complex.prototype.setPosition = function(x, y) {};
-Complex.prototype.getResidueCoordinates = function(x, y) {return this.getPosition()};
+Complex.prototype.getResidueCoordinates = function(x, y) {
+    return this.getPosition()
+};
 Complex.prototype.showHighlight = function() {};
 
 module.exports = Complex;
