@@ -1160,6 +1160,8 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
                     var anno = mol.annotations[a];
                     if (anno.description == "No annotations") {
                         var c = "#cccccc";
+                    } else if (anno.seqDatum && (anno.seqDatum.indexOf('n') > -1 || anno.seqDatum.indexOf('c') > -1) {
+                        var c = "#cccccc";
                     } else {
 						            //console.log(">" + anno.description);
                         var c = colourScheme(anno.description);
