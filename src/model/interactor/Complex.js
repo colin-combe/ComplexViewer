@@ -25,6 +25,9 @@ function Complex(id, xlvController) {
     this.sequenceLinks = d3.map();
     this.form = 0;
     this.type = 'complex';
+
+    this.padding = 0.01;//not working
+
     //TODO - this wastes a bit memory because the property is not on the prototype, fix
     // Object.defineProperty(this, "width", {
     //     get: function width() {
@@ -58,6 +61,7 @@ Complex.prototype.getPosition = function() {
 };
 
 Complex.prototype.setPosition = function(x, y) {};
+
 Complex.prototype.getResidueCoordinates = function(x, y) {
     return this.getPosition()
 };

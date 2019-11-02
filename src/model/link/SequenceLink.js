@@ -55,8 +55,8 @@ SequenceLink.prototype.initSVG = function() {
         this.glyph.setAttribute("stroke", "#A08214");
         this.glyph.setAttribute("stroke-width", "2");
         this.uncertainGlyph.setAttribute("class", "link");
-        this.uncertainGlyph.setAttribute("fill", "url('#checkers')");//"#A01284");
-        this.uncertainGlyph.setAttribute("stroke", "#A01284");
+        this.uncertainGlyph.setAttribute("fill", "url('#checkers_uncertain')");//"#A01284");
+        this.uncertainGlyph.setAttribute("stroke", "none");//"#A01284");
         this.uncertainGlyph.setAttribute("stroke-opacity", "0.7");
         this.uncertainGlyph.setAttribute("fill-opacity", "0.3");
         this.highlightGlyph.setAttribute("class", "link");
@@ -194,14 +194,14 @@ SequenceLink.prototype.setLinkCoordinates = function(interactor) {
         var sdCount = sequenceData.length;
         for (var s = 0; s < sdCount; s++) {
             var seqDatum = sequenceData[s];
-            if (!isNaN(parseFloat(seqDatum.start)) && isFinite(seqDatum.start)) {
-                var start = seqDatum.start * 1;
+            if (!isNaN(parseFloat(seqDatum.begin)) && isFinite(seqDatum.begin)) {
+                var start = seqDatum.begin * 1;
                 if (lowestLinkedRes === null || start < lowestLinkedRes) {
                     lowestLinkedRes = start;
                 }
             }
-            if (!isNaN(parseFloat(seqDatum.uncertainStart)) && isFinite(seqDatum.uncertainStart)) {
-                var uncertainStart = seqDatum.uncertainStart * 1;
+            if (!isNaN(parseFloat(seqDatum.uncertainBegin)) && isFinite(seqDatum.uncertainBegin)) {
+                var uncertainStart = seqDatum.uncertainBegin * 1;
                 if (lowestLinkedRes === null || uncertainStart < lowestLinkedRes) {
                     lowestLinkedRes = uncertainStart;
                 }
@@ -297,13 +297,13 @@ SequenceLink.prototype.setLinkCoordinates = function(interactor) {
     var highlightGlyphPath = 'M' + triPointMid[0] + ',' + triPointMid[1];
     for (var f = 0; f < fSDCount; f++) {
         seqDatum = this.fromSequenceData[f];
-        glyphPath += getPathSegments(triPointMid, ftMid, seqDatum.start, seqDatum.end, fromMolecule, fyOffset);
-        highlightStartRes = seqDatum.start;
+        glyphPath += getPathSegments(triPointMid, ftMid, seqDatum.begin, seqDatum.end, fromMolecule, fyOffset);
+        highlightStartRes = seqDatum.begin;
         highlightEndRes = seqDatum.end;
-        if (isNumber(seqDatum.uncertainStart)) {
+        if (isNumber(seqDatum.uncertainBegin)) {
             uncertainGlyphPath += getPathSegments(triPointMid, ftMid,
-                seqDatum.uncertainStart, seqDatum.start, fromMolecule, fyOffset);
-            highlightStartRes = seqDatum.uncertainStart;
+                seqDatum.uncertainBegin, seqDatum.begin, fromMolecule, fyOffset);
+            highlightStartRes = seqDatum.uncertainBegin;
         }
         if (isNumber(seqDatum.uncertainEnd)) {
             uncertainGlyphPath += getPathSegments(triPointMid, ftMid,
@@ -315,13 +315,13 @@ SequenceLink.prototype.setLinkCoordinates = function(interactor) {
     }
     for (var t = 0; t < tSDCount; t++) {
         seqDatum = this.toSequenceData[t];
-        glyphPath += getPathSegments(triPointMid, ttMid, seqDatum.start, seqDatum.end, toMolecule, tyOffset);
-        highlightStartRes = seqDatum.start;
+        glyphPath += getPathSegments(triPointMid, ttMid, seqDatum.begin, seqDatum.end, toMolecule, tyOffset);
+        highlightStartRes = seqDatum.begin;
         highlightEndRes = seqDatum.end;
-        if (isNumber(seqDatum.uncertainStart)) {
+        if (isNumber(seqDatum.uncertainBegin)) {
             uncertainGlyphPath += getPathSegments(triPointMid, ttMid,
-                seqDatum.uncertainStart, seqDatum.start, toMolecule, tyOffset);
-            highlightStartRes = seqDatum.uncertainStart;
+                seqDatum.uncertainBegin, seqDatum.begin, toMolecule, tyOffset);
+            highlightStartRes = seqDatum.uncertainBegin;
         }
         if (isNumber(seqDatum.uncertainEnd)) {
             uncertainGlyphPath += getPathSegments(triPointMid, ttMid,
