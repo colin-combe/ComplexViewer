@@ -19,7 +19,7 @@
  *              "123->256" = feature sequence w uncertain end between 256 and interactor.sequence.length
  */
 
-function SequenceDatum(node, sequenceDatumString) {
+function SequenceFeature(node, sequenceDatumString) {
     this.node = node;
     this.sequenceDatumString = sequenceDatumString.trim();
 
@@ -86,7 +86,7 @@ function SequenceDatum(node, sequenceDatumString) {
     }
 }
 
-SequenceDatum.prototype.toString = function() {
+SequenceFeature.prototype.toString = function() {
     return this.sequenceDatumString;
 }
 //On 06/06/13 09:22, marine@ebi.ac.uk wrote:
@@ -125,4 +125,4 @@ SequenceDatum.prototype.toString = function() {
 //> positions of the feature are <8 but it could happen that you have a
 //> feature such as "<8->22" or "<8-22", etc.
 
-module.exports = SequenceDatum;
+module.exports = SequenceFeature;

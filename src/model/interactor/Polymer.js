@@ -12,7 +12,7 @@
 
 var Molecule = require('./Molecule');
 var Annotation = require('.//Annotation');
-var SequenceDatum = require('./../link/SequenceDatum');
+var SequenceFeature = require('./../SequenceFeature');
 //var Rotator = require('../../controller/Rotator');
 var Config = require('../../controller/Config');
 
@@ -602,7 +602,7 @@ Polymer.prototype.setPositionalFeatures = function(posFeats) {
         this.annotations = posFeats;
         if (this.annotations.length == 0) {
             //~ alert("no annot");
-            this.annotations.push(new Annotation("No annotations", new SequenceDatum(null, 1 + "-" + this.size)));
+            this.annotations.push(new Annotation("No annotations", new SequenceFeature(null, 1 + "-" + this.size)));
         }
         for (var i = 0; i < posFeats.length; i++) {
             var anno = posFeats[i];

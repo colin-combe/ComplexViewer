@@ -7,7 +7,7 @@
 "use strict";
 
 var Link = require('./Link');
-var SequenceDatum = require('./SequenceDatum');
+var SequenceFeature = require('../SequenceFeature');
 //~ var BinaryLink = require('./BinaryLink');
 //~ var UnaryLink = require('./UnaryLink');
 var Config = require('../../controller/Config');

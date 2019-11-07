@@ -31,7 +31,7 @@ var MoleculeSet = require('../model/interactor/MoleculeSet');
 var Link = require('../model/link/Link');
 var NaryLink = require('../model/link/NaryLink');
 var SequenceLink = require('../model/link/SequenceLink');
-var SequenceDatum = require('../model/link/SequenceDatum');
+var SequenceFeature = require('./../model/SequenceFeature');
 var BinaryLink = require('../model/link/BinaryLink');
 var UnaryLink = require('../model/link/UnaryLink');
 var Expand = require('./Expand');
@@ -452,7 +452,7 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
                     mID = mID + "(" + seqDatum.participantRef + ")";
                 }
                 var molecule = self.molecules.get(mID);
-                var seqDatum = new SequenceDatum(molecule, seqDatum.pos)
+                var seqDatum = new SequenceFeature(molecule, seqDatum.pos)
                 var annotation = new Annotation(annotName, seqDatum);
                 if (molecule.miFeatures == null) {
                     molecule.miFeatures = new Array();
@@ -813,12 +813,12 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
             var fromFeaturePositions = new Array();
             var seqDatumCount = fromSeqData.length;
             for (var i = 0; i < seqDatumCount; i++) {
-                fromFeaturePositions.push(new SequenceDatum(getNode(fromSeqData[i]), fromSeqData[i].pos));
+                fromFeaturePositions.push(new SequenceFeature(getNode(fromSeqData[i]), fromSeqData[i].pos));
             }
             var toFeaturePositions = new Array();
             seqDatumCount = toSeqData.length;
             for (i = 0; i < seqDatumCount; i++) {
-                toFeaturePositions.push(new SequenceDatum(getNode(toSeqData[i]), toSeqData[i].pos));
+                toFeaturePositions.push(new SequenceFeature(getNode(toSeqData[i]), toSeqData[i].pos));
             }
             //~ if (endsSwapped === false) {
             sequenceLink = new SequenceLink(seqLinkId, fromFeaturePositions, toFeaturePositions, self, interaction);
@@ -1122,7 +1122,7 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
                 for (m = 0; m < molCount; m++) {
                     var mol = mols[m];
                     if (mol.id.indexOf('uniprotkb_') === 0) { //LIMIT IT TO PROTEINS
-                        var annotation = new Annotation(mol.json.label, new SequenceDatum(null, 1 + "-" + mol.size));
+                        var annotation = new Annotation(mol.json.label, new SequenceFeature(null, 1 + "-" + mol.size));
                         mol.setPositionalFeatures([annotation]);
                     }
                 }
