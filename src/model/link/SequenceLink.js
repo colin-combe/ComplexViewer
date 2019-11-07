@@ -201,9 +201,9 @@ SequenceLink.prototype.setLinkCoordinates = function(interactor) {
                 }
             }
             if (!isNaN(parseFloat(seqDatum.uncertainBegin)) && isFinite(seqDatum.uncertainBegin)) {
-                var uncertainStart = seqDatum.uncertainBegin * 1;
-                if (lowestLinkedRes === null || uncertainStart < lowestLinkedRes) {
-                    lowestLinkedRes = uncertainStart;
+                var uncertainBegin = seqDatum.uncertainBegin * 1;
+                if (lowestLinkedRes === null || uncertainBegin < lowestLinkedRes) {
+                    lowestLinkedRes = uncertainBegin;
                 }
             }
             if (!isNaN(parseFloat(seqDatum.end)) && isFinite(seqDatum.end)) {

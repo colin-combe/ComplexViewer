@@ -12,85 +12,81 @@
  *              "n-n" = n-terminal range (to be represented as link to box beside n terminal)
  *              "c-c" = c-terminal range (to be represented as link to box beside c terminal)
  *              "123-123" = specific residue
- *              "123-456" = segment? (don't say range)
- *              "86..123-456..464" = segment with uncertain boundaries
- *              "86..123-456" = segment with one uncertain boundary
- *              "<8-123" = uncertain start between 1 and 8 to 123
- *              "123->256" = uncertain end between 256 and interactor.sequence.length
+ *              "123-456" = feature sequence
+ *              "86..123-456..464" = feature sequence with uncertain boundaries
+ *              "86..123-456" = feature sequence with one uncertain boundary
+ *              "<8-123" = feature sequence w uncertain start between 1 and 8 to 123
+ *              "123->256" = feature sequence w uncertain end between 256 and interactor.sequence.length
  */
 
 function SequenceDatum(node, sequenceDatumString) {
     this.node = node;
     this.sequenceDatumString = sequenceDatumString.trim();
 
-    this.uncertainBegin = null;
-    this.begin = '?';
-    this.end = '?';
-    this.uncertainEnd = null;
-
-    var dashPosition = sequenceDatumString.indexOf('-');
-    var firstPart = sequenceDatumString.substring(0, dashPosition);
-    var secondPart = sequenceDatumString.substring(dashPosition + 1);
-
-    if (firstPart.indexOf('.') === -1) {
-        this.begin = firstPart;
-    } else {
-        var firstDotPosition = firstPart.indexOf('.');
-        this.uncertainBegin = firstPart.substring(0, firstDotPosition) * 1;
-        this.begin = firstPart.substring(firstDotPosition + 2) * 1;
-    }
-
-    if (secondPart.indexOf('.') === -1) {
-        this.end = secondPart;
-    } else {
-        var firstDotPosition = secondPart.indexOf('.');
-        this.end = secondPart.substring(0, firstDotPosition) * 1;
-        this.uncertainEnd = secondPart.substring(firstDotPosition + 2) * 1;
-    }
-
-    if (this.begin == 'n') {
-        this.begin = 0;
-    }
-    if (this.begin == 'c') {
-        this.begin = node.size + 1;
-    }
-    if (this.end == 'n') {
+    if (this.sequenceDatumString == "?-?") {
+        this.uncertainBegin = -40;
+        this.begin = -20;
         this.end = -20;
-    }
-    if (this.end == 'c') {
-        this.end = node.size + 20;
-    }
+    } else if (this.sequenceDatumString == "n-n") {
+        this.uncertainBegin = -20;
+        this.begin = 0;
+        this.end = 0;
+    } else if (this.sequenceDatumString == "c-c") {
+        this.begin = node.size + 1;
+        this.end = node.size + 1;
+        this.uncertainEnd = node.size + 21;
+    } else {
 
-    if (firstPart.indexOf('<') > -1) {
-        this.uncertainBegin = 0;
-        this.begin = firstPart.substring(1, firstPart.length);
-    }
-    if (secondPart.indexOf('>') > -1) {
-        this.end = secondPart.substring(1, firstPart.length);
-        this.uncertainEnd = node.size;
-    }
+        var dashPosition = sequenceDatumString.indexOf('-');
+        var firstPart = sequenceDatumString.substring(0, dashPosition);
+        var secondPart = sequenceDatumString.substring(dashPosition + 1);
 
-    if (firstPart.indexOf('>') > -1 && secondPart.indexOf('<') > -1) {
-        this.uncertainBegin = firstPart.substring(1, firstPart.length);
-        this.begin = secondPart.substring(1, firstPart.length);
-        this.end = this.begin;
-    }
+        if (firstPart.indexOf('.') === -1) {
+            this.begin = firstPart;
+        } else {
+            var firstDotPosition = firstPart.indexOf('.');
+            this.uncertainBegin = firstPart.substring(0, firstDotPosition) * 1;
+            this.begin = firstPart.substring(firstDotPosition + 2) * 1;
+        }
 
-    if (this.uncertainBegin == null) {
-        this.uncertainBegin = this.begin;
-    }
-    if (this.uncertainEnd == null) {
-        this.uncertainEnd = this.end;
-    }
+        if (secondPart.indexOf('.') === -1) {
+            this.end = secondPart;
+        } else {
+            var firstDotPosition = secondPart.indexOf('.');
+            this.end = secondPart.substring(0, firstDotPosition) * 1;
+            this.uncertainEnd = secondPart.substring(firstDotPosition + 2) * 1;
+        }
 
+        if (this.begin == 'n') {
+            this.uncertainBegin = 0;
+            this.begin = this.end;
+            this.uncertainEnd = this.end;
+        }
+
+        if (this.end == 'c') {
+            this.uncertainEnd = node.size;
+            this.end = this.begin;
+            this.uncertainBegin = this.begin;
+        }
+
+        if (firstPart.indexOf('<') > -1) {
+            this.uncertainBegin = 0;
+            this.begin = firstPart.substring(1, firstPart.length);
+        }
+        if (secondPart.indexOf('>') > -1) {
+            this.end = secondPart.substring(1, firstPart.length);
+            this.uncertainEnd = node.size;
+        }
+
+        if (firstPart.indexOf('>') > -1 && secondPart.indexOf('<') > -1) {
+            this.uncertainBegin = firstPart.substring(1, firstPart.length);
+            this.begin = secondPart.substring(1, firstPart.length);
+            this.end = this.begin;
+        }
+    }
 }
 
 SequenceDatum.prototype.toString = function() {
-    // var string = "";
-    // if (this.uncertainBegin) string += this.uncertainBegin + '..';
-    // if (this.start) string += this.begin+ '-';
-    // if (this.end) string += this.end;
-    // if (this.uncertainEnd) string += '..' + this.uncertainEnd;
     return this.sequenceDatumString;
 }
 //On 06/06/13 09:22, marine@ebi.ac.uk wrote:

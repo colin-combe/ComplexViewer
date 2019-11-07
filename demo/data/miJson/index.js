@@ -1,12 +1,12 @@
 var exampleIndex = [{
-        "ac": "CPX-1556",
-        "name": "CMG-Pol epsilon complex",
-        "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-1556",
-    },
-    {
         "ac": "CPX-297",
         "name": "CPX-297",
         "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-297",
+    },
+    {
+        "ac": "CPX-1556",
+        "name": "CMG-Pol epsilon complex",
+        "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-1556",
     },
     {
         "ac": "CPX-2020",

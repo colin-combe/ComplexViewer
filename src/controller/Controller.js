@@ -429,7 +429,7 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
     for (var f = 0; f < fCount; f++) {
         var feature = features[f];
         // add features to interactors/participants/nodes
-        //console.log("FEATURE:" + feature.name, feature.sequenceData);
+        console.log("FEATURE:" + feature.name, feature.sequenceData);
         var annotName = "";
         if (typeof feature.name !== 'undefined') {
             annotName += feature.name + ' ';
@@ -453,14 +453,11 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
                 }
                 var molecule = self.molecules.get(mID);
                 var seqDatum = new SequenceDatum(molecule, seqDatum.pos)
-                if (isNaN(seqDatum.begin) === false && isNaN(seqDatum.end) === false) {
-                    var annotation = new Annotation(annotName);
-                    annotation.initFromSeqDatum(seqDatum);
-                    if (molecule.miFeatures == null) {
-                        molecule.miFeatures = new Array();
-                    }
-                    molecule.miFeatures.push(annotation);
+                var annotation = new Annotation(annotName, seqDatum);
+                if (molecule.miFeatures == null) {
+                    molecule.miFeatures = new Array();
                 }
+                molecule.miFeatures.push(annotation);
             }
         }
     }
@@ -1115,7 +1112,7 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
         if (annotationChoice.toUpperCase() === "MI FEATURES") {
             for (m = 0; m < molCount; m++) {
                 var mol = mols[m];
-                if (mol.id.indexOf('uniprotkb_') === 0) { //LIMIT IT TO PROTEINS //todo:fix
+                if (mol.id.indexOf('uniprotkb_') === 0) { //LIMIT IT TO PROTEINS
                     mol.setPositionalFeatures(mol.miFeatures);
                 }
             }
@@ -1124,8 +1121,8 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
             if (self.proteinCount < 21) {
                 for (m = 0; m < molCount; m++) {
                     var mol = mols[m];
-                    if (mol.id.indexOf('uniprotkb_') === 0) { //LIMIT IT TO PROTEINS //todo:fix
-                        var annotation = new Annotation(mol.json.label, 1, mol.size);
+                    if (mol.id.indexOf('uniprotkb_') === 0) { //LIMIT IT TO PROTEINS
+                        var annotation = new Annotation(mol.json.label, new SequenceDatum(null, 1 + "-" + mol.size));
                         mol.setPositionalFeatures([annotation]);
                     }
                 }
@@ -1140,11 +1137,6 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
                 if (mol.id.indexOf('uniprotkb_') === 0) { //LIMIT IT TO PROTEINS //todo:fix
                     xiNET_Storage.getSuperFamFeatures(mol.id, function(id, fts) {
                         var m = self.molecules.get(id);
-                        for (var f = 0; f < fts.length; f++){
-                            var feature = fts[f];
-                            feature.uncertainBegin = feature.begin;
-                            feature.uncertainEnd = feature.end;
-                        }
                         m.setPositionalFeatures(fts);
                         molsAnnotated++;
                         if (molsAnnotated === molCount) {
@@ -1167,8 +1159,7 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
                         var m = self.molecules.get(id);
                         for (var f = 0; f < fts.length; f++){
                             var feature = fts[f];
-                            feature.uncertainBegin = feature.begin;
-                            feature.uncertainEnd = feature.end;
+                            feature.seqDatum = {begin: feature.begin, end: feature.end};
                         }
                         m.setPositionalFeatures(fts);
                         molsAnnotated++;
@@ -1196,14 +1187,11 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
         }
         var catCount = categories.values().length;
 
-        var colourScheme; // = null;
+        var colourScheme;
         if (catCount < 3) {
             catCount = 3;
         }
-        //~ if (catCount < 21) {
         if (catCount < 5) {
-            //~ var reversed = colorbrewer.Accent[catCount].slice().reverse();
-            //~ colourScheme = d3.scale.ordinal().range(reversed);
             colourScheme = d3.scale.ordinal().range(colorbrewer.Set1[4]);
         } else if (catCount < 13) {
             var reversed = colorbrewer.Set3[catCount].slice().reverse();
@@ -1248,19 +1236,11 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
                 anno.fuzzyStart.setAttribute("stroke", colour);
                 anno.fuzzyEnd.setAttribute("fill", checkedFill);
                 anno.fuzzyEnd.setAttribute("stroke", colour);
-
-                var fill;
-                if (anno.seqDatum && (anno.seqDatum.sequenceDatumString.indexOf('n') > -1 || anno.seqDatum.sequenceDatumString.indexOf('c') > -1)) {
-                    fill = checkedFill;
-                } else {
-                    fill = colour;
-                }
-                anno.certain.setAttribute("fill", fill);
+                anno.certain.setAttribute("fill", colour);
                 anno.certain.setAttribute("stroke", colour);
 
             }
         }
-        //~ }
         self.legendChanged(colourScheme);
     }
 };
