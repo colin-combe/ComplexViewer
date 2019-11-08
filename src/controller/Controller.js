@@ -52,11 +52,59 @@ xiNET.Controller = function(targetDiv, debug) {
     }
     // targetDiv could be div itself or id of div - lets deal with that
     if (typeof targetDiv === "string") {
-        this.targetDiv = document.getElementById(targetDiv);
+        this.el = document.getElementById(targetDiv);
     } else {
-        this.targetDiv = targetDiv;
+        this.el = targetDiv;
     }
-    this.emptyElement(this.targetDiv); //avoids prob with 'save - web page complete'
+
+    //avoids prob with 'save - web page complete'
+    d3.select(this.el).selectAll("*").remove();
+
+    var customMenuSel = d3.select(this.el)
+        .append("div").classed("custom-menu-margin", true)
+        .append("div").classed("custom-menu", true)
+        .append("ul");
+
+    customMenuSel.append("li").classed("collapse", true).text("Collapse");
+    var scaleButtonsListItemSel = customMenuSel.append("li").text("Scale: ");
+    // var dataSubsetDivSel = mainDivSel.append("div").attr ("class", "filterControlGroup");
+
+    this.barScales = [0.01, 0.2, 1, 2, 4, 8];
+    var scaleButtons = scaleButtonsListItemSel.selectAll("ul.custom-menu")
+        .data(this.barScales)
+        .enter()
+        .append("div")
+        .attr("class", "barScale")
+        .append("label");
+    var self = this;
+    scaleButtons.append("span")
+        .text(function(d) {
+            if (d == 8) return "AA";
+            else return d;
+        });
+    scaleButtons.append("input")
+        // .attr ("id", function(d) { return d*100; })
+        .attr("class", function(d) {
+            return "scaleButton scaleButton_" + (d * 100);
+        })
+        .attr("name", "scaleButtons")
+        .attr("type", "radio")
+        .on("change", function(d) {
+            self.contextMenuProt.setStickScale(d, self.contextMenuPoint);
+        });
+
+    var contextMenu = d3.select(".custom-menu-margin").node();
+    contextMenu.onmouseout = function(evt) {
+        var e = evt.toElement || evt.relatedTarget;
+        do {
+            if (e == this) return;
+            e = e.parentNode;
+        } while (e);
+        self.contextMenuProt = null;
+        d3.select(this).style("display", "none");
+    };
+
+
     //create SVG elemnent
     this.svgElement = document.createElementNS(Config.svgns, "svg");
     this.svgElement.setAttribute('id', 'complexViewerSVG');
@@ -89,7 +137,7 @@ xiNET.Controller = function(targetDiv, debug) {
     //legend changed callbacks
     this.legendCallbacks = new Array();
 
-    this.targetDiv.appendChild(this.svgElement);
+    this.el.appendChild(this.svgElement);
 
     // various groups needed
     this.container = document.createElementNS(Config.svgns, "g");
@@ -279,6 +327,76 @@ xiNET.Controller.prototype.clear = function() {
     this.hideTooltip();
 
     this.state = MouseEventCodes.MOUSE_UP;
+};
+
+
+//this can be done before all proteins have their sequences
+xiNET.Controller.prototype.initLayout = function() {
+
+    var maxSeqLength = 0;
+
+    var mols = this.molecules.values();
+    var molCount = mols.length;
+    for (var m = 0; m < molCount; m++) {
+        var participant = mols[m];
+        var protSize = participant.size;
+        if (protSize > maxSeqLength) {
+            maxSeqLength = protSize;
+        }
+    }
+    var width = this.svgElement.parentNode.clientWidth;
+    var defaultPixPerRes = ((width * 0.8) - Molecule.LABELMAXLENGTH) / maxSeqLength;
+
+    console.log("defautPixPerRes:" + defaultPixPerRes);
+
+    // https://stackoverflow.com/questions/12141150/from-list-of-integers-get-number-closest-to-a-given-value/12141511#12141511
+    function takeClosest(myList, myNumber) {
+        var bisect = d3.bisector(function(d) {
+            return d;
+        }).left;
+        var pos = bisect(myList, myNumber);
+        if (pos == 0 || pos == 1) {
+            return myList[0]; // don't return smallest scale as default
+        }
+        if (pos == myList.length) {
+            return myList[myList.length - 1]
+        }
+        var before = myList[pos - 1]
+        return before;
+    }
+
+    this.defaultBarScale = takeClosest(this.barScales, defaultPixPerRes);
+    console.log("default bar scale: " + this.defaultBarScale)
+
+    var mols = this.molecules.values();
+    var molCount = mols.length;
+    for (var m = 0; m < molCount; m++) {
+        var prot = mols[m];
+        if (prot.upperGroup) {
+            //this.proteinLower.appendChild(prot.lowerGroup);
+            this.proteinUpper.appendChild(prot.upperGroup);
+            if (!prot.stickZoom) {
+                prot.stickZoom = this.defaultBarScale;
+            }
+            prot.scale();
+        }
+    }
+
+    //may need to comment out following if probs
+    /*if (pCount < 3) {
+        var renderedParticipantsArr = Array.from(this.renderedProteins.values());
+        var rpCount =  renderedParticipantsArr.length;
+        for (var rp = 0; rp < rpCount; rp++ ) {
+            var renderedParticipant = renderedParticipantsArr[rp];
+            //~ if (renderedParticipant.hidden == false) {//todo: appears to be not working
+                //renderedParticipant.busy = false;
+                renderedParticipant.setForm(1);
+            //~ }
+        }
+    }*/
+
+
+    this.autoLayout();
 };
 
 xiNET.Controller.prototype.legendChanged = function(colourScheme) {
@@ -1157,9 +1275,12 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
                 if (mol.id.indexOf('uniprotkb_') === 0) { //LIMIT IT TO PROTEINS //todo:fix
                     xiNET_Storage.getUniProtFeatures(mol.id, function(id, fts) {
                         var m = self.molecules.get(id);
-                        for (var f = 0; f < fts.length; f++){
+                        for (var f = 0; f < fts.length; f++) {
                             var feature = fts[f];
-                            feature.seqDatum = {begin: feature.begin, end: feature.end};
+                            feature.seqDatum = {
+                                begin: feature.begin,
+                                end: feature.end
+                            };
                         }
                         m.setPositionalFeatures(fts);
                         molsAnnotated++;
@@ -1243,19 +1364,6 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
         }
         self.legendChanged(colourScheme);
     }
-};
-
-//this can be done before all proteins have their sequences
-xiNET.Controller.prototype.initLayout = function() {
-    var mols = this.molecules.values();
-    var molCount = mols.length;
-    for (var m = 0; m < molCount; m++) {
-        var mol = mols[m];
-        if (mol.upperGroup) {
-            this.proteinUpper.appendChild(mol.upperGroup);
-        }
-    }
-    this.autoLayout();
 };
 
 //requires all polymers have had sequence set
@@ -1479,11 +1587,19 @@ xiNET.Controller.prototype.mouseUp = function(evt) {
                         this.dragElement.switchStickScale(c);
                     } else {
                         if (this.sequenceInitComplete === true) {
-                            if (this.dragElement.form === 0) {
-                                this.dragElement.setForm(1, c);
-                            } else {
-                                this.dragElement.setForm(0, c);
-                            }
+                          if (this.dragElement.form === 0) {
+                              this.dragElement.setForm(1);
+                          // } else if (this.dragElement.type == "nary") {
+                          //     this.dragElement.setForm(0);
+                          } else {
+                              // this.model.get("tooltipModel").set("contents", null);
+                              this.contextMenuProt = this.dragElement;
+                              this.contextMenuPoint = c;
+                              var menu = d3.select(".custom-menu-margin")
+                              menu.style("top", (evt.pageY - 20) + "px").style("left", (evt.pageX - 20) + "px").style("display", "block");
+                              d3.select(".scaleButton_" + (this.dragElement.stickZoom * 100)).property("checked", true)
+                          }
+
                         }
                     }
                 }

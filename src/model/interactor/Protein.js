@@ -95,6 +95,23 @@ function Protein(id, xinetController, json, name) {
 
     this.scaleLabels = new Array();
 
+    //since form is set to 0, make this a circle, this stuff is equivalant to
+    // end result of toCircle but without transition
+    var r = this.getBlobRadius();
+    d3.select(this.outline)
+        .attr("fill-opacity", 1)
+        .attr("fill", "#ffffff")
+      //  .attr("fill", protColourModel.getColour(participant))
+        .attr("x", -r).attr("y", -r)
+        .attr("width", r * 2).attr("height", r * 2)
+        .attr("rx", r).attr("ry", r);
+    d3.select(this.highlight)
+        .attr("width", (r * 2) + 5).attr("height", (r * 2) + 5)
+        .attr("x", -r - 2.5).attr("y", -r - 2.5)
+        .attr("rx", r + 2.5).attr("ry", r + 2.5)
+        .attr("stroke-opacity", 0);
+    this.labelSVG.setAttribute("transform", "translate(" + (-(r + 5)) + "," + "-5)");
+
     // events
     var self = this;
     //    this.upperGroup.setAttribute('pointer-events','all');

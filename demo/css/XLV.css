@@ -30,3 +30,45 @@ svg {
         -2px 1px 0 white,
         2px 1px 0 white;*/
 }
+
+
+.custom-menu-margin {
+    padding: 20px;
+    display: none;
+    z-index: 10000;
+    position: absolute;
+}
+
+.custom-menu {
+    overflow: hidden;
+    border: 1px solid #CCC;
+    white-space: nowrap;
+    /*
+  font-family: sans-serif;
+*/
+    background: #FFF;
+    color: #333;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    pointer-events: all;
+}
+
+.custom-menu li {
+    padding: 8px 12px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.custom-menu li:hover {
+    background-color: #DEF;
+}
+
+.barScale {
+    display: inline;
+    padding-left: 10px;
+}
