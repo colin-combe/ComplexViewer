@@ -220,7 +220,7 @@ Polymer.prototype.toCircle = function(svgP) {
     this.busy = true;
 
     var protLength = this.size * this.stickZoom;
-     var r = this.getBlobRadius();
+    var r = this.getBlobRadius();
     //
     d3.select(this.background).transition()
         .attr("x", -r).attr("y", -r)
@@ -231,7 +231,7 @@ Polymer.prototype.toCircle = function(svgP) {
         .attr("x", -r).attr("y", -r)
         .attr("width", r * 2).attr("height", r * 2)
         .attr("rx", r).attr("ry", r)
-       .duration(Polymer.transitionTime);
+        .duration(Polymer.transitionTime);
     d3.select(this.annotationsSvgGroup).transition()
         .attr("transform", "scale(1, 1)")
         .duration(Polymer.transitionTime);
@@ -555,18 +555,15 @@ Polymer.prototype.setPositionalFeatures = function(posFeats) {
             anno.fuzzyStart.onmouseover = toolTipFunc;
             anno.certain.onmouseover = toolTipFunc;
             anno.fuzzyEnd.onmouseover = toolTipFunc;
-            if (this.annotationsSvgGroup) { //hack
-                if (typeof anno.seqDatum.uncertainBegin != "undefined") {
-                    this.annotationsSvgGroup.appendChild(anno.fuzzyStart);
-                }
-
-                if (anno.seqDatum.begin != anno.seqDatum.end) {
-                    this.annotationsSvgGroup.appendChild(anno.certain);
-                }
-                if (typeof anno.seqDatum.uncertainEnd != "undefined") {
-                    this.annotationsSvgGroup.appendChild(anno.fuzzyEnd);
-                }
+            // if (this.annotationsSvgGroup) { //hack
+            if (typeof anno.seqDatum.uncertainBegin != "undefined") {
+                this.annotationsSvgGroup.appendChild(anno.fuzzyStart);
             }
+            this.annotationsSvgGroup.appendChild(anno.certain);
+            if (typeof anno.seqDatum.uncertainEnd != "undefined") {
+                this.annotationsSvgGroup.appendChild(anno.fuzzyEnd);
+            }
+            // }
         }
     }
 };

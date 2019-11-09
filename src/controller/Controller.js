@@ -824,8 +824,6 @@ xiNET.Controller.prototype.autoLayout = function() {
         mi++;
     }
 
-    var linkedParticipants = new Set();
-
     var links = this.allBinaryLinks.values();
     var linkCount = links.length;
     for (var l = 0; l < linkCount; l++) {
@@ -843,9 +841,6 @@ xiNET.Controller.prototype.autoLayout = function() {
                 linkObj.target = molLookUp[toMol.id];
                 linkObj.id = link.id;
                 layoutObj.links.push(linkObj);
-
-                linkedParticipants.add(source);
-                linkedParticipants.add(target);
             } else {
                 alert("NOT RIGHT");
             }
@@ -921,7 +916,7 @@ xiNET.Controller.prototype.autoLayout = function() {
         for (var n = 0; n < nodeCount; n++) {
             var node = nodes[n];
             var mol = self.molecules.get(node.id);
-            var nx = node.x + (width / 2) + 60;
+            var nx = node.x + (width / 2);
             var ny = node.y + (height / 2);
             mol.setPosition(nx, ny);
         }
@@ -1196,7 +1191,7 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
                     var participant = self.molecules.get(participantId);
                     if (typeof participant === 'undefined') {
                         var interactor = self.interactors.get(intRef);
-                        participant = newInteractor(interactor, participantId, intRef);
+                        participant = newParticipant(interactor, participantId, intRef);
                         self.molecules.set(participantId, participant);
                     }
 
@@ -1215,7 +1210,7 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
         }
     };
 
-    function newInteractor(interactor, participantId, interactorRef) {
+    function newParticipant(interactor, participantId, interactorRef) {
         var participant;
         if (typeof interactor == "undefined" || interactor.type.id === 'MI:1302') {
             //must be a previously unencountered complex -
@@ -1351,7 +1346,7 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
             var interactor = interactors[i];
             var participant;
             var participantId = interactor.id;
-            participant = newInteractor(interactor, participantId);
+            participant = newParticipant(interactor, participantId);
             self.molecules.set(participantId, participant);
         }
 

@@ -137,12 +137,12 @@ function Protein(id, xinetController, json, name) {
     //TODO - this wastes a bit memory because the property is not on the prototype, fix
     Object.defineProperty(this, "width", {
         get: function width() {
-            return this.upperGroup.getBBox().width + 5;
+            return this.upperGroup.getBBox().width;
         }
     });
     Object.defineProperty(this, "height", {
         get: function height() {
-            return this.upperGroup.getBBox().height + 25;
+            return this.upperGroup.getBBox().height + 20;
         }
     });
 };
