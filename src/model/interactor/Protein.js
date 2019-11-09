@@ -10,7 +10,7 @@
 
 "use strict";
 
-var Molecule = require('./Molecule');
+var Interactor = require('./Interactor');
 var Polymer = require('./Polymer');
 //~ var Rotator = require('../../controller/Rotator');
 var Config = require('../../controller/Config');
@@ -77,7 +77,7 @@ function Protein(id, xinetController, json, name) {
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
     d3.select(this.labelSVG).attr("transform",
-        "translate( -" + (5) + " " + Molecule.labelY + ") rotate(0) scale(1, 1)");
+        "translate( -" + (5) + " " + Interactor.labelY + ") rotate(0) scale(1, 1)");
     this.upperGroup.appendChild(this.labelSVG);
     //ticks (and animo acid letters)
     this.ticks = document.createElementNS(Config.svgns, "g");

@@ -10,10 +10,10 @@
 
 "use strict";
 
-var Molecule = require('./Molecule');
+var Interactor = require('./Interactor');
 var Config = require('../../controller/Config');
 
-Complex.prototype = new Molecule();
+Complex.prototype = new Interactor();
 
 function Complex(id, xlvController, interactorRef, json) { //, name) {
     this.id = id; // id may not be accession (multiple Segments with same accesssion)
@@ -75,7 +75,7 @@ function Complex(id, xlvController, interactorRef, json) { //, name) {
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
     d3.select(this.labelSVG).attr("transform",
-        "translate( -" + (20) + " " + Molecule.labelY + ")"); // the hexagon has slightly bigger diameter
+        "translate( -" + (20) + " " + Interactor.labelY + ")"); // the hexagon has slightly bigger diameter
     this.upperGroup.appendChild(this.labelSVG);
 
     //make blob

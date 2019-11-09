@@ -4,18 +4,18 @@
 //    	This product includes software developed at
 //    	the Rappsilber Laboratory (http://www.rappsilberlab.org/).
 //
-//		MoleculeSet.js
+//		InteractorSet.js
 //
 //		authors: Colin Combe
 
 "use strict";
 
-var Molecule = require('./Molecule');
+var Interactor = require('./Interactor');
 var Config = require('../../controller/Config');
 
-MoleculeSet.prototype = new Molecule();
+InteractorSet.prototype = new Interactor();
 
-function MoleculeSet(id, xlvController, json, name) {
+function InteractorSet(id, xlvController, json, name) {
     this.id = id; // id may not be accession (multiple Segments with same accesssion)
     this.controller = xlvController;
     this.json = json;
@@ -81,7 +81,7 @@ function MoleculeSet(id, xlvController, json, name) {
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
     d3.select(this.labelSVG).attr("transform",
-        "translate( -" + (10) + " " + Molecule.labelY + ")");
+        "translate( -" + (10) + " " + Interactor.labelY + ")");
     this.upperGroup.appendChild(this.labelSVG);
 
     //make symbol
@@ -159,10 +159,10 @@ function MoleculeSet(id, xlvController, json, name) {
     });
 };
 
-MoleculeSet.prototype.getBlobRadius = function() {
+InteractorSet.prototype.getBlobRadius = function() {
     return 20;
 };
 
-MoleculeSet.prototype.setForm = function(form, svgP) {};
+InteractorSet.prototype.setForm = function(form, svgP) {};
 
-module.exports = MoleculeSet;
+module.exports = InteractorSet;

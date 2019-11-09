@@ -10,7 +10,7 @@
 
 "use strict";
 
-var Molecule = require('./Molecule');
+var Interactor = require('./Interactor');
 var Annotation = require('.//Annotation');
 var SequenceFeature = require('./../SequenceFeature');
 //var Rotator = require('../../controller/Rotator');
@@ -22,7 +22,7 @@ Polymer.transitionTime = 650;
 
 function Polymer() {}
 
-Polymer.prototype = new Molecule();
+Polymer.prototype = new Interactor();
 
 //sequence = amino acids in UPPERCASE, digits or lowercase can be used for modification info
 Polymer.prototype.setSequence = function(sequence) {
@@ -94,7 +94,7 @@ Polymer.prototype.scale = function() {
     if (this.form === 1) {
         var labelTransform = d3.transform(this.labelSVG.getAttribute("transform"));
         var k = this.controller.svgElement.createSVGMatrix().rotate(labelTransform.rotate)
-            .translate((-(((this.size / 2) * this.stickZoom) + 10)), Molecule.labelY); //.scale(z).translate(-c.x, -c.y);
+            .translate((-(((this.size / 2) * this.stickZoom) + 10)), Interactor.labelY); //.scale(z).translate(-c.x, -c.y);
         this.labelSVG.transform.baseVal.initialize(this.controller.svgElement.createSVGTransformFromMatrix(k));
 
         if (this.annotations) {
@@ -338,7 +338,7 @@ Polymer.prototype.toCircle = function(svgP) {
 
     function update(interp) {
         var labelTransform = d3.transform(self.labelSVG.getAttribute("transform"));
-        var k = self.controller.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), Molecule.labelY); //.scale(z).translate(-c.x, -c.y);
+        var k = self.controller.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), Interactor.labelY); //.scale(z).translate(-c.x, -c.y);
         self.labelSVG.transform.baseVal.initialize(self.controller.svgElement.createSVGTransformFromMatrix(k));
         //~
         if (xInterpol !== null) {
@@ -445,7 +445,7 @@ Polymer.prototype.toStick = function() {
 
     function update(interp) {
         var labelTransform = d3.transform(self.labelSVG.getAttribute("transform"));
-        var k = self.controller.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), Molecule.labelY); //.scale(z).translate(-c.x, -c.y);
+        var k = self.controller.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), Interactor.labelY); //.scale(z).translate(-c.x, -c.y);
         self.labelSVG.transform.baseVal.initialize(self.controller.svgElement.createSVGTransformFromMatrix(k));
 
         // var rot = rotationInterpol(cubicInOut(interp));
@@ -508,7 +508,7 @@ Polymer.prototype.getResidueCoordinates = function(r, yOff) {
 
 Polymer.prototype.setPositionalFeatures = function(posFeats) {
     if (posFeats) {
-        var y = -Molecule.STICKHEIGHT / 2;
+        var y = -Interactor.STICKHEIGHT / 2;
         //draw longest regions first
         posFeats.sort(function(a, b) {
             return (b.end - b.begin) - (a.end - a.begin);
@@ -590,8 +590,8 @@ Polymer.prototype.getAnnotationPieSliceArcPath = function(startRes, endRes) {
     var startAngle = ((startRes - 1) / this.size) * 360;
     var endAngle = ((endRes - 1) / this.size) * 360;
     var radius = this.getBlobRadius() - 2;
-    var arcStart = Molecule.trig(radius, startAngle - 90);
-    var arcEnd = Molecule.trig(radius, endAngle - 90);
+    var arcStart = Interactor.trig(radius, startAngle - 90);
+    var arcEnd = Interactor.trig(radius, endAngle - 90);
     var largeArch = 0;
     if ((endAngle - startAngle) > 180 || (endAngle == startAngle)) {
         largeArch = 1;
@@ -605,13 +605,13 @@ Polymer.prototype.getAnnotationPieSliceApproximatePath = function(startRes, endR
     var startAngle = ((startRes - 1) / this.size) * 360;
     var endAngle = ((endRes) / this.size) * 360;
     var pieRadius = this.getBlobRadius() - 2;
-    var arcStart = Molecule.trig(pieRadius, startAngle - 90);
-    var arcEnd = Molecule.trig(pieRadius, endAngle - 90);
+    var arcStart = Interactor.trig(pieRadius, startAngle - 90);
+    var arcEnd = Interactor.trig(pieRadius, endAngle - 90);
     var approximatePiePath = "M 0,0";
     var stepsInArc = 5;
     for (var sia = 0; sia <= Polymer.stepsInArc; sia++) {
         var angle = startAngle + ((endAngle - startAngle) * (sia / stepsInArc));
-        var siaCoord = Molecule.trig(pieRadius, angle - 90);
+        var siaCoord = Interactor.trig(pieRadius, angle - 90);
         approximatePiePath += " L " + siaCoord.x + "," + siaCoord.y;
     }
     approximatePiePath += " L " + 0 + "," + 0;

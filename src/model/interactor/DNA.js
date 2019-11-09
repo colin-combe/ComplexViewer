@@ -10,10 +10,10 @@
 
 "use strict";
 
-var Molecule = require('./Molecule');
+var Interactor = require('./Interactor');
 var Config = require('../../controller/Config');
 
-DNA.prototype = new Molecule();
+DNA.prototype = new Interactor();
 
 function DNA(id, xlvController, json, name) {
     this.id = id; // id may not be accession (multiple Segments with same accesssion)
@@ -79,7 +79,7 @@ function DNA(id, xlvController, json, name) {
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
     d3.select(this.labelSVG).attr("transform",
-        "translate( -" + (15) + " " + Molecule.labelY + ")");
+        "translate( -" + (15) + " " + Interactor.labelY + ")");
     this.upperGroup.appendChild(this.labelSVG);
 
     //make blob

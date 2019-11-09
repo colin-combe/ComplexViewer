@@ -4,7 +4,7 @@
 //      This product includes software developed at
 //      the Rappsilber Laboratory (http://www.rappsilberlab.org/).
 //
-//      Molecule.js
+//      Interactor.js
 //
 //      authors: Colin Combe
 
@@ -14,18 +14,18 @@ var colorbrewer = require('colorbrewer');
 var Config = require('../../controller/Config');
 
 //josh - should these be moved to Config.js?
-Molecule.LABELMAXLENGTH = 90; // maximal width reserved for protein-labels
-Molecule.labelY = -5; //label Y offset, better if calc'd half height of label once rendered
+Interactor.LABELMAXLENGTH = 90; // maximal width reserved for protein-labels
+Interactor.labelY = -5; //label Y offset, better if calc'd half height of label once rendered
 
-function Molecule() {}
+function Interactor() {}
 
-Molecule.prototype.addStoichiometryLabel = function(stoich) {
+Interactor.prototype.addStoichiometryLabel = function(stoich) {
     if (this.labelSVG) { //complexes don't have labels (yet?)
         this.labelSVG.childNodes[0].data = this.labelSVG.childNodes[0].data + ' [' + stoich + ']';
     }
 }
 
-Molecule.prototype.mouseDown = function(evt) {
+Interactor.prototype.mouseDown = function(evt) {
     this.controller.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
     //if a force layout exists then stop it
     if (this.controller.layout) {
@@ -46,7 +46,7 @@ Molecule.prototype.mouseDown = function(evt) {
     return false;
 };
 
-Molecule.prototype.touchStart = function(evt) {
+Interactor.prototype.touchStart = function(evt) {
     this.controller.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
     //if a force layout exists then stop it
     if (this.controller.layout !== undefined) {
@@ -66,26 +66,26 @@ Molecule.prototype.touchStart = function(evt) {
     return false;
 };
 
-Molecule.prototype.mouseOver = function(evt) {
+Interactor.prototype.mouseOver = function(evt) {
     this.controller.preventDefaultsAndStopPropagation(evt);
     this.showHighlight(true);
     //~ this.controller.setTooltip(this.id);
     return false;
 };
 
-Molecule.prototype.mouseOut = function(evt) {
+Interactor.prototype.mouseOut = function(evt) {
     this.controller.preventDefaultsAndStopPropagation(evt);
     this.showHighlight(false);
     this.controller.hideTooltip();
     return false;
 };
 
-Molecule.prototype.getBlobRadius = function() {
+Interactor.prototype.getBlobRadius = function() {
     return 15;
 };
 
 
-Molecule.prototype.showHighlight = function(show) {
+Interactor.prototype.showHighlight = function(show) {
     // default do nothing
     /*
     if (show === true) {
@@ -100,7 +100,7 @@ Molecule.prototype.showHighlight = function(show) {
     * */
 };
 
-Molecule.prototype.setSelected = function(select) {
+Interactor.prototype.setSelected = function(select) {
     //do nothing
     /*
      if (select && this.isSelected === false) {
@@ -117,12 +117,12 @@ Molecule.prototype.setSelected = function(select) {
      }*/
 };
 
-Molecule.prototype.getPosition = function() {
+Interactor.prototype.getPosition = function() {
     return [this.cx, this.cy];
 }
 
 // more accurately described as setting transform for top svg elements (sets scale also)
-Molecule.prototype.setPosition = function(x, y) {
+Interactor.prototype.setPosition = function(x, y) {
     this.cx = x;
     this.cy = y;
     if (this.form === 1) {
@@ -134,27 +134,27 @@ Molecule.prototype.setPosition = function(x, y) {
     }
 };
 
-Molecule.prototype.getAggregateSelfLinkPath = function() {
+Interactor.prototype.getAggregateSelfLinkPath = function() {
     var intraR = this.getBlobRadius() + 7;
     var sectorSize = 45;
-    var arcStart = Molecule.trig(intraR, 25 + sectorSize);
-    var arcEnd = Molecule.trig(intraR, -25 + sectorSize);
-    var cp1 = Molecule.trig(intraR, 40 + sectorSize);
-    var cp2 = Molecule.trig(intraR, -40 + sectorSize);
+    var arcStart = Interactor.trig(intraR, 25 + sectorSize);
+    var arcEnd = Interactor.trig(intraR, -25 + sectorSize);
+    var cp1 = Interactor.trig(intraR, 40 + sectorSize);
+    var cp2 = Interactor.trig(intraR, -40 + sectorSize);
     return 'M 0,0 ' +
         'Q ' + cp1.x + ',' + -cp1.y + ' ' + arcStart.x + ',' + -arcStart.y +
         ' A ' + intraR + ' ' + intraR + ' 0 0 1 ' + arcEnd.x + ',' + -arcEnd.y +
         ' Q ' + cp2.x + ',' + -cp2.y + ' 0,0';
 }
 
-Molecule.rotatePointAboutPoint = function(p, o, theta) {
+Interactor.rotatePointAboutPoint = function(p, o, theta) {
     theta = (theta / 360) * Math.PI * 2; //TODO: change theta arg to radians not degrees
     var rx = Math.cos(theta) * (p[0] - o[0]) - Math.sin(theta) * (p[1] - o[1]) + o[0];
     var ry = Math.sin(theta) * (p[0] - o[0]) + Math.cos(theta) * (p[1] - o[1]) + o[1];
     return [rx, ry];
 }
 
-Molecule.prototype.checkLinks = function() {
+Interactor.prototype.checkLinks = function() {
     function checkAll(linkMap) {
         var links = linkMap.values();
         var c = links.length;
@@ -171,7 +171,7 @@ Molecule.prototype.checkLinks = function() {
 }
 
 // update all lines (e.g after a move)
-Molecule.prototype.setAllLinkCoordinates = function() {
+Interactor.prototype.setAllLinkCoordinates = function() {
     var links = this.naryLinks.values();
     var c = links.length;
     for (var l = 0; l < c; l++) {
@@ -193,14 +193,14 @@ Molecule.prototype.setAllLinkCoordinates = function() {
     }
 };
 
-//todo: some tidying with regards whats in Molecule, whats in Polymer and whats in Gene,Protein, etc
-Molecule.prototype.clearPositionalFeatures = function(posFeats) {
+//todo: some tidying with regards whats in Interactor, whats in Polymer and whats in Gene,Protein, etc
+Interactor.prototype.clearPositionalFeatures = function(posFeats) {
     this.annotations = [];
     if (this.annotationsSvgGroup) d3.select(this.annotationsSvgGroup).selectAll("*").remove();
 }
 
 //TODO: remove this, use rotateAboutPoint instead
-Molecule.trig = function(radius, angleDegrees) {
+Interactor.trig = function(radius, angleDegrees) {
     //x = rx + radius * cos(theta) and y = ry + radius * sin(theta)
     var radians = (angleDegrees / 360) * Math.PI * 2;
     return {
@@ -209,10 +209,10 @@ Molecule.trig = function(radius, angleDegrees) {
     };
 };
 
-Molecule.prototype.showData = function(evt) {
+Interactor.prototype.showData = function(evt) {
     //~ alert ("molecule!");
 }
 
-Molecule.prototype.setForm = function(form, svgP) {};
+Interactor.prototype.setForm = function(form, svgP) {};
 
-module.exports = Molecule;
+module.exports = Interactor;
