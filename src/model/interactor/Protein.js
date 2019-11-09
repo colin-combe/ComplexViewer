@@ -100,11 +100,15 @@ function Protein(id, xinetController, json, name) {
     var r = this.getBlobRadius();
     d3.select(this.outline)
         .attr("fill-opacity", 1)
-        .attr("fill", "#ffffff")
-      //  .attr("fill", protColourModel.getColour(participant))
+        // .attr("fill", "#ffffff")
         .attr("x", -r).attr("y", -r)
         .attr("width", r * 2).attr("height", r * 2)
         .attr("rx", r).attr("ry", r);
+    d3.select(this.background)
+        .attr("x", -r).attr("y", -r)
+        .attr("width", r * 2).attr("height", r * 2)
+        .attr("rx", r).attr("ry", r);
+    d3.select(this.annotationsSvgGroup).attr("transform", "scale(1, 1)");
     d3.select(this.highlight)
         .attr("width", (r * 2) + 5).attr("height", (r * 2) + 5)
         .attr("x", -r - 2.5).attr("y", -r - 2.5)

@@ -15,10 +15,11 @@ var Config = require('../../controller/Config');
 
 Complex.prototype = new Molecule();
 
-function Complex(id, xlvController, interactorRef) { //, json, name) {
+function Complex(id, xlvController, interactorRef, json) { //, name) {
     this.id = id; // id may not be accession (multiple Segments with same accesssion)
     this.controller = xlvController;
     this.isComplexSymbol = true;
+    this.json = json;
     //this.json = json;
     //links
     this.naryLinks = d3.map();

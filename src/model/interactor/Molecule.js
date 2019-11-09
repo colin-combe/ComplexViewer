@@ -34,8 +34,8 @@ Molecule.prototype.mouseDown = function(evt) {
 
     this.controller.dragElement = this;
     //~ if (evt.controllerKey === false) {
-    this.controller.clearSelection();
-    this.setSelected(true);
+    // this.controller.clearSelection();
+    // this.setSelected(true);
     //~ } else {
     //~ this.setSelected(!this.isSelected);
     //~ }
@@ -196,7 +196,7 @@ Molecule.prototype.setAllLinkCoordinates = function() {
 //todo: some tidying with regards whats in Molecule, whats in Polymer and whats in Gene,Protein, etc
 Molecule.prototype.clearPositionalFeatures = function(posFeats) {
     this.annotations = [];
-    if (this.annotationsSvgGroup) this.controller.emptyElement(this.annotationsSvgGroup);
+    if (this.annotationsSvgGroup) d3.select(this.annotationsSvgGroup).selectAll("*").remove();
 }
 
 //TODO: remove this, use rotateAboutPoint instead

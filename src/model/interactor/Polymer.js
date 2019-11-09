@@ -33,7 +33,7 @@ Polymer.prototype.setSequence = function(sequence) {
 
 //by the time we get here all prot's have had their sequence set, so Polymer.MAXSIZE has correct value;
 Polymer.prototype.init = function() {
-    this.setForm(this.form);
+    //this.setForm(this.form);
     if (this.selfLink) this.selfLink.initSelfLinkSVG();
     this.setAllLinkCoordinates();
 };
@@ -56,42 +56,6 @@ Polymer.prototype.showHighlight = function(show) {
         this.highlight.setAttribute("stroke-opacity", "0");
         //~ }
         //~ this.highlight.setAttribute("stroke", xiNET.selectedColour.toRGB());
-    }
-};
-
-Polymer.prototype.setRotation = function(angle) {
-    this.rotation = angle % 360;
-    if (this.rotation < 0) {
-        this.rotation += 360;
-    }
-    this.upperGroup.setAttribute("transform", "translate(" + this.cx + " " + this.cy + ")" +
-        " scale(" + (this.controller.z) + ") " + "rotate(" + this.rotation + ")");
-
-    var svg = this.controller.svgElement;
-    var transformToContainingGroup = this.labelSVG.getAttribute("transform");
-    var labelTransform = d3.transform(transformToContainingGroup);
-    var sll = this.scaleLabels.length;
-    if (this.rotation >= 90 && this.rotation < 270) {
-        var k = svg.createSVGMatrix()
-            .translate(Math.abs(labelTransform.translate[0]), -Molecule.labelY)
-            .rotate(180, 0, 0);
-        this.labelSVG.transform.baseVal.initialize(svg.createSVGTransformFromMatrix(k));
-        if (this.form === 1) {
-            for (var i = 0; i < sll; i++) {
-                this.scaleLabels[i].setAttribute("transform", "scale(-1,1)");
-            }
-            this.ticks.setAttribute("transform", "scale(1,-1)");
-        }
-    } else {
-        var k = svg.createSVGMatrix()
-            .translate(-(Math.abs(labelTransform.translate[0])), Molecule.labelY);
-        this.labelSVG.transform.baseVal.initialize(svg.createSVGTransformFromMatrix(k));
-        if (this.form === 1) {
-            for (var j = 0; j < sll; j++) {
-                this.scaleLabels[j].setAttribute("transform", "scale(1,1)");
-            }
-            this.ticks.setAttribute("transform", "scale(1,1)");
-        }
     }
 };
 
@@ -126,11 +90,11 @@ Polymer.prototype.setStickScale = function(scale, svgP) {
 };
 
 Polymer.prototype.scale = function() {
-    var protLength = (this.size) * Polymer.UNITS_PER_RESIDUE * this.stickZoom;
+    var protLength = (this.size) * this.stickZoom;
     if (this.form === 1) {
         var labelTransform = d3.transform(this.labelSVG.getAttribute("transform"));
         var k = this.controller.svgElement.createSVGMatrix().rotate(labelTransform.rotate)
-            .translate((-(((this.size / 2) * Polymer.UNITS_PER_RESIDUE * this.stickZoom) + 10)), Molecule.labelY); //.scale(z).translate(-c.x, -c.y);
+            .translate((-(((this.size / 2) * this.stickZoom) + 10)), Molecule.labelY); //.scale(z).translate(-c.x, -c.y);
         this.labelSVG.transform.baseVal.initialize(this.controller.svgElement.createSVGTransformFromMatrix(k));
 
         if (this.annotations) {
@@ -163,7 +127,7 @@ Polymer.prototype.scale = function() {
 
 
         this.setScaleGroup();
-        this.setRotation(this.rotation); // places ticks and rotators
+      //  this.setRotation(this.rotation); // places ticks and rotators
     }
 };
 
@@ -194,7 +158,7 @@ Polymer.prototype.setScaleGroup = function() {
                 }
             }
         }
-        if (this.stickZoom > 8) {
+        if (this.stickZoom >= 8) {
             var seqLabelGroup = document.createElementNS(Config.svgns, "g");
             seqLabelGroup.setAttribute("transform", "translate(" + this.getResXwithStickZoom(res) + " " + 0 + ")");
             var seqLabel = document.createElementNS(Config.svgns, "text");
@@ -248,10 +212,12 @@ Polymer.prototype.setForm = function(form, svgP) {
                 this.toStick();
             }
         } else {
-            if (this.form !== 0) {
-                this.toCircle(svgP);
-            }
+            // if (this.form !== 0) {
+            this.toCircle(svgP);
+            var r = this.getBlobRadius();
+
         }
+        // }
     }
 };
 
@@ -260,8 +226,8 @@ Polymer.prototype.toCircle = function(svgP) {
     this.busy = true;
 
     var protLength = this.size * this.stickZoom;
-    var r = this.getBlobRadius();
-
+     var r = this.getBlobRadius();
+    //
     d3.select(this.background).transition()
         .attr("x", -r).attr("y", -r)
         .attr("width", r * 2).attr("height", r * 2)
@@ -271,7 +237,7 @@ Polymer.prototype.toCircle = function(svgP) {
         .attr("x", -r).attr("y", -r)
         .attr("width", r * 2).attr("height", r * 2)
         .attr("rx", r).attr("ry", r)
-        .duration(Polymer.transitionTime);
+       .duration(Polymer.transitionTime);
     d3.select(this.annotationsSvgGroup).transition()
         .attr("transform", "scale(1, 1)")
         .duration(Polymer.transitionTime);
@@ -381,7 +347,7 @@ Polymer.prototype.toCircle = function(svgP) {
 
         var rot = rotationInterpol(cubicInOut(interp));
         self.stickZoom = stickZoomInterpol(cubicInOut(interp))
-        self.setRotation(rot);
+      //  self.setRotation(rot);
         self.setAllLinkCoordinates();
 
         if (interp === 1) { // finished - tidy up
@@ -402,15 +368,6 @@ Polymer.prototype.toCircle = function(svgP) {
 Polymer.prototype.toStick = function() {
     this.busy = true;
     this.form = 1;
-
-    //place rotators
-    /*this.upperGroup.appendChild(this.lowerRotator.svg);
-    this.upperGroup.appendChild(this.upperRotator.svg);
-    this.lowerRotator.svg.setAttribute("transform",
-        "translate(" + (this.getResXwithStickZoom(0.5) - Polymer.rotOffset) + " 0)");
-    this.upperRotator.svg.setAttribute("transform",
-        "translate(" + (this.getResXwithStickZoom(this.size - 0 + 0.5) + Polymer.rotOffset) + " 0)");*/
-
     //remove prot-prot links - would it be better if checkLinks did this? - think not
     var c = this.binaryLinks.values().length;
     for (var l = 0; l < c; l++) {
@@ -491,8 +448,8 @@ Polymer.prototype.toStick = function() {
         var k = self.controller.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), Molecule.labelY); //.scale(z).translate(-c.x, -c.y);
         self.labelSVG.transform.baseVal.initialize(self.controller.svgElement.createSVGTransformFromMatrix(k));
 
-        var rot = rotationInterpol(cubicInOut(interp));
-        self.setRotation(rot);
+        // var rot = rotationInterpol(cubicInOut(interp));
+        // self.setRotation(rot);
 
         var currentLength = lengthInterpol(cubicInOut(interp));
         d3.select(self.highlight).attr("width", currentLength).attr("x", -(currentLength / 2) + (0.5 * self.stickZoom));
@@ -678,20 +635,5 @@ Polymer.prototype.getAnnotationRectPath = function(startRes, endRes) {
         " Z";
     return rectPath;
 };
-
-/*Polymer.prototype.getAnnotationRect = function(startRes, endRes) {
-    var rect = document.createElementNS(Config.svgns, "rect");
-    var bottom = Polymer.STICKHEIGHT / 2,
-        top = -Polymer.STICKHEIGHT / 2;
-    var annotX = this.getResXwithStickZoom(startRes - 0.5);
-    var annotSize = (1 + (endRes - startRes));
-    var annotLength = annotSize * Polymer.UNITS_PER_RESIDUE * this.stickZoom;
-
-    rect.setAttribute("x", annotX);
-    rect.setAttribute("y", top);
-    rect.setAttribute("height", Polymer.STICKHEIGHT);
-    rect.setAttribute("width", annotLength);
-    return rect;
-}*/
 
 module.exports = Polymer;

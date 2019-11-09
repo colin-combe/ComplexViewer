@@ -50,7 +50,7 @@ Link.prototype.mouseDown = function(evt) {
         this.controller.layout.stop();
     }
     this.controller.dragElement = this;
-    this.controller.clearSelection();
+    //this.controller.clearSelection();
     //this.setSelected(true);
     //store start location
     var p = this.controller.getEventPoint(evt); // seems to be correct, see above
