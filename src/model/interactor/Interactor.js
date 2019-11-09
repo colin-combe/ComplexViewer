@@ -27,42 +27,24 @@ Interactor.prototype.addStoichiometryLabel = function(stoich) {
 
 Interactor.prototype.mouseDown = function(evt) {
     this.controller.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
-    //if a force layout exists then stop it
-    if (this.controller.layout) {
-        this.controller.layout.stop();
+    if (typeof this.controller.d3cola !== 'undefined' && this.controller.d3cola != null) {
+        this.controller.d3cola.stop();
     }
-
     this.controller.dragElement = this;
-    //~ if (evt.controllerKey === false) {
-    // this.controller.clearSelection();
-    // this.setSelected(true);
-    //~ } else {
-    //~ this.setSelected(!this.isSelected);
-    //~ }
-    //store start location
     var p = this.controller.getEventPoint(evt);
     this.controller.dragStart = this.controller.mouseToSVG(p.x, p.y);
-    //~ this.showData();
     return false;
 };
 
 Interactor.prototype.touchStart = function(evt) {
     this.controller.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
-    //if a force layout exists then stop it
-    if (this.controller.layout !== undefined) {
-        this.controller.layout.stop();
+    if (this.controller.d3cola !== undefined) {
+        this.controller.d3cola.stop();
     }
     this.controller.dragElement = this;
-    //~ if (evt.controllerKey === false) {
-    this.controller.clearSelection();
-    this.setSelected(true);
-    //~ } else {
-    //~ this.setSelected(!this.isSelected);
-    //~ }
     //store start location
     var p = this.controller.getTouchEventPoint(evt);
     this.controller.dragStart = this.controller.mouseToSVG(p.x, p.y);
-    //        this.showData();
     return false;
 };
 

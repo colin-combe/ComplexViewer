@@ -347,7 +347,7 @@ xiNET.Controller.prototype.init = function() {
     var width = this.svgElement.parentNode.clientWidth;
     var defaultPixPerRes = ((width * 0.8) - Interactor.LABELMAXLENGTH) / maxSeqLength;
 
-    console.log("defautPixPerRes:" + defaultPixPerRes);
+    //console.log("defautPixPerRes:" + defaultPixPerRes);
 
     // https://stackoverflow.com/questions/12141150/from-list-of-integers-get-number-closest-to-a-given-value/12141511#12141511
     function takeClosest(myList, myNumber) {
@@ -366,7 +366,7 @@ xiNET.Controller.prototype.init = function() {
     }
 
     this.defaultBarScale = takeClosest(this.barScales, defaultPixPerRes);
-    console.log("default bar scale: " + this.defaultBarScale)
+    //console.log("default bar scale: " + this.defaultBarScale)
 
     if (this.annotationChoice) {
         xlv.setAnnotations(this.annotationChoice);
@@ -408,7 +408,7 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
         mols[m].clearPositionalFeatures();
     }
     this.legendChanged(null);
-    // if (this.sequenceInitComplete) { //dont want to be changing annotations while still waiting on sequence
+
     var self = this;
     if (annotationChoice.toUpperCase() === "MI FEATURES") {
         for (m = 0; m < molCount; m++) {
@@ -475,7 +475,6 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
                 }
             }
         }
-        // }
     }
 
     function chooseColours() {
@@ -668,7 +667,6 @@ xiNET.Controller.prototype.getEventPoint = function(evt) {
     return p;
 };
 
-
 //stop event propogation and defaults; only do what we ask
 xiNET.Controller.prototype.preventDefaultsAndStopPropagation = function(evt) {
     if (evt.stopPropagation)
@@ -714,8 +712,8 @@ xiNET.Controller.prototype.touchMove = function(evt) {
                 var nodeCount = nodes.length;
                 for (var i = 0; i < nodeCount; i++) {
                     var protein = nodes[i];
-                    ox = protein.x;
-                    oy = protein.y;
+                    ox = protein.cx;
+                    oy = protein.cy;
                     nx = ox - dx;
                     ny = oy - dy;
                     protein.setPosition(nx, ny);
@@ -734,19 +732,6 @@ xiNET.Controller.prototype.touchMove = function(evt) {
                 this.dragElement.setAllLinkCoordinates();
             }
             this.dragStart = c;
-        } else if (this.state === this.STATES.ROTATING) {
-            // Distance from mouse x and center of stick.
-            var _dx = c.x - this.dragElement.cx
-            // Distance from mouse y and center of stick.
-            var _dy = c.y - this.dragElement.cy;
-            //see http://en.wikipedia.org/wiki/Atan2#Motivation
-            var centreToMouseAngleRads = Math.atan2(_dy, _dx);
-            if (this.whichRotator === 0) {
-                centreToMouseAngleRads = centreToMouseAngleRads + Math.PI;
-            }
-            var centreToMouseAngleDegrees = centreToMouseAngleRads * (360 / (2 * Math.PI));
-            this.dragElement.setRotation(centreToMouseAngleDegrees);
-            this.dragElement.setAllLinkCoordinates();
         } else { //not dragging or rotating yet, maybe we should start
             // don't start dragging just on a click - we need to move the mouse a bit first
             if (Math.sqrt(dx * dx + dy * dy) > (5 * this.z)) {
@@ -754,65 +739,49 @@ xiNET.Controller.prototype.touchMove = function(evt) {
 
             }
         }
+    } else {
+        this.showTooltip(p);
     }
-
-    //    else if (this.state ===  this.STATES.SELECTING) {
-    //        this.updateMarquee(this.marquee, c);
-    //    }
-    else {
-
-        // if (this.state === this.STATES.PANNING) {
-        //~ xiNET.setCTM(this.container, this.container.getCTM()
-        //~ .translate(c.x - this.dragStart.x, c.y - this.dragStart.y));
-        // }
-        // else {
-        // // this.showTooltip(p);
-        // }
-    }
-    // }
     return false;
 };
 
 // this ends all dragging and rotating
 xiNET.Controller.prototype.touchEnd = function(evt) {
+    var time = new Date().getTime();
+    //console.log("Mouse up: " + evt.srcElement + " " + (time - this.lastMouseUp));
     this.preventDefaultsAndStopPropagation(evt);
-    if (this.dragElement != null) {
-        if (!(this.state === this.STATES.DRAGGING || this.state === this.STATES.ROTATING)) { //not dragging or rotating
-            if (typeof this.dragElement.cx === 'undefined') { //if not protein
-                //this.dragElement.showID();
-            } else {
+    //eliminate some spurious mouse up events
+    if ((time - this.lastMouseUp) > 150) {
+
+        var p = this.getTouchEventPoint(evt); // seems to be correct, see below
+        var c = this.mouseToSVG(p.x, p.y);
+
+        if (this.dragElement != null) {
+            if (!(this.state === this.STATES.DRAGGING || this.state === this.STATES.ROTATING)) { //not dragging or rotating
                 if (this.dragElement.form === 0) {
                     this.dragElement.setForm(1);
                 } else {
-                    this.dragElement.setForm(0);
+                    this.contextMenuProt = this.dragElement;
+                    this.contextMenuPoint = c;
+                    var menu = d3.select(".custom-menu-margin")
+                    menu.style("top", (evt.pageY - 20) + "px").style("left", (evt.pageX - 20) + "px").style("display", "block");
+                    d3.select(".scaleButton_" + (this.dragElement.stickZoom * 100)).property("checked", true)
                 }
             }
-            //~ this.checkLinks();
-        } else if (this.state === this.STATES.ROTATING) {
-            //round protein rotation to nearest 5 degrees (looks neater)
-            this.dragElement.setRotation(Math.round(this.dragElement.rotation / 5) * 5);
-        } else {} //end of protein drag; do nothing
+        }
     }
-    //~ else if (/*this.state !== xiNET.Controller.PANNING &&*/ evt.ctrlKey === false) {
-    //~ this.clearSelection();
-    //~ }
-    //~
-    //~ if (this.state === xiNET.Controller.SELECTING) {
-    //~ clearInterval(this.marcher);
-    //~ this.svgElement.removeChild(this.marquee);
-    //~ }
+
     this.dragElement = null;
     this.whichRotator = -1;
     this.state = this.STATES.MOUSE_UP;
+
+    this.lastMouseUp = time;
     return false;
 };
 
 //gets mouse position
 xiNET.Controller.prototype.getTouchEventPoint = function(evt) {
     var p = this.svgElement.createSVGPoint();
-    //    var rect = this.container.getBoundingClientRect();
-    //   p.x = evt.clientX - rect.left;
-    //    p.y = evt.clientY - rect.top;
     var element = this.svgElement.parentNode;
     var top = 0,
         left = 0;
@@ -821,14 +790,10 @@ xiNET.Controller.prototype.getTouchEventPoint = function(evt) {
         left += element.offsetLeft || 0;
         element = element.offsetParent;
     } while (element);
-    //TODO: should do equivalent for horizontal scroll also
-    //~ top += getScrollTop();
     p.x = evt.touches[0].pageX - left;
     p.y = evt.touches[0].pageY - top;
-    //~ var help = left;////evt.touches[0].pageX;//.toString();
     return p;
 };
-
 
 xiNET.Controller.prototype.autoLayout = function() {
     if (this.d3cola) {
@@ -851,20 +816,13 @@ xiNET.Controller.prototype.autoLayout = function() {
     layoutObj.nodes = nodes; //[];
     layoutObj.links = [];
 
-    // var molLookUp = {};
-    // var mi = 0;
-    // for (var n = 0; n < nodeCount; n++) {
-    //     var mol = nodes[n];
-    //     molLookUp[mol.id] = mi;
-    //     mi++;
-    //     var nodeObj = {};
-    //     nodeObj.id = mol.id;
-    //     nodeObj.x = mol.x;
-    //     nodeObj.y = mol.y;
-    //     nodeObj.px = mol.x;
-    //     nodeObj.py = mol.y;
-    //     layoutObj.nodes.push(nodeObj);
-    // }
+    var molLookUp = {};
+    var mi = 0;
+    for (var n = 0; n < nodeCount; n++) {
+        var mol = nodes[n];
+        molLookUp[mol.id] = mi;
+        mi++;
+    }
 
     var linkedParticipants = new Set();
 
@@ -881,8 +839,8 @@ xiNET.Controller.prototype.autoLayout = function() {
 
             if (typeof source !== 'undefined' && typeof target !== 'undefined') {
                 var linkObj = {};
-                linkObj.source = source;
-                linkObj.target = target;
+                linkObj.source = molLookUp[fromMol.id];
+                linkObj.target = molLookUp[toMol.id];
                 linkObj.id = link.id;
                 layoutObj.links.push(linkObj);
 
@@ -898,33 +856,24 @@ xiNET.Controller.prototype.autoLayout = function() {
     if (this.complexes) {
         for (var c = 0; c < this.complexes.length; c++) {
             var g = this.complexes[c];
-            // if (g.form == 1) {
             g.leaves = [];
             g.groups = [];
             for (var pi = 0; pi < g.naryLink.interactors.length; pi++) {
-                //var rp = this.renderedProteins.get(p.id);
                 var i = layoutObj.nodes.indexOf(g.naryLink.interactors[pi]);
                 if (g.naryLink.interactors[pi].type != "complex") {
                     g.leaves.push(i);
                 }
-                // else {
-                //    console.log("?",g.naryLink.interactors[pi])
-                //    g.groups.push(g.naryLink.interactors[pi]);
-                // }
             }
             groups.push(g);
         }
         for (var c = 0; c < this.complexes.length; c++) {
             var g = this.complexes[c];
-            // if (g.form == 1) {
             for (var pi = 0; pi < g.naryLink.interactors.length; pi++) {
-                //var rp = this.renderedProteins.get(p.id);
                 var i = groups.indexOf(g.naryLink.interactors[pi]);
                 if (g.naryLink.interactors[pi].type == "complex") {
                     g.groups.push(i);
                 }
             }
-            //groups.push(g);
         }
     }
     this.d3cola = cola.d3adaptor();
@@ -1022,8 +971,6 @@ xiNET.Controller.prototype.getSVG = function() {
         "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">" +
         svgXml;
 }
-
-
 
 // transform the mouse-position into a position on the svg
 xiNET.Controller.prototype.mouseToSVG = function(x, y) {

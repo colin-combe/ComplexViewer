@@ -34,7 +34,7 @@
 
                 <div id="detailsDiv">
                     <span>Choose Example:</span>
-                    <select id="dataSets" class="noShrink" onChange="document.getElementById('chkexpansion').checked = true;loadData();"></select>
+                    <select id="dataSets" class="noShrink" onChange="/*document.getElementById('chkexpansion').checked = true;*/loadData();"></select>
                     <br>
                     <div id="complexDetails"></div>
                 </div>
@@ -116,11 +116,11 @@
                         <option>None</option>
                         <option>Interactor</option>
                     </select>
-                    <label>&nbsp;&nbsp;Expand Stoich.
+                    <!-- <label>&nbsp;&nbsp;Expand Stoich.
                     <input checked onclick="loadData()" id="chkexpansion" value="expansion" type="checkbox">
-                    </label>
+                    </label> -->
                     &nbsp;&nbsp;
-                    <button class="btn btn-1 btn-1a" onclick="xlv.autoLayout();" style="display:inline">Reset Layout</button>
+                    <button class="btn btn-1 btn-1a" onclick="xlv.autoLayout();" style="display:inline">Layout</button>
                     <button class="btn btn-1 btn-1a" onclick="exportSVG();" style="display:inline">Export Graphic</button>
                 </div>
 
@@ -239,11 +239,11 @@
                         d3.select("#chkexpansion").attr("disabled", null);
                         //~ document.getElementById("chkexpansion").checked = true;
                     }
-                    var matrixExpansion = document.getElementById("chkexpansion").checked;
+                    //var matrixExpansion = document.getElementById("chkexpansion").checked;
 
                     var path = dataSetsSelect.options[dataSetsSelect.selectedIndex].value;
                     d3.json(path, function(data) {
-                       xlv.readMIJSON(data, matrixExpansion);
+                       xlv.readMIJSON(data);//, matrixExpansion);
                     });
                  }
 

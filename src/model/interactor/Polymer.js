@@ -47,15 +47,10 @@ Polymer.prototype.getBlobRadius = function() {
 };
 
 Polymer.prototype.showHighlight = function(show) {
-    // the only highlighting thing
     if (show === true) {
-        //~ this.highlight.setAttribute("stroke", xiNET.highlightColour.toRGB());
         this.highlight.setAttribute("stroke-opacity", "1");
     } else {
-        //~ if (this.isSelected == false) {
         this.highlight.setAttribute("stroke-opacity", "0");
-        //~ }
-        //~ this.highlight.setAttribute("stroke", xiNET.selectedColour.toRGB());
     }
 };
 
@@ -127,7 +122,6 @@ Polymer.prototype.scale = function() {
 
 
         this.setScaleGroup();
-      //  this.setRotation(this.rotation); // places ticks and rotators
     }
 };
 
@@ -346,8 +340,7 @@ Polymer.prototype.toCircle = function(svgP) {
         }
 
         var rot = rotationInterpol(cubicInOut(interp));
-        self.stickZoom = stickZoomInterpol(cubicInOut(interp))
-      //  self.setRotation(rot);
+        self.stickZoom = stickZoomInterpol(cubicInOut(interp));
         self.setAllLinkCoordinates();
 
         if (interp === 1) { // finished - tidy up
@@ -448,9 +441,6 @@ Polymer.prototype.toStick = function() {
         var k = self.controller.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), Interactor.labelY); //.scale(z).translate(-c.x, -c.y);
         self.labelSVG.transform.baseVal.initialize(self.controller.svgElement.createSVGTransformFromMatrix(k));
 
-        // var rot = rotationInterpol(cubicInOut(interp));
-        // self.setRotation(rot);
-
         var currentLength = lengthInterpol(cubicInOut(interp));
         d3.select(self.highlight).attr("width", currentLength).attr("x", -(currentLength / 2) + (0.5 * self.stickZoom));
         d3.select(self.outline).attr("width", currentLength).attr("x", -(currentLength / 2) + (0.5 * self.stickZoom));
@@ -475,9 +465,6 @@ Polymer.prototype.toStick = function() {
 };
 
 Polymer.prototype.getResXwithStickZoom = function(r) {
-    //    if (isNaN(r) || r === '?' || r === 'n') {
-    //        return ((0 - (this.size / 2)) * Polymer.UNITS_PER_RESIDUE * this.stickZoom) - 8; // ;
-    //    }
     return (r - (this.size / 2)) * this.stickZoom;
 };
 
