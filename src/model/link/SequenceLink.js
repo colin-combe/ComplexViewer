@@ -12,6 +12,7 @@ var SequenceFeature = require('../SequenceFeature');
 //~ var UnaryLink = require('./UnaryLink');
 var Config = require('../../controller/Config');
 
+//todo: rename to SequenceFeatureLink
 SequenceLink.prototype = new Link();
 
 function SequenceLink(id, fromFeatPos, toFeatPos, xlvController) {

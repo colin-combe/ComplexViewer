@@ -1,4 +1,8 @@
 var exampleIndex = [{
+        "ac": "EBI-6161327",
+        "name": "EBI-6161327",
+        "url": "https://wwwdev.ebi.ac.uk/intact/ws/graph/interaction/export/EBI-6161327",
+    }, {
         "ac": "CPX-297",
         "name": "CPX-297",
         "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-297",
@@ -96,11 +100,5 @@ var exampleIndex = [{
         "ac": "CPX-1599",
         "name": "40S cytosolic small ribosomal subunit",
         "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-1599",
-    },
-
-    {
-        "ac": "EBI-6161327",
-        "name": "EBI-6161327",
-        "url": "https://wwwdev.ebi.ac.uk/intact/ws/graph/interaction/export/EBI-6161327",
     },
 ];

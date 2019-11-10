@@ -19,6 +19,15 @@ Interactor.labelY = -5; //label Y offset, better if calc'd half height of label 
 
 function Interactor() {}
 
+Interactor.prototype = {
+    get width() {
+        return this.upperGroup.getBBox().width;
+    },
+    get height() {
+        return this.upperGroup.getBBox().height;
+    },
+}
+
 Interactor.prototype.addStoichiometryLabel = function(stoich) {
     if (this.labelSVG) { //complexes don't have labels (yet?)
         this.labelSVG.childNodes[0].data = this.labelSVG.childNodes[0].data + ' [' + stoich + ']';
@@ -36,6 +45,7 @@ Interactor.prototype.mouseDown = function(evt) {
     return false;
 };
 
+//// TODO: test on touch screen
 Interactor.prototype.touchStart = function(evt) {
     this.controller.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
     if (this.controller.d3cola !== undefined) {
@@ -68,18 +78,15 @@ Interactor.prototype.getBlobRadius = function() {
 
 
 Interactor.prototype.showHighlight = function(show) {
-    // default do nothing
-    /*
-    if (show === true) {
-        //~ this.highlight.setAttribute("stroke", xiNET.highlightColour.toRGB());
-        this.highlight.setAttribute("stroke-opacity", "1");
-    } else {
-        //~ if (this.isSelected == false) {
-                this.highlight.setAttribute("stroke-opacity", "0");
-        //~ }
-        //~ this.highlight.setAttribute("stroke", xiNET.selectedColour.toRGB());
-    }
-    * */
+    // if (show === true) {
+    //~ this.highlight.setAttribute("stroke", xiNET.highlightColour.toRGB());
+    // this.highlight.setAttribute("stroke-opacity", "1");
+    // } else {
+    //~ if (this.isSelected == false) {
+    this.highlight.setAttribute("stroke-opacity", "0");
+    //~ }
+    //~ this.highlight.setAttribute("stroke", xiNET.selectedColour.toRGB());
+    // }
 };
 
 Interactor.prototype.setSelected = function(select) {
@@ -104,16 +111,37 @@ Interactor.prototype.getPosition = function() {
 }
 
 // more accurately described as setting transform for top svg elements (sets scale also)
-Interactor.prototype.setPosition = function(x, y) {
-    this.cx = x;
-    this.cy = y;
-    if (this.form === 1) {
-        this.upperGroup.setAttribute("transform", "translate(" + this.cx + " " + this.cy + ")" +
-            " scale(" + (this.controller.z) + ") " + "rotate(" + this.rotation + ")");
-    } else {
-        this.upperGroup.setAttribute("transform", "translate(" + this.cx + " " + this.cy + ")" +
-            " scale(" + (this.controller.z) + ") ");
+Interactor.prototype.setPosition = function(x, y, width) {
+
+
+    var dx, dy, nx, ny;
+    // dx = this.cx - x;
+    //nx = this.cx + dx;
+
+    //dx = 40;
+
+    var bbox = this.upperGroup.getBBox();
+
+    dx = this.cx - bbox.x;
+
+    // console.log("x:", x, "this.x:", this.x, "this.cx:", this.cx, "bbox.x:", bbox.x, "dx:", dx);
+    if (isNaN(bbox.x) == true){
+      console.log("NAN!");
     }
+
+  //  console.log("!", this.upperGroup.getBBox(), this.upperGroup.getBoundingClientRect());
+
+    var dx = this.labelSVG.getBBox().width / 2;
+
+    this.cx = x;// + dx;// - (bbox.x / 2);
+    this.cy =  y;
+    // if (this.form === 1) {
+    this.upperGroup.setAttribute("transform", "translate(" + this.cx + " " + this.cy + ")"); // +
+    //         " scale(" + (this.controller.z) + ") " + "rotate(" + this.rotation + ")");
+    // } else {
+    //     this.upperGroup.setAttribute("transform", "translate(" + this.cx + " " + this.cy + ")" +
+    //         " scale(" + (this.controller.z) + ") ");
+    // }
 };
 
 Interactor.prototype.getAggregateSelfLinkPath = function() {
@@ -174,12 +202,6 @@ Interactor.prototype.setAllLinkCoordinates = function() {
         links[l].setLinkCoordinates();
     }
 };
-
-//todo: some tidying with regards whats in Interactor, whats in Polymer and whats in Gene,Protein, etc
-Interactor.prototype.clearPositionalFeatures = function(posFeats) {
-    this.annotations = [];
-    if (this.annotationsSvgGroup) d3.select(this.annotationsSvgGroup).selectAll("*").remove();
-}
 
 //TODO: remove this, use rotateAboutPoint instead
 Interactor.trig = function(radius, angleDegrees) {

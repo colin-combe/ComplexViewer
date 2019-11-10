@@ -26,17 +26,10 @@ function Gene(id, xlvController, json, name) {
     this.sequenceLinks = d3.map();
 
     this.name = name;
+
     // layout info
     this.cx = 40;
     this.cy = 40;
-    this.rotation = 0;
-    this.previousRotation = this.rotation;
-    this.stickZoom = 1;
-    this.form = 0; //null; // 0 = blob, 1 = stick
-    this.isParked = false;
-    this.isSelected = false;
-
-    this.size = 10; //hack, layout is using this
 
     /*
      * Upper group
@@ -126,19 +119,8 @@ function Gene(id, xlvController, json, name) {
     this.upperGroup.ontouchstart = function(evt) {
         self.touchStart(evt);
     };
-    this.isSelected = false;
+
     this.showHighlight(false);
-    //TODO - this wastes a bit memory because the property is not on the prototype, fix
-    Object.defineProperty(this, "width", {
-        get: function width() {
-            return this.upperGroup.getBBox().width + 5;
-        }
-    });
-    Object.defineProperty(this, "height", {
-        get: function height() {
-            return this.upperGroup.getBBox().height + 5;
-        }
-    });
 };
 
 module.exports = Gene;

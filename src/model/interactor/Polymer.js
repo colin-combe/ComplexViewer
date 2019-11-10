@@ -493,6 +493,11 @@ Polymer.prototype.getResidueCoordinates = function(r, yOff) {
     return [x, y];
 };
 
+Polymer.prototype.clearPositionalFeatures = function() {
+    this.annotations = [];
+    if (this.annotationsSvgGroup) d3.select(this.annotationsSvgGroup).selectAll("*").remove();
+}
+
 Polymer.prototype.setPositionalFeatures = function(posFeats) {
     if (posFeats) {
         var y = -Interactor.STICKHEIGHT / 2;

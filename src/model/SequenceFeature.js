@@ -20,10 +20,11 @@
  */
 
 function SequenceFeature(node, sequenceDatumString) {
-    this.node = node;
+    this.node = node; //todo: rename to participant
     this.sequenceDatumString = sequenceDatumString.trim();
 
     if (this.sequenceDatumString == "?-?") {
+        // todo: don't overlap ?-? features, keep track of them in this.node
         this.uncertainBegin = -40;
         this.begin = -20;
         this.end = -20;

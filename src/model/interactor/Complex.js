@@ -26,7 +26,7 @@ function Complex(id, xlvController) {
     this.form = 0;
     this.type = 'complex';
 
-    this.padding = 15;//not working
+    this.padding = 15;
 
     //TODO - this wastes a bit memory because the property is not on the prototype, fix
     // Object.defineProperty(this, "width", {

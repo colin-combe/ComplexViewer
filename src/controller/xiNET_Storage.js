@@ -8,6 +8,8 @@
 //
 //    xiNET_Storage.js
 
+//// TODO: get rid of
+
 "use strict";
 
 function xiNET_Storage() {}

@@ -12,7 +12,6 @@
 
 var Interactor = require('./Interactor');
 var Polymer = require('./Polymer');
-//~ var Rotator = require('../../controller/Rotator');
 var Config = require('../../controller/Config');
 
 Protein.prototype = new Polymer();
@@ -119,6 +118,7 @@ function Protein(id, xinetController, json, name) {
     // events
     var self = this;
     //    this.upperGroup.setAttribute('pointer-events','all');
+    //todo: move to Interactor prototype?
     this.upperGroup.onmousedown = function(evt) {
         self.mouseDown(evt);
     };
@@ -131,26 +131,13 @@ function Protein(id, xinetController, json, name) {
     this.upperGroup.ontouchstart = function(evt) {
         self.touchStart(evt);
     };
-    this.isSelected = false;
-    this.showHighlight(false);
 
-    //TODO - this wastes a bit memory because the property is not on the prototype, fix
-    Object.defineProperty(this, "width", {
-        get: function width() {
-            return this.upperGroup.getBBox().width;
-        }
-    });
-    Object.defineProperty(this, "height", {
-        get: function height() {
-            return this.upperGroup.getBBox().height + 20;
-        }
-    });
+    this.showHighlight(false);
 };
 
 Protein.prototype.showData = function(evt) {
     var url = "http://www.uniprot.org/uniprot/" + this.json.identifier.id;
-    //~ alert (url);
     var win = window.open(url, '_blank');
-    //~ win.focus();
 }
+
 module.exports = Protein;

@@ -306,8 +306,8 @@ xiNET.Controller.prototype.clear = function() {
     this.complexes = [];
 
     this.proteinCount = 0;
-    this.maxBlobRadius = 30;
-    Interactor.MAXSIZE = 100;
+    // this.maxBlobRadius = 30;
+    // Interactor.MAXSIZE = 100;
 
     this.z = 1;
     this.scores = null;
@@ -387,12 +387,12 @@ xiNET.Controller.prototype.init = function() {
         }
     }
 
-    if (molCount < 6) {
-        for (var m = 0; m < molCount; m++) {
-            var prot = mols[m];
-            prot.setForm(1);
-        }
-    }
+    // if (molCount < 6) {
+    //     for (var m = 0; m < molCount; m++) {
+    //         var prot = mols[m];
+    //         prot.setForm(1);
+    //     }
+    // }
 
     this.autoLayout();
 
@@ -405,7 +405,10 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
     var mols = this.molecules.values();
     var molCount = mols.length;
     for (var m = 0; m < molCount; m++) {
-        mols[m].clearPositionalFeatures();
+        var mol = mols[m];
+        if (mol.id.indexOf('uniprotkb_') === 0) { //LIMIT IT TO PROTEINS
+            mol.clearPositionalFeatures();
+        }
     }
     this.legendChanged(null);
 
@@ -481,7 +484,7 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
         var categories = d3.set();
         for (m = 0; m < molCount; m++) {
             var mol = mols[m];
-            for (var a = 0; a < mol.annotations.length; a++) {
+            for (var a = 0; a < (mol.annotations ? mol.annotations.length : 0); a++) {
                 categories.add(mol.annotations[a].description);
             }
         }
@@ -502,7 +505,7 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
 
         for (m = 0; m < molCount; m++) {
             var mol = mols[m];
-            for (a = 0; a < mol.annotations.length; a++) {
+            for (a = 0; a < (mol.annotations ? mol.annotations.length : 0); a++) {
                 var anno = mol.annotations[a];
                 var colour
                 if (anno.description == "No annotations") {
@@ -804,7 +807,8 @@ xiNET.Controller.prototype.autoLayout = function() {
     var height = this.svgElement.parentNode.clientHeight;
     this.acknowledgement.setAttribute("transform", "translate(5, " + (height - 40) + ")");
 
-    //var molCount = this.molecules.keys().length;
+    //// TODO: prune leaves from netork then layout, then add back leaves and layout again
+
     var self = this;
     var nodes = this.molecules.values();
     nodes = nodes.filter(function(value) {
@@ -813,7 +817,7 @@ xiNET.Controller.prototype.autoLayout = function() {
     var nodeCount = nodes.length;
 
     var layoutObj = {};
-    layoutObj.nodes = nodes; //[];
+    layoutObj.nodes = nodes;
     layoutObj.links = [];
 
     var molLookUp = {};
@@ -847,6 +851,7 @@ xiNET.Controller.prototype.autoLayout = function() {
         }
     }
 
+    // todo: add containing group?
     var groups = [];
     if (this.complexes) {
         for (var c = 0; c < this.complexes.length; c++) {
