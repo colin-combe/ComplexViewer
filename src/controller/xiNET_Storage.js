@@ -8,10 +8,13 @@
 //
 //    xiNET_Storage.js
 
+//// TODO: get rid of
+
 "use strict";
 
 function xiNET_Storage() {}
 var Annotation = require('../model/interactor/Annotation');
+var SequenceFeature = require('./../model/SequenceFeature');
 
 xiNET_Storage.ns = "xiNET.";
 
@@ -152,7 +155,7 @@ xiNET_Storage.getSuperFamFeatures = function(id, callback) {
                 var name = type.getAttribute('id');
                 var start = xmlFeature.getElementsByTagName('START')[0].textContent;
                 var end = xmlFeature.getElementsByTagName('END')[0].textContent;
-                features.push(new Annotation(name, start, end));
+                features.push(new Annotation(name, new SequenceFeature (null, start+"-"+end)));
             }
         }
         //~ console.log(JSON.stringify(features));

@@ -10,15 +10,16 @@
 
 "use strict";
 
-var Molecule = require('./Molecule');
+var Interactor = require('./Interactor');
 var Config = require('../../controller/Config');
 
-Complex.prototype = new Molecule();
+ComplexSymbol.prototype = new Interactor();
 
-function Complex(id, xlvController, interactorRef) { //, json, name) {
+function ComplexSymbol(id, xlvController, interactorRef, json) { //, name) {
     this.id = id; // id may not be accession (multiple Segments with same accesssion)
     this.controller = xlvController;
     this.isComplexSymbol = true;
+    this.json = json;
     //this.json = json;
     //links
     this.naryLinks = d3.map();
@@ -30,14 +31,6 @@ function Complex(id, xlvController, interactorRef) { //, json, name) {
     // layout info
     this.cx = 40;
     this.cy = 40;
-    this.rotation = 0;
-    this.previousRotation = this.rotation;
-    this.stickZoom = 1;
-    this.form = 0; //null; // 0 = blob, 1 = stick
-    this.isParked = false;
-    this.isSelected = false;
-
-    this.size = 10; //hack, layout is using this
 
     /*
      * Upper group
@@ -55,7 +48,6 @@ function Complex(id, xlvController, interactorRef) { //, json, name) {
     this.highlight.setAttribute("stroke", Config.highlightColour);
     this.highlight.setAttribute("stroke-width", "5");
     this.highlight.setAttribute("fill", "none");
-    //this.highlight.setAttribute("fill-opacity", 1);
     //attributes that may change
     d3.select(this.highlight).attr("stroke-opacity", 0);
     this.upperGroup.appendChild(this.highlight);
@@ -74,7 +66,7 @@ function Complex(id, xlvController, interactorRef) { //, json, name) {
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
     d3.select(this.labelSVG).attr("transform",
-        "translate( -" + (20) + " " + Molecule.labelY + ")"); // the hexagon has slightly bigger diameter
+        "translate( -" + (20) + " " + Interactor.labelY + ")"); // the hexagon has slightly bigger diameter
     this.upperGroup.appendChild(this.labelSVG);
 
     //make blob
@@ -100,22 +92,15 @@ function Complex(id, xlvController, interactorRef) { //, json, name) {
     this.upperGroup.onmouseout = function(evt) {
         self.mouseOut(evt);
     };
-
     this.upperGroup.ontouchstart = function(evt) {
         self.touchStart(evt);
     };
-
-
-    this.isSelected = false;
 };
 
-Complex.prototype.showData = function(evt) {
-    alert("yo");
+ComplexSymbol.prototype.showData = function(evt) {
     if (this.name.startsWith("intact_")) {
         var url = "http://www.ebi.ac.uk/intact/complex/details/" + this.name.substr(7);
-        //~ alert (url);
         var win = window.open(url, '_blank');
-        //~ win.focus();
     }
 }
-module.exports = Complex;
+module.exports = ComplexSymbol;

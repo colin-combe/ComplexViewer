@@ -9,24 +9,8 @@
 "use strict";
 
 //constructor for annotations
-function Annotation(annotName, startRes, endRes, colour, notes) {
+function Annotation(annotName, seqDatum) {
     this.description = annotName.trim();
-    this.begin= +startRes;
-    this.end = +endRes;
-    this.uncertainBegin = +startRes;
-    this.uncertainEnd = +endRes;
-    if (colour !== undefined && colour !== null) {
-        this.colour = colour;
-    }
-    //~ this.description = notes;
-}
-
-Annotation.prototype.initFromSeqDatum = function(seqDatum) {
-    // obviously, some of this could be tidied up...
-    this.begin= +seqDatum.begin;
-    this.end = +seqDatum.end;
-    this.uncertainBegin = +seqDatum.uncertainBegin;
-    this.uncertainEnd = +seqDatum.uncertainEnd;
     this.seqDatum = seqDatum;
 }
 

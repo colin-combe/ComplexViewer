@@ -10,9 +10,8 @@
 
 "use strict";
 
-var Molecule = require('./Molecule');
+var Interactor = require('./Interactor');
 var Polymer = require('./Polymer');
-//~ var Rotator = require('../../controller/Rotator');
 var Config = require('../../controller/Config');
 
 Protein.prototype = new Polymer();
@@ -77,7 +76,7 @@ function Protein(id, xinetController, json, name) {
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
     d3.select(this.labelSVG).attr("transform",
-        "translate( -" + (5) + " " + Molecule.labelY + ") rotate(0) scale(1, 1)");
+        "translate( -" + (5) + " " + Interactor.labelY + ") rotate(0) scale(1, 1)");
     this.upperGroup.appendChild(this.labelSVG);
     //ticks (and animo acid letters)
     this.ticks = document.createElementNS(Config.svgns, "g");
@@ -95,9 +94,31 @@ function Protein(id, xinetController, json, name) {
 
     this.scaleLabels = new Array();
 
+    //since form is set to 0, make this a circle, this stuff is equivalant to
+    // end result of toCircle but without transition
+    var r = this.getBlobRadius();
+    d3.select(this.outline)
+        .attr("fill-opacity", 1)
+        // .attr("fill", "#ffffff")
+        .attr("x", -r).attr("y", -r)
+        .attr("width", r * 2).attr("height", r * 2)
+        .attr("rx", r).attr("ry", r);
+    d3.select(this.background)
+        .attr("x", -r).attr("y", -r)
+        .attr("width", r * 2).attr("height", r * 2)
+        .attr("rx", r).attr("ry", r);
+    d3.select(this.annotationsSvgGroup).attr("transform", "scale(1, 1)");
+    d3.select(this.highlight)
+        .attr("width", (r * 2) + 5).attr("height", (r * 2) + 5)
+        .attr("x", -r - 2.5).attr("y", -r - 2.5)
+        .attr("rx", r + 2.5).attr("ry", r + 2.5)
+        .attr("stroke-opacity", 0);
+    this.labelSVG.setAttribute("transform", "translate(" + (-(r + 5)) + "," + "-5)");
+
     // events
     var self = this;
     //    this.upperGroup.setAttribute('pointer-events','all');
+    //todo: move to Interactor prototype?
     this.upperGroup.onmousedown = function(evt) {
         self.mouseDown(evt);
     };
@@ -110,26 +131,13 @@ function Protein(id, xinetController, json, name) {
     this.upperGroup.ontouchstart = function(evt) {
         self.touchStart(evt);
     };
-    this.isSelected = false;
-    this.showHighlight(false);
 
-    //TODO - this wastes a bit memory because the property is not on the prototype, fix
-    Object.defineProperty(this, "width", {
-        get: function width() {
-            return this.upperGroup.getBBox().width + 5;
-        }
-    });
-    Object.defineProperty(this, "height", {
-        get: function height() {
-            return this.upperGroup.getBBox().height + 25;
-        }
-    });
+    this.showHighlight(false);
 };
 
 Protein.prototype.showData = function(evt) {
     var url = "http://www.uniprot.org/uniprot/" + this.json.identifier.id;
-    //~ alert (url);
     var win = window.open(url, '_blank');
-    //~ win.focus();
 }
+
 module.exports = Protein;

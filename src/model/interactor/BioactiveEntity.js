@@ -10,10 +10,10 @@
 
 "use strict";
 
-var Molecule = require('./Molecule');
+var Interactor = require('./Interactor');
 var Config = require('../../controller/Config');
 
-BioactiveEntity.prototype = new Molecule();
+BioactiveEntity.prototype = new Interactor();
 
 function BioactiveEntity(id, xlvController, json, name) {
     this.id = id; // id may not be accession (multiple Segments with same accesssion)
@@ -29,14 +29,6 @@ function BioactiveEntity(id, xlvController, json, name) {
     // layout info
     this.cx = 40;
     this.cy = 40;
-    this.rotation = 0;
-    this.previousRotation = this.rotation;
-    this.stickZoom = 1;
-    this.form = 0; //null; // 0 = blob, 1 = stick
-    this.isParked = false;
-    this.isSelected = false;
-
-    this.size = 10; //hack, layout is using this
 
     /*
      * Upper group
@@ -54,7 +46,6 @@ function BioactiveEntity(id, xlvController, json, name) {
     this.highlight.setAttribute("stroke", Config.highlightColour);
     this.highlight.setAttribute("stroke-width", "5");
     this.highlight.setAttribute("fill", "none");
-    //this.highlight.setAttribute("fill-opacity", 1);
     //attributes that may change
     d3.select(this.highlight).attr("stroke-opacity", 0);
     this.upperGroup.appendChild(this.highlight);
@@ -73,7 +64,7 @@ function BioactiveEntity(id, xlvController, json, name) {
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
     d3.select(this.labelSVG).attr("transform",
-        "translate( -" + (15) + " " + Molecule.labelY + ")");
+        "translate( -" + (15) + " " + Interactor.labelY + ")");
     this.upperGroup.appendChild(this.labelSVG);
 
     //make blob
@@ -103,18 +94,6 @@ function BioactiveEntity(id, xlvController, json, name) {
     this.upperGroup.ontouchstart = function(evt) {
         self.touchStart(evt);
     };
-    this.isSelected = false;
-    //TODO - this wastes a bit memory because the property is not on the prototype, fix
-    Object.defineProperty(this, "width", {
-        get: function width() {
-            return this.upperGroup.getBBox().width + 5;
-        }
-    });
-    Object.defineProperty(this, "height", {
-        get: function height() {
-            return this.upperGroup.getBBox().height + 5;
-        }
-    });
 };
 
 BioactiveEntity.prototype.showData = function(evt) {

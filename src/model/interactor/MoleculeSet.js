@@ -4,18 +4,18 @@
 //    	This product includes software developed at
 //    	the Rappsilber Laboratory (http://www.rappsilberlab.org/).
 //
-//		MoleculeSet.js
+//		InteractorSet.js
 //
 //		authors: Colin Combe
 
 "use strict";
 
-var Molecule = require('./Molecule');
+var Interactor = require('./Interactor');
 var Config = require('../../controller/Config');
 
-MoleculeSet.prototype = new Molecule();
+InteractorSet.prototype = new Interactor();
 
-function MoleculeSet(id, xlvController, json, name) {
+function InteractorSet(id, xlvController, json, name) {
     this.id = id; // id may not be accession (multiple Segments with same accesssion)
     this.controller = xlvController;
     this.json = json;
@@ -26,21 +26,12 @@ function MoleculeSet(id, xlvController, json, name) {
     this.sequenceLinks = d3.map();
 
     this.name = name;
-    this.size = 10; //HACK
 
     this.tooltip = this.id;
 
     // layout info
     this.cx = 40;
     this.cy = 40;
-    this.rotation = 0;
-    this.previousRotation = this.rotation;
-    this.stickZoom = 1;
-    this.form = 0; //null; // 0 = blob, 1 = stick
-    this.isParked = false;
-    this.isSelected = false;
-
-    this.size = 10; //hack, layout is using this
 
     /*
      * Upper group
@@ -56,7 +47,6 @@ function MoleculeSet(id, xlvController, json, name) {
     this.highlight.setAttribute("stroke", Config.highlightColour);
     this.highlight.setAttribute("stroke-width", "5");
     this.highlight.setAttribute("fill", "none");
-    //this.highlight.setAttribute("fill-opacity", 1);
     //attributes that may change
     d3.select(this.highlight).attr("stroke-opacity", 0);
     this.upperGroup.appendChild(this.highlight);
@@ -81,7 +71,7 @@ function MoleculeSet(id, xlvController, json, name) {
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
     d3.select(this.labelSVG).attr("transform",
-        "translate( -" + (10) + " " + Molecule.labelY + ")");
+        "translate( -" + (10) + " " + Interactor.labelY + ")");
     this.upperGroup.appendChild(this.labelSVG);
 
     //make symbol
@@ -145,24 +135,13 @@ function MoleculeSet(id, xlvController, json, name) {
     //~ self.message("protein touch cancel");
     //~ self.mouseOut(evt);
     //~ };
-    this.isSelected = false;
-    //TODO - this wastes a bit memory because the property is not on the prototype, fix
-    Object.defineProperty(this, "width", {
-        get: function width() {
-            return this.upperGroup.getBBox().width + 5;
-        }
-    });
-    Object.defineProperty(this, "height", {
-        get: function height() {
-            return this.upperGroup.getBBox().height + 5;
-        }
-    });
+
 };
 
-MoleculeSet.prototype.getBlobRadius = function() {
+InteractorSet.prototype.getBlobRadius = function() {
     return 20;
 };
 
-MoleculeSet.prototype.setForm = function(form, svgP) {};
+InteractorSet.prototype.setForm = function(form, svgP) {};
 
-module.exports = MoleculeSet;
+module.exports = InteractorSet;

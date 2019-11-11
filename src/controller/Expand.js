@@ -15,7 +15,6 @@ var matrix = function(json) {
     })
 
     var newParticipants = [];
-    var newInteractors = [];
 
     // Loop through our interactions
     interactions.forEach(function(interaction) {

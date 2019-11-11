@@ -7,11 +7,12 @@
 "use strict";
 
 var Link = require('./Link');
-var SequenceDatum = require('./SequenceDatum');
+var SequenceFeature = require('../SequenceFeature');
 //~ var BinaryLink = require('./BinaryLink');
 //~ var UnaryLink = require('./UnaryLink');
 var Config = require('../../controller/Config');
 
+//todo: rename to SequenceFeatureLink
 SequenceLink.prototype = new Link();
 
 function SequenceLink(id, fromFeatPos, toFeatPos, xlvController) {
@@ -111,7 +112,7 @@ SequenceLink.prototype.showHighlight = function(show) {
 
 //used when filter changed
 SequenceLink.prototype.check = function() {
-    if (this.filteredEvidence().length > 0 && this.anyMoleculeIsBar() === true) {
+    if (this.filteredEvidence().length > 0 && this.anyInteractorIsBar() === true) {
         this.show();
         return true;
     } else {
@@ -120,7 +121,7 @@ SequenceLink.prototype.check = function() {
     }
 };
 
-SequenceLink.prototype.anyMoleculeIsBar = function() {
+SequenceLink.prototype.anyInteractorIsBar = function() {
     var ic = this.interactors.length;
     for (var i = 0; i < ic; i++) {
         if (this.interactors[i].form === 1) {
@@ -201,9 +202,9 @@ SequenceLink.prototype.setLinkCoordinates = function(interactor) {
                 }
             }
             if (!isNaN(parseFloat(seqDatum.uncertainBegin)) && isFinite(seqDatum.uncertainBegin)) {
-                var uncertainStart = seqDatum.uncertainBegin * 1;
-                if (lowestLinkedRes === null || uncertainStart < lowestLinkedRes) {
-                    lowestLinkedRes = uncertainStart;
+                var uncertainBegin = seqDatum.uncertainBegin * 1;
+                if (lowestLinkedRes === null || uncertainBegin < lowestLinkedRes) {
+                    lowestLinkedRes = uncertainBegin;
                 }
             }
             if (!isNaN(parseFloat(seqDatum.end)) && isFinite(seqDatum.end)) {
@@ -221,22 +222,22 @@ SequenceLink.prototype.setLinkCoordinates = function(interactor) {
         }
         return interactor.getResidueCoordinates((lowestLinkedRes + highestLinkedRes) / 2, 0);
     }
-    var fromMolecule = this.fromSequenceData[0].node;
-    var toMolecule = this.toSequenceData[0].node;
+    var fromInteractor = this.fromSequenceData[0].node;
+    var toInteractor = this.toSequenceData[0].node;
     //calculate mid points of from and to sequence data
     var fMid, tMid;
-    if (fromMolecule.form === 0) {
-        fMid = fromMolecule.getPosition();
+    if (fromInteractor.form === 0) {
+        fMid = fromInteractor.getPosition();
     } else {
-        fMid = sequenceDataMidPoint(this.fromSequenceData, fromMolecule);
+        fMid = sequenceDataMidPoint(this.fromSequenceData, fromInteractor);
     }
-    if (toMolecule.form === 0) {
-        tMid = toMolecule.getPosition();
+    if (toInteractor.form === 0) {
+        tMid = toInteractor.getPosition();
     } else {
-        tMid = sequenceDataMidPoint(this.toSequenceData, toMolecule);
+        tMid = sequenceDataMidPoint(this.toSequenceData, toInteractor);
     }
 
-    //calculate angle from fromMolecule mid point to toMolecule mid point
+    //calculate angle from fromInteractor mid point to toInteractor mid point
     var deltaX = fMid[0] - tMid[0];
     var deltaY = fMid[1] - tMid[1];
     var angleBetweenMidPoints = Math.atan2(deltaY, deltaX);
@@ -248,7 +249,7 @@ SequenceLink.prototype.setLinkCoordinates = function(interactor) {
 
     //out is value we use to decide which side of bar the link glyph is drawn
     //first for 'from' interactor
-    var out = (abmpDeg - fromMolecule.rotation);
+    var out = (abmpDeg - fromInteractor.rotation);
     if (out < 0) {
         out += 360;
     }
@@ -256,12 +257,12 @@ SequenceLink.prototype.setLinkCoordinates = function(interactor) {
     if (out < 180) {
         fyOffset = -10;
     }
-    var fRotRad = (fromMolecule.rotation / 360) * Math.PI * 2;
+    var fRotRad = (fromInteractor.rotation / 360) * Math.PI * 2;
     if (out > 180) {
         fRotRad = fRotRad - Math.PI;
     }
     //now for 'to' interactor
-    out = (abmpDeg - toMolecule.rotation);
+    out = (abmpDeg - toInteractor.rotation);
     if (out < 0) {
         out += 360;
     }
@@ -269,7 +270,7 @@ SequenceLink.prototype.setLinkCoordinates = function(interactor) {
     if (out > 180) {
         tyOffset = -10;
     }
-    var tRotRad = (toMolecule.rotation / 360) * Math.PI * 2;
+    var tRotRad = (toInteractor.rotation / 360) * Math.PI * 2;
     if (out < 180) {
         tRotRad = tRotRad - Math.PI;
     }
@@ -277,14 +278,14 @@ SequenceLink.prototype.setLinkCoordinates = function(interactor) {
     var ftMid = [fMid[0] + (30 * Math.sin(fRotRad) * this.controller.z),
         fMid[1] - (30 * Math.cos(fRotRad) * this.controller.z)
     ];
-    if (fromMolecule.form === 0) {
+    if (fromInteractor.form === 0) {
         ftMid = fMid;
     }
 
     var ttMid = [tMid[0] + (30 * Math.sin(tRotRad) * this.controller.z),
         tMid[1] - (30 * Math.cos(tRotRad) * this.controller.z)
     ];
-    if (toMolecule.form === 0) {
+    if (toInteractor.form === 0) {
         ttMid = tMid;
     }
 
@@ -297,39 +298,39 @@ SequenceLink.prototype.setLinkCoordinates = function(interactor) {
     var highlightGlyphPath = 'M' + triPointMid[0] + ',' + triPointMid[1];
     for (var f = 0; f < fSDCount; f++) {
         seqDatum = this.fromSequenceData[f];
-        glyphPath += getPathSegments(triPointMid, ftMid, seqDatum.begin, seqDatum.end, fromMolecule, fyOffset);
+        glyphPath += getPathSegments(triPointMid, ftMid, seqDatum.begin, seqDatum.end, fromInteractor, fyOffset);
         highlightStartRes = seqDatum.begin;
         highlightEndRes = seqDatum.end;
         if (isNumber(seqDatum.uncertainBegin)) {
             uncertainGlyphPath += getPathSegments(triPointMid, ftMid,
-                seqDatum.uncertainBegin, seqDatum.begin, fromMolecule, fyOffset);
+                seqDatum.uncertainBegin, seqDatum.begin, fromInteractor, fyOffset);
             highlightStartRes = seqDatum.uncertainBegin;
         }
         if (isNumber(seqDatum.uncertainEnd)) {
             uncertainGlyphPath += getPathSegments(triPointMid, ftMid,
-                seqDatum.end, seqDatum.uncertainEnd, fromMolecule, fyOffset);
+                seqDatum.end, seqDatum.uncertainEnd, fromInteractor, fyOffset);
             highlightEndRes = seqDatum.uncertainEnd;
         }
         highlightGlyphPath += getPathSegments(triPointMid, ftMid,
-            highlightStartRes, highlightEndRes, fromMolecule, fyOffset);
+            highlightStartRes, highlightEndRes, fromInteractor, fyOffset);
     }
     for (var t = 0; t < tSDCount; t++) {
         seqDatum = this.toSequenceData[t];
-        glyphPath += getPathSegments(triPointMid, ttMid, seqDatum.begin, seqDatum.end, toMolecule, tyOffset);
+        glyphPath += getPathSegments(triPointMid, ttMid, seqDatum.begin, seqDatum.end, toInteractor, tyOffset);
         highlightStartRes = seqDatum.begin;
         highlightEndRes = seqDatum.end;
         if (isNumber(seqDatum.uncertainBegin)) {
             uncertainGlyphPath += getPathSegments(triPointMid, ttMid,
-                seqDatum.uncertainBegin, seqDatum.begin, toMolecule, tyOffset);
+                seqDatum.uncertainBegin, seqDatum.begin, toInteractor, tyOffset);
             highlightStartRes = seqDatum.uncertainBegin;
         }
         if (isNumber(seqDatum.uncertainEnd)) {
             uncertainGlyphPath += getPathSegments(triPointMid, ttMid,
-                seqDatum.end, seqDatum.uncertainEnd, toMolecule, tyOffset);
+                seqDatum.end, seqDatum.uncertainEnd, toInteractor, tyOffset);
             highlightEndRes = seqDatum.uncertainEnd;
         }
         highlightGlyphPath += getPathSegments(triPointMid, ttMid,
-            highlightStartRes, highlightEndRes, toMolecule, tyOffset);
+            highlightStartRes, highlightEndRes, toInteractor, tyOffset);
     }
 
     if (!this.glyph) {

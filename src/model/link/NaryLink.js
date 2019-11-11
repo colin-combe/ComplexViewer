@@ -14,7 +14,7 @@
 var colorbrewer = require('colorbrewer');
 var Link = require('./Link');
 var Config = require('../../controller/Config');
-var Molecule = require('../interactor/Molecule');
+var Interactor = require('../interactor/Interactor');
 var d3 = require('d3');
 
 NaryLink.naryColours; // init'ed in clear function of controller
@@ -79,7 +79,7 @@ NaryLink.prototype.initSVG = function() {
 };
 
 NaryLink.prototype.showHighlight = function(show) {
-    this.highlightMolecules(show);
+    this.highlightInteractors(show);
 };
 
 NaryLink.prototype.check = function() {
@@ -147,7 +147,7 @@ NaryLink.prototype.orbitNodes = function(mapped) {
         for (var o = 0; o < NaryLink.orbitNodes; o++) {
             var angle = (360 / NaryLink.orbitNodes) * o;
             var p = [m[0] + NaryLink.orbitRadius, m[1]];
-            orbitNodes.push(Molecule.rotatePointAboutPoint(p, m, angle));
+            orbitNodes.push(Interactor.rotatePointAboutPoint(p, m, angle));
         }
     }
     return orbitNodes;
