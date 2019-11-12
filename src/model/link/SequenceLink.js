@@ -175,7 +175,7 @@ SequenceLink.prototype.setLinkCoordinates = function(interactor) {
 
     function getPathSegments(midPoint, controlPoint, startRes, endRes, interactor, yOffset) {
         var startPoint, endPoint;
-        if (interactor.form === 0) {
+        if (!interactor.form) { // tests if form = undefined or 0 //TODO: maybe change this, its confusing
             startPoint = interactor.getPosition();
             endPoint = startPoint;
         } else {
@@ -226,12 +226,12 @@ SequenceLink.prototype.setLinkCoordinates = function(interactor) {
     var toInteractor = this.toSequenceData[0].node;
     //calculate mid points of from and to sequence data
     var fMid, tMid;
-    if (fromInteractor.form === 0) {
+    if (!fromInteractor.form) { // if not (undefined or 0)
         fMid = fromInteractor.getPosition();
     } else {
         fMid = sequenceDataMidPoint(this.fromSequenceData, fromInteractor);
     }
-    if (toInteractor.form === 0) {
+    if (!toInteractor.form) {// if not (undefined or 0)
         tMid = toInteractor.getPosition();
     } else {
         tMid = sequenceDataMidPoint(this.toSequenceData, toInteractor);
@@ -278,14 +278,14 @@ SequenceLink.prototype.setLinkCoordinates = function(interactor) {
     var ftMid = [fMid[0] + (30 * Math.sin(fRotRad) * this.controller.z),
         fMid[1] - (30 * Math.cos(fRotRad) * this.controller.z)
     ];
-    if (fromInteractor.form === 0) {
+    if (!fromInteractor.form) { // if not (undefined or 0)
         ftMid = fMid;
     }
 
     var ttMid = [tMid[0] + (30 * Math.sin(tRotRad) * this.controller.z),
         tMid[1] - (30 * Math.cos(tRotRad) * this.controller.z)
     ];
-    if (toInteractor.form === 0) {
+    if (!toInteractor.form) { // if not (undefined or 0)
         ttMid = tMid;
     }
 

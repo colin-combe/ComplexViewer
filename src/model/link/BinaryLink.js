@@ -134,7 +134,7 @@ BinaryLink.prototype.showHighlight = function(show) {
 };
 
 BinaryLink.prototype.check = function() {
-    if (this.interactors[0].form === 0 && this.interactors[1].form === 0) {
+    if (!this.interactors[0].form && !this.interactors[1].form) { //checks if form not defined or is 0
         this.show();
         return true;
     } else { //at least one end was in stick form
