@@ -438,7 +438,7 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
         var molsAnnotated = 0;
         for (m = 0; m < molCount; m++) {
             var mol = mols[m];
-            if (mol.id.indexOf('uniprotkb_') === 0) { //LIMIT IT TO PROTEINS //todo:fix
+            if (mol.id.indexOf('uniprotkb_') === 0) { //LIMIT IT TO PROTEINS
                 xiNET_Storage.getSuperFamFeatures(mol.id, function(id, fts) {
                     var m = self.molecules.get(id);
                     m.setPositionalFeatures(fts);
@@ -458,7 +458,7 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
         var molsAnnotated = 0;
         for (m = 0; m < molCount; m++) {
             var mol = mols[m];
-            if (mol.id.indexOf('uniprotkb_') === 0) { //LIMIT IT TO PROTEINS //todo:fix
+            if (mol.id.indexOf('uniprotkb_') === 0) { //LIMIT IT TO PROTEINS
                 xiNET_Storage.getUniProtFeatures(mol.id, function(id, fts) {
                     var m = self.molecules.get(id);
                     for (var f = 0; f < fts.length; f++) {
@@ -920,10 +920,13 @@ xiNET.Controller.prototype.autoLayout = function() {
         // console.log("nodes", nodes);
         for (var n = 0; n < nodeCount; n++) {
             var node = nodes[n];
-            var mol = self.molecules.get(node.id);
-            var nx = node.x + (width / 2);
+
+            var outlineWidth = node.outline.getBBox().width;
+            var upperGroupWidth = node.upperGroup.getBBox().width;
+
+            var nx = node.bounds.x + upperGroupWidth - (outlineWidth / 2) + (width / 2);
             var ny = node.y + (height / 2);
-            mol.setPosition(nx, ny);
+            node.setPosition(nx, ny);
         }
         self.setAllLinkCoordinates();
 

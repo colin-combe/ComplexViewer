@@ -112,20 +112,8 @@ Interactor.prototype.getPosition = function() {
 
 // more accurately described as setting transform for top svg elements (sets scale also)
 Interactor.prototype.setPosition = function(x, y) {
-    var outlineWidth = this.outline.getBBox().width;
-    var upperGroupWidth = this.upperGroup.getBBox().width;
-    // if (isNaN(bbox.x) == true){
-      console.log("!", upperGroupWidth);
-    // }
-
-  //  console.log("!", this.upperGroup.getBBox(), this.upperGroup.getBoundingClientRect());
-
-
-  this.px = x;// + upperGroupWidth - (outlineWidth / 2);// + dx;// - (bbox.x / 2);
-  this.cx = x;// + upperGroupWidth - (outlineWidth / 2);// + dx;// - (bbox.x / 2);
-  console.log("*", x);
-    console.log("cx", this.cx);
-    this.cy =  y;
+    this.cx = x;
+    this.cy = y;
     // if (this.form === 1) {
     this.upperGroup.setAttribute("transform", "translate(" + (this.cx) + " " + this.cy + ")"); // +
     //         " scale(" + (this.controller.z) + ") " + "rotate(" + this.rotation + ")");

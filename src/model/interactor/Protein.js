@@ -31,6 +31,8 @@ function Protein(id, xinetController, json, name) {
     // layout info
     this.cx = 40;
     this.cy = 40;
+    this.ix = 40;
+    this.iy = 40;
     this.rotation = 0;
     this.previousRotation = this.rotation;
     this.stickZoom = 1;
