@@ -27,7 +27,7 @@ var DNA = require('../model/interactor/DNA');
 var RNA = require('../model/interactor/RNA');
 var Complex = require('../model/interactor/Complex');
 var Complex_symbol = require('../model/interactor/Complex_symbol');
-var InteractorSet = require('../model/interactor/MoleculeSet');
+var MoleculeSet = require('../model/interactor/MoleculeSet');
 var Link = require('../model/link/Link');
 var NaryLink = require('../model/link/NaryLink');
 var SequenceLink = require('../model/link/SequenceLink');
@@ -682,7 +682,7 @@ xiNET.Controller.prototype.preventDefaultsAndStopPropagation = function(evt) {
 
 /**
  * Handle touchstart event.
- */
+
 xiNET.Controller.prototype.touchStart = function(evt) {
     //prevent default, but allow propogation
     evt.preventDefault();
@@ -797,7 +797,7 @@ xiNET.Controller.prototype.getTouchEventPoint = function(evt) {
     p.y = evt.touches[0].pageY - top;
     return p;
 };
-
+*/
 xiNET.Controller.prototype.autoLayout = function() {
     if (this.d3cola) {
         this.d3cola.stop();
@@ -1247,7 +1247,7 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
             ||
             interactor.type.id === 'MI:1306' //molecule set - open set
         ) {
-            participant = new InteractorSet(participantId, self, interactor, interactor.label);
+            participant = new MoleculeSet(participantId, self, interactor, interactor.label);
         }
         //bioactive entities
         else if (interactor.type.id === 'MI:1100' // bioactive entity

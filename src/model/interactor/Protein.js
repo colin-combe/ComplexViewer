@@ -128,9 +128,9 @@ function Protein(id, xinetController, json, name) {
     this.upperGroup.onmouseout = function(evt) {
         self.mouseOut(evt);
     };
-    this.upperGroup.ontouchstart = function(evt) {
-        self.touchStart(evt);
-    };
+    // this.upperGroup.ontouchstart = function(evt) {
+    //     self.touchStart(evt);
+    // };
 
     this.showHighlight(false);
 };

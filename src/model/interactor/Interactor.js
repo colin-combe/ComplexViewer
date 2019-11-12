@@ -46,17 +46,17 @@ Interactor.prototype.mouseDown = function(evt) {
 };
 
 //// TODO: test on touch screen
-Interactor.prototype.touchStart = function(evt) {
-    this.controller.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
-    if (this.controller.d3cola !== undefined) {
-        this.controller.d3cola.stop();
-    }
-    this.controller.dragElement = this;
-    //store start location
-    var p = this.controller.getTouchEventPoint(evt);
-    this.controller.dragStart = this.controller.mouseToSVG(p.x, p.y);
-    return false;
-};
+// Interactor.prototype.touchStart = function(evt) {
+//     this.controller.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
+//     if (this.controller.d3cola !== undefined) {
+//         this.controller.d3cola.stop();
+//     }
+//     this.controller.dragElement = this;
+//     //store start location
+//     var p = this.controller.getTouchEventPoint(evt);
+//     this.controller.dragStart = this.controller.mouseToSVG(p.x, p.y);
+//     return false;
+// };
 
 Interactor.prototype.mouseOver = function(evt) {
     this.controller.preventDefaultsAndStopPropagation(evt);
@@ -111,32 +111,23 @@ Interactor.prototype.getPosition = function() {
 }
 
 // more accurately described as setting transform for top svg elements (sets scale also)
-Interactor.prototype.setPosition = function(x, y, width) {
-
-
-    var dx, dy, nx, ny;
-    // dx = this.cx - x;
-    //nx = this.cx + dx;
-
-    //dx = 40;
-
-    var bbox = this.upperGroup.getBBox();
-
-    dx = this.cx - bbox.x;
-
-    // console.log("x:", x, "this.x:", this.x, "this.cx:", this.cx, "bbox.x:", bbox.x, "dx:", dx);
-    if (isNaN(bbox.x) == true){
-      console.log("NAN!");
-    }
+Interactor.prototype.setPosition = function(x, y) {
+    var outlineWidth = this.outline.getBBox().width;
+    var upperGroupWidth = this.upperGroup.getBBox().width;
+    // if (isNaN(bbox.x) == true){
+      console.log("!", upperGroupWidth);
+    // }
 
   //  console.log("!", this.upperGroup.getBBox(), this.upperGroup.getBoundingClientRect());
 
-    var dx = this.labelSVG.getBBox().width / 2;
 
-    this.cx = x;// + dx;// - (bbox.x / 2);
+  this.px = x;// + upperGroupWidth - (outlineWidth / 2);// + dx;// - (bbox.x / 2);
+  this.cx = x;// + upperGroupWidth - (outlineWidth / 2);// + dx;// - (bbox.x / 2);
+  console.log("*", x);
+    console.log("cx", this.cx);
     this.cy =  y;
     // if (this.form === 1) {
-    this.upperGroup.setAttribute("transform", "translate(" + this.cx + " " + this.cy + ")"); // +
+    this.upperGroup.setAttribute("transform", "translate(" + (this.cx) + " " + this.cy + ")"); // +
     //         " scale(" + (this.controller.z) + ") " + "rotate(" + this.rotation + ")");
     // } else {
     //     this.upperGroup.setAttribute("transform", "translate(" + this.cx + " " + this.cy + ")" +
