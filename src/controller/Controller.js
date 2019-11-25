@@ -387,12 +387,14 @@ xiNET.Controller.prototype.init = function() {
         }
     }
 
-    // if (molCount < 6) {
-    //     for (var m = 0; m < molCount; m++) {
-    //         var prot = mols[m];
-    //         prot.setForm(1);
-    //     }
-    // }
+    if (molCount < 6) {
+        for (var m = 0; m < molCount; m++) {
+            var prot = mols[m];
+            if (prot.json.type.name == "protein") {
+                prot.toStickNoTransition()
+            };
+        }
+    }
 
     this.autoLayout();
 
@@ -803,11 +805,13 @@ xiNET.Controller.prototype.autoLayout = function() {
         this.d3cola.stop();
     }
 
-    var width = this.svgElement.parentNode.clientWidth;
+    var width = this.svgElement.parentNode.clientWidth; //this.svgElement.getBoundingClientRect().width;
     var height = this.svgElement.parentNode.clientHeight;
-    this.acknowledgement.setAttribute("transform", "translate(5, " + (height - 40) + ")");
 
-    //// TODO: prune leaves from netork then layout, then add back leaves and layout again
+    if (this.acknowledgement) {
+        this.acknowledgement.setAttribute("transform", "translate(5, " + (height - 40) + ")");
+    }
+    //// TODO: prune leaves from network then layout, then add back leaves and layout again
 
     var self = this;
     var nodes = this.molecules.values();
@@ -885,7 +889,6 @@ xiNET.Controller.prototype.autoLayout = function() {
 
     this.d3cola.nodes(layoutObj.nodes).groups(groups).links(layoutObj.links).avoidOverlaps(true);
 
-    var self = this;
     if (self.debug) {
         var groupDebugSel = d3.select(this.svgElement).selectAll('.group')
             .data(groups);

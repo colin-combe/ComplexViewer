@@ -25,9 +25,14 @@ function SequenceFeature(node, sequenceDatumString) {
 
     if (this.sequenceDatumString == "?-?") {
         // todo: don't overlap ?-? features, keep track of them in this.node
-        this.uncertainBegin = -40;
-        this.begin = -20;
-        this.end = -20;
+        // this.uncertainBegin = -40;
+        // this.begin = -20;
+        // this.end = -20;
+
+        this.begin = 0;
+        this.end = 0;
+        this.uncertainEnd = node.size;
+
     } else if (this.sequenceDatumString == "n-n") {
         this.uncertainBegin = -20;
         this.begin = 0;

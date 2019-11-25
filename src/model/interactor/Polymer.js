@@ -208,7 +208,7 @@ Polymer.prototype.setForm = function(form, svgP) {
         } else {
             // if (this.form !== 0) {
             this.toCircle(svgP);
-            var r = this.getBlobRadius();
+            // var r = this.getBlobRadius();
 
         }
         // }
@@ -361,6 +361,7 @@ Polymer.prototype.toCircle = function(svgP) {
 Polymer.prototype.toStick = function() {
     this.busy = true;
     this.form = 1;
+
     //remove prot-prot links - would it be better if checkLinks did this? - think not
     var c = this.binaryLinks.values().length;
     for (var l = 0; l < c; l++) {
@@ -462,6 +463,119 @@ Polymer.prototype.toStick = function() {
     this.setScaleGroup();
     d3.select(this.ticks).transition().attr("opacity", 1)
         .delay(Polymer.transitionTime * 0.8).duration(Polymer.transitionTime / 2);
+};
+
+
+Polymer.prototype.toStickNoTransition = function() {
+    this.busy = true;
+    this.form = 1;
+
+    //remove prot-prot links - would it be better if checkLinks did this? - think not
+    var c = this.binaryLinks.values().length;
+    for (var l = 0; l < c; l++) {
+        var link = this.binaryLinks.values()[l];
+        //out with the old
+        if (link.shown) {
+            link.hide();
+        }
+    }
+
+    var protLength = this.size * this.stickZoom;
+    var r = this.getBlobRadius();
+
+    var lengthInterpol = d3.interpolate((2 * r), protLength);
+    var stickZoomInterpol = d3.interpolate(0, this.stickZoom);
+    var rotationInterpol = d3.interpolate(0, (this.rotation > 180) ? this.rotation - 360 : this.rotation);
+    var labelTranslateInterpol = d3.interpolate(-(r + 5), -(((this.size / 2) * this.stickZoom) + 10));
+
+    // var origStickZoom = this.stickZoom;
+    // this.stickZoom = 0;
+    this.checkLinks(this.binaryLinks);
+    this.checkLinks(this.selfLink);
+    this.checkLinks(this.sequenceLinks);
+    // this.stickZoom = origStickZoom;
+
+    d3.select(this.background) //.transition() //.attr("stroke-opacity", 1)
+        .attr("height", Polymer.STICKHEIGHT)
+        .attr("y", -Polymer.STICKHEIGHT / 2)
+        .attr("rx", 0).attr("ry", 0);
+    //  .duration(Polymer.transitionTime);
+
+    d3.select(this.outline) //.transition() //.attr("stroke-opacity", 1)
+        .attr("height", Polymer.STICKHEIGHT)
+        .attr("y", -Polymer.STICKHEIGHT / 2)
+        .attr("rx", 0).attr("ry", 0);
+    //  .duration(Polymer.transitionTime);
+
+    d3.select(this.highlight) //.transition()
+        .attr("width", protLength + 5).attr("height", Polymer.STICKHEIGHT + 5)
+        .attr("x", this.getResXwithStickZoom(0.5) - 2.5).attr("y", (-Polymer.STICKHEIGHT / 2) - 2.5)
+        .attr("rx", 0).attr("ry", 0);
+    // .duration(Polymer.transitionTime);
+
+    if (this.annotations) {
+        var annots = this.annotations;
+        var ca = annots.length;
+        for (var a = 0; a < ca; a++) {
+            var anno = annots[a];
+            if (typeof anno.seqDatum.uncertainBegin != "undefined") {
+                var fuzzyStart = anno.fuzzyStart;
+                // fuzzyStart.setAttribute("d", this.getAnnotationPieSliceApproximatePath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin));
+                d3.select(fuzzyStart).attr("d", this.getAnnotationRectPath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin));
+                // .duration(Polymer.transitionTime);
+            }
+            // if (anno.seqDatum.begin && anno.seqDatum.end) {
+            var certain = anno.certain;
+            certain.setAttribute("d", this.getAnnotationPieSliceApproximatePath(anno.seqDatum.begin, anno.seqDatum.end));
+            d3.select(certain) /*.transition()*/ .attr("d", this.getAnnotationRectPath(anno.seqDatum.begin, anno.seqDatum.end));
+                // .duration(Polymer.transitionTime);
+            // }
+            if (typeof anno.seqDatum.uncertainEnd != "undefined") {
+                var fuzzyEnd = anno.fuzzyEnd;
+                // fuzzyEnd.setAttribute("d", this.getAnnotationPieSliceApproximatePath(anno.seqDatum.end, anno.seqDatum.uncertainEnd));
+                d3.select(fuzzyEnd) /*.transition()*/ .attr("d", this.getAnnotationRectPath(anno.seqDatum.end, anno.seqDatum.uncertainEnd));
+                // .duration(Polymer.transitionTime);
+            }
+        }
+    }
+
+    var self = this;
+    // var cubicInOut = d3.ease('cubic-in-out');
+    // d3.timer(function(elapsed) {
+    //     return update(elapsed / Polymer.transitionTime);
+    // });
+
+    // update(1)
+    //
+    // function update(interp) {
+        var labelTransform = d3.transform(self.labelSVG.getAttribute("transform"));
+        var k = self.controller.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(1), Interactor.labelY); //.scale(z).translate(-c.x, -c.y);
+        self.labelSVG.transform.baseVal.initialize(self.controller.svgElement.createSVGTransformFromMatrix(k));
+
+        var currentLength = lengthInterpol(1);
+        d3.select(self.highlight).attr("width", currentLength).attr("x", -(currentLength / 2) + (0.5 * self.stickZoom));
+        d3.select(self.outline).attr("width", currentLength).attr("x", -(currentLength / 2) + (0.5 * self.stickZoom));
+        d3.select(self.background).attr("width", currentLength).attr("x", -(currentLength / 2) + (0.5 * self.stickZoom));
+        // self.stickZoom = stickZoomInterpol(cubicInOut(interp))
+        self.setAllLinkCoordinates();
+
+        // if (interp === 1) { // finished - tidy up
+            // return true;
+        // } else if (interp > 1) {
+        //     return update(1);
+        // } else {
+        //     return false;
+        // }
+    // }
+
+
+    //d3.select(this.ticks).attr("opacity", 0);
+    this.setScaleGroup();
+    d3.select(this.ticks) /*.transition()*/ .attr("opacity", 1);
+    //.delay(Polymer.transitionTime * 0.8).duration(Polymer.transitionTime / 2);
+
+    self.busy = false;
+
 };
 
 Polymer.prototype.getResXwithStickZoom = function(r) {
