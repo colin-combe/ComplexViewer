@@ -139,6 +139,17 @@ xiNET.Controller = function(targetDiv, debug) {
         self.touchEnd(evt);
     };
 
+    this.el.oncontextmenu = function(evt) {
+        if (evt.preventDefault) { // necessary for addEventListener, works with traditional
+            evt.preventDefault();
+        }
+        if (evt.stopPropogation) {
+            evt.stopPropagation();
+        }
+        evt.returnValue = false; // necessary for attachEvent, works with traditional
+        return false; // works with traditional, not with attachEvent or addEventListener
+    };
+
     //legend changed callbacks
     this.legendCallbacks = new Array();
 
@@ -150,26 +161,8 @@ xiNET.Controller = function(targetDiv, debug) {
 
     var svg = d3.select(this.svgElement);
     this.defs = svg.append('defs');
-    var pattern = this.defs.append('pattern')
-        .attr('id', 'checkers_uncertain')
-        .attr('patternUnits', 'userSpaceOnUse')
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr('width', 10)
-        .attr('height', 10);
+    this.createHatchedFill('checkers_uncertain', 'black');
 
-    pattern.append('rect')
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("width", 5)
-        .attr("height", 5)
-        .style("fill", "#A01284");
-    pattern.append('rect')
-        .attr("x", 5)
-        .attr("y", 5)
-        .attr("width", 5)
-        .attr("height", 5)
-        .style("fill", "#A01284");
     //markers
     var data = [{
         id: 1,
@@ -275,6 +268,46 @@ xiNET.Controller = function(targetDiv, debug) {
 
     this.clear();
 };
+
+xiNET.Controller.prototype.createHatchedFill = function(name, colour) {
+    var pattern = this.defs.append('pattern')
+        .attr('id', name)
+        .attr('patternUnits', 'userSpaceOnUse')
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr('width', 12)
+        .attr('height', 12)
+        .attr("patternTransform", "rotate(45)");
+
+        pattern.append('rect')
+        .attr("x", 0)
+        .attr("y", 3)
+        .attr("width", 12)
+        .attr("height", 3)
+        .attr("fill", colour);
+
+        pattern.append('rect')
+        .attr("x", 0)
+        .attr("y", 9)
+        .attr("width", 12)
+        .attr("height", 3)
+        .attr("fill", colour);
+
+
+        // checks - yuk
+        // pattern.append('rect')
+        //     .attr("x", 0)
+        //     .attr("y", 0)
+        //     .attr("width", 5)
+        //     .attr("height", 5)
+        //     .style("fill", "black");// "#A01284");
+        // pattern.append('rect')
+        //     .attr("x", 5)
+        //     .attr("y", 5)
+        //     .attr("width", 5)
+        //     .attr("height", 5)
+        //     .style("fill", "black");//"#A01284");
+}
 
 xiNET.Controller.prototype.clear = function() {
     if (this.d3cola) {
@@ -493,11 +526,11 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
         var catCount = categories.values().length;
 
         var colourScheme;
-        if (catCount < 3) {
-            catCount = 3;
+        if (catCount < 4) {
+            colourScheme = d3.scale.ordinal().range(colorbrewer.Dark2[3]);
         }
-        if (catCount < 5) {
-            colourScheme = d3.scale.ordinal().range(colorbrewer.Set1[4]);
+        else if (catCount < 5) {
+            colourScheme = d3.scale.ordinal().range(colorbrewer.Paired[4]);
         } else if (catCount < 13) {
             var reversed = colorbrewer.Set3[catCount].slice().reverse();
             colourScheme = d3.scale.ordinal().range(reversed);
@@ -515,27 +548,31 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
                 } else {
                     colour = colourScheme(anno.description);
                 }
-                var pattern = self.defs.append('pattern')
-                    .attr('id', 'checkers_' + anno.description)
-                    .classed("feature_checkers", true)
-                    .attr('patternUnits', 'userSpaceOnUse')
-                    .attr("x", 0)
-                    .attr("y", 0)
-                    .attr('width', 10)
-                    .attr('height', 10);
+                //ToDO - way more of these are being created than needed
 
-                pattern.append('rect')
-                    .attr("x", 0)
-                    .attr("y", 0)
-                    .attr("width", 5)
-                    .attr("height", 5)
-                    .style("fill", colour);
-                pattern.append('rect')
-                    .attr("x", 5)
-                    .attr("y", 5)
-                    .attr("width", 5)
-                    .attr("height", 5)
-                    .style("fill", colour);
+                self.createHatchedFill("checkers_" + anno.description, colour)
+
+                // var pattern = self.defs.append('pattern')
+                //     .attr('id', 'checkers_' + anno.description)
+                //     .classed("feature_checkers", true)
+                //     .attr('patternUnits', 'userSpaceOnUse')
+                //     .attr("x", 0)
+                //     .attr("y", 0)
+                //     .attr('width', 10)
+                //     .attr('height', 10);
+                //
+                // pattern.append('rect')
+                //     .attr("x", 0)
+                //     .attr("y", 0)
+                //     .attr("width", 5)
+                //     .attr("height", 5)
+                //     .style("fill", colour);
+                // pattern.append('rect')
+                //     .attr("x", 5)
+                //     .attr("y", 5)
+                //     .attr("width", 5)
+                //     .attr("height", 5)
+                //     .style("fill", colour);
                 var checkedFill = "url('#checkers_" + anno.description + "')";
 
                 anno.fuzzyStart.setAttribute("fill", checkedFill);

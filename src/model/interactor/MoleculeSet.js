@@ -71,13 +71,14 @@ function MoleculeSet(id, xlvController, json, name) {
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
     d3.select(this.labelSVG).attr("transform",
-        "translate( -" + (10) + " " + Interactor.labelY + ")");
+        "translate( -" + (25) + " " + Interactor.labelY + ")");
     this.upperGroup.appendChild(this.labelSVG);
 
     //make symbol
     this.outline = document.createElementNS(Config.svgns, "rect");
     d3.select(this.outline).attr("height", 20)
         .attr("width", 40)
+        .attr("x", -20)
         .attr("y", -10)
         .attr("rx", 5)
         .attr("ry", 5)
@@ -92,6 +93,7 @@ function MoleculeSet(id, xlvController, json, name) {
     this.upperLine = document.createElementNS(Config.svgns, "rect");
     d3.select(this.upperLine).attr("height", 20)
         .attr("width", 40)
+        .attr("x", -20)
         .attr("y", -10)
         .attr("rx", 5)
         .attr("ry", 5)

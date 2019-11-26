@@ -51,14 +51,15 @@ SequenceLink.prototype.initSVG = function() {
         this.uncertainGlyph.setAttribute("stroke-linecap", "round");
         this.highlightGlyph.setAttribute("stroke-linecap", "round");
         this.glyph.setAttribute("class", "link");
-        this.glyph.setAttribute("fill", "#E08214");
+        this.glyph.setAttribute("fill", "black");//"#E08214");
         this.glyph.setAttribute("opacity", "0.6");
-        this.glyph.setAttribute("stroke", "#A08214");
-        this.glyph.setAttribute("stroke-width", "2");
+        this.glyph.setAttribute("stroke", "black");//""#A08214");// // TODO: will look better with this line partly removed
+        this.glyph.setAttribute("stroke-opacity", "0.3");
+        this.glyph.setAttribute("stroke-width", "1");
         this.uncertainGlyph.setAttribute("class", "link");
         this.uncertainGlyph.setAttribute("fill", "url('#checkers_uncertain')");//"#A01284");
-        this.uncertainGlyph.setAttribute("stroke", "none");//"#A01284");
-        this.uncertainGlyph.setAttribute("stroke-opacity", "0.7");
+        this.uncertainGlyph.setAttribute("stroke", "black");//"none");//"#A01284");
+        this.uncertainGlyph.setAttribute("stroke-opacity", "0.3");
         this.uncertainGlyph.setAttribute("fill-opacity", "0.3");
         this.highlightGlyph.setAttribute("class", "link");
         this.highlightGlyph.setAttribute("fill", "none");
@@ -149,6 +150,7 @@ SequenceLink.prototype.show = function() {
 };
 
 SequenceLink.prototype.hide = function() {
+    // TODO: this looks wierd
     var containingGroup = this.controller.res_resLinks;
     if (this.interactors[0] === this.interactors[1]) {
         containingGroup = this.controller.selfRes_resLinks;

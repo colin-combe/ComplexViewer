@@ -31,8 +31,8 @@ function Protein(id, xinetController, json, name) {
     // layout info
     this.cx = 40;
     this.cy = 40;
-    this.ix = 40;
-    this.iy = 40;
+    // this.ix = 40;
+    // this.iy = 40;
     this.rotation = 0;
     this.previousRotation = this.rotation;
     this.stickZoom = 1;
@@ -133,6 +133,12 @@ function Protein(id, xinetController, json, name) {
     // this.upperGroup.ontouchstart = function(evt) {
     //     self.touchStart(evt);
     // };
+
+    Object.defineProperty(this, "height", {
+    get: function height() {
+        return 60;//this.upperGroup.getBBox().height + 60; // * this.controller.z;
+      }
+    });
 
     this.showHighlight(false);
 };
