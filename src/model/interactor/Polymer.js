@@ -768,11 +768,11 @@ Polymer.prototype.getAnnotationRectPath = function(startRes, endRes, anno) {
     }
 
     var annotX, annotSize, annotLength;
-    if (anno.seqDatum.sequenceDatumString == "n-n") {
+    if (startRes == "n-n") {
         var annotX = this.getResXwithStickZoom(0 - 0.5) - 20;
         // var annotSize = (1 + (endRes - startRes));
         var annotLength = 20;//annotSize * this.stickZoom;
-    } else if (anno.seqDatum.sequenceDatumString == "c-c") {
+    } else if (endRes == "c-c") {
         var annotX = this.getResXwithStickZoom(startRes - 0 + 0.5);
         // var annotSize = (1 + (endRes - startRes));
         var annotLength = 20;//annotSize * this.stickZoom;
