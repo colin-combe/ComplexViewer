@@ -281,16 +281,16 @@ xiNET.Controller.prototype.createHatchedFill = function(name, colour) {
 
         pattern.append('rect')
         .attr("x", 0)
-        .attr("y", 3)
+        .attr("y", 2)
         .attr("width", 12)
-        .attr("height", 3)
+        .attr("height", 4)
         .attr("fill", colour);
 
         pattern.append('rect')
         .attr("x", 0)
-        .attr("y", 9)
+        .attr("y", 8)
         .attr("width", 12)
-        .attr("height", 3)
+        .attr("height", 4)
         .attr("fill", colour);
 
 
@@ -526,14 +526,16 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
         var catCount = categories.values().length;
 
         var colourScheme;
-        if (catCount < 4) {
-            colourScheme = d3.scale.ordinal().range(colorbrewer.Dark2[3]);
+
+        if (catCount < 3){
+          catCount = 3;
         }
-        else if (catCount < 5) {
-            colourScheme = d3.scale.ordinal().range(colorbrewer.Paired[4]);
-        } else if (catCount < 13) {
-            var reversed = colorbrewer.Set3[catCount].slice().reverse();
-            colourScheme = d3.scale.ordinal().range(reversed);
+
+        if (catCount < 9) {
+            colourScheme = d3.scale.ordinal().range(colorbrewer.Dark2[catCount].slice().reverse());
+        // } else if (catCount < 13) {
+        //     var reversed = colorbrewer.Paired[catCount];//.slice().reverse();
+        //     colourScheme = d3.scale.ordinal().range(reversed);
         } else {
             colourScheme = d3.scale.category20();
         }
@@ -548,31 +550,9 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
                 } else {
                     colour = colourScheme(anno.description);
                 }
+
                 //ToDO - way more of these are being created than needed
-
                 self.createHatchedFill("checkers_" + anno.description, colour)
-
-                // var pattern = self.defs.append('pattern')
-                //     .attr('id', 'checkers_' + anno.description)
-                //     .classed("feature_checkers", true)
-                //     .attr('patternUnits', 'userSpaceOnUse')
-                //     .attr("x", 0)
-                //     .attr("y", 0)
-                //     .attr('width', 10)
-                //     .attr('height', 10);
-                //
-                // pattern.append('rect')
-                //     .attr("x", 0)
-                //     .attr("y", 0)
-                //     .attr("width", 5)
-                //     .attr("height", 5)
-                //     .style("fill", colour);
-                // pattern.append('rect')
-                //     .attr("x", 5)
-                //     .attr("y", 5)
-                //     .attr("width", 5)
-                //     .attr("height", 5)
-                //     .style("fill", colour);
                 var checkedFill = "url('#checkers_" + anno.description + "')";
 
                 anno.fuzzyStart.setAttribute("fill", checkedFill);

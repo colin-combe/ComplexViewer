@@ -136,7 +136,7 @@ function Protein(id, xinetController, json, name) {
 
     Object.defineProperty(this, "height", {
     get: function height() {
-        return 60;//this.upperGroup.getBBox().height + 60; // * this.controller.z;
+        return 40;//this.upperGroup.getBBox().height + 60; // * this.controller.z;
       }
     });
 
