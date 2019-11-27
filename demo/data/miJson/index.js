@@ -1,8 +1,9 @@
 var exampleIndex = [{
-        "ac": "EBI-6161327",
-        "name": "EBI-6161327",
-        "url": "https://wwwdev.ebi.ac.uk/intact/ws/graph/interaction/export/EBI-6161327",
-    }, {
+        "ac": "EBI-12598622",
+        "name": "EBI-12598622",
+        "url": "https://ebi-intact.github.io/intact-view/details/interaction/EBI-12598622",
+    },
+    {
         "ac": "CPX-297",
         "name": "CPX-297",
         "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-297",
@@ -18,6 +19,11 @@ var exampleIndex = [{
         "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-2020",
     },
     {
+        "ac": "EBI-6161327",
+        "name": "EBI-6161327",
+        "url": "https://wwwdev.ebi.ac.uk/intact/ws/graph/interaction/export/EBI-6161327",
+    },
+    {
         "ac": "EBI-4371590",
         "name": "EBI-4371590",
         "url": "https://ebi-intact.github.io/intact-view/details/interaction/EBI-4371590",
@@ -26,11 +32,6 @@ var exampleIndex = [{
         "ac": "EBI-5260847",
         "name": "EBI-5260847",
         "url": "https://ebi-intact.github.io/intact-view/details/interaction/EBI-5260847",
-    },
-    {
-        "ac": "EBI-12598622",
-        "name": "EBI-12598622",
-        "url": "https://ebi-intact.github.io/intact-view/details/interaction/EBI-12598622",
     },
     {
         "ac": "EBI-12734333",

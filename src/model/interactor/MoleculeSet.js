@@ -4,7 +4,7 @@
 //    	This product includes software developed at
 //    	the Rappsilber Laboratory (http://www.rappsilberlab.org/).
 //
-//		InteractorSet.js
+//		MoleculeSet.js
 //
 //		authors: Colin Combe
 
@@ -13,9 +13,9 @@
 var Interactor = require('./Interactor');
 var Config = require('../../controller/Config');
 
-InteractorSet.prototype = new Interactor();
+MoleculeSet.prototype = new Interactor();
 
-function InteractorSet(id, xlvController, json, name) {
+function MoleculeSet(id, xlvController, json, name) {
     this.id = id; // id may not be accession (multiple Segments with same accesssion)
     this.controller = xlvController;
     this.json = json;
@@ -71,13 +71,14 @@ function InteractorSet(id, xlvController, json, name) {
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
     d3.select(this.labelSVG).attr("transform",
-        "translate( -" + (10) + " " + Interactor.labelY + ")");
+        "translate( -" + (25) + " " + Interactor.labelY + ")");
     this.upperGroup.appendChild(this.labelSVG);
 
     //make symbol
     this.outline = document.createElementNS(Config.svgns, "rect");
     d3.select(this.outline).attr("height", 20)
         .attr("width", 40)
+        .attr("x", -20)
         .attr("y", -10)
         .attr("rx", 5)
         .attr("ry", 5)
@@ -92,6 +93,7 @@ function InteractorSet(id, xlvController, json, name) {
     this.upperLine = document.createElementNS(Config.svgns, "rect");
     d3.select(this.upperLine).attr("height", 20)
         .attr("width", 40)
+        .attr("x", -20)
         .attr("y", -10)
         .attr("rx", 5)
         .attr("ry", 5)
@@ -138,10 +140,10 @@ function InteractorSet(id, xlvController, json, name) {
 
 };
 
-InteractorSet.prototype.getBlobRadius = function() {
+MoleculeSet.prototype.getBlobRadius = function() {
     return 20;
 };
 
-InteractorSet.prototype.setForm = function(form, svgP) {};
+MoleculeSet.prototype.setForm = function(form, svgP) {};
 
-module.exports = InteractorSet;
+module.exports = MoleculeSet;

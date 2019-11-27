@@ -24,18 +24,18 @@ function SequenceFeature(node, sequenceDatumString) {
     this.sequenceDatumString = sequenceDatumString.trim();
 
     if (this.sequenceDatumString == "?-?") {
-        // todo: don't overlap ?-? features, keep track of them in this.node
-        this.uncertainBegin = -40;
-        this.begin = -20;
-        this.end = -20;
-    } else if (this.sequenceDatumString == "n-n") {
-        this.uncertainBegin = -20;
         this.begin = 0;
         this.end = 0;
+        this.uncertainEnd = node.size;
+    } else if (this.sequenceDatumString == "n-n") {
+        this.uncertainBegin = "n-n";
+        this.begin = 0;
+        this.end = 0;
+        node.nTerminusFeature = true;
     } else if (this.sequenceDatumString == "c-c") {
         this.begin = node.size + 1;
         this.end = node.size + 1;
-        this.uncertainEnd = node.size + 21;
+        this.uncertainEnd = "c-c";//node.size + 21;
     } else {
 
         var dashPosition = sequenceDatumString.indexOf('-');

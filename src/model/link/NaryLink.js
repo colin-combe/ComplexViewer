@@ -53,15 +53,8 @@ NaryLink.prototype.getTotalParticipantCount = function() {
 
 NaryLink.prototype.initSVG = function() {
     this.path = document.createElementNS(Config.svgns, "path");
-    //~ if (this.controller.expand === false){
     this.colour = NaryLink.naryColours(this.id);
     this.path.setAttribute('fill', this.colour);
-    //~ }
-    //~ else {
-    // this.path.setAttribute('fill', '#70BDBD');
-    //~ }
-    //this.path.setAttribute('fill-opacity', 0);
-
     //set the events for it
     var self = this;
     this.path.onmousedown = function(evt) {

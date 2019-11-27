@@ -89,7 +89,7 @@ Polymer.prototype.scale = function() {
     if (this.form === 1) {
         var labelTransform = d3.transform(this.labelSVG.getAttribute("transform"));
         var k = this.controller.svgElement.createSVGMatrix().rotate(labelTransform.rotate)
-            .translate((-(((this.size / 2) * this.stickZoom) + 10)), Interactor.labelY); //.scale(z).translate(-c.x, -c.y);
+            .translate((-(((this.size / 2) * this.stickZoom) + (this.nTerminusFeature ? 25 : 10))), Interactor.labelY); //.scale(z).translate(-c.x, -c.y);
         this.labelSVG.transform.baseVal.initialize(this.controller.svgElement.createSVGTransformFromMatrix(k));
 
         if (this.annotations) {
@@ -97,13 +97,13 @@ Polymer.prototype.scale = function() {
             for (var a = 0; a < ca; a++) {
                 var anno = this.annotations[a];
                 if (typeof anno.seqDatum.uncertainBegin != "undefined") {
-                    anno.fuzzyStart.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin));
+                    anno.fuzzyStart.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin, anno));
                 }
 
-                anno.certain.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.begin, anno.seqDatum.end));
+                anno.certain.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.begin, anno.seqDatum.end, anno));
 
                 if (anno.seqDatum.uncertainEnd) {
-                    anno.fuzzyEnd.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.end, anno.seqDatum.uncertainEnd));
+                    anno.fuzzyEnd.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.end, anno.seqDatum.uncertainEnd, anno));
                 }
             }
         }
@@ -208,7 +208,7 @@ Polymer.prototype.setForm = function(form, svgP) {
         } else {
             // if (this.form !== 0) {
             this.toCircle(svgP);
-            var r = this.getBlobRadius();
+            // var r = this.getBlobRadius();
 
         }
         // }
@@ -361,6 +361,7 @@ Polymer.prototype.toCircle = function(svgP) {
 Polymer.prototype.toStick = function() {
     this.busy = true;
     this.form = 1;
+
     //remove prot-prot links - would it be better if checkLinks did this? - think not
     var c = this.binaryLinks.values().length;
     for (var l = 0; l < c; l++) {
@@ -377,7 +378,7 @@ Polymer.prototype.toStick = function() {
     var lengthInterpol = d3.interpolate((2 * r), protLength);
     var stickZoomInterpol = d3.interpolate(0, this.stickZoom);
     var rotationInterpol = d3.interpolate(0, (this.rotation > 180) ? this.rotation - 360 : this.rotation);
-    var labelTranslateInterpol = d3.interpolate(-(r + 5), -(((this.size / 2) * this.stickZoom) + 10));
+    var labelTranslateInterpol = d3.interpolate(-(r + 5), -(((this.size / 2) * this.stickZoom) + (this.nTerminusFeature ? 25 : 10)));
 
     var origStickZoom = this.stickZoom;
     this.stickZoom = 0;
@@ -412,19 +413,19 @@ Polymer.prototype.toStick = function() {
             if (typeof anno.seqDatum.uncertainBegin != "undefined") {
                 var fuzzyStart = anno.fuzzyStart;
                 fuzzyStart.setAttribute("d", this.getAnnotationPieSliceApproximatePath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin));
-                d3.select(fuzzyStart).transition().attr("d", this.getAnnotationRectPath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin))
+                d3.select(fuzzyStart).transition().attr("d", this.getAnnotationRectPath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin, anno))
                     .duration(Polymer.transitionTime);
             }
             // if (anno.seqDatum.begin && anno.seqDatum.end) {
             var certain = anno.certain;
             certain.setAttribute("d", this.getAnnotationPieSliceApproximatePath(anno.seqDatum.begin, anno.seqDatum.end));
-            d3.select(certain).transition().attr("d", this.getAnnotationRectPath(anno.seqDatum.begin, anno.seqDatum.end))
+            d3.select(certain).transition().attr("d", this.getAnnotationRectPath(anno.seqDatum.begin, anno.seqDatum.end, anno))
                 .duration(Polymer.transitionTime);
             // }
             if (typeof anno.seqDatum.uncertainEnd != "undefined") {
                 var fuzzyEnd = anno.fuzzyEnd;
                 fuzzyEnd.setAttribute("d", this.getAnnotationPieSliceApproximatePath(anno.seqDatum.end, anno.seqDatum.uncertainEnd));
-                d3.select(fuzzyEnd).transition().attr("d", this.getAnnotationRectPath(anno.seqDatum.end, anno.seqDatum.uncertainEnd))
+                d3.select(fuzzyEnd).transition().attr("d", this.getAnnotationRectPath(anno.seqDatum.end, anno.seqDatum.uncertainEnd, anno))
                     .duration(Polymer.transitionTime);
             }
         }
@@ -464,8 +465,127 @@ Polymer.prototype.toStick = function() {
         .delay(Polymer.transitionTime * 0.8).duration(Polymer.transitionTime / 2);
 };
 
+
+Polymer.prototype.toStickNoTransition = function() {
+    this.busy = true;
+    this.form = 1;
+
+    //remove prot-prot links - would it be better if checkLinks did this? - think not
+    var c = this.binaryLinks.values().length;
+    for (var l = 0; l < c; l++) {
+        var link = this.binaryLinks.values()[l];
+        //out with the old
+        if (link.shown) {
+            link.hide();
+        }
+    }
+
+    var protLength = this.size * this.stickZoom;
+    var r = this.getBlobRadius();
+
+    var lengthInterpol = d3.interpolate((2 * r), protLength);
+    var stickZoomInterpol = d3.interpolate(0, this.stickZoom);
+    var rotationInterpol = d3.interpolate(0, (this.rotation > 180) ? this.rotation - 360 : this.rotation);
+    var labelTranslateInterpol = d3.interpolate(-(r + 5), -(((this.size / 2) * this.stickZoom) + (this.nTerminusFeature ? 25 : 10)));
+
+    // var origStickZoom = this.stickZoom;
+    // this.stickZoom = 0;
+    this.checkLinks(this.binaryLinks);
+    this.checkLinks(this.selfLink);
+    this.checkLinks(this.sequenceLinks);
+    // this.stickZoom = origStickZoom;
+
+    d3.select(this.background) //.transition() //.attr("stroke-opacity", 1)
+        .attr("height", Polymer.STICKHEIGHT)
+        .attr("y", -Polymer.STICKHEIGHT / 2)
+        .attr("rx", 0).attr("ry", 0);
+    //  .duration(Polymer.transitionTime);
+
+    d3.select(this.outline) //.transition() //.attr("stroke-opacity", 1)
+        .attr("height", Polymer.STICKHEIGHT)
+        .attr("y", -Polymer.STICKHEIGHT / 2)
+        .attr("rx", 0).attr("ry", 0);
+    //  .duration(Polymer.transitionTime);
+
+    d3.select(this.highlight) //.transition()
+        .attr("width", protLength + 5).attr("height", Polymer.STICKHEIGHT + 5)
+        .attr("x", this.getResXwithStickZoom(0.5) - 2.5).attr("y", (-Polymer.STICKHEIGHT / 2) - 2.5)
+        .attr("rx", 0).attr("ry", 0);
+    // .duration(Polymer.transitionTime);
+
+    if (this.annotations) {
+        var annots = this.annotations;
+        var ca = annots.length;
+        for (var a = 0; a < ca; a++) {
+            var anno = annots[a];
+            if (typeof anno.seqDatum.uncertainBegin != "undefined") {
+                var fuzzyStart = anno.fuzzyStart;
+                // fuzzyStart.setAttribute("d", this.getAnnotationPieSliceApproximatePath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin));
+                d3.select(fuzzyStart).attr("d", this.getAnnotationRectPath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin, anno));
+                // .duration(Polymer.transitionTime);
+            }
+            // if (anno.seqDatum.begin && anno.seqDatum.end) {
+            var certain = anno.certain;
+            certain.setAttribute("d", this.getAnnotationPieSliceApproximatePath(anno.seqDatum.begin, anno.seqDatum.end));
+            d3.select(certain) /*.transition()*/ .attr("d", this.getAnnotationRectPath(anno.seqDatum.begin, anno.seqDatum.end, anno));
+            // .duration(Polymer.transitionTime);
+            // }
+            if (typeof anno.seqDatum.uncertainEnd != "undefined") {
+                var fuzzyEnd = anno.fuzzyEnd;
+                // fuzzyEnd.setAttribute("d", this.getAnnotationPieSliceApproximatePath(anno.seqDatum.end, anno.seqDatum.uncertainEnd));
+                d3.select(fuzzyEnd) /*.transition()*/ .attr("d", this.getAnnotationRectPath(anno.seqDatum.end, anno.seqDatum.uncertainEnd, anno));
+                // .duration(Polymer.transitionTime);
+            }
+        }
+    }
+
+    var self = this;
+    // var cubicInOut = d3.ease('cubic-in-out');
+    // d3.timer(function(elapsed) {
+    //     return update(elapsed / Polymer.transitionTime);
+    // });
+
+    // update(1)
+    //
+    // function update(interp) {
+    var labelTransform = d3.transform(self.labelSVG.getAttribute("transform"));
+    var k = self.controller.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(1), Interactor.labelY); //.scale(z).translate(-c.x, -c.y);
+    self.labelSVG.transform.baseVal.initialize(self.controller.svgElement.createSVGTransformFromMatrix(k));
+
+    var currentLength = lengthInterpol(1);
+    d3.select(self.highlight).attr("width", currentLength).attr("x", -(currentLength / 2) + (0.5 * self.stickZoom));
+    d3.select(self.outline).attr("width", currentLength).attr("x", -(currentLength / 2) + (0.5 * self.stickZoom));
+    d3.select(self.background).attr("width", currentLength).attr("x", -(currentLength / 2) + (0.5 * self.stickZoom));
+    // self.stickZoom = stickZoomInterpol(cubicInOut(interp))
+    self.setAllLinkCoordinates();
+
+    // if (interp === 1) { // finished - tidy up
+    // return true;
+    // } else if (interp > 1) {
+    //     return update(1);
+    // } else {
+    //     return false;
+    // }
+    // }
+
+
+    //d3.select(this.ticks).attr("opacity", 0);
+    this.setScaleGroup();
+    d3.select(this.ticks) /*.transition()*/ .attr("opacity", 1);
+    //.delay(Polymer.transitionTime * 0.8).duration(Polymer.transitionTime / 2);
+
+    self.busy = false;
+
+};
+
 Polymer.prototype.getResXwithStickZoom = function(r) {
-    return (r - (this.size / 2)) * this.stickZoom;
+    if (r == "n-n") {
+        return (-this.size / 2 * this.stickZoom) - 20;
+    } else if (r == "c-c") {
+        return (this.size / 2 * this.stickZoom) + 20;
+    } else {
+        return (r - (this.size / 2)) * this.stickZoom;
+    }
 };
 
 //calculate the  coordinates of a residue (relative to this.controller.container)
@@ -495,11 +615,13 @@ Polymer.prototype.getResidueCoordinates = function(r, yOff) {
 
 Polymer.prototype.clearPositionalFeatures = function() {
     this.annotations = [];
+    this.annotationTypes = [];
     if (this.annotationsSvgGroup) d3.select(this.annotationsSvgGroup).selectAll("*").remove();
 }
 
 Polymer.prototype.setPositionalFeatures = function(posFeats) {
     if (posFeats) {
+        var annotationTypesSet = new Set();
         var y = -Interactor.STICKHEIGHT / 2;
         //draw longest regions first
         posFeats.sort(function(a, b) {
@@ -512,6 +634,9 @@ Polymer.prototype.setPositionalFeatures = function(posFeats) {
         }
         for (var i = 0; i < posFeats.length; i++) {
             var anno = posFeats[i];
+            if (anno.seqDatum.sequenceDatumString != "n-n" && anno.seqDatum.sequenceDatumString != "c-c") {
+                annotationTypesSet.add(anno.description);
+            }
 
             anno.fuzzyStart = document.createElementNS(Config.svgns, "path");
             anno.certain = document.createElementNS(Config.svgns, "path");
@@ -529,13 +654,13 @@ Polymer.prototype.setPositionalFeatures = function(posFeats) {
                 }
             } else {
                 if (typeof anno.seqDatum.uncertainBegin != "undefined") {
-                    anno.fuzzyStart.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin));
+                    anno.fuzzyStart.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin, anno));
                 }
                 // if (anno.seqDatum.begin && anno.seqDatum.end) {
-                anno.certain.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.begin, anno.seqDatum.end));
+                anno.certain.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.begin, anno.seqDatum.end, anno));
                 // }
                 if (typeof anno.seqDatum.uncertainEnd != "undefined") {
-                    anno.fuzzyEnd.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.end, anno.seqDatum.uncertainEnd));
+                    anno.fuzzyEnd.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.end, anno.seqDatum.uncertainEnd, anno));
                 }
             }
             anno.fuzzyStart.setAttribute("stroke-width", 1);
@@ -570,14 +695,26 @@ Polymer.prototype.setPositionalFeatures = function(posFeats) {
             }
             // }
         }
+        this.annotationTypes = Array.from(annotationTypesSet.values());
     }
 };
 
 Polymer.stepsInArc = 5;
 
 Polymer.prototype.getAnnotationPieSliceArcPath = function(startRes, endRes) {
-    var startAngle = ((startRes - 1) / this.size) * 360;
-    var endAngle = ((endRes - 1) / this.size) * 360;
+    // var startAngle = ((startRes - 1) / this.size) * 360;
+    // var endAngle = ((endRes - 1) / this.size) * 360;
+    var startAngle, endAngle;
+    if (startRes == "n-n") {
+        startAngle = -20; //((startRes - 1) / this.size) * 360;
+        endAngle = ((endRes -1) / this.size) * 360;
+    } else if (endRes == "c-c") {
+        startAngle = ((startRes - 1) / this.size) * 360;
+        endAngle = +20; //((endRes) / this.size) * 360;
+    } else {
+        startAngle = ((startRes - 1) / this.size) * 360;
+        endAngle = ((endRes -1) / this.size) * 360;
+    }
     var radius = this.getBlobRadius() - 2;
     var arcStart = Interactor.trig(radius, startAngle - 90);
     var arcEnd = Interactor.trig(radius, endAngle - 90);
@@ -591,8 +728,17 @@ Polymer.prototype.getAnnotationPieSliceArcPath = function(startRes, endRes) {
 
 Polymer.prototype.getAnnotationPieSliceApproximatePath = function(startRes, endRes) {
     //approximate pie slice
-    var startAngle = ((startRes - 1) / this.size) * 360;
-    var endAngle = ((endRes) / this.size) * 360;
+    var startAngle, endAngle;
+    if (startRes == "n-n") {
+        startAngle = -20; //((startRes - 1) / this.size) * 360;
+        endAngle = ((endRes) / this.size) * 360;
+    } else if (endRes == "c-c") {
+        startAngle = ((startRes - 1) / this.size) * 360;
+        endAngle = +20; //((endRes) / this.size) * 360;
+    } else {
+        startAngle = ((startRes - 1) / this.size) * 360;
+        endAngle = ((endRes) / this.size) * 360;
+    }
     var pieRadius = this.getBlobRadius() - 2;
     var arcStart = Interactor.trig(pieRadius, startAngle - 90);
     var arcEnd = Interactor.trig(pieRadius, endAngle - 90);
@@ -608,13 +754,33 @@ Polymer.prototype.getAnnotationPieSliceApproximatePath = function(startRes, endR
     return approximatePiePath;
 };
 
-Polymer.prototype.getAnnotationRectPath = function(startRes, endRes) {
+Polymer.prototype.getAnnotationRectPath = function(startRes, endRes, anno) {
     //domain as rectangle path
-    var bottom = Polymer.STICKHEIGHT / 2,
-        top = -Polymer.STICKHEIGHT / 2;
-    var annotX = this.getResXwithStickZoom(startRes - 0.5);
-    var annotSize = (1 + (endRes - startRes));
-    var annotLength = annotSize * this.stickZoom;
+
+    var rung = this.annotationTypes.indexOf(anno.description);
+    if (rung == -1) {
+        var bottom = Polymer.STICKHEIGHT / 2,
+            top = -Polymer.STICKHEIGHT / 2;
+    } else {
+        var rungHeight = Polymer.STICKHEIGHT / this.annotationTypes.length;
+        var top = (-Polymer.STICKHEIGHT / 2) + (rung * rungHeight); // looks like top and bottom wrong way round?
+        var bottom = top + rungHeight;
+    }
+
+    var annotX, annotSize, annotLength;
+    if (startRes == "n-n") {
+        var annotX = this.getResXwithStickZoom(0 - 0.5) - 20;
+        // var annotSize = (1 + (endRes - startRes));
+        var annotLength = 20;//annotSize * this.stickZoom;
+    } else if (endRes == "c-c") {
+        var annotX = this.getResXwithStickZoom(startRes - 0 + 0.5);
+        // var annotSize = (1 + (endRes - startRes));
+        var annotLength = 20;//annotSize * this.stickZoom;
+    } else {
+        var annotX = this.getResXwithStickZoom(startRes - 0.5); // todo - look out for positions being strings
+        var annotSize = (1 + (endRes - startRes));
+        var annotLength = annotSize * this.stickZoom;
+    }
     var rectPath = "M " + annotX + "," + bottom;
     for (var sia = 0; sia <= Polymer.stepsInArc; sia++) {
         var step = annotX + (annotLength * (sia / Polymer.stepsInArc));

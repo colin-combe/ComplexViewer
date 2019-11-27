@@ -27,7 +27,7 @@ var DNA = require('../model/interactor/DNA');
 var RNA = require('../model/interactor/RNA');
 var Complex = require('../model/interactor/Complex');
 var Complex_symbol = require('../model/interactor/Complex_symbol');
-var InteractorSet = require('../model/interactor/MoleculeSet');
+var MoleculeSet = require('../model/interactor/MoleculeSet');
 var Link = require('../model/link/Link');
 var NaryLink = require('../model/link/NaryLink');
 var SequenceLink = require('../model/link/SequenceLink');
@@ -139,6 +139,17 @@ xiNET.Controller = function(targetDiv, debug) {
         self.touchEnd(evt);
     };
 
+    this.el.oncontextmenu = function(evt) {
+        if (evt.preventDefault) { // necessary for addEventListener, works with traditional
+            evt.preventDefault();
+        }
+        if (evt.stopPropogation) {
+            evt.stopPropagation();
+        }
+        evt.returnValue = false; // necessary for attachEvent, works with traditional
+        return false; // works with traditional, not with attachEvent or addEventListener
+    };
+
     //legend changed callbacks
     this.legendCallbacks = new Array();
 
@@ -150,26 +161,8 @@ xiNET.Controller = function(targetDiv, debug) {
 
     var svg = d3.select(this.svgElement);
     this.defs = svg.append('defs');
-    var pattern = this.defs.append('pattern')
-        .attr('id', 'checkers_uncertain')
-        .attr('patternUnits', 'userSpaceOnUse')
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr('width', 10)
-        .attr('height', 10);
+    this.createHatchedFill('checkers_uncertain', 'black');
 
-    pattern.append('rect')
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("width", 5)
-        .attr("height", 5)
-        .style("fill", "#A01284");
-    pattern.append('rect')
-        .attr("x", 5)
-        .attr("y", 5)
-        .attr("width", 5)
-        .attr("height", 5)
-        .style("fill", "#A01284");
     //markers
     var data = [{
         id: 1,
@@ -275,6 +268,46 @@ xiNET.Controller = function(targetDiv, debug) {
 
     this.clear();
 };
+
+xiNET.Controller.prototype.createHatchedFill = function(name, colour) {
+    var pattern = this.defs.append('pattern')
+        .attr('id', name)
+        .attr('patternUnits', 'userSpaceOnUse')
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr('width', 12)
+        .attr('height', 12)
+        .attr("patternTransform", "rotate(45)");
+
+        pattern.append('rect')
+        .attr("x", 0)
+        .attr("y", 2)
+        .attr("width", 12)
+        .attr("height", 4)
+        .attr("fill", colour);
+
+        pattern.append('rect')
+        .attr("x", 0)
+        .attr("y", 8)
+        .attr("width", 12)
+        .attr("height", 4)
+        .attr("fill", colour);
+
+
+        // checks - yuk
+        // pattern.append('rect')
+        //     .attr("x", 0)
+        //     .attr("y", 0)
+        //     .attr("width", 5)
+        //     .attr("height", 5)
+        //     .style("fill", "black");// "#A01284");
+        // pattern.append('rect')
+        //     .attr("x", 5)
+        //     .attr("y", 5)
+        //     .attr("width", 5)
+        //     .attr("height", 5)
+        //     .style("fill", "black");//"#A01284");
+}
 
 xiNET.Controller.prototype.clear = function() {
     if (this.d3cola) {
@@ -387,12 +420,14 @@ xiNET.Controller.prototype.init = function() {
         }
     }
 
-    // if (molCount < 6) {
-    //     for (var m = 0; m < molCount; m++) {
-    //         var prot = mols[m];
-    //         prot.setForm(1);
-    //     }
-    // }
+    if (molCount < 4) {
+        for (var m = 0; m < molCount; m++) {
+            var prot = mols[m];
+            if (prot.json.type.name == "protein") {
+                prot.toStickNoTransition()
+            };
+        }
+    }
 
     this.autoLayout();
 
@@ -438,7 +473,7 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
         var molsAnnotated = 0;
         for (m = 0; m < molCount; m++) {
             var mol = mols[m];
-            if (mol.id.indexOf('uniprotkb_') === 0) { //LIMIT IT TO PROTEINS //todo:fix
+            if (mol.id.indexOf('uniprotkb_') === 0) { //LIMIT IT TO PROTEINS
                 xiNET_Storage.getSuperFamFeatures(mol.id, function(id, fts) {
                     var m = self.molecules.get(id);
                     m.setPositionalFeatures(fts);
@@ -458,7 +493,7 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
         var molsAnnotated = 0;
         for (m = 0; m < molCount; m++) {
             var mol = mols[m];
-            if (mol.id.indexOf('uniprotkb_') === 0) { //LIMIT IT TO PROTEINS //todo:fix
+            if (mol.id.indexOf('uniprotkb_') === 0) { //LIMIT IT TO PROTEINS
                 xiNET_Storage.getUniProtFeatures(mol.id, function(id, fts) {
                     var m = self.molecules.get(id);
                     for (var f = 0; f < fts.length; f++) {
@@ -491,14 +526,16 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
         var catCount = categories.values().length;
 
         var colourScheme;
-        if (catCount < 3) {
-            catCount = 3;
+
+        if (catCount < 3){
+          catCount = 3;
         }
-        if (catCount < 5) {
-            colourScheme = d3.scale.ordinal().range(colorbrewer.Set1[4]);
-        } else if (catCount < 13) {
-            var reversed = colorbrewer.Set3[catCount].slice().reverse();
-            colourScheme = d3.scale.ordinal().range(reversed);
+
+        if (catCount < 9) {
+            colourScheme = d3.scale.ordinal().range(colorbrewer.Dark2[catCount].slice().reverse());
+        // } else if (catCount < 13) {
+        //     var reversed = colorbrewer.Paired[catCount];//.slice().reverse();
+        //     colourScheme = d3.scale.ordinal().range(reversed);
         } else {
             colourScheme = d3.scale.category20();
         }
@@ -513,27 +550,9 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
                 } else {
                     colour = colourScheme(anno.description);
                 }
-                var pattern = self.defs.append('pattern')
-                    .attr('id', 'checkers_' + anno.description)
-                    .classed("feature_checkers", true)
-                    .attr('patternUnits', 'userSpaceOnUse')
-                    .attr("x", 0)
-                    .attr("y", 0)
-                    .attr('width', 10)
-                    .attr('height', 10);
 
-                pattern.append('rect')
-                    .attr("x", 0)
-                    .attr("y", 0)
-                    .attr("width", 5)
-                    .attr("height", 5)
-                    .style("fill", colour);
-                pattern.append('rect')
-                    .attr("x", 5)
-                    .attr("y", 5)
-                    .attr("width", 5)
-                    .attr("height", 5)
-                    .style("fill", colour);
+                //ToDO - way more of these are being created than needed
+                self.createHatchedFill("checkers_" + anno.description, colour)
                 var checkedFill = "url('#checkers_" + anno.description + "')";
 
                 anno.fuzzyStart.setAttribute("fill", checkedFill);
@@ -682,7 +701,7 @@ xiNET.Controller.prototype.preventDefaultsAndStopPropagation = function(evt) {
 
 /**
  * Handle touchstart event.
- */
+
 xiNET.Controller.prototype.touchStart = function(evt) {
     //prevent default, but allow propogation
     evt.preventDefault();
@@ -797,17 +816,19 @@ xiNET.Controller.prototype.getTouchEventPoint = function(evt) {
     p.y = evt.touches[0].pageY - top;
     return p;
 };
-
+*/
 xiNET.Controller.prototype.autoLayout = function() {
     if (this.d3cola) {
         this.d3cola.stop();
     }
 
-    var width = this.svgElement.parentNode.clientWidth;
+    var width = this.svgElement.parentNode.clientWidth; //this.svgElement.getBoundingClientRect().width;
     var height = this.svgElement.parentNode.clientHeight;
-    this.acknowledgement.setAttribute("transform", "translate(5, " + (height - 40) + ")");
 
-    //// TODO: prune leaves from netork then layout, then add back leaves and layout again
+    if (this.acknowledgement) {
+        this.acknowledgement.setAttribute("transform", "translate(5, " + (height - 40) + ")");
+    }
+    //// TODO: prune leaves from network then layout, then add back leaves and layout again
 
     var self = this;
     var nodes = this.molecules.values();
@@ -885,7 +906,6 @@ xiNET.Controller.prototype.autoLayout = function() {
 
     this.d3cola.nodes(layoutObj.nodes).groups(groups).links(layoutObj.links).avoidOverlaps(true);
 
-    var self = this;
     if (self.debug) {
         var groupDebugSel = d3.select(this.svgElement).selectAll('.group')
             .data(groups);
@@ -920,10 +940,13 @@ xiNET.Controller.prototype.autoLayout = function() {
         // console.log("nodes", nodes);
         for (var n = 0; n < nodeCount; n++) {
             var node = nodes[n];
-            var mol = self.molecules.get(node.id);
-            var nx = node.x + (width / 2);
+
+            var outlineWidth = node.outline.getBBox().width;
+            var upperGroupWidth = node.upperGroup.getBBox().width;
+
+            var nx = node.bounds.x + upperGroupWidth - (outlineWidth / 2) + (width / 2);
             var ny = node.y + (height / 2);
-            mol.setPosition(nx, ny);
+            node.setPosition(nx, ny);
         }
         self.setAllLinkCoordinates();
 
@@ -1247,7 +1270,7 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
             ||
             interactor.type.id === 'MI:1306' //molecule set - open set
         ) {
-            participant = new InteractorSet(participantId, self, interactor, interactor.label);
+            participant = new MoleculeSet(participantId, self, interactor, interactor.label);
         }
         //bioactive entities
         else if (interactor.type.id === 'MI:1100' // bioactive entity

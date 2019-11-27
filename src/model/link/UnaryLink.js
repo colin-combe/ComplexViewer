@@ -159,10 +159,10 @@ UnaryLink.prototype.check = function() {
 };
 
 UnaryLink.prototype.show = function() {
-    this.line.setAttribute("transform", "translate(" + this.interactors[0].x +
-        " " + this.interactors[0].y + ")" + " scale(" + (this.controller.z) + ")");
-    this.highlightLine.setAttribute("transform", "translate(" + this.interactors[0].x +
-        " " + this.interactors[0].y + ")" + " scale(" + (this.controller.z) + ")");
+    this.line.setAttribute("transform", "translate(" + this.interactors[0].cx +
+        " " + this.interactors[0].cy + ")" + " scale(" + (this.controller.z) + ")");
+    this.highlightLine.setAttribute("transform", "translate(" + this.interactors[0].cx +
+        " " + this.interactors[0].cy + ")" + " scale(" + (this.controller.z) + ")");
     this.controller.highlights.appendChild(this.highlightLine);
     this.controller.p_pLinks.appendChild(this.line);
 };
