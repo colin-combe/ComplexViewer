@@ -420,7 +420,7 @@ xiNET.Controller.prototype.init = function() {
         }
     }
 
-    if (molCount < 6) {
+    if (molCount < 4) {
         for (var m = 0; m < molCount; m++) {
             var prot = mols[m];
             if (prot.json.type.name == "protein") {
