@@ -9,14 +9,9 @@
 "use strict";
 
 //constructor for annotations
-function Annotation(annotName, startRes, endRes, colour, notes) {
-    this.description = annotName;
-    this.begin = startRes;
-    this.end = endRes;
-    if (colour !== undefined && colour !== null) {
-        this.colour = colour;
-    }
-    //~ this.description = notes;
+function Annotation(annotName, seqDatum) {
+    this.description = annotName.trim();
+    this.seqDatum = seqDatum;
 }
 
 module.exports = Annotation;

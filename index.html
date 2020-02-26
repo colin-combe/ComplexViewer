@@ -18,7 +18,7 @@
         <script type="text/javascript" src="./demo/rgbcolor.js"></script>
         <script type="text/javascript" src="./demo/legend.js"></script>
         <!-- example data info -->
-        <script type="text/javascript" src="./demo/data/complex/index.js"></script>
+        <script type="text/javascript" src="./demo/data/miJson/index.js"></script>
     </head>
 
     <body>
@@ -27,14 +27,14 @@
 
             <div class="page-header">
                     <i class="fa fa-github" onclick="window.location = 'https://github.com/MICommunity/ComplexViewer';" title="Go to GitHub project" style="margin-right:5px;"></i>
-                    <a target="_blank" href="https://doi.org/10.1093/bioinformatics/btx497"><h1>ComplexViewer: visualization of curated macromolecular complexes</h1></a>
+                    <a target="_blank" href="https://doi.org/10.1093/bioinformatics/btx497"><h1>ComplexViewer: dev. version</h1></a>
             </div>
 
             <div id="centre">
 
                 <div id="detailsDiv">
                     <span>Choose Example:</span>
-                    <select id="dataSets" class="noShrink" onChange="document.getElementById('chkexpansion').checked = true;loadData();"></select>
+                    <select id="dataSets" class="noShrink" onChange="/*document.getElementById('chkexpansion').checked = true;*/loadData();"></select>
                     <br>
                     <div id="complexDetails"></div>
                 </div>
@@ -47,6 +47,14 @@
                         <div id="legend">
 
                                 <table>
+                                  <tr>
+                                     <td>
+                                         <div style="float:right">
+                                             <img src="./demo/svgForKey/molSet.svg" alt="Bioactive Entity">
+                                         </div>
+                                     </td>
+                                     <td>Molecule Set</td>
+                                   </tr>
                                  <tr>
                                     <td>
                                         <div style="float:right">
@@ -116,11 +124,11 @@
                         <option>None</option>
                         <option>Interactor</option>
                     </select>
-                    <label>&nbsp;&nbsp;Expand Stoich.
+                    <!-- <label>&nbsp;&nbsp;Expand Stoich.
                     <input checked onclick="loadData()" id="chkexpansion" value="expansion" type="checkbox">
-                    </label>
+                    </label> -->
                     &nbsp;&nbsp;
-                    <button class="btn btn-1 btn-1a" onclick="xlv.reset();" style="display:inline">Reset Layout</button>
+                    <button class="btn btn-1 btn-1a" onclick="xlv.autoLayout();" style="display:inline">Layout</button>
                     <button class="btn btn-1 btn-1a" onclick="exportSVG();" style="display:inline">Export Graphic</button>
                 </div>
 
@@ -153,37 +161,45 @@
                 xlv = new xiNET(targetDiv);
                 xlv.svgElement.setAttribute("style", "display: -webkit-box;display: -moz-box;display: -ms-flexbox; display: -webkit-flex;display: flex;flex-grow:1;");
 
-
                 var legend = d3.select("svg").append("g");
                 xlv.legendCallbacks.push(function (colourAssignment) {
                     legend.selectAll("*").remove();
+                    var table = "<table background:#EEEEEE;>";
                     var coloursKeyDiv = document.getElementById('colours');
                     if (colourAssignment){
 
-                        //html legend
-                    var dataSetsSelect = document.getElementById('dataSets');
+                        var complexColourScheme = xlv.getComplexColours();
+                        var ccDomain = complexColourScheme.domain();
+                        var ccRange = complexColourScheme.range();
+                        table += "<tr style='height:10px;'></tr>";
+                        for (var i = 0; i < ccDomain.length; i ++){
+                            //make transparent version of colour
+                            var temp = new RGBColor(ccRange[i%6]);
+                            //var trans = "rgba(" +temp.r+","+temp.g+","+temp.b+ ", 0.6)";
+                            table += "<tr><td style='width:75px;margin:10px;background:"
+                                    + ccRange[i%6] + ";border:1px solid "
+                                    + ccRange[i%6] + ";'></td><td>"
+                                    + ccDomain[i] +"</td></tr>";
+                            console.log(i + " "+ ccDomain[i] + " " + ccRange[i]);
+                        }
+                        table = table += "</table>";
+                        table = table += "<table background:#EEEEEE;>";
 
-                    var example = exampleIndex[dataSetsSelect.selectedIndex];
-
-
-                        var table = "<table background:#EEEEEE;><tr style='height:10px;'></tr><tr><td style='width:100px;margin:10px;"
-                                    + "background:#70BDBD;opacity:0.3;border:none;'>"
-                                    + "</td><td >"+example.ac+"</td></tr>";
-                                var domain = colourAssignment.domain();
-                            //~ //console.log("Domain:"+domain);
-                            var range = colourAssignment.range();
-                            //~ //console.log("Range:"+range);
-                            table += "<tr style='height:10px;'></tr>";
-                            for (var i = 0; i < domain.length; i ++){
-                                //make transparent version of colour
-                                var temp = new RGBColor(range[i%20]);
-                                var trans = "rgba(" +temp.r+","+temp.g+","+temp.b+ ", 0.6)";
-                                table += "<tr><td style='width:75px;margin:10px;background:"
-                                        + trans + ";border:1px solid "
-                                        + range[i%20] + ";'></td><td>"
-                                        + domain[i] +"</td></tr>";
-                                //~ //console.log(i + " "+ domain[i] + " " + range[i]);
-                            }
+                        var domain = colourAssignment.domain();
+                        //~ //console.log("Domain:"+domain);
+                        var range = colourAssignment.range();
+                        //~ //console.log("Range:"+range);
+                        table += "<tr style='height:10px;'></tr>";
+                        for (var i = 0; i < domain.length; i ++){
+                            //make transparent version of colour
+                            var temp = new RGBColor(range[i%20]);
+                            var trans = "rgba(" +temp.r+","+temp.g+","+temp.b+ ", 0.6)";
+                            table += "<tr><td style='width:75px;margin:10px;background:"
+                                    + trans + ";border:1px solid "
+                                    + range[i%20] + ";'></td><td>"
+                                    + domain[i] +"</td></tr>";
+                            //~ //console.log(i + " "+ domain[i] + " " + range[i]);
+                        }
 
                         table = table += "</table>";
                         coloursKeyDiv.innerHTML = table;
@@ -200,7 +216,7 @@
                     var example = exampleIndex[i];
                     var dataSetsSelect = document.getElementById('dataSets');
                     var opt = document.createElement('option');
-                    opt.value = "./demo/data/complex/" + example.ac + ".json";
+                    opt.value = "./demo/data/miJson/" + example.ac + ".json";
                     opt.innerHTML = example.name;
                     dataSetsSelect.appendChild(opt);
                 }
@@ -219,35 +235,23 @@
                     complexDetailsSel.selectAll("*").remove("*");
 
                     complexDetailsSel.append("a")
-                        .attr("href","http://www.ebi.ac.uk/complexportal/complex/"+example.ac)
+                        .attr("href", example.url)
                         .attr("target", "_blank")
-                        .html("<b>" + example.ac + "</b> - View on ComplexPortal");
-                    if (example.complexAssemblies[0]) {
-                        complexDetailsSel.append("p").html("<b>Type:</b> " + example.complexAssemblies[0]);
-                    }
+                        .html("<b>" + example.ac + "</b>");
 
 
-                    var innerSel = complexDetailsSel.append("div").classed("detailsInner", true);
-
-                    var detailsHtml = "<b>Properties:</b> " + example.properties;
-                    if (example.viewerNotes) {
-                        detailsHtml += "<br><b>Viewer Notes:</b> " + example.viewerNotes;
-                    }
-                    innerSel.append("p").html(detailsHtml);
-                    //~ innerSel.append("p").html("<b>Functions:</b> " + example.functions);
-
-                    if (example.disableStoichExpand) {
-                        d3.select("#chkexpansion").attr("disabled", "disabled");
-                        document.getElementById("chkexpansion").checked = false;
-                    } else {
-                        d3.select("#chkexpansion").attr("disabled", null);
-                        //~ document.getElementById("chkexpansion").checked = true;
-                    }
-                    var matrixExpansion = document.getElementById("chkexpansion").checked;
+                    // if (example.disableStoichExpand) {
+                    //     d3.select("#chkexpansion").attr("disabled", "disabled");
+                    //     document.getElementById("chkexpansion").checked = false;
+                    // } else {
+                    //     d3.select("#chkexpansion").attr("disabled", null);
+                    //     //~ document.getElementById("chkexpansion").checked = true;
+                    // }
+                    //var matrixExpansion = document.getElementById("chkexpansion").checked;
 
                     var path = dataSetsSelect.options[dataSetsSelect.selectedIndex].value;
                     d3.json(path, function(data) {
-                       xlv.readMIJSON(data, matrixExpansion);
+                       xlv.readMIJSON(data);//, matrixExpansion);
                     });
                  }
 

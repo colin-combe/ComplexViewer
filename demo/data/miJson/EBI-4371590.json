@@ -1,0 +1,292 @@
+{
+    "data": [
+        {
+            "id": "uniprotkb_O14727",
+            "identifier": {
+                "db": "uniprotkb",
+                "id": "O14727"
+            },
+            "label": "apaf_human",
+            "object": "interactor",
+            "organism": {
+                "common": "human",
+                "scientific": "Homo sapiens",
+                "taxid": "9606"
+            },
+            "sequence": "MDAKARNCLLQHREALEKDIKTSYIMDHMISDGFLTISEEEKVRNEPTQQQRAAMLIKMILKKDNDSYVSFYNALLHEGYKDLAALLHDGIPVVSSSSGKDSVSGITSYVRTVLCEGGVPQRPVVFVTRKKLVNAIQQKLSKLKGEPGWVTIHGMAGCGKSVLAAEAVRDHSLLEGCFPGGVHWVSVGKQDKSGLLMKLQNLCTRLDQDESFSQRLPLNIEEAKDRLRILMLRKHPRSLLILDDVWDSWVLKAFDSQCQILLTTRDKSVTDSVMGPKYVVPVESSLGKEKGLEILSLFVNMKKADLPEQAHSIIKECKGSPLVVSLIGALLRDFPNRWEYYLKQLQNKQFKRIRKSSSYDYEALDEAMSISVEMLREDIKDYYTDLSILQKDVKVPTKVLCILWDMETEEVEDILQEFVNKSLLFCDRNGKSFRYYLHDLQVDFLTEKNCSQLQDLHKKIITQFQRYHQPHTLSPDQEDCMYWYNFLAYHMASAKMHKELCALMFSLDWIKAKTELVGPAHLIHEFVEYRHILDEKDCAVSENFQEFLSLNGHLLGRQPFPNIVQLGLCEPETSEVYQQAKLQAKQEVDNGMLYLEWINKKNITNLSRLVVRPHTDAVYHACFSEDGQRIASCGADKTLQVFKAETGEKLLEIKAHEDEVLCCAFSTDDRFIATCSVDKKVKIWNSMTGELVHTYDEHSEQVNCCHFTNSSHHLLLATGSSDCFLKLWDLNQKECRNTMFGHTNSVNHCRFSPDDKLLASCSADGTLKLWDATSANERKSINVKQFFLNLEDPQEDMEVIVKCCSWSADGARIMVAAKNKIFLFDIHTSGLLGEIHTGHHSTIQYCDFSPQNHLAVVALSQYCVELWNTDSRSKVADCRGHLSWVHGVMFSPDGSSFLTSSDDQTIRLWETKKVCKNSAVMLKQEVDVVFQENEVMVLAVDHIRRLQLINGRTGQIDYLTEAQVSCCCLSPHLQYIAFGDENGAIEILELVNNRIFQSRFQHKKTVWHIQFTADEKTLISSSDDAEIQVWNWQLDKCIFLRGHQETVKDFRLLKNSRLLSWSFDGTVKVWNIITGNKEKDFVCHQGTVLSCDISHDATKFSSTSADKTAKIWSFDLLLPLHELRGHNGCVRCSAFSVDSTLLATGDDNGEIRIWNVSNGELLHLCAPLSEEGAATHGGWVTDLCFSPDGKMLISAGGYIKWWNVVTGESSQTFYTNGTNLKKIHVSPDFKTYVTVDNLGILYILQTLE",
+            "type": {
+                "id": "MI:0326",
+                "name": "protein"
+            }
+        },
+        {
+            "id": "uniprotkb_P55211",
+            "identifier": {
+                "db": "uniprotkb",
+                "id": "P55211"
+            },
+            "label": "casp9_human",
+            "object": "interactor",
+            "organism": {
+                "common": "human",
+                "scientific": "Homo sapiens",
+                "taxid": "9606"
+            },
+            "sequence": "MDEADRRLLRRCRLRLVEELQVDQLWDALLSRELFRPHMIEDIQRAGSGSRRDQARQLIIDLETRGSQALPLFISCLEDTGQDMLASFLRTNRQAAKLSKPTLENLTPVVLRPEIRKPEVLRPETPRPVDIGSGGFGDVGALESLRGNADLAYILSMEPCGHCLIINNVNFCRESGLRTRTGSNIDCEKLRRRFSSLHFMVEVKGDLTAKKMVLALLELAQQDHGALDCCVVVILSHGCQASHLQFPGAVYGTDGCPVSVEKIVNIFNGTSCPSLGGKPKLFFIQACGGEQKDHGFEVASTSPEDESPGSNPEPDATPFQEGLRTFDQLDAISSLPTPSDIFVSYSTFPGFVSWRDPKSGSWYVETLDDIFEQWAHSEDLQSLLLRVANAVSVKGIYKQMPGCFNFLRKKLFFKTS",
+            "type": {
+                "id": "MI:0326",
+                "name": "protein"
+            }
+        },
+        {
+            "id": "uniprotkb_P62894",
+            "identifier": {
+                "db": "uniprotkb",
+                "id": "P62894"
+            },
+            "label": "cyc_bovin",
+            "object": "interactor",
+            "organism": {
+                "common": "bovin",
+                "scientific": "Bos taurus (Bovine)",
+                "taxid": "9913"
+            },
+            "sequence": "MGDVEKGKKIFVQKCAQCHTVEKGGKHKTGPNLHGLFGRKTGQAPGFSYTDANKNKGITWGEETLMEYLENPKKYIPGTKMIFAGIKKKGEREDLIAYLKKATNE",
+            "type": {
+                "id": "MI:0326",
+                "name": "protein"
+            }
+        },
+        {
+            "experiment": {
+                "detmethod": {
+                    "id": "MI:0040",
+                    "name": "electron microscopy"
+                },
+                "figures": [
+                    "3E"
+                ],
+                "host": {
+                    "common": "in vitro",
+                    "scientific": "In vitro",
+                    "taxid": "-1"
+                },
+                "pubid": [
+                    {
+                        "db": "pubmed",
+                        "id": "21827945"
+                    },
+                    {
+                        "db": "intact",
+                        "id": "EBI-4371154"
+                    },
+                    {
+                        "db": "imex",
+                        "id": "IM-16917"
+                    }
+                ],
+                "sourceDatabase": {
+                    "id": "MI:0469",
+                    "name": "European Bioinformatics Institute"
+                }
+            },
+            "id": "intact_EBI-4371590",
+            "identifiers": [
+                {
+                    "db": "intact",
+                    "id": "EBI-4371590"
+                },
+                {
+                    "db": "imex",
+                    "id": "IM-16917-5"
+                }
+            ],
+            "interactionType": {
+                "id": "MI:0915",
+                "name": "physical association"
+            },
+            "object": "interaction",
+            "participants": [
+                {
+                    "bioRole": {
+                        "id": "MI:0499",
+                        "name": "unspecified role"
+                    },
+                    "expRole": {
+                        "id": "MI:0497",
+                        "name": "neutral component"
+                    },
+                    "expressedIn": {
+                        "cellType": {
+                            "id": "ACC 119",
+                            "name": "Insect cells"
+                        },
+                        "common": "spofr-sf_21",
+                        "scientific": "Spodoptera frugiperda insect cells",
+                        "taxid": "7108"
+                    },
+                    "features": [
+                        {
+                            "category": "experimentalFeatures",
+                            "id": "2",
+                            "name": "his tag",
+                            "sequenceData": [
+                                {
+                                    "interactorRef": "uniprotkb_O14727",
+                                    "participantRef": "1",
+                                    "pos": "c-c"
+                                }
+                            ],
+                            "type": {
+                                "id": "MI:0521",
+                                "name": "his tag"
+                            }
+                        },
+                        {
+                            "category": "experimentalFeatures",
+                            "id": "3",
+                            "name": "his tag",
+                            "sequenceData": [
+                                {
+                                    "interactorRef": "uniprotkb_O14727",
+                                    "participantRef": "1",
+                                    "pos": "n-n"
+                                }
+                            ],
+                            "type": {
+                                "id": "MI:0521",
+                                "name": "his tag"
+                            }
+                        }
+                    ],
+                    "id": "1",
+                    "identificationMethods": [
+                        {
+                            "id": "MI:0396",
+                            "name": "predetermined participant"
+                        }
+                    ],
+                    "interactorRef": "uniprotkb_O14727"
+                },
+                {
+                    "bioRole": {
+                        "id": "MI:0499",
+                        "name": "unspecified role"
+                    },
+                    "expRole": {
+                        "id": "MI:0497",
+                        "name": "neutral component"
+                    },
+                    "expressedIn": {
+                        "common": "ecoli",
+                        "scientific": "Escherichia coli (strain K12)",
+                        "taxid": "83333"
+                    },
+                    "features": [
+                        {
+                            "category": "experimentalFeatures",
+                            "id": "5",
+                            "name": "his tag",
+                            "sequenceData": [
+                                {
+                                    "interactorRef": "uniprotkb_P55211",
+                                    "participantRef": "4",
+                                    "pos": "c-c"
+                                }
+                            ],
+                            "type": {
+                                "id": "MI:0521",
+                                "name": "his tag"
+                            }
+                        },
+                        {
+                            "category": "bindingSites",
+                            "id": "6",
+                            "name": "casp9 without card region",
+                            "sequenceData": [
+                                {
+                                    "interactorRef": "uniprotkb_P55211",
+                                    "participantRef": "4",
+                                    "pos": "101..106-416"
+                                }
+                            ],
+                            "type": {
+                                "id": "MI:0442",
+                                "name": "sufficient binding region"
+                            }
+                        },
+                        {
+                            "category": "pointMutations",
+                            "id": "7",
+                            "name": "p.Asp315Ala",
+                            "sequenceData": [
+                                {
+                                    "interactorRef": "uniprotkb_P55211",
+                                    "participantRef": "4",
+                                    "pos": "315-315",
+                                    "resultingSequence": "A"
+                                }
+                            ],
+                            "type": {
+                                "id": "MI:0118",
+                                "name": "mutation"
+                            }
+                        },
+                        {
+                            "category": "bindingSites",
+                            "id": "8",
+                            "name": "deletion 30l",
+                            "sequenceData": [
+                                {
+                                    "interactorRef": "uniprotkb_P55211",
+                                    "participantRef": "4",
+                                    "pos": "n-108"
+                                },
+                                {
+                                    "interactorRef": "uniprotkb_P55211",
+                                    "participantRef": "4",
+                                    "pos": "138-c"
+                                }
+                            ],
+                            "type": {
+                                "id": "MI:0442",
+                                "name": "sufficient binding region"
+                            }
+                        }
+                    ],
+                    "id": "4",
+                    "identificationMethods": [
+                        {
+                            "id": "MI:0396",
+                            "name": "predetermined participant"
+                        }
+                    ],
+                    "interactorRef": "uniprotkb_P55211"
+                },
+                {
+                    "bioRole": {
+                        "id": "MI:0499",
+                        "name": "unspecified role"
+                    },
+                    "expRole": {
+                        "id": "MI:0497",
+                        "name": "neutral component"
+                    },
+                    "expressedIn": {
+                        "common": "bovin-heart",
+                        "scientific": "Bos taurus heast",
+                        "taxid": "9913"
+                    },
+                    "id": "9",
+                    "identificationMethods": [
+                        {
+                            "id": "MI:0396",
+                            "name": "predetermined participant"
+                        }
+                    ],
+                    "interactorRef": "uniprotkb_P62894"
+                }
+            ]
+        }
+    ]
+}
