@@ -3,8 +3,6 @@ package-lock.json
 
 .cache/
 coverage/
-dist/*
-!dist/index.html
 node_modules/
 *.log
 

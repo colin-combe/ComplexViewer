@@ -1,8 +1,8 @@
-const webpack = require('webpack');
+require('webpack');
 const path = require('path');
 
 const config = {
-    entry: './src/controller/Controller.js',
+    entry: path.resolve(__dirname + '/src/controller/Controller.js'),
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'complexviewer.js',

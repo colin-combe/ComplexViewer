@@ -50,11 +50,10 @@
     },
     "dependencies": {
         "colorbrewer": "^1.3.0",
+        "core-js": "^3.6.5",
         "d3": "~3.5.5",
         "intersectionjs": "^1.0.1",
         "point2d": "^0.0.1",
-        "rgbcolor": "^1.0.0",
-        "spin.js": "^4.1.0",
         "webcola": "^3.4.0"
     },
     "keywords": [

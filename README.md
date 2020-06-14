@@ -17,16 +17,22 @@ JAMI is capable of converting between various MI data formats, it can convert th
 
 JAMI was originally developed by Marine Dumousseau, who also largely determined the structure of the MI-JSON format the viewer reads.
 
-## Build Process
+## Building on localhost
 
-(0. install nodejs, npm)
-1. Clone the repository.
-2. $ cd /interaction-viewer
-3. $ npm install
-4. $ npm start
+First install dependencies:
 
-This starts a grunt task to watch the /src folder for changes. When a file changes (is saved), grunt will browserify the folder and save the compiled version in /build.
+```sh
+npm install
+```
 
-To build the minified version in /build, run:
+To create a production build:
 
-1. $ grunt package
+```sh
+npm run build-prod
+```
+
+To create a development build:
+
+```sh
+npm run build-dev
+```
