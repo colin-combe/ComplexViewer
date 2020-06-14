@@ -1,12 +1,13 @@
 {
     "name": "complexviewer",
-    "version": "1.0.9",
+    "version": "1.1.0",
     "description": "A network visualisation that displays molecular interaction data, including detailed residue-level information such as binding sites. v1 is used in EBI's Complex Portal. The aim for v2 is a general purpose viewer for PSI-MI XML data",
     "author": {
         "name": "Colin Combe",
         "email": "colin.combe@ed.ac.uk"
     },
-    "contributors": [{
+    "contributors": [
+        {
             "name": "Colin Combe",
             "email": "colin.combe@ed.ac.uk"
         },
@@ -25,22 +26,20 @@
     ],
     "license": "Apache-2.0",
     "devDependencies": {
-        "grunt": "0.4.x",
-        "grunt-browserify": "*",
-        "grunt-cli": "^1.2.0",
-        "grunt-contrib-jshint": "~0.10.0",
-        "grunt-contrib-uglify": "*",
-        "grunt-contrib-watch": "*",
-        "grunt-notify": "~0.3.1",
-        "wrappy": "^1.0.1"
+        "webpack": "^4.43.0",
+        "webpack-cli": "^3.3.11",
+        "babel-loader": "^8.1.0",
+        "@babel/core": "^7.10.2",
+        "@babel/preset-env": "^7.10.2",
+        "eslint": "^7.2.0"
     },
     "scripts": {
-        "start": "node ./node_modules/grunt-cli/bin/grunt",
-        "setup": "node ./node_modules/grunt-cli/bin/grunt setup",
-        "test": "node ./node_modules/grunt-cli/bin/grunt test"
+        "clean": "rm dist/complexviewer.js",
+        "build-dev": "webpack -d --mode development --config webpack.conf.js",
+        "build-prod": "webpack -p --mode production --config webpack.conf.js"
     },
     "engines": {
-        "node": ">=0.8.0"
+        "node": ">=14.0.0"
     },
     "browserify-shim": {
         "./bower_components/colorbrewer/colorbrewer.js": "colorbrewer"
@@ -50,16 +49,13 @@
         "url": "git@github.com:MICommunity/interaction-viewer.git"
     },
     "dependencies": {
-        "browserify": "^10.2.4",
-        "browserify-shim": "^3.8.9",
-        "colorbrewer": "~1.0.0",
+        "colorbrewer": "^1.3.0",
         "d3": "~3.5.5",
-        "deamdify": "^0.1.1",
         "intersectionjs": "^1.0.1",
-        "point2d": "0.0.1",
+        "point2d": "^0.0.1",
         "rgbcolor": "^1.0.0",
-        "spin.js": "2.3.2",
-        "webcola": "latest"
+        "spin.js": "^4.1.0",
+        "webcola": "^3.4.0"
     },
     "keywords": [
         "biojs",

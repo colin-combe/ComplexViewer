@@ -1,4 +1,9 @@
 var exampleIndex = [{
+        "ac": "CPX-1920",
+        "name": "~CPX-1920",
+        "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-1920",
+    },
+    {
         "ac": "EBI-12598622",
         "name": "EBI-12598622",
         "url": "https://ebi-intact.github.io/intact-view/details/interaction/EBI-12598622",
@@ -12,11 +17,6 @@ var exampleIndex = [{
         "ac": "CPX-1556",
         "name": "CMG-Pol epsilon complex",
         "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-1556",
-    },
-    {
-        "ac": "CPX-2020",
-        "name": "CPX-2020",
-        "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-2020",
     },
     {
         "ac": "EBI-6161327",
