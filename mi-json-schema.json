@@ -93,7 +93,7 @@
               "type": "array",
               "required": false,
               "description": "If the interactor is a set of interactors (we don't know which one interacts but one of them does interact), we can describe all the interactors which are member of this set.",
-              "items": {
+              "items": [{
                 "type": "object",
                 "required": true,
                 "description": "An interactor object member of an interactor set.",
@@ -165,7 +165,7 @@
                     }
                   }
                 }
-              }
+              }]
             }
           }
         },
@@ -200,21 +200,21 @@
                   "type": "array",
                   "required": false,
                   "description": "A list of experimental modifications done in a specific experiment.",
-                  "items": {
+                  "items": [{
                     "type": "string",
                     "required": true,
                     "description": "The description of the experimental modification done in a specific experiment. It is a free text comment."
-                  }
+                  }]
                 },
                 "figures": {
                   "type": "array",
                   "required": false,
                   "description": "A list of figure legends.",
-                  "items": {
+                  "items": [{
                     "type": "string",
                     "required": true,
                     "description": "The figure legend which illustrate this experiment in a scientific publication. It is a free text comment."
-                  }
+                  }]
                 },
                 "host": {
                   "type": "object",
@@ -293,7 +293,7 @@
                   "type": "array",
                   "required": false,
                   "description": "The list of publication identifiers where this experiment has been reported (pubmed, doi, imex, etc.).",
-                  "items": {
+                  "items": [{
                     "type": "object",
                     "required": true,
                     "properties": {
@@ -308,7 +308,7 @@
                         "description": "The database identifier/accession. It usually represents the primary accession of this object in a specific database."
                       }
                     }
-                  }
+                  }]
                 },
                 "sourceDatabase": {
                   "type": "object",
@@ -338,7 +338,7 @@
               "type": "array",
               "required": false,
               "description": "An list of database identifiers for this interaction.",
-              "items": {
+              "items": [{
                 "type": "object",
                 "required": false,
                 "description": "A database identifier for this interaction. It usually can be used to link to interaction resources for more details.",
@@ -354,7 +354,7 @@
                     "description": "The database identifier/accession. It usually represents the primary accession of this object in a specific database."
                   }
                 }
-              }
+              }]
             },
             "interactionType": {
               "type": "object",
@@ -382,7 +382,7 @@
               "type": "array",
               "required": true,
               "description": "The list of participants/interactor instances which are involved in this interaction.",
-              "items": {
+              "items": [{
                 "type": "object",
                 "required": true,
                 "description": "Participant involved in this interaction. It represents an instance of the interactor/molecule within this interaction",
@@ -425,7 +425,7 @@
                     "type": "array",
                     "required": false,
                     "description": "List of participant identification methods if the participant is from an interaction evidence, not a biological complex. It is usually a term from PSI-MI ontology: http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=MI&termId=MI%3A0002&termName=participant%20identification%20method",
-                    "items": {
+                    "items": [{
                       "type": "object",
                       "required": false,
                       "description": "Participant identification method (only for interaction evidences, not biological complexes) which is usually a term from the PSI-MI ontology: http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=MI&termId=MI%3A0002&termName=participant%20identification%20method",
@@ -441,7 +441,7 @@
                           "description": "The participant identification method unique short name from the PSI-MI ontology: http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=MI&termId=MI%3A0002&termName=participant%20identification%20method."
                         }
                       }
-                    }
+                    }]
                   },
                   "expressedIn": {
                     "type": "object",
@@ -520,7 +520,7 @@
                     "type": "array",
                     "required": false,
                     "description": "List of experimental confidences for this participant. It does not make sense for biological complexes.",
-                    "items": {
+                    "items": [{
                       "type": "object",
                       "required": true,
                       "description": "The experimental confidence determined fro this participant.",
@@ -548,13 +548,13 @@
                           "description": "Confidence value which is free text as it can be quantitative as qualitative."
                         }
                       }
-                    }
+                    }]
                   },
                   "parameters": {
                     "type": "array",
                     "required": false,
                     "description": "List of experimental parameters for this participant. It does not make sense for biological complexes.",
-                    "items": {
+                    "items": [{
                       "type": "object",
                       "required": true,
                       "description": "The experimental parameter determined fro this participant.",
@@ -599,7 +599,7 @@
                           }
                         }
                       }
-                    }
+                    }]
                   },
                   "id": {
                     "type": "integer",
@@ -615,7 +615,7 @@
                     "type": "array",
                     "required": false,
                     "description": "List of features attached to this participant.",
-                    "items": {
+                    "items": [{
                       "type": "object",
                       "required": true,
                       "description": "The feature attached to this participant (tag, etc.). See the PSI-MI ontology for all types of features: http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=MI&termId=MI%3A0116&termName=feature%20type",
@@ -634,7 +634,7 @@
                           "type": "array",
                           "required": true,
                           "description": "The list of feature sequence ranges.",
-                          "items": {
+                          "items": [{
                             "type": "object",
                             "required": true,
                             "properties": {
@@ -654,13 +654,13 @@
                                 "description": "The sequence positions. If the sequence positions are unknown, they are encoded with ?-?. If the positions are n-terminal range, they are encoded with n-n. If the positions are C terminal range, they are encoded with c-c. If the positions are fuzzy, they are encoded with x1..x2-x3..x4."
                               }
                             }
-                          }
+                          }]
                         },
                         "detMethods": {
                           "type": "array",
                           "required": false,
                           "description": "List of feature detection methods if the feature is from an interaction evidence, not a biological complex. It is usually a term from PSI-MI ontology: http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=MI&termId=MI%3A0003&termName=feature%20detection%20method",
-                          "items": {
+                          "items": [{
                             "type": "object",
                             "required": false,
                             "description": "Feature detection method (only for interaction evidences, not biological complexes) which is usually a term from the PSI-MI ontology: http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=MI&termId=MI%3A0003&termName=feature%20detection%20method",
@@ -676,13 +676,13 @@
                                 "description": "The feature detection method unique short name from the PSI-MI ontology: http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=MI&termId=MI%3A0003&termName=feature%20detection%20method."
                               }
                             }
-                          }
+                          }]
                         },
                         "parameters": {
                           "type": "array",
                           "required": false,
                           "description": "List of experimental parameters for this feature. It does not make sense for biological complexes.",
-                          "items": {
+                          "items": [{
                             "type": "object",
                             "required": true,
                             "description": "The experimental parameter determined fro this feature.",
@@ -727,17 +727,17 @@
                                 }
                               }
                             }
-                          }
+                          }]
                         },
                         "linkedFeatures": {
                           "type": "array",
                           "required": false,
                           "description": "List of feature ids this feature is linked to.",
-                          "items": {
+                          "items": [{
                             "type": "integer",
                             "required": true,
                             "description": "The feature id of the feature which is linked to the parent feature."
-                          }
+                          }]
                         },
                         "type": {
                           "type": "object",
@@ -784,16 +784,16 @@
                           "description": "The InterPro identifier which identifies this feature."
                         }
                       }
-                    }
+                    }]
                   }
                 }
-              }
+              }]
             },
             "confidences": {
               "type": "array",
               "required": false,
               "description": "List of experimental confidences for this interaction. It does not make sense for biological complexes.",
-              "items": {
+              "items": [{
                 "type": "object",
                 "required": true,
                 "description": "The experimental confidence determined fro this interaction.",
@@ -821,13 +821,13 @@
                     "description": "Confidence value which is free text as it can be quantitative as qualitative."
                   }
                 }
-              }
+              }]
             },
             "parameters": {
               "type": "array",
               "required": false,
               "description": "List of experimental parameters for this interaction. It does not make sense for biological complexes.",
-              "items": {
+              "items": [{
                 "type": "object",
                 "required": true,
                 "description": "The experimental parameter determined fro this interaction.",
@@ -872,7 +872,7 @@
                     }
                   }
                 }
-              }
+              }]
             },
             "organism": {
               "type": "object",
