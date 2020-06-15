@@ -34,7 +34,7 @@ const Expand = require('./Expand');
 const Config = require('./Config');
 
 
-xiNET.Controller = function(targetDiv, debug) {
+xiNET.Controller = function (targetDiv, debug) {
     this.debug = !!debug;
 
     if (typeof targetDiv === "string") {
@@ -61,7 +61,7 @@ xiNET.Controller = function(targetDiv, debug) {
     const self = this;
     const collapse = customMenuSel.append("li").classed("collapse", true); //.append("button");
     collapse.text("Collapse");
-    collapse[0][0].onclick = function(evt) {
+    collapse[0][0].onclick = function (evt) {
         self.collapseProtein(evt);
     };
     const scaleButtonsListItemSel = customMenuSel.append("li").text("Scale: ");
@@ -74,24 +74,24 @@ xiNET.Controller = function(targetDiv, debug) {
         .attr("class", "barScale")
         .append("label");
     scaleButtons.append("span")
-        .text(function(d) {
+        .text(function (d) {
             if (d === 8) return "AA";
             else return d;
         });
     scaleButtons.append("input")
         // .attr ("id", function(d) { return d*100; })
-        .attr("class", function(d) {
+        .attr("class", function (d) {
             return "scaleButton scaleButton_" + (d * 100);
         })
         .attr("name", "scaleButtons")
         .attr("type", "radio")
-        .on("change", function(d) {
+        .on("change", function (d) {
             self.preventDefaultsAndStopPropagation(d);
             self.contextMenuProt.setStickScale(d, self.contextMenuPoint);
         });
 
     const contextMenu = d3.select(".custom-menu-margin").node();
-    contextMenu.onmouseout = function(evt) {
+    contextMenu.onmouseout = function (evt) {
         let e = evt.relatedTarget;
         do {
             if (e === this) return;
@@ -107,16 +107,16 @@ xiNET.Controller = function(targetDiv, debug) {
     this.svgElement.setAttribute('id', 'complexViewerSVG');
 
     //add listeners
-    this.svgElement.onmousedown = function(evt) {
+    this.svgElement.onmousedown = function (evt) {
         self.mouseDown(evt);
     };
-    this.svgElement.onmousemove = function(evt) {
+    this.svgElement.onmousemove = function (evt) {
         self.mouseMove(evt);
     };
-    this.svgElement.onmouseup = function(evt) {
+    this.svgElement.onmouseup = function (evt) {
         self.mouseUp(evt);
     };
-    this.svgElement.onmouseout = function(evt) {
+    this.svgElement.onmouseout = function (evt) {
         self.hideTooltip(evt);
     };
     this.lastMouseUp = new Date().getTime();
@@ -130,7 +130,7 @@ xiNET.Controller = function(targetDiv, debug) {
         self.touchEnd(evt);
     };
     */
-    this.el.oncontextmenu = function(evt) {
+    this.el.oncontextmenu = function (evt) {
         if (evt.preventDefault) { // necessary for addEventListener, works with traditional
             evt.preventDefault();
         }
@@ -257,7 +257,7 @@ xiNET.Controller = function(targetDiv, debug) {
     this.clear();
 };
 
-xiNET.Controller.prototype.createHatchedFill = function(name, colour) {
+xiNET.Controller.prototype.createHatchedFill = function (name, colour) {
     const pattern = this.defs.append('pattern')
         .attr('id', name)
         .attr('patternUnits', 'userSpaceOnUse')
@@ -274,7 +274,7 @@ xiNET.Controller.prototype.createHatchedFill = function(name, colour) {
         .attr("height", 4)
         .attr("fill", colour);
 
-        pattern.append('rect')
+    pattern.append('rect')
         .attr("x", 0)
         .attr("y", 8)
         .attr("width", 12)
@@ -282,22 +282,22 @@ xiNET.Controller.prototype.createHatchedFill = function(name, colour) {
         .attr("fill", colour);
 
 
-        // checks - yuk
-        // pattern.append('rect')
-        //     .attr("x", 0)
-        //     .attr("y", 0)
-        //     .attr("width", 5)
-        //     .attr("height", 5)
-        //     .style("fill", "black");// "#A01284");
-        // pattern.append('rect')
-        //     .attr("x", 5)
-        //     .attr("y", 5)
-        //     .attr("width", 5)
-        //     .attr("height", 5)
-        //     .style("fill", "black");//"#A01284");
+    // checks - yuk
+    // pattern.append('rect')
+    //     .attr("x", 0)
+    //     .attr("y", 0)
+    //     .attr("width", 5)
+    //     .attr("height", 5)
+    //     .style("fill", "black");// "#A01284");
+    // pattern.append('rect')
+    //     .attr("x", 5)
+    //     .attr("y", 5)
+    //     .attr("width", 5)
+    //     .attr("height", 5)
+    //     .style("fill", "black");//"#A01284");
 }
 
-xiNET.Controller.prototype.clear = function() {
+xiNET.Controller.prototype.clear = function () {
     if (this.d3cola) {
         this.d3cola.stop();
     }
@@ -337,7 +337,7 @@ xiNET.Controller.prototype.clear = function() {
     this.state = this.STATES.MOUSE_UP;
 };
 
-xiNET.Controller.prototype.collapseProtein = function() {
+xiNET.Controller.prototype.collapseProtein = function () {
     const p = this.contextMenuPoint;
     const c = p.matrixTransform(this.container.getCTM().inverse());
 
@@ -347,10 +347,10 @@ xiNET.Controller.prototype.collapseProtein = function() {
 };
 
 //this can be done before all proteins have their sequences
-xiNET.Controller.prototype.init = function() {
+xiNET.Controller.prototype.init = function () {
     this.checkLinks(); // todo - should this really be here
     let maxSeqLength = 0;
-    for (let participant of this.molecules.values() ) {
+    for (let participant of this.molecules.values()) {
         if (participant.size > maxSeqLength) {
             maxSeqLength = participant.size;
         }
@@ -404,7 +404,7 @@ xiNET.Controller.prototype.init = function() {
     this.autoLayout();
 }
 
-xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
+xiNET.Controller.prototype.setAnnotations = function (annotationChoice) {
     this.annotationChoice = annotationChoice;
     const self = this;
     //clear all annot's
@@ -439,7 +439,7 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
     } else if (annotationChoice.toUpperCase() === "SUPERFAM" || annotationChoice.toUpperCase() === "SUPERFAMILY") {
         for (let mol of this.molecules.values()) {
             if (mol.id.indexOf('uniprotkb_') === 0) { //LIMIT IT TO PROTEINS
-                xiNET_Storage.getSuperFamFeatures(mol.id, function(id, fts) {
+                xiNET_Storage.getSuperFamFeatures(mol.id, function (id, fts) {
                     const m = self.molecules.get(id);
                     m.setPositionalFeatures(fts);
                     molsAnnotated++;
@@ -457,7 +457,7 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
     } else if (annotationChoice.toUpperCase() === "UNIPROT" || annotationChoice.toUpperCase() === "UNIPROTKB") {
         for (let mol of this.molecules.values()) {
             if (mol.id.indexOf('uniprotkb_') === 0) { //LIMIT IT TO PROTEINS
-                xiNET_Storage.getUniProtFeatures(mol.id, function(id, fts) {
+                xiNET_Storage.getUniProtFeatures(mol.id, function (id, fts) {
                     const m = self.molecules.get(id);
                     for (let f = 0; f < fts.length; f++) {
                         const feature = fts[f];
@@ -491,15 +491,15 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
 
         let colourScheme;
 
-        if (catCount < 3){
-          catCount = 3;
+        if (catCount < 3) {
+            catCount = 3;
         }
 
         if (catCount < 9) {
             colourScheme = d3.scale.ordinal().range(colorbrewer.Dark2[catCount].slice().reverse());
-        // } else if (catCount < 13) {
-        //     var reversed = colorbrewer.Paired[catCount];//.slice().reverse();
-        //     colourScheme = d3.scale.ordinal().range(reversed);
+            // } else if (catCount < 13) {
+            //     var reversed = colorbrewer.Paired[catCount];//.slice().reverse();
+            //     colourScheme = d3.scale.ordinal().range(reversed);
         } else {
             colourScheme = d3.scale.category20();
         }
@@ -537,7 +537,7 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
 /**
  * Handle mousedown event.
  */
-xiNET.Controller.prototype.mouseDown = function(evt) {
+xiNET.Controller.prototype.mouseDown = function (evt) {
     //prevent default, but allow propogation
     evt.preventDefault();
     //stop force layout
@@ -552,7 +552,7 @@ xiNET.Controller.prototype.mouseDown = function(evt) {
 };
 
 // dragging/rotation/panning/selecting
-xiNET.Controller.prototype.mouseMove = function(evt) {
+xiNET.Controller.prototype.mouseMove = function (evt) {
     const p = this.getEventPoint(evt); // seems to be correct, see below
     const c = this.mouseToSVG(p.x, p.y);
 
@@ -601,7 +601,7 @@ xiNET.Controller.prototype.mouseMove = function(evt) {
 };
 
 // this ends all dragging and rotating
-xiNET.Controller.prototype.mouseUp = function(evt) {
+xiNET.Controller.prototype.mouseUp = function (evt) {
     const time = new Date().getTime();
     //console.log("Mouse up: " + evt.srcElement + " " + (time - this.lastMouseUp));
     this.preventDefaultsAndStopPropagation(evt);
@@ -634,7 +634,7 @@ xiNET.Controller.prototype.mouseUp = function(evt) {
 };
 
 //gets mouse position
-xiNET.Controller.prototype.getEventPoint = function(evt) {
+xiNET.Controller.prototype.getEventPoint = function (evt) {
     const p = this.svgElement.createSVGPoint();
     let element = this.svgElement.parentNode;
     let top = 0,
@@ -650,7 +650,7 @@ xiNET.Controller.prototype.getEventPoint = function(evt) {
 };
 
 //stop event propogation and defaults; only do what we ask
-xiNET.Controller.prototype.preventDefaultsAndStopPropagation = function(evt) {
+xiNET.Controller.prototype.preventDefaultsAndStopPropagation = function (evt) {
     if (evt.stopPropagation)
         evt.stopPropagation();
     if (evt.cancelBubble != null)
@@ -662,7 +662,7 @@ xiNET.Controller.prototype.preventDefaultsAndStopPropagation = function(evt) {
 /**
  * Handle touchstart event.
 
-xiNET.Controller.prototype.touchStart = function(evt) {
+ xiNET.Controller.prototype.touchStart = function(evt) {
     //prevent default, but allow propogation
     evt.preventDefault();
 
@@ -675,8 +675,8 @@ xiNET.Controller.prototype.touchStart = function(evt) {
     this.dragStart = this.mouseToSVG(p.x, p.y);
 };
 
-// dragging/rotation/panning/selecting
-xiNET.Controller.prototype.touchMove = function(evt) {
+ // dragging/rotation/panning/selecting
+ xiNET.Controller.prototype.touchMove = function(evt) {
     // if (this.sequenceInitComplete) { // just being cautious
     var p = this.getTouchEventPoint(evt); // seems to be correct, see below
     var c = this.mouseToSVG(p.x, p.y);
@@ -776,8 +776,8 @@ xiNET.Controller.prototype.getTouchEventPoint = function(evt) {
     p.y = evt.touches[0].pageY - top;
     return p;
 };
-*/
-xiNET.Controller.prototype.autoLayout = function() {
+ */
+xiNET.Controller.prototype.autoLayout = function () {
     if (this.d3cola) {
         this.d3cola.stop();
     }
@@ -792,7 +792,7 @@ xiNET.Controller.prototype.autoLayout = function() {
 
     const self = this;
     let nodes = Array.from(this.molecules.values());
-    nodes = nodes.filter(function(value) {
+    nodes = nodes.filter(function (value) {
         return value.type !== "complex"
     });
     const nodeCount = nodes.length;
@@ -890,7 +890,7 @@ xiNET.Controller.prototype.autoLayout = function() {
         participantDebugSel.exit().remove();
     }
 
-    this.d3cola.symmetricDiffLinkLengths(30).on("tick", function() {
+    this.d3cola.symmetricDiffLinkLengths(30).on("tick", function () {
         const nodes = self.d3cola.nodes();
         // console.log("nodes", nodes);
         for (let n = 0; n < nodeCount; n++) {
@@ -907,31 +907,31 @@ xiNET.Controller.prototype.autoLayout = function() {
 
         if (self.debug) {
             groupDebugSel.attr({
-                x: function(d) {
+                x: function (d) {
                     return d.bounds.x + (width / 2);
                 },
-                y: function(d) {
+                y: function (d) {
                     return d.bounds.y + (height / 2);
                 },
-                width: function(d) {
+                width: function (d) {
                     return d.bounds.width()
                 },
-                height: function(d) {
+                height: function (d) {
                     return d.bounds.height()
                 }
             });
 
             participantDebugSel.attr({
-                x: function(d) {
+                x: function (d) {
                     return d.bounds.x + (width / 2);
                 },
-                y: function(d) {
+                y: function (d) {
                     return d.bounds.y + (height / 2);
                 },
-                width: function(d) {
+                width: function (d) {
                     return d.bounds.width()
                 },
-                height: function(d) {
+                height: function (d) {
                     return d.bounds.height()
                 }
             });
@@ -940,7 +940,7 @@ xiNET.Controller.prototype.autoLayout = function() {
     this.d3cola.start(20, 0, 20);
 };
 
-xiNET.Controller.prototype.getSVG = function() {
+xiNET.Controller.prototype.getSVG = function () {
     let svgXml = this.svgElement.outerHTML.replace(/<rect .*?\/rect>/i, ""); //take out white background fill
     const viewBox = 'viewBox="0 0 ' + this.svgElement.parentNode.clientWidth + " " + this.svgElement.parentNode.clientHeight + '" ';
     svgXml = svgXml.replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" ' + viewBox);
@@ -951,7 +951,7 @@ xiNET.Controller.prototype.getSVG = function() {
 }
 
 // transform the mouse-position into a position on the svg
-xiNET.Controller.prototype.mouseToSVG = function(x, y) {
+xiNET.Controller.prototype.mouseToSVG = function (x, y) {
     const p = this.svgElement.createSVGPoint();
     p.x = x;
     p.y = y;
@@ -959,7 +959,7 @@ xiNET.Controller.prototype.mouseToSVG = function(x, y) {
 };
 
 // reads MI JSON format
-xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
+xiNET.Controller.prototype.readMIJSON = function (miJson, expand) {
     //check that we've got a parsed javascript object here, not a String
     miJson = (typeof miJson === 'object') ? miJson : JSON.parse(miJson);
     miJson.data = miJson.data.reverse();
@@ -1474,7 +1474,7 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
     }
 };
 
-xiNET.Controller.prototype.checkLinks = function() {
+xiNET.Controller.prototype.checkLinks = function () {
     function checkAll(linkMap) {
         const links = linkMap.values();
         const c = links.length;
@@ -1489,7 +1489,7 @@ xiNET.Controller.prototype.checkLinks = function() {
     checkAll(this.allSequenceLinks);
 };
 
-xiNET.Controller.prototype.setAllLinkCoordinates = function() {
+xiNET.Controller.prototype.setAllLinkCoordinates = function () {
     function setAll(linkMap) {
         const links = linkMap.values();
         const c = links.length;
@@ -1497,13 +1497,14 @@ xiNET.Controller.prototype.setAllLinkCoordinates = function() {
             links[l].setLinkCoordinates();
         }
     }
+
     setAll(this.allNaryLinks);
     setAll(this.allBinaryLinks);
     setAll(this.allUnaryLinks);
     setAll(this.allSequenceLinks);
 };
 
-xiNET.Controller.prototype.showTooltip = function(p) {
+xiNET.Controller.prototype.showTooltip = function (p) {
     let ttX, ttY;
     const length = this.tooltip.getComputedTextLength() + 16;
     const width = this.svgElement.parentNode.clientWidth;
@@ -1527,7 +1528,7 @@ xiNET.Controller.prototype.showTooltip = function(p) {
     this.tooltip_subBg.setAttribute("y", ttY + 28);
 };
 
-xiNET.Controller.prototype.setTooltip = function(text, colour) {
+xiNET.Controller.prototype.setTooltip = function (text, colour) {
     if (text) {
         this.tooltip.firstChild.data = text.toString().replace(/&(quot);/g, '"');
         this.tooltip.setAttribute("display", "block");
@@ -1551,13 +1552,13 @@ xiNET.Controller.prototype.setTooltip = function(text, colour) {
     }
 };
 
-xiNET.Controller.prototype.hideTooltip = function() {
+xiNET.Controller.prototype.hideTooltip = function () {
     this.tooltip.setAttribute("display", "none");
     this.tooltip_bg.setAttribute("display", "none");
     this.tooltip_subBg.setAttribute("display", "none");
 };
 
-xiNET.Controller.prototype.legendChanged = function(colourScheme) {
+xiNET.Controller.prototype.legendChanged = function (colourScheme) {
     const callbacks = this.legendCallbacks;
     const count = callbacks.length;
     for (let i = 0; i < count; i++) {
@@ -1565,11 +1566,11 @@ xiNET.Controller.prototype.legendChanged = function(colourScheme) {
     }
 }
 
-xiNET.Controller.prototype.getComplexColours = function() {
+xiNET.Controller.prototype.getComplexColours = function () {
     return NaryLink.naryColours;
 };
 
-xiNET.Controller.prototype.collapseAll = function() {
+xiNET.Controller.prototype.collapseAll = function () {
     const molecules = this.molecules.values();
     const mCount = molecules.length;
     for (let m = 0; m < mCount; m++) {
@@ -1580,7 +1581,7 @@ xiNET.Controller.prototype.collapseAll = function() {
     }
 };
 
-xiNET.Controller.prototype.expandAll = function() {
+xiNET.Controller.prototype.expandAll = function () {
     const molecules = this.molecules.values();
     const mCount = molecules.length;
     for (let m = 0; m < mCount; m++) {

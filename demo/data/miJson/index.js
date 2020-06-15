@@ -1,8 +1,8 @@
 var exampleIndex = [{
-        "ac": "CPX-1920",
-        "name": "~CPX-1920",
-        "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-1920",
-    },
+    "ac": "CPX-1920",
+    "name": "~CPX-1920",
+    "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-1920",
+},
     {
         "ac": "EBI-12598622",
         "name": "EBI-12598622",

@@ -35,7 +35,7 @@ function NaryLink(id, xlvController) {
     this.initSVG();
 }
 
-NaryLink.prototype.getTotalParticipantCount = function() {
+NaryLink.prototype.getTotalParticipantCount = function () {
     let result = 0;
     const c = this.interactors.length;
     for (let p = 0; p < c; p++) {
@@ -50,44 +50,45 @@ NaryLink.prototype.getTotalParticipantCount = function() {
     return result;
 }
 
-NaryLink.prototype.initSVG = function() {
+NaryLink.prototype.initSVG = function () {
     this.path = document.createElementNS(Config.svgns, "path");
     this.colour = NaryLink.naryColours(this.id);
     this.path.setAttribute('fill', this.colour);
     //set the events for it
     const self = this;
-    this.path.onmousedown = function(evt) {
+    this.path.onmousedown = function (evt) {
         self.mouseDown(evt);
     };
-    this.path.onmouseover = function(evt) {
+    this.path.onmouseover = function (evt) {
         self.mouseOver(evt);
     };
-    this.path.onmouseout = function(evt) {
+    this.path.onmouseout = function (evt) {
         self.mouseOut(evt);
     };
-    this.path.ontouchstart = function(evt) {
+    this.path.ontouchstart = function (evt) {
         self.touchStart(evt);
     };
 };
 
-NaryLink.prototype.showHighlight = function(show) {
+NaryLink.prototype.showHighlight = function (show) {
     this.highlightInteractors(show);
 };
 
-NaryLink.prototype.check = function() {
+NaryLink.prototype.check = function () {
     this.show();
     return true;
 };
 
-NaryLink.prototype.show = function() {
+NaryLink.prototype.show = function () {
     this.path.setAttribute("stroke-width", this.controller.z * 1);
     this.setLinkCoordinates();
     this.controller.naryLinks.appendChild(this.path);
 };
 
-NaryLink.prototype.hide = function() {};
+NaryLink.prototype.hide = function () {
+};
 
-NaryLink.prototype.setLinkCoordinates = function() {
+NaryLink.prototype.setLinkCoordinates = function () {
     // Uses d3.geom.hull to calculate a bounding path around an array of vertices
     const calculateHullPath = function (values) {
         const hullPath = d3.geom.hull(values);
@@ -105,7 +106,7 @@ NaryLink.prototype.setLinkCoordinates = function() {
     }
 };
 
-NaryLink.prototype.getMappedCoordinates = function() {
+NaryLink.prototype.getMappedCoordinates = function () {
     const interactors = this.interactors;
     let mapped = [];
     const ic = interactors.length;
@@ -131,7 +132,7 @@ NaryLink.prototype.getMappedCoordinates = function() {
 }
 
 //'orbit' nodes - several nodes around interactor positions to give margin
-NaryLink.prototype.orbitNodes = function(mapped) {
+NaryLink.prototype.orbitNodes = function (mapped) {
     const orbitNodes = [];
     const mc = mapped.length;
     for (let mi = 0; mi < mc; mi++) {

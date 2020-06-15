@@ -120,13 +120,13 @@ function Protein(id, xinetController, json, name) {
     const self = this;
     //    this.upperGroup.setAttribute('pointer-events','all');
     //todo: move to Interactor prototype?
-    this.upperGroup.onmousedown = function(evt) {
+    this.upperGroup.onmousedown = function (evt) {
         self.mouseDown(evt);
     };
-    this.upperGroup.onmouseover = function(evt) {
+    this.upperGroup.onmouseover = function (evt) {
         self.mouseOver(evt);
     };
-    this.upperGroup.onmouseout = function(evt) {
+    this.upperGroup.onmouseout = function (evt) {
         self.mouseOut(evt);
     };
     // this.upperGroup.ontouchstart = function(evt) {
@@ -134,9 +134,9 @@ function Protein(id, xinetController, json, name) {
     // };
 
     Object.defineProperty(this, "height", {
-    get: function height() {
-        return 60;//this.upperGroup.getBBox().height + 60; // * this.controller.z;
-      }
+        get: function height() {
+            return 60;//this.upperGroup.getBBox().height + 60; // * this.controller.z;
+        }
     });
 
     this.showHighlight(false);

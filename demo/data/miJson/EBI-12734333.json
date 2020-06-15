@@ -1,173 +1,173 @@
 {
-    "data": [
-        {
-            "id": "uniprotkb_P17301",
-            "identifier": {
-                "db": "uniprotkb",
-                "id": "P17301"
-            },
-            "label": "ita2_human",
-            "object": "interactor",
-            "organism": {
-                "common": "human",
-                "scientific": "Homo sapiens",
-                "taxid": "9606"
-            },
-            "sequence": "MGPERTGAAPLPLLLVLALSQGILNCCLAYNVGLPEAKIFSGPSSEQFGYAVQQFINPKGNWLLVGSPWSGFPENRMGDVYKCPVDLSTATCEKLNLQTSTSIPNVTEMKTNMSLGLILTRNMGTGGFLTCGPLWAQQCGNQYYTTGVCSDISPDFQLSASFSPATQPCPSLIDVVVVCDESNSIYPWDAVKNFLEKFVQGLDIGPTKTQVGLIQYANNPRVVFNLNTYKTKEEMIVATSQTSQYGGDLTNTFGAIQYARKYAYSAASGGRRSATKVMVVVTDGESHDGSMLKAVIDQCNHDNILRFGIAVLGYLNRNALDTKNLIKEIKAIASIPTERYFFNVSDEAALLEKAGTLGEQIFSIEGTVQGGDNFQMEMSQVGFSADYSSQNDILMLGAVGAFGWSGTIVQKTSHGHLIFPKQAFDQILQDRNHSSYLGYSVAAISTGESTHFVAGAPRANYTGQIVLYSVNENGNITVIQAHRGDQIGSYFGSVLCSVDVDKDTITDVLLVGAPMYMSDLKKEEGRVYLFTIKKGILGQHQFLEGPEGIENTRFGSAIAALSDINMDGFNDVIVGSPLENQNSGAVYIYNGHQGTIRTKYSQKILGSDGAFRSHLQYFGRSLDGYGDLNGDSITDVSIGAFGQVVQLWSQSIADVAIEASFTPEKITLVNKNAQIILKLCFSAKFRPTKQNNQVAIVYNITLDADGFSSRVTSRGLFKENNERCLQKNMVVNQAQSCPEHIIYIQEPSDVVNSLDLRVDISLENPGTSPALEAYSETAKVFSIPFHKDCGEDGLCISDLVLDVRQIPAAQEQPFIVSNQNKRLTFSVTLKNKRESAYNTGIVVDFSENLFFASFSLPVDGTEVTCQVAASQKSVACDVGYPALKREQQVTFTINFDFNLQNLQNQASLSFQALSESQEENKADNLVNLKIPLLYDAEIHLTRSTNINFYEISSDGNVPSIVHSFEDVGPKFIFSLKVTTGSVPVSMATVIIHIPQYTKEKNPLMYLTGVQTDKAGDISCNADINPLKIGQTSSSVSFKSENFRHTKELNCRTASCSNVTCWLKDVHMKGEYFVNVTTRIWNGTFASSTFQTVQLTAAAEINTYNPEIYVIEDNTVTIPLMIMKPDEKAEVPTGVIIGSIIAGILLLLALVAILWKLGFFKRKYEKMTKNPDEIDETTELSS",
-            "type": {
-                "id": "MI:0326",
-                "name": "protein"
-            }
+  "data": [
+    {
+      "id": "uniprotkb_P17301",
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P17301"
+      },
+      "label": "ita2_human",
+      "object": "interactor",
+      "organism": {
+        "common": "human",
+        "scientific": "Homo sapiens",
+        "taxid": "9606"
+      },
+      "sequence": "MGPERTGAAPLPLLLVLALSQGILNCCLAYNVGLPEAKIFSGPSSEQFGYAVQQFINPKGNWLLVGSPWSGFPENRMGDVYKCPVDLSTATCEKLNLQTSTSIPNVTEMKTNMSLGLILTRNMGTGGFLTCGPLWAQQCGNQYYTTGVCSDISPDFQLSASFSPATQPCPSLIDVVVVCDESNSIYPWDAVKNFLEKFVQGLDIGPTKTQVGLIQYANNPRVVFNLNTYKTKEEMIVATSQTSQYGGDLTNTFGAIQYARKYAYSAASGGRRSATKVMVVVTDGESHDGSMLKAVIDQCNHDNILRFGIAVLGYLNRNALDTKNLIKEIKAIASIPTERYFFNVSDEAALLEKAGTLGEQIFSIEGTVQGGDNFQMEMSQVGFSADYSSQNDILMLGAVGAFGWSGTIVQKTSHGHLIFPKQAFDQILQDRNHSSYLGYSVAAISTGESTHFVAGAPRANYTGQIVLYSVNENGNITVIQAHRGDQIGSYFGSVLCSVDVDKDTITDVLLVGAPMYMSDLKKEEGRVYLFTIKKGILGQHQFLEGPEGIENTRFGSAIAALSDINMDGFNDVIVGSPLENQNSGAVYIYNGHQGTIRTKYSQKILGSDGAFRSHLQYFGRSLDGYGDLNGDSITDVSIGAFGQVVQLWSQSIADVAIEASFTPEKITLVNKNAQIILKLCFSAKFRPTKQNNQVAIVYNITLDADGFSSRVTSRGLFKENNERCLQKNMVVNQAQSCPEHIIYIQEPSDVVNSLDLRVDISLENPGTSPALEAYSETAKVFSIPFHKDCGEDGLCISDLVLDVRQIPAAQEQPFIVSNQNKRLTFSVTLKNKRESAYNTGIVVDFSENLFFASFSLPVDGTEVTCQVAASQKSVACDVGYPALKREQQVTFTINFDFNLQNLQNQASLSFQALSESQEENKADNLVNLKIPLLYDAEIHLTRSTNINFYEISSDGNVPSIVHSFEDVGPKFIFSLKVTTGSVPVSMATVIIHIPQYTKEKNPLMYLTGVQTDKAGDISCNADINPLKIGQTSSSVSFKSENFRHTKELNCRTASCSNVTCWLKDVHMKGEYFVNVTTRIWNGTFASSTFQTVQLTAAAEINTYNPEIYVIEDNTVTIPLMIMKPDEKAEVPTGVIIGSIIAGILLLLALVAILWKLGFFKRKYEKMTKNPDEIDETTELSS",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      }
+    },
+    {
+      "id": "complex portal_CPX-1727",
+      "identifier": {
+        "db": "complex portal",
+        "id": "CPX-1727"
+      },
+      "label": "collagen_v_human-1",
+      "object": "interactor",
+      "organism": {
+        "common": "human",
+        "scientific": "Homo sapiens",
+        "taxid": "9606"
+      },
+      "type": {
+        "id": "MI:1302",
+        "name": "stable complex"
+      }
+    },
+    {
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0892",
+          "name": "solid phase assay"
         },
-        {
-            "id": "complex portal_CPX-1727",
-            "identifier": {
-                "db": "complex portal",
-                "id": "CPX-1727"
-            },
-            "label": "collagen_v_human-1",
-            "object": "interactor",
-            "organism": {
-                "common": "human",
-                "scientific": "Homo sapiens",
-                "taxid": "9606"
-            },
-            "type": {
-                "id": "MI:1302",
-                "name": "stable complex"
-            }
+        "figures": [
+          "Fig. 4B"
+        ],
+        "host": {
+          "common": "in vitro",
+          "scientific": "In vitro",
+          "taxid": "-1"
         },
-        {
-            "experiment": {
-                "detmethod": {
-                    "id": "MI:0892",
-                    "name": "solid phase assay"
-                },
-                "figures": [
-                    "Fig. 4B"
-                ],
-                "host": {
-                    "common": "in vitro",
-                    "scientific": "In vitro",
-                    "taxid": "-1"
-                },
-                "pubid": [
-                    {
-                        "db": "intact",
-                        "id": "EBI-12601541"
-                    },
-                    {
-                        "db": "pubmed",
-                        "id": "10713152"
-                    },
-                    {
-                        "db": "imex",
-                        "id": "IM-25630"
-                    }
-                ],
-                "sourceDatabase": {
-                    "id": "MI:0917",
-                    "name": "matrixdb"
-                }
-            },
-            "id": "intact_EBI-12734333",
-            "identifiers": [
-                {
-                    "db": "intact",
-                    "id": "EBI-12734333"
-                },
-                {
-                    "db": "imex",
-                    "id": "IM-25630-25"
-                }
-            ],
-            "interactionType": {
-                "id": "MI:0407",
-                "name": "direct interaction"
-            },
-            "object": "interaction",
-            "participants": [
-                {
-                    "bioRole": {
-                        "id": "MI:0499",
-                        "name": "unspecified role"
-                    },
-                    "expRole": {
-                        "id": "MI:0498",
-                        "name": "prey"
-                    },
-                    "expressedIn": {
-                        "common": "ecobb",
-                        "scientific": "Escherichia coli (strain B / BL21)",
-                        "taxid": "511693"
-                    },
-                    "features": [
-                        {
-                            "category": "bindingSites",
-                            "id": "2",
-                            "name": "Binding site",
-                            "sequenceData": [
-                                {
-                                    "interactorRef": "uniprotkb_P17301",
-                                    "participantRef": "1",
-                                    "pos": "154-368"
-                                }
-                            ],
-                            "type": {
-                                "id": "MI:0442",
-                                "name": "sufficient binding region"
-                            }
-                        },
-                        {
-                            "category": "experimentalFeatures",
-                            "id": "3",
-                            "name": "Europium label",
-                            "sequenceData": [
-                                {
-                                    "interactorRef": "uniprotkb_P17301",
-                                    "participantRef": "1",
-                                    "pos": "?-?"
-                                }
-                            ],
-                            "type": {
-                                "id": "MI:0378",
-                                "name": "rare isotope label"
-                            }
-                        }
-                    ],
-                    "id": "1",
-                    "identificationMethods": [
-                        {
-                            "id": "MI:0396",
-                            "name": "predetermined participant"
-                        }
-                    ],
-                    "interactorRef": "uniprotkb_P17301"
-                },
-                {
-                    "bioRole": {
-                        "id": "MI:0499",
-                        "name": "unspecified role"
-                    },
-                    "expRole": {
-                        "id": "MI:0496",
-                        "name": "bait"
-                    },
-                    "expressedIn": {
-                        "common": "human-placenta",
-                        "scientific": "Homo sapiens placenta",
-                        "taxid": "9606"
-                    },
-                    "id": "4",
-                    "identificationMethods": [
-                        {
-                            "id": "MI:0396",
-                            "name": "predetermined participant"
-                        }
-                    ],
-                    "interactorRef": "complex portal_CPX-1727"
-                }
-            ]
+        "pubid": [
+          {
+            "db": "intact",
+            "id": "EBI-12601541"
+          },
+          {
+            "db": "pubmed",
+            "id": "10713152"
+          },
+          {
+            "db": "imex",
+            "id": "IM-25630"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0917",
+          "name": "matrixdb"
         }
-    ]
+      },
+      "id": "intact_EBI-12734333",
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-12734333"
+        },
+        {
+          "db": "imex",
+          "id": "IM-25630-25"
+        }
+      ],
+      "interactionType": {
+        "id": "MI:0407",
+        "name": "direct interaction"
+      },
+      "object": "interaction",
+      "participants": [
+        {
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "expressedIn": {
+            "common": "ecobb",
+            "scientific": "Escherichia coli (strain B / BL21)",
+            "taxid": "511693"
+          },
+          "features": [
+            {
+              "category": "bindingSites",
+              "id": "2",
+              "name": "Binding site",
+              "sequenceData": [
+                {
+                  "interactorRef": "uniprotkb_P17301",
+                  "participantRef": "1",
+                  "pos": "154-368"
+                }
+              ],
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              }
+            },
+            {
+              "category": "experimentalFeatures",
+              "id": "3",
+              "name": "Europium label",
+              "sequenceData": [
+                {
+                  "interactorRef": "uniprotkb_P17301",
+                  "participantRef": "1",
+                  "pos": "?-?"
+                }
+              ],
+              "type": {
+                "id": "MI:0378",
+                "name": "rare isotope label"
+              }
+            }
+          ],
+          "id": "1",
+          "identificationMethods": [
+            {
+              "id": "MI:0396",
+              "name": "predetermined participant"
+            }
+          ],
+          "interactorRef": "uniprotkb_P17301"
+        },
+        {
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0496",
+            "name": "bait"
+          },
+          "expressedIn": {
+            "common": "human-placenta",
+            "scientific": "Homo sapiens placenta",
+            "taxid": "9606"
+          },
+          "id": "4",
+          "identificationMethods": [
+            {
+              "id": "MI:0396",
+              "name": "predetermined participant"
+            }
+          ],
+          "interactorRef": "complex portal_CPX-1727"
+        }
+      ]
+    }
+  ]
 }

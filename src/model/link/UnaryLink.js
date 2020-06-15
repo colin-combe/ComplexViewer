@@ -54,7 +54,7 @@ function UnaryLink(id, xlvController, interactor) {
 //~ return tooltip;
 //~ };
 
-UnaryLink.prototype.initSVG = function() {
+UnaryLink.prototype.initSVG = function () {
     const path = this.interactors[0].getAggregateSelfLinkPath();
     this.line = document.createElementNS(Config.svgns, "path");
     this.line.setAttribute('d', path);
@@ -81,60 +81,60 @@ UnaryLink.prototype.initSVG = function() {
     this.thickLine.setAttribute("stroke-linejoin", "round");
     //set the events for it
     const self = this;
-    this.line.onmousedown = function(evt) {
+    this.line.onmousedown = function (evt) {
         self.mouseDown(evt);
     };
-    this.line.onmouseover = function(evt) {
+    this.line.onmouseover = function (evt) {
         self.mouseOver(evt);
     };
-    this.line.onmouseout = function(evt) {
+    this.line.onmouseout = function (evt) {
         self.mouseOut(evt);
     };
-    this.line.ontouchstart = function(evt) {
+    this.line.ontouchstart = function (evt) {
         self.touchStart(evt);
     };
 
-    this.highlightLine.onmousedown = function(evt) {
+    this.highlightLine.onmousedown = function (evt) {
         self.mouseDown(evt);
     };
-    this.highlightLine.onmouseover = function(evt) {
+    this.highlightLine.onmouseover = function (evt) {
         self.mouseOver(evt);
     };
-    this.highlightLine.onmouseout = function(evt) {
+    this.highlightLine.onmouseout = function (evt) {
         self.mouseOut(evt);
     };
-    this.highlightLine.ontouchstart = function(evt) {
+    this.highlightLine.ontouchstart = function (evt) {
         self.touchStart(evt);
     };
 
-    this.thickLine.onmousedown = function(evt) {
+    this.thickLine.onmousedown = function (evt) {
         self.mouseDown(evt);
     };
-    this.thickLine.onmouseover = function(evt) {
+    this.thickLine.onmouseover = function (evt) {
         self.mouseOver(evt);
     };
-    this.thickLine.onmouseout = function(evt) {
+    this.thickLine.onmouseout = function (evt) {
         self.mouseOut(evt);
     };
-    this.thickLine.ontouchstart = function(evt) {
+    this.thickLine.ontouchstart = function (evt) {
         self.touchStart(evt);
     };
 
     // this.isSelected = false;
 }
 
-UnaryLink.prototype.selfLink = function() {
+UnaryLink.prototype.selfLink = function () {
     return (this.fromProtein === this.toProtein);
 }
 
-UnaryLink.prototype.initSelfLinkSVG = function() {
+UnaryLink.prototype.initSelfLinkSVG = function () {
     const path = this.interactors[0].getAggregateSelfLinkPath();
     this.line.setAttribute('d', path);
     this.highlightLine.setAttribute('d', path);
     this.thickLine.setAttribute('d', path);
 };
 
-UnaryLink.prototype.showHighlight = function(show) {
+UnaryLink.prototype.showHighlight = function (show) {
     if (this.notSubLink === true) {
         this.highlightInteractors(show);
     }
@@ -149,7 +149,7 @@ UnaryLink.prototype.showHighlight = function(show) {
     }
 };
 
-UnaryLink.prototype.check = function() {
+UnaryLink.prototype.check = function () {
     if (this.interactors[0].form !== 1) {
         this.show();
         return true;
@@ -159,7 +159,7 @@ UnaryLink.prototype.check = function() {
     }
 };
 
-UnaryLink.prototype.show = function() {
+UnaryLink.prototype.show = function () {
     this.line.setAttribute("transform", "translate(" + this.interactors[0].cx +
         " " + this.interactors[0].cy + ")" + " scale(" + (this.controller.z) + ")");
     this.highlightLine.setAttribute("transform", "translate(" + this.interactors[0].cx +
@@ -169,7 +169,7 @@ UnaryLink.prototype.show = function() {
 };
 
 
-UnaryLink.prototype.setLinkCoordinates = function() {
+UnaryLink.prototype.setLinkCoordinates = function () {
     const interactor = this.interactors[0];
     if (typeof this.thickLine !== 'undefined') {
         this.thickLine.setAttribute("transform", "translate(" + interactor.cx +

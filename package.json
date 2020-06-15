@@ -1,66 +1,66 @@
 {
-    "name": "complexviewer",
-    "version": "1.1.0",
-    "description": "A network visualisation that displays molecular interaction data, including detailed residue-level information such as binding sites. v1 is used in EBI's Complex Portal. The aim for v2 is a general purpose viewer for PSI-MI XML data",
-    "author": {
-        "name": "Colin Combe",
-        "email": "colin.combe@ed.ac.uk"
+  "name": "complexviewer",
+  "version": "1.1.0",
+  "description": "A network visualisation that displays molecular interaction data, including detailed residue-level information such as binding sites. v1 is used in EBI's Complex Portal. The aim for v2 is a general purpose viewer for PSI-MI XML data",
+  "author": {
+    "name": "Colin Combe",
+    "email": "colin.combe@ed.ac.uk"
+  },
+  "contributors": [
+    {
+      "name": "Colin Combe",
+      "email": "colin.combe@ed.ac.uk"
     },
-    "contributors": [
-        {
-            "name": "Colin Combe",
-            "email": "colin.combe@ed.ac.uk"
-        },
-        {
-            "name": "Josh Heimbach",
-            "email": "joshkh@gmail.com"
-        },
-        {
-            "name": "Yo Yehudi",
-            "email": "yochannah@gmail.com"
-        },
-        {
-            "name": "Marine Dumousseau",
-            "email": ""
-        }
-    ],
-    "license": "Apache-2.0",
-    "devDependencies": {
-        "webpack": "^4.43.0",
-        "webpack-cli": "^3.3.11",
-        "babel-loader": "^8.1.0",
-        "@babel/core": "^7.10.2",
-        "@babel/preset-env": "^7.10.2",
-        "eslint": "^7.2.0"
+    {
+      "name": "Josh Heimbach",
+      "email": "joshkh@gmail.com"
     },
-    "scripts": {
-        "clean": "rm dist/complexviewer.js",
-        "build-dev": "webpack -d --mode development --config webpack.conf.js",
-        "build-prod": "webpack -p --mode production --config webpack.conf.js"
+    {
+      "name": "Yo Yehudi",
+      "email": "yochannah@gmail.com"
     },
-    "engines": {
-        "node": ">=14.0.0"
-    },
-    "browserify-shim": {
-        "./bower_components/colorbrewer/colorbrewer.js": "colorbrewer"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git@github.com:MICommunity/interaction-viewer.git"
-    },
-    "dependencies": {
-        "colorbrewer": "^1.3.0",
-        "core-js": "^3.6.5",
-        "d3": "~3.5.5",
-        "intersectionjs": "^1.0.1",
-        "point2d": "^0.0.1",
-        "webcola": "^3.4.0"
-    },
-    "keywords": [
-        "biojs",
-        "protein",
-        "interactions",
-        "complexes"
-    ],
-    "main": "src/controller/Controller.js"
+    {
+      "name": "Marine Dumousseau",
+      "email": ""
+    }
+  ],
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "babel-loader": "^8.1.0",
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "eslint": "^7.2.0"
+  },
+  "scripts": {
+    "clean": "rm dist/complexviewer.js",
+    "build-dev": "webpack -d --mode development --config webpack.conf.js",
+    "build-prod": "webpack -p --mode production --config webpack.conf.js"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserify-shim": {
+    "./bower_components/colorbrewer/colorbrewer.js": "colorbrewer"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:MICommunity/interaction-viewer.git"
+  },
+  "dependencies": {
+    "colorbrewer": "^1.3.0",
+    "core-js": "^3.6.5",
+    "d3": "~3.5.5",
+    "intersectionjs": "^1.0.1",
+    "point2d": "^0.0.1",
+    "webcola": "^3.4.0"
+  },
+  "keywords": [
+    "biojs",
+    "protein",
+    "interactions",
+    "complexes"
+  ],
+  "main": "src/controller/Controller.js"
 }

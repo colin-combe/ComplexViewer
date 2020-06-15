@@ -5,12 +5,15 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     font: inherit;
     vertical-align: baseline;
 }
+
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
     display: block;
 }
+
 body {
     line-height: 1;
 }
+
 /*
 ol, ul {
     list-style: none;
@@ -19,17 +22,21 @@ ol, ul {
 blockquote, q {
     quotes: none;
 }
+
 blockquote:after, blockquote:before, q:after, q:before {
     content: '';
     content: none;
 }
+
 table {
     border-collapse: collapse;
     border-spacing: 0;
 }
+
 body {
     -webkit-text-size-adjust: none;
 }
+
 *, :after, :before {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;

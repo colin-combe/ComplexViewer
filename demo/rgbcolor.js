@@ -4,19 +4,18 @@
  * @link   http://www.phpied.com/rgb-color-parser-in-javascript/
  * @license Use it if you like it
  */
-function RGBColor(color_string)
-{
+function RGBColor(color_string) {
     this.ok = false;
 
     // strip any leading #
     if (color_string.charAt(0) == '#') { // remove # if any
-        color_string = color_string.substr(1,6);
+        color_string = color_string.substr(1, 6);
     }
-    
-	//Col edit: also strip out leading 0x
-    color_string = color_string.replace(/0x/,'');
-    
-    color_string = color_string.replace(/ /g,'');
+
+    //Col edit: also strip out leading 0x
+    color_string = color_string.replace(/0x/, '');
+
+    color_string = color_string.replace(/ /g, '');
     color_string = color_string.toLowerCase();
 
     // before getting into regexps, try simple matches
@@ -78,8 +77,8 @@ function RGBColor(color_string)
         greenyellow: 'adff2f',
         honeydew: 'f0fff0',
         hotpink: 'ff69b4',
-        indianred : 'cd5c5c',
-        indigo : '4b0082',
+        indianred: 'cd5c5c',
+        indigo: '4b0082',
         ivory: 'fffff0',
         khaki: 'f0e68c',
         lavender: 'e6e6fa',
@@ -178,7 +177,7 @@ function RGBColor(color_string)
         {
             re: /^rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/,
             example: ['rgb(123, 234, 45)', 'rgb(255,234,245)'],
-            process: function (bits){
+            process: function (bits) {
                 return [
                     parseInt(bits[1]),
                     parseInt(bits[2]),
@@ -189,7 +188,7 @@ function RGBColor(color_string)
         {
             re: /^(\w{2})(\w{2})(\w{2})$/,
             example: ['#00ff00', '336699'],
-            process: function (bits){
+            process: function (bits) {
                 return [
                     parseInt(bits[1], 16),
                     parseInt(bits[2], 16),
@@ -200,7 +199,7 @@ function RGBColor(color_string)
         {
             re: /^(\w{1})(\w{1})(\w{1})$/,
             example: ['#fb0', 'f0f'],
-            process: function (bits){
+            process: function (bits) {
                 return [
                     parseInt(bits[1] + bits[1], 16),
                     parseInt(bits[2] + bits[2], 16),
@@ -247,7 +246,7 @@ function RGBColor(color_string)
     // help
     this.getHelpXML = function () {
 
-        var examples = new Array();
+        var examples = [];
         // add regexps
         for (var i = 0; i < color_defs.length; i++) {
             var example = color_defs[i].example;
@@ -268,10 +267,10 @@ function RGBColor(color_string)
                 var list_color = new RGBColor(examples[i]);
                 var example_div = document.createElement('div');
                 example_div.style.cssText =
-                        'margin: 3px; '
-                        + 'border: 1px solid black; '
-                        + 'background:' + list_color.toHex() + '; '
-                        + 'color:' + list_color.toHex()
+                    'margin: 3px; '
+                    + 'border: 1px solid black; '
+                    + 'background:' + list_color.toHex() + '; '
+                    + 'color:' + list_color.toHex()
                 ;
                 example_div.appendChild(document.createTextNode('test'));
                 var list_item_value = document.createTextNode(
@@ -281,7 +280,8 @@ function RGBColor(color_string)
                 list_item.appendChild(list_item_value);
                 xml.appendChild(list_item);
 
-            } catch(e){}
+            } catch (e) {
+            }
         }
         return xml;
 

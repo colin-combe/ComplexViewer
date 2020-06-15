@@ -82,16 +82,16 @@ function RNA(id, xlvController, json, name) {
     // events
     const self = this;
     //    this.upperGroup.setAttribute('pointer-events','all');
-    this.upperGroup.onmousedown = function(evt) {
+    this.upperGroup.onmousedown = function (evt) {
         self.mouseDown(evt);
     };
-    this.upperGroup.onmouseover = function(evt) {
+    this.upperGroup.onmouseover = function (evt) {
         self.mouseOver(evt);
     };
-    this.upperGroup.onmouseout = function(evt) {
+    this.upperGroup.onmouseout = function (evt) {
         self.mouseOut(evt);
     };
-    this.upperGroup.ontouchstart = function(evt) {
+    this.upperGroup.ontouchstart = function (evt) {
         self.touchStart(evt);
     };
 

@@ -8,15 +8,16 @@
 
 const Link = require('./Link');
 const Config = require('../../controller/Config');
+
 //todo: rename to SequenceFeatureLink
 
-function SequenceLink (id, fromFeatPos, toFeatPos, xlvController) {
+function SequenceLink(id, fromFeatPos, toFeatPos, xlvController) {
     this.init(id, fromFeatPos, toFeatPos, xlvController);
 }
 
 SequenceLink.prototype = new Link();
 
-SequenceLink.prototype.init = function(id, fromFeatPos, toFeatPos, xlvController) {
+SequenceLink.prototype.init = function (id, fromFeatPos, toFeatPos, xlvController) {
     this.id = id;
     this.controller = xlvController;
     this.fromSequenceData = fromFeatPos;
@@ -45,7 +46,7 @@ SequenceLink.prototype.getToolTip = function() {
     return tooltip;
 }*/
 
-SequenceLink.prototype.initSVG = function() {
+SequenceLink.prototype.initSVG = function () {
     if (typeof this.glyph === 'undefined') {
         this.glyph = document.createElementNS(Config.svgns, "path");
         this.uncertainGlyph = document.createElementNS(Config.svgns, "path");
@@ -72,38 +73,38 @@ SequenceLink.prototype.initSVG = function() {
 
         //set the events for it
         const self = this;
-        this.uncertainGlyph.onmousedown = function(evt) {
+        this.uncertainGlyph.onmousedown = function (evt) {
             self.mouseDown(evt);
         };
-        this.uncertainGlyph.onmouseover = function(evt) {
+        this.uncertainGlyph.onmouseover = function (evt) {
             self.mouseOver(evt);
         };
-        this.uncertainGlyph.onmouseout = function(evt) {
+        this.uncertainGlyph.onmouseout = function (evt) {
             self.mouseOut(evt);
         };
-        this.glyph.onmousedown = function(evt) {
+        this.glyph.onmousedown = function (evt) {
             self.mouseDown(evt);
         };
-        this.glyph.onmouseover = function(evt) {
+        this.glyph.onmouseover = function (evt) {
             self.mouseOver(evt);
         };
-        this.glyph.onmouseout = function(evt) {
+        this.glyph.onmouseout = function (evt) {
             self.mouseOut(evt);
         };
-        this.highlightGlyph.onmousedown = function(evt) {
+        this.highlightGlyph.onmousedown = function (evt) {
             self.mouseDown(evt);
         };
-        this.highlightGlyph.onmouseover = function(evt) {
+        this.highlightGlyph.onmouseover = function (evt) {
             self.mouseOver(evt);
         };
-        this.highlightGlyph.onmouseout = function(evt) {
+        this.highlightGlyph.onmouseout = function (evt) {
             self.mouseOut(evt);
         };
     }
 };
 
 //andAlternatives means highlight alternative links in case of site ambiguity
-SequenceLink.prototype.showHighlight = function(show) {
+SequenceLink.prototype.showHighlight = function (show) {
     if (show) {
         this.highlightGlyph.setAttribute("stroke-opacity", "1");
     } else {
@@ -112,7 +113,7 @@ SequenceLink.prototype.showHighlight = function(show) {
 };
 
 //used when filter changed
-SequenceLink.prototype.check = function() {
+SequenceLink.prototype.check = function () {
     if (this.filteredEvidence().length > 0 && this.anyInteractorIsBar() === true) {
         this.show();
         return true;
@@ -122,7 +123,7 @@ SequenceLink.prototype.check = function() {
     }
 };
 
-SequenceLink.prototype.anyInteractorIsBar = function() {
+SequenceLink.prototype.anyInteractorIsBar = function () {
     const ic = this.interactors.length;
     for (let i = 0; i < ic; i++) {
         if (this.interactors[i].form === 1) {
@@ -132,7 +133,7 @@ SequenceLink.prototype.anyInteractorIsBar = function() {
     return false;
 };
 
-SequenceLink.prototype.show = function() {
+SequenceLink.prototype.show = function () {
     if (!this.glyph) {
         this.initSVG();
     }
@@ -149,7 +150,7 @@ SequenceLink.prototype.show = function() {
     containingGroup.appendChild(this.uncertainGlyph);
 };
 
-SequenceLink.prototype.hide = function() {
+SequenceLink.prototype.hide = function () {
     // TODO: this looks wierd
     let containingGroup = this.controller.res_resLinks;
     if (this.interactors[0] === this.interactors[1]) {
@@ -170,7 +171,7 @@ SequenceLink.prototype.hide = function() {
 };
 
 // update the links(polygons/lines) to fit to the protein
-SequenceLink.prototype.setLinkCoordinates = function() {
+SequenceLink.prototype.setLinkCoordinates = function () {
     function isNumber(thing) {
         return (!isNaN(parseFloat(thing)) && isFinite(thing));
     }

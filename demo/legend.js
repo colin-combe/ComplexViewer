@@ -1,12 +1,15 @@
-d3.svg.legend = function() {
+d3.svg.legend = function () {
 
-    var legendValues=[{color: "red", stop: [0,1]},{color: "blue", stop: [1,2]},{color: "purple", stop: [2,3]},{color: "yellow", stop: [3,4]},{color: "Aquamarine", stop: [4,5]}];
+    var legendValues = [{color: "red", stop: [0, 1]}, {color: "blue", stop: [1, 2]}, {
+        color: "purple",
+        stop: [2, 3]
+    }, {color: "yellow", stop: [3, 4]}, {color: "Aquamarine", stop: [4, 5]}];
     var legendScale;
     var cellWidth = 30;
     var cellHeight = 20;
     var adjustable = false;
     var labelFormat = d3.format(".01f");
-    var coordinates = {x:0, y:0};
+    var coordinates = {x: 0, y: 0};
     var labelUnits = "units";
     var lastValue = 6;
     var changeValue = 1;
@@ -16,7 +19,7 @@ d3.svg.legend = function() {
 
     function legend(svg) {
 
-        updateBGSize = function(legend){
+        updateBGSize = function (legend) {
 
             var margin = 10;
             dim = legend.target.node().getBBox();
@@ -30,22 +33,22 @@ d3.svg.legend = function() {
         };
 
         //~ drag = d3.behavior.drag()
-            //~ .on("drag", function(d,i) {
-                //~ console.log(this);
-                //~ d.x += d3.event.dx;
-                //~ d.y += d3.event.dy;
-                //~ d3.select(this).attr("transform", function(d,i){
-                    //~ return "translate(" + [ d.x,d.y ] + ")"
-                //~ })
-            //~ })
-            //~ .on("dragstart", function() {
-                //~ d3.event.sourceEvent.stopPropagation(); // silence other listeners
-            //~ });
+        //~ .on("drag", function(d,i) {
+        //~ console.log(this);
+        //~ d.x += d3.event.dx;
+        //~ d.y += d3.event.dy;
+        //~ d3.select(this).attr("transform", function(d,i){
+        //~ return "translate(" + [ d.x,d.y ] + ")"
+        //~ })
+        //~ })
+        //~ .on("dragstart", function() {
+        //~ d3.event.sourceEvent.stopPropagation(); // silence other listeners
+        //~ });
 
         function init() {
             var mutLegendGroup = svg.append("g")
                 .attr("class", "mutLegendGroup")
-                .data([ coordinates ])
+                .data([coordinates])
                 .attr("transform", "translate(" + coordinates.x + "," + coordinates.y + ")");
             var target = mutLegendGroup
                 .insert("g")
@@ -65,8 +68,7 @@ d3.svg.legend = function() {
                 parentGroup: mutLegendGroup,
                 target: target
             }
-        };
-
+        }
 
 
         function cellRange(valuePosition, changeVal) {
@@ -79,26 +81,36 @@ d3.svg.legend = function() {
 
 
             legend.target.selectAll("g.legendCells").data(legendValues).exit().remove();
-            legend.target.selectAll("g.legendCells").select("rect").style("fill", function(d) {
-				var temp = new RGBColor(d.color);
-				//~ var trans = new RGBColor("rgba(" +temp.r+","+temp.g+","+temp.b+ ", 0.6)");
-				
-												var opaque = new RGBColor("");;
-								opaque.r = ((1 - 0.6) * 1) + (0.6 * (temp.r / 255));
-								opaque.g = ((1 - 0.6) * 1) + (0.6 * (temp.g / 255));
-								opaque.b = ((1 - 0.6) * 1) + (0.6 * (temp.b / 255));
-				
-				var col = "rgb(" +Math.floor(opaque.r * 255 ) +","
-									+ Math.floor(opaque.g * 255) +","+Math.floor(opaque.b * 255)+ ")";
-							
-				return col});
+            legend.target.selectAll("g.legendCells").select("rect").style("fill", function (d) {
+                var temp = new RGBColor(d.color);
+                //~ var trans = new RGBColor("rgba(" +temp.r+","+temp.g+","+temp.b+ ", 0.6)");
+
+                var opaque = new RGBColor("");
+                opaque.r = ((1 - 0.6) * 1) + (0.6 * (temp.r / 255));
+                opaque.g = ((1 - 0.6) * 1) + (0.6 * (temp.g / 255));
+                opaque.b = ((1 - 0.6) * 1) + (0.6 * (temp.b / 255));
+
+                var col = "rgb(" + Math.floor(opaque.r * 255) + ","
+                    + Math.floor(opaque.g * 255) + "," + Math.floor(opaque.b * 255) + ")";
+
+                return col
+            });
             if (orientation == "vertical") {
-                legend.target.selectAll("g.legendCells").select("text.breakLabels").style("display", "block").style("text-anchor", "start").attr("x", cellWidth + cellPadding).attr("y", 5 + (cellHeight / 2)).text(function(d) {return labelFormat(d.stop[0]) + (d.stop[1].length > 0 ? " - " + labelFormat(d.stop[1]) : "")})
-                legend.target.selectAll("g.legendCells").attr("transform", function(d,i) {return "translate(0," + (i * (cellHeight + cellPadding)) + ")" });
-            }
-            else {
-                legend.target.selectAll("g.legendCells").attr("transform", function(d,i) {return "translate(" + (i * cellWidth) + ",0)" });
-                legend.target.selectAll("text.breakLabels").style("text-anchor", "middle").attr("x", 0).attr("y", -7).style("display", function(d,i) {return i == 0 ? "none" : "block"}).text(function(d) {return labelFormat(d.stop[0])});
+                legend.target.selectAll("g.legendCells").select("text.breakLabels").style("display", "block").style("text-anchor", "start").attr("x", cellWidth + cellPadding).attr("y", 5 + (cellHeight / 2)).text(function (d) {
+                    return labelFormat(d.stop[0]) + (d.stop[1].length > 0 ? " - " + labelFormat(d.stop[1]) : "")
+                })
+                legend.target.selectAll("g.legendCells").attr("transform", function (d, i) {
+                    return "translate(0," + (i * (cellHeight + cellPadding)) + ")"
+                });
+            } else {
+                legend.target.selectAll("g.legendCells").attr("transform", function (d, i) {
+                    return "translate(" + (i * cellWidth) + ",0)"
+                });
+                legend.target.selectAll("text.breakLabels").style("text-anchor", "middle").attr("x", 0).attr("y", -7).style("display", function (d, i) {
+                    return i == 0 ? "none" : "block"
+                }).text(function (d) {
+                    return labelFormat(d.stop[0])
+                });
             }
         }
 
@@ -123,33 +135,38 @@ d3.svg.legend = function() {
             .enter()
             .append("g")
             .attr("class", "legendCells")
-            .attr("transform", function(d,i) {return "translate(" + (i * (cellWidth + cellPadding)) + ",0)" })
+            .attr("transform", function (d, i) {
+                return "translate(" + (i * (cellWidth + cellPadding)) + ",0)"
+            })
 
-									
+
         legend.target.selectAll("g.legendCells")
             .append("rect")
             .attr("class", "breakRect")
             .attr("height", cellHeight)
             .attr("width", cellWidth)
-            .style("fill", function(d) {
-				
-				//~ var temp = new RGBColor(d.color);
-				//Target.R = ((1 - Source.A) * BGColor.R) + (Source.A * Source.R)
-				//Target.G = ((1 - Source.A) * BGColor.G) + (Source.A * Source.G)
-				//Target.B = ((1 - Source.A) * BGColor.B) + (Source.A * Source.B)
-				//~ var opaque = {};
-				//~ opaque.r = ((1 - 0.6) * 1) + (0.6 * (temp.r / 255));
-				//~ opaque.g = ((1 - 0.6) * 1) + (0.6 * (temp.g / 255))
-				//~ opaque.b = ((1 - 0.6) * 1) + (0.6 * (temp.b / 255))
-				//~ var col = "rgb(" +Math.floor(opaque.r * 255 ) +","
-											//~ + Math.floor(opaque.g * 255) +","+Math.floor(opaque.b * 255)+ ")";
-				var temp = new RGBColor(d.color);
-				var trans = "rgba(" +temp.r+","+temp.g+","+temp.b+ ", 0.6)"
-											
-				
-				return "red"}
-			)
-            .style("stroke", function(d) {return d3.rgb(d.color);});
+            .style("fill", function (d) {
+
+                    //~ var temp = new RGBColor(d.color);
+                    //Target.R = ((1 - Source.A) * BGColor.R) + (Source.A * Source.R)
+                    //Target.G = ((1 - Source.A) * BGColor.G) + (Source.A * Source.G)
+                    //Target.B = ((1 - Source.A) * BGColor.B) + (Source.A * Source.B)
+                    //~ var opaque = {};
+                    //~ opaque.r = ((1 - 0.6) * 1) + (0.6 * (temp.r / 255));
+                    //~ opaque.g = ((1 - 0.6) * 1) + (0.6 * (temp.g / 255))
+                    //~ opaque.b = ((1 - 0.6) * 1) + (0.6 * (temp.b / 255))
+                    //~ var col = "rgb(" +Math.floor(opaque.r * 255 ) +","
+                    //~ + Math.floor(opaque.g * 255) +","+Math.floor(opaque.b * 255)+ ")";
+                    var temp = new RGBColor(d.color);
+                    var trans = "rgba(" + temp.r + "," + temp.g + "," + temp.b + ", 0.6)"
+
+
+                    return "red"
+                }
+            )
+            .style("stroke", function (d) {
+                return d3.rgb(d.color);
+            });
 
         legend.target.selectAll("g.legendCells")
             .append("text")
@@ -168,30 +185,29 @@ d3.svg.legend = function() {
     legend.initDone = false;
     legend.target;
 
-    legend.inputScale = function(newScale) {
+    legend.inputScale = function (newScale) {
         if (!arguments.length) return scale;
         scale = newScale;
         legendValues = [];
         if (scale.invertExtent) {
             //Is a quantile scale
-            scale.range().forEach(function(el) {
+            scale.range().forEach(function (el) {
                 var cellObject = {color: el, stop: scale.invertExtent(el)}
                 legendValues.push(cellObject)
             })
-        }
-        else {
+        } else {
             scale.domain().forEach(function (el) {
-                var cellObject = {color: scale(el), stop: [el,""]}
+                var cellObject = {color: scale(el), stop: [el, ""]}
                 legendValues.push(cellObject)
             })
         }
         return this;
     }
 
-    legend.scale = function(testValue) {
+    legend.scale = function (testValue) {
         var foundColor = legendValues[legendValues.length - 1].color;
         for (el in legendValues) {
-            if(testValue < legendValues[el].stop[1]) {
+            if (testValue < legendValues[el].stop[1]) {
                 foundColor = legendValues[el].color;
                 break;
             }
@@ -199,59 +215,65 @@ d3.svg.legend = function() {
         return foundColor;
     }
 
-    legend.cellWidth = function(newCellSize) {
+    legend.cellWidth = function (newCellSize) {
         if (!arguments.length) return cellWidth;
         cellWidth = newCellSize;
         return this;
     }
 
-    legend.cellHeight = function(newCellSize) {
+    legend.cellHeight = function (newCellSize) {
         if (!arguments.length) return cellHeight;
         cellHeight = newCellSize;
         return this;
     }
 
-    legend.cellPadding = function(newCellPadding) {
+    legend.cellPadding = function (newCellPadding) {
         if (!arguments.length) return cellPadding;
         cellPadding = newCellPadding;
         return this;
     }
 
-    legend.cellExtent = function(incColor,newExtent) {
-        var selectedStop = legendValues.filter(function(el) {return el.color == incColor})[0].stop;
+    legend.cellExtent = function (incColor, newExtent) {
+        var selectedStop = legendValues.filter(function (el) {
+            return el.color == incColor
+        })[0].stop;
         if (arguments.length == 1) return selectedStop;
-        legendValues.filter(function(el) {return el.color == incColor})[0].stop = newExtent;
+        legendValues.filter(function (el) {
+            return el.color == incColor
+        })[0].stop = newExtent;
         return this;
     }
 
-    legend.cellStepping = function(incStep) {
+    legend.cellStepping = function (incStep) {
         if (!arguments.length) return changeValue;
         changeValue = incStep;
         return this;
     }
 
-    legend.units = function(incUnits) {
+    legend.units = function (incUnits) {
         if (!arguments.length) return labelUnits;
         labelUnits = incUnits;
         return this;
     }
 
-    legend.orientation = function(incOrient) {
+    legend.orientation = function (incOrient) {
         if (!arguments.length) return orientation;
         orientation = incOrient;
         return this;
     }
 
-    legend.labelFormat = function(incFormat) {
+    legend.labelFormat = function (incFormat) {
         if (!arguments.length) return labelFormat;
         labelFormat = incFormat;
         if (incFormat == "none") {
-            labelFormat = function(inc) {return inc};
+            labelFormat = function (inc) {
+                return inc
+            };
         }
         return this;
     }
 
-    legend.place = function(incCoordinates) {
+    legend.place = function (incCoordinates) {
         if (!arguments.length) return incCoordinates;
         coordinates = incCoordinates;
         return this;

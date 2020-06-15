@@ -40,14 +40,14 @@ function Complex(id, xlvController) {
     // });
 }
 
-Complex.prototype.initInteractor = function(naryLink) {
+Complex.prototype.initInteractor = function (naryLink) {
     this.naryLink = naryLink;
     naryLink.path.setAttribute('stroke', 'gray');
     naryLink.path.setAttribute('stroke-linejoin', 'round');
     naryLink.path.setAttribute('stroke-width', 8);
 };
 
-Complex.prototype.getPosition = function() {
+Complex.prototype.getPosition = function () {
     const mapped = this.naryLink.getMappedCoordinates();
     const mc = mapped.length;
     let xSum = 0,
@@ -59,11 +59,13 @@ Complex.prototype.getPosition = function() {
     return [xSum / mc, ySum / mc];
 };
 
-Complex.prototype.setPosition = function(x, y) {};
+Complex.prototype.setPosition = function (x, y) {
+};
 
-Complex.prototype.getResidueCoordinates = function(x, y) {
+Complex.prototype.getResidueCoordinates = function (x, y) {
     return this.getPosition()
 };
-Complex.prototype.showHighlight = function() {};
+Complex.prototype.showHighlight = function () {
+};
 
 module.exports = Complex;

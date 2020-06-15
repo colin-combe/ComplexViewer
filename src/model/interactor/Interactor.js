@@ -13,7 +13,8 @@
 Interactor.LABELMAXLENGTH = 90; // maximal width reserved for protein-labels
 Interactor.labelY = -5; //label Y offset, better if calc'd half height of label once rendered
 
-function Interactor() {}
+function Interactor() {
+}
 
 Interactor.prototype = {
     get width() {
@@ -24,13 +25,13 @@ Interactor.prototype = {
     },
 }
 
-Interactor.prototype.addStoichiometryLabel = function(stoichiometry) {
+Interactor.prototype.addStoichiometryLabel = function (stoichiometry) {
     if (this.labelSVG) { //complexes don't have labels (yet?)
         this.labelSVG.childNodes[0].data = this.labelSVG.childNodes[0].data + ' [' + stoichiometry + ']';
     }
 }
 
-Interactor.prototype.mouseDown = function(evt) {
+Interactor.prototype.mouseDown = function (evt) {
     this.controller.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
     if (typeof this.controller.d3cola !== 'undefined' && this.controller.d3cola != null) {
         this.controller.d3cola.stop();
@@ -54,26 +55,26 @@ Interactor.prototype.mouseDown = function(evt) {
 //     return false;
 // };
 
-Interactor.prototype.mouseOver = function(evt) {
+Interactor.prototype.mouseOver = function (evt) {
     this.controller.preventDefaultsAndStopPropagation(evt);
     this.showHighlight(true);
     //~ this.controller.setTooltip(this.id);
     return false;
 };
 
-Interactor.prototype.mouseOut = function(evt) {
+Interactor.prototype.mouseOut = function (evt) {
     this.controller.preventDefaultsAndStopPropagation(evt);
     this.showHighlight(false);
     this.controller.hideTooltip();
     return false;
 };
 
-Interactor.prototype.getBlobRadius = function() {
+Interactor.prototype.getBlobRadius = function () {
     return 15;
 };
 
 
-Interactor.prototype.showHighlight = function(show) {
+Interactor.prototype.showHighlight = function (show) {
     // if (show === true) {
     //~ this.highlight.setAttribute("stroke", xiNET.highlightColour.toRGB());
     // this.highlight.setAttribute("stroke-opacity", "1");
@@ -102,12 +103,12 @@ Interactor.prototype.setSelected = function(select) {
 }
 */
 
-Interactor.prototype.getPosition = function() {
+Interactor.prototype.getPosition = function () {
     return [this.cx, this.cy];
 }
 
 // more accurately described as setting transform for top svg elements (sets scale also)
-Interactor.prototype.setPosition = function(x, y) {
+Interactor.prototype.setPosition = function (x, y) {
     this.cx = x;
     this.cy = y;
     // if (this.form === 1) {
@@ -119,7 +120,7 @@ Interactor.prototype.setPosition = function(x, y) {
     // }
 };
 
-Interactor.prototype.getAggregateSelfLinkPath = function() {
+Interactor.prototype.getAggregateSelfLinkPath = function () {
     const intraR = this.getBlobRadius() + 7;
     const sectorSize = 45;
     const arcStart = Interactor.trig(intraR, 25 + sectorSize);
@@ -132,14 +133,14 @@ Interactor.prototype.getAggregateSelfLinkPath = function() {
         ' Q ' + cp2.x + ',' + -cp2.y + ' 0,0';
 }
 
-Interactor.rotatePointAboutPoint = function(p, o, theta) {
+Interactor.rotatePointAboutPoint = function (p, o, theta) {
     theta = (theta / 360) * Math.PI * 2; //TODO: change theta arg to radians not degrees
     const rx = Math.cos(theta) * (p[0] - o[0]) - Math.sin(theta) * (p[1] - o[1]) + o[0];
     const ry = Math.sin(theta) * (p[0] - o[0]) + Math.cos(theta) * (p[1] - o[1]) + o[1];
     return [rx, ry];
 }
 
-Interactor.prototype.checkLinks = function() {
+Interactor.prototype.checkLinks = function () {
     function checkAll(linkMap) {
         const links = linkMap.values();
         const c = links.length;
@@ -147,6 +148,7 @@ Interactor.prototype.checkLinks = function() {
             links[l].check();
         }
     }
+
     // checkAll(this.naryLinks); // hacked out to help fix ordering od nLinks
     checkAll(this.binaryLinks);
     checkAll(this.sequenceLinks);
@@ -156,7 +158,7 @@ Interactor.prototype.checkLinks = function() {
 }
 
 // update all lines (e.g after a move)
-Interactor.prototype.setAllLinkCoordinates = function() {
+Interactor.prototype.setAllLinkCoordinates = function () {
     for (let link of this.naryLinks.values()) {
         link.setLinkCoordinates();
     }
@@ -172,7 +174,7 @@ Interactor.prototype.setAllLinkCoordinates = function() {
 };
 
 //TODO: remove this, use rotateAboutPoint instead
-Interactor.trig = function(radius, angleDegrees) {
+Interactor.trig = function (radius, angleDegrees) {
     //x = rx + radius * cos(theta) and y = ry + radius * sin(theta)
     const radians = (angleDegrees / 360) * Math.PI * 2;
     return {
@@ -187,6 +189,7 @@ Interactor.prototype.showData = function() {
 }
 */
 
-Interactor.prototype.setForm = function(form, svgP) {};
+Interactor.prototype.setForm = function (form, svgP) {
+};
 
 module.exports = Interactor;

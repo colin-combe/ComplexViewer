@@ -1,11 +1,11 @@
-.protein{
+.protein {
     cursor: crosshair;
 }
 
-.link{
-/*
-   cursor: crosshair;
-*/
+.link {
+    /*
+       cursor: crosshair;
+    */
 }
 
 /*you need this to stop horrible looking flickering of text as you drag*/
@@ -17,14 +17,12 @@ svg {
     user-select: none;
 }
 
-.xlv_text
-{
+.xlv_text {
     /*font-weight: bold;*/
-    text-shadow:
-        -1px -1px 0 white,
-        1px -1px 0 white,
-        -1px 1px 0 white,
-        1px 1px 0 white;
+    text-shadow: -1px -1px 0 white,
+    1px -1px 0 white,
+    -1px 1px 0 white,
+    1px 1px 0 white;
     /*   -2px -1px 0 white,
         2px -1px 0 white,
         -2px 1px 0 white,

@@ -1,117 +1,119 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>ComplexViewer Demo</title>
-        <meta name="ComplexViewer Demo" content="ComplexViewer Demo">
-        <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <!-- css -->
-        <link rel="stylesheet" type='text/css' href="./demo/css/reset.css">
-        <link rel="stylesheet" type='text/css' href="./demo/css/style.css">
-        <link rel="stylesheet" type='text/css' href="./demo/css/demo.css">
-        <link rel="stylesheet" type='text/css' href="./demo/css/XLV.css"/>
-        <!--libraries-->
-        <script type="text/javascript" src="./dist/complexviewer.js"></script>
-        <script type="text/javascript" src="./node_modules/d3/d3.js"></script>
-        <script type="text/javascript" src="./demo/rgbcolor.js"></script>
-        <script type="text/javascript" src="./demo/legend.js"></script>
-        <!-- example data info -->
-        <script type="text/javascript" src="./demo/data/miJson/index.js"></script>
-    </head>
+<head>
+    <meta charset="utf-8">
+    <title>ComplexViewer Demo</title>
+    <meta content="ComplexViewer Demo" name="ComplexViewer Demo">
+    <meta content="initial-scale=1, maximum-scale=1" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <!-- css -->
+    <link href="./demo/css/reset.css" rel="stylesheet" type='text/css'>
+    <link href="./demo/css/style.css" rel="stylesheet" type='text/css'>
+    <link href="./demo/css/demo.css" rel="stylesheet" type='text/css'>
+    <link href="./demo/css/XLV.css" rel="stylesheet" type='text/css'/>
+    <!--libraries-->
+    <script src="./dist/complexviewer.js" type="text/javascript"></script>
+    <script src="./node_modules/d3/d3.js" type="text/javascript"></script>
+    <script src="./demo/rgbcolor.js" type="text/javascript"></script>
+    <script src="./demo/legend.js" type="text/javascript"></script>
+    <!-- example data info -->
+    <script src="./demo/data/miJson/index.js" type="text/javascript"></script>
+</head>
 
-    <body>
-        <!-- Main -->
-        <div id="main">
+<body>
+<!-- Main -->
+<div id="main">
 
-            <div class="page-header">
-                    <i class="fa fa-github" onclick="window.location = 'https://github.com/MICommunity/ComplexViewer';" title="Go to GitHub project" style="margin-right:5px;"></i>
-                    <a target="_blank" href="https://doi.org/10.1093/bioinformatics/btx497"><h1>ComplexViewer: dev. version</h1></a>
-            </div>
+    <div class="page-header">
+        <i class="fa fa-github" onclick="window.location = 'https://github.com/MICommunity/ComplexViewer';"
+           style="margin-right:5px;" title="Go to GitHub project"></i>
+        <a href="https://doi.org/10.1093/bioinformatics/btx497" target="_blank"><h1>ComplexViewer: dev. version</h1></a>
+    </div>
 
-            <div id="centre">
+    <div id="centre">
 
-                <div id="detailsDiv">
-                    <span>Choose Example:</span>
-                    <select id="dataSets" class="noShrink" onChange="/*document.getElementById('chkexpansion').checked = true;*/loadData();"></select>
-                    <br>
-                    <div id="complexDetails"></div>
-                </div>
+        <div id="detailsDiv">
+            <span>Choose Example:</span>
+            <select class="noShrink" id="dataSets"
+                    onChange="/*document.getElementById('chkexpansion').checked = true;*/loadData();"></select>
+            <br>
+            <div id="complexDetails"></div>
+        </div>
 
-                <div id="middleDiv">
-                    <div id="innerMiddleDiv">
+        <div id="middleDiv">
+            <div id="innerMiddleDiv">
 
 
-                        <div id="networkDiv"></div>
-                        <div id="legend">
+                <div id="networkDiv"></div>
+                <div id="legend">
 
-                                <table>
-                                  <tr>
-                                     <td>
-                                         <div style="float:right">
-                                             <img src="./demo/svgForKey/molSet.svg" alt="Bioactive Entity">
-                                         </div>
-                                     </td>
-                                     <td>Molecule Set</td>
-                                   </tr>
-                                 <tr>
-                                    <td>
-                                        <div style="float:right">
-                                            <img src="./demo/svgForKey/smallMol.svg" alt="Bioactive Entity">
-                                        </div>
-                                    </td>
-                                    <td>Bioactive Entity</td>
-                                  </tr>
-
-                                  <tr>
-                                    <td>
-                                        <div style="float:right">
-                                            <img src="./demo/svgForKey/gene.svg" alt="Gene">
-                                        </div>
-                                    </td>
-                                    <td>Gene</td>
-                                  </tr>
-                                  <tr>
-                                    <td>
-                                        <div style="float:right">
-                                            <img src="./demo/svgForKey/DNA.svg" alt="DNA">
-                                        </div>
-                                    </td>
-                                    <td>DNA</td>
-                                  </tr>
-                                <tr>
-                                    <td>
-                                        <div style="float:right">
-                                            <img src="./demo/svgForKey/RNA.svg" alt="RNA">
-                                        </div>
-                                    </td>
-                                    <td>RNA</td>
-                                 </tr>
-                                 <tr style="border: 1px grey;">
-                                    <td>
-                                        <div style="float:right">
-                                            <img src="./demo/svgForKey/proteinBlob.svg" alt="Protein">
-                                        </div>
-                                        <div style="float:right">
-                                            <img src="./demo/svgForKey/proteinBar.svg"  alt="Protein">
-                                        </div>
-                                    </td>
-                                    <td>Protein - click to toggle between circle and bar</td>
-                                  </tr>
-                                </table>
-
-                                <div class="controls" style="height:46px;">Proteins:
-                                    <button class="btn btn-1 btn-1a" onclick="xlv.expandAll();">Expand  </button>
-                                    <button class="btn btn-1 btn-1a" onclick="xlv.collapseAll();">Collapse</button>
+                    <table>
+                        <tr>
+                            <td>
+                                <div style="float:right">
+                                    <img alt="Bioactive Entity" src="./demo/svgForKey/molSet.svg">
                                 </div>
+                            </td>
+                            <td>Molecule Set</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="float:right">
+                                    <img alt="Bioactive Entity" src="./demo/svgForKey/smallMol.svg">
+                                </div>
+                            </td>
+                            <td>Bioactive Entity</td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div style="float:right">
+                                    <img alt="Gene" src="./demo/svgForKey/gene.svg">
+                                </div>
+                            </td>
+                            <td>Gene</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="float:right">
+                                    <img alt="DNA" src="./demo/svgForKey/DNA.svg">
+                                </div>
+                            </td>
+                            <td>DNA</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="float:right">
+                                    <img alt="RNA" src="./demo/svgForKey/RNA.svg">
+                                </div>
+                            </td>
+                            <td>RNA</td>
+                        </tr>
+                        <tr style="border: 1px grey;">
+                            <td>
+                                <div style="float:right">
+                                    <img alt="Protein" src="./demo/svgForKey/proteinBlob.svg">
+                                </div>
+                                <div style="float:right">
+                                    <img alt="Protein" src="./demo/svgForKey/proteinBar.svg">
+                                </div>
+                            </td>
+                            <td>Protein - click to toggle between circle and bar</td>
+                        </tr>
+                    </table>
+
+                    <div class="controls" style="height:46px;">Proteins:
+                        <button class="btn btn-1 btn-1a" onclick="xlv.expandAll();">Expand</button>
+                        <button class="btn btn-1 btn-1a" onclick="xlv.collapseAll();">Collapse</button>
+                    </div>
 
 
-                       <div id="colours"></div>
+                    <div id="colours"></div>
                 </div><!-- legend -->
 
 
-                </div> <!-- innerMiddleDiv -->
+            </div> <!-- innerMiddleDiv -->
 
 
             <div>
@@ -129,146 +131,149 @@
                     </label> -->
                     &nbsp;&nbsp;
                     <button class="btn btn-1 btn-1a" onclick="xlv.autoLayout();" style="display:inline">Layout</button>
-                    <button class="btn btn-1 btn-1a" onclick="exportSVG();" style="display:inline">Export Graphic</button>
+                    <button class="btn btn-1 btn-1a" onclick="exportSVG();" style="display:inline">Export Graphic
+                    </button>
                 </div>
 
 
+            </div> <!-- bottom bar -->
 
-        </div> <!-- bottom bar -->
+        </div> <!-- middleDiv -->
 
-            </div> <!-- middleDiv -->
+    </div> <!-- centreDiv -->
 
-        </div> <!-- centreDiv -->
+    <div class="logoBar">
+        <a class="logo" href="http://rappsilberlab.org/" target="_blank"><img
+                alt="" src="./demo/images/RapLabTextLogoSmall.png"></a>
+        <a class="logo" href="http://www.ed.ac.uk/" target="_blank"><img alt="" src="./demo/images/eduni.jpeg"></a>
+        <a class="logo" href="http://www.wcb.ed.ac.uk/" target="_blank"><img alt="" src="./demo/images/WTCCB.png"></a>
+        <a class="logo" href="http://www.ebi.ac.uk/" target="_blank"><img alt="" src="./demo/images/ebiLogo2.jpeg"></a>
+        <a class="logo" href="http://intermine.org/" target="_blank"><img alt="" src="./demo/images/intermine.png"></a>
+        <a class="logo" href="https://www.cam.ac.uk/" target="_blank"><img alt=""
+                                                                           src="./demo/images/cambridge-blue.png"></a>
+        <!--
+                    </div>
+        -->
+    </div>
 
-<div class="logoBar">
-                <a class ="logo" href="http://rappsilberlab.org/" target="_blank"><img src="./demo/images/RapLabTextLogoSmall.png" alt=""></a>
-                <a class ="logo" href="http://www.ed.ac.uk/"  target="_blank"><img src="./demo/images/eduni.jpeg" alt=""></a>
-                <a class ="logo" href="http://www.wcb.ed.ac.uk/"  target="_blank"><img src="./demo/images/WTCCB.png" alt=""></a>
-                <a class ="logo" href="http://www.ebi.ac.uk/"  target="_blank"><img src="./demo/images/ebiLogo2.jpeg" alt=""></a>
-                <a class ="logo" href="http://intermine.org/" target="_blank"><img src="./demo/images/intermine.png" alt=""></a>
-                <a class ="logo" href="https://www.cam.ac.uk/" target="_blank"><img src="./demo/images/cambridge-blue.png" alt=""></a>
-<!--
-            </div>
--->
-        </div>
+</div><!-- MAIN -->
 
-    </div><!-- MAIN -->
+<script type="text/javascript">
+    //<![CDATA[
 
-        <script type="text/javascript">
-                //<![CDATA[
+    var targetDiv = document.getElementById('networkDiv');
+    xlv = new xiNET(targetDiv);
+    xlv.svgElement.setAttribute("style", "display: -webkit-box;display: -moz-box;display: -ms-flexbox; display: -webkit-flex;display: flex;flex-grow:1;");
 
-                var targetDiv = document.getElementById('networkDiv');
-                xlv = new xiNET(targetDiv);
-                xlv.svgElement.setAttribute("style", "display: -webkit-box;display: -moz-box;display: -ms-flexbox; display: -webkit-flex;display: flex;flex-grow:1;");
+    var legend = d3.select("svg").append("g");
+    xlv.legendCallbacks.push(function (colourAssignment) {
+        legend.selectAll("*").remove();
+        var table = "<table background:#EEEEEE;>";
+        var coloursKeyDiv = document.getElementById('colours');
+        if (colourAssignment) {
 
-                var legend = d3.select("svg").append("g");
-                xlv.legendCallbacks.push(function (colourAssignment) {
-                    legend.selectAll("*").remove();
-                    var table = "<table background:#EEEEEE;>";
-                    var coloursKeyDiv = document.getElementById('colours');
-                    if (colourAssignment){
+            var complexColourScheme = xlv.getComplexColours();
+            var ccDomain = complexColourScheme.domain();
+            var ccRange = complexColourScheme.range();
+            table += "<tr style='height:10px;'></tr>";
+            for (var i = 0; i < ccDomain.length; i++) {
+                //make transparent version of colour
+                var temp = new RGBColor(ccRange[i % 6]);
+                //var trans = "rgba(" +temp.r+","+temp.g+","+temp.b+ ", 0.6)";
+                table += "<tr><td style='width:75px;margin:10px;background:"
+                    + ccRange[i % 6] + ";border:1px solid "
+                    + ccRange[i % 6] + ";'></td><td>"
+                    + ccDomain[i] + "</td></tr>";
+                console.log(i + " " + ccDomain[i] + " " + ccRange[i]);
+            }
+            table = table += "</table>";
+            table = table += "<table background:#EEEEEE;>";
 
-                        var complexColourScheme = xlv.getComplexColours();
-                        var ccDomain = complexColourScheme.domain();
-                        var ccRange = complexColourScheme.range();
-                        table += "<tr style='height:10px;'></tr>";
-                        for (var i = 0; i < ccDomain.length; i ++){
-                            //make transparent version of colour
-                            var temp = new RGBColor(ccRange[i%6]);
-                            //var trans = "rgba(" +temp.r+","+temp.g+","+temp.b+ ", 0.6)";
-                            table += "<tr><td style='width:75px;margin:10px;background:"
-                                    + ccRange[i%6] + ";border:1px solid "
-                                    + ccRange[i%6] + ";'></td><td>"
-                                    + ccDomain[i] +"</td></tr>";
-                            console.log(i + " "+ ccDomain[i] + " " + ccRange[i]);
-                        }
-                        table = table += "</table>";
-                        table = table += "<table background:#EEEEEE;>";
+            var domain = colourAssignment.domain();
+            //~ //console.log("Domain:"+domain);
+            var range = colourAssignment.range();
+            //~ //console.log("Range:"+range);
+            table += "<tr style='height:10px;'></tr>";
+            for (var i = 0; i < domain.length; i++) {
+                //make transparent version of colour
+                var temp = new RGBColor(range[i % 20]);
+                var trans = "rgba(" + temp.r + "," + temp.g + "," + temp.b + ", 0.6)";
+                table += "<tr><td style='width:75px;margin:10px;background:"
+                    + trans + ";border:1px solid "
+                    + range[i % 20] + ";'></td><td>"
+                    + domain[i] + "</td></tr>";
+                //~ //console.log(i + " "+ domain[i] + " " + range[i]);
+            }
 
-                        var domain = colourAssignment.domain();
-                        //~ //console.log("Domain:"+domain);
-                        var range = colourAssignment.range();
-                        //~ //console.log("Range:"+range);
-                        table += "<tr style='height:10px;'></tr>";
-                        for (var i = 0; i < domain.length; i ++){
-                            //make transparent version of colour
-                            var temp = new RGBColor(range[i%20]);
-                            var trans = "rgba(" +temp.r+","+temp.g+","+temp.b+ ", 0.6)";
-                            table += "<tr><td style='width:75px;margin:10px;background:"
-                                    + trans + ";border:1px solid "
-                                    + range[i%20] + ";'></td><td>"
-                                    + domain[i] +"</td></tr>";
-                            //~ //console.log(i + " "+ domain[i] + " " + range[i]);
-                        }
-
-                        table = table += "</table>";
-                        coloursKeyDiv.innerHTML = table;
-
-
-                        //~ //d3 svg legend
-                        //~ verticalLegend = d3.svg.legend().labelFormat("none").cellPadding(5).orientation("vertical").units(xlv.annotationChoice).cellWidth(25).cellHeight(18).inputScale(colourAssignment);
-                        //~ legend.attr("transform", "translate(20,40)").attr("class", "legend").call(verticalLegend);
-                    }
-
-                });
-
-                for (var i = 0; i < exampleIndex.length; i++) {
-                    var example = exampleIndex[i];
-                    var dataSetsSelect = document.getElementById('dataSets');
-                    var opt = document.createElement('option');
-                    opt.value = "./demo/data/miJson/" + example.ac + ".json";
-                    opt.innerHTML = example.name;
-                    dataSetsSelect.appendChild(opt);
-                }
-
-                loadData();
-                changeAnnotations();
-
-                function loadData(){
-                    xlv.clear();
-                    var dataSetsSelect = document.getElementById('dataSets');
-
-                    var example = exampleIndex[dataSetsSelect.selectedIndex];
-
-                    var complexDetailsSel = d3.select('#complexDetails');
-
-                    complexDetailsSel.selectAll("*").remove("*");
-
-                    complexDetailsSel.append("a")
-                        .attr("href", example.url)
-                        .attr("target", "_blank")
-                        .html("<b>" + example.ac + "</b>");
+            table = table += "</table>";
+            coloursKeyDiv.innerHTML = table;
 
 
-                    // if (example.disableStoichExpand) {
-                    //     d3.select("#chkexpansion").attr("disabled", "disabled");
-                    //     document.getElementById("chkexpansion").checked = false;
-                    // } else {
-                    //     d3.select("#chkexpansion").attr("disabled", null);
-                    //     //~ document.getElementById("chkexpansion").checked = true;
-                    // }
-                    //var matrixExpansion = document.getElementById("chkexpansion").checked;
+            //~ //d3 svg legend
+            //~ verticalLegend = d3.svg.legend().labelFormat("none").cellPadding(5).orientation("vertical").units(xlv.annotationChoice).cellWidth(25).cellHeight(18).inputScale(colourAssignment);
+            //~ legend.attr("transform", "translate(20,40)").attr("class", "legend").call(verticalLegend);
+        }
 
-                    var path = dataSetsSelect.options[dataSetsSelect.selectedIndex].value;
-                    d3.json(path, function(data) {
-                       xlv.readMIJSON(data);//, matrixExpansion);
-                    });
-                 }
+    });
 
-                function changeAnnotations(){
-                    var annotationSelect = document.getElementById('annotationsSelect');
-                    xlv.setAnnotations(annotationSelect.options[annotationSelect.selectedIndex].value);
-                }
+    for (var i = 0; i < exampleIndex.length; i++) {
+        var example = exampleIndex[i];
+        var dataSetsSelect = document.getElementById('dataSets');
+        var opt = document.createElement('option');
+        opt.value = "./demo/data/miJson/" + example.ac + ".json";
+        opt.innerHTML = example.name;
+        dataSetsSelect.appendChild(opt);
+    }
 
-                function exportSVG(){
-                    var xml = xlv.getSVG();
-                    xmlAsUrl = 'data:image/svg;filename=xiNET-output.svg,';
-                    xmlAsUrl += encodeURIComponent(xml);
-                    alert("Downloading as SVG. You may need to change the file extension to '.svg' before opening.");
-                    var win = window.open(xmlAsUrl, 'xiNET-output.svg');
-                }
-                //]]>
-        </script>
+    loadData();
+    changeAnnotations();
 
-    </body>
+    function loadData() {
+        xlv.clear();
+        var dataSetsSelect = document.getElementById('dataSets');
+
+        var example = exampleIndex[dataSetsSelect.selectedIndex];
+
+        var complexDetailsSel = d3.select('#complexDetails');
+
+        complexDetailsSel.selectAll("*").remove("*");
+
+        complexDetailsSel.append("a")
+            .attr("href", example.url)
+            .attr("target", "_blank")
+            .html("<b>" + example.ac + "</b>");
+
+
+        // if (example.disableStoichExpand) {
+        //     d3.select("#chkexpansion").attr("disabled", "disabled");
+        //     document.getElementById("chkexpansion").checked = false;
+        // } else {
+        //     d3.select("#chkexpansion").attr("disabled", null);
+        //     //~ document.getElementById("chkexpansion").checked = true;
+        // }
+        //var matrixExpansion = document.getElementById("chkexpansion").checked;
+
+        var path = dataSetsSelect.options[dataSetsSelect.selectedIndex].value;
+        d3.json(path, function (data) {
+            xlv.readMIJSON(data);//, matrixExpansion);
+        });
+    }
+
+    function changeAnnotations() {
+        var annotationSelect = document.getElementById('annotationsSelect');
+        xlv.setAnnotations(annotationSelect.options[annotationSelect.selectedIndex].value);
+    }
+
+    function exportSVG() {
+        var xml = xlv.getSVG();
+        xmlAsUrl = 'data:image/svg;filename=xiNET-output.svg,';
+        xmlAsUrl += encodeURIComponent(xml);
+        alert("Downloading as SVG. You may need to change the file extension to '.svg' before opening.");
+        var win = window.open(xmlAsUrl, 'xiNET-output.svg');
+    }
+
+    //]]>
+</script>
+
+</body>
 </html>

@@ -13,14 +13,15 @@
 "use strict";
 const d3 = require('d3');
 
-function xiNET_Storage() {}
+function xiNET_Storage() {
+}
 
 const Annotation = require('../model/interactor/Annotation');
 const SequenceFeature = require('./../model/SequenceFeature');
 
 xiNET_Storage.ns = "xiNET.";
 
-xiNET_Storage.accessionFromId = function(id) {
+xiNET_Storage.accessionFromId = function (id) {
     let idRegex;
     // i cant figure out way to do this purely with regex... who cares
     if (id.indexOf("(") !== -1) { //id has participant number in it
@@ -39,12 +40,12 @@ xiNET_Storage.accessionFromId = function(id) {
     }
 }
 
-xiNET_Storage.getUniProtTxt = function(id, callback) {
+xiNET_Storage.getUniProtTxt = function (id, callback) {
     const accession = xiNET_Storage.accessionFromId(id);
 
     function uniprotWebService() {
         const url = "https://www.ebi.ac.uk/proteins/api/proteins/" + accession;
-        d3.json(url, function(txt) {
+        d3.json(url, function (txt) {
             //~ // console.log(accession + " retrieved from UniProt.");
             //~ if(typeof(Storage) !== "undefined") {
             //~ localStorage.setItem(xiNET_Storage.ns  + "UniProtKB."+ accession, txt);
@@ -74,9 +75,9 @@ xiNET_Storage.getUniProtTxt = function(id, callback) {
     //~ }
 }
 
-xiNET_Storage.getSequence = function(id, callback) {
+xiNET_Storage.getSequence = function (id, callback) {
     //~ var accession = xiNET_Storage.accessionFromId(id);
-    xiNET_Storage.getUniProtTxt(id, function(noNeed, json) {
+    xiNET_Storage.getUniProtTxt(id, function (noNeed, json) {
         //~ var sequence = "";
         //~ var lines = txt.split('\n');
         //~ var lineCount = lines.length;
@@ -95,9 +96,9 @@ xiNET_Storage.getSequence = function(id, callback) {
     });
 }
 
-xiNET_Storage.getUniProtFeatures = function(id, callback) {
+xiNET_Storage.getUniProtFeatures = function (id, callback) {
     //var accession = xiNET_Storage.accessionFromId(id);
-    xiNET_Storage.getUniProtTxt(id, function(id, json) {
+    xiNET_Storage.getUniProtTxt(id, function (id, json) {
         //~ var features = new Array();
         //~ var lines = txt.split('\n');
         //~ var lineCount = lines.length;
@@ -112,18 +113,18 @@ xiNET_Storage.getUniProtFeatures = function(id, callback) {
         //~ }
         //~ }
         //~ }
-        callback(id, json.features.filter(function(ft) {
+        callback(id, json.features.filter(function (ft) {
             return ft.type === "DOMAIN";
         }));
     });
 }
 
-xiNET_Storage.getSuperFamFeatures = function(id, callback) {
+xiNET_Storage.getSuperFamFeatures = function (id, callback) {
     const accession = xiNET_Storage.accessionFromId(id);
 
     function superFamDAS() {
         const url = "https://supfam.mrc-lmb.cam.ac.uk/SUPERFAMILY/cgi-bin/das/up/features?segment=" + accession;
-        d3.xml(url, function(xml) {
+        d3.xml(url, function (xml) {
             xml = new XMLSerializer().serializeToString(xml);
             //~ console.log(accession + " SuperFamDAS  retrieved.");
             //~ if(typeof(Storage) !== "undefined") {
@@ -157,7 +158,7 @@ xiNET_Storage.getSuperFamFeatures = function(id, callback) {
                 const name = type.getAttribute('id');
                 const start = xmlFeature.getElementsByTagName('START')[0].textContent;
                 const end = xmlFeature.getElementsByTagName('END')[0].textContent;
-                features.push(new Annotation(name, new SequenceFeature (null, start+"-"+end)));
+                features.push(new Annotation(name, new SequenceFeature(null, start + "-" + end)));
             }
         }
         //~ console.log(JSON.stringify(features));

@@ -19,7 +19,7 @@ const Link = function () {
 };
 Link.maxNoEvidences = 0;
 
-Link.prototype.addEvidence = function(interaction) {
+Link.prototype.addEvidence = function (interaction) {
     if (!this.evidences) {
         this.evidences = d3.map();
     }
@@ -35,7 +35,7 @@ Link.prototype.addEvidence = function(interaction) {
     }
 };
 
-Link.prototype.highlightInteractors = function(show) {
+Link.prototype.highlightInteractors = function (show) {
     const interactors = this.interactors;
     for (let i = 0; i < interactors.length; i++) {
         interactors[i].showHighlight(show);
@@ -43,7 +43,7 @@ Link.prototype.highlightInteractors = function(show) {
 }
 
 // event handler for starting dragging or rotation (or flipping internal links)
-Link.prototype.mouseDown = function(evt) {
+Link.prototype.mouseDown = function (evt) {
     this.controller.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
     //if a force layout exists then stop it
     if (this.controller.layout) {
@@ -60,7 +60,7 @@ Link.prototype.mouseDown = function(evt) {
 }
 
 // highlight on mouseover, all 'subclasses' need a showHighlight method
-Link.prototype.mouseOver = function(evt) {
+Link.prototype.mouseOver = function (evt) {
     //console.log("clickable mouse over");
     this.controller.preventDefaultsAndStopPropagation(evt);
     //this.showHighlight(true, true);
@@ -68,18 +68,18 @@ Link.prototype.mouseOver = function(evt) {
     return false;
 }
 
-Link.prototype.getToolTip = function() {
+Link.prototype.getToolTip = function () {
     return this.id;
 }
 
-Link.prototype.mouseOut = function(evt) {
+Link.prototype.mouseOut = function (evt) {
     this.controller.preventDefaultsAndStopPropagation(evt);
     this.showHighlight(false, true);
     this.controller.hideTooltip();
     return false;
 }
 
-Link.prototype.touchStart = function(evt) {
+Link.prototype.touchStart = function (evt) {
     this.controller.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
     //if a force layout exists then stop it
     if (this.controller.layout !== undefined) {
@@ -106,7 +106,7 @@ Link.prototype.touchStart = function(evt) {
     }
 };*/
 
-Link.prototype.filteredEvidence = function() {
+Link.prototype.filteredEvidence = function () {
     //TODO - filtering
     return this.evidences.values();
     //~ if (typeof interaction.confidences !== 'undefined') {
@@ -122,7 +122,7 @@ Link.prototype.filteredEvidence = function() {
 };
 
 //used by BinaryLink and UnaryLink
-Link.prototype.hide = function() {
+Link.prototype.hide = function () {
     this.thickLine.remove()
     this.highlightLine.remove()
     this.line.remove()

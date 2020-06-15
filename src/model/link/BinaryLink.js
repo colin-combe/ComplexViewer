@@ -53,7 +53,7 @@ function BinaryLink(id, xlvController, fromI, toI) {
 //~ return tooltip;
 //~ }
 
-BinaryLink.prototype.initSVG = function() {
+BinaryLink.prototype.initSVG = function () {
     this.line = document.createElementNS(Config.svgns, "line");
     this.highlightLine = document.createElementNS(Config.svgns, "line");
     this.thickLine = document.createElementNS(Config.svgns, "line");
@@ -76,46 +76,46 @@ BinaryLink.prototype.initSVG = function() {
     this.thickLine.setAttribute("stroke-linejoin", "round");
     //set the events for it
     const self = this;
-    this.line.onmousedown = function(evt) {
+    this.line.onmousedown = function (evt) {
         self.mouseDown(evt);
     };
-    this.line.onmouseover = function(evt) {
+    this.line.onmouseover = function (evt) {
         self.mouseOver(evt);
     };
-    this.line.onmouseout = function(evt) {
+    this.line.onmouseout = function (evt) {
         self.mouseOut(evt);
     };
-    this.line.ontouchstart = function(evt) {
+    this.line.ontouchstart = function (evt) {
         self.touchStart(evt);
     };
 
-    this.highlightLine.onmousedown = function(evt) {
+    this.highlightLine.onmousedown = function (evt) {
         self.mouseDown(evt);
     };
-    this.highlightLine.onmouseover = function(evt) {
+    this.highlightLine.onmouseover = function (evt) {
         self.mouseOver(evt);
     };
-    this.highlightLine.onmouseout = function(evt) {
+    this.highlightLine.onmouseout = function (evt) {
         self.mouseOut(evt);
     };
-    this.highlightLine.ontouchstart = function(evt) {
+    this.highlightLine.ontouchstart = function (evt) {
         self.touchStart(evt);
     };
 
-    this.thickLine.onmousedown = function(evt) {
+    this.thickLine.onmousedown = function (evt) {
         self.mouseDown(evt);
     };
-    this.thickLine.onmouseover = function(evt) {
+    this.thickLine.onmouseover = function (evt) {
         self.mouseOver(evt);
     };
-    this.thickLine.onmouseout = function(evt) {
+    this.thickLine.onmouseout = function (evt) {
         self.mouseOut(evt);
     };
-    this.thickLine.ontouchstart = function(evt) {
+    this.thickLine.ontouchstart = function (evt) {
         self.touchStart(evt);
     };
 };
-BinaryLink.prototype.showHighlight = function(show) {
+BinaryLink.prototype.showHighlight = function (show) {
     if (this.notSubLink === true) {
         this.highlightInteractors(show);
     }
@@ -130,7 +130,7 @@ BinaryLink.prototype.showHighlight = function(show) {
     }
 };
 
-BinaryLink.prototype.check = function() {
+BinaryLink.prototype.check = function () {
     if (!this.interactors[0].form && !this.interactors[1].form) { //checks if form not defined or is 0
         this.show();
         return true;
@@ -140,7 +140,7 @@ BinaryLink.prototype.check = function() {
     }
 };
 
-BinaryLink.prototype.show = function() {
+BinaryLink.prototype.show = function () {
     if (typeof this.line === 'undefined') {
         this.initSVG();
     }
@@ -158,7 +158,7 @@ BinaryLink.prototype.show = function() {
     }
 };
 
-BinaryLink.prototype.hide = function() {
+BinaryLink.prototype.hide = function () {
     this.thickLine.remove();
     this.highlightLine.remove();
     this.line.remove();
@@ -189,7 +189,7 @@ BinaryLink.prototype.hide = function() {
     // }
 };
 
-BinaryLink.prototype.setLinkCoordinates = function() {
+BinaryLink.prototype.setLinkCoordinates = function () {
     if (typeof this.line === 'undefined') {
         this.initSVG();
     }

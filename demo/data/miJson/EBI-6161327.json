@@ -1,129 +1,129 @@
 {
-    "data": [
-        {
-            "id": "uniprotkb_P02828",
-            "identifier": {
-                "db": "uniprotkb",
-                "id": "P02828"
-            },
-            "label": "hsp83_drome",
-            "object": "interactor",
-            "organism": {
-                "common": "drome",
-                "scientific": "Drosophila melanogaster (Fruit fly)",
-                "taxid": "7227"
-            },
-            "sequence": "MPEEAETFAFQAEIAQLMSLIINTFYSNKEIFLRELISNASDALDKIRYESLTDPSKLDSGKELYIKLIPNKTAGTLTIIDTGIGMTKSDLVNNLGTIAKSGTKAFMEALQAGADISMIGQFGVGFYSAYLVADKVTVTSKNNDDEQYVWESSAGGSFTVRADNSEPLGRGTKIVLYIKEDQTDYLEESKIKEIVNKHSQFIGYPIKLLVEKEREKEVSDDEADDEKKEGDEKKEMETDEPKIEDVGEDEDADKKDKDAKKKKTIKEKYTEDEELNKTKPIWTRNPDDISQEEYGEFYKSLTNDWEDHLAVKHFSVEGQLEFRALLFIPRRTPFDLFENQKKRNNIKLYVRRVFIMDNCEDLIPEYLNFMKGVVDSEDLPLNISREMLQQNKVLKVIRKNLVKKTMELIEELTEDKENYKKFYDQFSKNLKLGVHEDSNNRAKLADFLRFHTSASGDDFCSLADYVSRMKDNQKHVYFITGESKDQVSNSAFVERVKARGFEVVYMTEPIDEYVIQHLKEYKGKQLVSVTKEGLELPEDESEKKKREEDKAKFESLCKLMKSILDNKVEKVVVSNRLVDSPCCIVTSQFGWSANMERIMKAQALRDTATMGYMAGKKQLEINPDHPIVETLRQKADADKNDKAVKDLVILLFETSLLSSGFSLDSPQVHASRIYRMIKLGLGIDEDEPMTTDDAQSAGDAPSLVEDTEDASHMEEVD",
-            "type": {
-                "id": "MI:0326",
-                "name": "protein"
-            }
+  "data": [
+    {
+      "id": "uniprotkb_P02828",
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P02828"
+      },
+      "label": "hsp83_drome",
+      "object": "interactor",
+      "organism": {
+        "common": "drome",
+        "scientific": "Drosophila melanogaster (Fruit fly)",
+        "taxid": "7227"
+      },
+      "sequence": "MPEEAETFAFQAEIAQLMSLIINTFYSNKEIFLRELISNASDALDKIRYESLTDPSKLDSGKELYIKLIPNKTAGTLTIIDTGIGMTKSDLVNNLGTIAKSGTKAFMEALQAGADISMIGQFGVGFYSAYLVADKVTVTSKNNDDEQYVWESSAGGSFTVRADNSEPLGRGTKIVLYIKEDQTDYLEESKIKEIVNKHSQFIGYPIKLLVEKEREKEVSDDEADDEKKEGDEKKEMETDEPKIEDVGEDEDADKKDKDAKKKKTIKEKYTEDEELNKTKPIWTRNPDDISQEEYGEFYKSLTNDWEDHLAVKHFSVEGQLEFRALLFIPRRTPFDLFENQKKRNNIKLYVRRVFIMDNCEDLIPEYLNFMKGVVDSEDLPLNISREMLQQNKVLKVIRKNLVKKTMELIEELTEDKENYKKFYDQFSKNLKLGVHEDSNNRAKLADFLRFHTSASGDDFCSLADYVSRMKDNQKHVYFITGESKDQVSNSAFVERVKARGFEVVYMTEPIDEYVIQHLKEYKGKQLVSVTKEGLELPEDESEKKKREEDKAKFESLCKLMKSILDNKVEKVVVSNRLVDSPCCIVTSQFGWSANMERIMKAQALRDTATMGYMAGKKQLEINPDHPIVETLRQKADADKNDKAVKDLVILLFETSLLSSGFSLDSPQVHASRIYRMIKLGLGIDEDEPMTTDDAQSAGDAPSLVEDTEDASHMEEVD",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      }
+    },
+    {
+      "id": "ensemblgenomes_FBgn0001137",
+      "identifier": {
+        "db": "ensemblgenomes",
+        "id": "FBgn0001137"
+      },
+      "label": "grk_drome_gene",
+      "object": "interactor",
+      "organism": {
+        "common": "drome",
+        "scientific": "Drosophila melanogaster (Fruit fly)",
+        "taxid": "7227"
+      },
+      "type": {
+        "id": "MI:0250",
+        "name": "gene"
+      }
+    },
+    {
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0402",
+          "name": "chromatin immunoprecipitation assay"
         },
-        {
-            "id": "ensemblgenomes_FBgn0001137",
-            "identifier": {
-                "db": "ensemblgenomes",
-                "id": "FBgn0001137"
-            },
-            "label": "grk_drome_gene",
-            "object": "interactor",
-            "organism": {
-                "common": "drome",
-                "scientific": "Drosophila melanogaster (Fruit fly)",
-                "taxid": "7227"
-            },
-            "type": {
-                "id": "MI:0250",
-                "name": "gene"
-            }
+        "figures": [
+          "Table 1"
+        ],
+        "host": {
+          "common": "drome-schneider_2",
+          "scientific": "Drosophila melanogaster late embryo cells",
+          "taxid": "7227"
         },
-        {
-            "experiment": {
-                "detmethod": {
-                    "id": "MI:0402",
-                    "name": "chromatin immunoprecipitation assay"
-                },
-                "figures": [
-                    "Table 1"
-                ],
-                "host": {
-                    "common": "drome-schneider_2",
-                    "scientific": "Drosophila melanogaster late embryo cells",
-                    "taxid": "7227"
-                },
-                "pubid": [
-                    {
-                        "db": "intact",
-                        "id": "EBI-6141761"
-                    },
-                    {
-                        "db": "pubmed",
-                        "id": "22579285"
-                    },
-                    {
-                        "db": "imex",
-                        "id": "IM-17351"
-                    }
-                ],
-                "sourceDatabase": {
-                    "id": "MI:0469",
-                    "name": "European Bioinformatics Institute"
-                }
-            },
-            "id": "intact_EBI-6161327",
-            "identifiers": [
-                {
-                    "db": "intact",
-                    "id": "EBI-6161327"
-                },
-                {
-                    "db": "imex",
-                    "id": "IM-17351-28"
-                }
-            ],
-            "interactionType": {
-                "id": "MI:0914",
-                "name": "association"
-            },
-            "object": "interaction",
-            "participants": [
-                {
-                    "bioRole": {
-                        "id": "MI:0499",
-                        "name": "unspecified role"
-                    },
-                    "expRole": {
-                        "id": "MI:0496",
-                        "name": "bait"
-                    },
-                    "id": "1",
-                    "identificationMethods": [
-                        {
-                            "id": "MI:0078",
-                            "name": "nucleotide sequence identification"
-                        }
-                    ],
-                    "interactorRef": "uniprotkb_P02828"
-                },
-                {
-                    "bioRole": {
-                        "id": "MI:0499",
-                        "name": "unspecified role"
-                    },
-                    "expRole": {
-                        "id": "MI:0498",
-                        "name": "prey"
-                    },
-                    "id": "2",
-                    "identificationMethods": [
-                        {
-                            "id": "MI:0078",
-                            "name": "nucleotide sequence identification"
-                        }
-                    ],
-                    "interactorRef": "ensemblgenomes_FBgn0001137"
-                }
-            ]
+        "pubid": [
+          {
+            "db": "intact",
+            "id": "EBI-6141761"
+          },
+          {
+            "db": "pubmed",
+            "id": "22579285"
+          },
+          {
+            "db": "imex",
+            "id": "IM-17351"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0469",
+          "name": "European Bioinformatics Institute"
         }
-    ]
+      },
+      "id": "intact_EBI-6161327",
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-6161327"
+        },
+        {
+          "db": "imex",
+          "id": "IM-17351-28"
+        }
+      ],
+      "interactionType": {
+        "id": "MI:0914",
+        "name": "association"
+      },
+      "object": "interaction",
+      "participants": [
+        {
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0496",
+            "name": "bait"
+          },
+          "id": "1",
+          "identificationMethods": [
+            {
+              "id": "MI:0078",
+              "name": "nucleotide sequence identification"
+            }
+          ],
+          "interactorRef": "uniprotkb_P02828"
+        },
+        {
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "id": "2",
+          "identificationMethods": [
+            {
+              "id": "MI:0078",
+              "name": "nucleotide sequence identification"
+            }
+          ],
+          "interactorRef": "ensemblgenomes_FBgn0001137"
+        }
+      ]
+    }
+  ]
 }

@@ -87,7 +87,7 @@ function SequenceFeature(node, sequenceDatumString) {
     }
 }
 
-SequenceFeature.prototype.toString = function() {
+SequenceFeature.prototype.toString = function () {
     return this.sequenceDatumString;
 }
 //On 06/06/13 09:22, marine@ebi.ac.uk wrote:
