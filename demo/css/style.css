@@ -1,4 +1,4 @@
-@charset 'UTF-8';
+@charset "UTF-8";
 @import url("font-awesome.min.css");
 
 @font-face {
@@ -160,8 +160,7 @@ tbody tr:hover td, tbody tr:hover td a, .spectrumShown {
     transition: all .3s;
     cursor: pointer;
     float: right;
-    margin: 2px;
-    margin-right: 22px;
+    margin: 2px 22px 2px 2px;
 }
 
 .fa-times-circle:hover {
@@ -268,7 +267,7 @@ body, input, select, textarea, button {
 }
 
 #main .mainContent {
-    top: 0px;
+    top: 0;
     bottom: 65px;
     position: absolute;
 
@@ -336,7 +335,7 @@ body, input, select, textarea, button {
     height: 70%;
     position: absolute;
     top: 15%;
-    right: 0%;
+    right: 0;
 }
 
 .resize path {
@@ -362,12 +361,12 @@ body, input, select, textarea, button {
 
 #bottomDiv {
     background: rgba(9, 29, 66, 0.9);
-    padding: 0px 10px;
+    padding: 0 10px;
     position: relative; /* will overlay previous absolute divs i.e. distance slider */
 }
 
 .noMarg {
-    margin: 0px !important;
+    margin: 0 !important;
 }
 
 .dynDiv {
@@ -439,16 +438,10 @@ body, input, select, textarea, button {
 }
 
 .controls {
-    margin-top: 0px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    margin-left: 10px;
+    margin: 0px 10px 10px;
     background: #ecedf2;
     color: #091D42;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding: 5px 10px;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
@@ -530,9 +523,9 @@ body, input, select, textarea, button {
     padding: 1em;
     position: absolute;
     line-height: normal;
-    -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.5);
-    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 10px 10px 5px 0 rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 10px 10px 5px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 10px 10px 5px 0 rgba(0, 0, 0, 0.5);
     background: white;
 }
 
