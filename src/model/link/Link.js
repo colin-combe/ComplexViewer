@@ -8,15 +8,15 @@
 //
 //      Link.js
 //      The graphical representation of one or many interactions.
-//      One link represents all interactions with same particpants.
-//      E.g. psi-mi may conatins multiple experiments giving evidence for same interaction
+//      One link represents all interactions with same participants.
+//      E.g. psi-mi may contains multiple experiments giving evidence for same interaction
 //      - using one glyph to represent them all prevents uppermost graphic from occluding those lower down
 
 "use strict";
 
-var Config = require('../../controller/Config');
-
-var Link = function() {};
+const d3 = require('d3');
+const Link = function () {
+};
 Link.maxNoEvidences = 0;
 
 Link.prototype.addEvidence = function(interaction) {
@@ -36,8 +36,8 @@ Link.prototype.addEvidence = function(interaction) {
 };
 
 Link.prototype.highlightInteractors = function(show) {
-    var interactors = this.interactors;
-    for (var i = 0; i < interactors.length; i++) {
+    const interactors = this.interactors;
+    for (let i = 0; i < interactors.length; i++) {
         interactors[i].showHighlight(show);
     }
 }
@@ -53,7 +53,7 @@ Link.prototype.mouseDown = function(evt) {
     //this.controller.clearSelection();
     //this.setSelected(true);
     //store start location
-    var p = this.controller.getEventPoint(evt); // seems to be correct, see above
+    const p = this.controller.getEventPoint(evt); // seems to be correct, see above
     this.controller.dragStart = this.controller.mouseToSVG(p.x, p.y);
     //~ this.showData();
     return false;
@@ -89,7 +89,7 @@ Link.prototype.touchStart = function(evt) {
     this.controller.clearSelection();
     //    this.setSelected(true);
     //store start location
-    var p = this.controller.getTouchEventPoint(evt); // seems to be correct, see above
+    const p = this.controller.getTouchEventPoint(evt); // seems to be correct, see above
     this.controller.dragStart = this.controller.mouseToSVG(p.x, p.y);
     //~ this.showData();
     return false;
@@ -123,31 +123,34 @@ Link.prototype.filteredEvidence = function() {
 
 //used by BinaryLink and UnaryLink
 Link.prototype.hide = function() {
-    var p_pLinksWide = []
-    var highlights = []
-    var p_pLinks = []
-
-    for (var i = 0; i < this.controller.p_pLinksWide.childNodes.length; i++) {
-        p_pLinksWide[i] = this.controller.p_pLinksWide.childNodes[i];
-    }
-
-    for (var i = 0; i < this.controller.highlights.childNodes.length; i++) {
-        highlights[i] = this.controller.highlights.childNodes[i];
-    }
-
-    for (var i = 0; i < this.controller.p_pLinks.childNodes.length; i++) {
-        p_pLinks[i] = this.controller.p_pLinks.childNodes[i];
-    }
-
-    if (p_pLinksWide.indexOf(this.thickLine) > -1) {
-        this.controller.p_pLinksWide.removeChild(this.thickLine);
-    }
-    if (highlights.indexOf(this.highlightLine) > -1) {
-        this.controller.highlights.removeChild(this.highlightLine);
-    }
-    if (p_pLinks.indexOf(this.line) > -1) {
-        this.controller.p_pLinks.removeChild(this.line);
-    }
+    this.thickLine.remove()
+    this.highlightLine.remove()
+    this.line.remove()
+    // const p_pLinksWide = [];
+    // const highlights = [];
+    // const p_pLinks = [];
+    //
+    // for (var i = 0; i < this.controller.p_pLinksWide.childNodes.length; i++) {
+    //     p_pLinksWide[i] = this.controller.p_pLinksWide.childNodes[i];
+    // }
+    //
+    // for (var i = 0; i < this.controller.highlights.childNodes.length; i++) {
+    //     highlights[i] = this.controller.highlights.childNodes[i];
+    // }
+    //
+    // for (var i = 0; i < this.controller.p_pLinks.childNodes.length; i++) {
+    //     p_pLinks[i] = this.controller.p_pLinks.childNodes[i];
+    // }
+    //
+    // if (p_pLinksWide.indexOf(this.thickLine) > -1) {
+    //     this.controller.p_pLinksWide.removeChild(this.thickLine);
+    // }
+    // if (highlights.indexOf(this.highlightLine) > -1) {
+    //     this.controller.highlights.removeChild(this.highlightLine);
+    // }
+    // if (p_pLinks.indexOf(this.line) > -1) {
+    //     this.controller.p_pLinks.removeChild(this.line);
+    // }
 };
 
 module.exports = Link;

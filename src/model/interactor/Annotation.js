@@ -9,8 +9,8 @@
 "use strict";
 
 //constructor for annotations
-function Annotation(annotName, seqDatum) {
-    this.description = annotName.trim();
+function Annotation(annotationName, seqDatum) {
+    this.description = annotationName.trim();
     this.seqDatum = seqDatum;
 }
 

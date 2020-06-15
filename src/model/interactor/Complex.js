@@ -9,15 +9,14 @@
 //		authors: Colin Combe
 
 "use strict";
-
-var Interactor = require('./Interactor');
-var Config = require('../../controller/Config');
+const d3 = require('d3');
+const Interactor = require('./Interactor');
 
 Complex.prototype = new Interactor();
 
 function Complex(id, xlvController) {
     this.id = id;
-    this.ctrl = xlvController;
+    this.controller = xlvController;
     //links
     this.naryLinks = d3.map();
     this.binaryLinks = d3.map();
@@ -49,11 +48,11 @@ Complex.prototype.initInteractor = function(naryLink) {
 };
 
 Complex.prototype.getPosition = function() {
-    var mapped = this.naryLink.getMappedCoordinates();
-    var mc = mapped.length;
-    var xSum = 0,
+    const mapped = this.naryLink.getMappedCoordinates();
+    const mc = mapped.length;
+    let xSum = 0,
         ySum = 0;
-    for (var m = 0; m < mc; m++) {
+    for (let m = 0; m < mc; m++) {
         xSum += mapped[m][0];
         ySum += mapped[m][1];
     }

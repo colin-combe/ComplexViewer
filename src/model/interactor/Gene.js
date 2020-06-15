@@ -9,14 +9,14 @@
 //		authors: Colin Combe
 
 "use strict";
-
-var Interactor = require('./Interactor');
-var Config = require('../../controller/Config');
+const d3 = require('d3');
+const Interactor = require('./Interactor');
+const Config = require('../../controller/Config');
 
 Gene.prototype = new Interactor();
 
 function Gene(id, xlvController, json, name) {
-    this.id = id; // id may not be accession (multiple Segments with same accesssion)
+    this.id = id; // id may not be accession (multiple Segments with same accession)
     this.controller = xlvController;
     this.json = json;
     //links
@@ -24,9 +24,7 @@ function Gene(id, xlvController, json, name) {
     this.binaryLinks = d3.map();
     this.selfLink = null;
     this.sequenceLinks = d3.map();
-
     this.name = name;
-
     // layout info
     this.cx = 40;
     this.cy = 40;
@@ -56,13 +54,13 @@ function Gene(id, xlvController, json, name) {
     this.labelSVG = document.createElementNS(Config.svgns, "text");
     this.labelSVG.setAttribute("text-anchor", "end");
     this.labelSVG.setAttribute("fill", "black")
-    this.labelSVG.setAttribute("x", 0);
-    this.labelSVG.setAttribute("y", 10);
+    this.labelSVG.setAttribute("x", "0");
+    this.labelSVG.setAttribute("y", "10");
     this.labelSVG.setAttribute("class", "xlv_text proteinLabel");
     this.labelSVG.setAttribute('font-family', 'Arial');
     this.labelSVG.setAttribute('font-size', '16');
     //choose label text
-    if (this.name !== null & this.name !== "") {
+    if (this.name !== null && this.name !== "") {
         this.labelText = this.name;
     } else {
         this.labelText = this.id;
@@ -75,11 +73,11 @@ function Gene(id, xlvController, json, name) {
     d3.select(this.labelSVG).attr("transform",
         "translate( -" + (21) + " " + Interactor.labelY + ") rotate(0) scale(1, 1)");
     this.upperGroup.appendChild(this.labelSVG);
-    //ticks (and animo acid letters)
+    //ticks (and amino acid letters)
     this.ticks = document.createElementNS(Config.svgns, "g");
     //annotation svg group
     this.annotationsSvgGroup = document.createElementNS(Config.svgns, "g");
-    this.annotationsSvgGroup.setAttribute("opacity", 1);
+    this.annotationsSvgGroup.setAttribute("opacity", "1");
     this.upperGroup.appendChild(this.annotationsSvgGroup);
 
     //make outline
@@ -102,10 +100,10 @@ function Gene(id, xlvController, json, name) {
         .attr("width", 32).attr("height", 16)
         .attr("rx", 6).attr("ry", 6);
 
-    this.scaleLabels = new Array();
+    this.scaleLabels = [];
 
     // events
-    var self = this;
+    const self = this;
     //    this.upperGroup.setAttribute('pointer-events','all');
     this.upperGroup.onmousedown = function(evt) {
         self.mouseDown(evt);
@@ -121,6 +119,6 @@ function Gene(id, xlvController, json, name) {
     };
 
     this.showHighlight(false);
-};
+}
 
 module.exports = Gene;

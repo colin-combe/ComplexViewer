@@ -11,13 +11,12 @@
 
 "use strict";
 
-var colorbrewer = require('colorbrewer');
-var Link = require('./Link');
-var Config = require('../../controller/Config');
-var Interactor = require('../interactor/Interactor');
-var d3 = require('d3');
+const d3 = require('d3');
+const Link = require('./Link');
+const Config = require('../../controller/Config');
+const Interactor = require('../interactor/Interactor');
 
-NaryLink.naryColours; // init'ed in clear function of controller
+//NaryLink.naryColours; // init'ed in clear function of controller
 NaryLink.orbitNodes = 16;
 NaryLink.orbitRadius = 20;
 
@@ -26,7 +25,7 @@ NaryLink.prototype = new Link();
 function NaryLink(id, xlvController) {
     this.id = id;
     this.evidences = d3.map();
-    this.interactors = new Array(); // todo: rename to participants
+    this.interactors = []; // todo: rename to participants
     this.sequenceLinks = d3.map();
     this.binaryLinks = d3.map();
     this.unaryLinks = d3.map();
@@ -37,12 +36,12 @@ function NaryLink(id, xlvController) {
 }
 
 NaryLink.prototype.getTotalParticipantCount = function() {
-    var result = 0;
-    var c = this.interactors.length;
-    for (var p = 0; p < c; p++) {
-        var participant = this.interactors[p];
+    let result = 0;
+    const c = this.interactors.length;
+    for (let p = 0; p < c; p++) {
+        const participant = this.interactors[p];
         //console.log("! " + typeof participant);
-        if (participant.type != "complex") {
+        if (participant.type !== "complex") {
             result++;
         } else {
             result = result + participant.naryLink.getTotalParticipantCount();
@@ -56,7 +55,7 @@ NaryLink.prototype.initSVG = function() {
     this.colour = NaryLink.naryColours(this.id);
     this.path.setAttribute('fill', this.colour);
     //set the events for it
-    var self = this;
+    const self = this;
     this.path.onmousedown = function(evt) {
         self.mouseDown(evt);
     };
@@ -90,14 +89,14 @@ NaryLink.prototype.hide = function() {};
 
 NaryLink.prototype.setLinkCoordinates = function() {
     // Uses d3.geom.hull to calculate a bounding path around an array of vertices
-    var calculateHullPath = function(values) {
-        var calced = d3.geom.hull(values);
-        self.hull = calced; //hack?
-        return "M" + calced.join("L") + "Z";
+    const calculateHullPath = function (values) {
+        const hullPath = d3.geom.hull(values);
+        self.hull = hullPath; //hack?
+        return "M" + hullPath.join("L") + "Z";
     };
-    var self = this; // TODO: - tidy hack above?
-    var mapped = this.orbitNodes(this.getMappedCoordinates());
-    var hullValues = calculateHullPath(mapped);
+    const self = this; // TODO: - tidy hack above?
+    const mapped = this.orbitNodes(this.getMappedCoordinates());
+    const hullValues = calculateHullPath(mapped);
     if (hullValues) {
         this.path.setAttribute('d', hullValues);
     }
@@ -107,16 +106,16 @@ NaryLink.prototype.setLinkCoordinates = function() {
 };
 
 NaryLink.prototype.getMappedCoordinates = function() {
-    var interactors = this.interactors;
-    var mapped = new Array();
-    var ic = interactors.length;
-    for (var i = 0; i < ic; i++) {
-        var interactor = interactors[i];
-        if (interactor.type == 'complex') {
+    const interactors = this.interactors;
+    let mapped = [];
+    const ic = interactors.length;
+    for (let i = 0; i < ic; i++) {
+        const interactor = interactors[i];
+        if (interactor.type === 'complex') {
             mapped = mapped.concat(this.orbitNodes(interactor.naryLink.getMappedCoordinates()));
         } else if (interactor.form === 1) {
-            var start = interactor.getResidueCoordinates(0);
-            var end = interactor.getResidueCoordinates(interactor.size);
+            const start = interactor.getResidueCoordinates(0);
+            const end = interactor.getResidueCoordinates(interactor.size);
             if (!isNaN(start[0]) && !isNaN(start[1]) &&
                 !isNaN(end[0]) && !isNaN(end[1])) {
                 mapped.push(start);
@@ -133,13 +132,13 @@ NaryLink.prototype.getMappedCoordinates = function() {
 
 //'orbit' nodes - several nodes around interactor positions to give margin
 NaryLink.prototype.orbitNodes = function(mapped) {
-    var orbitNodes = new Array();
-    var mc = mapped.length;
-    for (var mi = 0; mi < mc; mi++) {
-        var m = mapped[mi];
-        for (var o = 0; o < NaryLink.orbitNodes; o++) {
-            var angle = (360 / NaryLink.orbitNodes) * o;
-            var p = [m[0] + NaryLink.orbitRadius, m[1]];
+    const orbitNodes = [];
+    const mc = mapped.length;
+    for (let mi = 0; mi < mc; mi++) {
+        const m = mapped[mi];
+        for (let o = 0; o < NaryLink.orbitNodes; o++) {
+            const angle = (360 / NaryLink.orbitNodes) * o;
+            const p = [m[0] + NaryLink.orbitRadius, m[1]];
             orbitNodes.push(Interactor.rotatePointAboutPoint(p, m, angle));
         }
     }

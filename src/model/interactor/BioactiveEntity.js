@@ -9,14 +9,14 @@
 //		authors: Colin Combe
 
 "use strict";
-
-var Interactor = require('./Interactor');
-var Config = require('../../controller/Config');
+const d3 = require('d3');
+const Interactor = require('./Interactor');
+const Config = require('../../controller/Config');
 
 BioactiveEntity.prototype = new Interactor();
 
 function BioactiveEntity(id, xlvController, json, name) {
-    this.id = id; // id may not be accession (multiple Segments with same accesssion)
+    this.id = id; // id may not be accession (multiple Segments with same accession)
     this.controller = xlvController;
     this.json = json;
     //links
@@ -24,7 +24,6 @@ function BioactiveEntity(id, xlvController, json, name) {
     this.binaryLinks = d3.map();
     this.selfLink = null;
     this.sequenceLinks = d3.map();
-
     this.name = name;
     // layout info
     this.cx = 40;
@@ -39,7 +38,7 @@ function BioactiveEntity(id, xlvController, json, name) {
     //~ this.upperGroup.setAttribute("class", "protein upperGroup");
 
     //for polygon
-    var points = "0, -10  8.66,5 -8.66,5";
+    const points = "0, -10  8.66,5 -8.66,5";
     //make highlight
     this.highlight = document.createElementNS(Config.svgns, "polygon");
     this.highlight.setAttribute("points", points);
@@ -54,8 +53,8 @@ function BioactiveEntity(id, xlvController, json, name) {
     this.labelSVG = document.createElementNS(Config.svgns, "text");
     this.labelSVG.setAttribute("text-anchor", "end");
     this.labelSVG.setAttribute("fill", "black")
-    this.labelSVG.setAttribute("x", 0);
-    this.labelSVG.setAttribute("y", 10);
+    this.labelSVG.setAttribute("x", "0");
+    this.labelSVG.setAttribute("y", "10");
     this.labelSVG.setAttribute("class", "xlv_text proteinLabel");
     this.labelSVG.setAttribute('font-family', 'Arial');
     this.labelSVG.setAttribute('font-size', '16');
@@ -79,7 +78,7 @@ function BioactiveEntity(id, xlvController, json, name) {
     this.upperGroup.appendChild(this.outline);
 
     // events
-    var self = this;
+    const self = this;
     //    this.upperGroup.setAttribute('pointer-events','all');
     this.upperGroup.onmousedown = function(evt) {
         self.mouseDown(evt);
@@ -94,12 +93,13 @@ function BioactiveEntity(id, xlvController, json, name) {
     this.upperGroup.ontouchstart = function(evt) {
         self.touchStart(evt);
     };
-};
-
-BioactiveEntity.prototype.showData = function(evt) {
-    var url = "https://www.ebi.ac.uk/chebi/searchId.do;?chebiId=" + this.json.identifier.id;
-    //~ alert (url);
-    var win = window.open(url, '_blank');
-    //~ win.focus();
 }
+
+/*
+BioactiveEntity.prototype.showData = function() {
+    const url = "https://www.ebi.ac.uk/chebi/searchId.do;?chebiId=" + this.json.identifier.id;
+    window.open(url, '_blank');
+}
+*/
+
 module.exports = BioactiveEntity;

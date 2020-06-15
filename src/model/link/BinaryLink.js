@@ -6,13 +6,12 @@
 
 "use strict";
 
-var Config = require('../../controller/Config');
-var Link = require('./Link');
-var SequenceLink = require('./SequenceLink');
-//josh - following are libraries and should be in 'vendor'?
-//  but I don't know how to set up the dependency if its there
-var Intersection = require('intersectionjs');
-var Point2D = require('point2d');
+
+const d3 = require('d3');
+const Config = require('../../controller/Config');
+const Link = require('./Link');
+const Intersection = require('intersectionjs');
+const Point2D = require('point2d');
 
 // BinaryLink.js
 // the class representing a binary interaction
@@ -76,7 +75,7 @@ BinaryLink.prototype.initSVG = function() {
     this.thickLine.setAttribute("stroke-linecap", "round");
     this.thickLine.setAttribute("stroke-linejoin", "round");
     //set the events for it
-    var self = this;
+    const self = this;
     this.line.onmousedown = function(evt) {
         self.mouseDown(evt);
     };
@@ -115,8 +114,6 @@ BinaryLink.prototype.initSVG = function() {
     this.thickLine.ontouchstart = function(evt) {
         self.touchStart(evt);
     };
-
-    this.isSelected = false;
 };
 BinaryLink.prototype.showHighlight = function(show) {
     if (this.notSubLink === true) {
@@ -162,51 +159,53 @@ BinaryLink.prototype.show = function() {
 };
 
 BinaryLink.prototype.hide = function() {
-    var p_pLinksWide = []
-    var highlights = []
-    var p_pLinks = []
-
-    for (var i = 0; i < this.controller.p_pLinksWide.childNodes.length; i++) {
-        p_pLinksWide[i] = this.controller.p_pLinksWide.childNodes[i];
-    }
-
-    for (var i = 0; i < this.controller.highlights.childNodes.length; i++) {
-        highlights[i] = this.controller.highlights.childNodes[i];
-    }
-
-    for (var i = 0; i < this.controller.p_pLinks.childNodes.length; i++) {
-        p_pLinks[i] = this.controller.p_pLinks.childNodes[i];
-    }
-
-    if (p_pLinksWide.indexOf(this.thickLine) > -1) {
-        this.controller.p_pLinksWide.removeChild(this.thickLine);
-    }
-    if (highlights.indexOf(this.highlightLine) > -1) {
-        this.controller.highlights.removeChild(this.highlightLine);
-    }
-    if (p_pLinks.indexOf(this.line) > -1) {
-        this.controller.p_pLinks.removeChild(this.line);
-    }
+    this.thickLine.remove();
+    this.highlightLine.remove();
+    this.line.remove();
+    // const p_pLinksWide = [];
+    // const highlights = [];
+    // const p_pLinks = [];
+    //
+    // for (var i = 0; i < this.controller.p_pLinksWide.childNodes.length; i++) {
+    //     p_pLinksWide[i] = this.controller.p_pLinksWide.childNodes[i];
+    // }
+    //
+    // for (var i = 0; i < this.controller.highlights.childNodes.length; i++) {
+    //     highlights[i] = this.controller.highlights.childNodes[i];
+    // }
+    //
+    // for (var i = 0; i < this.controller.p_pLinks.childNodes.length; i++) {
+    //     p_pLinks[i] = this.controller.p_pLinks.childNodes[i];
+    // }
+    //
+    // if (p_pLinksWide.indexOf(this.thickLine) > -1) {
+    //     this.controller.p_pLinksWide.removeChild(this.thickLine);
+    // }
+    // if (highlights.indexOf(this.highlightLine) > -1) {
+    //     this.controller.highlights.removeChild(this.highlightLine);
+    // }
+    // if (p_pLinks.indexOf(this.line) > -1) {
+    //     this.controller.p_pLinks.removeChild(this.line);
+    // }
 };
 
 BinaryLink.prototype.setLinkCoordinates = function() {
     if (typeof this.line === 'undefined') {
         this.initSVG();
     }
-    var pos1 = this.interactors[0].getPosition();
-    var pos2 = this.interactors[1].getPosition();
+    let pos1 = this.interactors[0].getPosition();
+    let pos2 = this.interactors[1].getPosition();
 
+    let naryPath, iPath, a1, a2, intersect;
     if (this.interactors[0].type === 'complex') {
-        var naryPath = this.interactors[0].naryLink.hull;
-        var iPath = new Array();
-        for (var pi = 0; pi < naryPath.length; pi++) {
-            var p = naryPath[pi];
+        naryPath = this.interactors[0].naryLink.hull;
+        iPath = [];
+        for (let p of naryPath) {
             iPath.push(new Point2D(p[0], p[1]));
         }
-        var a1 = new Point2D(pos1[0], pos1[1]);
-        var a2 = new Point2D(pos2[0], pos2[1]);
-        var intersect = Intersection.intersectLinePolygon(a1, a2, iPath);
-        var newPos;
+        a1 = new Point2D(pos1[0], pos1[1]);
+        a2 = new Point2D(pos2[0], pos2[1]);
+        intersect = Intersection.intersectLinePolygon(a1, a2, iPath);
         if (intersect.points[0]) {
             pos1 = [intersect.points[0].x, intersect.points[0].y];
         }
@@ -217,16 +216,14 @@ BinaryLink.prototype.setLinkCoordinates = function() {
     }
 
     if (this.interactors[1].type === 'complex') {
-        var naryPath = this.interactors[0].naryLink.hull;
-        var iPath = new Array();
-        for (var pi = 0; pi < naryPath.length; pi++) {
-            var p = naryPath[pi];
+        naryPath = this.interactors[0].naryLink.hull;
+        iPath = [];
+        for (let p of naryPath) {
             iPath.push(new Point2D(p[0], p[1]));
         }
-        var a1 = new Point2D(pos1[0], pos1[1]);
-        var a2 = new Point2D(pos2[0], pos2[1]);
-        var intersect = Intersection.intersectLinePolygon(a1, a2, iPath);
-        var newPos;
+        a1 = new Point2D(pos1[0], pos1[1]);
+        a2 = new Point2D(pos2[0], pos2[1]);
+        intersect = Intersection.intersectLinePolygon(a1, a2, iPath);
         if (intersect.points[0]) {
             pos2 = [intersect.points[0].x, intersect.points[0].y];
         }
@@ -252,8 +249,10 @@ BinaryLink.prototype.setLinkCoordinates = function() {
     }
 };
 
+/*
 BinaryLink.prototype.getOtherEnd = function(interactor) {
     return ((this.interactors[0] === interactor) ? this.interactors[1] : this.interactors[0]);
 };
+*/
 
 module.exports = BinaryLink;

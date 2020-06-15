@@ -6,7 +6,7 @@
 
 "use strict";
 
-/* construtor parameter sequenceDatumString is string with following format:
+/* constructor parameter sequenceDatumString is string with following format:
  *
  *              "?-?" = unknown
  *              "n-n" = n-terminal range (to be represented as link to box beside n terminal)
@@ -23,29 +23,29 @@ function SequenceFeature(node, sequenceDatumString) {
     this.node = node; //todo: rename to participant
     this.sequenceDatumString = sequenceDatumString.trim();
 
-    if (this.sequenceDatumString == "?-?") {
+    if (this.sequenceDatumString === "?-?") {
         this.begin = 0;
         this.end = 0;
         this.uncertainEnd = node.size;
-    } else if (this.sequenceDatumString == "n-n") {
+    } else if (this.sequenceDatumString === "n-n") {
         this.uncertainBegin = "n-n";
         this.begin = 0;
         this.end = 0;
         node.nTerminusFeature = true;
-    } else if (this.sequenceDatumString == "c-c") {
+    } else if (this.sequenceDatumString === "c-c") {
         this.begin = node.size + 1;
         this.end = node.size + 1;
         this.uncertainEnd = "c-c";//node.size + 21;
     } else {
 
-        var dashPosition = sequenceDatumString.indexOf('-');
-        var firstPart = sequenceDatumString.substring(0, dashPosition);
-        var secondPart = sequenceDatumString.substring(dashPosition + 1);
-
+        const dashPosition = sequenceDatumString.indexOf('-');
+        const firstPart = sequenceDatumString.substring(0, dashPosition);
+        const secondPart = sequenceDatumString.substring(dashPosition + 1);
+        let firstDotPosition;
         if (firstPart.indexOf('.') === -1) {
             this.begin = firstPart;
         } else {
-            var firstDotPosition = firstPart.indexOf('.');
+            firstDotPosition = firstPart.indexOf('.');
             this.uncertainBegin = firstPart.substring(0, firstDotPosition) * 1;
             this.begin = firstPart.substring(firstDotPosition + 2) * 1;
         }
@@ -53,18 +53,18 @@ function SequenceFeature(node, sequenceDatumString) {
         if (secondPart.indexOf('.') === -1) {
             this.end = secondPart;
         } else {
-            var firstDotPosition = secondPart.indexOf('.');
+            firstDotPosition = secondPart.indexOf('.');
             this.end = secondPart.substring(0, firstDotPosition) * 1;
             this.uncertainEnd = secondPart.substring(firstDotPosition + 2) * 1;
         }
 
-        if (this.begin == 'n') {
+        if (this.begin === 'n') {
             this.uncertainBegin = 0;
             this.begin = this.end;
             this.uncertainEnd = this.end;
         }
 
-        if (this.end == 'c') {
+        if (this.end === 'c') {
             this.uncertainEnd = node.size;
             this.end = this.begin;
             this.uncertainBegin = this.begin;
@@ -105,7 +105,7 @@ SequenceFeature.prototype.toString = function() {
 //> position (residue at interactor.sequence.length). We always use '-' to
 //> separate the start position from the end position so c-c means that the
 //> start and end positions of a feature are unknown but are bot in the
-//> C-terminal poriton of the sequence.
+//> C-terminal portion of the sequence.
 //>
 //> You will never have "123" = specific residue but rather "123-123" =
 //> specific residue which means the start and the end of the feature are

@@ -10,7 +10,7 @@
 
 "use strict";
 
-const xiNET = {}; //crosslinkviewer's javascript namespace
+const xiNET = {};
 const d3 = require('d3');
 const colorbrewer = require('colorbrewer');
 const cola = require('webcola');
@@ -75,7 +75,7 @@ xiNET.Controller = function(targetDiv, debug) {
         .append("label");
     scaleButtons.append("span")
         .text(function(d) {
-            if (d == 8) return "AA";
+            if (d === 8) return "AA";
             else return d;
         });
     scaleButtons.append("input")
@@ -92,9 +92,9 @@ xiNET.Controller = function(targetDiv, debug) {
 
     const contextMenu = d3.select(".custom-menu-margin").node();
     contextMenu.onmouseout = function(evt) {
-        let e = evt.toElement || evt.relatedTarget;
+        let e = evt.relatedTarget;
         do {
-            if (e == this) return;
+            if (e === this) return;
             e = e.parentNode;
         } while (e);
         self.contextMenuProt = null;
@@ -120,7 +120,7 @@ xiNET.Controller = function(targetDiv, debug) {
         self.hideTooltip(evt);
     };
     this.lastMouseUp = new Date().getTime();
-    this.svgElement.ontouchstart = function(evt) {
+    /*this.svgElement.ontouchstart = function(evt) {
         self.touchStart(evt);
     };
     this.svgElement.ontouchmove = function(evt) {
@@ -129,20 +129,17 @@ xiNET.Controller = function(targetDiv, debug) {
     this.svgElement.ontouchend = function(evt) {
         self.touchEnd(evt);
     };
-
+    */
     this.el.oncontextmenu = function(evt) {
         if (evt.preventDefault) { // necessary for addEventListener, works with traditional
             evt.preventDefault();
-        }
-        if (evt.stopPropogation) {
-            evt.stopPropagation();
         }
         evt.returnValue = false; // necessary for attachEvent, works with traditional
         return false; // works with traditional, not with attachEvent or addEventListener
     };
 
     //legend changed callbacks
-    this.legendCallbacks = new Array();
+    this.legendCallbacks = [];
 
     this.el.appendChild(this.svgElement);
 
@@ -193,7 +190,7 @@ xiNET.Controller = function(targetDiv, debug) {
 
     this.acknowledgement = document.createElementNS(Config.svgns, "g");
     const ackText = document.createElementNS(Config.svgns, "text");
-    ackText.innerHTML = "<a xlink:href='https://academic.oup.com/bioinformatics/article/33/22/3673/4061280' target='_blank'><tspan x='0' dy='1.2em' style='text-decoration: underline'>ComplexViewer</tspan></a><tspan x='0' dy='1.2em'>by <a xlink:href='http://rappsilberlab.org/' target='_blank'>Rappsilber Laboratory</a></tspan>"
+    ackText.innerHTML = "<a href='https://academic.oup.com/bioinformatics/article/33/22/3673/4061280' target='_blank'><tspan x='0' dy='1.2em' style='text-decoration: underline'>ComplexViewer</tspan></a><tspan x='0' dy='1.2em'>by <a href='http://rappsilberlab.org/' target='_blank'>Rappsilber Laboratory</a></tspan>"
 
     this.acknowledgement.appendChild(ackText);
     ackText.setAttribute("font-size", "12px");
@@ -317,7 +314,7 @@ xiNET.Controller.prototype.clear = function() {
     d3.select(this.proteinUpper).selectAll("*").remove();
     d3.select(this.selfRes_resLinks).selectAll("*").remove();
 
-    // if we are dragging something at the moment - this will be the element that is draged
+    // if we are dragging something at the moment - this will be the element that is dragged
     this.dragElement = null;
     // from where did we start dragging
     this.dragStart = {};
@@ -334,9 +331,6 @@ xiNET.Controller.prototype.clear = function() {
     // Interactor.MAXSIZE = 100;
 
     this.z = 1;
-    this.scores = null;
-    this.selected = d3.map();
-    this.selectedLinks = d3.map();
 
     this.hideTooltip();
 
@@ -371,14 +365,13 @@ xiNET.Controller.prototype.init = function() {
             return d;
         }).left;
         const pos = bisect(myList, myNumber);
-        if (pos == 0 || pos == 1) {
+        if (pos === 0 || pos === 1) {
             return myList[1]; // don't return smallest scale as default
         }
-        if (pos == myList.length) {
+        if (pos === myList.length) {
             return myList[myList.length - 1]
         }
-        const before = myList[pos - 1];
-        return before;
+        return myList[pos - 1];
     }
 
     this.defaultBarScale = takeClosest(this.barScales, defaultPixPerRes);
@@ -393,7 +386,7 @@ xiNET.Controller.prototype.init = function() {
     for (let participant of this.molecules.values()) {
         if (participant.upperGroup) {
             this.proteinUpper.appendChild(participant.upperGroup);
-            if (participant.json.type.name == "protein") {
+            if (participant.json.type.name === "protein") {
                 participant.stickZoom = this.defaultBarScale;
                 participant.init();
             }
@@ -402,7 +395,7 @@ xiNET.Controller.prototype.init = function() {
 
     if (this.molecules.size < 4) {
         for (let participant of this.molecules.values()) {
-            if (participant.json.type.name == "protein") {
+            if (participant.json.type.name === "protein") {
                 participant.toStickNoTransition()
             }
         }
@@ -515,7 +508,7 @@ xiNET.Controller.prototype.setAnnotations = function(annotationChoice) {
             if (mol.annotations) {
                 for (let anno of mol.annotations) {
                     let colour;
-                    if (anno.description == "No annotations") {
+                    if (anno.description === "No annotations") {
                         colour = "#cccccc";
                     } else {
                         colour = colourScheme(anno.description);
@@ -573,9 +566,7 @@ xiNET.Controller.prototype.mouseMove = function(evt) {
             let ox, oy, nx, ny;
             if (typeof this.dragElement.cx === 'undefined') { // if not an Interactor
                 const nodes = this.dragElement.interactors;
-                const nodeCount = nodes.length;
-                for (var i = 0; i < nodeCount; i++) {
-                    const protein = nodes[i];
+                for (let protein of nodes) {
                     ox = protein.cx;
                     oy = protein.cy;
                     nx = ox - dx;
@@ -583,8 +574,8 @@ xiNET.Controller.prototype.mouseMove = function(evt) {
                     protein.setPosition(nx, ny);
                     protein.setAllLinkCoordinates();
                 }
-                for (i = 0; i < nodeCount; i++) {
-                    nodes[i].setAllLinkCoordinates();
+                for (let node of nodes) {
+                    node.setAllLinkCoordinates();
                 }
             } else {
                 //its a protein - drag it TODO: DRAG SELECTED
@@ -636,7 +627,6 @@ xiNET.Controller.prototype.mouseUp = function(evt) {
     }
 
     this.dragElement = null;
-    this.whichRotator = -1;
     this.state = this.STATES.MOUSE_UP;
 
     this.lastMouseUp = time;
@@ -803,7 +793,7 @@ xiNET.Controller.prototype.autoLayout = function() {
     const self = this;
     let nodes = Array.from(this.molecules.values());
     nodes = nodes.filter(function(value) {
-        return value.type != "complex"
+        return value.type !== "complex"
     });
     const nodeCount = nodes.length;
 
@@ -813,8 +803,7 @@ xiNET.Controller.prototype.autoLayout = function() {
 
     const molLookUp = {};
     let mi = 0;
-    for (var n = 0; n < nodeCount; n++) {
-        const mol = nodes[n];
+    for (let mol of nodes) {
         molLookUp[mol.id] = mi;
         mi++;
     }
@@ -828,7 +817,7 @@ xiNET.Controller.prototype.autoLayout = function() {
         const source = fromMol; //molLookUp[fromMol.id];
         const target = toMol; //molLookUp[toMol.id];
 
-        if (source !== target && nodes.indexOf(source) != -1 && nodes.indexOf(target) != -1) {
+        if (source !== target && nodes.indexOf(source) !== -1 && nodes.indexOf(target) !== -1) {
 
             if (typeof source !== 'undefined' && typeof target !== 'undefined') {
                 const linkObj = {};
@@ -849,7 +838,7 @@ xiNET.Controller.prototype.autoLayout = function() {
             g.leaves = [];
             g.groups = [];
             for (let interactor of g.naryLink.interactors) {
-                if (interactor.type != "complex") {
+                if (interactor.type !== "complex") {
                     g.leaves.push(layoutObj.nodes.indexOf(interactor));
                 }
             }
@@ -857,7 +846,7 @@ xiNET.Controller.prototype.autoLayout = function() {
         }
         for (let g of this.complexes) {
             for (let interactor of g.naryLink.interactors) {
-                if (interactor.type == "complex") {
+                if (interactor.type === "complex") {
                     g.groups.push(groups.indexOf(interactor));
                 }
             }
@@ -871,9 +860,9 @@ xiNET.Controller.prototype.autoLayout = function() {
     delete this.d3cola._rootGroup;
 
     this.d3cola.nodes(layoutObj.nodes).groups(groups).links(layoutObj.links).avoidOverlaps(true);
-
+    let groupDebugSel, participantDebugSel;
     if (self.debug) {
-        var groupDebugSel = d3.select(this.svgElement).selectAll('.group')
+        groupDebugSel = d3.select(this.svgElement).selectAll('.group')
             .data(groups);
 
         groupDebugSel.enter().append('rect')
@@ -885,7 +874,7 @@ xiNET.Controller.prototype.autoLayout = function() {
             .style('stroke', "blue")
             .style('fill', "none");
 
-        var participantDebugSel = d3.select(this.svgElement).selectAll('.node')
+        participantDebugSel = d3.select(this.svgElement).selectAll('.node')
             .data(layoutObj.nodes);
 
         participantDebugSel.enter().append('rect')
@@ -978,7 +967,6 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
     if (typeof expand === 'undefined') {
         expand = true;
     }
-    this.expand = expand; //naryLink checks this when deciding colour
     const data = miJson.data;
     const self = this;
     self.features = d3.map();
@@ -1027,9 +1015,9 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
                                 if (expand) {
                                     nodeId = nodeId + '(' + seqData.participantRef + ')';
                                 }
-                                var toSequenceData = toSequenceData_indexedByNodeId.get(nodeId);
+                                let toSequenceData = toSequenceData_indexedByNodeId.get(nodeId);
                                 if (typeof toSequenceData === 'undefined') {
-                                    toSequenceData = new Array();
+                                    toSequenceData = [];
                                     toSequenceData_indexedByNodeId.set(nodeId, toSequenceData);
                                 }
                                 toSequenceData = toSequenceData.push(seqData)
@@ -1038,13 +1026,13 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
                             for (let toSequenceData of toSequenceData_indexedByNodeId.values()) {
                                 const fromInteractor = getNode(fromSequenceData[0]);
                                 const toInteractor = getNode(toSequenceData[0]);
-                                var link;
+                                let link;
                                 if (fromInteractor === toInteractor) {
                                     link = getUnaryLink(fromInteractor, datum);
                                 } else {
                                     link = getBinaryLink(fromInteractor, toInteractor, datum);
                                 }
-                                var sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, datum);
+                                const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, datum);
                                 fromInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
                                 toInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
                                 link.sequenceLinks.set(sequenceLink.id, sequenceLink);
@@ -1068,15 +1056,14 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
         } else {
             interactionId = complex.id;
         }
-        let naryLink;
         for (let datum of data) {
-            if (datum.object == "interaction" && datum.id == interactionId) {
+            if (datum.object === "interaction" && datum.id === interactionId) {
                 const nLinkId = getNaryLinkIdFromInteraction(datum);
-                naryLink = self.allNaryLinks.get(nLinkId);
+                const naryLink = self.allNaryLinks.get(nLinkId);
+                complex.initInteractor(naryLink);
+                naryLink.complex = complex;
             }
         }
-        complex.initInteractor(naryLink);
-        naryLink.complex = complex;
     }
 
     //make mi features into annotations
@@ -1101,7 +1088,7 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
                 const seqFeature = new SequenceFeature(molecule, seqDatum.pos)
                 const annotation = new Annotation(annotName, seqFeature);
                 if (molecule.miFeatures == null) {
-                    molecule.miFeatures = new Array();
+                    molecule.miFeatures = [];
                 }
                 molecule.miFeatures.push(annotation);
             }
@@ -1162,8 +1149,8 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
                         nLink.interactors.push(participant);
                     }
 
-                    if (jsonParticipant.stoichiometry && jsonParticipant.stoichiometry !== null) {
-                        var interactor = self.molecules.get(participantId);
+                    if (jsonParticipant.stoichiometry) {
+                        const interactor = self.molecules.get(participantId);
                         interactor.addStoichiometryLabel(jsonParticipant.stoichiometry);
                     }
                 }
@@ -1179,7 +1166,7 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
 
             let interactionExists = false;
             for (let datum of data) {
-                if (datum.object == "interaction" && datum.id == interactorRef) {
+                if (datum.object === "interaction" && datum.id === interactorRef) {
                     interactionExists = true;
                     break;
                 }
@@ -1343,7 +1330,7 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
                     //temp - to give sensible info when stoich collapsed
                     const interactor = self.molecules.get(intRef);
                     interactor.stoich = interactor.stoich ? interactor.stoich : 0;
-                    if (jsonParticipant.stoichiometry && jsonParticipant.stoichiometry !== null) {
+                    if (jsonParticipant.stoichiometry) {
                         interactor.stoich = interactor.stoich + +jsonParticipant.stoichiometry;
                     } else {
                         interactor.stoich = interactor.stoich + 1;
@@ -1421,15 +1408,13 @@ xiNET.Controller.prototype.readMIJSON = function(miJson, expand) {
         }
         let sequenceLink = self.allSequenceLinks.get(seqLinkId);
         if (typeof sequenceLink === 'undefined') {
-            const fromFeaturePositions = new Array();
-            let seqDatumCount = fromSeqData.length;
-            for (var i = 0; i < seqDatumCount; i++) {
-                fromFeaturePositions.push(new SequenceFeature(getNode(fromSeqData[i]), fromSeqData[i].pos));
+            const fromFeaturePositions = [];
+            for (let fromSeqDatum of fromSeqData) {
+                fromFeaturePositions.push(new SequenceFeature(getNode(fromSeqDatum), fromSeqDatum.pos));
             }
-            const toFeaturePositions = new Array();
-            seqDatumCount = toSeqData.length;
-            for (i = 0; i < seqDatumCount; i++) {
-                toFeaturePositions.push(new SequenceFeature(getNode(toSeqData[i]), toSeqData[i].pos));
+            const toFeaturePositions = [];
+            for (let toSeqDatum of toSeqData) {
+                toFeaturePositions.push(new SequenceFeature(getNode(toSeqDatum), toSeqDatum.pos));
             }
             //~ if (endsSwapped === false) {
             sequenceLink = new SequenceLink(seqLinkId, fromFeaturePositions, toFeaturePositions, self, interaction);
@@ -1606,6 +1591,7 @@ xiNET.Controller.prototype.expandAll = function() {
     }
 };
 
+/*
 xiNET.Controller.prototype.expandAndCollapseSelection = function(moleculesSelected) {
     const molecules = this.molecules.values();
     for (let m = 0; m < molecules.length; m++) {
@@ -1620,5 +1606,6 @@ xiNET.Controller.prototype.expandAndCollapseSelection = function(moleculesSelect
         }
     }
 };
+*/
 
 module.exports = xiNET.Controller;

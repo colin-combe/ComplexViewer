@@ -9,10 +9,11 @@
 //		authors: Lutz Fischer, Colin Combe
 
 "use strict";
+const d3 = require('d3');
 
-var Interactor = require('./Interactor');
-var Polymer = require('./Polymer');
-var Config = require('../../controller/Config');
+const Interactor = require('./Interactor');
+const Polymer = require('./Polymer');
+const Config = require('../../controller/Config');
 
 Protein.prototype = new Polymer();
 
@@ -34,10 +35,8 @@ function Protein(id, xinetController, json, name) {
     // this.ix = 40;
     // this.iy = 40;
     this.rotation = 0;
-    this.previousRotation = this.rotation;
     this.stickZoom = 1;
     this.form = 0; //null; // 0 = blob, 1 = stick
-    this.isSelected = false;
     //rotators
     /*	this.lowerRotator = new Rotator(this, 0, this.controller);
     	this.upperRotator = new Rotator(this, 1, this.controller); */
@@ -61,13 +60,13 @@ function Protein(id, xinetController, json, name) {
     this.labelSVG = document.createElementNS(Config.svgns, "text");
     this.labelSVG.setAttribute("text-anchor", "end");
     this.labelSVG.setAttribute("fill", "black")
-    this.labelSVG.setAttribute("x", 0);
-    this.labelSVG.setAttribute("y", 10);
+    this.labelSVG.setAttribute("x", "0");
+    this.labelSVG.setAttribute("y", "10");
     this.labelSVG.setAttribute("class", "protein xlv_text proteinLabel");
     this.labelSVG.setAttribute('font-family', 'Arial');
     this.labelSVG.setAttribute('font-size', '16');
     //choose label text
-    if (this.name !== null & this.name !== "") {
+    if (this.name !== null && this.name !== "") {
         this.labelText = this.name;
     } else {
         this.labelText = this.id;
@@ -84,7 +83,7 @@ function Protein(id, xinetController, json, name) {
     this.ticks = document.createElementNS(Config.svgns, "g");
     //svg group for annotations
     this.annotationsSvgGroup = document.createElementNS(Config.svgns, "g");
-    this.annotationsSvgGroup.setAttribute("opacity", 1);
+    this.annotationsSvgGroup.setAttribute("opacity", "1");
     this.upperGroup.appendChild(this.annotationsSvgGroup);
 
     //make outline
@@ -94,11 +93,11 @@ function Protein(id, xinetController, json, name) {
     this.outline.setAttribute("fill", "none");
     this.upperGroup.appendChild(this.outline);
 
-    this.scaleLabels = new Array();
+    this.scaleLabels = [];
 
     //since form is set to 0, make this a circle, this stuff is equivalant to
     // end result of toCircle but without transition
-    var r = this.getBlobRadius();
+    const r = this.getBlobRadius();
     d3.select(this.outline)
         .attr("fill-opacity", 1)
         // .attr("fill", "#ffffff")
@@ -118,7 +117,7 @@ function Protein(id, xinetController, json, name) {
     this.labelSVG.setAttribute("transform", "translate(" + (-(r + 5)) + "," + "-5)");
 
     // events
-    var self = this;
+    const self = this;
     //    this.upperGroup.setAttribute('pointer-events','all');
     //todo: move to Interactor prototype?
     this.upperGroup.onmousedown = function(evt) {
@@ -141,11 +140,13 @@ function Protein(id, xinetController, json, name) {
     });
 
     this.showHighlight(false);
-};
-
-Protein.prototype.showData = function(evt) {
-    var url = "http://www.uniprot.org/uniprot/" + this.json.identifier.id;
-    var win = window.open(url, '_blank');
 }
+
+/*
+Protein.prototype.showData = function(evt) {
+    const url = "http://www.uniprot.org/uniprot/" + this.json.identifier.id;
+    window.open(url, '_blank');
+}
+*/
 
 module.exports = Protein;

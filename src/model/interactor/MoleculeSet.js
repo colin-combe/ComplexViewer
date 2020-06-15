@@ -9,14 +9,15 @@
 //		authors: Colin Combe
 
 "use strict";
+const d3 = require('d3');
 
-var Interactor = require('./Interactor');
-var Config = require('../../controller/Config');
+const Interactor = require('./Interactor');
+const Config = require('../../controller/Config');
 
 MoleculeSet.prototype = new Interactor();
 
 function MoleculeSet(id, xlvController, json, name) {
-    this.id = id; // id may not be accession (multiple Segments with same accesssion)
+    this.id = id; // id may not be accession (multiple Segments with same accession)
     this.controller = xlvController;
     this.json = json;
     //links
@@ -24,11 +25,8 @@ function MoleculeSet(id, xlvController, json, name) {
     this.binaryLinks = d3.map();
     this.selfLink = null;
     this.sequenceLinks = d3.map();
-
     this.name = name;
-
     this.tooltip = this.id;
-
     // layout info
     this.cx = 40;
     this.cy = 40;
@@ -40,7 +38,7 @@ function MoleculeSet(id, xlvController, json, name) {
 
     this.upperGroup = document.createElementNS(Config.svgns, "g");
     this.upperGroup.setAttribute("class", "upperGroup");
-    var points = "0, -10  8.66,5 -8.66,5";
+    const points = "0, -10  8.66,5 -8.66,5";
     //make highlight
     this.highlight = document.createElementNS(Config.svgns, "polygon");
     this.highlight.setAttribute("points", points);
@@ -61,8 +59,8 @@ function MoleculeSet(id, xlvController, json, name) {
     this.labelSVG = document.createElementNS(Config.svgns, "text");
     this.labelSVG.setAttribute("text-anchor", "end");
     this.labelSVG.setAttribute("fill", "black")
-    this.labelSVG.setAttribute("x", 0);
-    this.labelSVG.setAttribute("y", 10);
+    this.labelSVG.setAttribute("x", "0");
+    this.labelSVG.setAttribute("y", "10");
     this.labelSVG.setAttribute("class", "xlv_text proteinLabel");
     this.labelSVG.setAttribute('font-family', 'Arial');
     this.labelSVG.setAttribute('font-size', '16');
@@ -105,7 +103,7 @@ function MoleculeSet(id, xlvController, json, name) {
     this.upperGroup.appendChild(this.upperLine);
 
     // events
-    var self = this;
+    const self = this;
     //    this.upperGroup.setAttribute('pointer-events','all');
     this.upperGroup.onmousedown = function(evt) {
         self.mouseDown(evt);
@@ -138,12 +136,11 @@ function MoleculeSet(id, xlvController, json, name) {
     //~ self.mouseOut(evt);
     //~ };
 
-};
+}
 
+/*
 MoleculeSet.prototype.getBlobRadius = function() {
     return 20;
-};
-
-MoleculeSet.prototype.setForm = function(form, svgP) {};
-
+}
+*/
 module.exports = MoleculeSet;

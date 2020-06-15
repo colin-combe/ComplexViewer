@@ -9,14 +9,14 @@
 //		authors: Colin Combe
 
 "use strict";
-
-var Interactor = require('./Interactor');
-var Config = require('../../controller/Config');
+const d3 = require('d3');
+const Interactor = require('./Interactor');
+const Config = require('../../controller/Config');
 
 RNA.prototype = new Interactor();
 
 function RNA(id, xlvController, json, name) {
-    this.id = id; // id may not be accession (multiple Segments with same accesssion)
+    this.id = id; // id may not be accession (multiple Segments with same accession)
     this.controller = xlvController;
     this.json = json;
     //links
@@ -39,7 +39,7 @@ function RNA(id, xlvController, json, name) {
     this.upperGroup.setAttribute("class", "upperGroup");
 
     //for polygon
-    var points = "0, -10  10, 0 0, 10 -10, 0";
+    const points = "0, -10  10, 0 0, 10 -10, 0";
     //make highlight
     this.highlight = document.createElementNS(Config.svgns, "polygon");
     this.highlight.setAttribute("points", points);
@@ -55,8 +55,8 @@ function RNA(id, xlvController, json, name) {
     this.labelSVG = document.createElementNS(Config.svgns, "text");
     this.labelSVG.setAttribute("text-anchor", "end");
     this.labelSVG.setAttribute("fill", "black")
-    this.labelSVG.setAttribute("x", 0);
-    this.labelSVG.setAttribute("y", 10);
+    this.labelSVG.setAttribute("x", "0");
+    this.labelSVG.setAttribute("y", "10");
     this.labelSVG.setAttribute("class", "xlv_text proteinLabel");
     this.labelSVG.setAttribute('font-family', 'Arial');
     this.labelSVG.setAttribute('font-size', '16');
@@ -80,7 +80,7 @@ function RNA(id, xlvController, json, name) {
     this.upperGroup.appendChild(this.outline);
 
     // events
-    var self = this;
+    const self = this;
     //    this.upperGroup.setAttribute('pointer-events','all');
     this.upperGroup.onmousedown = function(evt) {
         self.mouseDown(evt);
@@ -95,11 +95,12 @@ function RNA(id, xlvController, json, name) {
         self.touchStart(evt);
     };
 
-};
-
-RNA.prototype.showData = function(evt) {
-    var url = "http://rnacentral.org/rna/" + this.json.identifier.id;
-    var win = window.open(url, '_blank');
 }
 
+/*
+RNA.prototype.showData = function(evt) {
+    const url = "http://rnacentral.org/rna/" + this.json.identifier.id;
+    window.open(url, '_blank');
+}
+*/
 module.exports = RNA;

@@ -10,10 +10,6 @@
 
 "use strict";
 
-var colorbrewer = require('colorbrewer');
-var Config = require('../../controller/Config');
-
-//josh - should these be moved to Config.js?
 Interactor.LABELMAXLENGTH = 90; // maximal width reserved for protein-labels
 Interactor.labelY = -5; //label Y offset, better if calc'd half height of label once rendered
 
@@ -28,9 +24,9 @@ Interactor.prototype = {
     },
 }
 
-Interactor.prototype.addStoichiometryLabel = function(stoich) {
+Interactor.prototype.addStoichiometryLabel = function(stoichiometry) {
     if (this.labelSVG) { //complexes don't have labels (yet?)
-        this.labelSVG.childNodes[0].data = this.labelSVG.childNodes[0].data + ' [' + stoich + ']';
+        this.labelSVG.childNodes[0].data = this.labelSVG.childNodes[0].data + ' [' + stoichiometry + ']';
     }
 }
 
@@ -40,7 +36,7 @@ Interactor.prototype.mouseDown = function(evt) {
         this.controller.d3cola.stop();
     }
     this.controller.dragElement = this;
-    var p = this.controller.getEventPoint(evt);
+    const p = this.controller.getEventPoint(evt);
     this.controller.dragStart = this.controller.mouseToSVG(p.x, p.y);
     return false;
 };
@@ -89,9 +85,8 @@ Interactor.prototype.showHighlight = function(show) {
     // }
 };
 
+/*
 Interactor.prototype.setSelected = function(select) {
-    //do nothing
-    /*
      if (select && this.isSelected === false) {
          this.controller.selected.set(this.id, this);
          this.isSelected = true;
@@ -103,8 +98,9 @@ Interactor.prototype.setSelected = function(select) {
          this.isSelected = false;
          this.highlight.setAttribute("stroke-opacity", "0");
          this.highlight.setAttribute("stroke", Config.highlightColour);
-     }*/
-};
+     }
+}
+*/
 
 Interactor.prototype.getPosition = function() {
     return [this.cx, this.cy];
@@ -124,12 +120,12 @@ Interactor.prototype.setPosition = function(x, y) {
 };
 
 Interactor.prototype.getAggregateSelfLinkPath = function() {
-    var intraR = this.getBlobRadius() + 7;
-    var sectorSize = 45;
-    var arcStart = Interactor.trig(intraR, 25 + sectorSize);
-    var arcEnd = Interactor.trig(intraR, -25 + sectorSize);
-    var cp1 = Interactor.trig(intraR, 40 + sectorSize);
-    var cp2 = Interactor.trig(intraR, -40 + sectorSize);
+    const intraR = this.getBlobRadius() + 7;
+    const sectorSize = 45;
+    const arcStart = Interactor.trig(intraR, 25 + sectorSize);
+    const arcEnd = Interactor.trig(intraR, -25 + sectorSize);
+    const cp1 = Interactor.trig(intraR, 40 + sectorSize);
+    const cp2 = Interactor.trig(intraR, -40 + sectorSize);
     return 'M 0,0 ' +
         'Q ' + cp1.x + ',' + -cp1.y + ' ' + arcStart.x + ',' + -arcStart.y +
         ' A ' + intraR + ' ' + intraR + ' 0 0 1 ' + arcEnd.x + ',' + -arcEnd.y +
@@ -138,16 +134,16 @@ Interactor.prototype.getAggregateSelfLinkPath = function() {
 
 Interactor.rotatePointAboutPoint = function(p, o, theta) {
     theta = (theta / 360) * Math.PI * 2; //TODO: change theta arg to radians not degrees
-    var rx = Math.cos(theta) * (p[0] - o[0]) - Math.sin(theta) * (p[1] - o[1]) + o[0];
-    var ry = Math.sin(theta) * (p[0] - o[0]) + Math.cos(theta) * (p[1] - o[1]) + o[1];
+    const rx = Math.cos(theta) * (p[0] - o[0]) - Math.sin(theta) * (p[1] - o[1]) + o[0];
+    const ry = Math.sin(theta) * (p[0] - o[0]) + Math.cos(theta) * (p[1] - o[1]) + o[1];
     return [rx, ry];
 }
 
 Interactor.prototype.checkLinks = function() {
     function checkAll(linkMap) {
-        var links = linkMap.values();
-        var c = links.length;
-        for (var l = 0; l < c; l++) {
+        const links = linkMap.values();
+        const c = links.length;
+        for (let l = 0; l < c; l++) {
             links[l].check();
         }
     }
@@ -161,40 +157,35 @@ Interactor.prototype.checkLinks = function() {
 
 // update all lines (e.g after a move)
 Interactor.prototype.setAllLinkCoordinates = function() {
-    var links = this.naryLinks.values();
-    var c = links.length;
-    for (var l = 0; l < c; l++) {
-        links[l].setLinkCoordinates();
+    for (let link of this.naryLinks.values()) {
+        link.setLinkCoordinates();
     }
-    links = this.binaryLinks.values();
-    c = links.length;
-    for (var l = 0; l < c; l++) {
-        var link = links[l];
+    for (let link of this.binaryLinks.values()) {
         link.setLinkCoordinates();
     }
     if (this.selfLink) {
         this.selfLink.setLinkCoordinates();
     }
-    links = this.sequenceLinks.values();
-    c = links.length;
-    for (var l = 0; l < c; l++) {
-        links[l].setLinkCoordinates();
+    for (let link of this.sequenceLinks.values()) {
+        link.setLinkCoordinates();
     }
 };
 
 //TODO: remove this, use rotateAboutPoint instead
 Interactor.trig = function(radius, angleDegrees) {
     //x = rx + radius * cos(theta) and y = ry + radius * sin(theta)
-    var radians = (angleDegrees / 360) * Math.PI * 2;
+    const radians = (angleDegrees / 360) * Math.PI * 2;
     return {
         x: (radius * Math.cos(radians)),
         y: (radius * Math.sin(radians))
     };
 };
 
-Interactor.prototype.showData = function(evt) {
+/*
+Interactor.prototype.showData = function() {
     //~ alert ("molecule!");
 }
+*/
 
 Interactor.prototype.setForm = function(form, svgP) {};
 

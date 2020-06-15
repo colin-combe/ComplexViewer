@@ -10,17 +10,17 @@
 
 "use strict";
 
-var Interactor = require('./Interactor');
-var Config = require('../../controller/Config');
+const d3 = require('d3');
+const Interactor = require('./Interactor');
+const Config = require('../../controller/Config');
 
 ComplexSymbol.prototype = new Interactor();
 
 function ComplexSymbol(id, xlvController, interactorRef, json) { //, name) {
-    this.id = id; // id may not be accession (multiple Segments with same accesssion)
+    this.id = id; // id may not be accession (multiple Segments with same accession)
     this.controller = xlvController;
     this.isComplexSymbol = true;
     this.json = json;
-    //this.json = json;
     //links
     this.naryLinks = d3.map();
     this.binaryLinks = d3.map();
@@ -41,7 +41,7 @@ function ComplexSymbol(id, xlvController, interactorRef, json) { //, name) {
     //~ this.upperGroup.setAttribute("class", "protein upperGroup");
 
     //for polygon
-    var points = "15,0 8,-13 -7,-13 -15,0 -8,13 7,13";
+    const points = "15,0 8,-13 -7,-13 -15,0 -8,13 7,13";
     //make highlight
     this.highlight = document.createElementNS(Config.svgns, "polygon");
     this.highlight.setAttribute("points", points);
@@ -56,8 +56,8 @@ function ComplexSymbol(id, xlvController, interactorRef, json) { //, name) {
     this.labelSVG = document.createElementNS(Config.svgns, "text");
     this.labelSVG.setAttribute("text-anchor", "end");
     this.labelSVG.setAttribute("fill", "black")
-    this.labelSVG.setAttribute("x", 0);
-    this.labelSVG.setAttribute("y", 10);
+    this.labelSVG.setAttribute("x", "0");
+    this.labelSVG.setAttribute("y", "10");
     this.labelSVG.setAttribute("class", "xlv_text proteinLabel");
     this.labelSVG.setAttribute('font-family', 'Arial');
     this.labelSVG.setAttribute('font-size', '16');
@@ -81,7 +81,7 @@ function ComplexSymbol(id, xlvController, interactorRef, json) { //, name) {
     this.upperGroup.appendChild(this.outline);
 
     // events
-    var self = this;
+    const self = this;
     //    this.upperGroup.setAttribute('pointer-events','all');
     this.upperGroup.onmousedown = function(evt) {
         self.mouseDown(evt);
@@ -95,12 +95,15 @@ function ComplexSymbol(id, xlvController, interactorRef, json) { //, name) {
     this.upperGroup.ontouchstart = function(evt) {
         self.touchStart(evt);
     };
-};
+}
 
-ComplexSymbol.prototype.showData = function(evt) {
+/*
+ComplexSymbol.prototype.showData = function() {
     if (this.name.startsWith("intact_")) {
-        var url = "http://www.ebi.ac.uk/intact/complex/details/" + this.name.substr(7);
-        var win = window.open(url, '_blank');
+        const url = "http://www.ebi.ac.uk/intact/complex/details/" + this.name.substr(7);
+        window.open(url, '_blank');
     }
 }
+*/
+
 module.exports = ComplexSymbol;

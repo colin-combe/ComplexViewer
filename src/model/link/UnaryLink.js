@@ -11,9 +11,10 @@
 
 "use strict";
 
-var Config = require('../../controller/Config');
-var Link = require('./Link');
-var SequenceLink = require('./SequenceLink');
+const d3 = require('d3');
+const Config = require('../../controller/Config');
+const Link = require('./Link');
+// var SequenceLink = require('./SequenceLink');
 
 UnaryLink.prototype = new Link();
 
@@ -24,7 +25,7 @@ function UnaryLink(id, xlvController, interactor) {
     this.sequenceLinks = d3.map();
     this.controller = xlvController;
     this.initSVG();
-};
+}
 
 //~ UnaryLink.prototype.getToolTip = function(){
 //~ var tooltip = "", fromResidues = "", toResidues = "";
@@ -54,7 +55,7 @@ function UnaryLink(id, xlvController, interactor) {
 //~ };
 
 UnaryLink.prototype.initSVG = function() {
-    var path = this.interactors[0].getAggregateSelfLinkPath();
+    const path = this.interactors[0].getAggregateSelfLinkPath();
     this.line = document.createElementNS(Config.svgns, "path");
     this.line.setAttribute('d', path);
     this.highlightLine = document.createElementNS(Config.svgns, 'path');
@@ -65,7 +66,7 @@ UnaryLink.prototype.initSVG = function() {
     this.line.setAttribute("class", "link");
     this.line.setAttribute("fill", "none");
     this.line.setAttribute("stroke", "black");
-    this.line.setAttribute("stroke-width", 1);
+    this.line.setAttribute("stroke-width", "1");
     this.line.setAttribute("stroke-linecap", "round");
     this.highlightLine.setAttribute("class", "link");
     this.highlightLine.setAttribute("fill", "none");
@@ -79,7 +80,7 @@ UnaryLink.prototype.initSVG = function() {
     this.thickLine.setAttribute("stroke-linecap", "round");
     this.thickLine.setAttribute("stroke-linejoin", "round");
     //set the events for it
-    var self = this;
+    const self = this;
     this.line.onmousedown = function(evt) {
         self.mouseDown(evt);
     };
@@ -119,7 +120,7 @@ UnaryLink.prototype.initSVG = function() {
         self.touchStart(evt);
     };
 
-    this.isSelected = false;
+    // this.isSelected = false;
 }
 
 UnaryLink.prototype.selfLink = function() {
@@ -127,7 +128,7 @@ UnaryLink.prototype.selfLink = function() {
 }
 
 UnaryLink.prototype.initSelfLinkSVG = function() {
-    var path = this.interactors[0].getAggregateSelfLinkPath();
+    const path = this.interactors[0].getAggregateSelfLinkPath();
     this.line.setAttribute('d', path);
     this.highlightLine.setAttribute('d', path);
     this.thickLine.setAttribute('d', path);
@@ -169,7 +170,7 @@ UnaryLink.prototype.show = function() {
 
 
 UnaryLink.prototype.setLinkCoordinates = function() {
-    var interactor = this.interactors[0];
+    const interactor = this.interactors[0];
     if (typeof this.thickLine !== 'undefined') {
         this.thickLine.setAttribute("transform", "translate(" + interactor.cx +
             " " + interactor.cy + ")" + " scale(" + (this.controller.z) + ")");
