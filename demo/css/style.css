@@ -13,10 +13,6 @@
     src: url('../fonts/lato/regular/Lato-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('../fonts/lato/regular/Lato-Regular.woff') format('woff'), /* Modern Browsers */ url('../fonts/lato/regular/Lato-Regular.ttf') format('truetype'), /* Safari, Android, iOS  */ url('../fonts/lato/regular/Lato-Regular.svg#svgLato-Regular') format('svg');  /* Legacy iOS */
 }
 
-.highlighted {
-    stroke: #fdc086;
-}
-
 /* Btn */
 .btn {
     border: none;
@@ -110,32 +106,7 @@ td:last-child {
     padding-right: 10px;
 }
 
-tbody tr:hover td, tbody tr:hover td a, .spectrumShown {
-    color: #fff;
-    background-color: #091D42;
-    -webkit-transition: all 200ms ease;
-    -moz-transition: all 200ms ease;
-    -ms-transition: all 200ms ease;
-    -o-transition: all 200ms ease;
-    transition: all 200ms ease;
-}
-
 /* fa */
-.fa-home {
-    font-size: 1.5em;
-    /*
-        vertical-align:middle;
-    */
-    -webkit-transition: all .3s;
-    -moz-transition: all .3s;
-    transition: all .3s;
-    cursor: pointer;
-}
-
-.fa-home:hover {
-    color: #091D42;
-    background: white;
-}
 
 .fa-github {
     font-size: 1.5em;
@@ -153,29 +124,12 @@ tbody tr:hover td, tbody tr:hover td a, .spectrumShown {
     background: white;
 }
 
-.fa-times-circle {
-    vertical-align: baseline;
-    -webkit-transition: all .3s;
-    -moz-transition: all .3s;
-    transition: all .3s;
-    cursor: pointer;
-    float: right;
-    margin: 2px 22px 2px 2px;
-}
-
-.fa-times-circle:hover {
-    color: #091D42;
-    background: white;
-}
-
 /* Common */
 body, html {
     background: #fff;
     height: 100%;
     -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: -moz-none;
-    -o-user-select: none;
+    -moz-user-select: none;
     user-select: none;
 }
 
@@ -187,14 +141,6 @@ body, input, select, textarea, button {
     font-weight: 300;
     line-height: 1.75em;
     color: #091D42;
-    -webkit-text-stroke: .15px;
-}
-
-.centre {
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    vertical-align: middle;
 }
 
 .page-header {
@@ -216,18 +162,12 @@ body, input, select, textarea, button {
     */
 }
 
-.headerLabel {
-    text-transform: uppercase;
-    margin-right: 10px;
-}
-
 /* history page */
 .tableContainer a {
     color: #091D42;
     text-decoration: underline;
     -webkit-transition: all 200ms ease-in-out;
     -moz-transition: all 200ms ease-in-out;
-    -ms-transition: all 200ms ease-in-out;
     -o-transition: all 200ms ease-in-out;
     transition: all 200ms ease-in-out;
 }
@@ -235,19 +175,6 @@ body, input, select, textarea, button {
 .tableContainer a:hover {
     color: #ffffff !important;
     background-color: #091D42;
-}
-
-.clearChx {
-    background: #091D42;
-    width: 70px;
-}
-
-.dynamic-table-filter {
-    margin: auto;
-}
-
-.aggregateCheckbox {
-    width: 20px;
 }
 
 /* network page */
@@ -266,29 +193,12 @@ body, input, select, textarea, button {
     /*z-index:-1;*/
 }
 
-#main .mainContent {
-    top: 0;
-    bottom: 65px;
-    position: absolute;
-
-    /*
-    display: table-row;
-    height: 100%;
-    */
-    width: 100%;
-    overflow: none;
-}
-
 .page-header p {
     display: inline-block;
     padding-right: 1px;
     padding-left: 10px;
 }
 
-
-#topDiv {
-    overflow: hidden;
-}
 
 /*
 #networkDiv {
@@ -297,19 +207,6 @@ body, input, select, textarea, button {
     display:block;
 }
 */
-
-#spectrumDiv {
-    background-color: white;
-    height: calc(100% - 40px);
-}
-
-.histoLabel {
-    color: black;
-}
-
-.dist {
-    height: 100px;
-}
 
 .bar rect {
     fill: steelblue;
@@ -322,100 +219,16 @@ body, input, select, textarea, button {
     fill: #fff;
 }
 
-.peakAnnot {
-    font-size: 12px;
-}
-
-.fragBar {
-    stroke-width: 1.3px;
-    stroke-linecap: round;
-}
-
-#sliderDiv {
-    height: 70%;
-    position: absolute;
-    top: 15%;
-    right: 0;
-}
-
 .resize path {
     fill: #888;
     stroke: #000;
-    stroke-width: 1.5px;
-}
-
-.resize path.bevel {
-    fill: none;
-    stroke: #ccc;
-    stroke-width: 2.5px;
+    stroke-width: 2px;
 }
 
 .axis path, .axis line {
     fill: none;
     stroke: #000;
-    stroke-width: 1.2px;
-}
-
-.brush .extent {
-}
-
-#bottomDiv {
-    background: rgba(9, 29, 66, 0.9);
-    padding: 0 10px;
-    position: relative; /* will overlay previous absolute divs i.e. distance slider */
-}
-
-.noMarg {
-    margin: 0 !important;
-}
-
-.dynDiv {
-    padding: 20px 10px;
-    background: rgba(9, 29, 66, 0.9);
-    overflow: hidden;
-    color: #fff;
-    position: fixed;
-    pointer-events: all;
-    /*
-        height:400px;
-    */
-}
-
-.dynDiv_moveParentDiv {
-    height: 20px;
-    background: #091D42;
-}
-
-.dynDiv_resizeDiv_tl, .dynDiv_resizeDiv_tr, .dynDiv_resizeDiv_bl, .dynDiv_resizeDiv_br {
-    width: 20px;
-    height: 20px;
-    background: #091D42;
-    border: none;
-}
-
-.dynDiv_resizeDiv_tl {
-    background-image: url("../images/tl.png");
-}
-
-.dynDiv_resizeDiv_tr {
-    background-image: url("../images/tr.png");
-}
-
-.dynDiv_resizeDiv_bl {
-    background-image: url("../images/bl.png");
-}
-
-.dynDiv_resizeDiv_br {
-    background-image: url("../images/br.png");
-}
-
-.panelInner {
-    overflow: hidden;
-    height: 100%;
-    width: 100%;
-    color: #fff;
-    text-align: left;
-    display: block;
+    stroke-width: 1px;
 }
 
 .panelInner th {
@@ -438,129 +251,17 @@ body, input, select, textarea, button {
 }
 
 .controls {
-    margin: 0px 10px 10px;
+    margin: 0 10px 10px;
     background: #ecedf2;
     color: #091D42;
     padding: 5px 10px;
     -webkit-user-select: none;
-    -khtml-user-select: none;
     -moz-user-select: none;
-    -o-user-select: none;
     user-select: none;
-}
-
-#defaultLinkKey {
-    background: white;
-}
-
-#logo {
-    display: block;
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
-
-#keyPanel, #spectrumPanelWrapper, #nglPanel, #distoPanel, #alignPanel, #proteinInfoPanel, #circularPanel, #clmsErrorBox, #pdbPanel, #csvPanel, #searchSummaryPanel {
-    display: none;
-    top: 80px;
-}
-
-#keyPanel {
-    left: 10px;
-    height: 25em;
-    width: 30em;
-}
-
-#searchSummaryPanel {
-    left: 10px;
-    width: 600px;
-    height: 600px;
-}
-
-#spectrumPanel {
-    width: 100%;
-    height: 100%;
-}
-
-#spectrumPanelWrapper {
-    left: 280px;
-    width: 600px;
-    height: 600px;
-}
-
-#nglPanel {
-    left: 40px;
-    width: 700px;
-    height: 400px;
-}
-
-#pdbPanel {
-    left: 40px;
-}
-
-#distoPanel {
-    left: 40px;
-    width: 500px;
-    height: 300px;
-}
-
-#circularPanel {
-    left: 40px;
-    width: 500px;
-    height: 500px;
-}
-
-#proteinInfoPanel {
-    left: 40px;
-    width: 40em;
-    height: 25em;
-}
-
-#clmsErrorBox {
-    z-index: 3;
-    font-size: 2em;
-    border: 4px solid red;
-    margin-left: 3em;
-    padding: 1em;
-    position: absolute;
-    line-height: normal;
-    -webkit-box-shadow: 10px 10px 5px 0 rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 10px 10px 5px 0 rgba(0, 0, 0, 0.5);
-    box-shadow: 10px 10px 5px 0 rgba(0, 0, 0, 0.5);
-    background: white;
-}
-
-.dynTitle {
-    position: relative;
-    left: 30px;
-    top: -2px;
-    letter-spacing: 0.5px;
-    font-size: 0.9em;
-    color: white;
-
-}
-
-#alignPanel {
-    left: 40px;
-    width: 500px;
-    /*height:80px;*/
-}
-
-#colourSelect {
-    /*display: none;*/
 }
 
 #colourSelect span {
     margin-right: 0.5em;
-}
-
-label.verticalFlow {
-    display: block;
-}
-
-label.horizontalFlow:not(:last-child) {
-    display: inline;
-    border-right: 1px solid grey;
-    margin-right: 0.4em;
 }
 
 label.horizontalFlow input[type=number] {
@@ -569,81 +270,27 @@ label.horizontalFlow input[type=number] {
 
 /* See http://jsfiddle.net/7jx02upg/1/ */
 label.horizontalFlow input[type=radio], label.horizontalFlow input[type=checkbox] {
-    vertical-align: normal;
+    /*vertical-align: normal;*/
 }
 
 /* <label class='horizontalFlow'><span class='noBreak'>stuff you dont want split over multiple lines</span></label><more labels n spans...>
 
 /* span.noBreak asks for no line-breaks internally */
-.noBreak {
-    white-space: nowrap;
-}
 
 span.noBreak select {
     margin-left: 0.5em;
 }
 
 /* and then put spaces after labels to give a known place for content to break */
-label.horizontalFlow::after, #nglPanel label.btn::before, #pdbPanel label.btn::before, #matrixPanel label.btn::before {
-    content: " ";
-}
 
 A.btn {
     text-decoration: none;
 }
 
-.righty {
-    float: right;
-    vertical-align: middle;
-    line-height: 20px;
-}
-
 /* For use with Split.js */
-
-.gutter {
-    background-color: #eee;
-    background-repeat: no-repeat;
-    background-position: 50%;
-    position: relative; /* will overlay previous absolute divs i.e. distance slider */
-}
-
-.gutter.gutter-horizontal {
-    background-image: url('../images/grips/vertical.png');
-    cursor: ew-resize;
-}
-
-.gutter.gutter-vertical {
-    background-image: url('../images/grips/horizontal.png');
-    cursor: ns-resize;
-}
-
-.fdrResult {
-    display: inline-flex;
-    background: #55e;
-    border: 1px solid black;
-    padding: 0.2em 0.5em;
-    margin-top: 0.3em;
-    user-select: text;
-    -moz-user-select: text;
-    -ms-user-select: text;
-    -webkit-user-select: text;
-}
-
-.fdrCalculation {
-    display: inline-block;
-}
-
-.fdrBoost {
-    display: none;
-}
 
 .btn:disabled {
     color: gray;
     border-color: gray;
 }
 
-.brushValueText {
-    font-size: 0.75em;
-    fill: #ddd;
-    stroke: none;
-}

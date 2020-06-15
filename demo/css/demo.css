@@ -73,19 +73,6 @@ select, button {
     min-width: 0; /* NEW */
 }
 
-.detailsInner {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    overflow: auto;
-    min-height: 0; /* NEW */
-    min-width: 0; /* NEW */
-}
-
 b {
     font-weight: bold;
 }
@@ -172,23 +159,6 @@ div#legendInner {
 
 .noShrink {
     flex-shrink: 0;
-}
-
-div.logos {
-    background: white;
-    margin-left: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 10px;
-    border: 1px solid grey;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    flex-direction: row;
-    flex-shrink: 0;
-    text-align: center;
 }
 
 .logo {
