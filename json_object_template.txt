@@ -54,19 +54,19 @@
 
 "feature" : {
      "id": 'string',
-	 "name" : 'string',
-	 "type" : 'cvType',
-	 "category": 'string',
-	 "role" : 'cvType',
-	 "detmethods" : "listType_cvType",	
+     "name" : 'string',
+     "type" : 'cvType',
+     "category": 'string',
+     "role" : 'cvType',
+     "detmethods" : "listType_cvType",
      "parameters" : "listType_cvType",	
      "InterPro" : 'string',	
-	 "sequenceData" : "listType_rangeData",
+     "sequenceData" : "listType_rangeData",
      "linkedFeatures": 'listType_featureId'		  			
 }
 "rangeData" : {
      "interactorRef": 'string',
-	 "participantRef" : 'string',
-	 "pos" : 'string'
+     "participantRef" : 'string',
+     "pos" : 'string'
 }
 }

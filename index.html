@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <title>ComplexViewer Demo</title>
@@ -35,8 +35,8 @@
 
         <div id="detailsDiv">
             <span>Choose Example:</span>
-            <select class="noShrink" id="dataSets"
-                    onChange="/*document.getElementById('chkexpansion').checked = true;*/loadData();"></select>
+            <label for="dataSets">Example:</label><select class="noShrink" id="dataSets"
+                                                  onChange="/*document.getElementById('chkexpansion').checked = true;*/loadData();"></select>
             <br>
             <div id="complexDetails"></div>
         </div>
@@ -118,8 +118,7 @@
 
             <div>
                 <div class="controls">
-                    Annotations:
-                    <select class="btn btn-1 btn-1a" id="annotationsSelect" onChange="changeAnnotations();">
+                    <label for="annotationsSelect">Annotations:</label><select class="btn btn-1 btn-1a" id="annotationsSelect" onChange="changeAnnotations();">
                         <option selected='selected'>MI features</option>
                         <option>UniprotKB</option>
                         <option>SuperFamily</option>
@@ -168,7 +167,7 @@
     var legend = d3.select("svg").append("g");
     xlv.legendCallbacks.push(function (colourAssignment) {
         legend.selectAll("*").remove();
-        var table = "<table background:#EEEEEE;>";
+        var table = "<table>";
         var coloursKeyDiv = document.getElementById('colours');
         if (colourAssignment) {
 
@@ -187,7 +186,7 @@
                 console.log(i + " " + ccDomain[i] + " " + ccRange[i]);
             }
             table = table += "</table>";
-            table = table += "<table background:#EEEEEE;>";
+            table = table += "<table>";
 
             var domain = colourAssignment.domain();
             //~ //console.log("Domain:"+domain);
