@@ -1,5 +1,3 @@
-//// TODO: move set annotations code
-
 "use strict";
 
 const d3 = require("d3");
