@@ -7,11 +7,11 @@
 "use strict";
 
 
-const d3 = require('d3');
-const Config = require('../../controller/Config');
-const Link = require('./Link');
-const Intersection = require('intersectionjs');
-const Point2D = require('point2d');
+const d3 = require("d3");
+const Config = require("../../controller/Config");
+const Link = require("./Link");
+const Intersection = require("intersectionjs");
+const Point2D = require("point2d");
 
 // BinaryLink.js
 // the class representing a binary interaction
@@ -141,7 +141,7 @@ BinaryLink.prototype.check = function () {
 };
 
 BinaryLink.prototype.show = function () {
-    if (typeof this.line === 'undefined') {
+    if (typeof this.line === "undefined") {
         this.initSVG();
     }
     this.line.setAttribute("stroke-width", this.controller.z * 1);
@@ -162,42 +162,17 @@ BinaryLink.prototype.hide = function () {
     this.thickLine.remove();
     this.highlightLine.remove();
     this.line.remove();
-    // const p_pLinksWide = [];
-    // const highlights = [];
-    // const p_pLinks = [];
-    //
-    // for (var i = 0; i < this.controller.p_pLinksWide.childNodes.length; i++) {
-    //     p_pLinksWide[i] = this.controller.p_pLinksWide.childNodes[i];
-    // }
-    //
-    // for (var i = 0; i < this.controller.highlights.childNodes.length; i++) {
-    //     highlights[i] = this.controller.highlights.childNodes[i];
-    // }
-    //
-    // for (var i = 0; i < this.controller.p_pLinks.childNodes.length; i++) {
-    //     p_pLinks[i] = this.controller.p_pLinks.childNodes[i];
-    // }
-    //
-    // if (p_pLinksWide.indexOf(this.thickLine) > -1) {
-    //     this.controller.p_pLinksWide.removeChild(this.thickLine);
-    // }
-    // if (highlights.indexOf(this.highlightLine) > -1) {
-    //     this.controller.highlights.removeChild(this.highlightLine);
-    // }
-    // if (p_pLinks.indexOf(this.line) > -1) {
-    //     this.controller.p_pLinks.removeChild(this.line);
-    // }
 };
 
 BinaryLink.prototype.setLinkCoordinates = function () {
-    if (typeof this.line === 'undefined') {
+    if (typeof this.line === "undefined") {
         this.initSVG();
     }
     let pos1 = this.interactors[0].getPosition();
     let pos2 = this.interactors[1].getPosition();
 
     let naryPath, iPath, a1, a2, intersect;
-    if (this.interactors[0].type === 'complex') {
+    if (this.interactors[0].type === "complex") {
         naryPath = this.interactors[0].naryLink.hull;
         iPath = [];
         for (let p of naryPath) {
@@ -215,7 +190,7 @@ BinaryLink.prototype.setLinkCoordinates = function () {
 
     }
 
-    if (this.interactors[1].type === 'complex') {
+    if (this.interactors[1].type === "complex") {
         naryPath = this.interactors[0].naryLink.hull;
         iPath = [];
         for (let p of naryPath) {

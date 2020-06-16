@@ -6,8 +6,8 @@
 
 "use strict";
 
-const Link = require('./Link');
-const Config = require('../../controller/Config');
+const Link = require("./Link");
+const Config = require("../../controller/Config");
 
 //todo: rename to SequenceFeatureLink
 
@@ -26,7 +26,7 @@ SequenceLink.prototype.init = function (id, fromFeatPos, toFeatPos, xlvControlle
     this.interactors = [this.fromSequenceData[0].node, this.toSequenceData[0].node]; //*
     // *potentially, this over simplifies the situation,
     // but there is a workaround in way ReadMiJson init's links so OK for now
-}
+};
 
 
 /*
@@ -47,7 +47,7 @@ SequenceLink.prototype.getToolTip = function() {
 }*/
 
 SequenceLink.prototype.initSVG = function () {
-    if (typeof this.glyph === 'undefined') {
+    if (typeof this.glyph === "undefined") {
         this.glyph = document.createElementNS(Config.svgns, "path");
         this.uncertainGlyph = document.createElementNS(Config.svgns, "path");
         this.highlightGlyph = document.createElementNS(Config.svgns, "path");
@@ -186,9 +186,9 @@ SequenceLink.prototype.setLinkCoordinates = function () {
             endPoint = interactor.getResidueCoordinates(endRes, yOffset);
 
         }
-        return ' Q' + controlPoint[0] + ',' + controlPoint[1] + ' ' + startPoint[0] + ',' + startPoint[1] +
-            ' L' + endPoint[0] + ',' + endPoint[1] +
-            ' Q' + controlPoint[0] + ',' + controlPoint[1] + ' ' + midPoint[0] + ',' + midPoint[1];
+        return " Q" + controlPoint[0] + "," + controlPoint[1] + " " + startPoint[0] + "," + startPoint[1] +
+            " L" + endPoint[0] + "," + endPoint[1] +
+            " Q" + controlPoint[0] + "," + controlPoint[1] + " " + midPoint[0] + "," + midPoint[1];
     }
 
     function sequenceDataMidPoint(sequenceData, interactor) {
@@ -297,9 +297,9 @@ SequenceLink.prototype.setLinkCoordinates = function () {
     const fSDCount = this.fromSequenceData.length;
     const tSDCount = this.toSequenceData.length;
     let seqDatum, highlightStartRes, highlightEndRes;
-    let glyphPath = 'M' + triPointMid[0] + ',' + triPointMid[1];
-    let uncertainGlyphPath = 'M' + triPointMid[0] + ',' + triPointMid[1];
-    let highlightGlyphPath = 'M' + triPointMid[0] + ',' + triPointMid[1];
+    let glyphPath = "M" + triPointMid[0] + "," + triPointMid[1];
+    let uncertainGlyphPath = "M" + triPointMid[0] + "," + triPointMid[1];
+    let highlightGlyphPath = "M" + triPointMid[0] + "," + triPointMid[1];
     for (let f = 0; f < fSDCount; f++) {
         seqDatum = this.fromSequenceData[f];
         glyphPath += getPathSegments(triPointMid, ftMid, seqDatum.begin, seqDatum.end, fromInteractor, fyOffset);

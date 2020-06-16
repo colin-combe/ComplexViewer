@@ -38,48 +38,48 @@ function SequenceFeature(node, sequenceDatumString) {
         this.uncertainEnd = "c-c";//node.size + 21;
     } else {
 
-        const dashPosition = sequenceDatumString.indexOf('-');
+        const dashPosition = sequenceDatumString.indexOf("-");
         const firstPart = sequenceDatumString.substring(0, dashPosition);
         const secondPart = sequenceDatumString.substring(dashPosition + 1);
         let firstDotPosition;
-        if (firstPart.indexOf('.') === -1) {
+        if (firstPart.indexOf(".") === -1) {
             this.begin = firstPart;
         } else {
-            firstDotPosition = firstPart.indexOf('.');
+            firstDotPosition = firstPart.indexOf(".");
             this.uncertainBegin = firstPart.substring(0, firstDotPosition) * 1;
             this.begin = firstPart.substring(firstDotPosition + 2) * 1;
         }
 
-        if (secondPart.indexOf('.') === -1) {
+        if (secondPart.indexOf(".") === -1) {
             this.end = secondPart;
         } else {
-            firstDotPosition = secondPart.indexOf('.');
+            firstDotPosition = secondPart.indexOf(".");
             this.end = secondPart.substring(0, firstDotPosition) * 1;
             this.uncertainEnd = secondPart.substring(firstDotPosition + 2) * 1;
         }
 
-        if (this.begin === 'n') {
+        if (this.begin === "n") {
             this.uncertainBegin = 0;
             this.begin = this.end;
             this.uncertainEnd = this.end;
         }
 
-        if (this.end === 'c') {
+        if (this.end === "c") {
             this.uncertainEnd = node.size;
             this.end = this.begin;
             this.uncertainBegin = this.begin;
         }
 
-        if (firstPart.indexOf('<') > -1) {
+        if (firstPart.indexOf("<") > -1) {
             this.uncertainBegin = 0;
             this.begin = firstPart.substring(1, firstPart.length);
         }
-        if (secondPart.indexOf('>') > -1) {
+        if (secondPart.indexOf(">") > -1) {
             this.end = secondPart.substring(1, firstPart.length);
             this.uncertainEnd = node.size;
         }
 
-        if (firstPart.indexOf('>') > -1 && secondPart.indexOf('<') > -1) {
+        if (firstPart.indexOf(">") > -1 && secondPart.indexOf("<") > -1) {
             this.uncertainBegin = firstPart.substring(1, firstPart.length);
             this.begin = secondPart.substring(1, firstPart.length);
             this.end = this.begin;
@@ -89,7 +89,7 @@ function SequenceFeature(node, sequenceDatumString) {
 
 SequenceFeature.prototype.toString = function () {
     return this.sequenceDatumString;
-}
+};
 //On 06/06/13 09:22, marine@ebi.ac.uk wrote:
 //> Concerning the ranges, I think there was a confusion :
 //>

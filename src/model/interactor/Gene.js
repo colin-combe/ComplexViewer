@@ -9,9 +9,9 @@
 //		authors: Colin Combe
 
 "use strict";
-const d3 = require('d3');
-const Interactor = require('./Interactor');
-const Config = require('../../controller/Config');
+const d3 = require("d3");
+const Interactor = require("./Interactor");
+const Config = require("../../controller/Config");
 
 Gene.prototype = new Interactor();
 
@@ -53,12 +53,12 @@ function Gene(id, xlvController, json, name) {
     //create label - we will move this svg element around when protein form changes
     this.labelSVG = document.createElementNS(Config.svgns, "text");
     this.labelSVG.setAttribute("text-anchor", "end");
-    this.labelSVG.setAttribute("fill", "black")
+    this.labelSVG.setAttribute("fill", "black");
     this.labelSVG.setAttribute("x", "0");
     this.labelSVG.setAttribute("y", "10");
     this.labelSVG.setAttribute("class", "xlv_text proteinLabel");
-    this.labelSVG.setAttribute('font-family', 'Arial');
-    this.labelSVG.setAttribute('font-size', '16');
+    this.labelSVG.setAttribute("font-family", "Arial");
+    this.labelSVG.setAttribute("font-size", "16");
     //choose label text
     if (this.name !== null && this.name !== "") {
         this.labelText = this.name;

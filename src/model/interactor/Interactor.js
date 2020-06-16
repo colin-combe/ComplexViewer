@@ -23,17 +23,17 @@ Interactor.prototype = {
     get height() {
         return this.upperGroup.getBBox().height;
     },
-}
+};
 
 Interactor.prototype.addStoichiometryLabel = function (stoichiometry) {
     if (this.labelSVG) { //complexes don't have labels (yet?)
-        this.labelSVG.childNodes[0].data = this.labelSVG.childNodes[0].data + ' [' + stoichiometry + ']';
+        this.labelSVG.childNodes[0].data = this.labelSVG.childNodes[0].data + " [" + stoichiometry + "]";
     }
-}
+};
 
 Interactor.prototype.mouseDown = function (evt) {
     this.controller.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
-    if (typeof this.controller.d3cola !== 'undefined' && this.controller.d3cola != null) {
+    if (typeof this.controller.d3cola !== "undefined" && this.controller.d3cola != null) {
         this.controller.d3cola.stop();
     }
     this.controller.dragElement = this;
@@ -74,7 +74,7 @@ Interactor.prototype.getBlobRadius = function () {
 };
 
 
-Interactor.prototype.showHighlight = function (show) {
+Interactor.prototype.showHighlight = function () {
     // if (show === true) {
     //~ this.highlight.setAttribute("stroke", xiNET.highlightColour.toRGB());
     // this.highlight.setAttribute("stroke-opacity", "1");
@@ -105,7 +105,7 @@ Interactor.prototype.setSelected = function(select) {
 
 Interactor.prototype.getPosition = function () {
     return [this.cx, this.cy];
-}
+};
 
 // more accurately described as setting transform for top svg elements (sets scale also)
 Interactor.prototype.setPosition = function (x, y) {
@@ -127,18 +127,18 @@ Interactor.prototype.getAggregateSelfLinkPath = function () {
     const arcEnd = Interactor.trig(intraR, -25 + sectorSize);
     const cp1 = Interactor.trig(intraR, 40 + sectorSize);
     const cp2 = Interactor.trig(intraR, -40 + sectorSize);
-    return 'M 0,0 ' +
-        'Q ' + cp1.x + ',' + -cp1.y + ' ' + arcStart.x + ',' + -arcStart.y +
-        ' A ' + intraR + ' ' + intraR + ' 0 0 1 ' + arcEnd.x + ',' + -arcEnd.y +
-        ' Q ' + cp2.x + ',' + -cp2.y + ' 0,0';
-}
+    return "M 0,0 " +
+        "Q " + cp1.x + "," + -cp1.y + " " + arcStart.x + "," + -arcStart.y +
+        " A " + intraR + " " + intraR + " 0 0 1 " + arcEnd.x + "," + -arcEnd.y +
+        " Q " + cp2.x + "," + -cp2.y + " 0,0";
+};
 
 Interactor.rotatePointAboutPoint = function (p, o, theta) {
     theta = (theta / 360) * Math.PI * 2; //TODO: change theta arg to radians not degrees
     const rx = Math.cos(theta) * (p[0] - o[0]) - Math.sin(theta) * (p[1] - o[1]) + o[0];
     const ry = Math.sin(theta) * (p[0] - o[0]) + Math.cos(theta) * (p[1] - o[1]) + o[1];
     return [rx, ry];
-}
+};
 
 Interactor.prototype.checkLinks = function () {
     function checkAll(linkMap) {
@@ -155,7 +155,7 @@ Interactor.prototype.checkLinks = function () {
     if (this.selfLink !== null) {
         this.selfLink.check();
     }
-}
+};
 
 // update all lines (e.g after a move)
 Interactor.prototype.setAllLinkCoordinates = function () {
@@ -189,7 +189,7 @@ Interactor.prototype.showData = function() {
 }
 */
 
-Interactor.prototype.setForm = function (form, svgP) {
+Interactor.prototype.setForm = function () {
 };
 
 module.exports = Interactor;

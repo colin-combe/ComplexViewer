@@ -1,4 +1,4 @@
-var exampleIndex = [{
+const exampleIndex = [{
     "ac": "CPX-1920",
     "name": "~CPX-1920",
     "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-1920",

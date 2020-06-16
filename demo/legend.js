@@ -29,7 +29,7 @@ d3.svg.legend = function () {
             dim.x -= margin;
 
             legend.parentGroup.select(".mutLegendBG")
-                .attr(dim)
+                .attr(dim);
         };
 
         //~ drag = d3.behavior.drag()
@@ -67,7 +67,7 @@ d3.svg.legend = function () {
             return {
                 parentGroup: mutLegendGroup,
                 target: target
-            }
+            };
         }
 
 
@@ -86,30 +86,28 @@ d3.svg.legend = function () {
                 //~ var trans = new RGBColor("rgba(" +temp.r+","+temp.g+","+temp.b+ ", 0.6)");
 
                 var opaque = new RGBColor("");
-                opaque.r = ((1 - 0.6) * 1) + (0.6 * (temp.r / 255));
-                opaque.g = ((1 - 0.6) * 1) + (0.6 * (temp.g / 255));
-                opaque.b = ((1 - 0.6) * 1) + (0.6 * (temp.b / 255));
+                opaque.r = ((1 - 0.6)) + (0.6 * (temp.r / 255));
+                opaque.g = ((1 - 0.6)) + (0.6 * (temp.g / 255));
+                opaque.b = ((1 - 0.6)) + (0.6 * (temp.b / 255));
 
-                var col = "rgb(" + Math.floor(opaque.r * 255) + ","
+                return "rgb(" + Math.floor(opaque.r * 255) + ","
                     + Math.floor(opaque.g * 255) + "," + Math.floor(opaque.b * 255) + ")";
-
-                return col
             });
-            if (orientation == "vertical") {
+            if (orientation === "vertical") {
                 legend.target.selectAll("g.legendCells").select("text.breakLabels").style("display", "block").style("text-anchor", "start").attr("x", cellWidth + cellPadding).attr("y", 5 + (cellHeight / 2)).text(function (d) {
-                    return labelFormat(d.stop[0]) + (d.stop[1].length > 0 ? " - " + labelFormat(d.stop[1]) : "")
-                })
+                    return labelFormat(d.stop[0]) + (d.stop[1].length > 0 ? " - " + labelFormat(d.stop[1]) : "");
+                });
                 legend.target.selectAll("g.legendCells").attr("transform", function (d, i) {
-                    return "translate(0," + (i * (cellHeight + cellPadding)) + ")"
+                    return "translate(0," + (i * (cellHeight + cellPadding)) + ")";
                 });
             } else {
                 legend.target.selectAll("g.legendCells").attr("transform", function (d, i) {
-                    return "translate(" + (i * cellWidth) + ",0)"
+                    return "translate(" + (i * cellWidth) + ",0)";
                 });
                 legend.target.selectAll("text.breakLabels").style("text-anchor", "middle").attr("x", 0).attr("y", -7).style("display", function (d, i) {
-                    return i == 0 ? "none" : "block"
+                    return i === 0 ? "none" : "block";
                 }).text(function (d) {
-                    return labelFormat(d.stop[0])
+                    return labelFormat(d.stop[0]);
                 });
             }
         }
@@ -136,8 +134,8 @@ d3.svg.legend = function () {
             .append("g")
             .attr("class", "legendCells")
             .attr("transform", function (d, i) {
-                return "translate(" + (i * (cellWidth + cellPadding)) + ",0)"
-            })
+                return "translate(" + (i * (cellWidth + cellPadding)) + ",0)";
+            });
 
 
         legend.target.selectAll("g.legendCells")
@@ -158,10 +156,10 @@ d3.svg.legend = function () {
                     //~ var col = "rgb(" +Math.floor(opaque.r * 255 ) +","
                     //~ + Math.floor(opaque.g * 255) +","+Math.floor(opaque.b * 255)+ ")";
                     var temp = new RGBColor(d.color);
-                    var trans = "rgba(" + temp.r + "," + temp.g + "," + temp.b + ", 0.6)"
+                    var trans = "rgba(" + temp.r + "," + temp.g + "," + temp.b + ", 0.6)";
 
 
-                    return "red"
+                    return "red";
                 }
             )
             .style("stroke", function (d) {
@@ -192,17 +190,17 @@ d3.svg.legend = function () {
         if (scale.invertExtent) {
             //Is a quantile scale
             scale.range().forEach(function (el) {
-                var cellObject = {color: el, stop: scale.invertExtent(el)}
-                legendValues.push(cellObject)
-            })
+                var cellObject = {color: el, stop: scale.invertExtent(el)};
+                legendValues.push(cellObject);
+            });
         } else {
             scale.domain().forEach(function (el) {
-                var cellObject = {color: scale(el), stop: [el, ""]}
-                legendValues.push(cellObject)
-            })
+                var cellObject = {color: scale(el), stop: [el, ""]};
+                legendValues.push(cellObject);
+            });
         }
         return this;
-    }
+    };
 
     legend.scale = function (testValue) {
         var foundColor = legendValues[legendValues.length - 1].color;
@@ -213,72 +211,72 @@ d3.svg.legend = function () {
             }
         }
         return foundColor;
-    }
+    };
 
     legend.cellWidth = function (newCellSize) {
         if (!arguments.length) return cellWidth;
         cellWidth = newCellSize;
         return this;
-    }
+    };
 
     legend.cellHeight = function (newCellSize) {
         if (!arguments.length) return cellHeight;
         cellHeight = newCellSize;
         return this;
-    }
+    };
 
     legend.cellPadding = function (newCellPadding) {
         if (!arguments.length) return cellPadding;
         cellPadding = newCellPadding;
         return this;
-    }
+    };
 
     legend.cellExtent = function (incColor, newExtent) {
         var selectedStop = legendValues.filter(function (el) {
-            return el.color == incColor
+            return el.color === incColor;
         })[0].stop;
-        if (arguments.length == 1) return selectedStop;
+        if (arguments.length === 1) return selectedStop;
         legendValues.filter(function (el) {
-            return el.color == incColor
+            return el.color === incColor;
         })[0].stop = newExtent;
         return this;
-    }
+    };
 
     legend.cellStepping = function (incStep) {
         if (!arguments.length) return changeValue;
         changeValue = incStep;
         return this;
-    }
+    };
 
     legend.units = function (incUnits) {
         if (!arguments.length) return labelUnits;
         labelUnits = incUnits;
         return this;
-    }
+    };
 
     legend.orientation = function (incOrient) {
         if (!arguments.length) return orientation;
         orientation = incOrient;
         return this;
-    }
+    };
 
     legend.labelFormat = function (incFormat) {
         if (!arguments.length) return labelFormat;
         labelFormat = incFormat;
-        if (incFormat == "none") {
+        if (incFormat === "none") {
             labelFormat = function (inc) {
-                return inc
+                return inc;
             };
         }
         return this;
-    }
+    };
 
     legend.place = function (incCoordinates) {
         if (!arguments.length) return incCoordinates;
         coordinates = incCoordinates;
         return this;
-    }
+    };
 
     return legend;
 
-}
+};

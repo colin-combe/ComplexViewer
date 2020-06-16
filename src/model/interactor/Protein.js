@@ -9,20 +9,20 @@
 //		authors: Lutz Fischer, Colin Combe
 
 "use strict";
-const d3 = require('d3');
+const d3 = require("d3");
 
-const Interactor = require('./Interactor');
-const Polymer = require('./Polymer');
-const Config = require('../../controller/Config');
+const Interactor = require("./Interactor");
+const Polymer = require("./Polymer");
+const Config = require("../../controller/Config");
 
 Protein.prototype = new Polymer();
 
 function Protein(id, xinetController, json, name) {
-    this.id = id; // id may not be accession (multiple Segments with same accesssion)
+    this.id = id; // id may not be accession (multiple Segments with same accession)
     this.controller = xinetController;
     this.json = json;
     this.name = name;
-    this.tooltip = this.name + ' [' + this.id + ']'; // + this.accession;
+    this.tooltip = this.name + " [" + this.id + "]"; // + this.accession;
     //links
     this.naryLinks = d3.map();
     this.binaryLinks = d3.map();
@@ -59,12 +59,12 @@ function Protein(id, xinetController, json, name) {
     //create label - we will move this svg element around when protein form changes
     this.labelSVG = document.createElementNS(Config.svgns, "text");
     this.labelSVG.setAttribute("text-anchor", "end");
-    this.labelSVG.setAttribute("fill", "black")
+    this.labelSVG.setAttribute("fill", "black");
     this.labelSVG.setAttribute("x", "0");
     this.labelSVG.setAttribute("y", "10");
     this.labelSVG.setAttribute("class", "protein xlv_text proteinLabel");
-    this.labelSVG.setAttribute('font-family', 'Arial');
-    this.labelSVG.setAttribute('font-size', '16');
+    this.labelSVG.setAttribute("font-family", "Arial");
+    this.labelSVG.setAttribute("font-size", "16");
     //choose label text
     if (this.name !== null && this.name !== "") {
         this.labelText = this.name;
@@ -79,7 +79,7 @@ function Protein(id, xinetController, json, name) {
     d3.select(this.labelSVG).attr("transform",
         "translate( -" + (5) + " " + Interactor.labelY + ") rotate(0) scale(1, 1)");
     this.upperGroup.appendChild(this.labelSVG);
-    //ticks (and animo acid letters)
+    //ticks (and amino acid letters)
     this.ticks = document.createElementNS(Config.svgns, "g");
     //svg group for annotations
     this.annotationsSvgGroup = document.createElementNS(Config.svgns, "g");
@@ -95,7 +95,7 @@ function Protein(id, xinetController, json, name) {
 
     this.scaleLabels = [];
 
-    //since form is set to 0, make this a circle, this stuff is equivalant to
+    //since form is set to 0, make this a circle, this stuff is equivalent to
     // end result of toCircle but without transition
     const r = this.getBlobRadius();
     d3.select(this.outline)

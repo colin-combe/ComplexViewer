@@ -11,13 +11,13 @@
 //// TODO: get rid of
 
 "use strict";
-const d3 = require('d3');
+const d3 = require("d3");
 
 function xiNET_Storage() {
 }
 
-const Annotation = require('../model/interactor/Annotation');
-const SequenceFeature = require('./../model/SequenceFeature');
+const Annotation = require("../model/interactor/Annotation");
+const SequenceFeature = require("./../model/SequenceFeature");
 
 xiNET_Storage.ns = "xiNET.";
 
@@ -32,13 +32,13 @@ xiNET_Storage.accessionFromId = function (id) {
     const match = idRegex.exec(id);
     if (match) {
         return match[1];
-    } else if (id.indexOf('|') !== -1) {
+    } else if (id.indexOf("|") !== -1) {
         //following reads swiss-prot style identifiers
-        return id.split('|')[1];
+        return id.split("|")[1];
     } else {
         return id;
     }
-}
+};
 
 xiNET_Storage.getUniProtTxt = function (id, callback) {
     const accession = xiNET_Storage.accessionFromId(id);
@@ -51,7 +51,7 @@ xiNET_Storage.getUniProtTxt = function (id, callback) {
             //~ localStorage.setItem(xiNET_Storage.ns  + "UniProtKB."+ accession, txt);
             //~ //console.log(accession + " UniProt added to local storage.");
             //~ }
-            callback(id, txt)
+            callback(id, txt);
         });
     }
 
@@ -73,7 +73,7 @@ xiNET_Storage.getUniProtTxt = function (id, callback) {
     // console.log("No local storage found.");
     uniprotWebService();
     //~ }
-}
+};
 
 xiNET_Storage.getSequence = function (id, callback) {
     //~ var accession = xiNET_Storage.accessionFromId(id);
@@ -92,9 +92,9 @@ xiNET_Storage.getSequence = function (id, callback) {
         //~ }
         //~ }
         //~ }
-        callback(id, json.sequence.replace(/[^A-Z]/g, ''));
+        callback(id, json.sequence.replace(/[^A-Z]/g, ""));
     });
-}
+};
 
 xiNET_Storage.getUniProtFeatures = function (id, callback) {
     //var accession = xiNET_Storage.accessionFromId(id);
@@ -117,7 +117,7 @@ xiNET_Storage.getUniProtFeatures = function (id, callback) {
             return ft.type === "DOMAIN";
         }));
     });
-}
+};
 
 xiNET_Storage.getSuperFamFeatures = function (id, callback) {
     const accession = xiNET_Storage.accessionFromId(id);
@@ -148,16 +148,16 @@ xiNET_Storage.getSuperFamFeatures = function (id, callback) {
             xmlDoc.loadXML(dasXml);
         }
         const features = [];
-        const xmlFeatures = xmlDoc.getElementsByTagName('FEATURE');
+        const xmlFeatures = xmlDoc.getElementsByTagName("FEATURE");
         const featureCount = xmlFeatures.length;
         for (let f = 0; f < featureCount; f++) {
             const xmlFeature = xmlFeatures[f];
-            const type = xmlFeature.getElementsByTagName('TYPE')[0]; //might need to watch for text nodes getting mixed in here
-            const category = type.getAttribute('category');
-            if (category === 'miscellaneous') {
-                const name = type.getAttribute('id');
-                const start = xmlFeature.getElementsByTagName('START')[0].textContent;
-                const end = xmlFeature.getElementsByTagName('END')[0].textContent;
+            const type = xmlFeature.getElementsByTagName("TYPE")[0]; //might need to watch for text nodes getting mixed in here
+            const category = type.getAttribute("category");
+            if (category === "miscellaneous") {
+                const name = type.getAttribute("id");
+                const start = xmlFeature.getElementsByTagName("START")[0].textContent;
+                const end = xmlFeature.getElementsByTagName("END")[0].textContent;
                 features.push(new Annotation(name, new SequenceFeature(null, start + "-" + end)));
             }
         }
@@ -182,6 +182,6 @@ xiNET_Storage.getSuperFamFeatures = function (id, callback) {
     // console.log("No local storage found.");
     superFamDAS();
     //~ }
-}
+};
 
 module.exports = xiNET_Storage;

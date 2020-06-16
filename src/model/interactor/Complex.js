@@ -9,8 +9,8 @@
 //		authors: Colin Combe
 
 "use strict";
-const d3 = require('d3');
-const Interactor = require('./Interactor');
+const d3 = require("d3");
+const Interactor = require("./Interactor");
 
 Complex.prototype = new Interactor();
 
@@ -23,7 +23,7 @@ function Complex(id, xlvController) {
     this.selfLink = null;
     this.sequenceLinks = d3.map();
     this.form = 0;
-    this.type = 'complex';
+    this.type = "complex";
 
     this.padding = 15;
 
@@ -42,9 +42,9 @@ function Complex(id, xlvController) {
 
 Complex.prototype.initInteractor = function (naryLink) {
     this.naryLink = naryLink;
-    naryLink.path.setAttribute('stroke', 'gray');
-    naryLink.path.setAttribute('stroke-linejoin', 'round');
-    naryLink.path.setAttribute('stroke-width', 8);
+    naryLink.path.setAttribute("stroke", "gray");
+    naryLink.path.setAttribute("stroke-linejoin", "round");
+    naryLink.path.setAttribute("stroke-width", 8);
 };
 
 Complex.prototype.getPosition = function () {
@@ -59,11 +59,11 @@ Complex.prototype.getPosition = function () {
     return [xSum / mc, ySum / mc];
 };
 
-Complex.prototype.setPosition = function (x, y) {
+Complex.prototype.setPosition = function () {
 };
 
-Complex.prototype.getResidueCoordinates = function (x, y) {
-    return this.getPosition()
+Complex.prototype.getResidueCoordinates = function () {
+    return this.getPosition();
 };
 Complex.prototype.showHighlight = function () {
 };

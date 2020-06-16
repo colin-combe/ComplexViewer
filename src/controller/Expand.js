@@ -1,16 +1,16 @@
 "use strict";
 
-const d3 = require('d3');
+const d3 = require("d3");
 
 const matrix = function (json) {
 
     // We'll need collections of our interactions and interactors for later..
     const interactions = json.data.filter(function (interaction) {
-        return interaction.object == "interaction";
+        return interaction.object === "interaction";
     });
 
     const interactors = json.data.filter(function (interactor) {
-        return interactor.object == "interactor";
+        return interactor.object === "interactor";
     });
 
     const newParticipants = [];
@@ -44,7 +44,7 @@ const matrix = function (json) {
                     // Store a reference from where we were cloned
                     clonedParticipant.cloneParentID = participant.id;
                     clonedParticipant.cloneIteration = i;
-                    participant.cloned = true
+                    participant.cloned = true;
 
                     // We need to relink to our binding site IDs:
                     if (clonedParticipant.features) {
@@ -91,7 +91,7 @@ const matrix = function (json) {
                         if (linkedFeatures.indexOf(feature.clonedfrom) > -1) {
                             const clonedFeature = JSON.parse(JSON.stringify(nFeature));
                             clonedFeature.id = nFeature.id + "_" + feature.id;
-                            clonedFeature.linkedFeatures = []
+                            clonedFeature.linkedFeatures = [];
                             clonedFeature.linkedFeatures.push(feature.id);
 
                             const parts = findFirstObjWithAttr(interaction.participants, "id", clonedFeature.parentParticipant);
@@ -113,7 +113,7 @@ const matrix = function (json) {
 
     //actually the expansion code doesn't seem to take up that much time
     //console.log("Expand time:" + ( +new Date() - startTime));
-    return json
+    return json;
 };
 
 // Returns the first object in an array that has an attribute with a matching value.
@@ -127,4 +127,4 @@ function findFirstObjWithAttr(collection, attribute, value) {
 
 module.exports = {
     matrix: matrix
-}
+};

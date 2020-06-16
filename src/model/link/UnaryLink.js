@@ -11,9 +11,9 @@
 
 "use strict";
 
-const d3 = require('d3');
-const Config = require('../../controller/Config');
-const Link = require('./Link');
+const d3 = require("d3");
+const Config = require("../../controller/Config");
+const Link = require("./Link");
 // var SequenceLink = require('./SequenceLink');
 
 UnaryLink.prototype = new Link();
@@ -57,11 +57,11 @@ function UnaryLink(id, xlvController, interactor) {
 UnaryLink.prototype.initSVG = function () {
     const path = this.interactors[0].getAggregateSelfLinkPath();
     this.line = document.createElementNS(Config.svgns, "path");
-    this.line.setAttribute('d', path);
-    this.highlightLine = document.createElementNS(Config.svgns, 'path');
-    this.highlightLine.setAttribute('d', path);
-    this.thickLine = document.createElementNS(Config.svgns, 'path');
-    this.thickLine.setAttribute('d', path);
+    this.line.setAttribute("d", path);
+    this.highlightLine = document.createElementNS(Config.svgns, "path");
+    this.highlightLine.setAttribute("d", path);
+    this.thickLine = document.createElementNS(Config.svgns, "path");
+    this.thickLine.setAttribute("d", path);
 
     this.line.setAttribute("class", "link");
     this.line.setAttribute("fill", "none");
@@ -121,17 +121,17 @@ UnaryLink.prototype.initSVG = function () {
     };
 
     // this.isSelected = false;
-}
+};
 
 UnaryLink.prototype.selfLink = function () {
     return (this.fromProtein === this.toProtein);
-}
+};
 
 UnaryLink.prototype.initSelfLinkSVG = function () {
     const path = this.interactors[0].getAggregateSelfLinkPath();
-    this.line.setAttribute('d', path);
-    this.highlightLine.setAttribute('d', path);
-    this.thickLine.setAttribute('d', path);
+    this.line.setAttribute("d", path);
+    this.highlightLine.setAttribute("d", path);
+    this.thickLine.setAttribute("d", path);
 };
 
 UnaryLink.prototype.showHighlight = function (show) {
@@ -171,7 +171,7 @@ UnaryLink.prototype.show = function () {
 
 UnaryLink.prototype.setLinkCoordinates = function () {
     const interactor = this.interactors[0];
-    if (typeof this.thickLine !== 'undefined') {
+    if (typeof this.thickLine !== "undefined") {
         this.thickLine.setAttribute("transform", "translate(" + interactor.cx +
             " " + interactor.cy + ")" + " scale(" + (this.controller.z) + ")");
     }

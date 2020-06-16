@@ -11,10 +11,10 @@
 
 "use strict";
 
-const d3 = require('d3');
-const Link = require('./Link');
-const Config = require('../../controller/Config');
-const Interactor = require('../interactor/Interactor');
+const d3 = require("d3");
+const Link = require("./Link");
+const Config = require("../../controller/Config");
+const Interactor = require("../interactor/Interactor");
 
 //NaryLink.naryColours; // init'ed in clear function of controller
 NaryLink.orbitNodes = 16;
@@ -48,12 +48,12 @@ NaryLink.prototype.getTotalParticipantCount = function () {
         }
     }
     return result;
-}
+};
 
 NaryLink.prototype.initSVG = function () {
     this.path = document.createElementNS(Config.svgns, "path");
     this.colour = NaryLink.naryColours(this.id);
-    this.path.setAttribute('fill', this.colour);
+    this.path.setAttribute("fill", this.colour);
     //set the events for it
     const self = this;
     this.path.onmousedown = function (evt) {
@@ -99,7 +99,7 @@ NaryLink.prototype.setLinkCoordinates = function () {
     const mapped = this.orbitNodes(this.getMappedCoordinates());
     const hullValues = calculateHullPath(mapped);
     if (hullValues) {
-        this.path.setAttribute('d', hullValues);
+        this.path.setAttribute("d", hullValues);
     }
     if (this.complex) {
         this.complex.setAllLinkCoordinates();
@@ -112,7 +112,7 @@ NaryLink.prototype.getMappedCoordinates = function () {
     const ic = interactors.length;
     for (let i = 0; i < ic; i++) {
         const interactor = interactors[i];
-        if (interactor.type === 'complex') {
+        if (interactor.type === "complex") {
             mapped = mapped.concat(this.orbitNodes(interactor.naryLink.getMappedCoordinates()));
         } else if (interactor.form === 1) {
             const start = interactor.getResidueCoordinates(0);
@@ -129,7 +129,7 @@ NaryLink.prototype.getMappedCoordinates = function () {
         }
     }
     return mapped;
-}
+};
 
 //'orbit' nodes - several nodes around interactor positions to give margin
 NaryLink.prototype.orbitNodes = function (mapped) {
@@ -144,7 +144,7 @@ NaryLink.prototype.orbitNodes = function (mapped) {
         }
     }
     return orbitNodes;
-}
+};
 
 
 module.exports = NaryLink;

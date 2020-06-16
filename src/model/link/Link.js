@@ -14,7 +14,7 @@
 
 "use strict";
 
-const d3 = require('d3');
+const d3 = require("d3");
 const Link = function () {
 };
 Link.maxNoEvidences = 0;
@@ -40,7 +40,7 @@ Link.prototype.highlightInteractors = function (show) {
     for (let i = 0; i < interactors.length; i++) {
         interactors[i].showHighlight(show);
     }
-}
+};
 
 // event handler for starting dragging or rotation (or flipping internal links)
 Link.prototype.mouseDown = function (evt) {
@@ -57,7 +57,7 @@ Link.prototype.mouseDown = function (evt) {
     this.controller.dragStart = this.controller.mouseToSVG(p.x, p.y);
     //~ this.showData();
     return false;
-}
+};
 
 // highlight on mouseover, all 'subclasses' need a showHighlight method
 Link.prototype.mouseOver = function (evt) {
@@ -66,18 +66,18 @@ Link.prototype.mouseOver = function (evt) {
     //this.showHighlight(true, true);
     this.controller.setTooltip(this.getToolTip(), this.colour);
     return false;
-}
+};
 
 Link.prototype.getToolTip = function () {
     return this.id;
-}
+};
 
 Link.prototype.mouseOut = function (evt) {
     this.controller.preventDefaultsAndStopPropagation(evt);
     this.showHighlight(false, true);
     this.controller.hideTooltip();
     return false;
-}
+};
 
 Link.prototype.touchStart = function (evt) {
     this.controller.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
@@ -93,7 +93,7 @@ Link.prototype.touchStart = function (evt) {
     this.controller.dragStart = this.controller.mouseToSVG(p.x, p.y);
     //~ this.showData();
     return false;
-}
+};
 
 //used when link clicked
 /*Link.prototype.showData = function() {
@@ -123,9 +123,9 @@ Link.prototype.filteredEvidence = function () {
 
 //used by BinaryLink and UnaryLink
 Link.prototype.hide = function () {
-    this.thickLine.remove()
-    this.highlightLine.remove()
-    this.line.remove()
+    this.thickLine.remove();
+    this.highlightLine.remove();
+    this.line.remove();
     // const p_pLinksWide = [];
     // const highlights = [];
     // const p_pLinks = [];

@@ -10,12 +10,12 @@
 
 "use strict";
 
-const d3 = require('d3');
-const Interactor = require('./Interactor');
-const Annotation = require('./Annotation');
-const SequenceFeature = require('./../SequenceFeature');
+const d3 = require("d3");
+const Interactor = require("./Interactor");
+const Annotation = require("./Annotation");
+const SequenceFeature = require("./../SequenceFeature");
 //var Rotator = require('../../controller/Rotator');
-const Config = require('../../controller/Config');
+const Config = require("../../controller/Config");
 
 Polymer.STICKHEIGHT = 20; //height of stick in pixels
 Polymer.MAXSIZE = 0; // residue count of longest sequence
@@ -29,9 +29,9 @@ Polymer.prototype = new Interactor();
 //sequence = amino acids in UPPERCASE, digits or lowercase can be used for modification info
 Polymer.prototype.setSequence = function (sequence) {
     //remove modification site info from sequence
-    this.sequence = sequence.replace(/[^A-Z]/g, '');
+    this.sequence = sequence.replace(/[^A-Z]/g, "");
     this.size = this.sequence.length;
-}
+};
 
 //by the time we get here all prot's have had their sequence set, so Polymer.MAXSIZE has correct value;
 Polymer.prototype.init = function () {
@@ -82,7 +82,7 @@ Polymer.prototype.setStickScale = function (scale, svgP) {
 
     this.stickZoom = scale;
     this.scale();
-    this.setPosition(x, y)
+    this.setPosition(x, y);
     this.setAllLinkCoordinates();
 };
 
@@ -157,8 +157,8 @@ Polymer.prototype.setScaleGroup = function () {
             const seqLabelGroup = document.createElementNS(Config.svgns, "g");
             seqLabelGroup.setAttribute("transform", "translate(" + this.getResXwithStickZoom(res) + " " + 0 + ")");
             const seqLabel = document.createElementNS(Config.svgns, "text");
-            seqLabel.setAttribute('font-family', "'Courier New', monospace");
-            seqLabel.setAttribute('font-size', '10px');
+            seqLabel.setAttribute("font-family", "'Courier New', monospace");
+            seqLabel.setAttribute("font-size", "10px");
             seqLabel.setAttribute("text-anchor", "middle");
             seqLabel.setAttribute("x", "0");
             seqLabel.setAttribute("y", "3");
@@ -178,8 +178,8 @@ Polymer.prototype.setScaleGroup = function () {
         scaleLabelGroup.setAttribute("transform", "translate(" + tickX + " " + 0 + ")");
         const scaleLabel = document.createElementNS(Config.svgns, "text");
         scaleLabel.setAttribute("class", "Polymer xlv_text PolymerLabel");
-        scaleLabel.setAttribute('font-family', "'Courier New', monospace");
-        scaleLabel.setAttribute('font-size', '14');
+        scaleLabel.setAttribute("font-family", "'Courier New', monospace");
+        scaleLabel.setAttribute("font-size", "14");
         scaleLabel.setAttribute("text-anchor", "middle");
         scaleLabel.setAttribute("x", "0");
         scaleLabel.setAttribute("y", Polymer.STICKHEIGHT + 4);
@@ -250,7 +250,7 @@ Polymer.prototype.toCircle = function (svgP) {
 
     let xInterpol = null,
         yInterpol = null;
-    if (typeof svgP !== 'undefined' && svgP !== null) {
+    if (typeof svgP !== "undefined" && svgP !== null) {
         xInterpol = d3.interpolate(this.cx, svgP.x);
         yInterpol = d3.interpolate(this.cy, svgP.y);
     }
@@ -270,13 +270,11 @@ Polymer.prototype.toCircle = function (svgP) {
         .duration(Polymer.transitionTime);
 
     if (this.annotations) {
-        const annots = this.annotations;
-        const ca = annots.length;
-        for (let a = 0; a < ca; a++) {
-            const anno = annots[a];
-            if (typeof anno.seqDatum.uncertainBegin != "undefined") {
-                const fuzzyStart = anno.fuzzyStart;
-                d3.select(fuzzyStart).transition().attr("d", this.getAnnotationPieSliceApproximatePath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin))
+        const ca = this.annotations.length;
+        for (let annotation of this.annotations) {
+            if (typeof annotation.seqDatum.uncertainBegin != "undefined") {
+                const fuzzyStart = annotation.fuzzyStart;
+                d3.select(fuzzyStart).transition().attr("d", this.getAnnotationPieSliceApproximatePath(annotation.seqDatum.uncertainBegin, annotation.seqDatum.begin))
                     .duration(Polymer.transitionTime).each("end",
                     function () {
                         for (let b = 0; b < ca; b++) {
@@ -290,12 +288,11 @@ Polymer.prototype.toCircle = function (svgP) {
             }
 
             // if (anno.begin && anno.end) {
-            const certain = anno.certain;
-            d3.select(certain).transition().attr("d", this.getAnnotationPieSliceApproximatePath(anno.seqDatum.begin, anno.seqDatum.end))
+            const certain = annotation.certain;
+            d3.select(certain).transition().attr("d", this.getAnnotationPieSliceApproximatePath(annotation.seqDatum.begin, annotation.seqDatum.end))
                 .duration(Polymer.transitionTime).each("end",
                 function () {
-                    for (let b = 0; b < ca; b++) {
-                        const annoB = self.annotations[b];
+                    for (let annoB of self.annotations){
                         if (this === annoB.certain) {
                             d3.select(this).attr("d", self.getAnnotationPieSliceArcPath(annoB.seqDatum.begin, annoB.seqDatum.end));
                         }
@@ -304,9 +301,9 @@ Polymer.prototype.toCircle = function (svgP) {
             );
             // }
 
-            if (typeof anno.seqDatum.uncertainEnd != "undefined") {
-                const fuzzyEnd = anno.fuzzyEnd;
-                d3.select(fuzzyEnd).transition().attr("d", this.getAnnotationPieSliceApproximatePath(anno.seqDatum.end, anno.seqDatum.uncertainEnd))
+            if (typeof annotation.seqDatum.uncertainEnd != "undefined") {
+                const fuzzyEnd = annotation.fuzzyEnd;
+                d3.select(fuzzyEnd).transition().attr("d", this.getAnnotationPieSliceApproximatePath(annotation.seqDatum.end, annotation.seqDatum.uncertainEnd))
                     .duration(Polymer.transitionTime).each("end",
                     function () {
                         for (let b = 0; b < ca; b++) {
@@ -324,7 +321,7 @@ Polymer.prototype.toCircle = function (svgP) {
 
     const originalStickZoom = this.stickZoom;
     const originalRotation = this.rotation;
-    const cubicInOut = d3.ease('cubic-in-out');
+    const cubicInOut = d3.ease("cubic-in-out");
     d3.timer(function (elapsed) {
         return update(elapsed / Polymer.transitionTime);
     });
@@ -429,7 +426,7 @@ Polymer.prototype.toStick = function () {
     }
 
     const self = this;
-    const cubicInOut = d3.ease('cubic-in-out');
+    const cubicInOut = d3.ease("cubic-in-out");
     d3.timer(function (elapsed) {
         return update(elapsed / Polymer.transitionTime);
     });
@@ -443,7 +440,7 @@ Polymer.prototype.toStick = function () {
         d3.select(self.highlight).attr("width", currentLength).attr("x", -(currentLength / 2) + (0.5 * self.stickZoom));
         d3.select(self.outline).attr("width", currentLength).attr("x", -(currentLength / 2) + (0.5 * self.stickZoom));
         d3.select(self.background).attr("width", currentLength).attr("x", -(currentLength / 2) + (0.5 * self.stickZoom));
-        self.stickZoom = stickZoomInterpol(cubicInOut(interp))
+        self.stickZoom = stickZoomInterpol(cubicInOut(interp));
         self.setAllLinkCoordinates();
 
         if (interp === 1) { // finished - tidy up
@@ -598,7 +595,7 @@ Polymer.prototype.getResidueCoordinates = function (r, yOff) {
         const rotRad = (this.rotation / 360) * Math.PI * 2;
         x = l * Math.cos(rotRad + a);
         y = l * Math.sin(rotRad + a);
-        if (typeof yOff !== 'undefined') {
+        if (typeof yOff !== "undefined") {
             x += yOff * this.controller.z * Math.cos(rotRad + (Math.PI / 2));
             y += yOff * this.controller.z * Math.sin(rotRad + (Math.PI / 2));
         }
@@ -614,7 +611,7 @@ Polymer.prototype.clearPositionalFeatures = function () {
     this.annotations = [];
     this.annotationTypes = [];
     if (this.annotationsSvgGroup) d3.select(this.annotationsSvgGroup).selectAll("*").remove();
-}
+};
 
 Polymer.prototype.setPositionalFeatures = function (posFeats) {
     if (posFeats) {
@@ -676,7 +673,7 @@ Polymer.prototype.setPositionalFeatures = function (posFeats) {
             const toolTipFunc = function (evt) {
                 const el = (evt.target.correspondingUseElement) ? evt.target.correspondingUseElement : evt.target;
                 xlv.preventDefaultsAndStopPropagation(evt);
-                xlv.setTooltip(el.name, el.getAttribute('fill'));
+                xlv.setTooltip(el.name, el.getAttribute("fill"));
                 self.showHighlight(true);
             };
             anno.fuzzyStart.onmouseover = toolTipFunc;
@@ -751,10 +748,10 @@ Polymer.prototype.getAnnotationPieSliceApproximatePath = function (startRes, end
     return approximatePiePath;
 };
 
-Polymer.prototype.getAnnotationRectPath = function (startRes, endRes, anno) {
+Polymer.prototype.getAnnotationRectPath = function (startRes, endRes, annotation) {
     //domain as rectangle path
     let top, bottom, rungHeight;
-    const rung = this.annotationTypes.indexOf(anno.description);
+    const rung = this.annotationTypes.indexOf(annotation.description);
     if (rung === -1) {
         bottom = Polymer.STICKHEIGHT / 2;
         top = -Polymer.STICKHEIGHT / 2;
