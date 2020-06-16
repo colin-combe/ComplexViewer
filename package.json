@@ -1,7 +1,7 @@
 {
   "name": "complexviewer",
-  "version": "1.1.0",
-  "description": "A network visualisation that displays molecular interaction data, including detailed residue-level information such as binding sites. v1 is used in EBI's Complex Portal. The aim for v2 is a general purpose viewer for PSI-MI XML data",
+  "version": "2.0.0-beta",
+  "description": "A network visualisation that displays molecular interaction data, including detailed residue-level information such as binding sites. Used in EBI's Complex Portal and elsewhere.",
   "author": {
     "name": "Colin Combe",
     "email": "colin.combe@ed.ac.uk"
@@ -29,16 +29,20 @@
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.11.0",
-    "babel-loader": "^8.1.0",
+    "style-loader": "^1.2.1",
+    "css-loader": "^3.6.0",
+    "file-loader": "^6.0.0",
+    "url-loader": "^4.1.0",
     "@babel/core": "^7.10.2",
     "@babel/preset-env": "^7.10.2",
+    "babel-loader": "^8.1.0",
     "eslint": "^7.2.0"
   },
   "scripts": {
-    "clean": "rm dist/complexviewer.js",
+    "clean": "rm dist/*",
     "start:dev": "webpack-dev-server --config webpack.conf.js",
-    "build-dev": "webpack -d --mode development --config webpack.conf.js",
-    "build-prod": "webpack -p --mode production --config webpack.conf.js"
+    "build-dev": "rm dist/*; webpack -d --mode development --config webpack.conf.js",
+    "build-prod": "rm dist/*; webpack -p --mode production --config webpack.conf.js"
   },
   "engines": {
     "node": ">=14.0.0"
@@ -64,5 +68,5 @@
     "interactions",
     "complexes"
   ],
-  "main": "src/controller/Controller.js"
+  "main": "src/js/app.js"
 }

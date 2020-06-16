@@ -3,7 +3,7 @@ This file provides some documentation for the current version of the interaction
 
 The procedure for use is as follows:
 
-1. 	Construct a new instance of the xiNET Controller object, 
+1. 	Construct a new instance of the xiNET App object,
     passing the target DIV you would like it to draw into as a parameter to the constructor.
     E.g.:
 
@@ -27,7 +27,7 @@ The procedure for use is as follows:
 
 -----------------------------------------------------------------------------------------
 
-Other functions you may call (assumes 'xlv' is var name for your instance of xiNET Controller):
+Other functions you may call (assumes 'xlv' is var name for your instance of xiNET App):
 
 xlv.reset()					resets zoom/pan, changes all molecules to blobs (not bars), runs autolayout
 xlv.resetZoom()				resets zoom/pan (actually, zooming currently disabled)

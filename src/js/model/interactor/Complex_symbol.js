@@ -4,29 +4,30 @@
 //    	This product includes software developed at
 //    	the Rappsilber Laboratory (http://www.rappsilberlab.org/).
 //
-//		MoleculeSet.js
+//		Complex.js
 //
 //		authors: Colin Combe
 
 "use strict";
+
 const d3 = require("d3");
-
 const Interactor = require("./Interactor");
-const Config = require("../../controller/Config");
+const Config = require("../../util/Config");
 
-MoleculeSet.prototype = new Interactor();
+ComplexSymbol.prototype = new Interactor();
 
-function MoleculeSet(id, xlvController, json, name) {
+function ComplexSymbol(id, xlvController, interactorRef, json) { //, name) {
     this.id = id; // id may not be accession (multiple Segments with same accession)
     this.controller = xlvController;
+    this.isComplexSymbol = true;
     this.json = json;
     //links
     this.naryLinks = d3.map();
     this.binaryLinks = d3.map();
     this.selfLink = null;
     this.sequenceLinks = d3.map();
-    this.name = name;
-    this.tooltip = this.id;
+
+    this.name = interactorRef;
     // layout info
     this.cx = 40;
     this.cy = 40;
@@ -37,8 +38,10 @@ function MoleculeSet(id, xlvController, json, name) {
      */
 
     this.upperGroup = document.createElementNS(Config.svgns, "g");
-    this.upperGroup.setAttribute("class", "upperGroup");
-    const points = "0, -10  8.66,5 -8.66,5";
+    //~ this.upperGroup.setAttribute("class", "protein upperGroup");
+
+    //for polygon
+    const points = "15,0 8,-13 -7,-13 -15,0 -8,13 7,13";
     //make highlight
     this.highlight = document.createElementNS(Config.svgns, "polygon");
     this.highlight.setAttribute("points", points);
@@ -48,12 +51,6 @@ function MoleculeSet(id, xlvController, json, name) {
     //attributes that may change
     d3.select(this.highlight).attr("stroke-opacity", 0);
     this.upperGroup.appendChild(this.highlight);
-
-    //svg groups for self links
-    this.intraLinksHighlights = document.createElementNS(Config.svgns, "g");
-    this.intraLinks = document.createElementNS(Config.svgns, "g");
-    this.upperGroup.appendChild(this.intraLinksHighlights);
-    this.upperGroup.appendChild(this.intraLinks);
 
     //create label - we will move this svg element around when protein form changes
     this.labelSVG = document.createElementNS(Config.svgns, "text");
@@ -69,38 +66,19 @@ function MoleculeSet(id, xlvController, json, name) {
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
     d3.select(this.labelSVG).attr("transform",
-        "translate( -" + (25) + " " + Interactor.labelY + ")");
+        "translate( -" + (20) + " " + Interactor.labelY + ")"); // the hexagon has slightly bigger diameter
     this.upperGroup.appendChild(this.labelSVG);
 
-    //make symbol
-    this.outline = document.createElementNS(Config.svgns, "rect");
-    d3.select(this.outline).attr("height", 20)
-        .attr("width", 40)
-        .attr("x", -20)
-        .attr("y", -10)
-        .attr("rx", 5)
-        .attr("ry", 5)
-        .attr("stroke", "black")
-        .attr("stroke-width", "4")
-        .attr("stroke-opacity", 1)
-        .attr("fill-opacity", 1)
+    //make blob
+    this.outline = document.createElementNS(Config.svgns, "polygon");
+    this.outline.setAttribute("points", points);
+
+    this.outline.setAttribute("stroke", "black");
+    this.outline.setAttribute("stroke-width", "1");
+    d3.select(this.outline).attr("stroke-opacity", 1).attr("fill-opacity", 1)
         .attr("fill", "#ffffff");
     //append outline
     this.upperGroup.appendChild(this.outline);
-
-    this.upperLine = document.createElementNS(Config.svgns, "rect");
-    d3.select(this.upperLine).attr("height", 20)
-        .attr("width", 40)
-        .attr("x", -20)
-        .attr("y", -10)
-        .attr("rx", 5)
-        .attr("ry", 5)
-        .attr("stroke", "white")
-        .attr("stroke-width", "2")
-        .attr("stroke-opacity", 1)
-        .attr("fill-opacity", 0);
-    //append outline
-    this.upperGroup.appendChild(this.upperLine);
 
     // events
     const self = this;
@@ -114,33 +92,18 @@ function MoleculeSet(id, xlvController, json, name) {
     this.upperGroup.onmouseout = function (evt) {
         self.mouseOut(evt);
     };
-
     this.upperGroup.ontouchstart = function (evt) {
         self.touchStart(evt);
     };
-    //~ this.upperGroup.ontouchmove = function(evt) {};
-    //~ this.upperGroup.ontouchend = function(evt) {
-    //~ self.ctrl.message("protein touch end");
-    //~ self.mouseOut(evt);
-    //~ };
-    //~ this.upperGroup.ontouchenter = function(evt) {
-    //~ self.message("protein touch enter");
-    //~ self.touchStart(evt);
-    //~ };
-    //~ this.upperGroup.ontouchleave = function(evt) {
-    //~ self.message("protein touch leave");
-    //~ self.mouseOut(evt);
-    //~ };
-    //~ this.upperGroup.ontouchcancel = function(evt) {
-    //~ self.message("protein touch cancel");
-    //~ self.mouseOut(evt);
-    //~ };
-
 }
 
 /*
-MoleculeSet.prototype.getBlobRadius = function() {
-    return 20;
+ComplexSymbol.prototype.showData = function() {
+    if (this.name.startsWith("intact_")) {
+        const url = "http://www.ebi.ac.uk/intact/complex/details/" + this.name.substr(7);
+        window.open(url, '_blank');
+    }
 }
 */
-module.exports = MoleculeSet;
+
+module.exports = ComplexSymbol;

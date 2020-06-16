@@ -13,7 +13,7 @@ const d3 = require("d3");
 
 const Interactor = require("./Interactor");
 const Polymer = require("./Polymer");
-const Config = require("../../controller/Config");
+const Config = require("../../util/Config");
 
 Protein.prototype = new Polymer();
 
@@ -38,8 +38,8 @@ function Protein(id, xinetController, json, name) {
     this.stickZoom = 1;
     this.form = 0; //null; // 0 = blob, 1 = stick
     //rotators
-    /*	this.lowerRotator = new Rotator(this, 0, this.controller);
-        this.upperRotator = new Rotator(this, 1, this.controller); */
+    /*	this.lowerRotator = new Rotator(this, 0, this.util);
+        this.upperRotator = new Rotator(this, 1, this.util); */
 
     this.upperGroup = document.createElementNS(Config.svgns, "g");
     this.upperGroup.setAttribute("class", "protein upperGroup");
@@ -135,7 +135,7 @@ function Protein(id, xinetController, json, name) {
 
     Object.defineProperty(this, "height", {
         get: function height() {
-            return 60;//this.upperGroup.getBBox().height + 60; // * this.controller.z;
+            return 60;//this.upperGroup.getBBox().height + 60; // * this.util.z;
         }
     });
 

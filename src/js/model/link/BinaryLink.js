@@ -8,7 +8,7 @@
 
 
 const d3 = require("d3");
-const Config = require("../../controller/Config");
+const Config = require("../../util/Config");
 const Link = require("./Link");
 const Intersection = require("intersectionjs");
 const Point2D = require("point2d");

@@ -6,117 +6,131 @@
 //
 //    author: Colin Combe
 //
-//    Controller.js
+//    app.js
 
-"use strict";
+import * as css from '../css/XLV.css';
 
-const d3 = require("d3");
-const colorbrewer = require("colorbrewer");
-const cola = require("webcola");
-const readMIJSON = require("./readMIJSON");
-const setAnnotations = require("./setAnnotations");
-const NaryLink = require("../model/link/NaryLink");
-const Config = require("./Config");
+import * as d3 from "d3";
+import * as colorbrewer from "colorbrewer";
+import * as cola from "webcola";
+import * as readMIJSON from "./util/readMIJSON";
+import * as setAnnotations from "./util/setAnnotations";
 
-//todo - refactor everything to use new javascript class syntax
-const xiNET = {}; //todo - get rid of this, its pointless?
+import SymbolKey from "./SymbolKey";
 
-xiNET.Controller = function (targetDiv, debug) {
-    this.debug = !!debug;
+// import * as ColorSchemeKey from "./color-scheme-key";
+import * as NaryLink from "./model/link/NaryLink";
+import * as Config from "./util/Config";
 
-    if (typeof targetDiv === "string") {
-        this.el = document.getElementById(targetDiv);
-    } else {
-        this.el = targetDiv;
-    }
+//todo - refactor everything to use ES6 class syntax
+// but https://benmccormick.org/2015/04/07/es6-classes-and-backbone-js
+// "ES6 classes don’t support adding properties directly to the class instance, only functions/methods"
+// and so backbone doesn't work
+// ...continuing to use prototypical inheritance
 
-    this.STATES = {};
-    this.STATES.MOUSE_UP = 0; //start state, also set when mouse up on svgElement
-    this.STATES.PANNING = 1; //set by mouse down on svgElement - left button, no shift or controller
-    this.STATES.DRAGGING = 2; //set by mouse down on Protein or Link
-    this.STATES.ROTATING = 3; //set by mouse down on Rotator, drag?
-    this.STATES.SELECTING = 4; //set by mouse down on svgElement- right button or left button shift or controller, drag
+export function App (networkDiv, /*colourSchemeDiv,*/ symbolKeyDiv) {
 
-    //avoids prob with 'save - web page complete'
-    d3.select(this.el).selectAll("*").remove();
+        alert("yo");
+    // this.debug = true;
 
-    const customMenuSel = d3.select(this.el)
-        .append("div").classed("custom-menu-margin", true)
-        .append("div").classed("custom-menu", true)
-        .append("ul");
+        if (typeof targetDiv === "string") {
+            this.el = document.getElementById(networkDiv);
+        } else {
+            this.el = networkDiv;
+        }
 
-    const self = this;
-    const collapse = customMenuSel.append("li").classed("collapse", true); //.append("button");
-    collapse.text("Collapse");
-    collapse[0][0].onclick = function (evt) {
-        self.collapseProtein(evt);
-    };
-    const scaleButtonsListItemSel = customMenuSel.append("li").text("Scale: ");
+        if (symbolKeyDiv) {
+            new SymbolKey(symbolKeyDiv);
+        }
 
-    this.barScales = [0.01, 0.2, 1, 2, 4, 8];
-    const scaleButtons = scaleButtonsListItemSel.selectAll("ul.custom-menu")
-        .data(this.barScales)
-        .enter()
-        .append("div")
-        .attr("class", "barScale")
-        .append("label");
-    scaleButtons.append("span")
-        .text(function (d) {
-            if (d === 8) return "AA";
-            else return d;
-        });
-    scaleButtons.append("input")
-        // .attr ("id", function(d) { return d*100; })
-        .attr("class", function (d) {
-            return "scaleButton scaleButton_" + (d * 100);
-        })
-        .attr("name", "scaleButtons")
-        .attr("type", "radio")
-        .on("change", function (d) {
-            self.preventDefaultsAndStopPropagation(d);
-            self.contextMenuProt.setStickScale(d, self.contextMenuPoint);
-        });
+        this.STATES = {};
+        this.STATES.MOUSE_UP = 0; //start state, also set when mouse up on svgElement
+        this.STATES.PANNING = 1; //set by mouse down on svgElement - left button, no shift or util
+        this.STATES.DRAGGING = 2; //set by mouse down on Protein or Link
+        this.STATES.ROTATING = 3; //set by mouse down on Rotator, drag?
+        this.STATES.SELECTING = 4; //set by mouse down on svgElement- right button or left button shift or util, drag
 
-    const contextMenu = d3.select(".custom-menu-margin").node();
-    contextMenu.onmouseout = function (evt) {
-        let e = evt.relatedTarget;
-        do {
-            if (e === this) return;
-            e = e.parentNode;
-        } while (e);
-        self.contextMenuProt = null;
-        d3.select(this).style("display", "none");
-    };
+        //avoids prob with 'save - web page complete'
+        d3.select(this.el).selectAll("*").remove();
+
+        const customMenuSel = d3.select(this.el)
+            .append("div").classed("custom-menu-margin", true)
+            .append("div").classed("custom-menu", true)
+            .append("ul");
+
+        const self = this;
+        const collapse = customMenuSel.append("li").classed("collapse", true); //.append("button");
+        collapse.text("Collapse");
+        collapse[0][0].onclick = function (evt) {
+            self.collapseProtein(evt);
+        };
+        const scaleButtonsListItemSel = customMenuSel.append("li").text("Scale: ");
+
+        this.barScales = [0.01, 0.2, 1, 2, 4, 8];
+        const scaleButtons = scaleButtonsListItemSel.selectAll("ul.custom-menu")
+            .data(this.barScales)
+            .enter()
+            .append("div")
+            .attr("class", "barScale")
+            .append("label");
+        scaleButtons.append("span")
+            .text(function (d) {
+                if (d === 8) return "AA";
+                else return d;
+            });
+        scaleButtons.append("input")
+            // .attr ("id", function(d) { return d*100; })
+            .attr("class", function (d) {
+                return "scaleButton scaleButton_" + (d * 100);
+            })
+            .attr("name", "scaleButtons")
+            .attr("type", "radio")
+            .on("change", function (d) {
+                self.preventDefaultsAndStopPropagation(d);
+                self.contextMenuProt.setStickScale(d, self.contextMenuPoint);
+            });
+
+        const contextMenu = d3.select(".custom-menu-margin").node();
+        contextMenu.onmouseout = function (evt) {
+            let e = evt.relatedTarget;
+            do {
+                if (e === this) return;
+                e = e.parentNode;
+            } while (e);
+            self.contextMenuProt = null;
+            d3.select(this).style("display", "none");
+        };
 
 
-    //create SVG element
-    this.svgElement = document.createElementNS(Config.svgns, "svg");
-    this.svgElement.setAttribute("id", "complexViewerSVG");
+        //create SVG element
+        this.svgElement = document.createElementNS(Config.svgns, "svg");
+        this.svgElement.setAttribute("id", "complexViewerSVG");
 
-    //add listeners
-    this.svgElement.onmousedown = function (evt) {
-        self.mouseDown(evt);
-    };
-    this.svgElement.onmousemove = function (evt) {
-        self.mouseMove(evt);
-    };
-    this.svgElement.onmouseup = function (evt) {
-        self.mouseUp(evt);
-    };
-    this.svgElement.onmouseout = function (evt) {
-        self.hideTooltip(evt);
-    };
-    this.lastMouseUp = new Date().getTime();
-    /*this.svgElement.ontouchstart = function(evt) {
-        self.touchStart(evt);
-    };
-    this.svgElement.ontouchmove = function(evt) {
-        self.touchMove(evt);
-    };
-    this.svgElement.ontouchend = function(evt) {
-        self.touchEnd(evt);
-    };
-    */
+        //add listeners
+        this.svgElement.onmousedown = function (evt) {
+            self.mouseDown(evt);
+        };
+        this.svgElement.onmousemove = function (evt) {
+            self.mouseMove(evt);
+        };
+        this.svgElement.onmouseup = function (evt) {
+            self.mouseUp(evt);
+        };
+        this.svgElement.onmouseout = function (evt) {
+            self.hideTooltip(evt);
+        };
+        this.lastMouseUp = new Date().getTime();
+        /*this.svgElement.ontouchstart = function(evt) {
+            self.touchStart(evt);
+        };
+        this.svgElement.ontouchmove = function(evt) {
+            self.touchMove(evt);
+        };
+        this.svgElement.ontouchend = function(evt) {
+            self.touchEnd(evt);
+        };
+        */
+
     this.el.oncontextmenu = function (evt) {
         if (evt.preventDefault) { // necessary for addEventListener, works with traditional
             evt.preventDefault();
@@ -242,9 +256,9 @@ xiNET.Controller = function (targetDiv, debug) {
     this.svgElement.appendChild(this.tooltip);
 
     this.clear();
-};
+}
 
-xiNET.Controller.prototype.createHatchedFill = function (name, colour) {
+App.prototype.createHatchedFill = function (name, colour) {
     const pattern = this.defs.append("pattern")
         .attr("id", name)
         .attr("patternUnits", "userSpaceOnUse")
@@ -284,7 +298,7 @@ xiNET.Controller.prototype.createHatchedFill = function (name, colour) {
     //     .style("fill", "black");//"#A01284");
 };
 
-xiNET.Controller.prototype.clear = function () {
+App.prototype.clear = function () {
     if (this.d3cola) {
         this.d3cola.stop();
     }
@@ -324,7 +338,7 @@ xiNET.Controller.prototype.clear = function () {
     this.state = this.STATES.MOUSE_UP;
 };
 
-xiNET.Controller.prototype.collapseProtein = function () {
+App.prototype.collapseProtein = function () {
     const p = this.contextMenuPoint;
     const c = p.matrixTransform(this.container.getCTM().inverse());
 
@@ -334,7 +348,7 @@ xiNET.Controller.prototype.collapseProtein = function () {
 };
 
 //this can be done before all proteins have their sequences
-xiNET.Controller.prototype.init = function () {
+App.prototype.init = function () {
     this.checkLinks(); // todo - should this really be here
     let maxSeqLength = 0;
     for (let participant of this.molecules.values()) {
@@ -391,17 +405,14 @@ xiNET.Controller.prototype.init = function () {
     this.autoLayout();
 };
 
-xiNET.Controller.prototype.setAnnotations = function (annotationChoice) {
+App.prototype.setAnnotations = function (annotationChoice) {
     setAnnotations(annotationChoice, this);
 };
 
 //listeners also attached to mouse events by Interactor (and Rotator) and Link, those consume their events
 //mouse down on svgElement must be allowed to propogate (to fire event on Prots/Links)
 
-/**
- * Handle mousedown event.
- */
-xiNET.Controller.prototype.mouseDown = function (evt) {
+App.prototype.mouseDown = function (evt) {
     //prevent default, but allow propogation
     evt.preventDefault();
     //stop force layout
@@ -416,7 +427,7 @@ xiNET.Controller.prototype.mouseDown = function (evt) {
 };
 
 // dragging/rotation/panning/selecting
-xiNET.Controller.prototype.mouseMove = function (evt) {
+App.prototype.mouseMove = function (evt) {
     const p = this.getEventPoint(evt); // seems to be correct, see below
     const c = this.mouseToSVG(p.x, p.y);
 
@@ -465,7 +476,7 @@ xiNET.Controller.prototype.mouseMove = function (evt) {
 };
 
 // this ends all dragging and rotating
-xiNET.Controller.prototype.mouseUp = function (evt) {
+App.prototype.mouseUp = function (evt) {
     const time = new Date().getTime();
     //console.log("Mouse up: " + evt.srcElement + " " + (time - this.lastMouseUp));
     this.preventDefaultsAndStopPropagation(evt);
@@ -498,7 +509,7 @@ xiNET.Controller.prototype.mouseUp = function (evt) {
 };
 
 //gets mouse position
-xiNET.Controller.prototype.getEventPoint = function (evt) {
+App.prototype.getEventPoint = function (evt) {
     const p = this.svgElement.createSVGPoint();
     let element = this.svgElement.parentNode;
     let top = 0,
@@ -514,7 +525,7 @@ xiNET.Controller.prototype.getEventPoint = function (evt) {
 };
 
 //stop event propogation and defaults; only do what we ask
-xiNET.Controller.prototype.preventDefaultsAndStopPropagation = function (evt) {
+App.prototype.preventDefaultsAndStopPropagation = function (evt) {
     if (evt.stopPropagation)
         evt.stopPropagation();
     if (evt.cancelBubble != null)
@@ -526,7 +537,7 @@ xiNET.Controller.prototype.preventDefaultsAndStopPropagation = function (evt) {
 /**
  * Handle touchstart event.
 
- xiNET.Controller.prototype.touchStart = function(evt) {
+ App.prototype.touchStart = function(evt) {
     //prevent default, but allow propogation
     evt.preventDefault();
 
@@ -540,7 +551,7 @@ xiNET.Controller.prototype.preventDefaultsAndStopPropagation = function (evt) {
 };
 
  // dragging/rotation/panning/selecting
- xiNET.Controller.prototype.touchMove = function(evt) {
+ App.prototype.touchMove = function(evt) {
     // if (this.sequenceInitComplete) { // just being cautious
     var p = this.getTouchEventPoint(evt); // seems to be correct, see below
     var c = this.mouseToSVG(p.x, p.y);
@@ -592,7 +603,7 @@ xiNET.Controller.prototype.preventDefaultsAndStopPropagation = function (evt) {
 };
 
 // this ends all dragging and rotating
-xiNET.Controller.prototype.touchEnd = function(evt) {
+App.prototype.touchEnd = function(evt) {
     var time = new Date().getTime();
     //console.log("Mouse up: " + evt.srcElement + " " + (time - this.lastMouseUp));
     this.preventDefaultsAndStopPropagation(evt);
@@ -626,7 +637,7 @@ xiNET.Controller.prototype.touchEnd = function(evt) {
 };
 
 //gets mouse position
-xiNET.Controller.prototype.getTouchEventPoint = function(evt) {
+App.prototype.getTouchEventPoint = function(evt) {
     var p = this.svgElement.createSVGPoint();
     var element = this.svgElement.parentNode;
     var top = 0,
@@ -641,7 +652,7 @@ xiNET.Controller.prototype.getTouchEventPoint = function(evt) {
     return p;
 };
  */
-xiNET.Controller.prototype.autoLayout = function () {
+App.prototype.autoLayout = function () {
     if (this.d3cola) {
         this.d3cola.stop();
     }
@@ -804,7 +815,7 @@ xiNET.Controller.prototype.autoLayout = function () {
     this.d3cola.start(20, 0, 20);
 };
 
-xiNET.Controller.prototype.getSVG = function () {
+App.prototype.getSVG = function () {
     let svgXml = this.svgElement.outerHTML.replace(/<rect .*?\/rect>/i, ""); //take out white background fill
     const viewBox = "viewBox=\"0 0 " + this.svgElement.parentNode.clientWidth + " " + this.svgElement.parentNode.clientHeight + "\" ";
     svgXml = svgXml.replace("<svg ", "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:ev=\"http://www.w3.org/2001/xml-events\" " + viewBox);
@@ -815,7 +826,7 @@ xiNET.Controller.prototype.getSVG = function () {
 };
 
 // transform the mouse-position into a position on the svg
-xiNET.Controller.prototype.mouseToSVG = function (x, y) {
+App.prototype.mouseToSVG = function (x, y) {
     const p = this.svgElement.createSVGPoint();
     p.x = x;
     p.y = y;
@@ -823,11 +834,11 @@ xiNET.Controller.prototype.mouseToSVG = function (x, y) {
 };
 
 // reads MI JSON format
-xiNET.Controller.prototype.readMIJSON = function (miJson, expand = true) {
+App.prototype.readMIJSON = function (miJson, expand = true) {
     readMIJSON(miJson, this, expand);
 };
 
-xiNET.Controller.prototype.checkLinks = function () {
+App.prototype.checkLinks = function () {
     function checkAll(linkMap) {
         const links = linkMap.values();
         const c = links.length;
@@ -841,7 +852,7 @@ xiNET.Controller.prototype.checkLinks = function () {
     checkAll(this.allSequenceLinks);
 };
 
-xiNET.Controller.prototype.setAllLinkCoordinates = function () {
+App.prototype.setAllLinkCoordinates = function () {
     function setAll(linkMap) {
         const links = linkMap.values();
         const c = links.length;
@@ -856,7 +867,7 @@ xiNET.Controller.prototype.setAllLinkCoordinates = function () {
     setAll(this.allSequenceLinks);
 };
 
-xiNET.Controller.prototype.showTooltip = function (p) {
+App.prototype.showTooltip = function (p) {
     let ttX, ttY;
     const length = this.tooltip.getComputedTextLength() + 16;
     const width = this.svgElement.parentNode.clientWidth;
@@ -880,7 +891,7 @@ xiNET.Controller.prototype.showTooltip = function (p) {
     this.tooltip_subBg.setAttribute("y", ttY + 28);
 };
 
-xiNET.Controller.prototype.setTooltip = function (text, colour) {
+App.prototype.setTooltip = function (text, colour) {
     if (text) {
         this.tooltip.firstChild.data = text.toString().replace(/&(quot);/g, "\"");
         this.tooltip.setAttribute("display", "block");
@@ -904,13 +915,13 @@ xiNET.Controller.prototype.setTooltip = function (text, colour) {
     }
 };
 
-xiNET.Controller.prototype.hideTooltip = function () {
+App.prototype.hideTooltip = function () {
     this.tooltip.setAttribute("display", "none");
     this.tooltip_bg.setAttribute("display", "none");
     this.tooltip_subBg.setAttribute("display", "none");
 };
 
-xiNET.Controller.prototype.legendChanged = function (colourScheme) {
+App.prototype.legendChanged = function (colourScheme) {
     const callbacks = this.legendCallbacks;
     const count = callbacks.length;
     for (let i = 0; i < count; i++) {
@@ -918,11 +929,11 @@ xiNET.Controller.prototype.legendChanged = function (colourScheme) {
     }
 };
 
-xiNET.Controller.prototype.getComplexColours = function () {
+App.prototype.getComplexColours = function () {
     return NaryLink.naryColours;
 };
 
-xiNET.Controller.prototype.collapseAll = function () {
+App.prototype.collapseAll = function () {
     const molecules = this.molecules.values();
     const mCount = molecules.length;
     for (let m = 0; m < mCount; m++) {
@@ -933,7 +944,7 @@ xiNET.Controller.prototype.collapseAll = function () {
     }
 };
 
-xiNET.Controller.prototype.expandAll = function () {
+App.prototype.expandAll = function () {
     const molecules = this.molecules.values();
     const mCount = molecules.length;
     for (let m = 0; m < mCount; m++) {
@@ -945,7 +956,7 @@ xiNET.Controller.prototype.expandAll = function () {
 };
 
 /*
-xiNET.Controller.prototype.expandAndCollapseSelection = function(moleculesSelected) {
+App.prototype.expandAndCollapseSelection = function(moleculesSelected) {
     const molecules = this.molecules.values();
     for (let m = 0; m < molecules.length; m++) {
         const molecule = molecules[m];
@@ -961,4 +972,4 @@ xiNET.Controller.prototype.expandAndCollapseSelection = function(moleculesSelect
 };
 */
 
-module.exports = xiNET.Controller;
+

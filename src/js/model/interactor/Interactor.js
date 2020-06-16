@@ -44,21 +44,21 @@ Interactor.prototype.mouseDown = function (evt) {
 
 //// TODO: test on touch screen
 // Interactor.prototype.touchStart = function(evt) {
-//     this.controller.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
-//     if (this.controller.d3cola !== undefined) {
-//         this.controller.d3cola.stop();
+//     this.util.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
+//     if (this.util.d3cola !== undefined) {
+//         this.util.d3cola.stop();
 //     }
-//     this.controller.dragElement = this;
+//     this.util.dragElement = this;
 //     //store start location
-//     var p = this.controller.getTouchEventPoint(evt);
-//     this.controller.dragStart = this.controller.mouseToSVG(p.x, p.y);
+//     var p = this.util.getTouchEventPoint(evt);
+//     this.util.dragStart = this.util.mouseToSVG(p.x, p.y);
 //     return false;
 // };
 
 Interactor.prototype.mouseOver = function (evt) {
     this.controller.preventDefaultsAndStopPropagation(evt);
     this.showHighlight(true);
-    //~ this.controller.setTooltip(this.id);
+    //~ this.util.setTooltip(this.id);
     return false;
 };
 
@@ -89,13 +89,13 @@ Interactor.prototype.showHighlight = function () {
 /*
 Interactor.prototype.setSelected = function(select) {
      if (select && this.isSelected === false) {
-         this.controller.selected.set(this.id, this);
+         this.util.selected.set(this.id, this);
          this.isSelected = true;
          this.highlight.setAttribute("stroke", Config.selectedColour);
          this.highlight.setAttribute("stroke-opacity", "1");
      }
      else if (select === false && this.isSelected === true) {
-         this.controller.selected.remove(this.id);
+         this.util.selected.remove(this.id);
          this.isSelected = false;
          this.highlight.setAttribute("stroke-opacity", "0");
          this.highlight.setAttribute("stroke", Config.highlightColour);
@@ -113,10 +113,10 @@ Interactor.prototype.setPosition = function (x, y) {
     this.cy = y;
     // if (this.form === 1) {
     this.upperGroup.setAttribute("transform", "translate(" + (this.cx) + " " + this.cy + ")"); // +
-    //         " scale(" + (this.controller.z) + ") " + "rotate(" + this.rotation + ")");
+    //         " scale(" + (this.util.z) + ") " + "rotate(" + this.rotation + ")");
     // } else {
     //     this.upperGroup.setAttribute("transform", "translate(" + this.cx + " " + this.cy + ")" +
-    //         " scale(" + (this.controller.z) + ") ");
+    //         " scale(" + (this.util.z) + ") ");
     // }
 };
 

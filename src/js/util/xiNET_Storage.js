@@ -15,7 +15,7 @@
 "use strict";
 const d3 = require("d3");
 const Annotation = require("../model/interactor/Annotation");
-const SequenceFeature = require("./../model/SequenceFeature");
+const SequenceFeature = require("../model/SequenceFeature");
 
 function xiNET_Storage() {
 }

@@ -13,9 +13,9 @@
 const d3 = require("d3");
 const Interactor = require("./Interactor");
 const Annotation = require("./Annotation");
-const SequenceFeature = require("./../SequenceFeature");
-//var Rotator = require('../../controller/Rotator');
-const Config = require("../../controller/Config");
+const SequenceFeature = require("../SequenceFeature");
+//var Rotator = require('../../util/Rotator');
+const Config = require("../../util/Config");
 
 Polymer.STICKHEIGHT = 20; //height of stick in pixels
 Polymer.MAXSIZE = 0; // residue count of longest sequence
@@ -582,7 +582,7 @@ Polymer.prototype.getResXwithStickZoom = function (r) {
     }
 };
 
-//calculate the  coordinates of a residue (relative to this.controller.container)
+//calculate the  coordinates of a residue (relative to this.util.container)
 Polymer.prototype.getResidueCoordinates = function (r, yOff) {
     if (typeof r === "undefined") {
         alert("Error: residue number is undefined");

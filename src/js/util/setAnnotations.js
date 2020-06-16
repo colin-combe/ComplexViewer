@@ -4,7 +4,7 @@ const d3 = require("d3");
 const colorbrewer = require("colorbrewer");
 const xiNET_Storage = require("./xiNET_Storage");
 const Annotation = require("../model/interactor/Annotation");
-const SequenceFeature = require("./../model/SequenceFeature");
+const SequenceFeature = require("../model/SequenceFeature");
 
 const setAnnotations = function (annotationChoice, controller) {
     controller.annotationChoice = annotationChoice;

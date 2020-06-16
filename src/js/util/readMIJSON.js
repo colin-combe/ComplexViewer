@@ -12,10 +12,10 @@ const Complex_symbol = require("../model/interactor/Complex_symbol");
 const MoleculeSet = require("../model/interactor/MoleculeSet");
 const NaryLink = require("../model/link/NaryLink");
 const SequenceLink = require("../model/link/SequenceLink");
-const SequenceFeature = require("./../model/SequenceFeature");
+const SequenceFeature = require("../model/SequenceFeature");
 const BinaryLink = require("../model/link/BinaryLink");
 const UnaryLink = require("../model/link/UnaryLink");
-const Expand = require("./Expand");
+const Expand = require("./expand");
 
 // reads MI JSON format
 const readMIJSON = function (miJson, controller, expand = true) {
@@ -460,7 +460,7 @@ const readMIJSON = function (miJson, controller, expand = true) {
             //~ if (endsSwapped === false) {
             sequenceLink = new SequenceLink(seqLinkId, fromFeaturePositions, toFeaturePositions, controller, interaction);
             //~ }else {
-            //~ sequenceLink = new SequenceLink(seqLinkId, toFeaturePositions, fromFeaturePositions, controller, interaction);
+            //~ sequenceLink = new SequenceLink(seqLinkId, toFeaturePositions, fromFeaturePositions, util, interaction);
             //~ }
             controller.allSequenceLinks.set(seqLinkId, sequenceLink);
         }

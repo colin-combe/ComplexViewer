@@ -7,7 +7,7 @@
 "use strict";
 
 const Link = require("./Link");
-const Config = require("../../controller/Config");
+const Config = require("../../util/Config");
 
 //todo: rename to SequenceFeatureLink
 
@@ -137,9 +137,9 @@ SequenceLink.prototype.show = function () {
     if (!this.glyph) {
         this.initSVG();
     }
-    // //this.glyph.setAttribute("stroke-width", this.controller.z * xiNET.linkWidth);
-    // this.uncertainGlyph.setAttribute("stroke-width", this.controller.z * 10);
-    // this.highlightGlyph.setAttribute("stroke-width", this.controller.z * 10);
+    // //this.glyph.setAttribute("stroke-width", this.util.z * xiNET.linkWidth);
+    // this.uncertainGlyph.setAttribute("stroke-width", this.util.z * 10);
+    // this.highlightGlyph.setAttribute("stroke-width", this.util.z * 10);
     this.setLinkCoordinates();
     let containingGroup = this.controller.res_resLinks;
     if (this.interactors[0] === this.interactors[1]) {

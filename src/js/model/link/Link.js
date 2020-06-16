@@ -50,7 +50,7 @@ Link.prototype.mouseDown = function (evt) {
         this.controller.layout.stop();
     }
     this.controller.dragElement = this;
-    //this.controller.clearSelection();
+    //this.util.clearSelection();
     //this.setSelected(true);
     //store start location
     const p = this.controller.getEventPoint(evt); // seems to be correct, see above
@@ -130,26 +130,26 @@ Link.prototype.hide = function () {
     // const highlights = [];
     // const p_pLinks = [];
     //
-    // for (var i = 0; i < this.controller.p_pLinksWide.childNodes.length; i++) {
-    //     p_pLinksWide[i] = this.controller.p_pLinksWide.childNodes[i];
+    // for (var i = 0; i < this.util.p_pLinksWide.childNodes.length; i++) {
+    //     p_pLinksWide[i] = this.util.p_pLinksWide.childNodes[i];
     // }
     //
-    // for (var i = 0; i < this.controller.highlights.childNodes.length; i++) {
-    //     highlights[i] = this.controller.highlights.childNodes[i];
+    // for (var i = 0; i < this.util.highlights.childNodes.length; i++) {
+    //     highlights[i] = this.util.highlights.childNodes[i];
     // }
     //
-    // for (var i = 0; i < this.controller.p_pLinks.childNodes.length; i++) {
-    //     p_pLinks[i] = this.controller.p_pLinks.childNodes[i];
+    // for (var i = 0; i < this.util.p_pLinks.childNodes.length; i++) {
+    //     p_pLinks[i] = this.util.p_pLinks.childNodes[i];
     // }
     //
     // if (p_pLinksWide.indexOf(this.thickLine) > -1) {
-    //     this.controller.p_pLinksWide.removeChild(this.thickLine);
+    //     this.util.p_pLinksWide.removeChild(this.thickLine);
     // }
     // if (highlights.indexOf(this.highlightLine) > -1) {
-    //     this.controller.highlights.removeChild(this.highlightLine);
+    //     this.util.highlights.removeChild(this.highlightLine);
     // }
     // if (p_pLinks.indexOf(this.line) > -1) {
-    //     this.controller.p_pLinks.removeChild(this.line);
+    //     this.util.p_pLinks.removeChild(this.line);
     // }
 };
 

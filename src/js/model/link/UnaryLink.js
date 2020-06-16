@@ -12,7 +12,7 @@
 "use strict";
 
 const d3 = require("d3");
-const Config = require("../../controller/Config");
+const Config = require("../../util/Config");
 const Link = require("./Link");
 // var SequenceLink = require('./SequenceLink');
 

@@ -11,7 +11,7 @@
 "use strict";
 const d3 = require("d3");
 const Interactor = require("./Interactor");
-const Config = require("../../controller/Config");
+const Config = require("../../util/Config");
 
 BioactiveEntity.prototype = new Interactor();
 

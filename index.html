@@ -14,9 +14,9 @@
     <link href="./css/XLV.css" rel="stylesheet" type='text/css'/>
     <!--libraries-->
     <script src="./dist/complexviewer.js" type="text/javascript"></script>
-    <script src="./node_modules/d3/d3.js" type="text/javascript"></script>
-    <script src="./rgbcolor.js" type="text/javascript"></script>
-    <script src="./legend.js" type="text/javascript"></script>
+<!--    <script src="./node_modules/d3/d3.js" type="text/javascript"></script>-->
+<!--    <script src="./rgbcolor.js" type="text/javascript"></script>-->
+<!--    <script src="./legend.js" type="text/javascript"></script>-->
     <!-- example data info -->
     <script src="./data/index.js" type="text/javascript"></script>
 </head>
@@ -42,61 +42,61 @@
         <div id="middleDiv">
             <div id="innerMiddleDiv">
                 <div id="networkDiv"></div>
-                <div id="legend">
-                    <table>
-                        <tr>
-                            <td>
-                                <div style="float:right">
-                                    <img alt="Bioactive Entity" src="./images/svgForKey/molSet.svg">
-                                </div>
-                            </td>
-                            <td>Molecule Set</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div style="float:right">
-                                    <img alt="Bioactive Entity" src="./images/svgForKey/smallMol.svg">
-                                </div>
-                            </td>
-                            <td>Bioactive Entity</td>
-                        </tr>
+                <div id="symbolKeyDiv">
+<!--                    <table>-->
+<!--                        <tr>-->
+<!--                            <td>-->
+<!--                                <div style="float:right">-->
+<!--                                    <img alt="Bioactive Entity" src="./imgs/svgForKey/molSet.svg">-->
+<!--                                </div>-->
+<!--                            </td>-->
+<!--                            <td>Molecule Set</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>-->
+<!--                                <div style="float:right">-->
+<!--                                    <img alt="Bioactive Entity" src="./imgs/svgForKey/smallMol.svg">-->
+<!--                                </div>-->
+<!--                            </td>-->
+<!--                            <td>Bioactive Entity</td>-->
+<!--                        </tr>-->
 
-                        <tr>
-                            <td>
-                                <div style="float:right">
-                                    <img alt="Gene" src="./images/svgForKey/gene.svg">
-                                </div>
-                            </td>
-                            <td>Gene</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div style="float:right">
-                                    <img alt="DNA" src="./images/svgForKey/DNA.svg">
-                                </div>
-                            </td>
-                            <td>DNA</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div style="float:right">
-                                    <img alt="RNA" src="./images/svgForKey/RNA.svg">
-                                </div>
-                            </td>
-                            <td>RNA</td>
-                        </tr>
-                        <tr style="border: 1px grey;">
-                            <td>
-                                <div style="float:right">
-                                    <img alt="Protein" src="./images/svgForKey/proteinBlob.svg">
-                                </div>
-                                <div style="float:right">
-                                    <img alt="Protein" src="./images/svgForKey/proteinBar.svg">
-                                </div>
-                            </td>
-                            <td>Protein - click to toggle between circle and bar</td>
-                        </tr>
-                    </table>
+<!--                        <tr>-->
+<!--                            <td>-->
+<!--                                <div style="float:right">-->
+<!--                                    <img alt="Gene" src="./imgs/svgForKey/gene.svg">-->
+<!--                                </div>-->
+<!--                            </td>-->
+<!--                            <td>Gene</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>-->
+<!--                                <div style="float:right">-->
+<!--                                    <img alt="DNA" src="./imgs/svgForKey/DNA.svg">-->
+<!--                                </div>-->
+<!--                            </td>-->
+<!--                            <td>DNA</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>-->
+<!--                                <div style="float:right">-->
+<!--                                    <img alt="RNA" src="./imgs/svgForKey/RNA.svg">-->
+<!--                                </div>-->
+<!--                            </td>-->
+<!--                            <td>RNA</td>-->
+<!--                        </tr>-->
+<!--                        <tr style="border: 1px grey;">-->
+<!--                            <td>-->
+<!--                                <div style="float:right">-->
+<!--                                    <img alt="Protein" src="./imgs/svgForKey/proteinBlob.svg">-->
+<!--                                </div>-->
+<!--                                <div style="float:right">-->
+<!--                                    <img alt="Protein" src="./imgs/svgForKey/proteinBar.svg">-->
+<!--                                </div>-->
+<!--                            </td>-->
+<!--                            <td>Protein - click to toggle between circle and bar</td>-->
+<!--                        </tr>-->
+<!--                    </table>-->
                     <div class="controls" style="height:46px;">Proteins:
                         <button class="btn btn-1 btn-1a" onclick="xlv.expandAll();">Expand</button>
                         <button class="btn btn-1 btn-1a" onclick="xlv.collapseAll();">Collapse</button>
@@ -149,11 +149,12 @@
     //<![CDATA[
 
     const networkTargetDiv = document.getElementById('networkDiv');
-    const legendTargetDiv = document.getElementById('networkDiv');
-    xlv = new ComplexViewer(networkTargetDiv, legendTargetDiv);
+    const legendTargetDiv = document.getElementById('symbolKeyDiv');
+    xlv = new complexviewer.App(networkTargetDiv, legendTargetDiv);
     //todo - er, use css
     xlv.svgElement.setAttribute('style', 'display: -webkit-box;display: -moz-box;display: -ms-flexbox; display: -webkit-flex;display: flex;flex-grow:1;');
 
+    /*
     const legend = d3.select('svg').append('g');
     xlv.legendCallbacks.push(function (colourAssignment) {
         legend.selectAll('*').remove();
@@ -203,7 +204,7 @@
             //~ legend.attr("transform", "translate(20,40)").attr("class", "legend").call(verticalLegend);
         }
 
-    });
+    }); */
 
     for (var i = 0; i < exampleIndex.length; i++) {
         var example = exampleIndex[i];

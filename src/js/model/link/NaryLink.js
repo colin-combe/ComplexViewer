@@ -13,10 +13,10 @@
 
 const d3 = require("d3");
 const Link = require("./Link");
-const Config = require("../../controller/Config");
+const Config = require("../../util/Config");
 const Interactor = require("../interactor/Interactor");
 
-//NaryLink.naryColours; // init'ed in clear function of controller
+//NaryLink.naryColours; // init'ed in clear function of util
 NaryLink.orbitNodes = 16;
 NaryLink.orbitRadius = 20;
 

@@ -1,25 +1,35 @@
-require("webpack");
-const path = require("path");
+require('webpack');
+const path = require('path');
 
 
 module.exports = {
-    entry: path.resolve(__dirname + "/src/controller/Controller.js"),
+    entry: path.resolve(__dirname + '/src/js/app.js'),
     output: {
-        path: path.resolve(__dirname, "dist"),
-        filename: "complexviewer.js",
-        library: ["ComplexViewer"]
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'complexviewer.js',
+        library: ['complexviewer'],
+        libraryTarget: 'umd'
     },
     module: {
         rules: [
             {
-                test: /\.js$/,
-                use: "babel-loader",
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader'],
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
+                loader: 'url-loader',
+                // options: {
+                //     limit: 8192,
+                // },
+
+            },
+            {
+                test: /\.(js)$/,
+                use: 'babel-loader',
                 exclude: /node_modules/
             }
         ]
-    },
-    resolve: {
-        extensions: [".js", ".jsx"]
     },
     devServer: {
         contentBase: path.join(__dirname),
