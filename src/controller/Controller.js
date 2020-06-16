@@ -416,7 +416,7 @@ xiNET.Controller.prototype.setAnnotations = function (annotationChoice) {
     this.legendChanged(null);
 
     let molsAnnotated = 0;
-    const molCount = this.molecules.values().size;
+    const molCount = this.molecules.size;
     if (annotationChoice.toUpperCase() === "MI FEATURES") {
         for (let mol of this.molecules.values()) {
             if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS
