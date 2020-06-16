@@ -14,7 +14,7 @@ const xiNET = {};
 const d3 = require("d3");
 const colorbrewer = require("colorbrewer");
 const cola = require("webcola");
-const xiNET_Storage = require("./xiNET_Storage");
+const setAnnotations = require("./setAnnotations");
 const Annotation = require("../model/interactor/Annotation");
 const Interactor = require("../model/interactor/Interactor");
 const Protein = require("../model/interactor/Protein");
@@ -405,130 +405,7 @@ xiNET.Controller.prototype.init = function () {
 };
 
 xiNET.Controller.prototype.setAnnotations = function (annotationChoice) {
-    this.annotationChoice = annotationChoice;
-    const self = this;
-    //clear all annot's
-    for (let mol of this.molecules.values()) {
-        if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS // todo - is this best way to check if protein
-            mol.clearPositionalFeatures();
-        }
-    }
-    this.legendChanged(null);
-
-    let molsAnnotated = 0;
-    const molCount = this.molecules.size;
-    if (annotationChoice.toUpperCase() === "MI FEATURES") {
-        for (let mol of this.molecules.values()) {
-            if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS
-                mol.setPositionalFeatures(mol.miFeatures);
-            }
-        }
-        chooseColours();
-    } else if (annotationChoice.toUpperCase() === "INTERACTOR") {
-        if (self.proteinCount < 21) {
-            for (let mol of this.molecules.values()) {
-                if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS
-                    const annotation = new Annotation(mol.json.label, new SequenceFeature(null, 1 + "-" + mol.size));
-                    mol.setPositionalFeatures([annotation]);
-                }
-            }
-            chooseColours();
-        } else {
-            alert("Too many (> 20) - can't colour by interactor.");
-        }
-    } else if (annotationChoice.toUpperCase() === "SUPERFAM" || annotationChoice.toUpperCase() === "SUPERFAMILY") {
-        for (let mol of this.molecules.values()) {
-            if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS
-                xiNET_Storage.getSuperFamFeatures(mol.id, function (id, fts) {
-                    const m = self.molecules.get(id);
-                    m.setPositionalFeatures(fts);
-                    molsAnnotated++;
-                    if (molsAnnotated === molCount) {
-                        chooseColours();
-                    }
-                });
-            } else {
-                molsAnnotated++;
-                if (molsAnnotated === molCount) {
-                    chooseColours();
-                }
-            }
-        }
-    } else if (annotationChoice.toUpperCase() === "UNIPROT" || annotationChoice.toUpperCase() === "UNIPROTKB") {
-        for (let mol of this.molecules.values()) {
-            if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS
-                xiNET_Storage.getUniProtFeatures(mol.id, function (id, fts) {
-                    const m = self.molecules.get(id);
-                    for (let f = 0; f < fts.length; f++) {
-                        const feature = fts[f];
-                        feature.seqDatum = new SequenceFeature(null, feature.begin + "-" + feature.end);
-                    }
-                    m.setPositionalFeatures(fts);
-                    molsAnnotated++;
-                    if (molsAnnotated === molCount) {
-                        chooseColours();
-                    }
-                });
-            } else {
-                molsAnnotated++;
-                if (molsAnnotated === molCount) {
-                    chooseColours();
-                }
-            }
-        }
-    }
-
-    function chooseColours() {
-        const categories = d3.set();
-        for (let mol of self.molecules.values()) {
-            if (mol.annotations) {
-                for (let annotation of mol.annotations) {
-                    categories.add(annotation.description);
-                }
-            }
-        }
-        let catCount = categories.values().length;
-
-        let colourScheme;
-
-        if (catCount < 3) {
-            catCount = 3;
-        }
-
-        if (catCount < 9) {
-            colourScheme = d3.scale.ordinal().range(colorbrewer.Dark2[catCount].slice().reverse());
-            // } else if (catCount < 13) {
-            //     var reversed = colorbrewer.Paired[catCount];//.slice().reverse();
-            //     colourScheme = d3.scale.ordinal().range(reversed);
-        } else {
-            colourScheme = d3.scale.category20();
-        }
-
-        for (let mol of self.molecules.values()) {
-            if (mol.annotations) {
-                for (let anno of mol.annotations) {
-                    let colour;
-                    if (anno.description === "No annotations") {
-                        colour = "#cccccc";
-                    } else {
-                        colour = colourScheme(anno.description);
-                    }
-
-                    //ToDO - way more of these are being created than needed
-                    self.createHatchedFill("checkers_" + anno.description, colour);
-                    const checkedFill = "url('#checkers_" + anno.description + "')";
-
-                    anno.fuzzyStart.setAttribute("fill", checkedFill);
-                    anno.fuzzyStart.setAttribute("stroke", colour);
-                    anno.fuzzyEnd.setAttribute("fill", checkedFill);
-                    anno.fuzzyEnd.setAttribute("stroke", colour);
-                    anno.certain.setAttribute("fill", colour);
-                    anno.certain.setAttribute("stroke", colour);
-                }
-            }
-        }
-        self.legendChanged(colourScheme);
-    }
+    setAnnotations(annotationChoice, this);
 };
 
 //listeners also attached to mouse events by Interactor (and Rotator) and Link, those consume their events
@@ -1176,9 +1053,7 @@ xiNET.Controller.prototype.readMIJSON = function (/*mi-json-schema*/miJson, expa
             } else {
                 participant = new Complex_symbol(participantId, self, interactorRef, interactor);
             }
-        }
-        //molecule sets
-        else if (interactor.type.id === "MI:1304" //molecule set
+        }else if (interactor.type.id === "MI:1304" //molecule set
             ||
             interactor.type.id === "MI:1305" //molecule set - candidate set
             ||
@@ -1187,18 +1062,14 @@ xiNET.Controller.prototype.readMIJSON = function (/*mi-json-schema*/miJson, expa
             interactor.type.id === "MI:1306" //molecule set - open set
         ) {
             participant = new MoleculeSet(participantId, self, interactor, interactor.label);
-        }
-        //bioactive entities
-        else if (interactor.type.id === "MI:1100" // bioactive entity
+        } else if (interactor.type.id === "MI:1100" // bioactive entity
             ||
             interactor.type.id === "MI:0904" // bioactive entity - polysaccharide
             ||
             interactor.type.id === "MI:0328" //bioactive entity - small mol
         ) {
             participant = new BioactiveEntity(participantId, self, interactor, interactor.label);
-        }
-        // proteins, peptides
-        else if (interactor.type.id === "MI:0326" || interactor.type.id === "MI:0327") {
+        } else if (interactor.type.id === "MI:0326" || interactor.type.id === "MI:0327") { // proteins, peptides
             participant = new Protein(participantId, self, interactor, interactor.label);
             if (typeof interactor.sequence !== "undefined") {
                 participant.setSequence(interactor.sequence);
@@ -1210,13 +1081,9 @@ xiNET.Controller.prototype.readMIJSON = function (/*mi-json-schema*/miJson, expa
                     participant.setSequence("SEQUENCEMISSING");
                 }
             }
-        }
-        //genes
-        else if (interactor.type.id === "MI:0250") {
+        } else if (interactor.type.id === "MI:0250") { //genes
             participant = new Gene(participantId, self, interactor, interactor.label);
-        }
-        //RNA
-        else if (interactor.type.id === "MI:0320" // RNA
+        } else if (interactor.type.id === "MI:0320" // RNA
             ||
             interactor.type.id === "MI:0321" // RNA - catalytic
             ||
@@ -1243,9 +1110,7 @@ xiNET.Controller.prototype.readMIJSON = function (/*mi-json-schema*/miJson, expa
             interactor.type.id === "MI:0325" // RNA - transfer
         ) {
             participant = new RNA(participantId, self, interactor, interactor.label);
-        }
-        //DNA
-        else if (interactor.type.id === "MI:0319" // DNA
+        } else if (interactor.type.id === "MI:0319" // DNA
             ||
             interactor.type.id === "MI:0681" // DNA - double stranded
             ||
