@@ -7,7 +7,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, "dist"),
         filename: "complexviewer.js",
-        library: ["xiNET"]
+        library: ["ComplexViewer"]
     },
     module: {
         rules: [

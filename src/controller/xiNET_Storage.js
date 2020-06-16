@@ -8,16 +8,17 @@
 //
 //    xiNET_Storage.js
 
-//// TODO: get rid of
+//not actually using local storage, can be problems with it filling up
+//this just fetches unniprotkb and superfam annotations from web services
+//// TODO: get rid of?
 
 "use strict";
 const d3 = require("d3");
+const Annotation = require("../model/interactor/Annotation");
+const SequenceFeature = require("./../model/SequenceFeature");
 
 function xiNET_Storage() {
 }
-
-const Annotation = require("../model/interactor/Annotation");
-const SequenceFeature = require("./../model/SequenceFeature");
 
 xiNET_Storage.ns = "xiNET.";
 
@@ -141,8 +142,7 @@ xiNET_Storage.getSuperFamFeatures = function (id, callback) {
         if (window.DOMParser) {
             const parser = new DOMParser();
             xmlDoc = parser.parseFromString(dasXml, "text/xml");
-        } else // Internet Explorer
-        {
+        } else { // Internet Explorer
             xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
             xmlDoc.async = false;
             xmlDoc.loadXML(dasXml);
