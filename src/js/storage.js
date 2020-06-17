@@ -13,8 +13,8 @@
 //// TODO: get rid of?
 
 import * as d3 from "d3";
-import {Annotation} from "../model/interactor/annotation";
-import {Feature} from "../model/feature";
+import {Annotation} from "./viz/interactor/annotation";
+import {Feature} from "./viz/feature";
 
 export function storage() {//todo this is weird
 }

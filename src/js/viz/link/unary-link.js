@@ -10,7 +10,7 @@
 // 		the class representing a self-link
 
 import * as d3 from "d3";
-import {Config} from "../../util/config";
+import {Config} from "../../config";
 import {Link} from "./link";
 // var FeatureLink = require('./FeatureLink');
 

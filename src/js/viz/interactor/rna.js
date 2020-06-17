@@ -4,17 +4,17 @@
 //    	This product includes software developed at
 //    	the Rappsilber Laboratory (http://www.rappsilberlab.org/).
 //
-//		Gene.js
+//		RNA.js
 //
 //		authors: Colin Combe
 
-import * as d3 from "d3";
+import * as  d3 from "d3";
 import {Interactor} from "./interactor";
-import {Config} from "../../util/config";
+import {Config} from "../../config";
 
-Gene.prototype = new Interactor();
+RNA.prototype = new Interactor();
 
-export function Gene(id, xlvController, json, name) {
+export function RNA(id, xlvController, json, name) {
     this.id = id; // id may not be accession (multiple Segments with same accession)
     this.controller = xlvController;
     this.json = json;
@@ -23,6 +23,7 @@ export function Gene(id, xlvController, json, name) {
     this.binaryLinks = d3.map();
     this.selfLink = null;
     this.sequenceLinks = d3.map();
+
     this.name = name;
     // layout info
     this.cx = 40;
@@ -34,20 +35,20 @@ export function Gene(id, xlvController, json, name) {
      */
 
     this.upperGroup = document.createElementNS(Config.svgns, "g");
-    //~ this.upperGroup.setAttribute("class", "protein upperGroup");
+    this.upperGroup.setAttribute("class", "upperGroup");
 
+    //for polygon
+    const points = "0, -10  10, 0 0, 10 -10, 0";
     //make highlight
-    this.highlight = document.createElementNS(Config.svgns, "rect");
+    this.highlight = document.createElementNS(Config.svgns, "polygon");
+    this.highlight.setAttribute("points", points);
     this.highlight.setAttribute("stroke", Config.highlightColour);
     this.highlight.setAttribute("stroke-width", "5");
     this.highlight.setAttribute("fill", "none");
+    //this.highlight.setAttribute("fill-opacity", 1);
+    //attributes that may change
+    d3.select(this.highlight).attr("stroke-opacity", 0);
     this.upperGroup.appendChild(this.highlight);
-
-    //make background
-    //http://stackoverflow.com/questions/17437408/how-do-i-change-a-circle-to-a-square-using-d3
-    this.background = document.createElementNS(Config.svgns, "rect");
-    this.background.setAttribute("fill", "#FFFFFF");
-    this.upperGroup.appendChild(this.background);
 
     //create label - we will move this svg element around when protein form changes
     this.labelSVG = document.createElementNS(Config.svgns, "text");
@@ -58,48 +59,24 @@ export function Gene(id, xlvController, json, name) {
     this.labelSVG.setAttribute("class", "xlv_text proteinLabel");
     this.labelSVG.setAttribute("font-family", "Arial");
     this.labelSVG.setAttribute("font-size", "16");
-    //choose label text
-    if (this.name !== null && this.name !== "") {
-        this.labelText = this.name;
-    } else {
-        this.labelText = this.id;
-    }
-    if (this.labelText.length > 25) {
-        this.labelText = this.labelText.substr(0, 16) + "...";
-    }
+
+    this.labelText = this.name;
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
     d3.select(this.labelSVG).attr("transform",
-        "translate( -" + (21) + " " + Interactor.labelY + ") rotate(0) scale(1, 1)");
+        "translate( -" + (15) + " " + Interactor.labelY + ")");
     this.upperGroup.appendChild(this.labelSVG);
-    //ticks (and amino acid letters)
-    this.ticks = document.createElementNS(Config.svgns, "g");
-    //annotation svg group
-    this.annotationsSvgGroup = document.createElementNS(Config.svgns, "g");
-    this.annotationsSvgGroup.setAttribute("opacity", "1");
-    this.upperGroup.appendChild(this.annotationsSvgGroup);
 
-    //make outline
-    this.outline = document.createElementNS(Config.svgns, "rect");
+    //make blob
+    this.outline = document.createElementNS(Config.svgns, "polygon");
+    this.outline.setAttribute("points", points);
+
     this.outline.setAttribute("stroke", "black");
     this.outline.setAttribute("stroke-width", "1");
-    this.outline.setAttribute("fill", "none");
+    d3.select(this.outline).attr("stroke-opacity", 1).attr("fill-opacity", 1)
+        .attr("fill", "#ffffff");
+    //append outline
     this.upperGroup.appendChild(this.outline);
-
-    d3.select(this.background).transition()
-        .attr("x", -16).attr("y", -8)
-        .attr("width", 32).attr("height", 16)
-        .attr("rx", 6).attr("ry", 6);
-    d3.select(this.outline).transition()
-        .attr("x", -16).attr("y", -8)
-        .attr("width", 32).attr("height", 16)
-        .attr("rx", 6).attr("ry", 6);
-    d3.select(this.highlight).transition()
-        .attr("x", -16).attr("y", -8)
-        .attr("width", 32).attr("height", 16)
-        .attr("rx", 6).attr("ry", 6);
-
-    this.scaleLabels = [];
 
     // events
     const self = this;
@@ -117,5 +94,11 @@ export function Gene(id, xlvController, json, name) {
         self.touchStart(evt);
     };
 
-    this.showHighlight(false);
 }
+
+/*
+RNA.prototype.showData = function(evt) {
+    const url = "http://rnacentral.org/rna/" + this.json.identifier.id;
+    window.open(url, '_blank');
+}
+*/

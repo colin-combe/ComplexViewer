@@ -13,14 +13,14 @@ import * as css from '../css/xinet.css';
 import * as d3 from "d3";
 import * as colorbrewer from "colorbrewer";
 import * as cola from "webcola";
-import {readMijson} from "./util/read-mijson";
-import {setAnnotations} from "./util/annotations";
+import {readMijson} from "./read-mijson";
+import {setAnnotations} from "./annotations";
 
 import SymbolKey from "./symbol-key";
 
 // import * as ColorSchemeKey from "./color-scheme-key";
-import {NaryLink} from "./model/link/nary-link";
-import {Config} from "./util/config";
+import {NaryLink} from "./viz/link/nary-link";
+import {Config} from "./config";
 
 //todo - refactor everything to use ES6 class syntax
 // but https://benmccormick.org/2015/04/07/es6-classes-and-backbone-js

@@ -10,7 +10,7 @@
 
 import * as d3 from "d3";
 import {Interactor} from "./interactor";
-import {Config} from "../../util/config";
+import {Config} from "../../config";
 
 MoleculeSet.prototype = new Interactor();
 

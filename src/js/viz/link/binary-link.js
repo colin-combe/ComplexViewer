@@ -5,7 +5,7 @@
 //    the Rappsilber Laboratory (http://www.rappsilberlab.org/).
 
 import * as d3 from "d3";
-import {Config} from "../../util/config";
+import {Config} from "../../config";
 import {Link} from "./link";
 import {Intersection} from "intersectionjs";
 import {Point2D} from "point2d";

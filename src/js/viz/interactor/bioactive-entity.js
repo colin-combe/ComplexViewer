@@ -4,28 +4,26 @@
 //    	This product includes software developed at
 //    	the Rappsilber Laboratory (http://www.rappsilberlab.org/).
 //
-//		Complex.js
+//		BioactiveEntity.js
 //
 //		authors: Colin Combe
 
 import * as d3 from "d3";
 import {Interactor} from "./interactor";
-import {Config} from "../../util/config";
+import {Config} from "../../config";
 
-ComplexSymbol.prototype = new Interactor();
+BioactiveEntity.prototype = new Interactor();
 
-export function ComplexSymbol(id, xlvController, interactorRef, json) { //, name) {
+export function BioactiveEntity(id, xlvController, json, name) {
     this.id = id; // id may not be accession (multiple Segments with same accession)
     this.controller = xlvController;
-    this.isComplexSymbol = true;
     this.json = json;
     //links
     this.naryLinks = d3.map();
     this.binaryLinks = d3.map();
     this.selfLink = null;
     this.sequenceLinks = d3.map();
-
-    this.name = interactorRef;
+    this.name = name;
     // layout info
     this.cx = 40;
     this.cy = 40;
@@ -39,7 +37,7 @@ export function ComplexSymbol(id, xlvController, interactorRef, json) { //, name
     //~ this.upperGroup.setAttribute("class", "protein upperGroup");
 
     //for polygon
-    const points = "15,0 8,-13 -7,-13 -15,0 -8,13 7,13";
+    const points = "0, -10  8.66,5 -8.66,5";
     //make highlight
     this.highlight = document.createElementNS(Config.svgns, "polygon");
     this.highlight.setAttribute("points", points);
@@ -64,7 +62,7 @@ export function ComplexSymbol(id, xlvController, interactorRef, json) { //, name
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
     d3.select(this.labelSVG).attr("transform",
-        "translate( -" + (20) + " " + Interactor.labelY + ")"); // the hexagon has slightly bigger diameter
+        "translate( -" + (15) + " " + Interactor.labelY + ")");
     this.upperGroup.appendChild(this.labelSVG);
 
     //make blob
@@ -90,16 +88,15 @@ export function ComplexSymbol(id, xlvController, interactorRef, json) { //, name
     this.upperGroup.onmouseout = function (evt) {
         self.mouseOut(evt);
     };
+
     this.upperGroup.ontouchstart = function (evt) {
         self.touchStart(evt);
     };
 }
 
 /*
-ComplexSymbol.prototype.showData = function() {
-    if (this.name.startsWith("intact_")) {
-        const url = "http://www.ebi.ac.uk/intact/complex/details/" + this.name.substr(7);
-        window.open(url, '_blank');
-    }
+BioactiveEntity.prototype.showData = function() {
+    const url = "https://www.ebi.ac.uk/chebi/searchId.do;?chebiId=" + this.json.identifier.id;
+    window.open(url, '_blank');
 }
 */

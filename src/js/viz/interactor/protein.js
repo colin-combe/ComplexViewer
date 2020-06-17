@@ -11,7 +11,7 @@
 import * as d3 from "d3";
 import {Interactor} from "./interactor";
 import {Polymer} from "./polymer";
-import {Config} from '../../util/config';
+import {Config} from '../../config';
 
 Protein.prototype = new Polymer();
 

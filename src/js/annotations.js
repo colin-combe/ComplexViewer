@@ -1,8 +1,8 @@
 import * as d3 from "d3";
 import * as colorbrewer from "colorbrewer";
 import {storage} from "./storage";
-import {Annotation} from "../model/interactor/annotation";
-import {Feature} from "../model/feature";
+import {Annotation} from "./viz/interactor/annotation";
+import {Feature} from "./viz/feature";
 
 export function setAnnotations (annotationChoice, controller) {
     controller.annotationChoice = annotationChoice;

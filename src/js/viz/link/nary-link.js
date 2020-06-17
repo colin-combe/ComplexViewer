@@ -11,7 +11,7 @@
 
 import * as d3 from "d3";
 import {Link} from "./link";
-import {Config} from "../../util/config";
+import {Config} from "../../config";
 import {Interactor} from "../interactor/interactor";
 
 NaryLink.naryColours; // init'ed in clear function of util

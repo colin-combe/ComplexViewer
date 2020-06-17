@@ -13,7 +13,7 @@ import {Interactor, trig} from "./interactor";
 import {Annotation} from "./annotation";
 import {Feature} from "../feature";
 //var Rotator = require('../../util/Rotator');
-import {Config} from '../../util/config';
+import {Config} from '../../config';
 
 Polymer.STICKHEIGHT = 20; //height of stick in pixels
 Polymer.MAXSIZE = 0; // residue count of longest sequence

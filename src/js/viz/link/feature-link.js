@@ -5,7 +5,7 @@
 //    the Rappsilber Laboratory (http://www.rappsilberlab.org/).
 
 import {Link} from "./link";
-import {Config} from "../../util/config";
+import {Config} from "../../config";
 
 //todo: rename to SequenceFeatureLink
 

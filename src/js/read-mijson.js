@@ -1,20 +1,20 @@
 "use strict";
 
 const d3 = require("d3");
-import {Annotation} from "../model/interactor/annotation";
-import {Protein} from "../model/interactor/protein";
-import {BioactiveEntity}  from "../model/interactor/bioactive-entity";
-import {Gene} from "../model/interactor/gene";
-import {DNA} from "../model/interactor/dna";
-import {RNA} from "../model/interactor/rna";
-import {Complex} from "../model/interactor/complex";
-import {ComplexSymbol} from "../model/interactor/complex-symbol";
-import {MoleculeSet}  from "../model/interactor/molecule-set";
-import {NaryLink} from "../model/link/nary-link";
-import {FeatureLink} from "../model/link/feature-link";
-import {Feature}  from "../model/feature";
-import {BinaryLink} from "../model/link/binary-link";
-import {UnaryLink}  from "../model/link/unary-link";
+import {Annotation} from "./viz/interactor/annotation";
+import {Protein} from "./viz/interactor/protein";
+import {BioactiveEntity}  from "./viz/interactor/bioactive-entity";
+import {Gene} from "./viz/interactor/gene";
+import {DNA} from "./viz/interactor/dna";
+import {RNA} from "./viz/interactor/rna";
+import {Complex} from "./viz/interactor/complex";
+import {ComplexSymbol} from "./viz/interactor/complex-symbol";
+import {MoleculeSet}  from "./viz/interactor/molecule-set";
+import {NaryLink} from "./viz/link/nary-link";
+import {FeatureLink} from "./viz/link/feature-link";
+import {Feature}  from "./viz/feature";
+import {BinaryLink} from "./viz/link/binary-link";
+import {UnaryLink}  from "./viz/link/unary-link";
 import {matrix} from "./expand";
 
 // reads MI JSON format

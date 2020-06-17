@@ -4,17 +4,17 @@
 //    	This product includes software developed at
 //    	the Rappsilber Laboratory (http://www.rappsilberlab.org/).
 //
-//		BioactiveEntity.js
+//		DNA.js
 //
 //		authors: Colin Combe
 
 import * as d3 from "d3";
 import {Interactor} from "./interactor";
-import {Config} from "../../util/config";
+import {Config} from "../../config";
 
-BioactiveEntity.prototype = new Interactor();
+DNA.prototype = new Interactor();
 
-export function BioactiveEntity(id, xlvController, json, name) {
+export function DNA(id, xlvController, json, name) {
     this.id = id; // id may not be accession (multiple Segments with same accession)
     this.controller = xlvController;
     this.json = json;
@@ -23,6 +23,7 @@ export function BioactiveEntity(id, xlvController, json, name) {
     this.binaryLinks = d3.map();
     this.selfLink = null;
     this.sequenceLinks = d3.map();
+
     this.name = name;
     // layout info
     this.cx = 40;
@@ -37,7 +38,7 @@ export function BioactiveEntity(id, xlvController, json, name) {
     //~ this.upperGroup.setAttribute("class", "protein upperGroup");
 
     //for polygon
-    const points = "0, -10  8.66,5 -8.66,5";
+    const points = "0, -5  10, -10 0, 10 -10, -10";
     //make highlight
     this.highlight = document.createElementNS(Config.svgns, "polygon");
     this.highlight.setAttribute("points", points);
@@ -47,6 +48,12 @@ export function BioactiveEntity(id, xlvController, json, name) {
     //attributes that may change
     d3.select(this.highlight).attr("stroke-opacity", 0);
     this.upperGroup.appendChild(this.highlight);
+
+    //svg groups for self links
+    //    this.intraLinksHighlights = document.createElementNS(Config.svgns, "g");
+    //    this.intraLinks = document.createElementNS(Config.svgns, "g");
+    //    this.upperGroup.appendChild(this.intraLinksHighlights);
+    //	this.upperGroup.appendChild(this.intraLinks);
 
     //create label - we will move this svg element around when protein form changes
     this.labelSVG = document.createElementNS(Config.svgns, "text");
@@ -93,10 +100,3 @@ export function BioactiveEntity(id, xlvController, json, name) {
         self.touchStart(evt);
     };
 }
-
-/*
-BioactiveEntity.prototype.showData = function() {
-    const url = "https://www.ebi.ac.uk/chebi/searchId.do;?chebiId=" + this.json.identifier.id;
-    window.open(url, '_blank');
-}
-*/

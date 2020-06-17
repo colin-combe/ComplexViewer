@@ -4,19 +4,20 @@
 //    	This product includes software developed at
 //    	the Rappsilber Laboratory (http://www.rappsilberlab.org/).
 //
-//		RNA.js
+//		Complex.js
 //
 //		authors: Colin Combe
 
-import * as  d3 from "d3";
+import * as d3 from "d3";
 import {Interactor} from "./interactor";
-import {Config} from "../../util/config";
+import {Config} from "../../config";
 
-RNA.prototype = new Interactor();
+ComplexSymbol.prototype = new Interactor();
 
-export function RNA(id, xlvController, json, name) {
+export function ComplexSymbol(id, xlvController, interactorRef, json) { //, name) {
     this.id = id; // id may not be accession (multiple Segments with same accession)
     this.controller = xlvController;
+    this.isComplexSymbol = true;
     this.json = json;
     //links
     this.naryLinks = d3.map();
@@ -24,7 +25,7 @@ export function RNA(id, xlvController, json, name) {
     this.selfLink = null;
     this.sequenceLinks = d3.map();
 
-    this.name = name;
+    this.name = interactorRef;
     // layout info
     this.cx = 40;
     this.cy = 40;
@@ -35,17 +36,16 @@ export function RNA(id, xlvController, json, name) {
      */
 
     this.upperGroup = document.createElementNS(Config.svgns, "g");
-    this.upperGroup.setAttribute("class", "upperGroup");
+    //~ this.upperGroup.setAttribute("class", "protein upperGroup");
 
     //for polygon
-    const points = "0, -10  10, 0 0, 10 -10, 0";
+    const points = "15,0 8,-13 -7,-13 -15,0 -8,13 7,13";
     //make highlight
     this.highlight = document.createElementNS(Config.svgns, "polygon");
     this.highlight.setAttribute("points", points);
     this.highlight.setAttribute("stroke", Config.highlightColour);
     this.highlight.setAttribute("stroke-width", "5");
     this.highlight.setAttribute("fill", "none");
-    //this.highlight.setAttribute("fill-opacity", 1);
     //attributes that may change
     d3.select(this.highlight).attr("stroke-opacity", 0);
     this.upperGroup.appendChild(this.highlight);
@@ -64,7 +64,7 @@ export function RNA(id, xlvController, json, name) {
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
     d3.select(this.labelSVG).attr("transform",
-        "translate( -" + (15) + " " + Interactor.labelY + ")");
+        "translate( -" + (20) + " " + Interactor.labelY + ")"); // the hexagon has slightly bigger diameter
     this.upperGroup.appendChild(this.labelSVG);
 
     //make blob
@@ -93,12 +93,13 @@ export function RNA(id, xlvController, json, name) {
     this.upperGroup.ontouchstart = function (evt) {
         self.touchStart(evt);
     };
-
 }
 
 /*
-RNA.prototype.showData = function(evt) {
-    const url = "http://rnacentral.org/rna/" + this.json.identifier.id;
-    window.open(url, '_blank');
+ComplexSymbol.prototype.showData = function() {
+    if (this.name.startsWith("intact_")) {
+        const url = "http://www.ebi.ac.uk/intact/complex/details/" + this.name.substr(7);
+        window.open(url, '_blank');
+    }
 }
 */
