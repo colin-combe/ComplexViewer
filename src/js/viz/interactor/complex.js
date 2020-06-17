@@ -8,8 +8,8 @@
 //
 //		authors: Colin Combe
 
-import * as d3 from "d3";
-import {Interactor} from "./interactor";
+import * as d3 from 'd3';
+import {Interactor} from './interactor';
 
 Complex.prototype = new Interactor();
 
@@ -22,7 +22,7 @@ export function Complex(id, xlvController) {
     this.selfLink = null;
     this.sequenceLinks = d3.map();
     this.form = 0;
-    this.type = "complex";
+    this.type = 'complex';
 
     this.padding = 15;
 
@@ -41,9 +41,9 @@ export function Complex(id, xlvController) {
 
 Complex.prototype.initInteractor = function (naryLink) {
     this.naryLink = naryLink;
-    naryLink.path.setAttribute("stroke", "gray");
-    naryLink.path.setAttribute("stroke-linejoin", "round");
-    naryLink.path.setAttribute("stroke-width", 8);
+    naryLink.path.setAttribute('stroke', 'gray');
+    naryLink.path.setAttribute('stroke-linejoin', 'round');
+    naryLink.path.setAttribute('stroke-width', 8);
 };
 
 Complex.prototype.getPosition = function () {

@@ -61,18 +61,6 @@ select, button {
     font-size: 1em;
 }
 
-#complexDetails {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    min-height: 0; /* NEW */
-    min-width: 0; /* NEW */
-}
-
 b {
     font-weight: bold;
 }

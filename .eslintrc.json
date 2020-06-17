@@ -5,7 +5,7 @@
     "semi-style": ["error", "last"],
     "semi-spacing": ["error", {"before": false, "after": true}],
     "quotes": [ "warn", "single" ],
-    "brace-style": "error"
+    "brace-style": "warn"
 //    "object-curly-newline": ["error", "always"]
   },
   "env": {

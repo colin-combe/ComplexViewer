@@ -4,11 +4,11 @@
 //    This product includes software developed at
 //    the Rappsilber Laboratory (http://www.rappsilberlab.org/).
 
-import * as d3 from "d3";
-import {Config} from "../../config";
-import {Link} from "./link";
-import {Intersection} from "intersectionjs";
-import {Point2D} from "point2d";
+import * as d3 from 'd3';
+import {Config} from '../../config';
+import {Link} from './link';
+import {Intersection} from 'intersectionjs';
+import {Point2D} from 'point2d';
 
 // BinaryLink.js
 // the class representing a binary interaction
@@ -51,26 +51,26 @@ export function BinaryLink(id, xlvController, fromI, toI) {
 //~ }
 
 BinaryLink.prototype.initSVG = function () {
-    this.line = document.createElementNS(Config.svgns, "line");
-    this.highlightLine = document.createElementNS(Config.svgns, "line");
-    this.thickLine = document.createElementNS(Config.svgns, "line");
+    this.line = document.createElementNS(Config.svgns, 'line');
+    this.highlightLine = document.createElementNS(Config.svgns, 'line');
+    this.thickLine = document.createElementNS(Config.svgns, 'line');
 
-    this.line.setAttribute("class", "link");
-    this.line.setAttribute("fill", "none");
-    this.line.setAttribute("stroke", "black");
-    this.line.setAttribute("stroke-width", "1");
-    this.line.setAttribute("stroke-linecap", "round");
-    this.highlightLine.setAttribute("class", "link");
-    this.highlightLine.setAttribute("fill", "none");
-    this.highlightLine.setAttribute("stroke", Config.highlightColour);
-    this.highlightLine.setAttribute("stroke-width", "10");
-    this.highlightLine.setAttribute("stroke-linecap", "round");
-    this.highlightLine.setAttribute("stroke-opacity", "0");
-    this.thickLine.setAttribute("class", "link");
-    this.thickLine.setAttribute("fill", "none");
-    this.thickLine.setAttribute("stroke", "lightgray");
-    this.thickLine.setAttribute("stroke-linecap", "round");
-    this.thickLine.setAttribute("stroke-linejoin", "round");
+    this.line.setAttribute('class', 'link');
+    this.line.setAttribute('fill', 'none');
+    this.line.setAttribute('stroke', 'black');
+    this.line.setAttribute('stroke-width', '1');
+    this.line.setAttribute('stroke-linecap', 'round');
+    this.highlightLine.setAttribute('class', 'link');
+    this.highlightLine.setAttribute('fill', 'none');
+    this.highlightLine.setAttribute('stroke', Config.highlightColour);
+    this.highlightLine.setAttribute('stroke-width', '10');
+    this.highlightLine.setAttribute('stroke-linecap', 'round');
+    this.highlightLine.setAttribute('stroke-opacity', '0');
+    this.thickLine.setAttribute('class', 'link');
+    this.thickLine.setAttribute('fill', 'none');
+    this.thickLine.setAttribute('stroke', 'lightgray');
+    this.thickLine.setAttribute('stroke-linecap', 'round');
+    this.thickLine.setAttribute('stroke-linejoin', 'round');
     //set the events for it
     const self = this;
     this.line.onmousedown = function (evt) {
@@ -118,11 +118,11 @@ BinaryLink.prototype.showHighlight = function (show) {
     }
     if (show) {
         //~ this.highlightLine.setAttribute("stroke", xiNET.highlightColour.toRGB());
-        this.highlightLine.setAttribute("stroke-opacity", "1");
+        this.highlightLine.setAttribute('stroke-opacity', '1');
     } else {
         //~ this.highlightLine.setAttribute("stroke", xiNET.selectedColour.toRGB());
         //~ if (this.isSelected === false) {
-        this.highlightLine.setAttribute("stroke-opacity", "0");
+        this.highlightLine.setAttribute('stroke-opacity', '0');
         //~ }
     }
 };
@@ -138,11 +138,11 @@ BinaryLink.prototype.check = function () {
 };
 
 BinaryLink.prototype.show = function () {
-    if (typeof this.line === "undefined") {
+    if (typeof this.line === 'undefined') {
         this.initSVG();
     }
-    this.line.setAttribute("stroke-width", this.controller.z * 1);
-    this.highlightLine.setAttribute("stroke-width", this.controller.z * 10);
+    this.line.setAttribute('stroke-width', this.controller.z * 1);
+    this.highlightLine.setAttribute('stroke-width', this.controller.z * 10);
     this.setLinkCoordinates(this.interactors[0]);
     this.setLinkCoordinates(this.interactors[1]);
     if (this.thickLineShown) {
@@ -151,7 +151,7 @@ BinaryLink.prototype.show = function () {
     this.controller.highlights.appendChild(this.highlightLine);
     this.controller.p_pLinks.appendChild(this.line);
     if (this.thickLineShown) {
-        this.thickLine.setAttribute("stroke-width", this.w);
+        this.thickLine.setAttribute('stroke-width', this.w);
     }
 };
 
@@ -162,14 +162,14 @@ BinaryLink.prototype.hide = function () {
 };
 
 BinaryLink.prototype.setLinkCoordinates = function () {
-    if (typeof this.line === "undefined") {
+    if (typeof this.line === 'undefined') {
         this.initSVG();
     }
     let pos1 = this.interactors[0].getPosition();
     let pos2 = this.interactors[1].getPosition();
 
     let naryPath, iPath, a1, a2, intersect;
-    if (this.interactors[0].type === "complex") {
+    if (this.interactors[0].type === 'complex') {
         naryPath = this.interactors[0].naryLink.hull;
         iPath = [];
         for (let p of naryPath) {
@@ -182,12 +182,12 @@ BinaryLink.prototype.setLinkCoordinates = function () {
             pos1 = [intersect.points[0].x, intersect.points[0].y];
         }
 
-        this.line.setAttribute("marker-start", "url(#marker_diamond)");
-        this.line.setAttribute("marker-end", "url(#marker_diamond)");
+        this.line.setAttribute('marker-start', 'url(#marker_diamond)');
+        this.line.setAttribute('marker-end', 'url(#marker_diamond)');
 
     }
 
-    if (this.interactors[1].type === "complex") {
+    if (this.interactors[1].type === 'complex') {
         naryPath = this.interactors[0].naryLink.hull;
         iPath = [];
         for (let p of naryPath) {
@@ -199,25 +199,25 @@ BinaryLink.prototype.setLinkCoordinates = function () {
         if (intersect.points[0]) {
             pos2 = [intersect.points[0].x, intersect.points[0].y];
         }
-        this.line.setAttribute("marker-start", "url(#marker_diamond)");
-        this.line.setAttribute("marker-end", "url(#marker_diamond)");
+        this.line.setAttribute('marker-start', 'url(#marker_diamond)');
+        this.line.setAttribute('marker-end', 'url(#marker_diamond)');
     }
 
-    this.line.setAttribute("x1", pos1[0]);
-    this.line.setAttribute("y1", pos1[1]);
-    this.highlightLine.setAttribute("x1", pos1[0]);
-    this.highlightLine.setAttribute("y1", pos1[1]);
+    this.line.setAttribute('x1', pos1[0]);
+    this.line.setAttribute('y1', pos1[1]);
+    this.highlightLine.setAttribute('x1', pos1[0]);
+    this.highlightLine.setAttribute('y1', pos1[1]);
     if (this.thickLineShown) {
-        this.thickLine.setAttribute("x1", pos1[0]);
-        this.thickLine.setAttribute("y1", pos1[1]);
+        this.thickLine.setAttribute('x1', pos1[0]);
+        this.thickLine.setAttribute('y1', pos1[1]);
     }
-    this.line.setAttribute("x2", pos2[0]);
-    this.line.setAttribute("y2", pos2[1]);
-    this.highlightLine.setAttribute("x2", pos2[0]);
-    this.highlightLine.setAttribute("y2", pos2[1]);
+    this.line.setAttribute('x2', pos2[0]);
+    this.line.setAttribute('y2', pos2[1]);
+    this.highlightLine.setAttribute('x2', pos2[0]);
+    this.highlightLine.setAttribute('y2', pos2[1]);
     if (this.thickLineShown) {
-        this.thickLine.setAttribute("x2", pos2[0]);
-        this.thickLine.setAttribute("y2", pos2[1]);
+        this.thickLine.setAttribute('x2', pos2[0]);
+        this.thickLine.setAttribute('y2', pos2[1]);
     }
 };
 

@@ -21,63 +21,63 @@ export function Feature(node, sequenceDatumString) {
     this.node = node; //todo: rename to participant
     this.sequenceDatumString = sequenceDatumString.trim();
 
-    if (this.sequenceDatumString === "?-?") {
+    if (this.sequenceDatumString === '?-?') {
         this.begin = 0;
         this.end = 0;
         this.uncertainEnd = node.size;
-    } else if (this.sequenceDatumString === "n-n") {
-        this.uncertainBegin = "n-n";
+    } else if (this.sequenceDatumString === 'n-n') {
+        this.uncertainBegin = 'n-n';
         this.begin = 0;
         this.end = 0;
         node.nTerminusFeature = true;
-    } else if (this.sequenceDatumString === "c-c") {
+    } else if (this.sequenceDatumString === 'c-c') {
         this.begin = node.size + 1;
         this.end = node.size + 1;
-        this.uncertainEnd = "c-c";//node.size + 21;
+        this.uncertainEnd = 'c-c';//node.size + 21;
     } else {
 
-        const dashPosition = sequenceDatumString.indexOf("-");
+        const dashPosition = sequenceDatumString.indexOf('-');
         const firstPart = sequenceDatumString.substring(0, dashPosition);
         const secondPart = sequenceDatumString.substring(dashPosition + 1);
         let firstDotPosition;
-        if (firstPart.indexOf(".") === -1) {
+        if (firstPart.indexOf('.') === -1) {
             this.begin = firstPart;
         } else {
-            firstDotPosition = firstPart.indexOf(".");
+            firstDotPosition = firstPart.indexOf('.');
             this.uncertainBegin = firstPart.substring(0, firstDotPosition) * 1;
             this.begin = firstPart.substring(firstDotPosition + 2) * 1;
         }
 
-        if (secondPart.indexOf(".") === -1) {
+        if (secondPart.indexOf('.') === -1) {
             this.end = secondPart;
         } else {
-            firstDotPosition = secondPart.indexOf(".");
+            firstDotPosition = secondPart.indexOf('.');
             this.end = secondPart.substring(0, firstDotPosition) * 1;
             this.uncertainEnd = secondPart.substring(firstDotPosition + 2) * 1;
         }
 
-        if (this.begin === "n") {
+        if (this.begin === 'n') {
             this.uncertainBegin = 0;
             this.begin = this.end;
             this.uncertainEnd = this.end;
         }
 
-        if (this.end === "c") {
+        if (this.end === 'c') {
             this.uncertainEnd = node.size;
             this.end = this.begin;
             this.uncertainBegin = this.begin;
         }
 
-        if (firstPart.indexOf("<") > -1) {
+        if (firstPart.indexOf('<') > -1) {
             this.uncertainBegin = 0;
             this.begin = firstPart.substring(1, firstPart.length);
         }
-        if (secondPart.indexOf(">") > -1) {
+        if (secondPart.indexOf('>') > -1) {
             this.end = secondPart.substring(1, firstPart.length);
             this.uncertainEnd = node.size;
         }
 
-        if (firstPart.indexOf(">") > -1 && secondPart.indexOf("<") > -1) {
+        if (firstPart.indexOf('>') > -1 && secondPart.indexOf('<') > -1) {
             this.uncertainBegin = firstPart.substring(1, firstPart.length);
             this.begin = secondPart.substring(1, firstPart.length);
             this.end = this.begin;

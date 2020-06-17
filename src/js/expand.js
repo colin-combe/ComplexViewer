@@ -1,14 +1,14 @@
-import * as d3 from "d3";
+import * as d3 from 'd3';
 
 export function matrix (json) {
 
     // We'll need collections of our interactions and interactors for later..
     const interactions = json.data.filter(function (interaction) {
-        return interaction.object === "interaction";
+        return interaction.object === 'interaction';
     });
 
     const interactors = json.data.filter(function (interactor) {
-        return interactor.object === "interactor";
+        return interactor.object === 'interactor';
     });
 
     const newParticipants = [];
@@ -27,7 +27,7 @@ export function matrix (json) {
         participantsToExpand.forEach(function (participant) {
 
             // Do we have an interactor? TODO: Will his affect complexes?
-            const foundInteractor = findFirstObjWithAttr(interactors, "id", participant.interactorRef);
+            const foundInteractor = findFirstObjWithAttr(interactors, 'id', participant.interactorRef);
 
             // If we found an interactor then we need to clone it.
             if (foundInteractor) {
@@ -37,7 +37,7 @@ export function matrix (json) {
                     const clonedParticipant = JSON.parse(JSON.stringify(participant));
 
                     //~ clonedParticipant.interactorRef = clonedInteractor.id;
-                    clonedParticipant.id = clonedParticipant.id + "_" + i;
+                    clonedParticipant.id = clonedParticipant.id + '_' + i;
 
                     // Store a reference from where we were cloned
                     clonedParticipant.cloneParentID = participant.id;
@@ -49,7 +49,7 @@ export function matrix (json) {
                         clonedParticipant.features.forEach(function (feature) {
 
                             feature.clonedfrom = feature.id;
-                            feature.id = feature.id + "_" + i;
+                            feature.id = feature.id + '_' + i;
 
                             // Also, adjust our sequence data
                             feature.sequenceData.forEach(function (sequenceData) {
@@ -88,11 +88,11 @@ export function matrix (json) {
                     if (linkedFeatures) {
                         if (linkedFeatures.indexOf(feature.clonedfrom) > -1) {
                             const clonedFeature = JSON.parse(JSON.stringify(nFeature));
-                            clonedFeature.id = nFeature.id + "_" + feature.id;
+                            clonedFeature.id = nFeature.id + '_' + feature.id;
                             clonedFeature.linkedFeatures = [];
                             clonedFeature.linkedFeatures.push(feature.id);
 
-                            const parts = findFirstObjWithAttr(interaction.participants, "id", clonedFeature.parentParticipant);
+                            const parts = findFirstObjWithAttr(interaction.participants, 'id', clonedFeature.parentParticipant);
                             parts.features.push(clonedFeature);
                         }
                     }
@@ -112,7 +112,7 @@ export function matrix (json) {
     //actually the expansion code doesn't seem to take up that much time
     //console.log("Expand time:" + ( +new Date() - startTime));
     return json;
-};
+}
 
 // Returns the first object in an array that has an attribute with a matching value.
 function findFirstObjWithAttr(collection, attribute, value) {

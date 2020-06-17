@@ -4,8 +4,8 @@
 //    This product includes software developed at
 //    the Rappsilber Laboratory (http://www.rappsilberlab.org/).
 
-import {Link} from "./link";
-import {Config} from "../../config";
+import {Link} from './link';
+import {Config} from '../../config';
 
 //todo: rename to SequenceFeatureLink
 
@@ -45,29 +45,29 @@ FeatureLink.prototype.getToolTip = function() {
 }*/
 
 FeatureLink.prototype.initSVG = function () {
-    if (typeof this.glyph === "undefined") {
-        this.glyph = document.createElementNS(Config.svgns, "path");
-        this.uncertainGlyph = document.createElementNS(Config.svgns, "path");
-        this.highlightGlyph = document.createElementNS(Config.svgns, "path");
-        this.glyph.setAttribute("stroke-linecap", "round");
-        this.uncertainGlyph.setAttribute("stroke-linecap", "round");
-        this.highlightGlyph.setAttribute("stroke-linecap", "round");
-        this.glyph.setAttribute("class", "link");
-        this.glyph.setAttribute("fill", "black");//"#E08214");
-        this.glyph.setAttribute("opacity", "0.6");
-        this.glyph.setAttribute("stroke", "black");//""#A08214");// // TODO: will look better with this line partly removed
-        this.glyph.setAttribute("stroke-opacity", "0.6");
-        this.glyph.setAttribute("stroke-width", "1");
-        this.uncertainGlyph.setAttribute("class", "link");
-        this.uncertainGlyph.setAttribute("fill", "black");//url('#checkers_uncertain')");//"#A01284");
-        this.uncertainGlyph.setAttribute("stroke", "black");//"none");//"#A01284");
-        this.uncertainGlyph.setAttribute("stroke-opacity", "0.2");
-        this.uncertainGlyph.setAttribute("fill-opacity", "0.2");
-        this.highlightGlyph.setAttribute("class", "link");
-        this.highlightGlyph.setAttribute("fill", "none");
-        this.highlightGlyph.setAttribute("stroke", Config.highlightColour);
-        this.highlightGlyph.setAttribute("stroke-width", "10");
-        this.highlightGlyph.setAttribute("stroke-opacity", "0");
+    if (typeof this.glyph === 'undefined') {
+        this.glyph = document.createElementNS(Config.svgns, 'path');
+        this.uncertainGlyph = document.createElementNS(Config.svgns, 'path');
+        this.highlightGlyph = document.createElementNS(Config.svgns, 'path');
+        this.glyph.setAttribute('stroke-linecap', 'round');
+        this.uncertainGlyph.setAttribute('stroke-linecap', 'round');
+        this.highlightGlyph.setAttribute('stroke-linecap', 'round');
+        this.glyph.setAttribute('class', 'link');
+        this.glyph.setAttribute('fill', 'black');//"#E08214");
+        this.glyph.setAttribute('opacity', '0.6');
+        this.glyph.setAttribute('stroke', 'black');//""#A08214");// // TODO: will look better with this line partly removed
+        this.glyph.setAttribute('stroke-opacity', '0.6');
+        this.glyph.setAttribute('stroke-width', '1');
+        this.uncertainGlyph.setAttribute('class', 'link');
+        this.uncertainGlyph.setAttribute('fill', 'black');//url('#checkers_uncertain')");//"#A01284");
+        this.uncertainGlyph.setAttribute('stroke', 'black');//"none");//"#A01284");
+        this.uncertainGlyph.setAttribute('stroke-opacity', '0.2');
+        this.uncertainGlyph.setAttribute('fill-opacity', '0.2');
+        this.highlightGlyph.setAttribute('class', 'link');
+        this.highlightGlyph.setAttribute('fill', 'none');
+        this.highlightGlyph.setAttribute('stroke', Config.highlightColour);
+        this.highlightGlyph.setAttribute('stroke-width', '10');
+        this.highlightGlyph.setAttribute('stroke-opacity', '0');
 
         //set the events for it
         const self = this;
@@ -104,9 +104,9 @@ FeatureLink.prototype.initSVG = function () {
 //andAlternatives means highlight alternative links in case of site ambiguity
 FeatureLink.prototype.showHighlight = function (show) {
     if (show) {
-        this.highlightGlyph.setAttribute("stroke-opacity", "1");
+        this.highlightGlyph.setAttribute('stroke-opacity', '1');
     } else {
-        this.highlightGlyph.setAttribute("stroke-opacity", "0");
+        this.highlightGlyph.setAttribute('stroke-opacity', '0');
     }
 };
 
@@ -184,9 +184,9 @@ FeatureLink.prototype.setLinkCoordinates = function () {
             endPoint = interactor.getResidueCoordinates(endRes, yOffset);
 
         }
-        return " Q" + controlPoint[0] + "," + controlPoint[1] + " " + startPoint[0] + "," + startPoint[1] +
-            " L" + endPoint[0] + "," + endPoint[1] +
-            " Q" + controlPoint[0] + "," + controlPoint[1] + " " + midPoint[0] + "," + midPoint[1];
+        return ' Q' + controlPoint[0] + ',' + controlPoint[1] + ' ' + startPoint[0] + ',' + startPoint[1] +
+            ' L' + endPoint[0] + ',' + endPoint[1] +
+            ' Q' + controlPoint[0] + ',' + controlPoint[1] + ' ' + midPoint[0] + ',' + midPoint[1];
     }
 
     function sequenceDataMidPoint(sequenceData, interactor) {
@@ -261,7 +261,7 @@ FeatureLink.prototype.setLinkCoordinates = function () {
     }
     let fRotRad = (fromInteractor.rotation / 360) * Math.PI * 2;
     if (out > 180) {
-        fRotRad = fRotRad - Math.PI;
+        fRotRad -= Math.PI;
     }
     //now for 'to' interactor
     out = (abmpDeg - toInteractor.rotation);
@@ -274,7 +274,7 @@ FeatureLink.prototype.setLinkCoordinates = function () {
     }
     let tRotRad = (toInteractor.rotation / 360) * Math.PI * 2;
     if (out < 180) {
-        tRotRad = tRotRad - Math.PI;
+        tRotRad -= Math.PI;
     }
 
     let ftMid = [fMid[0] + (30 * Math.sin(fRotRad) * this.controller.z),
@@ -295,9 +295,9 @@ FeatureLink.prototype.setLinkCoordinates = function () {
     const fSDCount = this.fromSequenceData.length;
     const tSDCount = this.toSequenceData.length;
     let seqDatum, highlightStartRes, highlightEndRes;
-    let glyphPath = "M" + triPointMid[0] + "," + triPointMid[1];
-    let uncertainGlyphPath = "M" + triPointMid[0] + "," + triPointMid[1];
-    let highlightGlyphPath = "M" + triPointMid[0] + "," + triPointMid[1];
+    let glyphPath = 'M' + triPointMid[0] + ',' + triPointMid[1];
+    let uncertainGlyphPath = 'M' + triPointMid[0] + ',' + triPointMid[1];
+    let highlightGlyphPath = 'M' + triPointMid[0] + ',' + triPointMid[1];
     for (let f = 0; f < fSDCount; f++) {
         seqDatum = this.fromSequenceData[f];
         glyphPath += getPathSegments(triPointMid, ftMid, seqDatum.begin, seqDatum.end, fromInteractor, fyOffset);
@@ -339,7 +339,7 @@ FeatureLink.prototype.setLinkCoordinates = function () {
         this.initSVG();
     }
 
-    this.glyph.setAttribute("d", glyphPath);
-    this.uncertainGlyph.setAttribute("d", uncertainGlyphPath);
-    this.highlightGlyph.setAttribute("d", highlightGlyphPath);
+    this.glyph.setAttribute('d', glyphPath);
+    this.uncertainGlyph.setAttribute('d', uncertainGlyphPath);
+    this.highlightGlyph.setAttribute('d', highlightGlyphPath);
 };

@@ -25,13 +25,13 @@ Interactor.prototype = {
 
 Interactor.prototype.addStoichiometryLabel = function (stoichiometry) {
     if (this.labelSVG) { //complexes don't have labels (yet?)
-        this.labelSVG.childNodes[0].data = this.labelSVG.childNodes[0].data + " [" + stoichiometry + "]";
+        this.labelSVG.childNodes[0].data = this.labelSVG.childNodes[0].data + ' [' + stoichiometry + ']';
     }
 };
 
 Interactor.prototype.mouseDown = function (evt) {
     this.controller.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
-    if (typeof this.controller.d3cola !== "undefined" && this.controller.d3cola != null) {
+    if (typeof this.controller.d3cola !== 'undefined' && this.controller.d3cola != null) {
         this.controller.d3cola.stop();
     }
     this.controller.dragElement = this;
@@ -78,7 +78,7 @@ Interactor.prototype.showHighlight = function () {
     // this.highlight.setAttribute("stroke-opacity", "1");
     // } else {
     //~ if (this.isSelected == false) {
-    this.highlight.setAttribute("stroke-opacity", "0");
+    this.highlight.setAttribute('stroke-opacity', '0');
     //~ }
     //~ this.highlight.setAttribute("stroke", xiNET.selectedColour.toRGB());
     // }
@@ -110,7 +110,7 @@ Interactor.prototype.setPosition = function (x, y) {
     this.cx = x;
     this.cy = y;
     // if (this.form === 1) {
-    this.upperGroup.setAttribute("transform", "translate(" + (this.cx) + " " + this.cy + ")"); // +
+    this.upperGroup.setAttribute('transform', 'translate(' + (this.cx) + ' ' + this.cy + ')'); // +
     //         " scale(" + (this.util.z) + ") " + "rotate(" + this.rotation + ")");
     // } else {
     //     this.upperGroup.setAttribute("transform", "translate(" + this.cx + " " + this.cy + ")" +
@@ -121,14 +121,14 @@ Interactor.prototype.setPosition = function (x, y) {
 Interactor.prototype.getAggregateSelfLinkPath = function () {
     const intraR = this.getBlobRadius() + 7;
     const sectorSize = 45;
-    const arcStart = Interactor.trig(intraR, 25 + sectorSize);
-    const arcEnd = Interactor.trig(intraR, -25 + sectorSize);
-    const cp1 = Interactor.trig(intraR, 40 + sectorSize);
-    const cp2 = Interactor.trig(intraR, -40 + sectorSize);
-    return "M 0,0 " +
-        "Q " + cp1.x + "," + -cp1.y + " " + arcStart.x + "," + -arcStart.y +
-        " A " + intraR + " " + intraR + " 0 0 1 " + arcEnd.x + "," + -arcEnd.y +
-        " Q " + cp2.x + "," + -cp2.y + " 0,0";
+    const arcStart = trig(intraR, 25 + sectorSize);
+    const arcEnd = trig(intraR, -25 + sectorSize);
+    const cp1 = trig(intraR, 40 + sectorSize);
+    const cp2 = trig(intraR, -40 + sectorSize);
+    return 'M 0,0 ' +
+        'Q ' + cp1.x + ',' + -cp1.y + ' ' + arcStart.x + ',' + -arcStart.y +
+        ' A ' + intraR + ' ' + intraR + ' 0 0 1 ' + arcEnd.x + ',' + -arcEnd.y +
+        ' Q ' + cp2.x + ',' + -cp2.y + ' 0,0';
 };
 
 Interactor.rotatePointAboutPoint = function (p, o, theta) {
@@ -179,7 +179,7 @@ export function trig (radius, angleDegrees) {
         x: (radius * Math.cos(radians)),
         y: (radius * Math.sin(radians))
     };
-};
+}
 
 /*
 Interactor.prototype.showData = function() {

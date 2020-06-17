@@ -12,19 +12,19 @@
 //this just fetches unniprotkb and superfam annotations from web services
 //// TODO: get rid of?
 
-import * as d3 from "d3";
-import {Annotation} from "./viz/interactor/annotation";
-import {Feature} from "./viz/feature";
+import * as d3 from 'd3';
+import {Annotation} from './viz/interactor/annotation';
+import {Feature} from './viz/feature';
 
 export function storage() {//todo this is weird
 }
 
-storage.ns = "xiNET.";
+storage.ns = 'xiNET.';
 
 storage.accessionFromId = function (id) {
     let idRegex;
     // i cant figure out way to do this purely with regex... who cares
-    if (id.indexOf("(") !== -1) { //id has participant number in it
+    if (id.indexOf('(') !== -1) { //id has participant number in it
         idRegex = /uniprotkb_(.*)(\()/;
     } else {
         idRegex = /uniprotkb_(.*)/;
@@ -32,9 +32,9 @@ storage.accessionFromId = function (id) {
     const match = idRegex.exec(id);
     if (match) {
         return match[1];
-    } else if (id.indexOf("|") !== -1) {
+    } else if (id.indexOf('|') !== -1) {
         //following reads swiss-prot style identifiers
-        return id.split("|")[1];
+        return id.split('|')[1];
     } else {
         return id;
     }
@@ -44,7 +44,7 @@ storage.getUniProtTxt = function (id, callback) {
     const accession = storage.accessionFromId(id);
 
     function uniprotWebService() {
-        const url = "https://www.ebi.ac.uk/proteins/api/proteins/" + accession;
+        const url = 'https://www.ebi.ac.uk/proteins/api/proteins/' + accession;
         d3.json(url, function (txt) {
             //~ // console.log(accession + " retrieved from UniProt.");
             //~ if(typeof(Storage) !== "undefined") {
@@ -92,7 +92,7 @@ storage.getSequence = function (id, callback) {
         //~ }
         //~ }
         //~ }
-        callback(id, json.sequence.replace(/[^A-Z]/g, ""));
+        callback(id, json.sequence.replace(/[^A-Z]/g, ''));
     });
 };
 
@@ -114,7 +114,7 @@ storage.getUniProtFeatures = function (id, callback) {
         //~ }
         //~ }
         callback(id, json.features.filter(function (ft) {
-            return ft.type === "DOMAIN";
+            return ft.type === 'DOMAIN';
         }));
     });
 };
@@ -123,41 +123,35 @@ storage.getSuperFamFeatures = function (id, callback) {
     const accession = storage.accessionFromId(id);
 
     function superFamDAS() {
-        const url = "https://supfam.mrc-lmb.cam.ac.uk/SUPERFAMILY/cgi-bin/das/up/features?segment=" + accession;
+        const url = 'https://supfam.mrc-lmb.cam.ac.uk/SUPERFAMILY/cgi-bin/das/up/features?segment=' + accession;
         d3.xml(url, function (xml) {
-            xml = new XMLSerializer().serializeToString(xml);
-            //~ console.log(accession + " SuperFamDAS  retrieved.");
+            // xml = new XMLSerializer().serializeToString(xml);
+            //~ console.log(accession + " SuperFamDAS  retrieved
+            // .");
             //~ if(typeof(Storage) !== "undefined") {
             //~ localStorage.setItem(xiNET_Storage.ns  + "SuperFamDAS." + accession, xml);
             //~ // console.log(accession + " SuperFamDAS added to local storage.");
             //~ }
-            parseSuperFamDAS(xml);
+            parseSuperFamDAS(new XMLSerializer().serializeToString(xml));
         });
     }
 
     function parseSuperFamDAS(dasXml) {
         //~ console.log(dasXml);
-        let xmlDoc;
-        if (window.DOMParser) {
-            const parser = new DOMParser();
-            xmlDoc = parser.parseFromString(dasXml, "text/xml");
-        } else { // Internet Explorer
-            xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
-            xmlDoc.async = false;
-            xmlDoc.loadXML(dasXml);
-        }
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(dasXml, 'text/xml');
         const features = [];
-        const xmlFeatures = xmlDoc.getElementsByTagName("FEATURE");
+        const xmlFeatures = xmlDoc.getElementsByTagName('FEATURE');
         const featureCount = xmlFeatures.length;
         for (let f = 0; f < featureCount; f++) {
             const xmlFeature = xmlFeatures[f];
-            const type = xmlFeature.getElementsByTagName("TYPE")[0]; //might need to watch for text nodes getting mixed in here
-            const category = type.getAttribute("category");
-            if (category === "miscellaneous") {
-                const name = type.getAttribute("id");
-                const start = xmlFeature.getElementsByTagName("START")[0].textContent;
-                const end = xmlFeature.getElementsByTagName("END")[0].textContent;
-                features.push(new Annotation(name, new Feature(null, start + "-" + end)));
+            const type = xmlFeature.getElementsByTagName('TYPE')[0]; //might need to watch for text nodes getting mixed in here
+            const category = type.getAttribute('category');
+            if (category === 'miscellaneous') {
+                const name = type.getAttribute('id');
+                const start = xmlFeature.getElementsByTagName('START')[0].textContent;
+                const end = xmlFeature.getElementsByTagName('END')[0].textContent;
+                features.push(new Annotation(name, new Feature(null, start + '-' + end)));
             }
         }
         //~ console.log(JSON.stringify(features));

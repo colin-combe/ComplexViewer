@@ -1,14 +1,14 @@
-import * as d3 from "d3";
-import * as colorbrewer from "colorbrewer";
-import {storage} from "./storage";
-import {Annotation} from "./viz/interactor/annotation";
-import {Feature} from "./viz/feature";
+import * as d3 from 'd3';
+import * as colorbrewer from 'colorbrewer';
+import {storage} from './storage';
+import {Annotation} from './viz/interactor/annotation';
+import {Feature} from './viz/feature';
 
 export function setAnnotations (annotationChoice, controller) {
     controller.annotationChoice = annotationChoice;
     //clear all annot's
     for (let mol of controller.molecules.values()) {
-        if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS // todo - is this best way to check if protein
+        if (mol.id.indexOf('uniprotkb_') === 0) { //LIMIT IT TO PROTEINS // todo - is this best way to check if protein
             mol.clearPositionalFeatures();
         }
     }
@@ -16,29 +16,29 @@ export function setAnnotations (annotationChoice, controller) {
 
     let molsAnnotated = 0;
     const molCount = controller.molecules.size;
-    if (annotationChoice.toUpperCase() === "MI FEATURES") {
+    if (annotationChoice.toUpperCase() === 'MI FEATURES') {
         for (let mol of controller.molecules.values()) {
-            if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS
+            if (mol.id.indexOf('uniprotkb_') === 0) { //LIMIT IT TO PROTEINS
                 mol.setPositionalFeatures(mol.miFeatures);
             }
         }
         chooseColours();
-    } else if (annotationChoice.toUpperCase() === "INTERACTOR") {
+    } else if (annotationChoice.toUpperCase() === 'INTERACTOR') {
         if (controller.proteinCount < 21) {
             for (let mol of controller.molecules.values()) {
-                if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS
-                    const annotation = new Annotation(mol.json.label, new Feature(null, 1 + "-" + mol.size));
+                if (mol.id.indexOf('uniprotkb_') === 0) { //LIMIT IT TO PROTEINS
+                    const annotation = new Annotation(mol.json.label, new Feature(null, 1 + '-' + mol.size));
                     mol.setPositionalFeatures([annotation]);
                 }
             }
             chooseColours();
         } else {
-            alert("Too many (> 20) - can't colour by interactor.");
+            alert('Too many (> 20) - can\'t colour by interactor.');
         }
-    } else if (annotationChoice.toUpperCase() === "SUPERFAM" || annotationChoice.toUpperCase() === "SUPERFAMILY") {
+    } else if (annotationChoice.toUpperCase() === 'SUPERFAM' || annotationChoice.toUpperCase() === 'SUPERFAMILY') {
         for (let mol of controller.molecules.values()) {
-            if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS
-                xiNET_Storage.getSuperFamFeatures(mol.id, function (id, fts) {
+            if (mol.id.indexOf('uniprotkb_') === 0) { //LIMIT IT TO PROTEINS
+                storage.getSuperFamFeatures(mol.id, function (id, fts) {
                     const m = controller.molecules.get(id);
                     m.setPositionalFeatures(fts);
                     molsAnnotated++;
@@ -53,14 +53,14 @@ export function setAnnotations (annotationChoice, controller) {
                 }
             }
         }
-    } else if (annotationChoice.toUpperCase() === "UNIPROT" || annotationChoice.toUpperCase() === "UNIPROTKB") {
+    } else if (annotationChoice.toUpperCase() === 'UNIPROT' || annotationChoice.toUpperCase() === 'UNIPROTKB') {
         for (let mol of controller.molecules.values()) {
-            if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS
-                xiNET_Storage.getUniProtFeatures(mol.id, function (id, fts) {
+            if (mol.id.indexOf('uniprotkb_') === 0) { //LIMIT IT TO PROTEINS
+                storage.getUniProtFeatures(mol.id, function (id, fts) {
                     const m = controller.molecules.get(id);
                     for (let f = 0; f < fts.length; f++) {
                         const feature = fts[f];
-                        feature.seqDatum = new Feature(null, feature.begin + "-" + feature.end);
+                        feature.seqDatum = new Feature(null, feature.begin + '-' + feature.end);
                     }
                     m.setPositionalFeatures(fts);
                     molsAnnotated++;
@@ -107,25 +107,25 @@ export function setAnnotations (annotationChoice, controller) {
             if (mol.annotations) {
                 for (let anno of mol.annotations) {
                     let colour;
-                    if (anno.description === "No annotations") {
-                        colour = "#cccccc";
+                    if (anno.description === 'No annotations') {
+                        colour = '#cccccc';
                     } else {
                         colour = colourScheme(anno.description);
                     }
 
                     //ToDO - way more of these are being created than needed
-                    controller.createHatchedFill("checkers_" + anno.description, colour);
-                    const checkedFill = "url('#checkers_" + anno.description + "')";
+                    controller.createHatchedFill('checkers_' + anno.description, colour);
+                    const checkedFill = 'url(\'#checkers_' + anno.description + '\')';
 
-                    anno.fuzzyStart.setAttribute("fill", checkedFill);
-                    anno.fuzzyStart.setAttribute("stroke", colour);
-                    anno.fuzzyEnd.setAttribute("fill", checkedFill);
-                    anno.fuzzyEnd.setAttribute("stroke", colour);
-                    anno.certain.setAttribute("fill", colour);
-                    anno.certain.setAttribute("stroke", colour);
+                    anno.fuzzyStart.setAttribute('fill', checkedFill);
+                    anno.fuzzyStart.setAttribute('stroke', colour);
+                    anno.fuzzyEnd.setAttribute('fill', checkedFill);
+                    anno.fuzzyEnd.setAttribute('stroke', colour);
+                    anno.certain.setAttribute('fill', colour);
+                    anno.certain.setAttribute('stroke', colour);
                 }
             }
         }
         controller.legendChanged(colourScheme);
     }
-};
+}

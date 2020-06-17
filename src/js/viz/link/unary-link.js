@@ -9,9 +9,9 @@
 // 		UnaryLink.js
 // 		the class representing a self-link
 
-import * as d3 from "d3";
-import {Config} from "../../config";
-import {Link} from "./link";
+import * as d3 from 'd3';
+import {Config} from '../../config';
+import {Link} from './link';
 // var FeatureLink = require('./FeatureLink');
 
 UnaryLink.prototype = new Link();
@@ -54,29 +54,29 @@ export function UnaryLink(id, xlvController, interactor) {
 
 UnaryLink.prototype.initSVG = function () {
     const path = this.interactors[0].getAggregateSelfLinkPath();
-    this.line = document.createElementNS(Config.svgns, "path");
-    this.line.setAttribute("d", path);
-    this.highlightLine = document.createElementNS(Config.svgns, "path");
-    this.highlightLine.setAttribute("d", path);
-    this.thickLine = document.createElementNS(Config.svgns, "path");
-    this.thickLine.setAttribute("d", path);
+    this.line = document.createElementNS(Config.svgns, 'path');
+    this.line.setAttribute('d', path);
+    this.highlightLine = document.createElementNS(Config.svgns, 'path');
+    this.highlightLine.setAttribute('d', path);
+    this.thickLine = document.createElementNS(Config.svgns, 'path');
+    this.thickLine.setAttribute('d', path);
 
-    this.line.setAttribute("class", "link");
-    this.line.setAttribute("fill", "none");
-    this.line.setAttribute("stroke", "black");
-    this.line.setAttribute("stroke-width", "1");
-    this.line.setAttribute("stroke-linecap", "round");
-    this.highlightLine.setAttribute("class", "link");
-    this.highlightLine.setAttribute("fill", "none");
-    this.highlightLine.setAttribute("stroke", Config.highlightColour);
-    this.highlightLine.setAttribute("stroke-width", "10");
-    this.highlightLine.setAttribute("stroke-linecap", "round");
-    this.highlightLine.setAttribute("stroke-opacity", "0");
-    this.thickLine.setAttribute("class", "link");
-    this.thickLine.setAttribute("fill", "none");
-    this.thickLine.setAttribute("stroke", "lightgray");
-    this.thickLine.setAttribute("stroke-linecap", "round");
-    this.thickLine.setAttribute("stroke-linejoin", "round");
+    this.line.setAttribute('class', 'link');
+    this.line.setAttribute('fill', 'none');
+    this.line.setAttribute('stroke', 'black');
+    this.line.setAttribute('stroke-width', '1');
+    this.line.setAttribute('stroke-linecap', 'round');
+    this.highlightLine.setAttribute('class', 'link');
+    this.highlightLine.setAttribute('fill', 'none');
+    this.highlightLine.setAttribute('stroke', Config.highlightColour);
+    this.highlightLine.setAttribute('stroke-width', '10');
+    this.highlightLine.setAttribute('stroke-linecap', 'round');
+    this.highlightLine.setAttribute('stroke-opacity', '0');
+    this.thickLine.setAttribute('class', 'link');
+    this.thickLine.setAttribute('fill', 'none');
+    this.thickLine.setAttribute('stroke', 'lightgray');
+    this.thickLine.setAttribute('stroke-linecap', 'round');
+    this.thickLine.setAttribute('stroke-linejoin', 'round');
     //set the events for it
     const self = this;
     this.line.onmousedown = function (evt) {
@@ -127,9 +127,9 @@ UnaryLink.prototype.selfLink = function () {
 
 UnaryLink.prototype.initSelfLinkSVG = function () {
     const path = this.interactors[0].getAggregateSelfLinkPath();
-    this.line.setAttribute("d", path);
-    this.highlightLine.setAttribute("d", path);
-    this.thickLine.setAttribute("d", path);
+    this.line.setAttribute('d', path);
+    this.highlightLine.setAttribute('d', path);
+    this.thickLine.setAttribute('d', path);
 };
 
 UnaryLink.prototype.showHighlight = function (show) {
@@ -138,11 +138,11 @@ UnaryLink.prototype.showHighlight = function (show) {
     }
     if (show) {
         //~ this.highlightLine.setAttribute("stroke", xiNET.highlightColour.toRGB());
-        this.highlightLine.setAttribute("stroke-opacity", "1");
+        this.highlightLine.setAttribute('stroke-opacity', '1');
     } else {
         //~ this.highlightLine.setAttribute("stroke", xiNET.selectedColour.toRGB());
         //~ if (this.isSelected === false) {
-        this.highlightLine.setAttribute("stroke-opacity", "0");
+        this.highlightLine.setAttribute('stroke-opacity', '0');
         //~ }
     }
 };
@@ -158,10 +158,10 @@ UnaryLink.prototype.check = function () {
 };
 
 UnaryLink.prototype.show = function () {
-    this.line.setAttribute("transform", "translate(" + this.interactors[0].cx +
-        " " + this.interactors[0].cy + ")" + " scale(" + (this.controller.z) + ")");
-    this.highlightLine.setAttribute("transform", "translate(" + this.interactors[0].cx +
-        " " + this.interactors[0].cy + ")" + " scale(" + (this.controller.z) + ")");
+    this.line.setAttribute('transform', 'translate(' + this.interactors[0].cx +
+        ' ' + this.interactors[0].cy + ')' + ' scale(' + (this.controller.z) + ')');
+    this.highlightLine.setAttribute('transform', 'translate(' + this.interactors[0].cx +
+        ' ' + this.interactors[0].cy + ')' + ' scale(' + (this.controller.z) + ')');
     this.controller.highlights.appendChild(this.highlightLine);
     this.controller.p_pLinks.appendChild(this.line);
 };
@@ -169,13 +169,13 @@ UnaryLink.prototype.show = function () {
 
 UnaryLink.prototype.setLinkCoordinates = function () {
     const interactor = this.interactors[0];
-    if (typeof this.thickLine !== "undefined") {
-        this.thickLine.setAttribute("transform", "translate(" + interactor.cx +
-            " " + interactor.cy + ")" + " scale(" + (this.controller.z) + ")");
+    if (typeof this.thickLine !== 'undefined') {
+        this.thickLine.setAttribute('transform', 'translate(' + interactor.cx +
+            ' ' + interactor.cy + ')' + ' scale(' + (this.controller.z) + ')');
     }
-    this.line.setAttribute("transform", "translate(" + interactor.cx +
-        " " + interactor.cy + ")" + " scale(" + (this.controller.z) + ")");
-    this.highlightLine.setAttribute("transform", "translate(" + interactor.cx +
-        " " + interactor.cy + ")" + " scale(" + (this.controller.z) + ")");
+    this.line.setAttribute('transform', 'translate(' + interactor.cx +
+        ' ' + interactor.cy + ')' + ' scale(' + (this.controller.z) + ')');
+    this.highlightLine.setAttribute('transform', 'translate(' + interactor.cx +
+        ' ' + interactor.cy + ')' + ' scale(' + (this.controller.z) + ')');
 };
 
