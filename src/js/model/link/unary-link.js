@@ -9,16 +9,14 @@
 // 		UnaryLink.js
 // 		the class representing a self-link
 
-"use strict";
-
-const d3 = require("d3");
-const Config = require("../../util/Config");
-const Link = require("./Link");
-// var SequenceLink = require('./SequenceLink');
+import * as d3 from "d3";
+import {Config} from "../../util/config";
+import {Link} from "./link";
+// var FeatureLink = require('./FeatureLink');
 
 UnaryLink.prototype = new Link();
 
-function UnaryLink(id, xlvController, interactor) {
+export function UnaryLink(id, xlvController, interactor) {
     this.id = id;
     this.evidences = d3.map();
     this.interactors = [interactor];
@@ -181,4 +179,3 @@ UnaryLink.prototype.setLinkCoordinates = function () {
         " " + interactor.cy + ")" + " scale(" + (this.controller.z) + ")");
 };
 
-module.exports = UnaryLink;

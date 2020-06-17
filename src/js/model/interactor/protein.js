@@ -8,16 +8,14 @@
 //
 //		authors: Lutz Fischer, Colin Combe
 
-"use strict";
-const d3 = require("d3");
-
-const Interactor = require("./Interactor");
-const Polymer = require("./Polymer");
-const Config = require("../../util/Config");
+import * as d3 from "d3";
+import {Interactor} from "./interactor";
+import {Polymer} from "./polymer";
+import {Config} from '../../util/config';
 
 Protein.prototype = new Polymer();
 
-function Protein(id, xinetController, json, name) {
+export function Protein(id, xinetController, json, name) {
     this.id = id; // id may not be accession (multiple Segments with same accession)
     this.controller = xinetController;
     this.json = json;
@@ -148,5 +146,3 @@ Protein.prototype.showData = function(evt) {
     window.open(url, '_blank');
 }
 */
-
-module.exports = Protein;

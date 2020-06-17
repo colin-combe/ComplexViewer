@@ -1,8 +1,6 @@
-"use strict";
+import * as d3 from "d3";
 
-const d3 = require("d3");
-
-const matrix = function (json) {
+export function matrix (json) {
 
     // We'll need collections of our interactions and interactors for later..
     const interactions = json.data.filter(function (interaction) {
@@ -125,6 +123,6 @@ function findFirstObjWithAttr(collection, attribute, value) {
     }
 }
 
-module.exports = {
-    matrix: matrix
-};
+// module.exports = {
+//     matrix: matrix
+// };

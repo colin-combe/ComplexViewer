@@ -12,17 +12,16 @@
 //this just fetches unniprotkb and superfam annotations from web services
 //// TODO: get rid of?
 
-"use strict";
-const d3 = require("d3");
-const Annotation = require("../model/interactor/Annotation");
-const SequenceFeature = require("../model/SequenceFeature");
+import * as d3 from "d3";
+import {Annotation} from "../model/interactor/annotation";
+import {Feature} from "../model/feature";
 
-function xiNET_Storage() {
+export function storage() {//todo this is weird
 }
 
-xiNET_Storage.ns = "xiNET.";
+storage.ns = "xiNET.";
 
-xiNET_Storage.accessionFromId = function (id) {
+storage.accessionFromId = function (id) {
     let idRegex;
     // i cant figure out way to do this purely with regex... who cares
     if (id.indexOf("(") !== -1) { //id has participant number in it
@@ -41,8 +40,8 @@ xiNET_Storage.accessionFromId = function (id) {
     }
 };
 
-xiNET_Storage.getUniProtTxt = function (id, callback) {
-    const accession = xiNET_Storage.accessionFromId(id);
+storage.getUniProtTxt = function (id, callback) {
+    const accession = storage.accessionFromId(id);
 
     function uniprotWebService() {
         const url = "https://www.ebi.ac.uk/proteins/api/proteins/" + accession;
@@ -76,9 +75,9 @@ xiNET_Storage.getUniProtTxt = function (id, callback) {
     //~ }
 };
 
-xiNET_Storage.getSequence = function (id, callback) {
+storage.getSequence = function (id, callback) {
     //~ var accession = xiNET_Storage.accessionFromId(id);
-    xiNET_Storage.getUniProtTxt(id, function (noNeed, json) {
+    storage.getUniProtTxt(id, function (noNeed, json) {
         //~ var sequence = "";
         //~ var lines = txt.split('\n');
         //~ var lineCount = lines.length;
@@ -97,9 +96,9 @@ xiNET_Storage.getSequence = function (id, callback) {
     });
 };
 
-xiNET_Storage.getUniProtFeatures = function (id, callback) {
+storage.getUniProtFeatures = function (id, callback) {
     //var accession = xiNET_Storage.accessionFromId(id);
-    xiNET_Storage.getUniProtTxt(id, function (id, json) {
+    storage.getUniProtTxt(id, function (id, json) {
         //~ var features = new Array();
         //~ var lines = txt.split('\n');
         //~ var lineCount = lines.length;
@@ -120,8 +119,8 @@ xiNET_Storage.getUniProtFeatures = function (id, callback) {
     });
 };
 
-xiNET_Storage.getSuperFamFeatures = function (id, callback) {
-    const accession = xiNET_Storage.accessionFromId(id);
+storage.getSuperFamFeatures = function (id, callback) {
+    const accession = storage.accessionFromId(id);
 
     function superFamDAS() {
         const url = "https://supfam.mrc-lmb.cam.ac.uk/SUPERFAMILY/cgi-bin/das/up/features?segment=" + accession;
@@ -158,7 +157,7 @@ xiNET_Storage.getSuperFamFeatures = function (id, callback) {
                 const name = type.getAttribute("id");
                 const start = xmlFeature.getElementsByTagName("START")[0].textContent;
                 const end = xmlFeature.getElementsByTagName("END")[0].textContent;
-                features.push(new Annotation(name, new SequenceFeature(null, start + "-" + end)));
+                features.push(new Annotation(name, new Feature(null, start + "-" + end)));
             }
         }
         //~ console.log(JSON.stringify(features));
@@ -184,4 +183,3 @@ xiNET_Storage.getSuperFamFeatures = function (id, callback) {
     //~ }
 };
 
-module.exports = xiNET_Storage;

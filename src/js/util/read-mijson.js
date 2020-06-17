@@ -1,24 +1,24 @@
 "use strict";
 
 const d3 = require("d3");
-const Annotation = require("../model/interactor/Annotation");
-const Protein = require("../model/interactor/Protein");
-const BioactiveEntity = require("../model/interactor/BioactiveEntity");
-const Gene = require("../model/interactor/Gene");
-const DNA = require("../model/interactor/DNA");
-const RNA = require("../model/interactor/RNA");
-const Complex = require("../model/interactor/Complex");
-const Complex_symbol = require("../model/interactor/Complex_symbol");
-const MoleculeSet = require("../model/interactor/MoleculeSet");
-const NaryLink = require("../model/link/NaryLink");
-const SequenceLink = require("../model/link/SequenceLink");
-const SequenceFeature = require("../model/SequenceFeature");
-const BinaryLink = require("../model/link/BinaryLink");
-const UnaryLink = require("../model/link/UnaryLink");
-const Expand = require("./expand");
+import {Annotation} from "../model/interactor/annotation";
+import {Protein} from "../model/interactor/protein";
+import {BioactiveEntity}  from "../model/interactor/bioactive-entity";
+import {Gene} from "../model/interactor/gene";
+import {DNA} from "../model/interactor/dna";
+import {RNA} from "../model/interactor/rna";
+import {Complex} from "../model/interactor/complex";
+import {ComplexSymbol} from "../model/interactor/complex-symbol";
+import {MoleculeSet}  from "../model/interactor/molecule-set";
+import {NaryLink} from "../model/link/nary-link";
+import {FeatureLink} from "../model/link/feature-link";
+import {Feature}  from "../model/feature";
+import {BinaryLink} from "../model/link/binary-link";
+import {UnaryLink}  from "../model/link/unary-link";
+import {matrix} from "./expand";
 
 // reads MI JSON format
-const readMIJSON = function (miJson, controller, expand = true) {
+export function readMijson (miJson, controller, expand = true) {
     //check that we've got a parsed javascript object here, not a String
     miJson = (typeof miJson === "object") ? miJson : JSON.parse(miJson);
     miJson.data = miJson.data.reverse();
@@ -138,7 +138,7 @@ const readMIJSON = function (miJson, controller, expand = true) {
                     mID = mID + "(" + seqDatum.participantRef + ")";
                 }
                 const molecule = controller.molecules.get(mID);
-                const seqFeature = new SequenceFeature(molecule, seqDatum.pos);
+                const seqFeature = new Feature(molecule, seqDatum.pos);
                 const annotation = new Annotation(annotName, seqFeature);
                 if (molecule.miFeatures == null) {
                     molecule.miFeatures = [];
@@ -163,7 +163,7 @@ const readMIJSON = function (miJson, controller, expand = true) {
             }
         }
         if (maxStoich < 30) {
-            miJson = Expand.matrix(miJson);
+            miJson = matrix(miJson);
         }
 
         indexFeatures();
@@ -230,7 +230,7 @@ const readMIJSON = function (miJson, controller, expand = true) {
                 participant = new Complex(participantId, controller, interactorRef);
                 complexes.set(participantId, participant);
             } else {
-                participant = new Complex_symbol(participantId, controller, interactorRef, interactor);
+                participant = new ComplexSymbol(participantId, controller, interactorRef, interactor);
             }
         }else if (interactor.type.id === "MI:1304" //molecule set
             ||
@@ -451,16 +451,16 @@ const readMIJSON = function (miJson, controller, expand = true) {
         if (typeof sequenceLink === "undefined") {
             const fromFeaturePositions = [];
             for (let fromSeqDatum of fromSeqData) {
-                fromFeaturePositions.push(new SequenceFeature(getNode(fromSeqDatum), fromSeqDatum.pos));
+                fromFeaturePositions.push(new Feature(getNode(fromSeqDatum), fromSeqDatum.pos));
             }
             const toFeaturePositions = [];
             for (let toSeqDatum of toSeqData) {
-                toFeaturePositions.push(new SequenceFeature(getNode(toSeqDatum), toSeqDatum.pos));
+                toFeaturePositions.push(new Feature(getNode(toSeqDatum), toSeqDatum.pos));
             }
             //~ if (endsSwapped === false) {
-            sequenceLink = new SequenceLink(seqLinkId, fromFeaturePositions, toFeaturePositions, controller, interaction);
+            sequenceLink = new FeatureLink(seqLinkId, fromFeaturePositions, toFeaturePositions, controller, interaction);
             //~ }else {
-            //~ sequenceLink = new SequenceLink(seqLinkId, toFeaturePositions, fromFeaturePositions, util, interaction);
+            //~ sequenceLink = new FeatureLink(seqLinkId, toFeaturePositions, fromFeaturePositions, util, interaction);
             //~ }
             controller.allSequenceLinks.set(seqLinkId, sequenceLink);
         }
@@ -514,5 +514,3 @@ const readMIJSON = function (miJson, controller, expand = true) {
         return link;
     }
 };
-
-module.exports = readMIJSON;

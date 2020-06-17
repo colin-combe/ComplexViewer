@@ -6,12 +6,8 @@
 //
 //    author: Colin Combe
 
-"use strict";
-
 //constructor for annotations
-function Annotation(annotationName, seqDatum) {
+export function Annotation(annotationName, seqDatum) {
     this.description = annotationName.trim();
     this.seqDatum = seqDatum;
 }
-
-module.exports = Annotation;

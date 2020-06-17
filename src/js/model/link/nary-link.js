@@ -9,20 +9,18 @@
 //		NaryLink.js
 //		graphically represents n-ary interactions
 
-"use strict";
+import * as d3 from "d3";
+import {Link} from "./link";
+import {Config} from "../../util/config";
+import {Interactor} from "../interactor/interactor";
 
-const d3 = require("d3");
-const Link = require("./Link");
-const Config = require("../../util/Config");
-const Interactor = require("../interactor/Interactor");
-
-//NaryLink.naryColours; // init'ed in clear function of util
+NaryLink.naryColours; // init'ed in clear function of util
 NaryLink.orbitNodes = 16;
 NaryLink.orbitRadius = 20;
 
 NaryLink.prototype = new Link();
 
-function NaryLink(id, xlvController) {
+export function NaryLink(id, xlvController) {
     this.id = id;
     this.evidences = d3.map();
     this.interactors = []; // todo: rename to participants
@@ -145,6 +143,3 @@ NaryLink.prototype.orbitNodes = function (mapped) {
     }
     return orbitNodes;
 };
-
-
-module.exports = NaryLink;

@@ -1,4 +1,4 @@
-import * as molSetSvg from "../imgs/svgForKey/molSet.svg";
+import * as molSetSvg from "../imgs/key-svg/molecule-set.svg";
 
 export default function SymbolKey (symbolKeyDiv) {
     if (typeof symbolKeyDiv === "string") {

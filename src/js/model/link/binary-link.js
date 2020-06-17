@@ -4,21 +4,18 @@
 //    This product includes software developed at
 //    the Rappsilber Laboratory (http://www.rappsilberlab.org/).
 
-"use strict";
-
-
-const d3 = require("d3");
-const Config = require("../../util/Config");
-const Link = require("./Link");
-const Intersection = require("intersectionjs");
-const Point2D = require("point2d");
+import * as d3 from "d3";
+import {Config} from "../../util/config";
+import {Link} from "./link";
+import {Intersection} from "intersectionjs";
+import {Point2D} from "point2d";
 
 // BinaryLink.js
 // the class representing a binary interaction
 
 BinaryLink.prototype = new Link();
 
-function BinaryLink(id, xlvController, fromI, toI) {
+export function BinaryLink(id, xlvController, fromI, toI) {
     this.id = id;
     this.evidences = d3.map();
     this.interactors = [fromI, toI];
@@ -229,5 +226,3 @@ BinaryLink.prototype.getOtherEnd = function(interactor) {
     return ((this.interactors[0] === interactor) ? this.interactors[1] : this.interactors[0]);
 };
 */
-
-module.exports = BinaryLink;

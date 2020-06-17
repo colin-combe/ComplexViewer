@@ -8,14 +8,13 @@
 //
 //		authors: Colin Combe
 
-"use strict";
-const d3 = require("d3");
-const Interactor = require("./Interactor");
-const Config = require("../../util/Config");
+import * as  d3 from "d3";
+import {Interactor} from "./interactor";
+import {Config} from "../../util/config";
 
 RNA.prototype = new Interactor();
 
-function RNA(id, xlvController, json, name) {
+export function RNA(id, xlvController, json, name) {
     this.id = id; // id may not be accession (multiple Segments with same accession)
     this.controller = xlvController;
     this.json = json;
@@ -103,4 +102,3 @@ RNA.prototype.showData = function(evt) {
     window.open(url, '_blank');
 }
 */
-module.exports = RNA;

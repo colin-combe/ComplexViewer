@@ -8,13 +8,12 @@
 //
 //		authors: Colin Combe
 
-"use strict";
-const d3 = require("d3");
-const Interactor = require("./Interactor");
+import * as d3 from "d3";
+import {Interactor} from "./interactor";
 
 Complex.prototype = new Interactor();
 
-function Complex(id, xlvController) {
+export function Complex(id, xlvController) {
     this.id = id;
     this.controller = xlvController;
     //links
@@ -67,5 +66,3 @@ Complex.prototype.getResidueCoordinates = function () {
 };
 Complex.prototype.showHighlight = function () {
 };
-
-module.exports = Complex;

@@ -12,11 +12,10 @@
 //      E.g. psi-mi may contains multiple experiments giving evidence for same interaction
 //      - using one glyph to represent them all prevents uppermost graphic from occluding those lower down
 
-"use strict";
+import * as d3 from "d3";
 
-const d3 = require("d3");
-const Link = function () {
-};
+export function Link () {}
+
 Link.maxNoEvidences = 0;
 
 Link.prototype.addEvidence = function (interaction) {
@@ -152,5 +151,3 @@ Link.prototype.hide = function () {
     //     this.util.p_pLinks.removeChild(this.line);
     // }
 };
-
-module.exports = Link;

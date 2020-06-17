@@ -8,14 +8,13 @@
 //
 //		authors: Colin Combe
 
-"use strict";
-const d3 = require("d3");
-const Interactor = require("./Interactor");
-const Config = require("../../util/Config");
+import * as d3 from "d3";
+import {Interactor} from "./interactor";
+import {Config} from "../../util/config";
 
 Gene.prototype = new Interactor();
 
-function Gene(id, xlvController, json, name) {
+export function Gene(id, xlvController, json, name) {
     this.id = id; // id may not be accession (multiple Segments with same accession)
     this.controller = xlvController;
     this.json = json;
@@ -120,5 +119,3 @@ function Gene(id, xlvController, json, name) {
 
     this.showHighlight(false);
 }
-
-module.exports = Gene;

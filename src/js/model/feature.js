@@ -4,8 +4,6 @@
 //    This product includes software developed at
 //    the Rappsilber Laboratory (http://www.rappsilberlab.org/).
 
-"use strict";
-
 /* constructor parameter sequenceDatumString is string with following format:
  *
  *              "?-?" = unknown
@@ -19,7 +17,7 @@
  *              "123->256" = feature sequence w uncertain end between 256 and interactor.sequence.length
  */
 
-function SequenceFeature(node, sequenceDatumString) {
+export function Feature(node, sequenceDatumString) {
     this.node = node; //todo: rename to participant
     this.sequenceDatumString = sequenceDatumString.trim();
 
@@ -87,7 +85,7 @@ function SequenceFeature(node, sequenceDatumString) {
     }
 }
 
-SequenceFeature.prototype.toString = function () {
+Feature.prototype.toString = function () {
     return this.sequenceDatumString;
 };
 //On 06/06/13 09:22, marine@ebi.ac.uk wrote:
@@ -126,4 +124,3 @@ SequenceFeature.prototype.toString = function () {
 //> positions of the feature are <8 but it could happen that you have a
 //> feature such as "<8->22" or "<8-22", etc.
 
-module.exports = SequenceFeature;

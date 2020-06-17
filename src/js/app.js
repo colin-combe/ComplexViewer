@@ -8,30 +8,28 @@
 //
 //    app.js
 
-import * as css from '../css/XLV.css';
+import * as css from '../css/xinet.css';
 
 import * as d3 from "d3";
 import * as colorbrewer from "colorbrewer";
 import * as cola from "webcola";
-import * as readMIJSON from "./util/readMIJSON";
-import * as setAnnotations from "./util/setAnnotations";
+import {readMijson} from "./util/read-mijson";
+import {setAnnotations} from "./util/annotations";
 
-import SymbolKey from "./SymbolKey";
+import SymbolKey from "./symbol-key";
 
 // import * as ColorSchemeKey from "./color-scheme-key";
-import * as NaryLink from "./model/link/NaryLink";
-import * as Config from "./util/Config";
+import {NaryLink} from "./model/link/nary-link";
+import {Config} from "./util/config";
 
 //todo - refactor everything to use ES6 class syntax
 // but https://benmccormick.org/2015/04/07/es6-classes-and-backbone-js
 // "ES6 classes don’t support adding properties directly to the class instance, only functions/methods"
 // and so backbone doesn't work
-// ...continuing to use prototypical inheritance
+// so continuing to use prototypical inheritance
 
 export function App (networkDiv, /*colourSchemeDiv,*/ symbolKeyDiv) {
-
-        alert("yo");
-    // this.debug = true;
+        // this.debug = true;
 
         if (typeof targetDiv === "string") {
             this.el = document.getElementById(networkDiv);
@@ -835,7 +833,7 @@ App.prototype.mouseToSVG = function (x, y) {
 
 // reads MI JSON format
 App.prototype.readMIJSON = function (miJson, expand = true) {
-    readMIJSON(miJson, this, expand);
+    readMijson(miJson, this, expand);
 };
 
 App.prototype.checkLinks = function () {

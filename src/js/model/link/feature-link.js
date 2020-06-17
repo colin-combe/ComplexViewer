@@ -4,20 +4,18 @@
 //    This product includes software developed at
 //    the Rappsilber Laboratory (http://www.rappsilberlab.org/).
 
-"use strict";
-
-const Link = require("./Link");
-const Config = require("../../util/Config");
+import {Link} from "./link";
+import {Config} from "../../util/config";
 
 //todo: rename to SequenceFeatureLink
 
-function SequenceLink(id, fromFeatPos, toFeatPos, xlvController) {
+export function FeatureLink(id, fromFeatPos, toFeatPos, xlvController) {
     this.init(id, fromFeatPos, toFeatPos, xlvController);
 }
 
-SequenceLink.prototype = new Link();
+FeatureLink.prototype = new Link();
 
-SequenceLink.prototype.init = function (id, fromFeatPos, toFeatPos, xlvController) {
+FeatureLink.prototype.init = function (id, fromFeatPos, toFeatPos, xlvController) {
     this.id = id;
     this.controller = xlvController;
     this.fromSequenceData = fromFeatPos;
@@ -30,7 +28,7 @@ SequenceLink.prototype.init = function (id, fromFeatPos, toFeatPos, xlvControlle
 
 
 /*
-SequenceLink.prototype.getToolTip = function() {
+FeatureLink.prototype.getToolTip = function() {
     var tooltip = "";
     tooltip += this.interactors[0].labelText + " ";
     for (var i = 0; i < this.fromSequenceData.length; i++) {
@@ -46,7 +44,7 @@ SequenceLink.prototype.getToolTip = function() {
     return tooltip;
 }*/
 
-SequenceLink.prototype.initSVG = function () {
+FeatureLink.prototype.initSVG = function () {
     if (typeof this.glyph === "undefined") {
         this.glyph = document.createElementNS(Config.svgns, "path");
         this.uncertainGlyph = document.createElementNS(Config.svgns, "path");
@@ -104,7 +102,7 @@ SequenceLink.prototype.initSVG = function () {
 };
 
 //andAlternatives means highlight alternative links in case of site ambiguity
-SequenceLink.prototype.showHighlight = function (show) {
+FeatureLink.prototype.showHighlight = function (show) {
     if (show) {
         this.highlightGlyph.setAttribute("stroke-opacity", "1");
     } else {
@@ -113,7 +111,7 @@ SequenceLink.prototype.showHighlight = function (show) {
 };
 
 //used when filter changed
-SequenceLink.prototype.check = function () {
+FeatureLink.prototype.check = function () {
     if (this.filteredEvidence().length > 0 && this.anyInteractorIsBar() === true) {
         this.show();
         return true;
@@ -123,7 +121,7 @@ SequenceLink.prototype.check = function () {
     }
 };
 
-SequenceLink.prototype.anyInteractorIsBar = function () {
+FeatureLink.prototype.anyInteractorIsBar = function () {
     const ic = this.interactors.length;
     for (let i = 0; i < ic; i++) {
         if (this.interactors[i].form === 1) {
@@ -133,7 +131,7 @@ SequenceLink.prototype.anyInteractorIsBar = function () {
     return false;
 };
 
-SequenceLink.prototype.show = function () {
+FeatureLink.prototype.show = function () {
     if (!this.glyph) {
         this.initSVG();
     }
@@ -150,7 +148,7 @@ SequenceLink.prototype.show = function () {
     containingGroup.appendChild(this.uncertainGlyph);
 };
 
-SequenceLink.prototype.hide = function () {
+FeatureLink.prototype.hide = function () {
     // TODO: this looks wierd
     let containingGroup = this.controller.res_resLinks;
     if (this.interactors[0] === this.interactors[1]) {
@@ -171,7 +169,7 @@ SequenceLink.prototype.hide = function () {
 };
 
 // update the links(polygons/lines) to fit to the protein
-SequenceLink.prototype.setLinkCoordinates = function () {
+FeatureLink.prototype.setLinkCoordinates = function () {
     function isNumber(thing) {
         return (!isNaN(parseFloat(thing)) && isFinite(thing));
     }
@@ -345,5 +343,3 @@ SequenceLink.prototype.setLinkCoordinates = function () {
     this.uncertainGlyph.setAttribute("d", uncertainGlyphPath);
     this.highlightGlyph.setAttribute("d", highlightGlyphPath);
 };
-
-module.exports = SequenceLink;

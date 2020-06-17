@@ -1,12 +1,10 @@
-"use strict";
+import * as d3 from "d3";
+import * as colorbrewer from "colorbrewer";
+import {storage} from "./storage";
+import {Annotation} from "../model/interactor/annotation";
+import {Feature} from "../model/feature";
 
-const d3 = require("d3");
-const colorbrewer = require("colorbrewer");
-const xiNET_Storage = require("./xiNET_Storage");
-const Annotation = require("../model/interactor/Annotation");
-const SequenceFeature = require("../model/SequenceFeature");
-
-const setAnnotations = function (annotationChoice, controller) {
+export function setAnnotations (annotationChoice, controller) {
     controller.annotationChoice = annotationChoice;
     //clear all annot's
     for (let mol of controller.molecules.values()) {
@@ -29,7 +27,7 @@ const setAnnotations = function (annotationChoice, controller) {
         if (controller.proteinCount < 21) {
             for (let mol of controller.molecules.values()) {
                 if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS
-                    const annotation = new Annotation(mol.json.label, new SequenceFeature(null, 1 + "-" + mol.size));
+                    const annotation = new Annotation(mol.json.label, new Feature(null, 1 + "-" + mol.size));
                     mol.setPositionalFeatures([annotation]);
                 }
             }
@@ -62,7 +60,7 @@ const setAnnotations = function (annotationChoice, controller) {
                     const m = controller.molecules.get(id);
                     for (let f = 0; f < fts.length; f++) {
                         const feature = fts[f];
-                        feature.seqDatum = new SequenceFeature(null, feature.begin + "-" + feature.end);
+                        feature.seqDatum = new Feature(null, feature.begin + "-" + feature.end);
                     }
                     m.setPositionalFeatures(fts);
                     molsAnnotated++;
@@ -131,5 +129,3 @@ const setAnnotations = function (annotationChoice, controller) {
         controller.legendChanged(colourScheme);
     }
 };
-
-module.exports = setAnnotations;

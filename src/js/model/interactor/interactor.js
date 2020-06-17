@@ -8,12 +8,10 @@
 //
 //      authors: Colin Combe
 
-"use strict";
-
 Interactor.LABELMAXLENGTH = 90; // maximal width reserved for protein-labels
 Interactor.labelY = -5; //label Y offset, better if calc'd half height of label once rendered
 
-function Interactor() {
+export function Interactor() {
 }
 
 Interactor.prototype = {
@@ -174,7 +172,7 @@ Interactor.prototype.setAllLinkCoordinates = function () {
 };
 
 //TODO: remove this, use rotateAboutPoint instead
-Interactor.trig = function (radius, angleDegrees) {
+export function trig (radius, angleDegrees) {
     //x = rx + radius * cos(theta) and y = ry + radius * sin(theta)
     const radians = (angleDegrees / 360) * Math.PI * 2;
     return {
@@ -191,5 +189,3 @@ Interactor.prototype.showData = function() {
 
 Interactor.prototype.setForm = function () {
 };
-
-module.exports = Interactor;

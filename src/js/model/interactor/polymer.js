@@ -8,20 +8,18 @@
 //
 //      authors: Lutz Fischer, Colin Combe
 
-"use strict";
-
-const d3 = require("d3");
-const Interactor = require("./Interactor");
-const Annotation = require("./Annotation");
-const SequenceFeature = require("../SequenceFeature");
+import * as d3 from "d3";
+import {Interactor, trig} from "./interactor";
+import {Annotation} from "./annotation";
+import {Feature} from "../feature";
 //var Rotator = require('../../util/Rotator');
-const Config = require("../../util/Config");
+import {Config} from '../../util/config';
 
 Polymer.STICKHEIGHT = 20; //height of stick in pixels
 Polymer.MAXSIZE = 0; // residue count of longest sequence
 Polymer.transitionTime = 650;
 
-function Polymer() {
+export function Polymer() {
 }
 
 Polymer.prototype = new Interactor();
@@ -624,7 +622,7 @@ Polymer.prototype.setPositionalFeatures = function (posFeats) {
         this.annotations = posFeats;
         if (this.annotations.length === 0) {
             //~ alert("no annot");
-            this.annotations.push(new Annotation("No annotations", new SequenceFeature(null, 1 + "-" + this.size)));
+            this.annotations.push(new Annotation("No annotations", new Feature(null, 1 + "-" + this.size)));
         }
         for (let i = 0; i < posFeats.length; i++) {
             const anno = posFeats[i];
@@ -710,8 +708,8 @@ Polymer.prototype.getAnnotationPieSliceArcPath = function (startRes, endRes) {
         endAngle = ((endRes - 1) / this.size) * 360;
     }
     const radius = this.getBlobRadius() - 2;
-    const arcStart = Interactor.trig(radius, startAngle - 90);
-    const arcEnd = Interactor.trig(radius, endAngle - 90);
+    const arcStart = trig(radius, startAngle - 90);
+    const arcEnd = trig(radius, endAngle - 90);
     let largeArch = 0;
     if ((endAngle - startAngle) > 180 || (endAngle === startAngle)) {
         largeArch = 1;
@@ -740,7 +738,7 @@ Polymer.prototype.getAnnotationPieSliceApproximatePath = function (startRes, end
     const stepsInArc = 5;
     for (let sia = 0; sia <= Polymer.stepsInArc; sia++) {
         const angle = startAngle + ((endAngle - startAngle) * (sia / stepsInArc));
-        const siaCoord = Interactor.trig(pieRadius, angle - 90);
+        const siaCoord = trig(pieRadius, angle - 90);
         approximatePiePath += " L " + siaCoord.x + "," + siaCoord.y;
     }
     approximatePiePath += " L " + 0 + "," + 0;
@@ -784,5 +782,3 @@ Polymer.prototype.getAnnotationRectPath = function (startRes, endRes, annotation
         " Z";
     return rectPath;
 };
-
-module.exports = Polymer;
