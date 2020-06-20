@@ -8,9 +8,9 @@
 //
 //		authors: Colin Combe
 
-import * as d3 from 'd3';
-import {Interactor} from './interactor';
-import {Config} from '../../config';
+import * as d3 from "d3";
+import {Interactor} from "./interactor";
+import {svgns, highlightColour} from "../../config";
 
 DNA.prototype = new Interactor();
 
@@ -34,52 +34,52 @@ export function DNA(id, xlvController, json, name) {
      * svg group for elements that appear above links
      */
 
-    this.upperGroup = document.createElementNS(Config.svgns, 'g');
+    this.upperGroup = document.createElementNS(svgns, "g");
     //~ this.upperGroup.setAttribute("class", "protein upperGroup");
 
     //for polygon
-    const points = '0, -5  10, -10 0, 10 -10, -10';
+    const points = "0, -5  10, -10 0, 10 -10, -10";
     //make highlight
-    this.highlight = document.createElementNS(Config.svgns, 'polygon');
-    this.highlight.setAttribute('points', points);
-    this.highlight.setAttribute('stroke', Config.highlightColour);
-    this.highlight.setAttribute('stroke-width', '5');
-    this.highlight.setAttribute('fill', 'none');
+    this.highlight = document.createElementNS(svgns, "polygon");
+    this.highlight.setAttribute("points", points);
+    this.highlight.setAttribute("stroke", highlightColour);
+    this.highlight.setAttribute("stroke-width", "5");
+    this.highlight.setAttribute("fill", "none");
     //attributes that may change
-    d3.select(this.highlight).attr('stroke-opacity', 0);
+    d3.select(this.highlight).attr("stroke-opacity", 0);
     this.upperGroup.appendChild(this.highlight);
 
     //svg groups for self links
-    //    this.intraLinksHighlights = document.createElementNS(Config.svgns, "g");
-    //    this.intraLinks = document.createElementNS(Config.svgns, "g");
+    //    this.intraLinksHighlights = document.createElementNS(svgns, "g");
+    //    this.intraLinks = document.createElementNS(svgns, "g");
     //    this.upperGroup.appendChild(this.intraLinksHighlights);
     //	this.upperGroup.appendChild(this.intraLinks);
 
     //create label - we will move this svg element around when protein form changes
-    this.labelSVG = document.createElementNS(Config.svgns, 'text');
-    this.labelSVG.setAttribute('text-anchor', 'end');
-    this.labelSVG.setAttribute('fill', 'black');
-    this.labelSVG.setAttribute('x', '0');
-    this.labelSVG.setAttribute('y', '10');
-    this.labelSVG.setAttribute('class', 'xlv_text proteinLabel');
-    this.labelSVG.setAttribute('font-family', 'Arial');
-    this.labelSVG.setAttribute('font-size', '16');
+    this.labelSVG = document.createElementNS(svgns, "text");
+    this.labelSVG.setAttribute("text-anchor", "end");
+    this.labelSVG.setAttribute("fill", "black");
+    this.labelSVG.setAttribute("x", "0");
+    this.labelSVG.setAttribute("y", "10");
+    this.labelSVG.setAttribute("class", "xlv_text proteinLabel");
+    this.labelSVG.setAttribute("font-family", "Arial");
+    this.labelSVG.setAttribute("font-size", "16");
 
     this.labelText = this.name;
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
-    d3.select(this.labelSVG).attr('transform',
-        'translate( -' + (15) + ' ' + Interactor.labelY + ')');
+    d3.select(this.labelSVG).attr("transform",
+        "translate( -" + (15) + " " + Interactor.labelY + ")");
     this.upperGroup.appendChild(this.labelSVG);
 
     //make blob
-    this.outline = document.createElementNS(Config.svgns, 'polygon');
-    this.outline.setAttribute('points', points);
+    this.outline = document.createElementNS(svgns, "polygon");
+    this.outline.setAttribute("points", points);
 
-    this.outline.setAttribute('stroke', 'black');
-    this.outline.setAttribute('stroke-width', '1');
-    d3.select(this.outline).attr('stroke-opacity', 1).attr('fill-opacity', 1)
-        .attr('fill', '#ffffff');
+    this.outline.setAttribute("stroke", "black");
+    this.outline.setAttribute("stroke-width", "1");
+    d3.select(this.outline).attr("stroke-opacity", 1).attr("fill-opacity", 1)
+        .attr("fill", "#ffffff");
     //append outline
     this.upperGroup.appendChild(this.outline);
 

@@ -25,13 +25,13 @@ Interactor.prototype = {
 
 Interactor.prototype.addStoichiometryLabel = function (stoichiometry) {
     if (this.labelSVG) { //complexes don't have labels (yet?)
-        this.labelSVG.childNodes[0].data = this.labelSVG.childNodes[0].data + ' [' + stoichiometry + ']';
+        this.labelSVG.childNodes[0].data = this.labelSVG.childNodes[0].data + " [" + stoichiometry + "]";
     }
 };
 
 Interactor.prototype.mouseDown = function (evt) {
     this.controller.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
-    if (typeof this.controller.d3cola !== 'undefined' && this.controller.d3cola != null) {
+    if (typeof this.controller.d3cola !== "undefined" && this.controller.d3cola != null) {
         this.controller.d3cola.stop();
     }
     this.controller.dragElement = this;
@@ -78,7 +78,7 @@ Interactor.prototype.showHighlight = function () {
     // this.highlight.setAttribute("stroke-opacity", "1");
     // } else {
     //~ if (this.isSelected == false) {
-    this.highlight.setAttribute('stroke-opacity', '0');
+    this.highlight.setAttribute("stroke-opacity", "0");
     //~ }
     //~ this.highlight.setAttribute("stroke", xiNET.selectedColour.toRGB());
     // }
@@ -89,14 +89,14 @@ Interactor.prototype.setSelected = function(select) {
      if (select && this.isSelected === false) {
          this.util.selected.set(this.id, this);
          this.isSelected = true;
-         this.highlight.setAttribute("stroke", Config.selectedColour);
+         this.highlight.setAttribute("stroke", selectedColour);
          this.highlight.setAttribute("stroke-opacity", "1");
      }
      else if (select === false && this.isSelected === true) {
          this.util.selected.remove(this.id);
          this.isSelected = false;
          this.highlight.setAttribute("stroke-opacity", "0");
-         this.highlight.setAttribute("stroke", Config.highlightColour);
+         this.highlight.setAttribute("stroke", highlightColour);
      }
 }
 */
@@ -110,7 +110,7 @@ Interactor.prototype.setPosition = function (x, y) {
     this.cx = x;
     this.cy = y;
     // if (this.form === 1) {
-    this.upperGroup.setAttribute('transform', 'translate(' + (this.cx) + ' ' + this.cy + ')'); // +
+    this.upperGroup.setAttribute("transform", "translate(" + (this.cx) + " " + this.cy + ")"); // +
     //         " scale(" + (this.util.z) + ") " + "rotate(" + this.rotation + ")");
     // } else {
     //     this.upperGroup.setAttribute("transform", "translate(" + this.cx + " " + this.cy + ")" +
@@ -125,10 +125,10 @@ Interactor.prototype.getAggregateSelfLinkPath = function () {
     const arcEnd = trig(intraR, -25 + sectorSize);
     const cp1 = trig(intraR, 40 + sectorSize);
     const cp2 = trig(intraR, -40 + sectorSize);
-    return 'M 0,0 ' +
-        'Q ' + cp1.x + ',' + -cp1.y + ' ' + arcStart.x + ',' + -arcStart.y +
-        ' A ' + intraR + ' ' + intraR + ' 0 0 1 ' + arcEnd.x + ',' + -arcEnd.y +
-        ' Q ' + cp2.x + ',' + -cp2.y + ' 0,0';
+    return "M 0,0 " +
+        "Q " + cp1.x + "," + -cp1.y + " " + arcStart.x + "," + -arcStart.y +
+        " A " + intraR + " " + intraR + " 0 0 1 " + arcEnd.x + "," + -arcEnd.y +
+        " Q " + cp2.x + "," + -cp2.y + " 0,0";
 };
 
 Interactor.rotatePointAboutPoint = function (p, o, theta) {
@@ -147,7 +147,7 @@ Interactor.prototype.checkLinks = function () {
         }
     }
 
-    // checkAll(this.naryLinks); // hacked out to help fix ordering od nLinks
+    // checkAll(this.naryLinks); // hacked out to help fix ordering of nLinks
     checkAll(this.binaryLinks);
     checkAll(this.sequenceLinks);
     if (this.selfLink !== null) {

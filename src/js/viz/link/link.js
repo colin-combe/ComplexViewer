@@ -12,7 +12,7 @@
 //      E.g. psi-mi may contains multiple experiments giving evidence for same interaction
 //      - using one glyph to represent them all prevents uppermost graphic from occluding those lower down
 
-import * as d3 from 'd3';
+import * as d3 from "d3";
 
 export function Link () {}
 

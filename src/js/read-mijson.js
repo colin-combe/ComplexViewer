@@ -1,26 +1,24 @@
-'use strict';
-
-const d3 = require('d3');
-import {Annotation} from './viz/interactor/annotation';
-import {Protein} from './viz/interactor/protein';
-import {BioactiveEntity}  from './viz/interactor/bioactive-entity';
-import {Gene} from './viz/interactor/gene';
-import {DNA} from './viz/interactor/dna';
-import {RNA} from './viz/interactor/rna';
-import {Complex} from './viz/interactor/complex';
-import {ComplexSymbol} from './viz/interactor/complex-symbol';
-import {MoleculeSet}  from './viz/interactor/molecule-set';
-import {NaryLink} from './viz/link/nary-link';
-import {FeatureLink} from './viz/link/feature-link';
-import {Feature}  from './viz/feature';
-import {BinaryLink} from './viz/link/binary-link';
-import {UnaryLink}  from './viz/link/unary-link';
-import {matrix} from './expand';
+import * as d3 from "d3";
+import {Annotation} from "./viz/interactor/annotation";
+import {Protein} from "./viz/interactor/protein";
+import {BioactiveEntity}  from "./viz/interactor/bioactive-entity";
+import {Gene} from "./viz/interactor/gene";
+import {DNA} from "./viz/interactor/dna";
+import {RNA} from "./viz/interactor/rna";
+import {Complex} from "./viz/interactor/complex";
+import {ComplexSymbol} from "./viz/interactor/complex-symbol";
+import {MoleculeSet}  from "./viz/interactor/molecule-set";
+import {NaryLink} from "./viz/link/nary-link";
+import {FeatureLink} from "./viz/link/feature-link";
+import {Feature}  from "./viz/feature";
+import {BinaryLink} from "./viz/link/binary-link";
+import {UnaryLink}  from "./viz/link/unary-link";
+import {matrix} from "./expand";
 
 // reads MI JSON format
-export function readMijson (miJson, controller, expand = true) {
+export function readMijson (/*miJson*/miJson, /*App*/ controller, expand = true) {
     //check that we've got a parsed javascript object here, not a String
-    miJson = (typeof miJson === 'object') ? miJson : JSON.parse(miJson);
+    miJson = (typeof miJson === "object") ? miJson : JSON.parse(miJson);
     miJson.data = miJson.data.reverse();
     controller.features = d3.map();
 
@@ -31,9 +29,9 @@ export function readMijson (miJson, controller, expand = true) {
     controller.proteinCount = 0;
     controller.interactors = d3.map();
     for (let datum of miJson.data) {
-        if (datum.object === 'interactor') {
+        if (datum.object === "interactor") {
             controller.interactors.set(datum.id, datum);
-            if (datum.id.indexOf('uniprotkb_') === 0) { // todo - is this best way to test this?
+            if (datum.id.indexOf("uniprotkb_") === 0) { // todo - is this best way to test this?
                 controller.proteinCount++;
             }
         }
@@ -45,7 +43,7 @@ export function readMijson (miJson, controller, expand = true) {
     // init binary, unary and sequence links,
     // and make needed associations between these and containing naryLink
     for (let datum of miJson.data) {
-        if (datum.object === 'interaction') {
+        if (datum.object === "interaction") {
             for (let jsonParticipant of datum.participants) {
                 let features = new Array(0);
                 if (jsonParticipant.features) features = jsonParticipant.features;
@@ -66,10 +64,10 @@ export function readMijson (miJson, controller, expand = true) {
                             for (let seqData of linkedFeature.sequenceData) {
                                 let nodeId = seqData.interactorRef;
                                 if (expand) {
-                                    nodeId = nodeId + '(' + seqData.participantRef + ')';
+                                    nodeId = nodeId + "(" + seqData.participantRef + ")";
                                 }
                                 let toSequenceData = toSequenceData_indexedByNodeId.get(nodeId);
-                                if (typeof toSequenceData === 'undefined') {
+                                if (typeof toSequenceData === "undefined") {
                                     toSequenceData = [];
                                     toSequenceData_indexedByNodeId.set(nodeId, toSequenceData);
                                 }
@@ -105,12 +103,12 @@ export function readMijson (miJson, controller, expand = true) {
         const complex = controller.complexes[c];
         let interactionId;
         if (expand) {
-            interactionId = complex.id.substring(0, complex.id.indexOf('('));
+            interactionId = complex.id.substring(0, complex.id.indexOf("("));
         } else {
             interactionId = complex.id;
         }
         for (let datum of miJson.data) {
-            if (datum.object === 'interaction' && datum.id === interactionId) {
+            if (datum.object === "interaction" && datum.id === interactionId) {
                 const nLinkId = getNaryLinkIdFromInteraction(datum);
                 const naryLink = controller.allNaryLinks.get(nLinkId);
                 complex.initInteractor(naryLink);
@@ -123,21 +121,21 @@ export function readMijson (miJson, controller, expand = true) {
     for (let feature of controller.features.values()) {
         // add features to interactors/participants/nodes
         //console.log("FEATURE:" + feature.name, feature.sequenceData);
-        let annotName = '';
-        if (typeof feature.name !== 'undefined') {
-            annotName += feature.name + ' ';
+        let annotName = "";
+        if (typeof feature.name !== "undefined") {
+            annotName += feature.name + " ";
         }
-        if (typeof feature.detmethod !== 'undefined') {
-            annotName += ', ' + feature.detmethod.name;
+        if (typeof feature.detmethod !== "undefined") {
+            annotName += ", " + feature.detmethod.name;
         }
         // the id info we need is inside sequenceData att
         if (feature.sequenceData) { // todo - still needed?
             for (let seqDatum of feature.sequenceData) {
                 let mID = seqDatum.interactorRef;
                 if (expand) {
-                    mID = mID + '(' + seqDatum.participantRef + ')';
+                    mID = mID + "(" + seqDatum.participantRef + ")";
                 }
-                const molecule = controller.molecules.get(mID);
+                const molecule = controller.participants.get(mID);
                 const seqFeature = new Feature(molecule, seqDatum.pos);
                 const annotation = new Annotation(annotName, seqFeature);
                 if (molecule.miFeatures == null) {
@@ -154,7 +152,7 @@ export function readMijson (miJson, controller, expand = true) {
         //get maximum stoichiometry
         let maxStoich = 0;
         for (let datum of miJson.data) {
-            if (datum.object === 'interaction') {
+            if (datum.object === "interaction") {
                 for (let jsonParticipant of datum.participants) {
                     if (jsonParticipant.stoichiometry && (jsonParticipant.stoichiometry - 0) > maxStoich) {
                         maxStoich = (jsonParticipant.stoichiometry - 0);
@@ -170,11 +168,11 @@ export function readMijson (miJson, controller, expand = true) {
 
         //add naryLinks and participants
         for (let datum of miJson.data) {
-            if (datum.object === 'interaction') {
+            if (datum.object === "interaction") {
                 //init n-ary link
                 const nLinkId = datum.id || getNaryLinkIdFromInteraction(datum);
                 let nLink = controller.allNaryLinks.get(nLinkId);
-                if (typeof nLink === 'undefined') {
+                if (typeof nLink === "undefined") {
                     //doesn't already exist, make new nLink
                     nLink = new NaryLink(nLinkId, controller);
                     controller.allNaryLinks.set(nLinkId, nLink);
@@ -188,12 +186,12 @@ export function readMijson (miJson, controller, expand = true) {
                 for (let jsonParticipant of datum.participants) {
                     const intRef = jsonParticipant.interactorRef;
                     const partRef = jsonParticipant.id;
-                    const participantId = intRef + '(' + partRef + ')';
-                    let participant = controller.molecules.get(participantId);
-                    if (typeof participant === 'undefined') {
+                    const participantId = intRef + "(" + partRef + ")";
+                    let participant = controller.participants.get(participantId);
+                    if (typeof participant === "undefined") {
                         const interactor = controller.interactors.get(intRef);
                         participant = newParticipant(interactor, participantId, intRef);
-                        controller.molecules.set(participantId, participant);
+                        controller.participants.set(participantId, participant);
                     }
 
                     participant.naryLinks.set(nLinkId, nLink);
@@ -203,7 +201,7 @@ export function readMijson (miJson, controller, expand = true) {
                     }
 
                     if (jsonParticipant.stoichiometry) {
-                        const interactor = controller.molecules.get(participantId);
+                        const interactor = controller.participants.get(participantId);
                         interactor.addStoichiometryLabel(jsonParticipant.stoichiometry);
                     }
                 }
@@ -213,13 +211,13 @@ export function readMijson (miJson, controller, expand = true) {
 
     function newParticipant(interactor, participantId, interactorRef) {
         let participant;
-        if (typeof interactor == 'undefined' || interactor.type.id === 'MI:1302') {
+        if (typeof interactor == "undefined" || interactor.type.id === "MI:1302") {
             //must be a previously unencountered complex -
             // MI:0314 - interaction?, MI:0317 - complex? and its many subclasses
 
             let interactionExists = false;
             for (let datum of miJson.data) {
-                if (datum.object === 'interaction' && datum.id === interactorRef) {
+                if (datum.object === "interaction" && datum.id === interactorRef) {
                     interactionExists = true;
                     break;
                 }
@@ -232,74 +230,74 @@ export function readMijson (miJson, controller, expand = true) {
             } else {
                 participant = new ComplexSymbol(participantId, controller, interactorRef, interactor);
             }
-        }else if (interactor.type.id === 'MI:1304' //molecule set
+        }else if (interactor.type.id === "MI:1304" //molecule set
             ||
-            interactor.type.id === 'MI:1305' //molecule set - candidate set
+            interactor.type.id === "MI:1305" //molecule set - candidate set
             ||
-            interactor.type.id === 'MI:1307' //molecule set - defined set
+            interactor.type.id === "MI:1307" //molecule set - defined set
             ||
-            interactor.type.id === 'MI:1306' //molecule set - open set
+            interactor.type.id === "MI:1306" //molecule set - open set
         ) {
             participant = new MoleculeSet(participantId, controller, interactor, interactor.label);
-        } else if (interactor.type.id === 'MI:1100' // bioactive entity
+        } else if (interactor.type.id === "MI:1100" // bioactive entity
             ||
-            interactor.type.id === 'MI:0904' // bioactive entity - polysaccharide
+            interactor.type.id === "MI:0904" // bioactive entity - polysaccharide
             ||
-            interactor.type.id === 'MI:0328' //bioactive entity - small mol
+            interactor.type.id === "MI:0328" //bioactive entity - small mol
         ) {
             participant = new BioactiveEntity(participantId, controller, interactor, interactor.label);
-        } else if (interactor.type.id === 'MI:0326' || interactor.type.id === 'MI:0327') { // proteins, peptides
+        } else if (interactor.type.id === "MI:0326" || interactor.type.id === "MI:0327") { // proteins, peptides
             participant = new Protein(participantId, controller, interactor, interactor.label);
-            if (typeof interactor.sequence !== 'undefined') {
+            if (typeof interactor.sequence !== "undefined") {
                 participant.setSequence(interactor.sequence);
             } else {
                 //should look it up using accession number
-                if (participantId.indexOf('uniprotkb') === 0) {
+                if (participantId.indexOf("uniprotkb") === 0) {
                     needsSequence.add(participantId);
                 } else {
-                    participant.setSequence('SEQUENCEMISSING');
+                    participant.setSequence("SEQUENCEMISSING");
                 }
             }
-        } else if (interactor.type.id === 'MI:0250') { //genes
+        } else if (interactor.type.id === "MI:0250") { //genes
             participant = new Gene(participantId, controller, interactor, interactor.label);
-        } else if (interactor.type.id === 'MI:0320' // RNA
+        } else if (interactor.type.id === "MI:0320" // RNA
             ||
-            interactor.type.id === 'MI:0321' // RNA - catalytic
+            interactor.type.id === "MI:0321" // RNA - catalytic
             ||
-            interactor.type.id === 'MI:0322' // RNA - guide
+            interactor.type.id === "MI:0322" // RNA - guide
             ||
-            interactor.type.id === 'MI:0323' // RNA - heterogeneous nuclear
+            interactor.type.id === "MI:0323" // RNA - heterogeneous nuclear
             ||
-            interactor.type.id === 'MI:2190' // RNA - long non-coding
+            interactor.type.id === "MI:2190" // RNA - long non-coding
             ||
-            interactor.type.id === 'MI:0324' // RNA - messenger
+            interactor.type.id === "MI:0324" // RNA - messenger
             ||
-            interactor.type.id === 'MI:0679' // RNA - poly adenine
+            interactor.type.id === "MI:0679" // RNA - poly adenine
             ||
-            interactor.type.id === 'MI:0608' // RNA - ribosomal
+            interactor.type.id === "MI:0608" // RNA - ribosomal
             ||
-            interactor.type.id === 'MI:0611' // RNA - signal recognition particle
+            interactor.type.id === "MI:0611" // RNA - signal recognition particle
             ||
-            interactor.type.id === 'MI:0610' // RNA - small interfering
+            interactor.type.id === "MI:0610" // RNA - small interfering
             ||
-            interactor.type.id === 'MI:0607' // RNA - small nuclear
+            interactor.type.id === "MI:0607" // RNA - small nuclear
             ||
-            interactor.type.id === 'MI:0609' // RNA - small nucleolar
+            interactor.type.id === "MI:0609" // RNA - small nucleolar
             ||
-            interactor.type.id === 'MI:0325' // RNA - transfer
+            interactor.type.id === "MI:0325" // RNA - transfer
         ) {
             participant = new RNA(participantId, controller, interactor, interactor.label);
-        } else if (interactor.type.id === 'MI:0319' // DNA
+        } else if (interactor.type.id === "MI:0319" // DNA
             ||
-            interactor.type.id === 'MI:0681' // DNA - double stranded
+            interactor.type.id === "MI:0681" // DNA - double stranded
             ||
-            interactor.type.id === 'MI:0680' // DNA - single stranded
+            interactor.type.id === "MI:0680" // DNA - single stranded
         ) {
             participant = new DNA(participantId, controller, interactor, interactor.label);
         } else {
             // MI:0329 - unknown participant ?
             // MI:0383 - biopolymer ?
-            alert('Unrecognised type:' + interactor.type.name);
+            alert("Unrecognised type:" + interactor.type.name);
         }
         return participant;
     }
@@ -308,7 +306,7 @@ export function readMijson (miJson, controller, expand = true) {
         //create indexed collection of all features from interactions
         // - still seems like a good starting point?
         for (let datum of miJson.data) {
-            if (datum.object === 'interaction') {
+            if (datum.object === "interaction") {
                 for (let jsonParticipant of datum.participants) {
                     let features = new Array(0);
                     if (jsonParticipant.features) features = jsonParticipant.features;
@@ -328,21 +326,21 @@ export function readMijson (miJson, controller, expand = true) {
         for (let interactor of controller.interactors.values()) {
             const participantId = interactor.id;
             const participant = newParticipant(interactor, participantId);
-            controller.molecules.set(participantId, participant);
+            controller.participants.set(participantId, participant);
         }
 
         indexFeatures();
 
         //add naryLinks
         for (let datum of miJson.data) {
-            if (datum.object === 'interaction') {
+            if (datum.object === "interaction") {
                 const jsonParticipants = datum.participants;
                 const participantCount = jsonParticipants.length;
 
                 //init n-ary link
                 const nLinkId = getNaryLinkIdFromInteraction(datum);
                 let nLink = controller.allNaryLinks.get(nLinkId);
-                if (typeof nLink === 'undefined') {
+                if (typeof nLink === "undefined") {
                     //doesn't already exist, make new nLink
                     nLink = new NaryLink(nLinkId, controller);
                     controller.allNaryLinks.set(nLinkId, nLink);
@@ -353,13 +351,13 @@ export function readMijson (miJson, controller, expand = true) {
                 for (let pi = 0; pi < participantCount; pi++) {
                     const jsonParticipant = jsonParticipants[pi];
                     const intRef = jsonParticipant.interactorRef;
-                    let participant = controller.molecules.get(intRef);
+                    let participant = controller.participants.get(intRef);
 
-                    if (typeof participant === 'undefined') {
+                    if (typeof participant === "undefined") {
                         //must be a previously unencountered complex
                         participant = new Complex(intRef, controller);
                         complexes.set(intRef, participant);
-                        controller.molecules.set(intRef, participant);
+                        controller.participants.set(intRef, participant);
                     }
 
 
@@ -369,7 +367,7 @@ export function readMijson (miJson, controller, expand = true) {
                         nLink.interactors.push(participant);
                     }
                     //temp - to give sensible info when stoich collapsed
-                    const interactor = controller.molecules.get(intRef);
+                    const interactor = controller.participants.get(intRef);
                     interactor.stoich = interactor.stoich ? interactor.stoich : 0;
                     if (jsonParticipant.stoichiometry) {
                         interactor.stoich += +jsonParticipant.stoichiometry;
@@ -378,7 +376,7 @@ export function readMijson (miJson, controller, expand = true) {
                     }
                 }
 
-                const interactorArr = controller.molecules.values();
+                const interactorArr = controller.participants.values();
                 const iCount = interactorArr.length;
                 for (let ii = 0; ii < iCount; ii++) {
                     const int = interactorArr[ii];
@@ -403,20 +401,20 @@ export function readMijson (miJson, controller, expand = true) {
         for (let pi = 0; pi < participantCount; pi++) {
             let pID = jsonParticipants[pi].interactorRef;
             if (expand) {
-                pID = pID + '(' + jsonParticipants[pi].id + ')';
+                pID = pID + "(" + jsonParticipants[pi].id + ")";
             }
             pIDs.add(pID);
         }
 
-        return pIDs.values().sort().join('-');
+        return pIDs.values().sort().join("-");
     }
 
     function getNode(seqDatum) {
         let id = seqDatum.interactorRef;
         if (expand) {
-            id = id + '(' + seqDatum.participantRef + ')';
+            id = id + "(" + seqDatum.participantRef + ")";
         }
-        return controller.molecules.get(id);
+        return controller.participants.get(id);
     }
 
     function getFeatureLink(fromSeqData, toSeqData, interaction) {
@@ -427,13 +425,13 @@ export function readMijson (miJson, controller, expand = true) {
                 const seq = seqData[s];
                 let id = seq.interactorRef;
                 if (expand) {
-                    id = id + '(' + seq.participantRef + ')';
+                    id = id + "(" + seq.participantRef + ")";
                 }
-                id = id + ':' + seq.pos;
+                id = id + ":" + seq.pos;
                 nodeIds.add(id);
             }
             //sort ids
-            return nodeIds.values().sort().join(';');
+            return nodeIds.values().sort().join(";");
         }
 
 
@@ -441,14 +439,14 @@ export function readMijson (miJson, controller, expand = true) {
         const end = seqDataToString(toSeqData);
         let seqLinkId;//, endsSwapped;
         if (start < end) {
-            seqLinkId = start + '><' + end;
+            seqLinkId = start + "><" + end;
             //endsSwapped = false;
         } else {
-            seqLinkId = end + '><' + start;
+            seqLinkId = end + "><" + start;
             //endsSwapped = true;
         }
         let sequenceLink = controller.allSequenceLinks.get(seqLinkId);
-        if (typeof sequenceLink === 'undefined') {
+        if (typeof sequenceLink === "undefined") {
             const fromFeaturePositions = [];
             for (let fromSeqDatum of fromSeqData) {
                 fromFeaturePositions.push(new Feature(getNode(fromSeqDatum), fromSeqDatum.pos));
@@ -473,9 +471,9 @@ export function readMijson (miJson, controller, expand = true) {
     }
 
     function getUnaryLink(interactor, interaction) {
-        const linkID = '-' + interactor.id + '-' + interactor.id;
+        const linkID = "-" + interactor.id + "-" + interactor.id;
         let link = controller.allUnaryLinks.get(linkID);
-        if (typeof link === 'undefined') {
+        if (typeof link === "undefined") {
             link = new UnaryLink(linkID, controller, interactor);
             controller.allUnaryLinks.set(linkID, link);
             interactor.controllerLink = link;
@@ -492,16 +490,16 @@ export function readMijson (miJson, controller, expand = true) {
         // these links are undirected and should have same ID regardless of which way round
         // source and target are
         if (sourceInteractor.id < targetInteractor.id) {
-            linkID = '-' + sourceInteractor.id + '-' + targetInteractor.id;
+            linkID = "-" + sourceInteractor.id + "-" + targetInteractor.id;
             fi = sourceInteractor;
             ti = targetInteractor;
         } else {
-            linkID = '-' + targetInteractor.id + '-' + sourceInteractor.id;
+            linkID = "-" + targetInteractor.id + "-" + sourceInteractor.id;
             fi = targetInteractor;
             ti = sourceInteractor;
         }
         let link = controller.allBinaryLinks.get(linkID);
-        if (typeof link === 'undefined') {
+        if (typeof link === "undefined") {
             link = new BinaryLink(linkID, controller, fi, ti);
             fi.binaryLinks.set(linkID, link);
             ti.binaryLinks.set(linkID, link);

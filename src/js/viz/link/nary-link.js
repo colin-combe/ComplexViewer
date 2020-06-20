@@ -9,10 +9,10 @@
 //		NaryLink.js
 //		graphically represents n-ary interactions
 
-import * as d3 from 'd3';
-import {Link} from './link';
-import {Config} from '../../config';
-import {Interactor} from '../interactor/interactor';
+import * as d3 from "d3";
+import {Link} from "./link";
+import {svgns, highlightColour} from "../../config";
+import {Interactor} from "../interactor/interactor";
 
 NaryLink.naryColours; // init'ed in clear function of util
 NaryLink.orbitNodes = 16;
@@ -39,7 +39,7 @@ NaryLink.prototype.getTotalParticipantCount = function () {
     for (let p = 0; p < c; p++) {
         const participant = this.interactors[p];
         //console.log("! " + typeof participant);
-        if (participant.type !== 'complex') {
+        if (participant.type !== "complex") {
             result++;
         } else {
             result += participant.naryLink.getTotalParticipantCount();
@@ -49,9 +49,9 @@ NaryLink.prototype.getTotalParticipantCount = function () {
 };
 
 NaryLink.prototype.initSVG = function () {
-    this.path = document.createElementNS(Config.svgns, 'path');
+    this.path = document.createElementNS(svgns, "path");
     this.colour = NaryLink.naryColours(this.id);
-    this.path.setAttribute('fill', this.colour);
+    this.path.setAttribute("fill", this.colour);
     //set the events for it
     const self = this;
     this.path.onmousedown = function (evt) {
@@ -78,7 +78,7 @@ NaryLink.prototype.check = function () {
 };
 
 NaryLink.prototype.show = function () {
-    this.path.setAttribute('stroke-width', this.controller.z);
+    this.path.setAttribute("stroke-width", this.controller.z);
     this.setLinkCoordinates();
     this.controller.naryLinks.appendChild(this.path);
 };
@@ -91,13 +91,13 @@ NaryLink.prototype.setLinkCoordinates = function () {
     const calculateHullPath = function (values) {
         const hullPath = d3.geom.hull(values);
         self.hull = hullPath; //hack?
-        return 'M' + hullPath.join('L') + 'Z';
+        return "M" + hullPath.join("L") + "Z";
     };
     const self = this; // TODO: - tidy hack above?
     const mapped = this.orbitNodes(this.getMappedCoordinates());
     const hullValues = calculateHullPath(mapped);
     if (hullValues) {
-        this.path.setAttribute('d', hullValues);
+        this.path.setAttribute("d", hullValues);
     }
     if (this.complex) {
         this.complex.setAllLinkCoordinates();
@@ -110,7 +110,7 @@ NaryLink.prototype.getMappedCoordinates = function () {
     const ic = interactors.length;
     for (let i = 0; i < ic; i++) {
         const interactor = interactors[i];
-        if (interactor.type === 'complex') {
+        if (interactor.type === "complex") {
             mapped = mapped.concat(this.orbitNodes(interactor.naryLink.getMappedCoordinates()));
         } else if (interactor.form === 1) {
             const start = interactor.getResidueCoordinates(0);

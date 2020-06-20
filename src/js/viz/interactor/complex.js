@@ -8,42 +8,28 @@
 //
 //		authors: Colin Combe
 
-import * as d3 from 'd3';
-import {Interactor} from './interactor';
+import * as d3 from "d3";
+import {Interactor} from "./interactor";
 
 Complex.prototype = new Interactor();
 
-export function Complex(id, xlvController) {
+export function Complex(id, controller) {
     this.id = id;
-    this.controller = xlvController;
+    this.controller = controller;
     //links
     this.naryLinks = d3.map();
     this.binaryLinks = d3.map();
     this.selfLink = null;
     this.sequenceLinks = d3.map();
-    this.form = 0;
-    this.type = 'complex';
-
+    this.type = "complex";
     this.padding = 15;
-
-    //TODO - this wastes a bit memory because the property is not on the prototype, fix
-    // Object.defineProperty(this, "width", {
-    //     get: function width() {
-    //         return this.naryLink.path.getBBox().width;
-    //     }
-    // });
-    // Object.defineProperty(this, "height", {
-    //     get: function height() {
-    //         return this.naryLink.path.getBBox().height;
-    //     }
-    // });
 }
 
 Complex.prototype.initInteractor = function (naryLink) {
     this.naryLink = naryLink;
-    naryLink.path.setAttribute('stroke', 'gray');
-    naryLink.path.setAttribute('stroke-linejoin', 'round');
-    naryLink.path.setAttribute('stroke-width', 8);
+    naryLink.path.setAttribute("stroke", "gray");
+    naryLink.path.setAttribute("stroke-linejoin", "round");
+    naryLink.path.setAttribute("stroke-width", 8);
 };
 
 Complex.prototype.getPosition = function () {

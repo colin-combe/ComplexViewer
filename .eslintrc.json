@@ -4,7 +4,7 @@
     "semi": ["error", "always" ],
     "semi-style": ["error", "last"],
     "semi-spacing": ["error", {"before": false, "after": true}],
-    "quotes": [ "warn", "single" ],
+    "quotes": [ "warn", "double" ], // JSON standard says double
     "brace-style": "warn"
 //    "object-curly-newline": ["error", "always"]
   },
