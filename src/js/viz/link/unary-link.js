@@ -9,7 +9,8 @@
 // 		UnaryLink.js
 // 		the class representing a self-link
 
-import * as d3 from "d3";
+//todo - is this even working? you never see it
+
 import {svgns, highlightColour} from "../../config";
 import {Link} from "./link";
 // var FeatureLink = require('./FeatureLink');
@@ -18,9 +19,9 @@ UnaryLink.prototype = new Link();
 
 export function UnaryLink(id, xlvController, interactor) {
     this.id = id;
-    this.evidences = d3.map();
+    // this.evidences = d3.map();
     this.interactors = [interactor];
-    this.sequenceLinks = d3.map();
+    this.sequenceLinks = new Map();
     this.controller = xlvController;
     this.initSVG();
 }

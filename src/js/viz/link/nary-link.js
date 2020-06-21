@@ -9,9 +9,9 @@
 //		NaryLink.js
 //		graphically represents n-ary interactions
 
-import * as d3 from "d3";
+import * as d3 from "d3"; //used for d3.geom.hull
 import {Link} from "./link";
-import {svgns, highlightColour} from "../../config";
+import {svgns} from "../../config";
 import {Interactor} from "../interactor/interactor";
 
 NaryLink.naryColours; // init'ed in clear function of util
@@ -22,11 +22,11 @@ NaryLink.prototype = new Link();
 
 export function NaryLink(id, xlvController) {
     this.id = id;
-    this.evidences = d3.map();
+    // this.evidences = d3.map();
     this.interactors = []; // todo: rename to participants
-    this.sequenceLinks = d3.map();
-    this.binaryLinks = d3.map();
-    this.unaryLinks = d3.map();
+    this.sequenceLinks = new Map();
+    this.binaryLinks = new Map();
+    this.unaryLinks = new Map();
     this.controller = xlvController;
     this.tooltip = this.id;
     //used to avoid some unnecessary manipulation of DOM

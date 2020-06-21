@@ -112,7 +112,7 @@ FeatureLink.prototype.showHighlight = function (show) {
 
 //used when filter changed
 FeatureLink.prototype.check = function () {
-    if (this.filteredEvidence().length > 0 && this.anyInteractorIsBar() === true) {
+    if (/*this.filteredEvidence().length > 0 &&*/ this.anyInteractorIsBar() === true) {
         this.show();
         return true;
     } else {

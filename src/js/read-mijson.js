@@ -1,4 +1,3 @@
-import * as d3 from "d3";
 import {Annotation} from "./viz/interactor/annotation";
 import {Protein} from "./viz/interactor/protein";
 import {BioactiveEntity}  from "./viz/interactor/bioactive-entity";
@@ -20,14 +19,15 @@ export function readMijson (/*miJson*/miJson, /*App*/ controller, expand = true)
     //check that we've got a parsed javascript object here, not a String
     miJson = (typeof miJson === "object") ? miJson : JSON.parse(miJson);
     miJson.data = miJson.data.reverse();
-    controller.features = d3.map();
+    controller.features = new Map();
 
-    const complexes = d3.map();
-    const needsSequence = d3.set(); //things that need seq looked up
+    const complexes = new Map();
+    // todo - make sequence required in miJSON rather than optional, JAMI's always adding it
+    //const needsSequence = new Set(); //things that need seq looked up
 
     //get interactors
     controller.proteinCount = 0;
-    controller.interactors = d3.map();
+    controller.interactors = new Map();
     for (let datum of miJson.data) {
         if (datum.object === "interactor") {
             controller.interactors.set(datum.id, datum);
@@ -58,7 +58,7 @@ export function readMijson (/*miJson*/miJson, /*App*/ controller, expand = true)
                             // !! following is a hack, code can't deal with
                             // !! composite binding region across two different interactors
                             // break feature links to different nodes into separate binary links
-                            const toSequenceData_indexedByNodeId = d3.map();
+                            const toSequenceData_indexedByNodeId = new Map();
 
                             const linkedFeature = controller.features.get(linkedFeatureIDs[lfi]);
                             for (let seqData of linkedFeature.sequenceData) {
@@ -98,7 +98,7 @@ export function readMijson (/*miJson*/miJson, /*App*/ controller, expand = true)
     }
 
     //init complexes
-    controller.complexes = complexes.values();
+    controller.complexes = Array.from(complexes.values()); // todo - why not just keep it in map
     for (let c = 0; c < controller.complexes.length; c++) {
         const complex = controller.complexes[c];
         let interactionId;
@@ -252,11 +252,11 @@ export function readMijson (/*miJson*/miJson, /*App*/ controller, expand = true)
                 participant.setSequence(interactor.sequence);
             } else {
                 //should look it up using accession number
-                if (participantId.indexOf("uniprotkb") === 0) {
-                    needsSequence.add(participantId);
-                } else {
+                // if (participantId.indexOf("uniprotkb") === 0) {
+                //     needsSequence.add(participantId);
+                // } else {
                     participant.setSequence("SEQUENCEMISSING");
-                }
+                // }
             }
         } else if (interactor.type.id === "MI:0250") { //genes
             participant = new Gene(participantId, controller, interactor, interactor.label);
@@ -396,7 +396,7 @@ export function readMijson (/*miJson*/miJson, /*App*/ controller, expand = true)
         const jsonParticipants = interaction.participants;
         const participantCount = jsonParticipants.length;
 
-        const pIDs = d3.set(); //used to eliminate duplicates
+        const pIDs = new Set(); //used to eliminate duplicates
         //make id
         for (let pi = 0; pi < participantCount; pi++) {
             let pID = jsonParticipants[pi].interactorRef;
@@ -406,7 +406,7 @@ export function readMijson (/*miJson*/miJson, /*App*/ controller, expand = true)
             pIDs.add(pID);
         }
 
-        return pIDs.values().sort().join("-");
+        return Array.from(pIDs.values()).sort().join("-");
     }
 
     function getNode(seqDatum) {
@@ -419,7 +419,7 @@ export function readMijson (/*miJson*/miJson, /*App*/ controller, expand = true)
 
     function getFeatureLink(fromSeqData, toSeqData, interaction) {
         function seqDataToString(seqData) {
-            const nodeIds = d3.set(); //used to eliminate duplicates
+            const nodeIds = new Set(); //used to eliminate duplicates
             //make id
             for (let s = 0; s < seqData.length; s++) {
                 const seq = seqData[s];
@@ -431,7 +431,7 @@ export function readMijson (/*miJson*/miJson, /*App*/ controller, expand = true)
                 nodeIds.add(id);
             }
             //sort ids
-            return nodeIds.values().sort().join(";");
+            return Array.from(nodeIds.values()).sort().join(";");
         }
 
 

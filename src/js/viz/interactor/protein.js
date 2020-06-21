@@ -1,14 +1,4 @@
-//    	xiNET Interaction Viewer
-//    	Copyright 2013 Rappsilber Laboratory
-//
-//    	This product includes software developed at
-//    	the Rappsilber Laboratory (http://www.rappsilberlab.org/).
-//
-//		Protein.js
-//
-//		authors: Lutz Fischer, Colin Combe
-
-import * as d3 from "d3";
+import * as d3 from "d3"; //only used to set att's'
 import {Interactor} from "./interactor";
 import {Polymer} from "./polymer";
 import {svgns, highlightColour} from "../../config";
@@ -22,10 +12,10 @@ export function Protein(id, xinetController, json, name) {
     this.name = name;
     this.tooltip = this.name + " [" + this.id + "]"; // + this.accession;
     //links
-    this.naryLinks = d3.map();
-    this.binaryLinks = d3.map();
+    this.naryLinks = new Map();
+    this.binaryLinks = new Map();
     this.selfLink = null;
-    this.sequenceLinks = d3.map();
+    this.sequenceLinks = new Map();
     this.selfLink = null;
     // layout info
     this.cx = 40;
@@ -74,7 +64,7 @@ export function Protein(id, xinetController, json, name) {
     }
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
-    d3.select(this.labelSVG).attr("transform",
+    this.labelSVG.setAttribute("transform",
         "translate( -" + (5) + " " + Interactor.labelY + ") rotate(0) scale(1, 1)");
     this.upperGroup.appendChild(this.labelSVG);
     //ticks (and amino acid letters)

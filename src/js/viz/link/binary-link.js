@@ -4,11 +4,11 @@
 //    This product includes software developed at
 //    the Rappsilber Laboratory (http://www.rappsilberlab.org/).
 
-import * as d3 from "d3";
+// import * as d3 from "d3";
 import {svgns, highlightColour} from "../../config";
 import {Link} from "./link";
-import {Intersection} from "intersectionjs";
-import {Point2D} from "point2d";
+import * as Intersection from "intersectionjs";
+import * as Point2D from "point2d";
 
 // BinaryLink.js
 // the class representing a binary interaction
@@ -17,9 +17,9 @@ BinaryLink.prototype = new Link();
 
 export function BinaryLink(id, xlvController, fromI, toI) {
     this.id = id;
-    this.evidences = d3.map();
+    // this.evidences = d3.map();
     this.interactors = [fromI, toI];
-    this.sequenceLinks = d3.map();
+    this.sequenceLinks = new Map();
     this.controller = xlvController;
 }
 

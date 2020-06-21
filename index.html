@@ -5,22 +5,15 @@
     <title>ComplexViewer Demo</title>
     <meta content="ComplexViewer Demo" name="ComplexViewer Demo">
     <meta content="initial-scale=1, maximum-scale=1" name="viewport">
-    <meta content="yes" name="apple-mobile-web-app-capable">
-    <meta content="black" name="apple-mobile-web-app-status-bar-style">
     <!-- css -->
     <link href="./css/reset.css" rel="stylesheet" type='text/css'>
     <link href="./css/style.css" rel="stylesheet" type='text/css'>
     <link href="./css/demo.css" rel="stylesheet" type='text/css'>
-<!--    <link href="./css/XLV.css" rel="stylesheet" type='text/css'/>-->
     <!--libraries-->
     <script src="./dist/complexviewer.js" type="text/javascript"></script>
-<!--    <script src="./node_modules/d3/d3.js" type="text/javascript"></script>-->
-<!--    <script src="./rgbcolor.js" type="text/javascript"></script>-->
-<!--    <script src="./legend.js" type="text/javascript"></script>-->
     <!-- example data info -->
     <script src="./data/index.js" type="text/javascript"></script>
 </head>
-
 <body>
 <!-- Main -->
 <div id="main">
@@ -28,80 +21,80 @@
     <div class="page-header">
         <i class="fa fa-github" onclick="window.location = 'https://github.com/MICommunity/ComplexViewer';"
            style="margin-right:5px;" title="Go to GitHub project"></i>
-        <h1><a href="https://doi.org/10.1093/bioinformatics/btx497" target="_blank">ComplexViewer</a>: dev. version</h1>
-        <span>Choose Example:</span>
-        <label for="dataSets">Example:</label><select class="noShrink" id="dataSets"
-                                                      onChange="/*document.getElementById('chkexpansion').checked = true;*/loadData();"></select>
+        <h1><a href="https://doi.org/10.1093/bioinformatics/btx497" target="_blank">ComplexViewer</a></h1>
+        <label for="dataSets">Examples:</label>
+        <select class="noShrink" id="dataSets"
+                onChange="/*document.getElementById('chkexpansion').checked = true;*/loadData();"></select>
         <br>
     </div>
 
     <div id="centre">
 
-<!--        <div id="detailsDiv"></div>-->
+        <!--        <div id="detailsDiv"></div>-->
 
         <div id="middleDiv">
             <div id="innerMiddleDiv">
                 <div id="networkDiv"></div>
                 <div id="symbolKeyDiv">
-<!--                    <table>-->
-<!--                        <tr>-->
-<!--                            <td>-->
-<!--                                <div style="float:right">-->
-<!--                                    <img alt="Bioactive Entity" src="./imgs/key-svg/molecule-set.svg">-->
-<!--                                </div>-->
-<!--                            </td>-->
-<!--                            <td>Molecule Set</td>-->
-<!--                        </tr>-->
-<!--                        <tr>-->
-<!--                            <td>-->
-<!--                                <div style="float:right">-->
-<!--                                    <img alt="Bioactive Entity" src="./imgs/key-svg/small-molecule.svg">-->
-<!--                                </div>-->
-<!--                            </td>-->
-<!--                            <td>Bioactive Entity</td>-->
-<!--                        </tr>-->
+                    <!--                    <table>-->
+                    <!--                        <tr>-->
+                    <!--                            <td>-->
+                    <!--                                <div style="float:right">-->
+                    <!--                                    <img alt="Bioactive Entity" src="./imgs/key-svg/molecule-set.svg">-->
+                    <!--                                </div>-->
+                    <!--                            </td>-->
+                    <!--                            <td>Molecule Set</td>-->
+                    <!--                        </tr>-->
+                    <!--                        <tr>-->
+                    <!--                            <td>-->
+                    <!--                                <div style="float:right">-->
+                    <!--                                    <img alt="Bioactive Entity" src="./imgs/key-svg/small-molecule.svg">-->
+                    <!--                                </div>-->
+                    <!--                            </td>-->
+                    <!--                            <td>Bioactive Entity</td>-->
+                    <!--                        </tr>-->
 
-<!--                        <tr>-->
-<!--                            <td>-->
-<!--                                <div style="float:right">-->
-<!--                                    <img alt="Gene" src="./imgs/key-svg/gene.svg">-->
-<!--                                </div>-->
-<!--                            </td>-->
-<!--                            <td>Gene</td>-->
-<!--                        </tr>-->
-<!--                        <tr>-->
-<!--                            <td>-->
-<!--                                <div style="float:right">-->
-<!--                                    <img alt="DNA" src="./imgs/key-svg/dna.svg">-->
-<!--                                </div>-->
-<!--                            </td>-->
-<!--                            <td>DNA</td>-->
-<!--                        </tr>-->
-<!--                        <tr>-->
-<!--                            <td>-->
-<!--                                <div style="float:right">-->
-<!--                                    <img alt="RNA" src="./imgs/key-svg/rna.svg">-->
-<!--                                </div>-->
-<!--                            </td>-->
-<!--                            <td>RNA</td>-->
-<!--                        </tr>-->
-<!--                        <tr style="border: 1px grey;">-->
-<!--                            <td>-->
-<!--                                <div style="float:right">-->
-<!--                                    <img alt="Protein" src="./imgs/key-svg/protein-circle.svg">-->
-<!--                                </div>-->
-<!--                                <div style="float:right">-->
-<!--                                    <img alt="Protein" src="./imgs/key-svg/protein-bar.svg">-->
-<!--                                </div>-->
-<!--                            </td>-->
-<!--                            <td>Protein - click to toggle between circle and bar</td>-->
-<!--                        </tr>-->
-<!--                    </table>-->
+                    <!--                        <tr>-->
+                    <!--                            <td>-->
+                    <!--                                <div style="float:right">-->
+                    <!--                                    <img alt="Gene" src="./imgs/key-svg/gene.svg">-->
+                    <!--                                </div>-->
+                    <!--                            </td>-->
+                    <!--                            <td>Gene</td>-->
+                    <!--                        </tr>-->
+                    <!--                        <tr>-->
+                    <!--                            <td>-->
+                    <!--                                <div style="float:right">-->
+                    <!--                                    <img alt="DNA" src="./imgs/key-svg/dna.svg">-->
+                    <!--                                </div>-->
+                    <!--                            </td>-->
+                    <!--                            <td>DNA</td>-->
+                    <!--                        </tr>-->
+                    <!--                        <tr>-->
+                    <!--                            <td>-->
+                    <!--                                <div style="float:right">-->
+                    <!--                                    <img alt="RNA" src="./imgs/key-svg/rna.svg">-->
+                    <!--                                </div>-->
+                    <!--                            </td>-->
+                    <!--                            <td>RNA</td>-->
+                    <!--                        </tr>-->
+                    <!--                        <tr style="border: 1px grey;">-->
+                    <!--                            <td>-->
+                    <!--                                <div style="float:right">-->
+                    <!--                                    <img alt="Protein" src="./imgs/key-svg/protein-circle.svg">-->
+                    <!--                                </div>-->
+                    <!--                                <div style="float:right">-->
+                    <!--                                    <img alt="Protein" src="./imgs/key-svg/protein-bar.svg">-->
+                    <!--                                </div>-->
+                    <!--                            </td>-->
+                    <!--                            <td>Protein - click to toggle between circle and bar</td>-->
+                    <!--                        </tr>-->
+                    <!--                    </table>-->
                     <div class="controls" style="height:46px;">Proteins:
                         <button class="btn btn-1 btn-1a" onclick="xlv.expandAll();">Expand</button>
                         <button class="btn btn-1 btn-1a" onclick="xlv.collapseAll();">Collapse</button>
                     </div>
-                    <div id="colours"></div>
+                    <div id="colors"></div>
 
                 </div><!-- legend -->
 
@@ -127,7 +120,6 @@
                     </button>
                 </div>
 
-
             </div> <!-- bottom bar -->
 
         </div> <!-- middleDiv -->
@@ -135,12 +127,18 @@
     </div> <!-- centreDiv -->
 
     <div class="logoBar">
-        <a class="logo" href="http://rappsilberlab.org/" target="_blank"><img src="images/logos/rappsilber-logo-sml.png" alt="Rappsilber Laboratory"></a>
-        <a class="logo" href="http://www.ed.ac.uk/" target="_blank"><img src="./images/logos/eduni.jpeg" alt="Edinburgh University"></a>
-        <a class="logo" href="http://www.wcb.ed.ac.uk/" target="_blank"><img src="images/logos/wtccb.png" alt="Wellcome Trust Centre for Cell Biology"></a>
-        <a class="logo" href="http://www.ebi.ac.uk/" target="_blank"><img src="images/logos/ebi-logo.jpeg" alt="European Bioinformatics Institute"></a>
-        <a class="logo" href="http://intermine.org/" target="_blank"><img src="./images/logos/intermine.png" alt="Intermine"></a>
-        <a class="logo" href="https://www.cam.ac.uk/" target="_blank"><img src="./images/logos/cambridge-blue.png" alt="Cambridge University"></a>
+        <a class="logo" href="http://rappsilberlab.org/" target="_blank"><img src="images/logos/rappsilber-logo-sml.png"
+                                                                              alt="Rappsilber Laboratory"></a>
+        <a class="logo" href="http://www.ed.ac.uk/" target="_blank"><img src="./images/logos/eduni.jpeg"
+                                                                         alt="Edinburgh University"></a>
+        <a class="logo" href="http://www.wcb.ed.ac.uk/" target="_blank"><img src="images/logos/wtccb.png"
+                                                                             alt="Wellcome Trust Centre for Cell Biology"></a>
+        <a class="logo" href="http://www.ebi.ac.uk/" target="_blank"><img src="images/logos/ebi-logo.jpeg"
+                                                                          alt="European Bioinformatics Institute"></a>
+        <a class="logo" href="http://intermine.org/" target="_blank"><img src="./images/logos/intermine.png"
+                                                                          alt="Intermine"></a>
+        <a class="logo" href="https://www.cam.ac.uk/" target="_blank"><img src="./images/logos/cambridge-blue.png"
+                                                                           alt="Cambridge University"></a>
     </div>
 
 </div><!-- MAIN -->
@@ -149,8 +147,9 @@
     //<![CDATA[
 
     const networkTargetDiv = document.getElementById('networkDiv');
-    const legendTargetDiv = document.getElementById('symbolKeyDiv');
-    xlv = new complexviewer.App(networkTargetDiv, legendTargetDiv);
+    const symbolTargetDiv = document.getElementById('symbolKeyDiv');
+    xlv = new complexviewer.App(networkTargetDiv);
+    complexviewer.makeSymbolKey(document.getElementById('symbolKeyDiv'));
     //todo - er, use css
     xlv.svgElement.setAttribute('style', 'display: -webkit-box;display: -moz-box;display: -ms-flexbox; display: -webkit-flex;display: flex;flex-grow:1;');
 
@@ -231,7 +230,7 @@
         complexDetailsSel.append('a')
             .attr('href', example.url)
             .attr('target', '_blank')
-            .html('<b>' + example.ac + '<'+'/b>');
+            .html('<b>' + example.ac + '<' + '/b>');
 
 
         // if (example.disableStoichExpand) {
@@ -255,6 +254,7 @@
     }
 
     function exportSVG() {
+        // todo
         const xml = xlv.getSVG();
         let xmlAsUrl = 'data:image/svg;filename=xiNET-output.svg,';
         xmlAsUrl += encodeURIComponent(xml);

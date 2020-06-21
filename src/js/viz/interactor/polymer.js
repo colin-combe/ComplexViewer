@@ -8,12 +8,12 @@
 //
 //      authors: Lutz Fischer, Colin Combe
 
-import * as d3 from "d3";
+import * as d3 from "d3"; // transitions and other stuff
 import {Interactor, trig} from "./interactor";
 import {Annotation} from "./annotation";
 import {Feature} from "../feature";
 //var Rotator = require('../../util/Rotator');
-import {svgns, highlightColour} from "../../config";
+import {svgns} from "../../config";
 
 Polymer.STICKHEIGHT = 20; //height of stick in pixels
 Polymer.MAXSIZE = 0; // residue count of longest sequence

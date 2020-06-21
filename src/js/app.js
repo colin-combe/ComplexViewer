@@ -18,8 +18,7 @@ import * as cola from "webcola";
 import {readMijson} from "./read-mijson";
 import {setAnnotations} from "./annotations";
 
-import SymbolKey from "./symbol-key";
-
+import {SymbolKey} from "./symbol-key";
 // import * as ColorSchemeKey from "./color-scheme-key";
 import {NaryLink} from "./viz/link/nary-link";
 import {svgns} from "./config";
@@ -30,18 +29,19 @@ import {svgns} from "./config";
 // so backbone doesn't work
 // so continuing to use prototypical inheritance in things for time being
 
-export function App (networkDiv, /*colourSchemeDiv,*/ symbolKeyDiv) {
+export function App (networkDiv, colorSchemeDiv) {
         // this.debug = true;
 
-        if (typeof targetDiv === "string") {
-            this.el = document.getElementById(networkDiv);
-        } else {
-            this.el = networkDiv;
-        }
-
-        if (symbolKeyDiv) {
-            new SymbolKey(symbolKeyDiv);
-        }
+    if (typeof targetDiv === "string") {
+        this.el = document.getElementById(networkDiv);
+    } else {
+        this.el = networkDiv;
+    }
+    if (typeof colorSchemeDiv === "string") {
+        // this.el = document.getElementById(networkDiv);
+    } else {
+        // this.el = networkDiv;
+    }
 
         this.STATES = {};
         this.STATES.MOUSE_UP = 0; //start state, also set when mouse up on svgElement
@@ -320,11 +320,11 @@ App.prototype.clear = function () {
     // from where did we start dragging
     this.dragStart = {};
 
-    this.participants = new Map(); // todo - rename
-    this.allNaryLinks = d3.map();
-    this.allBinaryLinks = d3.map();
-    this.allUnaryLinks = d3.map();
-    this.allSequenceLinks = d3.map();
+    this.participants = new Map();
+    this.allNaryLinks = new Map();
+    this.allBinaryLinks = new Map();
+    this.allUnaryLinks = new Map();
+    this.allSequenceLinks = new Map();
     this.complexes = [];
 
     this.proteinCount = 0;
@@ -683,12 +683,9 @@ App.prototype.autoLayout = function () {
         mi++;
     }
 
-    const links = this.allBinaryLinks.values();
-    const linkCount = links.length;
-    for (let l = 0; l < linkCount; l++) {
-        const link = links[l];
-        const fromMol = link.interactors[0];
-        const toMol = link.interactors[1];
+    for (let binaryLink of this.allBinaryLinks.values()) {
+        const fromMol = binaryLink.interactors[0];
+        const toMol = binaryLink.interactors[1];
         const source = fromMol; //molLookUp[fromMol.id];
         const target = toMol; //molLookUp[toMol.id];
 
@@ -698,7 +695,7 @@ App.prototype.autoLayout = function () {
                 const linkObj = {};
                 linkObj.source = molLookUp[fromMol.id];
                 linkObj.target = molLookUp[toMol.id];
-                linkObj.id = link.id;
+                linkObj.id = binaryLink.id;
                 layoutObj.links.push(linkObj);
             } else {
                 alert("NOT RIGHT");
@@ -840,10 +837,8 @@ App.prototype.readMIJSON = function (miJson, expand = true) {
 
 App.prototype.checkLinks = function () {
     function checkAll(linkMap) {
-        const links = linkMap.values();
-        const c = links.length;
-        for (let l = 0; l < c; l++) {
-            links[l].check();
+        for (let link of linkMap.values()) {
+            link.check();
         }
     }
     checkAll(this.allNaryLinks);
@@ -854,13 +849,10 @@ App.prototype.checkLinks = function () {
 
 App.prototype.setAllLinkCoordinates = function () {
     function setAll(linkMap) {
-        const links = linkMap.values();
-        const c = links.length;
-        for (let l = 0; l < c; l++) {
-            links[l].setLinkCoordinates();
+        for (let link of linkMap.values()) {
+            link.setLinkCoordinates();
         }
     }
-
     setAll(this.allNaryLinks);
     setAll(this.allBinaryLinks);
     setAll(this.allUnaryLinks);
@@ -936,42 +928,21 @@ App.prototype.getComplexColours = function () {
 */
 
 App.prototype.collapseAll = function () {
-    const molecules = this.participants.values();
-    const mCount = molecules.length;
-    for (let m = 0; m < mCount; m++) {
-        const molecule = molecules[m];
-        if (molecule.form === 1) {
-            molecule.setForm(0);
+    for (let participant of this.participants.values()) {
+        if (participant.form === 1) {
+            participant.setForm(0);
         }
     }
 };
 
 App.prototype.expandAll = function () {
-    const molecules = this.participants.values();
-    const mCount = molecules.length;
-    for (let m = 0; m < mCount; m++) {
-        const molecule = molecules[m];
-        if (molecule.form === 0) {
-            molecule.setForm(1);
+    for (let participant of this.participants.values()) {
+        if (participant.form === 0) {
+            participant.setForm(1);
         }
     }
 };
 
-/*
-App.prototype.expandAndCollapseSelection = function(moleculesSelected) {
-    const molecules = this.participants.values();
-    for (let m = 0; m < molecules.length; m++) {
-        const molecule = molecules[m];
-        const molecule_id = molecule.json.identifier.id;
-        if (moleculesSelected.includes(molecule_id)) {
-            if (molecule.form === 0) {
-                molecule.setForm(1);
-            }
-        } else if (molecule.form === 1) {
-            molecule.setForm(0);
-        }
-    }
-};
-*/
-
-
+export function makeSymbolKey(targetDiv){
+    new SymbolKey(targetDiv);
+}

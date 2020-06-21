@@ -80,15 +80,15 @@ export function setAnnotations (annotationChoice, /*App*/ controller) {
     }
 
     function chooseColours() {
-        const categories = d3.set();
-        for (let mol of controller.participants.values()) {
-            if (mol.annotations) {
-                for (let annotation of mol.annotations) {
+        const categories = new Set();
+        for (let participant of controller.participants.values()) {
+            if (participant.annotations) {
+                for (let annotation of participant.annotations) {
                     categories.add(annotation.description);
                 }
             }
         }
-        let catCount = categories.values().length;
+        let catCount = categories.size;
 
         let colourScheme;
 

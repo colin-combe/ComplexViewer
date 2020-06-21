@@ -8,7 +8,7 @@
 //
 //		authors: Colin Combe
 
-import * as d3 from "d3";
+import * as d3 from "d3"; //only used to set att's, remove
 import {Interactor} from "./interactor";
 import {svgns, highlightColour} from "../../config";
 
@@ -19,10 +19,10 @@ export function MoleculeSet(id, xlvController, json, name) {
     this.controller = xlvController;
     this.json = json;
     //links
-    this.naryLinks = d3.map();
-    this.binaryLinks = d3.map();
+    this.naryLinks = new Map();
+    this.binaryLinks = new Map();
     this.selfLink = null;
-    this.sequenceLinks = d3.map();
+    this.sequenceLinks = new Map();
     this.name = name;
     this.tooltip = this.id;
     // layout info
@@ -44,7 +44,7 @@ export function MoleculeSet(id, xlvController, json, name) {
     this.highlight.setAttribute("stroke-width", "5");
     this.highlight.setAttribute("fill", "none");
     //attributes that may change
-    d3.select(this.highlight).attr("stroke-opacity", 0);
+    this.highlight.setAttribute("stroke-opacity", 0);
     this.upperGroup.appendChild(this.highlight);
 
     //svg groups for self links
@@ -66,12 +66,13 @@ export function MoleculeSet(id, xlvController, json, name) {
     this.labelText = this.name;
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
-    d3.select(this.labelSVG).attr("transform",
+    this.labelSVG.setAttribute("transform",
         "translate( -" + (25) + " " + Interactor.labelY + ")");
     this.upperGroup.appendChild(this.labelSVG);
 
     //make symbol
     this.outline = document.createElementNS(svgns, "rect");
+    //todo
     d3.select(this.outline).attr("height", 20)
         .attr("width", 40)
         .attr("x", -20)

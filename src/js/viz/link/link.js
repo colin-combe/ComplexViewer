@@ -12,21 +12,18 @@
 //      E.g. psi-mi may contains multiple experiments giving evidence for same interaction
 //      - using one glyph to represent them all prevents uppermost graphic from occluding those lower down
 
-import * as d3 from "d3";
-
 export function Link () {}
 
 Link.maxNoEvidences = 0;
 
 Link.prototype.addEvidence = function (interaction) {
     if (!this.evidences) {
-        this.evidences = d3.map();
+        this.evidences = new Map();
     }
     if (this.evidences.has(interaction.id) === false) {
         this.evidences.set(interaction.id, interaction);
-        if (this.evidences.values().length > Link.maxNoEvidences) {
-            //values().length can be replaced with size() in newer d3 lib
-            Link.maxNoEvidences = this.evidences.values().length;
+        if (this.evidences.size > Link.maxNoEvidences) {
+            Link.maxNoEvidences = this.evidences.size;
             return true;
         }
     } else {
@@ -105,6 +102,7 @@ Link.prototype.touchStart = function (evt) {
     }
 };*/
 
+/*
 Link.prototype.filteredEvidence = function () {
     //TODO - filtering
     return this.evidences.values();
@@ -119,6 +117,7 @@ Link.prototype.filteredEvidence = function () {
     //~ }
     //~ }
 };
+*/
 
 //used by BinaryLink and UnaryLink
 Link.prototype.hide = function () {

@@ -1,14 +1,3 @@
-//    	xiNET Interaction Viewer
-//    	Copyright 2014 Rappsilber Laboratory
-//
-//    	This product includes software developed at
-//    	the Rappsilber Laboratory (http://www.rappsilberlab.org/).
-//
-//		Complex.js
-//
-//		authors: Colin Combe
-
-import * as d3 from "d3";
 import {Interactor} from "./interactor";
 
 Complex.prototype = new Interactor();
@@ -17,10 +6,10 @@ export function Complex(id, controller) {
     this.id = id;
     this.controller = controller;
     //links
-    this.naryLinks = d3.map();
-    this.binaryLinks = d3.map();
+    this.naryLinks = new Map();
+    this.binaryLinks = new Map();
     this.selfLink = null;
-    this.sequenceLinks = d3.map();
+    this.sequenceLinks = new Map();
     this.type = "complex";
     this.padding = 15;
 }

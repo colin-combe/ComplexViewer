@@ -1,4 +1,4 @@
-import * as d3 from "d3";
+// author: Josh Heimbach
 
 export function matrix (json) {
 
@@ -67,7 +67,7 @@ export function matrix (json) {
         });
 
         // Get ALL of our features.
-        const featureMap = d3.map();
+        const featureMap = new Map();
         interaction.participants.forEach(function (participant) {
             if (participant.features) {
                 participant.features.forEach(function (feature) {
@@ -78,7 +78,7 @@ export function matrix (json) {
         });
 
 
-        const values = featureMap.values();
+        const values = Array.from(featureMap.values());
 
         values.forEach(function (feature) {
             if (feature.clonedfrom) {
@@ -122,7 +122,3 @@ function findFirstObjWithAttr(collection, attribute, value) {
         }
     }
 }
-
-// module.exports = {
-//     matrix: matrix
-// };

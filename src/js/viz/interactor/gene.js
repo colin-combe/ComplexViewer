@@ -1,13 +1,3 @@
-//    	xiNET Interaction Viewer
-//    	Copyright 2013 Rappsilber Laboratory
-//
-//    	This product includes software developed at
-//    	the Rappsilber Laboratory (http://www.rappsilberlab.org/).
-//
-//		Gene.js
-//
-//		authors: Colin Combe
-
 import * as d3 from "d3";
 import {Interactor} from "./interactor";
 import {svgns, highlightColour} from "../../config";
@@ -19,10 +9,10 @@ export function Gene(id, xlvController, json, name) {
     this.controller = xlvController;
     this.json = json;
     //links
-    this.naryLinks = d3.map();
-    this.binaryLinks = d3.map();
+    this.naryLinks = new Map();
+    this.binaryLinks = new Map();
     this.selfLink = null;
-    this.sequenceLinks = d3.map();
+    this.sequenceLinks = new Map();
     this.name = name;
     // layout info
     this.cx = 40;
@@ -69,7 +59,7 @@ export function Gene(id, xlvController, json, name) {
     }
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
-    d3.select(this.labelSVG).attr("transform",
+    this.labelSVG.appendChild("transform",
         "translate( -" + (21) + " " + Interactor.labelY + ") rotate(0) scale(1, 1)");
     this.upperGroup.appendChild(this.labelSVG);
     //ticks (and amino acid letters)
@@ -86,15 +76,28 @@ export function Gene(id, xlvController, json, name) {
     this.outline.setAttribute("fill", "none");
     this.upperGroup.appendChild(this.outline);
 
-    d3.select(this.background).transition()
+    //todo - what is this, why transition?
+    // d3.select(this.background).transition()
+    //     .attr("x", -16).attr("y", -8)
+    //     .attr("width", 32).attr("height", 16)
+    //     .attr("rx", 6).attr("ry", 6);
+    // d3.select(this.outline).transition()
+    //     .attr("x", -16).attr("y", -8)
+    //     .attr("width", 32).attr("height", 16)
+    //     .attr("rx", 6).attr("ry", 6);
+    // d3.select(this.highlight).transition()
+    //     .attr("x", -16).attr("y", -8)
+    //     .attr("width", 32).attr("height", 16)
+    //     .attr("rx", 6).attr("ry", 6);
+    d3.select(this.background)
         .attr("x", -16).attr("y", -8)
         .attr("width", 32).attr("height", 16)
         .attr("rx", 6).attr("ry", 6);
-    d3.select(this.outline).transition()
+    d3.select(this.outline)
         .attr("x", -16).attr("y", -8)
         .attr("width", 32).attr("height", 16)
         .attr("rx", 6).attr("ry", 6);
-    d3.select(this.highlight).transition()
+    d3.select(this.highlight)
         .attr("x", -16).attr("y", -8)
         .attr("width", 32).attr("height", 16)
         .attr("rx", 6).attr("ry", 6);

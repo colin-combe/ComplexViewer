@@ -8,7 +8,6 @@
 //
 //		authors: Colin Combe
 
-import * as d3 from "d3";
 import {Interactor} from "./interactor";
 import {svgns, highlightColour} from "../../config";
 
@@ -19,10 +18,10 @@ export function BioactiveEntity(id, xlvController, json, name) {
     this.controller = xlvController;
     this.json = json;
     //links
-    this.naryLinks = d3.map();
-    this.binaryLinks = d3.map();
+    this.naryLinks = new Map();
+    this.binaryLinks = new Map();
     this.selfLink = null;
-    this.sequenceLinks = d3.map();
+    this.sequenceLinks = new Map();
     this.name = name;
     // layout info
     this.cx = 40;
@@ -45,7 +44,7 @@ export function BioactiveEntity(id, xlvController, json, name) {
     this.highlight.setAttribute("stroke-width", "5");
     this.highlight.setAttribute("fill", "none");
     //attributes that may change
-    d3.select(this.highlight).attr("stroke-opacity", 0);
+    this.highlight.setAttribute("stroke-opacity", "0");
     this.upperGroup.appendChild(this.highlight);
 
     //create label - we will move this svg element around when protein form changes
@@ -61,7 +60,7 @@ export function BioactiveEntity(id, xlvController, json, name) {
     this.labelText = this.name;
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
-    d3.select(this.labelSVG).attr("transform",
+    this.labelSVG.setAttribute("transform",
         "translate( -" + (15) + " " + Interactor.labelY + ")");
     this.upperGroup.appendChild(this.labelSVG);
 
@@ -71,8 +70,9 @@ export function BioactiveEntity(id, xlvController, json, name) {
 
     this.outline.setAttribute("stroke", "black");
     this.outline.setAttribute("stroke-width", "1");
-    d3.select(this.outline).attr("stroke-opacity", 1).attr("fill-opacity", 1)
-        .attr("fill", "#ffffff");
+    this.outline.setAttribute("stroke-opacity", "1");
+    this.outline.setAttribute("fill-opacity", "1");
+    this.outline.setAttribute("fill", "#ffffff");
     //append outline
     this.upperGroup.appendChild(this.outline);
 

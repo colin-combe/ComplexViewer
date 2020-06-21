@@ -1,14 +1,3 @@
-//    	xiNET Interaction Viewer
-//    	Copyright 2013 Rappsilber Laboratory
-//
-//    	This product includes software developed at
-//    	the Rappsilber Laboratory (http://www.rappsilberlab.org/).
-//
-//		Complex.js
-//
-//		authors: Colin Combe
-
-import * as d3 from "d3";
 import {Interactor} from "./interactor";
 import {svgns, highlightColour} from "../../config";
 
@@ -20,10 +9,10 @@ export function ComplexSymbol(id, xlvController, interactorRef, json) { //, name
     this.isComplexSymbol = true;
     this.json = json;
     //links
-    this.naryLinks = d3.map();
-    this.binaryLinks = d3.map();
+    this.naryLinks = new Map();
+    this.binaryLinks = new Map();
     this.selfLink = null;
-    this.sequenceLinks = d3.map();
+    this.sequenceLinks = new Map();
 
     this.name = interactorRef;
     // layout info
@@ -47,7 +36,7 @@ export function ComplexSymbol(id, xlvController, interactorRef, json) { //, name
     this.highlight.setAttribute("stroke-width", "5");
     this.highlight.setAttribute("fill", "none");
     //attributes that may change
-    d3.select(this.highlight).attr("stroke-opacity", 0);
+    this.highlight.setAttribute("stroke-opacity", "0");
     this.upperGroup.appendChild(this.highlight);
 
     //create label - we will move this svg element around when protein form changes
@@ -63,7 +52,7 @@ export function ComplexSymbol(id, xlvController, interactorRef, json) { //, name
     this.labelText = this.name;
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
-    d3.select(this.labelSVG).attr("transform",
+    this.labelSVG.setAttribute("transform",
         "translate( -" + (20) + " " + Interactor.labelY + ")"); // the hexagon has slightly bigger diameter
     this.upperGroup.appendChild(this.labelSVG);
 
@@ -73,8 +62,9 @@ export function ComplexSymbol(id, xlvController, interactorRef, json) { //, name
 
     this.outline.setAttribute("stroke", "black");
     this.outline.setAttribute("stroke-width", "1");
-    d3.select(this.outline).attr("stroke-opacity", 1).attr("fill-opacity", 1)
-        .attr("fill", "#ffffff");
+    this.outline.setAttribute("stroke-opacity", "1");
+    this.outline.setAttribute("fill-opacity", "1");
+    this.outline.setAttribute("fill", "#ffffff");
     //append outline
     this.upperGroup.appendChild(this.outline);
 
