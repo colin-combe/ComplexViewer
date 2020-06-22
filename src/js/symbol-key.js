@@ -55,24 +55,3 @@ export function SymbolKey (symbolKeyDiv) {
     this.el.appendChild(img);
 
 }
-
-
-//     <!--                                    <img alt="Molecule Set" src="./imgs/key-svg/molecule-set.svg">-->
-// <!--                                    <img alt="Bioactive Entity" src="./imgs/key-svg/small-molecule.svg">-->
-// <!--                                    <img alt="Gene" src="./imgs/key-svg/gene.svg">-->
-// <!--                                    <img alt="DNA" src="./imgs/key-svg/dna.svg">-->
-// <!--                                    <img alt="RNA" src="./imgs/key-svg/rna.svg">-->
-// <!--                                </div>-->
-// <!--                            </td>-->
-// <!--                            <td>RNA</td>-->
-// <!--                        </tr>-->
-// <!--                        <tr style="border: 1px grey;">-->
-// <!--                            <td>-->
-// <!--                                <div style="float:right">-->
-// <!--                                    <img alt="Protein" src="./imgs/key-svg/protein-circle.svg">-->
-// <!--                                </div>-->
-// <!--                                <div style="float:right">-->
-// <!--                                    <img alt="Protein" src="./imgs/key-svg/protein-bar.svg">-->
-// <!--                                </div>-->
-// <!--                            </td>-->
-// <!--                            <td>Protein - click to toggle between circle and bar</td>-->

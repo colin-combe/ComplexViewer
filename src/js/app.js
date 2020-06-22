@@ -1,14 +1,3 @@
-//todo - make c notices consistent, are they really needed in each file  - https://softwareengineering.stackexchange.com/questions/19649/copyright-notices-disclaimers-in-source-files
-//    xiNET Interaction Viewer
-//    Copyright 2013 Rappsilber Laboratory, University of Edinburgh
-//
-//    This product includes software developed at
-//    the Rappsilber Laboratory (http://www.rappsilberlab.org/).
-//
-//    author: Colin Combe
-//
-//    app.js
-
 // eslint-disable-next-line no-unused-vars
 import * as css from "../css/xinet.css";
 
@@ -29,19 +18,8 @@ import {svgns} from "./config";
 // so backbone doesn't work
 // so continuing to use prototypical inheritance in things for time being
 
-export function App (networkDiv, colorSchemeDiv) {
-        // this.debug = true;
-
-    if (typeof targetDiv === "string") {
-        this.el = document.getElementById(networkDiv);
-    } else {
+export function App (/*HTMLDivElement*/networkDiv) {
         this.el = networkDiv;
-    }
-    if (typeof colorSchemeDiv === "string") {
-        // this.el = document.getElementById(networkDiv);
-    } else {
-        // this.el = networkDiv;
-    }
 
         this.STATES = {};
         this.STATES.MOUSE_UP = 0; //start state, also set when mouse up on svgElement
@@ -347,7 +325,6 @@ App.prototype.collapseProtein = function () {
     this.contextMenuProt = null;
 };
 
-//this can be done before all proteins have their sequences
 App.prototype.init = function () {
     this.checkLinks(); // todo - should this really be here
     let maxSeqLength = 0;

@@ -1,13 +1,3 @@
-//      xiNET Interaction Viewer
-//      Copyright 2013 Rappsilber Laboratory
-//
-//      This product includes software developed at
-//      the Rappsilber Laboratory (http://www.rappsilberlab.org/).
-//
-//      Interactor.js
-//
-//      authors: Colin Combe
-
 Interactor.LABELMAXLENGTH = 90; // maximal width reserved for protein-labels
 Interactor.labelY = -5; //label Y offset, better if calc'd half height of label once rendered
 
@@ -140,10 +130,8 @@ Interactor.rotatePointAboutPoint = function (p, o, theta) {
 
 Interactor.prototype.checkLinks = function () {
     function checkAll(linkMap) {
-        const links = linkMap.values();
-        const c = links.length;
-        for (let l = 0; l < c; l++) {
-            links[l].check();
+        for (let link of linkMap.values()) {
+            link.check();
         }
     }
 

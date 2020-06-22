@@ -1,13 +1,3 @@
-//    	xiNET Interaction Viewer
-//    	Copyright 2013 Rappsilber Laboratory
-//
-//    	This product includes software developed at
-//    	the Rappsilber Laboratory (http://www.rappsilberlab.org/).
-//
-//		MoleculeSet.js
-//
-//		authors: Colin Combe
-
 import * as d3 from "d3"; //only used to set att's, remove
 import {Interactor} from "./interactor";
 import {svgns, highlightColour} from "../../config";

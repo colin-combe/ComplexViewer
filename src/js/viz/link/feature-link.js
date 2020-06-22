@@ -1,9 +1,3 @@
-//    xiNET interaction viewer
-//    Copyright 2013 Rappsilber Laboratory
-//
-//    This product includes software developed at
-//    the Rappsilber Laboratory (http://www.rappsilberlab.org/).
-
 import {Link} from "./link";
 import {svgns, highlightColour} from "../../config";
 

@@ -36,60 +36,60 @@
             <div id="innerMiddleDiv">
                 <div id="networkDiv"></div>
                 <div id="symbolKeyDiv">
-                    <!--                    <table>-->
-                    <!--                        <tr>-->
-                    <!--                            <td>-->
-                    <!--                                <div style="float:right">-->
-                    <!--                                    <img alt="Bioactive Entity" src="./imgs/key-svg/molecule-set.svg">-->
-                    <!--                                </div>-->
-                    <!--                            </td>-->
-                    <!--                            <td>Molecule Set</td>-->
-                    <!--                        </tr>-->
-                    <!--                        <tr>-->
-                    <!--                            <td>-->
-                    <!--                                <div style="float:right">-->
-                    <!--                                    <img alt="Bioactive Entity" src="./imgs/key-svg/small-molecule.svg">-->
-                    <!--                                </div>-->
-                    <!--                            </td>-->
-                    <!--                            <td>Bioactive Entity</td>-->
-                    <!--                        </tr>-->
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div style="float:right">
+                                                        <img alt="Bioactive Entity" src="./src/imgs/key-svg/molecule-set.svg">
+                                                    </div>
+                                                </td>
+                                                <td>Molecule Set</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div style="float:right">
+                                                        <img alt="Bioactive Entity" src="./src/imgs/key-svg/small-molecule.svg">
+                                                    </div>
+                                                </td>
+                                                <td>Bioactive Entity</td>
+                                            </tr>
 
-                    <!--                        <tr>-->
-                    <!--                            <td>-->
-                    <!--                                <div style="float:right">-->
-                    <!--                                    <img alt="Gene" src="./imgs/key-svg/gene.svg">-->
-                    <!--                                </div>-->
-                    <!--                            </td>-->
-                    <!--                            <td>Gene</td>-->
-                    <!--                        </tr>-->
-                    <!--                        <tr>-->
-                    <!--                            <td>-->
-                    <!--                                <div style="float:right">-->
-                    <!--                                    <img alt="DNA" src="./imgs/key-svg/dna.svg">-->
-                    <!--                                </div>-->
-                    <!--                            </td>-->
-                    <!--                            <td>DNA</td>-->
-                    <!--                        </tr>-->
-                    <!--                        <tr>-->
-                    <!--                            <td>-->
-                    <!--                                <div style="float:right">-->
-                    <!--                                    <img alt="RNA" src="./imgs/key-svg/rna.svg">-->
-                    <!--                                </div>-->
-                    <!--                            </td>-->
-                    <!--                            <td>RNA</td>-->
-                    <!--                        </tr>-->
-                    <!--                        <tr style="border: 1px grey;">-->
-                    <!--                            <td>-->
-                    <!--                                <div style="float:right">-->
-                    <!--                                    <img alt="Protein" src="./imgs/key-svg/protein-circle.svg">-->
-                    <!--                                </div>-->
-                    <!--                                <div style="float:right">-->
-                    <!--                                    <img alt="Protein" src="./imgs/key-svg/protein-bar.svg">-->
-                    <!--                                </div>-->
-                    <!--                            </td>-->
-                    <!--                            <td>Protein - click to toggle between circle and bar</td>-->
-                    <!--                        </tr>-->
-                    <!--                    </table>-->
+                                            <tr>
+                                                <td>
+                                                    <div style="float:right">
+                                                        <img alt="Gene" src="./src/imgs/key-svg/gene.svg">
+                                                    </div>
+                                                </td>
+                                                <td>Gene</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div style="float:right">
+                                                        <img alt="DNA" src="./src/imgs/key-svg/dna.svg">
+                                                    </div>
+                                                </td>
+                                                <td>DNA</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div style="float:right">
+                                                        <img alt="RNA" src="./src/imgs/key-svg/rna.svg">
+                                                    </div>
+                                                </td>
+                                                <td>RNA</td>
+                                            </tr>
+                                            <tr style="border: 1px grey;">
+                                                <td>
+                                                    <div style="float:right">
+                                                        <img alt="Protein" src="./src/imgs/key-svg/protein-circle.svg">
+                                                    </div>
+                                                    <div style="float:right">
+                                                        <img alt="Protein" src="./src/imgs/key-svg/protein-bar.svg">
+                                                    </div>
+                                                </td>
+                                                <td>Protein - click to toggle between circle and bar</td>
+                                            </tr>
+                                        </table>
                     <div class="controls" style="height:46px;">Proteins:
                         <button class="btn btn-1 btn-1a" onclick="xlv.expandAll();">Expand</button>
                         <button class="btn btn-1 btn-1a" onclick="xlv.collapseAll();">Collapse</button>
@@ -149,64 +149,11 @@
     const networkTargetDiv = document.getElementById('networkDiv');
     const symbolTargetDiv = document.getElementById('symbolKeyDiv');
     xlv = new complexviewer.App(networkTargetDiv);
-    complexviewer.makeSymbolKey(document.getElementById('symbolKeyDiv'));
+    // complexviewer.makeSymbolKey(document.getElementById('symbolKeyDiv'));
     //todo - er, use css
     xlv.svgElement.setAttribute('style', 'display: -webkit-box;display: -moz-box;display: -ms-flexbox; display: -webkit-flex;display: flex;flex-grow:1;');
 
-    /*
-    const legend = d3.select('svg').append('g');
-    xlv.legendCallbacks.push(function (colourAssignment) {
-        legend.selectAll('*').remove();
-        let table = '<table>';
-        const coloursKeyDiv = document.getElementById('colours');
-        if (colourAssignment) {
-
-            const complexColourScheme = xlv.getComplexColours();
-            const ccDomain = complexColourScheme.domain();
-            const ccRange = complexColourScheme.range();
-            table += '<tr style=\'height:10px;\'></tr>';
-            for (var i = 0; i < ccDomain.length; i++) {
-                //make transparent version of colour
-                //var temp = new RGBColor(ccRange[i % 6]);
-                //var trans = "rgba(" +temp.r+","+temp.g+","+temp.b+ ", 0.6)";
-                table += '<tr><td style=\'width:75px;margin:10px;background:'
-                    + ccRange[i % 6] + ';border:1px solid '
-                    + ccRange[i % 6] + ';\'></td><td>'
-                    + ccDomain[i] + '</td></tr>';
-                console.log(i + ' ' + ccDomain[i] + ' ' + ccRange[i]);
-            }
-            table += '</table>';
-            table += '<table>';
-
-            const domain = colourAssignment.domain();
-            //~ //console.log("Domain:"+domain);
-            const range = colourAssignment.range();
-            //~ //console.log("Range:"+range);
-            table += '<tr style=\'height:10px;\'></tr>';
-            for (var i = 0; i < domain.length; i++) {
-                //make transparent version of colour
-                var temp = new RGBColor(range[i % 20]);
-                const trans = 'rgba(' + temp.r + ',' + temp.g + ',' + temp.b + ', 0.6)';
-                table += '<tr><td style=\'width:75px;margin:10px;background:'
-                    + trans + ';border:1px solid '
-                    + range[i % 20] + ';\'></td><td>'
-                    + domain[i] + '</td></tr>';
-                //~ //console.log(i + " "+ domain[i] + " " + range[i]);
-            }
-
-            table += '</table>';
-            coloursKeyDiv.innerHTML = table;
-
-
-            //~ //d3 svg legend
-            //~ verticalLegend = d3.svg.legend().labelFormat("none").cellPadding(5).orientation("vertical").units(xlv.annotationChoice).cellWidth(25).cellHeight(18).inputScale(colourAssignment);
-            //~ legend.attr("transform", "translate(20,40)").attr("class", "legend").call(verticalLegend);
-        }
-
-    }); */
-
-    for (var i = 0; i < exampleIndex.length; i++) {
-        var example = exampleIndex[i];
+    for (let example of exampleIndex) {
         const dataSetsSelect = document.getElementById('dataSets');
         const opt = document.createElement('option');
         opt.value = './data/' + example.ac + '.json';

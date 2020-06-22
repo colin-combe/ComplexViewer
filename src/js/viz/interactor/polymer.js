@@ -7,7 +7,6 @@
 //      Polymer.js
 //
 //      authors: Lutz Fischer, Colin Combe
-
 import * as d3 from "d3"; // transitions and other stuff
 import {Interactor, trig} from "./interactor";
 import {Annotation} from "./annotation";

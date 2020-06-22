@@ -1,17 +1,3 @@
-//      xiNET Interaction Viewer
-//      Copyright 2013 Rappsilber Laboratory
-//
-//      This product includes software developed at
-//      the Rappsilber Laboratory (http://www.rappsilberlab.org/).
-//
-//      author: Colin Combe
-//
-//      Link.js
-//      The graphical representation of one or many interactions.
-//      One link represents all interactions with same participants.
-//      E.g. psi-mi may contains multiple experiments giving evidence for same interaction
-//      - using one glyph to represent them all prevents uppermost graphic from occluding those lower down
-
 export function Link () {}
 
 Link.maxNoEvidences = 0;

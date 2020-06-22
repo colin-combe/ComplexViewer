@@ -3,6 +3,8 @@ import * as colorbrewer from 'colorbrewer';
 import {Annotation} from './viz/interactor/annotation';
 import {Feature} from './viz/feature';
 
+
+//todo - cache annotations in memory
 export function setAnnotations (annotationChoice, /*App*/ controller) {
     controller.annotationChoice = annotationChoice;
 

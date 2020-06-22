@@ -1,14 +1,3 @@
-//      xiNET interaction viewer
-//      Copyright 2014 Rappsilber Laboratory
-//
-//      This product includes software developed at
-//      the Rappsilber Laboratory (http://www.rappsilberlab.org/).
-//
-//      author: Colin Combe, Josh Heimbach
-//
-//		NaryLink.js
-//		graphically represents n-ary interactions
-
 import * as d3 from "d3"; //used for d3.geom.hull
 import {Link} from "./link";
 import {svgns} from "../../config";

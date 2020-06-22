@@ -1,14 +1,3 @@
-//    	xiNET Interaction Viewer
-//    	Copyright 2013 Rappsilber Laboratory
-//
-//    	This product includes software developed at
-//    	the Rappsilber Laboratory (http://www.rappsilberlab.org/).
-//
-//		author: Colin Combe
-//
-// 		UnaryLink.js
-// 		the class representing a self-link
-
 //todo - is this even working? you never see it
 
 import {svgns, highlightColour} from "../../config";
