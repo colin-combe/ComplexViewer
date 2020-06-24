@@ -5,7 +5,7 @@ RNA.prototype = new Interactor();
 
 export function RNA(id, xlvController, json, name) {
     this.id = id; // id may not be accession (multiple Segments with same accession)
-    this.controller = xlvController;
+    this.app = xlvController;
     this.json = json;
     //links
     this.naryLinks = new Map();

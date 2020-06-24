@@ -61,7 +61,8 @@
     "d3": "~3.5.5",
     "intersectionjs": "^1.0.1",
     "point2d": "^0.0.1",
-    "webcola": "^3.4.0"
+    "webcola": "^3.4.0",
+    "rgbcolor": "^1.0.1"
   },
   "keywords": [
     "biojs",

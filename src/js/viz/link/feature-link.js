@@ -11,7 +11,7 @@ FeatureLink.prototype = new Link();
 
 FeatureLink.prototype.init = function (id, fromFeatPos, toFeatPos, xlvController) {
     this.id = id;
-    this.controller = xlvController;
+    this.app = xlvController;
     this.fromSequenceData = fromFeatPos;
     this.toSequenceData = toFeatPos;
 
@@ -133,9 +133,9 @@ FeatureLink.prototype.show = function () {
     // this.uncertainGlyph.setAttribute("stroke-width", this.util.z * 10);
     // this.highlightGlyph.setAttribute("stroke-width", this.util.z * 10);
     this.setLinkCoordinates();
-    let containingGroup = this.controller.res_resLinks;
+    let containingGroup = this.app.res_resLinks;
     if (this.interactors[0] === this.interactors[1]) {
-        containingGroup = this.controller.selfRes_resLinks;
+        containingGroup = this.app.selfRes_resLinks;
     }
     containingGroup.appendChild(this.highlightGlyph);
     containingGroup.appendChild(this.glyph);
@@ -144,9 +144,9 @@ FeatureLink.prototype.show = function () {
 
 FeatureLink.prototype.hide = function () {
     // TODO: this looks wierd
-    let containingGroup = this.controller.res_resLinks;
+    let containingGroup = this.app.res_resLinks;
     if (this.interactors[0] === this.interactors[1]) {
-        containingGroup = this.controller.selfRes_resLinks;
+        containingGroup = this.app.selfRes_resLinks;
     }
 
     const groupChildren = [];
@@ -271,15 +271,15 @@ FeatureLink.prototype.setLinkCoordinates = function () {
         tRotRad -= Math.PI;
     }
 
-    let ftMid = [fMid[0] + (30 * Math.sin(fRotRad) * this.controller.z),
-        fMid[1] - (30 * Math.cos(fRotRad) * this.controller.z)
+    let ftMid = [fMid[0] + (30 * Math.sin(fRotRad) * this.app.z),
+        fMid[1] - (30 * Math.cos(fRotRad) * this.app.z)
     ];
     if (!fromInteractor.form) { // if not (undefined or 0)
         ftMid = fMid;
     }
 
-    let ttMid = [tMid[0] + (30 * Math.sin(tRotRad) * this.controller.z),
-        tMid[1] - (30 * Math.cos(tRotRad) * this.controller.z)
+    let ttMid = [tMid[0] + (30 * Math.sin(tRotRad) * this.app.z),
+        tMid[1] - (30 * Math.cos(tRotRad) * this.app.z)
     ];
     if (!toInteractor.form) { // if not (undefined or 0)
         ttMid = tMid;

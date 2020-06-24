@@ -132,6 +132,9 @@ body, html {
     -moz-user-select: none;
     user-select: none;
 }
+h1 > a {
+    color: #fff;
+}
 
 body, input, select, textarea, button {
     Font-family: "Lato-Regular", Helvetica, Arial, sans-serif;
@@ -165,17 +168,13 @@ body, input, select, textarea, button {
 
 
 #main {
-    /*
-        height:100vh;
-    */
     width: 100vw;
-    /*display: table;*/
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-/ overflow: hidden;
+/* overflow: hidden;*/
     /*z-index:-1;*/
 }
 
@@ -194,11 +193,8 @@ body, input, select, textarea, button {
 }
 */
 
-.bar rect {
+/*.bar rect {
     fill: steelblue;
-    /*
-      shape-rendering: crispEdges;
-    */
 }
 
 .bar text {
@@ -221,7 +217,6 @@ body, input, select, textarea, button {
     font-weight: 400;
     color: #039;
     height: 30px;
-    /*#091D42;*/
 }
 
 .panelInner thead td {
@@ -230,10 +225,9 @@ body, input, select, textarea, button {
 
 .panelInner td, .helpPanel td {
     color: #777;
-}
+}*/
 
 .controls {
-    margin: 0 10px 10px;
     background: #ecedf2;
     color: #091D42;
     padding: 5px 10px;
@@ -242,9 +236,9 @@ body, input, select, textarea, button {
     user-select: none;
 }
 
-#colourSelect span {
-    margin-right: 0.5em;
-}
+/*#colourSelect span {*/
+/*    margin-right: 0.5em;*/
+/*}*/
 
 label.horizontalFlow input[type=number] {
     margin-left: 0.2em;

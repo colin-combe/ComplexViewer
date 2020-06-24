@@ -87,9 +87,9 @@ Polymer.prototype.scale = function () {
     const protLength = (this.size) * this.stickZoom;
     if (this.form === 1) {
         const labelTransform = d3.transform(this.labelSVG.getAttribute("transform"));
-        const k = this.controller.svgElement.createSVGMatrix().rotate(labelTransform.rotate)
+        const k = this.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate)
             .translate((-(((this.size / 2) * this.stickZoom) + (this.nTerminusFeature ? 25 : 10))), Interactor.labelY); //.scale(z).translate(-c.x, -c.y);
-        this.labelSVG.transform.baseVal.initialize(this.controller.svgElement.createSVGTransformFromMatrix(k));
+        this.labelSVG.transform.baseVal.initialize(this.app.svgElement.createSVGTransformFromMatrix(k));
 
         if (this.annotations) {
             const ca = this.annotations.length;
@@ -325,8 +325,8 @@ Polymer.prototype.toCircle = function (svgP) {
 
     function update(interp) {
         const labelTransform = d3.transform(self.labelSVG.getAttribute("transform"));
-        const k = self.controller.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), Interactor.labelY); //.scale(z).translate(-c.x, -c.y);
-        self.labelSVG.transform.baseVal.initialize(self.controller.svgElement.createSVGTransformFromMatrix(k));
+        const k = self.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), Interactor.labelY); //.scale(z).translate(-c.x, -c.y);
+        self.labelSVG.transform.baseVal.initialize(self.app.svgElement.createSVGTransformFromMatrix(k));
         //~
         if (xInterpol !== null) {
             self.setPosition(xInterpol(cubicInOut(interp)), yInterpol(cubicInOut(interp)));
@@ -430,8 +430,8 @@ Polymer.prototype.toStick = function () {
 
     function update(interp) {
         const labelTransform = d3.transform(self.labelSVG.getAttribute("transform"));
-        const k = self.controller.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), Interactor.labelY); //.scale(z).translate(-c.x, -c.y);
-        self.labelSVG.transform.baseVal.initialize(self.controller.svgElement.createSVGTransformFromMatrix(k));
+        const k = self.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), Interactor.labelY); //.scale(z).translate(-c.x, -c.y);
+        self.labelSVG.transform.baseVal.initialize(self.app.svgElement.createSVGTransformFromMatrix(k));
 
         const currentLength = lengthInterpol(cubicInOut(interp));
         d3.select(self.highlight).attr("width", currentLength).attr("x", -(currentLength / 2) + (0.5 * self.stickZoom));
@@ -540,8 +540,8 @@ Polymer.prototype.toStickNoTransition = function () {
     //
     // function update(interp) {
     const labelTransform = d3.transform(self.labelSVG.getAttribute("transform"));
-    const k = self.controller.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(1), Interactor.labelY); //.scale(z).translate(-c.x, -c.y);
-    self.labelSVG.transform.baseVal.initialize(self.controller.svgElement.createSVGTransformFromMatrix(k));
+    const k = self.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(1), Interactor.labelY); //.scale(z).translate(-c.x, -c.y);
+    self.labelSVG.transform.baseVal.initialize(self.app.svgElement.createSVGTransformFromMatrix(k));
 
     const currentLength = lengthInterpol(1);
     d3.select(self.highlight).attr("width", currentLength).attr("x", -(currentLength / 2) + (0.5 * self.stickZoom));
@@ -584,7 +584,7 @@ Polymer.prototype.getResidueCoordinates = function (r, yOff) {
     if (typeof r === "undefined") {
         alert("Error: residue number is undefined");
     }
-    let x = this.getResXwithStickZoom(r * 1) * this.controller.z;
+    let x = this.getResXwithStickZoom(r * 1) * this.app.z;
     let y;
     if (x !== 0) {
         const l = Math.abs(x);
@@ -593,8 +593,8 @@ Polymer.prototype.getResidueCoordinates = function (r, yOff) {
         x = l * Math.cos(rotRad + a);
         y = l * Math.sin(rotRad + a);
         if (typeof yOff !== "undefined") {
-            x += yOff * this.controller.z * Math.cos(rotRad + (Math.PI / 2));
-            y += yOff * this.controller.z * Math.sin(rotRad + (Math.PI / 2));
+            x += yOff * this.app.z * Math.cos(rotRad + (Math.PI / 2));
+            y += yOff * this.app.z * Math.sin(rotRad + (Math.PI / 2));
         }
     } else {
         y = yOff;
@@ -665,12 +665,11 @@ Polymer.prototype.setPositionalFeatures = function (posFeats) {
             anno.fuzzyStart.name = text;
             anno.certain.name = text;
             anno.fuzzyEnd.name = text;
-            const xlv = this.controller;
             const self = this;
             const toolTipFunc = function (evt) {
                 const el = (evt.target.correspondingUseElement) ? evt.target.correspondingUseElement : evt.target;
-                xlv.preventDefaultsAndStopPropagation(evt);
-                xlv.setTooltip(el.name, el.getAttribute("fill"));
+                self.app.preventDefaultsAndStopPropagation(evt);
+                self.app.setTooltip(el.name, el.getAttribute("fill"));
                 self.showHighlight(true);
             };
             anno.fuzzyStart.onmouseover = toolTipFunc;

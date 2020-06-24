@@ -1,18 +1,18 @@
 // eslint-disable-next-line no-unused-vars
 import * as css from "../css/xinet.css";
-
+import {version} from '../../package.json';
 import * as d3 from "d3";
 import * as colorbrewer from "colorbrewer";
 import * as cola from "webcola";
 import {readMijson} from "./read-mijson";
 import {setAnnotations} from "./annotations";
 
-import {SymbolKey} from "./symbol-key";
-// import * as ColorSchemeKey from "./color-scheme-key";
+// import {SymbolKey} from "./symbol-key";
+import * as ColorSchemeKey from "./color-scheme-key";
 import {NaryLink} from "./viz/link/nary-link";
 import {svgns} from "./config";
 
-//todo - refactor everything to use ES6 class syntax
+// could refactor everything to use ES6 class syntax
 // but https://benmccormick.org/2015/04/07/es6-classes-and-backbone-js
 // "ES6 classes don’t support adding properties directly to the class instance, only functions/methods"
 // so backbone doesn't work
@@ -29,7 +29,7 @@ export function App (/*HTMLDivElement*/networkDiv) {
         this.STATES.SELECTING = 4; //set by mouse down on svgElement- right button or left button shift or util, drag
 
         //avoids prob with 'save - web page complete'
-        d3.select(this.el).selectAll("*").remove();
+        this.el.textContent = ''; //https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
 
         const customMenuSel = d3.select(this.el)
             .append("div").classed("custom-menu-margin", true)
@@ -118,7 +118,7 @@ export function App (/*HTMLDivElement*/networkDiv) {
     };
 
     //legend changed callbacks
-    this.legendCallbacks = [];
+    this.colorSchemeKeyDivs = new Set();
 
     this.el.appendChild(this.svgElement);
 
@@ -169,7 +169,7 @@ export function App (/*HTMLDivElement*/networkDiv) {
 
     this.acknowledgement = document.createElementNS(svgns, "g");
     const ackText = document.createElementNS(svgns, "text");
-    ackText.innerHTML = "<a href='https://academic.oup.com/bioinformatics/article/33/22/3673/4061280' target='_blank'><tspan x='0' dy='1.2em' style='text-decoration: underline'>ComplexViewer</tspan></a><tspan x='0' dy='1.2em'>by <a href='http://rappsilberlab.org/' target='_blank'>Rappsilber Laboratory</a></tspan>";
+    ackText.innerHTML = "<a href='https://academic.oup.com/bioinformatics/article/33/22/3673/4061280' target='_blank'><tspan x='0' dy='1.2em' style='text-decoration: underline'>ComplexViewer "+version+"</tspan></a><tspan x='0' dy='1.2em'>by <a href='http://rappsilberlab.org/' target='_blank'>Rappsilber Laboratory</a></tspan>";
 
     this.acknowledgement.appendChild(ackText);
     ackText.setAttribute("font-size", "12px");
@@ -236,7 +236,7 @@ export function App (/*HTMLDivElement*/networkDiv) {
     this.clear();
 }
 
-App.prototype.createHatchedFill = function (name, colour) {
+App.prototype.createHatchedFill = function (name, color) {
     const pattern = this.defs.append("pattern")
         .attr("id", name)
         .attr("patternUnits", "userSpaceOnUse")
@@ -251,14 +251,14 @@ App.prototype.createHatchedFill = function (name, colour) {
         .attr("y", 2)
         .attr("width", 12)
         .attr("height", 4)
-        .attr("fill", colour);
+        .attr("fill", color);
 
     pattern.append("rect")
         .attr("x", 0)
         .attr("y", 8)
         .attr("width", 12)
         .attr("height", 4)
-        .attr("fill", colour);
+        .attr("fill", color);
 
 
     // checks - yuk
@@ -282,7 +282,7 @@ App.prototype.clear = function () {
     }
     this.d3cola = null;
 
-    NaryLink.naryColours = d3.scale.ordinal().range(colorbrewer.Pastel2[8]);
+    NaryLink.naryColors = d3.scale.ordinal().range(colorbrewer.Pastel2[8]);
     this.defs.selectAll(".feature_checkers").remove();
 
     d3.select(this.naryLinks).selectAll("*").remove();
@@ -860,16 +860,16 @@ App.prototype.showTooltip = function (p) {
     this.tooltip_subBg.setAttribute("y", ttY + 28);
 };
 
-App.prototype.setTooltip = function (text, colour) {
+App.prototype.setTooltip = function (text, color) {
     if (text) {
         this.tooltip.firstChild.data = text.toString().replace(/&(quot);/g, "\"");
         this.tooltip.setAttribute("display", "block");
         const length = this.tooltip.getComputedTextLength();
         this.tooltip_bg.setAttribute("width", length + 16);
         this.tooltip_subBg.setAttribute("width", length + 16);
-        if (typeof colour !== "undefined" && colour != null) {
-            this.tooltip_bg.setAttribute("fill", colour);
-            this.tooltip_bg.setAttribute("stroke", colour);
+        if (typeof color !== "undefined" && color != null) {
+            this.tooltip_bg.setAttribute("fill", color);
+            this.tooltip_bg.setAttribute("stroke", color);
             this.tooltip_bg.setAttribute("fill-opacity", "0.5");
         } else {
             this.tooltip_bg.setAttribute("fill", "white");
@@ -890,19 +890,30 @@ App.prototype.hideTooltip = function () {
     this.tooltip_subBg.setAttribute("display", "none");
 };
 
-App.prototype.legendChanged = function (colourScheme) {
-    const callbacks = this.legendCallbacks;
-    const count = callbacks.length;
-    for (let i = 0; i < count; i++) {
-        callbacks[i](colourScheme);
+App.prototype.addColorSchemeKey = function (/*HTMLDivElement*/ div) {
+    this.colorSchemeKeyDivs.add(div);
+    ColorSchemeKey.update(div, this);
+};
+
+App.prototype.removeColorSchemeKeylegend = function (/*HTMLDivElement*/ colorSchemeKeyDiv) {
+    this.colorSchemeKeyDivs.remove(colorSchemeKeyDiv);
+    colorSchemeKeyDiv.textContent = "";
+};
+
+App.prototype.colorSchemeChanged = function (featureColorScheme) {
+    for (let div of this.colorSchemeKeyDivs){
+        ColorSchemeKey.update(div, this);
     }
 };
 
-/*
-App.prototype.getComplexColours = function () {
-    return NaryLink.naryColours;
+App.prototype.getComplexColors = function () {
+    return NaryLink.naryColors;
 };
-*/
+
+
+App.prototype.getFeatureColors = function () {
+    return this.featureColors;
+};
 
 App.prototype.collapseAll = function () {
     for (let participant of this.participants.values()) {
@@ -920,6 +931,6 @@ App.prototype.expandAll = function () {
     }
 };
 
-export function makeSymbolKey(targetDiv){
-    new SymbolKey(targetDiv);
-}
+// export function makeSymbolKey(targetDiv){
+//     new SymbolKey(targetDiv);
+// }

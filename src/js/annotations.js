@@ -5,63 +5,63 @@ import {Feature} from './viz/feature';
 
 
 //todo - cache annotations in memory
-export function setAnnotations (annotationChoice, /*App*/ controller) {
-    controller.annotationChoice = annotationChoice;
+export function setAnnotations (annotationChoice, /*App*/ app) {
+    app.annotationChoice = annotationChoice;
 
     // proteins = participants.filter('blah') // todo
 
     //clear all annot's
-    for (let mol of controller.participants.values()) {
+    for (let mol of app.participants.values()) {
         if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS
             mol.clearPositionalFeatures();
         }
     }
-    //controller.legendChanged(null); // todo - this isn't happening?
+    //app.legendChanged(null); // todo - this isn't happening?
 
     let molsAnnotated = 0;
-    const molCount = controller.participants.size;
+    const molCount = app.participants.size;
     if (annotationChoice.toUpperCase() === "MI FEATURES") {
-        for (let mol of controller.participants.values()) {
+        for (let mol of app.participants.values()) {
             if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS
                 mol.setPositionalFeatures(mol.miFeatures);
             }
         }
-        chooseColours();
+        chooseColors();
     } else if (annotationChoice.toUpperCase() === "INTERACTOR") {
-        if (controller.proteinCount < 21) {
-            for (let mol of controller.participants.values()) {
+        if (app.proteinCount < 21) {
+            for (let mol of app.participants.values()) {
                 if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS
                     const annotation = new Annotation(mol.json.label, new Feature(null, 1 + "-" + mol.size));
                     mol.setPositionalFeatures([annotation]);
                 }
             }
-            chooseColours();
+            chooseColors();
         } else {
-            alert("Too many (> 20) - can't colour by interactor.");
+            alert("Too many (> 20) - can't color by interactor.");
         }
     } else if (annotationChoice.toUpperCase() === "SUPERFAM" || annotationChoice.toUpperCase() === "SUPERFAMILY") {
-        for (let mol of controller.participants.values()) {
+        for (let mol of app.participants.values()) {
             if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS
                 getSuperFamFeatures(mol.id, function (id, fts) {
-                    const m = controller.participants.get(id);
+                    const m = app.participants.get(id);
                     m.setPositionalFeatures(fts);
                     molsAnnotated++;
                     if (molsAnnotated === molCount) {
-                        chooseColours();
+                        chooseColors();
                     }
                 });
             } else {
                 molsAnnotated++;
                 if (molsAnnotated === molCount) {
-                    chooseColours();
+                    chooseColors();
                 }
             }
         }
     } else if (annotationChoice.toUpperCase() === "UNIPROT" || annotationChoice.toUpperCase() === "UNIPROTKB") {
-        for (let mol of controller.participants.values()) {
+        for (let mol of app.participants.values()) {
             if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS
                 getUniProtFeatures(mol.id, function (id, fts) {
-                    const m = controller.participants.get(id);
+                    const m = app.participants.get(id);
                     for (let f = 0; f < fts.length; f++) {
                         const feature = fts[f];
                         feature.seqDatum = new Feature(null, feature.begin + "-" + feature.end);
@@ -69,21 +69,21 @@ export function setAnnotations (annotationChoice, /*App*/ controller) {
                     m.setPositionalFeatures(fts);
                     molsAnnotated++;
                     if (molsAnnotated === molCount) {
-                        chooseColours();
+                        chooseColors();
                     }
                 });
             } else {
                 molsAnnotated++;
                 if (molsAnnotated === molCount) {
-                    chooseColours();
+                    chooseColors();
                 }
             }
         }
     }
 
-    function chooseColours() {
+    function chooseColors() {
         const categories = new Set();
-        for (let participant of controller.participants.values()) {
+        for (let participant of app.participants.values()) {
             if (participant.annotations) {
                 for (let annotation of participant.annotations) {
                     categories.add(annotation.description);
@@ -92,45 +92,46 @@ export function setAnnotations (annotationChoice, /*App*/ controller) {
         }
         let catCount = categories.size;
 
-        let colourScheme;
+        let colorScheme;
 
         if (catCount < 3) {
             catCount = 3;
         }
 
         if (catCount < 9) {
-            colourScheme = d3.scale.ordinal().range(colorbrewer.Dark2[catCount].slice().reverse());
+            colorScheme = d3.scale.ordinal().range(colorbrewer.Dark2[catCount].slice().reverse());
         // } else if (catCount < 13) {
         //     var reversed = colorbrewer.Paired[catCount];//.slice().reverse();
-        //     colourScheme = d3.scale.ordinal().range(reversed);
+        //     colorScheme = d3.scale.ordinal().range(reversed);
         } else {
-            colourScheme = d3.scale.category20();
+            colorScheme = d3.scale.category20();
         }
 
-        for (let mol of controller.participants.values()) {
+        for (let mol of app.participants.values()) {
             if (mol.annotations) {
                 for (let anno of mol.annotations) {
-                    let colour;
+                    let color;
                     if (anno.description === "No annotations") {
-                        colour = "#cccccc";
+                        color = "#cccccc";
                     } else {
-                        colour = colourScheme(anno.description);
+                        color = colorScheme(anno.description);
                     }
 
                     //ToDO - way more of these are being created than needed
-                    controller.createHatchedFill("checkers_" + anno.description, colour);
+                    app.createHatchedFill("checkers_" + anno.description, color);
                     const checkedFill = "url('#checkers_" + anno.description + "')";
 
                     anno.fuzzyStart.setAttribute("fill", checkedFill);
-                    anno.fuzzyStart.setAttribute("stroke", colour);
+                    anno.fuzzyStart.setAttribute("stroke", color);
                     anno.fuzzyEnd.setAttribute("fill", checkedFill);
-                    anno.fuzzyEnd.setAttribute("stroke", colour);
-                    anno.certain.setAttribute("fill", colour);
-                    anno.certain.setAttribute("stroke", colour);
+                    anno.fuzzyEnd.setAttribute("stroke", color);
+                    anno.certain.setAttribute("fill", color);
+                    anno.certain.setAttribute("stroke", color);
                 }
             }
         }
-        controller.legendChanged(colourScheme);
+        app.featureColors = colorScheme;
+        app.colorSchemeChanged();
     }
 }
 

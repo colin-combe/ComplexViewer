@@ -1,54 +1,43 @@
+import * as RGBColor from "rgbcolor";
 
+export function update(/*HTMLDivElement*/ div, /*App*/app) {
+    div.textContent = '';
 
+    const complexColorScheme = app.getComplexColors();
+    const complexColorTable = document.createElement('table');
+    complexColorTable.classList.add('color_key', 'complex_colors');
+    const th = complexColorTable.createTHead();
+    th.textContent = 'Complexes';
+    const ccDomain = complexColorScheme.domain();
+    const ccRange = complexColorScheme.range();
+    for (let i = 0; i < ccDomain.length; i++) {
+        const tr = complexColorTable.insertRow();
+        const tc1 = tr.insertCell();
+        tc1.style.backgroundColor = ccRange[i % 6];
+        const tc2 = tr.insertCell();
+        tc2.textContent = ccDomain[i];
+        console.log(i + ' ' + ccDomain[i] + ' ' + ccRange[i]);
+    }
+    div.appendChild(complexColorTable);
 
-/*
-const legend = d3.select('svg').append('g');
-xlv.legendCallbacks.push(function (colourAssignment) {
-    legend.selectAll('*').remove();
-    let table = '<table>';
-    const coloursKeyDiv = document.getElementById('colours');
-    if (colourAssignment) {
-
-        const complexColourScheme = xlv.getComplexColours();
-        const ccDomain = complexColourScheme.domain();
-        const ccRange = complexColourScheme.range();
-        table += '<tr style=\'height:10px;\'></tr>';
-        for (var i = 0; i < ccDomain.length; i++) {
-            //make transparent version of colour
-            //var temp = new RGBColor(ccRange[i % 6]);
-            //var trans = "rgba(" +temp.r+","+temp.g+","+temp.b+ ", 0.6)";
-            table += '<tr><td style=\'width:75px;margin:10px;background:'
-                + ccRange[i % 6] + ';border:1px solid '
-                + ccRange[i % 6] + ';\'></td><td>'
-                + ccDomain[i] + '</td></tr>';
-            console.log(i + ' ' + ccDomain[i] + ' ' + ccRange[i]);
-        }
-        table += '</table>';
-        table += '<table>';
-
-        const domain = colourAssignment.domain();
-        //~ //console.log("Domain:"+domain);
-        const range = colourAssignment.range();
-        //~ //console.log("Range:"+range);
-        table += '<tr style=\'height:10px;\'></tr>';
-        for (var i = 0; i < domain.length; i++) {
-            //make transparent version of colour
+    const featureColorScheme = app.getFeatureColors();
+    if (featureColorScheme) {
+        const featureColorTable = document.createElement('table');
+        featureColorTable.classList.add('color_key', 'feature_colors');
+        const th2 = featureColorTable.createTHead();
+        th2.textContent = 'Features';
+        const domain = featureColorScheme.domain();
+        const range = featureColorScheme.range();
+        for (let i = 0; i < domain.length; i++) {
+            const tr = featureColorTable.insertRow();
+            const tc1 = tr.insertCell();
+            // make transparent version of color
             var temp = new RGBColor(range[i % 20]);
             const trans = 'rgba(' + temp.r + ',' + temp.g + ',' + temp.b + ', 0.6)';
-            table += '<tr><td style=\'width:75px;margin:10px;background:'
-                + trans + ';border:1px solid '
-                + range[i % 20] + ';\'></td><td>'
-                + domain[i] + '</td></tr>';
-            //~ //console.log(i + " "+ domain[i] + " " + range[i]);
+            tc1.style.backgroundColor = trans;
+            const tc2 = tr.insertCell();
+            tc2.textContent = domain[i];
         }
-
-        table += '</table>';
-        coloursKeyDiv.innerHTML = table;
-
-
-        //~ //d3 svg legend
-        //~ verticalLegend = d3.svg.legend().labelFormat("none").cellPadding(5).orientation("vertical").units(xlv.annotationChoice).cellWidth(25).cellHeight(18).inputScale(colourAssignment);
-        //~ legend.attr("transform", "translate(20,40)").attr("class", "legend").call(verticalLegend);
+        div.appendChild(featureColorTable);
     }
-
-}); */
+}

@@ -20,6 +20,12 @@
     text-decoration: underline;
 }
 
+.examples-dropdown {
+    float: right;
+    margin-top: 5px;
+    margin-right: 10px;
+}
+
 h1 {
     font-size: 1.6em;
     display: inline;
@@ -155,4 +161,5 @@ div#legendInner {
 
 img {
     vertical-align: middle;
+    /*margin: 3px;*/
 }

@@ -3,7 +3,7 @@ import {Link} from "./link";
 import {svgns} from "../../config";
 import {Interactor} from "../interactor/interactor";
 
-NaryLink.naryColours; // init'ed in clear function of util
+NaryLink.naryColors; // init'ed in clear function of util
 NaryLink.orbitNodes = 16;
 NaryLink.orbitRadius = 20;
 
@@ -16,7 +16,7 @@ export function NaryLink(id, xlvController) {
     this.sequenceLinks = new Map();
     this.binaryLinks = new Map();
     this.unaryLinks = new Map();
-    this.controller = xlvController;
+    this.app = xlvController;
     this.tooltip = this.id;
     //used to avoid some unnecessary manipulation of DOM
     this.initSVG();
@@ -39,8 +39,8 @@ NaryLink.prototype.getTotalParticipantCount = function () {
 
 NaryLink.prototype.initSVG = function () {
     this.path = document.createElementNS(svgns, "path");
-    this.colour = NaryLink.naryColours(this.id);
-    this.path.setAttribute("fill", this.colour);
+    this.color = NaryLink.naryColors(this.id);
+    this.path.setAttribute("fill", this.color);
     //set the events for it
     const self = this;
     this.path.onmousedown = function (evt) {
@@ -67,9 +67,9 @@ NaryLink.prototype.check = function () {
 };
 
 NaryLink.prototype.show = function () {
-    this.path.setAttribute("stroke-width", this.controller.z);
+    this.path.setAttribute("stroke-width", this.app.z);
     this.setLinkCoordinates();
-    this.controller.naryLinks.appendChild(this.path);
+    this.app.naryLinks.appendChild(this.path);
 };
 
 NaryLink.prototype.hide = function () {

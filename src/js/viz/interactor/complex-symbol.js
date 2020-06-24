@@ -5,7 +5,7 @@ ComplexSymbol.prototype = new Interactor();
 
 export function ComplexSymbol(id, xlvController, interactorRef, json) { //, name) {
     this.id = id; // id may not be accession (multiple Segments with same accession)
-    this.controller = xlvController;
+    this.app = xlvController;
     this.isComplexSymbol = true;
     this.json = json;
     //links

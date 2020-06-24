@@ -13,7 +13,7 @@ export function BinaryLink(id, xlvController, fromI, toI) {
     // this.evidences = d3.map();
     this.interactors = [fromI, toI];
     this.sequenceLinks = new Map();
-    this.controller = xlvController;
+    this.app = xlvController;
 }
 
 //~ BinaryLink.prototype.getToolTip = function(){
@@ -134,15 +134,15 @@ BinaryLink.prototype.show = function () {
     if (typeof this.line === "undefined") {
         this.initSVG();
     }
-    this.line.setAttribute("stroke-width", this.controller.z * 1);
-    this.highlightLine.setAttribute("stroke-width", this.controller.z * 10);
+    this.line.setAttribute("stroke-width", this.app.z * 1);
+    this.highlightLine.setAttribute("stroke-width", this.app.z * 10);
     this.setLinkCoordinates(this.interactors[0]);
     this.setLinkCoordinates(this.interactors[1]);
     if (this.thickLineShown) {
-        this.controller.p_pLinksWide.appendChild(this.thickLine);
+        this.app.p_pLinksWide.appendChild(this.thickLine);
     }
-    this.controller.highlights.appendChild(this.highlightLine);
-    this.controller.p_pLinks.appendChild(this.line);
+    this.app.highlights.appendChild(this.highlightLine);
+    this.app.p_pLinks.appendChild(this.line);
     if (this.thickLineShown) {
         this.thickLine.setAttribute("stroke-width", this.w);
     }

@@ -20,12 +20,14 @@
 
     <div class="page-header">
         <i class="fa fa-github" onclick="window.location = 'https://github.com/MICommunity/ComplexViewer';"
-           style="margin-right:5px;" title="Go to GitHub project"></i>
-        <h1><a href="https://doi.org/10.1093/bioinformatics/btx497" target="_blank">ComplexViewer</a></h1>
-        <label for="dataSets">Examples:</label>
+           style="margin-right:5px;" title="GitHub project"></i>
+        <h1><a href="https://doi.org/10.1093/bioinformatics/btx497" target="_blank"  title="Publication">ComplexViewer</a></h1>
+       <div class="examples-dropdown">
+        <label for="dataSets">Choose example:</label>
         <select class="noShrink" id="dataSets"
                 onChange="/*document.getElementById('chkexpansion').checked = true;*/loadData();"></select>
         <br>
+       </div>
     </div>
 
     <div id="centre">
@@ -127,7 +129,7 @@
     </div> <!-- centreDiv -->
 
     <div class="logoBar">
-        <a class="logo" href="http://rappsilberlab.org/" target="_blank"><img src="images/logos/rappsilber-logo-sml.png"
+        <a class="logo" href="http://rappsilberlab.org/" target="_blank"><img src="images/logos/rappsilber-logo.png"
                                                                               alt="Rappsilber Laboratory"></a>
         <a class="logo" href="http://www.ed.ac.uk/" target="_blank"><img src="./images/logos/eduni.jpeg"
                                                                          alt="Edinburgh University"></a>
@@ -147,11 +149,11 @@
     //<![CDATA[
 
     const networkTargetDiv = document.getElementById('networkDiv');
-    const symbolTargetDiv = document.getElementById('symbolKeyDiv');
-    xlv = new complexviewer.App(networkTargetDiv);
-    // complexviewer.makeSymbolKey(document.getElementById('symbolKeyDiv'));
+    // const colorsTargetDiv = document.getElementById('colors');
+    cv = new complexviewer.App(networkTargetDiv);
+    cv.addColorSchemeKey(document.getElementById('colors'));
     //todo - er, use css
-    xlv.svgElement.setAttribute('style', 'display: -webkit-box;display: -moz-box;display: -ms-flexbox; display: -webkit-flex;display: flex;flex-grow:1;');
+    cv.svgElement.setAttribute('style', 'display: -webkit-box;display: -moz-box;display: -ms-flexbox; display: -webkit-flex;display: flex;flex-grow:1;');
 
     for (let example of exampleIndex) {
         const dataSetsSelect = document.getElementById('dataSets');
@@ -165,7 +167,7 @@
     changeAnnotations();
 
     function loadData() {
-        xlv.clear();
+        cv.clear();
         const dataSetsSelect = document.getElementById('dataSets');
 
         const example = exampleIndex[dataSetsSelect.selectedIndex];
@@ -191,18 +193,18 @@
 
         const path = dataSetsSelect.options[dataSetsSelect.selectedIndex].value;
         d3.json(path, function (data) {
-            xlv.readMIJSON(data);//, matrixExpansion);
+            cv.readMIJSON(data);//, matrixExpansion);
         });
     }
 
     function changeAnnotations() {
         const annotationSelect = document.getElementById('annotationsSelect');
-        xlv.setAnnotations(annotationSelect.options[annotationSelect.selectedIndex].value);
+        cv.setAnnotations(annotationSelect.options[annotationSelect.selectedIndex].value);
     }
 
     function exportSVG() {
         // todo
-        const xml = xlv.getSVG();
+        const xml = cv.getSVG();
         let xmlAsUrl = 'data:image/svg;filename=xiNET-output.svg,';
         xmlAsUrl += encodeURIComponent(xml);
         alert('Downloading as SVG. You may need to change the file extension to \'.svg\' before opening.');

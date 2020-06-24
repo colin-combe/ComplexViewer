@@ -2,9 +2,9 @@ import {Interactor} from "./interactor";
 
 Complex.prototype = new Interactor();
 
-export function Complex(id, controller) {
+export function Complex(id, app) {
     this.id = id;
-    this.controller = controller;
+    this.app = app;
     //links
     this.naryLinks = new Map();
     this.binaryLinks = new Map();

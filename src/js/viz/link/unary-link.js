@@ -11,7 +11,7 @@ export function UnaryLink(id, xlvController, interactor) {
     // this.evidences = d3.map();
     this.interactors = [interactor];
     this.sequenceLinks = new Map();
-    this.controller = xlvController;
+    this.app = xlvController;
     this.initSVG();
 }
 
@@ -149,11 +149,11 @@ UnaryLink.prototype.check = function () {
 
 UnaryLink.prototype.show = function () {
     this.line.setAttribute("transform", "translate(" + this.interactors[0].cx +
-        " " + this.interactors[0].cy + ")" + " scale(" + (this.controller.z) + ")");
+        " " + this.interactors[0].cy + ")" + " scale(" + (this.app.z) + ")");
     this.highlightLine.setAttribute("transform", "translate(" + this.interactors[0].cx +
-        " " + this.interactors[0].cy + ")" + " scale(" + (this.controller.z) + ")");
-    this.controller.highlights.appendChild(this.highlightLine);
-    this.controller.p_pLinks.appendChild(this.line);
+        " " + this.interactors[0].cy + ")" + " scale(" + (this.app.z) + ")");
+    this.app.highlights.appendChild(this.highlightLine);
+    this.app.p_pLinks.appendChild(this.line);
 };
 
 
@@ -161,11 +161,11 @@ UnaryLink.prototype.setLinkCoordinates = function () {
     const interactor = this.interactors[0];
     if (typeof this.thickLine !== "undefined") {
         this.thickLine.setAttribute("transform", "translate(" + interactor.cx +
-            " " + interactor.cy + ")" + " scale(" + (this.controller.z) + ")");
+            " " + interactor.cy + ")" + " scale(" + (this.app.z) + ")");
     }
     this.line.setAttribute("transform", "translate(" + interactor.cx +
-        " " + interactor.cy + ")" + " scale(" + (this.controller.z) + ")");
+        " " + interactor.cy + ")" + " scale(" + (this.app.z) + ")");
     this.highlightLine.setAttribute("transform", "translate(" + interactor.cx +
-        " " + interactor.cy + ")" + " scale(" + (this.controller.z) + ")");
+        " " + interactor.cy + ")" + " scale(" + (this.app.z) + ")");
 };
 

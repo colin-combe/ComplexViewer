@@ -7,7 +7,7 @@ Protein.prototype = new Polymer();
 
 export function Protein(id, xinetController, json, name) {
     this.id = id; // id may not be accession (multiple Segments with same accession)
-    this.controller = xinetController;
+    this.app = xinetController;
     this.json = json;
     this.name = name;
     this.tooltip = this.name + " [" + this.id + "]"; // + this.accession;

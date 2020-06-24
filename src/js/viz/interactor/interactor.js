@@ -20,13 +20,13 @@ Interactor.prototype.addStoichiometryLabel = function (stoichiometry) {
 };
 
 Interactor.prototype.mouseDown = function (evt) {
-    this.controller.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
-    if (typeof this.controller.d3cola !== "undefined" && this.controller.d3cola != null) {
-        this.controller.d3cola.stop();
+    this.app.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
+    if (typeof this.app.d3cola !== "undefined" && this.app.d3cola != null) {
+        this.app.d3cola.stop();
     }
-    this.controller.dragElement = this;
-    const p = this.controller.getEventPoint(evt);
-    this.controller.dragStart = this.controller.mouseToSVG(p.x, p.y);
+    this.app.dragElement = this;
+    const p = this.app.getEventPoint(evt);
+    this.app.dragStart = this.app.mouseToSVG(p.x, p.y);
     return false;
 };
 
@@ -44,16 +44,16 @@ Interactor.prototype.mouseDown = function (evt) {
 // };
 
 Interactor.prototype.mouseOver = function (evt) {
-    this.controller.preventDefaultsAndStopPropagation(evt);
+    this.app.preventDefaultsAndStopPropagation(evt);
     this.showHighlight(true);
     //~ this.util.setTooltip(this.id);
     return false;
 };
 
 Interactor.prototype.mouseOut = function (evt) {
-    this.controller.preventDefaultsAndStopPropagation(evt);
+    this.app.preventDefaultsAndStopPropagation(evt);
     this.showHighlight(false);
-    this.controller.hideTooltip();
+    this.app.hideTooltip();
     return false;
 };
 
