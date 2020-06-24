@@ -1,6 +1,6 @@
 require("webpack");
-const merge = require('webpack-merge');
-const common = require('./webpack.common.js');
+const merge = require("webpack-merge");
+const common = require("./webpack.common.js");
 
 module.exports = merge(common, {
     mode:"production",
@@ -8,7 +8,7 @@ module.exports = merge(common, {
         rules: [
             {
                 test: /\.(js)$/,
-                use: 'babel-loader',
+                use: "babel-loader",
                 exclude: /node_modules/
             }
         ]

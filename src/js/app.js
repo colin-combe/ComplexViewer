@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import * as css from "../css/xinet.css";
-import {version} from '../../package.json';
+import {version} from "../../package.json";
 import * as d3 from "d3";
 import * as colorbrewer from "colorbrewer";
 import * as cola from "webcola";
@@ -29,7 +29,7 @@ export function App (/*HTMLDivElement*/networkDiv) {
         this.STATES.SELECTING = 4; //set by mouse down on svgElement- right button or left button shift or util, drag
 
         //avoids prob with 'save - web page complete'
-        this.el.textContent = ''; //https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
+        this.el.textContent = ""; //https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
 
         const customMenuSel = d3.select(this.el)
             .append("div").classed("custom-menu-margin", true)
@@ -169,7 +169,8 @@ export function App (/*HTMLDivElement*/networkDiv) {
 
     this.acknowledgement = document.createElementNS(svgns, "g");
     const ackText = document.createElementNS(svgns, "text");
-    ackText.innerHTML = "<a href='https://academic.oup.com/bioinformatics/article/33/22/3673/4061280' target='_blank'><tspan x='0' dy='1.2em' style='text-decoration: underline'>ComplexViewer "+version+"</tspan></a><tspan x='0' dy='1.2em'>by <a href='http://rappsilberlab.org/' target='_blank'>Rappsilber Laboratory</a></tspan>";
+    ackText.innerHTML = "<a href='https://academic.oup.com/bioinformatics/article/33/22/3673/4061280' target='_blank'><tspan x='0' dy='1.2em' style='text-decoration: underline'>ComplexViewer "
+        +version+"</tspan></a><tspan x='0' dy='1.2em'>by <a href='http://rappsilberlab.org/' target='_blank'>Rappsilber Laboratory</a></tspan>";
 
     this.acknowledgement.appendChild(ackText);
     ackText.setAttribute("font-size", "12px");
@@ -900,7 +901,7 @@ App.prototype.removeColorSchemeKeylegend = function (/*HTMLDivElement*/ colorSch
     colorSchemeKeyDiv.textContent = "";
 };
 
-App.prototype.colorSchemeChanged = function (featureColorScheme) {
+App.prototype.colorSchemeChanged = function () {
     for (let div of this.colorSchemeKeyDivs){
         ColorSchemeKey.update(div, this);
     }

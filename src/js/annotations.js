@@ -1,7 +1,7 @@
-import * as d3 from 'd3';
-import * as colorbrewer from 'colorbrewer';
-import {Annotation} from './viz/interactor/annotation';
-import {Feature} from './viz/feature';
+import * as d3 from "d3";
+import * as colorbrewer from "colorbrewer";
+import {Annotation} from "./viz/interactor/annotation";
+import {Feature} from "./viz/feature";
 
 
 //todo - cache annotations in memory
