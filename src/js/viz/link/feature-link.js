@@ -3,15 +3,15 @@ import {svgns, highlightColour} from "../../config";
 
 //todo: rename to SequenceFeatureLink
 
-export function FeatureLink(id, fromFeatPos, toFeatPos, xlvController) {
-    this.init(id, fromFeatPos, toFeatPos, xlvController);
+export function FeatureLink(id, fromFeatPos, toFeatPos, app) {
+    this.init(id, fromFeatPos, toFeatPos, app);
 }
 
 FeatureLink.prototype = new Link();
 
-FeatureLink.prototype.init = function (id, fromFeatPos, toFeatPos, xlvController) {
+FeatureLink.prototype.init = function (id, fromFeatPos, toFeatPos, app) {
     this.id = id;
-    this.app = xlvController;
+    this.app = app;
     this.fromSequenceData = fromFeatPos;
     this.toSequenceData = toFeatPos;
 

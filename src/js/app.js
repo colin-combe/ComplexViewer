@@ -3,7 +3,7 @@ import * as css from "../css/xinet.css";
 import {version} from "../../package.json";
 import * as d3 from "d3";
 import * as colorbrewer from "colorbrewer";
-import * as cola from "webcola";
+import * as cola from "./cola";
 import {readMijson} from "./read-mijson";
 import {setAnnotations} from "./annotations";
 
@@ -19,6 +19,7 @@ import {svgns} from "./config";
 // so continuing to use prototypical inheritance in things for time being
 
 export function App (/*HTMLDivElement*/networkDiv) {
+        // this.debug = true;
         this.el = networkDiv;
 
         this.STATES = {};
@@ -174,7 +175,7 @@ export function App (/*HTMLDivElement*/networkDiv) {
 
     this.acknowledgement.appendChild(ackText);
     ackText.setAttribute("font-size", "12px");
-    this.container.appendChild(this.acknowledgement);
+    // this.container.appendChild(this.acknowledgement);
 
     this.naryLinks = document.createElementNS(svgns, "g");
     this.naryLinks.setAttribute("id", "naryLinks");
@@ -382,6 +383,57 @@ App.prototype.init = function () {
 
     this.autoLayout();
 };
+
+App.prototype.zoomToExtent = function () {
+    const width = this.svgElement.parentNode.clientWidth;
+    const height = this.svgElement.parentNode.clientHeight;
+    const bbox = this.container.getBBox();
+    let xr = width / bbox.width;
+    let yr = height / bbox.height;
+    let scaleFactor;
+    if (yr < xr) {
+        scaleFactor = yr;
+    } else {
+        scaleFactor = xr;
+    }
+
+
+
+    if (scaleFactor < 1) { ///didn't fit in div
+        xr = (width - 40) / (bbox.width);
+        yr = (height - 40) / (bbox.height);
+        let scaleFactor;
+        if (yr < xr) {
+            scaleFactor = yr;
+        } else {
+            scaleFactor = xr;
+        }        // }
+        //bbox.x + x = 0;
+        let x = - bbox.x + (20 / scaleFactor);
+        //box.y + y = 0
+        let y = - bbox.y + (20 / scaleFactor);
+        console.log("no fit", scaleFactor);
+        this.container.setAttribute("transform", "scale(" + scaleFactor + ") translate(" + x + " " + y + ") ");
+        // this.container.setAttribute("transform", "scale(" + scaleFactor + ") translate(" + ((width / scaleFactor) - bbox.width - bbox.x) + " " + -bbox.y + ")");
+        // this.scale();
+    } else {
+        console.log("fit", scaleFactor);
+        // this.container.setAttribute("transform", "scale(" + 1 + ") translate(" + -(width/2) + " " + -bbox.y + ")");
+        const deltaWidth = width - bbox.width;
+        const deltaHeight = height - bbox.height;
+        //bbox.x + x = deltaWidth /2;
+        let x = (deltaWidth / 2) - bbox.x;
+        //box.y + y = deltaHeight / 2
+        let y = (deltaHeight / 2) - bbox.y;
+
+
+        this.container.setAttribute("transform", "scale(" + 1 + ") translate(" + x + " " + y + ")");
+    }
+
+
+
+},
+
 
 App.prototype.setAnnotations = function (annotationChoice) {
     setAnnotations(annotationChoice, this);
@@ -635,12 +687,9 @@ App.prototype.autoLayout = function () {
         this.d3cola.stop();
     }
 
-    const width = this.svgElement.parentNode.clientWidth; //this.svgElement.getBoundingClientRect().width;
-    const height = this.svgElement.parentNode.clientHeight;
-
-    if (this.acknowledgement) {
-        this.acknowledgement.setAttribute("transform", "translate(5, " + (height - 40) + ")");
-    }
+    // if (this.acknowledgement) {
+    //     this.acknowledgement.setAttribute("transform", "translate(5, " + (height - 40) + ")");
+    // }
     //// TODO: prune leaves from network then layout, then add back leaves and layout again
 
     const self = this;
@@ -709,7 +758,14 @@ App.prototype.autoLayout = function () {
     delete this.d3cola._descent;
     delete this.d3cola._rootGroup;
 
-    this.d3cola.nodes(layoutObj.nodes).groups(groups).links(layoutObj.links).avoidOverlaps(true);
+    let linkLength = (nodes.length < 30) ? 30 : 20;
+    if (nodes.length === 2) {
+        linkLength = 100;
+    }
+    const width = this.svgElement.parentNode.clientWidth;
+    const height = this.svgElement.parentNode.clientHeight;
+
+    this.d3cola.size([height, width]).nodes(layoutObj.nodes).groups(groups).links(layoutObj.links).avoidOverlaps(true);
     let groupDebugSel, participantDebugSel;
     if (self.debug) {
         groupDebugSel = d3.select(this.svgElement).selectAll(".group")
@@ -740,28 +796,30 @@ App.prototype.autoLayout = function () {
         participantDebugSel.exit().remove();
     }
 
-    this.d3cola.symmetricDiffLinkLengths(30).on("tick", function () {
+    this.d3cola.symmetricDiffLinkLengths(linkLength).on("tick", function () {
         const nodes = self.d3cola.nodes();
         // console.log("nodes", nodes);
         for (let n = 0; n < nodeCount; n++) {
             const node = nodes[n];
 
-            const outlineWidth = node.outline.getBBox().width;
-            const upperGroupWidth = node.upperGroup.getBBox().width;
+            // const outlineWidth = node.outline.getBBox().width;
+            // const upperGroupWidth = node.upperGroup.getBBox().width;
 
-            const nx = node.bounds.x + upperGroupWidth - (outlineWidth / 2) + (width / 2);
-            const ny = node.y + (height / 2);
-            node.setPosition(nx, ny);
+            // const nx = node.bounds.x + upperGroupWidth - (outlineWidth / 2) + (width / 2);
+            // const ny = node.y + (height / 2);
+            node.setPosition(node.x, node.y);
         }
         self.setAllLinkCoordinates();
+
+        self.zoomToExtent();
 
         if (self.debug) {
             groupDebugSel.attr({
                 x: function (d) {
-                    return d.bounds.x + (width / 2);
+                    return d.bounds.x;// + (width / 2);
                 },
                 y: function (d) {
-                    return d.bounds.y + (height / 2);
+                    return d.bounds.y;// + (height / 2);
                 },
                 width: function (d) {
                     return d.bounds.width();
@@ -773,10 +831,10 @@ App.prototype.autoLayout = function () {
 
             participantDebugSel.attr({
                 x: function (d) {
-                    return d.bounds.x + (width / 2);
+                    return d.bounds.x;// + (width / 2);
                 },
                 y: function (d) {
-                    return d.bounds.y + (height / 2);
+                    return d.bounds.y;// + (height / 2);
                 },
                 width: function (d) {
                     return d.bounds.width();

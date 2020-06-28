@@ -9,14 +9,14 @@ NaryLink.orbitRadius = 20;
 
 NaryLink.prototype = new Link();
 
-export function NaryLink(id, xlvController) {
+export function NaryLink(id, app) {
     this.id = id;
     // this.evidences = d3.map();
     this.interactors = []; // todo: rename to participants
     this.sequenceLinks = new Map();
     this.binaryLinks = new Map();
     this.unaryLinks = new Map();
-    this.app = xlvController;
+    this.app = app;
     this.tooltip = this.id;
     //used to avoid some unnecessary manipulation of DOM
     this.initSVG();

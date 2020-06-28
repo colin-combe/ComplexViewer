@@ -6,12 +6,12 @@ import {Link} from "./link";
 
 UnaryLink.prototype = new Link();
 
-export function UnaryLink(id, xlvController, interactor) {
+export function UnaryLink(id, app, interactor) {
     this.id = id;
     // this.evidences = d3.map();
     this.interactors = [interactor];
     this.sequenceLinks = new Map();
-    this.app = xlvController;
+    this.app = app;
     this.initSVG();
 }
 

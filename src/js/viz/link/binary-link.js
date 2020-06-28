@@ -8,12 +8,12 @@ import * as Point2D from "point2d";
 
 BinaryLink.prototype = new Link();
 
-export function BinaryLink(id, xlvController, fromI, toI) {
+export function BinaryLink(id, app, fromI, toI) {
     this.id = id;
     // this.evidences = d3.map();
     this.interactors = [fromI, toI];
     this.sequenceLinks = new Map();
-    this.app = xlvController;
+    this.app = app;
 }
 
 //~ BinaryLink.prototype.getToolTip = function(){

@@ -1,18 +1,9 @@
-//      xiNET Interaction Viewer
-//      Copyright 2013 Rappsilber Laboratory
-//
-//      This product includes software developed at
-//      the Rappsilber Laboratory (http://www.rappsilberlab.org/).
-//
-//      Polymer.js
-//
-//      authors: Lutz Fischer, Colin Combe
 import * as d3 from "d3"; // transitions and other stuff
 import {Interactor, trig} from "./interactor";
 import {Annotation} from "./annotation";
 import {Feature} from "../feature";
 //var Rotator = require('../../util/Rotator');
-import {svgns} from "../../config";
+import {svgns, LABEL_Y} from "../../config";
 
 Polymer.STICKHEIGHT = 20; //height of stick in pixels
 Polymer.MAXSIZE = 0; // residue count of longest sequence
@@ -88,7 +79,7 @@ Polymer.prototype.scale = function () {
     if (this.form === 1) {
         const labelTransform = d3.transform(this.labelSVG.getAttribute("transform"));
         const k = this.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate)
-            .translate((-(((this.size / 2) * this.stickZoom) + (this.nTerminusFeature ? 25 : 10))), Interactor.labelY); //.scale(z).translate(-c.x, -c.y);
+            .translate((-(((this.size / 2) * this.stickZoom) + (this.nTerminusFeature ? 25 : 10))), LABEL_Y); //.scale(z).translate(-c.x, -c.y);
         this.labelSVG.transform.baseVal.initialize(this.app.svgElement.createSVGTransformFromMatrix(k));
 
         if (this.annotations) {
@@ -325,7 +316,7 @@ Polymer.prototype.toCircle = function (svgP) {
 
     function update(interp) {
         const labelTransform = d3.transform(self.labelSVG.getAttribute("transform"));
-        const k = self.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), Interactor.labelY); //.scale(z).translate(-c.x, -c.y);
+        const k = self.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), LABEL_Y); //.scale(z).translate(-c.x, -c.y);
         self.labelSVG.transform.baseVal.initialize(self.app.svgElement.createSVGTransformFromMatrix(k));
         //~
         if (xInterpol !== null) {
@@ -430,7 +421,7 @@ Polymer.prototype.toStick = function () {
 
     function update(interp) {
         const labelTransform = d3.transform(self.labelSVG.getAttribute("transform"));
-        const k = self.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), Interactor.labelY); //.scale(z).translate(-c.x, -c.y);
+        const k = self.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), LABEL_Y); //.scale(z).translate(-c.x, -c.y);
         self.labelSVG.transform.baseVal.initialize(self.app.svgElement.createSVGTransformFromMatrix(k));
 
         const currentLength = lengthInterpol(cubicInOut(interp));
@@ -540,7 +531,7 @@ Polymer.prototype.toStickNoTransition = function () {
     //
     // function update(interp) {
     const labelTransform = d3.transform(self.labelSVG.getAttribute("transform"));
-    const k = self.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(1), Interactor.labelY); //.scale(z).translate(-c.x, -c.y);
+    const k = self.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(1), LABEL_Y); //.scale(z).translate(-c.x, -c.y);
     self.labelSVG.transform.baseVal.initialize(self.app.svgElement.createSVGTransformFromMatrix(k));
 
     const currentLength = lengthInterpol(1);

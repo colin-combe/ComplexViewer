@@ -1,11 +1,11 @@
 import {Interactor} from "./interactor";
-import {svgns, highlightColour} from "../../config";
+import {svgns, highlightColour, LABEL_Y} from "../../config";
 
 ComplexSymbol.prototype = new Interactor();
 
-export function ComplexSymbol(id, xlvController, interactorRef, json) { //, name) {
+export function ComplexSymbol(id, app, interactorRef, json) { //, name) {
     this.id = id; // id may not be accession (multiple Segments with same accession)
-    this.app = xlvController;
+    this.app = app;
     this.isComplexSymbol = true;
     this.json = json;
     //links
@@ -53,7 +53,7 @@ export function ComplexSymbol(id, xlvController, interactorRef, json) { //, name
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
     this.labelSVG.setAttribute("transform",
-        "translate( -" + (20) + " " + Interactor.labelY + ")"); // the hexagon has slightly bigger diameter
+        "translate( -" + (20) + " " + LABEL_Y + ")"); // the hexagon has slightly bigger diameter
     this.upperGroup.appendChild(this.labelSVG);
 
     //make blob

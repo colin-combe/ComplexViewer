@@ -1,7 +1,7 @@
 import * as d3 from "d3"; //only used to set att's'
-import {Interactor} from "./interactor";
+// import {Interactor} from "./interactor";
 import {Polymer} from "./polymer";
-import {svgns, highlightColour} from "../../config";
+import {svgns, highlightColour, LABEL_Y} from "../../config";
 
 Protein.prototype = new Polymer();
 
@@ -65,7 +65,7 @@ export function Protein(id, xinetController, json, name) {
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
     this.labelSVG.setAttribute("transform",
-        "translate( -" + (5) + " " + Interactor.labelY + ") rotate(0) scale(1, 1)");
+        "translate( -" + (5) + " " + LABEL_Y + ") rotate(0) scale(1, 1)");
     this.upperGroup.appendChild(this.labelSVG);
     //ticks (and amino acid letters)
     this.ticks = document.createElementNS(svgns, "g");

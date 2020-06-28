@@ -1,12 +1,12 @@
 import * as d3 from "d3";
 import {Interactor} from "./interactor";
-import {svgns, highlightColour} from "../../config";
+import {LABEL_Y, svgns, highlightColour} from "../../config";
 
 Gene.prototype = new Interactor();
 
-export function Gene(id, xlvController, json, name) {
+export function Gene(id, app, json, name) {
     this.id = id; // id may not be accession (multiple Segments with same accession)
-    this.app = xlvController;
+    this.app = app;
     this.json = json;
     //links
     this.naryLinks = new Map();
@@ -49,7 +49,7 @@ export function Gene(id, xlvController, json, name) {
     this.labelSVG.setAttribute("font-family", "Arial");
     this.labelSVG.setAttribute("font-size", "16");
     //choose label text
-    if (this.name !== null && this.name !== "") {
+    if (this.name) {
         this.labelText = this.name;
     } else {
         this.labelText = this.id;
@@ -59,8 +59,8 @@ export function Gene(id, xlvController, json, name) {
     }
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
-    this.labelSVG.appendChild("transform",
-        "translate( -" + (21) + " " + Interactor.labelY + ") rotate(0) scale(1, 1)");
+    this.labelSVG.setAttribute("transform",
+        "translate( -" + (21) + " " + LABEL_Y + ") rotate(0) scale(1, 1)");
     this.upperGroup.appendChild(this.labelSVG);
     //ticks (and amino acid letters)
     this.ticks = document.createElementNS(svgns, "g");

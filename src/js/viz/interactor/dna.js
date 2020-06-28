@@ -1,11 +1,11 @@
 import {Interactor} from "./interactor";
-import {svgns, highlightColour} from "../../config";
+import {svgns, highlightColour, LABEL_Y} from "../../config";
 
 DNA.prototype = new Interactor();
 
-export function DNA(id, xlvController, json, name) {
+export function DNA(id, app, json, name) {
     this.id = id; // id may not be accession (multiple Segments with same accession)
-    this.app = xlvController;
+    this.app = app;
     this.json = json;
     //links
     this.naryLinks = new Map();
@@ -58,7 +58,7 @@ export function DNA(id, xlvController, json, name) {
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
     this.labelSVG.setAttribute("transform",
-        "translate( -" + (15) + " " + Interactor.labelY + ")");
+        "translate( -" + (15) + " " + LABEL_Y + ")");
     this.upperGroup.appendChild(this.labelSVG);
 
     //make blob

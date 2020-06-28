@@ -1,6 +1,3 @@
-Interactor.LABELMAXLENGTH = 90; // maximal width reserved for protein-labels
-Interactor.labelY = -5; //label Y offset, better if calc'd half height of label once rendered
-
 export function Interactor() {
 }
 

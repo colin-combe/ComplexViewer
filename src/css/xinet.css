@@ -27,6 +27,10 @@ svg {
         2px 1px 0 white;*/
 }
 
+.proteinLabel {
+    font-size: 10pt;
+    /*font-weight: bold;*/
+}
 
 .custom-menu-margin {
     padding: 20px;
