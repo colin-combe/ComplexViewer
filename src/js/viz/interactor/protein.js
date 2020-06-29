@@ -1,34 +1,18 @@
 import * as d3 from "d3"; //only used to set att's'
 // import {Interactor} from "./interactor";
 import {Polymer} from "./polymer";
-import {svgns, highlightColour, LABEL_Y} from "../../config";
-
-Protein.prototype = new Polymer();
+import {svgns, highlightColour} from "../../config";
 
 export function Protein(id, /*App*/ app, json, name) {
-    this.id = id; // id may not be accession (multiple Segments with same accession)
-    this.app = app;
-    this.json = json;
-    this.name = name;
-    this.tooltip = this.name + " [" + this.id + "]"; // + this.accession;
-    //links
-    this.naryLinks = new Map();
-    this.binaryLinks = new Map();
-    this.sequenceLinks = new Map();
+    this.init(id, app, json, name);
+
+    // this.tooltip = this.name + " [" + this.id + "]"; // + this.accession;
     // layout info
     this.cx = 40;
     this.cy = 40;
-    // this.ix = 40;
-    // this.iy = 40;
     this.rotation = 0;
     this.stickZoom = 1;
-    this.form = 0; //null; // 0 = blob, 1 = stick
-    //rotators
-    /*	this.lowerRotator = new Rotator(this, 0, this.util);
-        this.upperRotator = new Rotator(this, 1, this.util); */
-
-    this.upperGroup = document.createElementNS(svgns, "g");
-    this.upperGroup.setAttribute("class", "protein upperGroup");
+    this.form = 0; // 0 = blob, 1 = stick
 
     //make highlight
     this.highlight = document.createElementNS(svgns, "rect");
@@ -43,28 +27,7 @@ export function Protein(id, /*App*/ app, json, name) {
     this.background.setAttribute("fill", "#FFFFFF");
     this.upperGroup.appendChild(this.background);
     //create label - we will move this svg element around when protein form changes
-    this.labelSVG = document.createElementNS(svgns, "text");
-    this.labelSVG.setAttribute("text-anchor", "end");
-    this.labelSVG.setAttribute("fill", "black");
-    this.labelSVG.setAttribute("x", "0");
-    this.labelSVG.setAttribute("y", "10");
-    this.labelSVG.setAttribute("class", "protein xlv_text proteinLabel");
-    this.labelSVG.setAttribute("font-family", "Arial");
-    this.labelSVG.setAttribute("font-size", "16");
-    //choose label text
-    if (this.name !== null && this.name !== "") {
-        this.labelText = this.name;
-    } else {
-        this.labelText = this.id;
-    }
-    if (this.labelText.length > 25) {
-        this.labelText = this.labelText.substr(0, 16) + "...";
-    }
-    this.labelTextNode = document.createTextNode(this.labelText);
-    this.labelSVG.appendChild(this.labelTextNode);
-    this.labelSVG.setAttribute("transform",
-        "translate( -" + (5) + " " + LABEL_Y + ") rotate(0) scale(1, 1)");
-    this.upperGroup.appendChild(this.labelSVG);
+    this.initLabel();
     //ticks (and amino acid letters)
     this.ticks = document.createElementNS(svgns, "g");
     //svg group for annotations
@@ -102,22 +65,23 @@ export function Protein(id, /*App*/ app, json, name) {
         .attr("stroke-opacity", 0);
     this.labelSVG.setAttribute("transform", "translate(" + (-(r + 5)) + "," + "-5)");
 
-    // events
-    const self = this;
-    //    this.upperGroup.setAttribute('pointer-events','all');
-    //todo: move to Interactor prototype?
-    this.upperGroup.onmousedown = function (evt) {
-        self.mouseDown(evt);
-    };
-    this.upperGroup.onmouseover = function (evt) {
-        self.mouseOver(evt);
-    };
-    this.upperGroup.onmouseout = function (evt) {
-        self.mouseOut(evt);
-    };
-    // this.upperGroup.ontouchstart = function(evt) {
-    //     self.touchStart(evt);
+    this.initListeners();
+    // // events
+    // const self = this;
+    // //    this.upperGroup.setAttribute('pointer-events','all');
+    // //todo: move to Interactor prototype?
+    // this.upperGroup.onmousedown = function (evt) {
+    //     self.mouseDown(evt);
     // };
+    // this.upperGroup.onmouseover = function (evt) {
+    //     self.mouseOver(evt);
+    // };
+    // this.upperGroup.onmouseout = function (evt) {
+    //     self.mouseOut(evt);
+    // };
+    // // this.upperGroup.ontouchstart = function(evt) {
+    // //     self.touchStart(evt);
+    // // };
 
     Object.defineProperty(this, "height", {
         get: function height() {
@@ -127,6 +91,8 @@ export function Protein(id, /*App*/ app, json, name) {
 
     this.showHighlight(false);
 }
+
+Protein.prototype = new Polymer();
 
 /*
 Protein.prototype.showData = function(evt) {

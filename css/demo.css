@@ -141,6 +141,7 @@ div#legendInner {
 
 .logoBar {
     margin-top: 5px;
+    margin-bottom: 5px;
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;

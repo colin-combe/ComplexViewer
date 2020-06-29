@@ -1,17 +1,13 @@
 import {Interactor} from "./interactor";
 
-Complex.prototype = new Interactor();
-
 export function Complex(id, app) {
-    this.id = id;
-    this.app = app;
-    //links
-    this.naryLinks = new Map();
-    this.binaryLinks = new Map();
-    this.sequenceLinks = new Map();
+    this.init(id, app);
+    this.upperGroup = null; // todo, bit yucky, take it out of init
     this.type = "complex";
     this.padding = 15;
 }
+
+Complex.prototype = new Interactor();
 
 Complex.prototype.initParticipant = function (naryLink) {
     this.naryLink = naryLink;
@@ -45,5 +41,4 @@ Complex.prototype.changePosition = function (dx, dy) {
 Complex.prototype.getResidueCoordinates = function () {
     return this.getPosition();
 };
-Complex.prototype.showHighlight = function () {
-};
+

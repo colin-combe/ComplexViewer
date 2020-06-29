@@ -22,7 +22,7 @@ Polymer.prototype.setSequence = function (sequence) {
 };
 
 //by the time we get here all prot's have had their sequence set, so Polymer.MAXSIZE has correct value;
-Polymer.prototype.init = function () {
+Polymer.prototype.initSVG = function () {
     //this.setForm(this.form);
     if (this.selfLink) this.selfLink.initSelfLinkSVG();
     this.setAllLinkCoordinates();

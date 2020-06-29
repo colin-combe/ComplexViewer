@@ -1,4 +1,4 @@
-import * as molSetSvg from "../imgs/key-svg/molecule-set.svg";
+/*import * as molSetSvg from "../imgs/key-svg/molecule-set.svg";
 import * as smallMolSvg from "../imgs/key-svg/small-molecule.svg";
 import * as geneSvg from "../imgs/key-svg/gene.svg";
 import * as dnaSvg from "../imgs/key-svg/dna.svg";
@@ -54,4 +54,4 @@ export function SymbolKey (symbolKeyDiv) {
 
     this.el.appendChild(img);
 
-}
+}*/

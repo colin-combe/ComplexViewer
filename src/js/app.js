@@ -348,11 +348,11 @@ App.prototype.init = function () {
     }
 
     for (let participant of this.participants.values()) {
-        if (participant.upperGroup) {
+        if (participant.type !== "complex") {
             this.proteinUpper.appendChild(participant.upperGroup);
             if (participant.json.type.name === "protein") {
                 participant.stickZoom = this.defaultBarScale;
-                participant.init();
+                participant.initSVG();
             }
         }
     }
@@ -447,7 +447,7 @@ App.prototype.mouseMove = function (evt) {
             // we are currently dragging things around
             let ox, oy, nx, ny;
             if (!this.dragElement.cx) { // if not an Interactor (that makes it so-called 'naryLink')
-                const nodes = this.dragElement.interactors;
+                const nodes = this.dragElement.participants;
                 for (let protein of nodes) { // todo - rename var
                     protein.changePosition(dx, dy);
                 }
@@ -727,7 +727,7 @@ App.prototype.autoLayout = function () {
 
     let linkLength = (nodes.length < 30) ? 30 : 20;
     if (nodes.length === 2) {
-        linkLength = 100;
+        linkLength = 50;
     }
     const width = this.svgElement.parentNode.clientWidth;
     const height = this.svgElement.parentNode.clientHeight;

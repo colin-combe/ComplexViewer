@@ -1,3 +1,5 @@
+import {LABEL_Y, svgns} from "../../config";
+
 export function Interactor() {
 }
 
@@ -10,8 +12,96 @@ Interactor.prototype = {
     },
 };
 
+Interactor.prototype.init = function (id, app, json, name){
+    this.id = id;
+    this.app = app;
+    this.json = json;
+    //links
+    this.naryLinks = new Map();
+    this.binaryLinks = new Map();
+    this.sequenceLinks = new Map();
+    this.name = name;
+    this.upperGroup = document.createElementNS(svgns, "g");
+};
+
+Interactor.prototype.initLabel = function (){
+
+    this.labelSVG = document.createElementNS(svgns, "text");
+    this.labelSVG.setAttribute("text-anchor", "end");
+    this.labelSVG.setAttribute("fill", "black");
+    this.labelSVG.setAttribute("x", "0");
+    this.labelSVG.setAttribute("y", "10");
+    this.labelSVG.setAttribute("class", "xlv_text proteinLabel");
+    this.labelSVG.setAttribute("font-family", "Arial");
+    this.labelSVG.setAttribute("font-size", "16");
+
+    //choose label text
+    if (this.name) {
+        this.labelText = this.name;
+    } else {
+        this.labelText = this.id;
+    }
+    if (this.labelText.length > 25) {
+        this.labelText = this.labelText.substr(0, 16) + "...";
+    }
+
+    this.labelText = this.name;
+    this.labelTextNode = document.createTextNode(this.labelText);
+    this.labelSVG.appendChild(this.labelTextNode);
+    this.labelSVG.setAttribute("transform",
+        "translate( -" + this.getBlobRadius() + " " + LABEL_Y + ")");
+    this.upperGroup.appendChild(this.labelSVG);
+};
+
+Interactor.prototype.initOutline = function (){
+    this.outline.setAttribute("stroke", "black");
+    this.outline.setAttribute("stroke-width", "1");
+    this.outline.setAttribute("stroke-opacity", "1");
+    this.outline.setAttribute("fill-opacity", "1");
+    this.outline.setAttribute("fill", "#ffffff");
+    //append outline
+    this.upperGroup.appendChild(this.outline);
+};
+
+Interactor.prototype.initListeners = function (){
+    // events
+    const self = this;
+    //    this.upperGroup.setAttribute('pointer-events','all');
+    this.upperGroup.onmousedown = function (evt) {
+        self.mouseDown(evt);
+    };
+    this.upperGroup.onmouseover = function (evt) {
+        self.mouseOver(evt);
+    };
+    this.upperGroup.onmouseout = function (evt) {
+        self.mouseOut(evt);
+    };
+    // this.upperGroup.ontouchstart = function (evt) {
+    //     self.touchStart(evt);
+    // };
+
+    //~ this.upperGroup.ontouchmove = function(evt) {};
+    //~ this.upperGroup.ontouchend = function(evt) {
+    //~ self.ctrl.message("protein touch end");
+    //~ self.mouseOut(evt);
+    //~ };
+    //~ this.upperGroup.ontouchenter = function(evt) {
+    //~ self.message("protein touch enter");
+    //~ self.touchStart(evt);
+    //~ };
+    //~ this.upperGroup.ontouchleave = function(evt) {
+    //~ self.message("protein touch leave");
+    //~ self.mouseOut(evt);
+    //~ };
+    //~ this.upperGroup.ontouchcancel = function(evt) {
+    //~ self.message("protein touch cancel");
+    //~ self.mouseOut(evt);
+    //~ };
+};
+
 Interactor.prototype.addStoichiometryLabel = function (stoichiometry) {
     if (this.labelSVG) { //complexes don't have labels (yet?)
+        // noinspection JSUndefinedPropertyAssignment
         this.labelSVG.childNodes[0].data = this.labelSVG.childNodes[0].data + " [" + stoichiometry + "]";
     }
 };
@@ -60,33 +150,7 @@ Interactor.prototype.getBlobRadius = function () {
 
 
 Interactor.prototype.showHighlight = function () {
-    // if (show === true) {
-    //~ this.highlight.setAttribute("stroke", xiNET.highlightColour.toRGB());
-    // this.highlight.setAttribute("stroke-opacity", "1");
-    // } else {
-    //~ if (this.isSelected == false) {
-    this.highlight.setAttribute("stroke-opacity", "0");
-    //~ }
-    //~ this.highlight.setAttribute("stroke", xiNET.selectedColour.toRGB());
-    // }
 };
-
-/*
-Interactor.prototype.setSelected = function(select) {
-     if (select && this.isSelected === false) {
-         this.util.selected.set(this.id, this);
-         this.isSelected = true;
-         this.highlight.setAttribute("stroke", selectedColour);
-         this.highlight.setAttribute("stroke-opacity", "1");
-     }
-     else if (select === false && this.isSelected === true) {
-         this.util.selected.remove(this.id);
-         this.isSelected = false;
-         this.highlight.setAttribute("stroke-opacity", "0");
-         this.highlight.setAttribute("stroke", highlightColour);
-     }
-}
-*/
 
 Interactor.prototype.getPosition = function () {
     return [this.cx, this.cy]; // todo - type of return is kind of inconsistent
@@ -135,7 +199,7 @@ Interactor.prototype.checkLinks = function () {
     // checkAll(this.naryLinks); // hacked out to fix ordering of nLinks
     checkAll(this.binaryLinks);
     checkAll(this.sequenceLinks);
-    if (this.selfLink !== null) {
+    if (this.selfLink) {
         this.selfLink.check();
     }
 };
@@ -165,12 +229,6 @@ export function trig (radius, angleDegrees) {
         y: (radius * Math.sin(radians))
     };
 }
-
-/*
-Interactor.prototype.showData = function() {
-    //~ alert ("molecule!");
-}
-*/
 
 Interactor.prototype.setForm = function () {
 };

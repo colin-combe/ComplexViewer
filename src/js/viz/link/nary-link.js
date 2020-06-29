@@ -14,7 +14,7 @@ export function NaryLink(id, app) {
     this.binaryLinks = new Map();
     this.unaryLinks = new Map();
     this.app = app;
-    this.tooltip = this.id;
+    // this.tooltip = this.id;
     this.initSVG();
 }
 
