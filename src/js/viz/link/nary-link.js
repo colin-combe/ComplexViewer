@@ -7,21 +7,20 @@ NaryLink.naryColors; // init'ed in clear function of util
 NaryLink.orbitNodes = 16;
 NaryLink.orbitRadius = 20;
 
-NaryLink.prototype = new Link();
-
 export function NaryLink(id, app) {
     this.id = id;
-    // this.evidences = d3.map();
     this.interactors = []; // todo: rename to participants
     this.sequenceLinks = new Map();
     this.binaryLinks = new Map();
     this.unaryLinks = new Map();
     this.app = app;
     this.tooltip = this.id;
-    //used to avoid some unnecessary manipulation of DOM
     this.initSVG();
 }
 
+NaryLink.prototype = new Link();
+
+/*
 NaryLink.prototype.getTotalParticipantCount = function () {
     let result = 0;
     const c = this.interactors.length;
@@ -36,6 +35,7 @@ NaryLink.prototype.getTotalParticipantCount = function () {
     }
     return result;
 };
+*/
 
 NaryLink.prototype.initSVG = function () {
     this.path = document.createElementNS(svgns, "path");
@@ -52,9 +52,9 @@ NaryLink.prototype.initSVG = function () {
     this.path.onmouseout = function (evt) {
         self.mouseOut(evt);
     };
-    this.path.ontouchstart = function (evt) {
-        self.touchStart(evt);
-    };
+    // this.path.ontouchstart = function (evt) {
+    //     self.touchStart(evt);
+    // };
 };
 
 NaryLink.prototype.showHighlight = function (show) {

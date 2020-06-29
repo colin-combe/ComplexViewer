@@ -273,6 +273,7 @@ App.prototype.clear = function () {
     NaryLink.naryColors = d3.scale.ordinal().range(colorbrewer.Pastel2[8]);
     this.defs.selectAll(".feature_checkers").remove();
 
+    //todo - don't use d3 for this
     d3.select(this.naryLinks).selectAll("*").remove();
     d3.select(this.p_pLinksWide).selectAll("*").remove();
     d3.select(this.highlights).selectAll("*").remove();
@@ -394,6 +395,7 @@ App.prototype.zoomToExtent = function () {
         //box.y + y = 0
         let y = -bbox.y + (20 / scaleFactor);
         this.container.setAttribute("transform", "scale(" + scaleFactor + ") translate(" + x + " " + y + ") ");
+        this.z = scaleFactor;
     } else {
         //console.log("fit", scaleFactor);
         // this.container.setAttribute("transform", "scale(" + 1 + ") translate(" + -(width/2) + " " + -bbox.y + ")");
@@ -404,6 +406,7 @@ App.prototype.zoomToExtent = function () {
         //box.y + y = deltaHeight / 2
         let y = (deltaHeight / 2) - bbox.y;
         this.container.setAttribute("transform", "scale(" + 1 + ") translate(" + x + " " + y + ")");
+        this.z = 1;
     }
     //todo - following could be tided up by using acknowledgement bbox or positioning att's of text
     this.acknowledgement.setAttribute("transform", "translate("+(width - 150)+", " + (height - 30) + ")");

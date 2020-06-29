@@ -180,7 +180,7 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
                     datum.naryId = nLinkId;
 
                 }
-                nLink.addEvidence(datum);
+                //nLink.addEvidence(datum);
 
                 //init participants
                 for (let jsonParticipant of datum.participants) {
@@ -345,7 +345,7 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
                     nLink = new NaryLink(nLinkId, app);
                     app.allNaryLinks.set(nLinkId, nLink);
                 }
-                nLink.addEvidence(datum);
+                //nLink.addEvidence(datum);
 
                 //~ //init participants
                 for (let pi = 0; pi < participantCount; pi++) {
@@ -463,7 +463,7 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
             app.allSequenceLinks.set(seqLinkId, sequenceLink);
         }
 
-        sequenceLink.addEvidence(interaction);
+        //sequenceLink.addEvidence(interaction);
         const nLinkId = getNaryLinkIdFromInteraction(interaction);
         const nLink = app.allNaryLinks.get(nLinkId);
         nLink.sequenceLinks.set(seqLinkId, sequenceLink);
@@ -481,7 +481,7 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
         const nLinkId = getNaryLinkIdFromInteraction(interaction);
         const nLink = app.allNaryLinks.get(nLinkId);
         nLink.unaryLinks.set(linkID, link);
-        link.addEvidence(interaction);
+        //link.addEvidence(interaction);
         return link;
     }
 
@@ -508,7 +508,7 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
         const nLinkId = getNaryLinkIdFromInteraction(interaction);
         const nLink = app.allNaryLinks.get(nLinkId);
         nLink.binaryLinks.set(linkID, link);
-        link.addEvidence(interaction);
+        //link.addEvidence(interaction);
         return link;
     }
 }

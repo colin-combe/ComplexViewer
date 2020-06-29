@@ -106,7 +106,7 @@ FeatureLink.prototype.showHighlight = function (show) {
 
 //used when filter changed
 FeatureLink.prototype.check = function () {
-    if (/*this.filteredEvidence().length > 0 &&*/ this.anyInteractorIsBar() === true) {
+    if (this.anyParticipantIsBar() === true) {
         this.show();
         return true;
     } else {
@@ -115,7 +115,7 @@ FeatureLink.prototype.check = function () {
     }
 };
 
-FeatureLink.prototype.anyInteractorIsBar = function () {
+FeatureLink.prototype.anyParticipantIsBar = function () {
     const ic = this.interactors.length;
     for (let i = 0; i < ic; i++) {
         if (this.interactors[i].form === 1) {
@@ -143,7 +143,7 @@ FeatureLink.prototype.show = function () {
 };
 
 FeatureLink.prototype.hide = function () {
-    // TODO: this looks wierd
+    // TODO: this looks weird
     let containingGroup = this.app.res_resLinks;
     if (this.interactors[0] === this.interactors[1]) {
         containingGroup = this.app.selfRes_resLinks;
@@ -191,7 +191,8 @@ FeatureLink.prototype.setLinkCoordinates = function () {
         for (let s = 0; s < sdCount; s++) {
             const seqDatum = sequenceData[s];
             if (!isNaN(parseFloat(seqDatum.begin)) && isFinite(seqDatum.begin)) {
-                const start = seqDatum.begin * 1; // todo - the times 1 is necessary
+                // noinspection PointlessArithmeticExpressionJS
+                const start = seqDatum.begin * 1; // the * 1 is necessary (type conversion)
                 if (lowestLinkedRes === null || start < lowestLinkedRes) {
                     lowestLinkedRes = start;
                 }
