@@ -15,7 +15,7 @@ FeatureLink.prototype.init = function (id, fromFeatPos, toFeatPos, app) {
     this.fromSequenceData = fromFeatPos;
     this.toSequenceData = toFeatPos;
 
-    this.interactors = [this.fromSequenceData[0].node, this.toSequenceData[0].node]; //*
+    this.participants = [this.fromSequenceData[0].node, this.toSequenceData[0].node]; //*
     // *potentially, this over simplifies the situation,
     // but there is a workaround in way ReadMiJson init's links so OK for now
 };
@@ -24,13 +24,13 @@ FeatureLink.prototype.init = function (id, fromFeatPos, toFeatPos, app) {
 /*
 FeatureLink.prototype.getToolTip = function() {
     var tooltip = "";
-    tooltip += this.interactors[0].labelText + " ";
+    tooltip += this.participants[0].labelText + " ";
     for (var i = 0; i < this.fromSequenceData.length; i++) {
         if (i > 0) tooltip += ",";
         tooltip += this.fromSequenceData[i].toString();
     }
     tooltip += " to ";
-    tooltip += this.interactors[1].labelText + " ";
+    tooltip += this.participants[1].labelText + " ";
     for (var j = 0; j < this.toSequenceData.length; j++) {
         if (j > 0) tooltip += ",";
         tooltip += this.toSequenceData[j].toString();
@@ -116,9 +116,9 @@ FeatureLink.prototype.check = function () {
 };
 
 FeatureLink.prototype.anyParticipantIsBar = function () {
-    const ic = this.interactors.length;
+    const ic = this.participants.length;
     for (let i = 0; i < ic; i++) {
-        if (this.interactors[i].form === 1) {
+        if (this.participants[i].form === 1) {
             return true;
         }
     }
@@ -134,7 +134,7 @@ FeatureLink.prototype.show = function () {
     // this.highlightGlyph.setAttribute("stroke-width", this.util.z * 10);
     this.setLinkCoordinates();
     let containingGroup = this.app.res_resLinks;
-    if (this.interactors[0] === this.interactors[1]) {
+    if (this.participants[0] === this.participants[1]) {
         containingGroup = this.app.selfRes_resLinks;
     }
     containingGroup.appendChild(this.highlightGlyph);
@@ -145,7 +145,7 @@ FeatureLink.prototype.show = function () {
 FeatureLink.prototype.hide = function () {
     // TODO: this looks weird
     let containingGroup = this.app.res_resLinks;
-    if (this.interactors[0] === this.interactors[1]) {
+    if (this.participants[0] === this.participants[1]) {
         containingGroup = this.app.selfRes_resLinks;
     }
 

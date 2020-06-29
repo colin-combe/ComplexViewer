@@ -38,7 +38,7 @@ Complex.prototype.setPosition = function () {
 };
 
 Complex.prototype.changePosition = function (dx, dy) {
-    for (let participant of this.naryLink.interactors){
+    for (let participant of this.naryLink.participants){
         participant.changePosition(dx, dy);
     }
 };

@@ -10,7 +10,7 @@ import * as Point2D from "point2d";
 export function BinaryLink(id, app, fromI, toI) {
     this.id = id;
     // this.evidences = d3.map();
-    this.interactors = [fromI, toI];
+    this.participants = [fromI, toI];
     this.sequenceLinks = new Map();
     this.app = app;
     this.line = document.createElementNS(svgns, "line");
@@ -21,7 +21,7 @@ export function BinaryLink(id, app, fromI, toI) {
 BinaryLink.prototype = new Link();
 
 BinaryLink.prototype.check = function () {
-    if (!this.interactors[0].form && !this.interactors[1].form) { //checks if form not defined or is 0
+    if (!this.participants[0].form && !this.participants[1].form) { //checks if form not defined or is 0
         this.show();
         return true;
     } else { //at least one end was in stick form
@@ -36,8 +36,8 @@ BinaryLink.prototype.show = function () {
     // }
     this.line.setAttribute("stroke-width", this.app.z * 1);
     this.highlightLine.setAttribute("stroke-width", this.app.z * 10);
-    this.setLinkCoordinates(this.interactors[0]);
-    this.setLinkCoordinates(this.interactors[1]);
+    this.setLinkCoordinates(this.participants[0]);
+    this.setLinkCoordinates(this.participants[1]);
     this.app.highlights.appendChild(this.highlightLine);
     this.app.p_pLinks.appendChild(this.line);
 };
@@ -47,12 +47,12 @@ BinaryLink.prototype.setLinkCoordinates = function () {
     if (typeof this.line === "undefined") {
         this.initSVG();
     }
-    let pos1 = this.interactors[0].getPosition();
-    let pos2 = this.interactors[1].getPosition();
+    let pos1 = this.participants[0].getPosition();
+    let pos2 = this.participants[1].getPosition();
 
     let naryPath, iPath, a1, a2, intersect;
-    if (this.interactors[0].type === "complex") {
-        naryPath = this.interactors[0].naryLink.hull;
+    if (this.participants[0].type === "complex") {
+        naryPath = this.participants[0].naryLink.hull;
         iPath = [];
         for (let p of naryPath) {
             iPath.push(new Point2D(p[0], p[1]));
@@ -69,8 +69,8 @@ BinaryLink.prototype.setLinkCoordinates = function () {
 
     }
 
-    if (this.interactors[1].type === "complex") {
-        naryPath = this.interactors[0].naryLink.hull;
+    if (this.participants[1].type === "complex") {
+        naryPath = this.participants[0].naryLink.hull;
         iPath = [];
         for (let p of naryPath) {
             iPath.push(new Point2D(p[0], p[1]));

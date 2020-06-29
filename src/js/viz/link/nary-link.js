@@ -9,7 +9,7 @@ NaryLink.orbitRadius = 20;
 
 export function NaryLink(id, app) {
     this.id = id;
-    this.interactors = []; // todo: rename to participants
+    this.participants = []; // todo: rename to participants
     this.sequenceLinks = new Map();
     this.binaryLinks = new Map();
     this.unaryLinks = new Map();
@@ -23,9 +23,9 @@ NaryLink.prototype = new Link();
 /*
 NaryLink.prototype.getTotalParticipantCount = function () {
     let result = 0;
-    const c = this.interactors.length;
+    const c = this.participants.length;
     for (let p = 0; p < c; p++) {
-        const participant = this.interactors[p];
+        const participant = this.participants[p];
         //console.log("! " + typeof participant);
         if (participant.type !== "complex") {
             result++;
@@ -94,7 +94,7 @@ NaryLink.prototype.setLinkCoordinates = function () {
 };
 
 NaryLink.prototype.getMappedCoordinates = function () {
-    const interactors = this.interactors;
+    const interactors = this.participants;
     let mapped = [];
     const ic = interactors.length;
     for (let i = 0; i < ic; i++) {

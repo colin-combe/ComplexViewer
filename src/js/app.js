@@ -678,8 +678,8 @@ App.prototype.autoLayout = function () {
     }
 
     for (let binaryLink of this.allBinaryLinks.values()) {
-        const fromMol = binaryLink.interactors[0];
-        const toMol = binaryLink.interactors[1];
+        const fromMol = binaryLink.participants[0];
+        const toMol = binaryLink.participants[1];
         const source = fromMol; //molLookUp[fromMol.id];
         const target = toMol; //molLookUp[toMol.id];
 
@@ -703,7 +703,7 @@ App.prototype.autoLayout = function () {
         for (let g of this.complexes) {
             g.leaves = [];
             g.groups = [];
-            for (let interactor of g.naryLink.interactors) {
+            for (let interactor of g.naryLink.participants) {
                 if (interactor.type !== "complex") {
                     g.leaves.push(layoutObj.nodes.indexOf(interactor));
                 }
@@ -711,7 +711,7 @@ App.prototype.autoLayout = function () {
             groups.push(g);
         }
         for (let g of this.complexes) {
-            for (let interactor of g.naryLink.interactors) {
+            for (let interactor of g.naryLink.participants) {
                 if (interactor.type === "complex") {
                     g.groups.push(groups.indexOf(interactor));
                 }

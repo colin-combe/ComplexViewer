@@ -196,8 +196,8 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
 
                     participant.naryLinks.set(nLinkId, nLink);
                     //TODO: tidy up whats happening in NaryLink re interactor/participant terminology
-                    if (nLink.interactors.indexOf(participant) === -1) {
-                        nLink.interactors.push(participant);
+                    if (nLink.participants.indexOf(participant) === -1) {
+                        nLink.participants.push(participant);
                     }
 
                     if (jsonParticipant.stoichiometry) {
@@ -363,8 +363,8 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
 
                     participant.naryLinks.set(nLinkId, nLink);
                     //TODO: tidy up whats happening in NaryLink re interactor/participant terminology
-                    if (nLink.interactors.indexOf(participant) === -1) {
-                        nLink.interactors.push(participant);
+                    if (nLink.participants.indexOf(participant) === -1) {
+                        nLink.participants.push(participant);
                     }
                     //temp - to give sensible info when stoich collapsed
                     const interactor = app.participants.get(intRef);
