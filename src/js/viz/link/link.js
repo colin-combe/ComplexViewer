@@ -28,8 +28,8 @@ Link.prototype.highlightInteractors = function (show) {
 Link.prototype.mouseDown = function (evt) {
     this.app.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
     //if a force layout exists then stop it
-    if (this.app.layout) {
-        this.app.layout.stop();
+    if (this.app.d3cola) {
+        this.app.d3cola.stop();
     }
     this.app.dragElement = this;
     //this.util.clearSelection();

@@ -18,97 +18,97 @@ import {svgns} from "./config";
 // so backbone doesn't work
 // so continuing to use prototypical inheritance in things for time being
 
-export function App (/*HTMLDivElement*/networkDiv) {
-        // this.debug = true;
-        this.el = networkDiv;
+export function App(/*HTMLDivElement*/networkDiv) {
+    // this.debug = true;
+    this.el = networkDiv;
 
-        this.STATES = {};
-        this.STATES.MOUSE_UP = 0; //start state, also set when mouse up on svgElement
-        this.STATES.PANNING = 1; //set by mouse down on svgElement - left button, no shift or util
-        this.STATES.DRAGGING = 2; //set by mouse down on Protein or Link
-        this.STATES.ROTATING = 3; //set by mouse down on Rotator, drag?
-        this.STATES.SELECTING = 4; //set by mouse down on svgElement- right button or left button shift or util, drag
+    this.STATES = {};
+    this.STATES.MOUSE_UP = 0; //start state, also set when mouse up on svgElement
+    this.STATES.PANNING = 1; //set by mouse down on svgElement - left button, no shift or util
+    this.STATES.DRAGGING = 2; //set by mouse down on Protein or Link
+    this.STATES.ROTATING = 3; //set by mouse down on Rotator, drag?
+    this.STATES.SELECTING = 4; //set by mouse down on svgElement- right button or left button shift or util, drag
 
-        //avoids prob with 'save - web page complete'
-        this.el.textContent = ""; //https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
+    //avoids prob with 'save - web page complete'
+    this.el.textContent = ""; //https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
 
-        const customMenuSel = d3.select(this.el)
-            .append("div").classed("custom-menu-margin", true)
-            .append("div").classed("custom-menu", true)
-            .append("ul");
+    const customMenuSel = d3.select(this.el)
+        .append("div").classed("custom-menu-margin", true)
+        .append("div").classed("custom-menu", true)
+        .append("ul");
 
-        const self = this;
-        const collapse = customMenuSel.append("li").classed("collapse", true); //.append("button");
-        collapse.text("Collapse");
-        collapse[0][0].onclick = function (evt) {
-            self.collapseProtein(evt);
-        };
-        const scaleButtonsListItemSel = customMenuSel.append("li").text("Scale: ");
+    const self = this;
+    const collapse = customMenuSel.append("li").classed("collapse", true); //.append("button");
+    collapse.text("Collapse");
+    collapse[0][0].onclick = function (evt) {
+        self.collapseProtein(evt);
+    };
+    const scaleButtonsListItemSel = customMenuSel.append("li").text("Scale: ");
 
-        this.barScales = [0.01, 0.2, 1, 2, 4, 8];
-        const scaleButtons = scaleButtonsListItemSel.selectAll("ul.custom-menu")
-            .data(this.barScales)
-            .enter()
-            .append("div")
-            .attr("class", "barScale")
-            .append("label");
-        scaleButtons.append("span")
-            .text(function (d) {
-                if (d === 8) return "AA";
-                else return d;
-            });
-        scaleButtons.append("input")
-            // .attr ("id", function(d) { return d*100; })
-            .attr("class", function (d) {
-                return "scaleButton scaleButton_" + (d * 100);
-            })
-            .attr("name", "scaleButtons")
-            .attr("type", "radio")
-            .on("change", function (d) {
-                self.preventDefaultsAndStopPropagation(d);
-                self.contextMenuProt.setStickScale(d, self.contextMenuPoint);
-            });
+    this.barScales = [0.01, 0.2, 1, 2, 4, 8];
+    const scaleButtons = scaleButtonsListItemSel.selectAll("ul.custom-menu")
+        .data(this.barScales)
+        .enter()
+        .append("div")
+        .attr("class", "barScale")
+        .append("label");
+    scaleButtons.append("span")
+        .text(function (d) {
+            if (d === 8) return "AA";
+            else return d;
+        });
+    scaleButtons.append("input")
+        // .attr ("id", function(d) { return d*100; })
+        .attr("class", function (d) {
+            return "scaleButton scaleButton_" + (d * 100);
+        })
+        .attr("name", "scaleButtons")
+        .attr("type", "radio")
+        .on("change", function (d) {
+            self.preventDefaultsAndStopPropagation(d);
+            self.contextMenuProt.setStickScale(d, self.contextMenuPoint);
+        });
 
-        const contextMenu = d3.select(".custom-menu-margin").node();
-        contextMenu.onmouseout = function (evt) {
-            let e = evt.relatedTarget;
-            do {
-                if (e === this) return;
-                e = e.parentNode;
-            } while (e);
-            self.contextMenuProt = null;
-            d3.select(this).style("display", "none");
-        };
+    const contextMenu = d3.select(".custom-menu-margin").node();
+    contextMenu.onmouseout = function (evt) {
+        let e = evt.relatedTarget;
+        do {
+            if (e === this) return;
+            e = e.parentNode;
+        } while (e);
+        self.contextMenuProt = null;
+        d3.select(this).style("display", "none");
+    };
 
 
-        //create SVG element
-        this.svgElement = document.createElementNS(svgns, "svg");
-        this.svgElement.setAttribute("id", "complexViewerSVG");
+    //create SVG element
+    this.svgElement = document.createElementNS(svgns, "svg");
+    this.svgElement.setAttribute("id", "complexViewerSVG");
 
-        //add listeners
-        this.svgElement.onmousedown = function (evt) {
-            self.mouseDown(evt);
-        };
-        this.svgElement.onmousemove = function (evt) {
-            self.mouseMove(evt);
-        };
-        this.svgElement.onmouseup = function (evt) {
-            self.mouseUp(evt);
-        };
-        this.svgElement.onmouseout = function (evt) {
-            self.hideTooltip(evt);
-        };
-        this.lastMouseUp = new Date().getTime();
-        /*this.svgElement.ontouchstart = function(evt) {
-            self.touchStart(evt);
-        };
-        this.svgElement.ontouchmove = function(evt) {
-            self.touchMove(evt);
-        };
-        this.svgElement.ontouchend = function(evt) {
-            self.touchEnd(evt);
-        };
-        */
+    //add listeners
+    this.svgElement.onmousedown = function (evt) {
+        self.mouseDown(evt);
+    };
+    this.svgElement.onmousemove = function (evt) {
+        self.mouseMove(evt);
+    };
+    this.svgElement.onmouseup = function (evt) {
+        self.mouseUp(evt);
+    };
+    this.svgElement.onmouseout = function (evt) {
+        self.hideTooltip(evt);
+    };
+    this.lastMouseUp = new Date().getTime();
+    /*this.svgElement.ontouchstart = function(evt) {
+        self.touchStart(evt);
+    };
+    this.svgElement.ontouchmove = function(evt) {
+        self.touchMove(evt);
+    };
+    this.svgElement.ontouchend = function(evt) {
+        self.touchEnd(evt);
+    };
+    */
 
     this.el.oncontextmenu = function (evt) {
         if (evt.preventDefault) { // necessary for addEventListener, works with traditional
@@ -171,11 +171,12 @@ export function App (/*HTMLDivElement*/networkDiv) {
     this.acknowledgement = document.createElementNS(svgns, "g");
     const ackText = document.createElementNS(svgns, "text");
     ackText.innerHTML = "<a href='https://academic.oup.com/bioinformatics/article/33/22/3673/4061280' target='_blank'><tspan x='0' dy='1.2em' style='text-decoration: underline'>ComplexViewer "
-        +version+"</tspan></a><tspan x='0' dy='1.2em'>by <a href='http://rappsilberlab.org/' target='_blank'>Rappsilber Laboratory</a></tspan>";
+        + version + "</tspan></a><tspan x='0' dy='1.2em'>by <a href='http://rappsilberlab.org/' target='_blank'>Rappsilber Laboratory</a></tspan>";
 
     this.acknowledgement.appendChild(ackText);
-    ackText.setAttribute("font-size", "12px");
-    // this.container.appendChild(this.acknowledgement);
+    ackText.classList.add("xlv_text");
+    ackText.setAttribute("font-size", "8pt");
+    this.svgElement.appendChild(this.acknowledgement);
 
     this.naryLinks = document.createElementNS(svgns, "g");
     this.naryLinks.setAttribute("id", "naryLinks");
@@ -261,21 +262,6 @@ App.prototype.createHatchedFill = function (name, color) {
         .attr("width", 12)
         .attr("height", 4)
         .attr("fill", color);
-
-
-    // checks - yuk
-    // pattern.append('rect')
-    //     .attr("x", 0)
-    //     .attr("y", 0)
-    //     .attr("width", 5)
-    //     .attr("height", 5)
-    //     .style("fill", "black");// "#A01284");
-    // pattern.append('rect')
-    //     .attr("x", 5)
-    //     .attr("y", 5)
-    //     .attr("width", 5)
-    //     .attr("height", 5)
-    //     .style("fill", "black");//"#A01284");
 };
 
 App.prototype.clear = function () {
@@ -319,11 +305,8 @@ App.prototype.clear = function () {
 };
 
 App.prototype.collapseProtein = function () {
-    const p = this.contextMenuPoint;
-    const c = p.matrixTransform(this.container.getCTM().inverse());
-
     d3.select(".custom-menu-margin").style("display", "none");
-    this.contextMenuProt.setForm(0, c);
+    this.contextMenuProt.setForm(0, this.contextMenuPoint);
     this.contextMenuProt = null;
 };
 
@@ -396,10 +379,8 @@ App.prototype.zoomToExtent = function () {
     } else {
         scaleFactor = xr;
     }
-
-
-
     if (scaleFactor < 1) { ///didn't fit in div
+        //console.log("no fit", scaleFactor);
         xr = (width - 40) / (bbox.width);
         yr = (height - 40) / (bbox.height);
         let scaleFactor;
@@ -409,15 +390,12 @@ App.prototype.zoomToExtent = function () {
             scaleFactor = xr;
         }        // }
         //bbox.x + x = 0;
-        let x = - bbox.x + (20 / scaleFactor);
+        let x = -bbox.x + (20 / scaleFactor);
         //box.y + y = 0
-        let y = - bbox.y + (20 / scaleFactor);
-        console.log("no fit", scaleFactor);
+        let y = -bbox.y + (20 / scaleFactor);
         this.container.setAttribute("transform", "scale(" + scaleFactor + ") translate(" + x + " " + y + ") ");
-        // this.container.setAttribute("transform", "scale(" + scaleFactor + ") translate(" + ((width / scaleFactor) - bbox.width - bbox.x) + " " + -bbox.y + ")");
-        // this.scale();
     } else {
-        console.log("fit", scaleFactor);
+        //console.log("fit", scaleFactor);
         // this.container.setAttribute("transform", "scale(" + 1 + ") translate(" + -(width/2) + " " + -bbox.y + ")");
         const deltaWidth = width - bbox.width;
         const deltaHeight = height - bbox.height;
@@ -425,15 +403,11 @@ App.prototype.zoomToExtent = function () {
         let x = (deltaWidth / 2) - bbox.x;
         //box.y + y = deltaHeight / 2
         let y = (deltaHeight / 2) - bbox.y;
-
-
         this.container.setAttribute("transform", "scale(" + 1 + ") translate(" + x + " " + y + ")");
     }
-
-
-
-},
-
+    //todo - followign could be tided up by using acknowledgement bbox or positioning att's of text
+    this.acknowledgement.setAttribute("transform", "translate("+(width - 150)+", " + (height - 30) + ")");
+};
 
 App.prototype.setAnnotations = function (annotationChoice) {
     setAnnotations(annotationChoice, this);
@@ -516,7 +490,7 @@ App.prototype.mouseUp = function (evt) {
         const p = this.getEventPoint(evt); // seems to be correct, see below
         const c = this.mouseToSVG(p.x, p.y);
 
-        if (this.dragElement != null) {
+        if (this.dragElement && this.dragElement.cx) { // naryLink does not have .cx
             if (!(this.state === this.STATES.DRAGGING || this.state === this.STATES.ROTATING)) { //not dragging or rotating
                 if (this.dragElement.form === 0) {
                     this.dragElement.setForm(1);
@@ -687,9 +661,6 @@ App.prototype.autoLayout = function () {
         this.d3cola.stop();
     }
 
-    // if (this.acknowledgement) {
-    //     this.acknowledgement.setAttribute("transform", "translate(5, " + (height - 40) + ")");
-    // }
     //// TODO: prune leaves from network then layout, then add back leaves and layout again
 
     const self = this;
@@ -765,7 +736,7 @@ App.prototype.autoLayout = function () {
     const width = this.svgElement.parentNode.clientWidth;
     const height = this.svgElement.parentNode.clientHeight;
 
-    this.d3cola.size([height, width]).nodes(layoutObj.nodes).groups(groups).links(layoutObj.links).avoidOverlaps(true);
+    this.d3cola.size([height - 40, width - 40]).nodes(layoutObj.nodes).groups(groups).links(layoutObj.links).avoidOverlaps(true);
     let groupDebugSel, participantDebugSel;
     if (self.debug) {
         groupDebugSel = d3.select(this.svgElement).selectAll(".group")
@@ -877,6 +848,7 @@ App.prototype.checkLinks = function () {
             link.check();
         }
     }
+
     checkAll(this.allNaryLinks);
     checkAll(this.allBinaryLinks);
     checkAll(this.allUnaryLinks);
@@ -889,6 +861,7 @@ App.prototype.setAllLinkCoordinates = function () {
             link.setLinkCoordinates();
         }
     }
+
     setAll(this.allNaryLinks);
     setAll(this.allBinaryLinks);
     setAll(this.allUnaryLinks);
@@ -960,7 +933,7 @@ App.prototype.removeColorSchemeKeylegend = function (/*HTMLDivElement*/ colorSch
 };
 
 App.prototype.colorSchemeChanged = function () {
-    for (let div of this.colorSchemeKeyDivs){
+    for (let div of this.colorSchemeKeyDivs) {
         ColorSchemeKey.update(div, this);
     }
 };
