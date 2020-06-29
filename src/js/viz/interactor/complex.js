@@ -8,13 +8,12 @@ export function Complex(id, app) {
     //links
     this.naryLinks = new Map();
     this.binaryLinks = new Map();
-    this.selfLink = null;
     this.sequenceLinks = new Map();
     this.type = "complex";
     this.padding = 15;
 }
 
-Complex.prototype.initInteractor = function (naryLink) {
+Complex.prototype.initParticipant = function (naryLink) {
     this.naryLink = naryLink;
     naryLink.path.setAttribute("stroke", "gray");
     naryLink.path.setAttribute("stroke-linejoin", "round");

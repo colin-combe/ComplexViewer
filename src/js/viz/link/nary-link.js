@@ -3,7 +3,7 @@ import {Link} from "./link";
 import {svgns} from "../../config";
 import {Interactor} from "../interactor/interactor";
 
-NaryLink.naryColors; // init'ed in clear function of util
+//NaryLink.naryColors; // init'ed in clear function of util
 NaryLink.orbitNodes = 16;
 NaryLink.orbitRadius = 20;
 
@@ -58,7 +58,7 @@ NaryLink.prototype.initSVG = function () {
 };
 
 NaryLink.prototype.showHighlight = function (show) {
-    this.highlightInteractors(show);
+    this.highlightParticipants(show);
 };
 
 NaryLink.prototype.check = function () {
@@ -94,31 +94,31 @@ NaryLink.prototype.setLinkCoordinates = function () {
 };
 
 NaryLink.prototype.getMappedCoordinates = function () {
-    const interactors = this.participants;
+    const participants = this.participants;
     let mapped = [];
-    const ic = interactors.length;
+    const ic = participants.length;
     for (let i = 0; i < ic; i++) {
-        const interactor = interactors[i];
-        if (interactor.type === "complex") {
-            mapped = mapped.concat(this.orbitNodes(interactor.naryLink.getMappedCoordinates()));
-        } else if (interactor.form === 1) {
-            const start = interactor.getResidueCoordinates(0);
-            const end = interactor.getResidueCoordinates(interactor.size);
+        const participant = participants[i];
+        if (participant.type === "complex") {
+            mapped = mapped.concat(this.orbitNodes(participant.naryLink.getMappedCoordinates()));
+        } else if (participant.form === 1) {
+            const start = participant.getResidueCoordinates(0);
+            const end = participant.getResidueCoordinates(participant.size);
             if (!isNaN(start[0]) && !isNaN(start[1]) &&
                 !isNaN(end[0]) && !isNaN(end[1])) {
                 mapped.push(start);
                 mapped.push(end);
             } else {
-                mapped.push(interactor.getPosition());
+                mapped.push(participant.getPosition());
             }
         } else {
-            mapped.push(interactor.getPosition());
+            mapped.push(participant.getPosition());
         }
     }
     return mapped;
 };
 
-//'orbit' nodes - several nodes around interactor positions to give margin
+//'orbit' nodes - several nodes around participant positions to give margin
 NaryLink.prototype.orbitNodes = function (mapped) {
     const orbitNodes = [];
     const mc = mapped.length;

@@ -10,7 +10,6 @@ export function DNA(id, app, json, name) {
     //links
     this.naryLinks = new Map();
     this.binaryLinks = new Map();
-    this.selfLink = null;
     this.sequenceLinks = new Map();
 
     this.name = name;
@@ -35,14 +34,8 @@ export function DNA(id, app, json, name) {
     this.highlight.setAttribute("stroke-width", "5");
     this.highlight.setAttribute("fill", "none");
     //attributes that may change
-    this.highlight.setAttribute("stroke-opacity", 0);
+    this.highlight.setAttribute("stroke-opacity", "0");
     this.upperGroup.appendChild(this.highlight);
-
-    //svg groups for self links
-    //    this.intraLinksHighlights = document.createElementNS(svgns, "g");
-    //    this.intraLinks = document.createElementNS(svgns, "g");
-    //    this.upperGroup.appendChild(this.intraLinksHighlights);
-    //	this.upperGroup.appendChild(this.intraLinks);
 
     //create label - we will move this svg element around when protein form changes
     this.labelSVG = document.createElementNS(svgns, "text");
@@ -86,7 +79,7 @@ export function DNA(id, app, json, name) {
         self.mouseOut(evt);
     };
 
-    this.upperGroup.ontouchstart = function (evt) {
-        self.touchStart(evt);
-    };
+    // this.upperGroup.ontouchstart = function (evt) {
+    //     self.touchStart(evt);
+    // };
 }

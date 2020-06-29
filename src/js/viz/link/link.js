@@ -1,10 +1,9 @@
 import {highlightColour} from "../../config";
 export function Link () {}
 
-Link.prototype.highlightInteractors = function (show) {
-    const interactors = this.participants;
-    for (let i = 0; i < interactors.length; i++) {
-        interactors[i].showHighlight(show);
+Link.prototype.highlightParticipants = function (show) {
+    for (let participant of this.participants) {
+        participant.showHighlight(show);
     }
 };
 

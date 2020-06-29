@@ -10,7 +10,6 @@ export function BioactiveEntity(id, app, json, name) {
     //links
     this.naryLinks = new Map();
     this.binaryLinks = new Map();
-    this.selfLink = null;
     this.sequenceLinks = new Map();
     this.name = name;
     // layout info
@@ -79,9 +78,9 @@ export function BioactiveEntity(id, app, json, name) {
         self.mouseOut(evt);
     };
 
-    this.upperGroup.ontouchstart = function (evt) {
-        self.touchStart(evt);
-    };
+    // this.upperGroup.ontouchstart = function (evt) {
+    //     self.touchStart(evt);
+    // };
 }
 
 /*

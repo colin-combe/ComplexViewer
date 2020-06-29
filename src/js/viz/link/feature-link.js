@@ -20,24 +20,6 @@ FeatureLink.prototype.init = function (id, fromFeatPos, toFeatPos, app) {
     // but there is a workaround in way ReadMiJson init's links so OK for now
 };
 
-
-/*
-FeatureLink.prototype.getToolTip = function() {
-    var tooltip = "";
-    tooltip += this.participants[0].labelText + " ";
-    for (var i = 0; i < this.fromSequenceData.length; i++) {
-        if (i > 0) tooltip += ",";
-        tooltip += this.fromSequenceData[i].toString();
-    }
-    tooltip += " to ";
-    tooltip += this.participants[1].labelText + " ";
-    for (var j = 0; j < this.toSequenceData.length; j++) {
-        if (j > 0) tooltip += ",";
-        tooltip += this.toSequenceData[j].toString();
-    }
-    return tooltip;
-}*/
-
 FeatureLink.prototype.initSVG = function () {
     if (typeof this.glyph === "undefined") {
         this.glyph = document.createElementNS(svgns, "path");
@@ -168,14 +150,14 @@ FeatureLink.prototype.setLinkCoordinates = function () {
         return (!isNaN(parseFloat(thing)) && isFinite(thing));
     }
 
-    function getPathSegments(midPoint, controlPoint, startRes, endRes, interactor, yOffset) {
+    function getPathSegments(midPoint, controlPoint, startRes, endRes, participant, yOffset) {
         let startPoint, endPoint;
-        if (!interactor.form) { // tests if form = undefined or 0 //TODO: maybe change this, its confusing
-            startPoint = interactor.getPosition();
+        if (!participant.form) { // tests if form = undefined or 0 //TODO: maybe change this, its confusing
+            startPoint = participant.getPosition();
             endPoint = startPoint;
         } else {
-            startPoint = interactor.getResidueCoordinates(startRes, yOffset);
-            endPoint = interactor.getResidueCoordinates(endRes, yOffset);
+            startPoint = participant.getResidueCoordinates(startRes, yOffset);
+            endPoint = participant.getResidueCoordinates(endRes, yOffset);
 
         }
         return " Q" + controlPoint[0] + "," + controlPoint[1] + " " + startPoint[0] + "," + startPoint[1] +
@@ -183,7 +165,7 @@ FeatureLink.prototype.setLinkCoordinates = function () {
             " Q" + controlPoint[0] + "," + controlPoint[1] + " " + midPoint[0] + "," + midPoint[1];
     }
 
-    function sequenceDataMidPoint(sequenceData, interactor) {
+    function sequenceDataMidPoint(sequenceData, participant) {
         //get the smallest start and the biggest end
         let lowestLinkedRes = null,
             highestLinkedRes = null;
@@ -216,25 +198,25 @@ FeatureLink.prototype.setLinkCoordinates = function () {
                 }
             }
         }
-        return interactor.getResidueCoordinates((lowestLinkedRes + highestLinkedRes) / 2, 0);
+        return participant.getResidueCoordinates((lowestLinkedRes + highestLinkedRes) / 2, 0);
     }
 
-    const fromInteractor = this.fromSequenceData[0].node;
-    const toInteractor = this.toSequenceData[0].node;
+    const fromParticipant = this.fromSequenceData[0].node;
+    const toParticipant = this.toSequenceData[0].node;
     //calculate mid points of from and to sequence data
     let fMid, tMid;
-    if (!fromInteractor.form) { // if not (undefined or 0)
-        fMid = fromInteractor.getPosition();
+    if (!fromParticipant.form) { // if not (undefined or 0)
+        fMid = fromParticipant.getPosition();
     } else {
-        fMid = sequenceDataMidPoint(this.fromSequenceData, fromInteractor);
+        fMid = sequenceDataMidPoint(this.fromSequenceData, fromParticipant);
     }
-    if (!toInteractor.form) {// if not (undefined or 0)
-        tMid = toInteractor.getPosition();
+    if (!toParticipant.form) {// if not (undefined or 0)
+        tMid = toParticipant.getPosition();
     } else {
-        tMid = sequenceDataMidPoint(this.toSequenceData, toInteractor);
+        tMid = sequenceDataMidPoint(this.toSequenceData, toParticipant);
     }
 
-    //calculate angle from fromInteractor mid point to toInteractor mid point
+    //calculate angle from fromParticipant mid point to toParticipant mid point
     const deltaX = fMid[0] - tMid[0];
     const deltaY = fMid[1] - tMid[1];
     const angleBetweenMidPoints = Math.atan2(deltaY, deltaX);
@@ -245,8 +227,8 @@ FeatureLink.prototype.setLinkCoordinates = function () {
     }
 
     //out is value we use to decide which side of bar the link glyph is drawn
-    //first for 'from' interactor
-    let out = (abmpDeg - fromInteractor.rotation);
+    //first for 'from' participant
+    let out = (abmpDeg - fromParticipant.rotation);
     if (out < 0) {
         out += 360;
     }
@@ -254,12 +236,12 @@ FeatureLink.prototype.setLinkCoordinates = function () {
     if (out < 180) {
         fyOffset = -10;
     }
-    let fRotRad = (fromInteractor.rotation / 360) * Math.PI * 2;
+    let fRotRad = (fromParticipant.rotation / 360) * Math.PI * 2;
     if (out > 180) {
         fRotRad -= Math.PI;
     }
-    //now for 'to' interactor
-    out = (abmpDeg - toInteractor.rotation);
+    //now for 'to' participant
+    out = (abmpDeg - toParticipant.rotation);
     if (out < 0) {
         out += 360;
     }
@@ -267,7 +249,7 @@ FeatureLink.prototype.setLinkCoordinates = function () {
     if (out > 180) {
         tyOffset = -10;
     }
-    let tRotRad = (toInteractor.rotation / 360) * Math.PI * 2;
+    let tRotRad = (toParticipant.rotation / 360) * Math.PI * 2;
     if (out < 180) {
         tRotRad -= Math.PI;
     }
@@ -275,14 +257,14 @@ FeatureLink.prototype.setLinkCoordinates = function () {
     let ftMid = [fMid[0] + (30 * Math.sin(fRotRad) * this.app.z),
         fMid[1] - (30 * Math.cos(fRotRad) * this.app.z)
     ];
-    if (!fromInteractor.form) { // if not (undefined or 0)
+    if (!fromParticipant.form) { // if not (undefined or 0)
         ftMid = fMid;
     }
 
     let ttMid = [tMid[0] + (30 * Math.sin(tRotRad) * this.app.z),
         tMid[1] - (30 * Math.cos(tRotRad) * this.app.z)
     ];
-    if (!toInteractor.form) { // if not (undefined or 0)
+    if (!toParticipant.form) { // if not (undefined or 0)
         ttMid = tMid;
     }
 
@@ -295,39 +277,39 @@ FeatureLink.prototype.setLinkCoordinates = function () {
     let highlightGlyphPath = "M" + triPointMid[0] + "," + triPointMid[1];
     for (let f = 0; f < fSDCount; f++) {
         seqDatum = this.fromSequenceData[f];
-        glyphPath += getPathSegments(triPointMid, ftMid, seqDatum.begin, seqDatum.end, fromInteractor, fyOffset);
+        glyphPath += getPathSegments(triPointMid, ftMid, seqDatum.begin, seqDatum.end, fromParticipant, fyOffset);
         highlightStartRes = seqDatum.begin;
         highlightEndRes = seqDatum.end;
         if (isNumber(seqDatum.uncertainBegin)) {
             uncertainGlyphPath += getPathSegments(triPointMid, ftMid,
-                seqDatum.uncertainBegin, seqDatum.begin, fromInteractor, fyOffset);
+                seqDatum.uncertainBegin, seqDatum.begin, fromParticipant, fyOffset);
             highlightStartRes = seqDatum.uncertainBegin;
         }
         if (isNumber(seqDatum.uncertainEnd)) {
             uncertainGlyphPath += getPathSegments(triPointMid, ftMid,
-                seqDatum.end, seqDatum.uncertainEnd, fromInteractor, fyOffset);
+                seqDatum.end, seqDatum.uncertainEnd, fromParticipant, fyOffset);
             highlightEndRes = seqDatum.uncertainEnd;
         }
         highlightGlyphPath += getPathSegments(triPointMid, ftMid,
-            highlightStartRes, highlightEndRes, fromInteractor, fyOffset);
+            highlightStartRes, highlightEndRes, fromParticipant, fyOffset);
     }
     for (let t = 0; t < tSDCount; t++) {
         seqDatum = this.toSequenceData[t];
-        glyphPath += getPathSegments(triPointMid, ttMid, seqDatum.begin, seqDatum.end, toInteractor, tyOffset);
+        glyphPath += getPathSegments(triPointMid, ttMid, seqDatum.begin, seqDatum.end, toParticipant, tyOffset);
         highlightStartRes = seqDatum.begin;
         highlightEndRes = seqDatum.end;
         if (isNumber(seqDatum.uncertainBegin)) {
             uncertainGlyphPath += getPathSegments(triPointMid, ttMid,
-                seqDatum.uncertainBegin, seqDatum.begin, toInteractor, tyOffset);
+                seqDatum.uncertainBegin, seqDatum.begin, toParticipant, tyOffset);
             highlightStartRes = seqDatum.uncertainBegin;
         }
         if (isNumber(seqDatum.uncertainEnd)) {
             uncertainGlyphPath += getPathSegments(triPointMid, ttMid,
-                seqDatum.end, seqDatum.uncertainEnd, toInteractor, tyOffset);
+                seqDatum.end, seqDatum.uncertainEnd, toParticipant, tyOffset);
             highlightEndRes = seqDatum.uncertainEnd;
         }
         highlightGlyphPath += getPathSegments(triPointMid, ttMid,
-            highlightStartRes, highlightEndRes, toInteractor, tyOffset);
+            highlightStartRes, highlightEndRes, toParticipant, tyOffset);
     }
 
     if (!this.glyph) {

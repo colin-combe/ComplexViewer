@@ -10,7 +10,6 @@ export function RNA(id, app, json, name) {
     //links
     this.naryLinks = new Map();
     this.binaryLinks = new Map();
-    this.selfLink = null;
     this.sequenceLinks = new Map();
 
     this.name = name;
@@ -36,7 +35,7 @@ export function RNA(id, app, json, name) {
     this.highlight.setAttribute("fill", "none");
     //this.highlight.setAttribute("fill-opacity", 1);
     //attributes that may change
-    this.highlight.setAttribute("stroke-opacity", 0);
+    this.highlight.setAttribute("stroke-opacity", "0");
     this.upperGroup.appendChild(this.highlight);
 
     //create label - we will move this svg element around when protein form changes
@@ -80,9 +79,9 @@ export function RNA(id, app, json, name) {
     this.upperGroup.onmouseout = function (evt) {
         self.mouseOut(evt);
     };
-    this.upperGroup.ontouchstart = function (evt) {
-        self.touchStart(evt);
-    };
+    // this.upperGroup.ontouchstart = function (evt) {
+    //     self.touchStart(evt);
+    // };
 
 }
 

@@ -5,18 +5,16 @@ import {svgns, highlightColour, LABEL_Y} from "../../config";
 
 Protein.prototype = new Polymer();
 
-export function Protein(id, xinetController, json, name) {
+export function Protein(id, /*App*/ app, json, name) {
     this.id = id; // id may not be accession (multiple Segments with same accession)
-    this.app = xinetController;
+    this.app = app;
     this.json = json;
     this.name = name;
     this.tooltip = this.name + " [" + this.id + "]"; // + this.accession;
     //links
     this.naryLinks = new Map();
     this.binaryLinks = new Map();
-    this.selfLink = null;
     this.sequenceLinks = new Map();
-    this.selfLink = null;
     // layout info
     this.cx = 40;
     this.cy = 40;

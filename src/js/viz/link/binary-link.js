@@ -1,4 +1,4 @@
-import {svgns, highlightColour} from "../../config";
+import {svgns} from "../../config";
 import {Link} from "./link";
 import * as Intersection from "intersectionjs";
 import * as Point2D from "point2d";

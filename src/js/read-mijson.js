@@ -111,7 +111,7 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
             if (datum.object === "interaction" && datum.id === interactionId) {
                 const nLinkId = getNaryLinkIdFromInteraction(datum);
                 const naryLink = app.allNaryLinks.get(nLinkId);
-                complex.initInteractor(naryLink);
+                complex.initParticipant(naryLink);
                 naryLink.complex = complex;
             }
         }

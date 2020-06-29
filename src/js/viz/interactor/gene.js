@@ -11,7 +11,6 @@ export function Gene(id, app, json, name) {
     //links
     this.naryLinks = new Map();
     this.binaryLinks = new Map();
-    this.selfLink = null;
     this.sequenceLinks = new Map();
     this.name = name;
     // layout info
@@ -116,9 +115,9 @@ export function Gene(id, app, json, name) {
     this.upperGroup.onmouseout = function (evt) {
         self.mouseOut(evt);
     };
-    this.upperGroup.ontouchstart = function (evt) {
-        self.touchStart(evt);
-    };
+    // this.upperGroup.ontouchstart = function (evt) {
+    //     self.touchStart(evt);
+    // };
 
     this.showHighlight(false);
 }

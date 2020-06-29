@@ -4,9 +4,9 @@ import {svgns} from "../../config";
 import {Link} from "./link";
 // var FeatureLink = require('./FeatureLink');
 
-export function UnaryLink(id, app, interactor) {
+export function UnaryLink(id, app, participant) {
     this.id = id;
-    this.participants = [interactor];
+    this.participants = [participant];
     this.sequenceLinks = new Map();
     this.app = app;
     this.line = document.createElementNS(svgns, "path");
@@ -43,10 +43,10 @@ UnaryLink.prototype.show = function () {
 
 
 UnaryLink.prototype.setLinkCoordinates = function () {
-    const interactor = this.participants[0];
-    this.line.setAttribute("transform", "translate(" + interactor.cx +
-        " " + interactor.cy + ")" + " scale(" + (this.app.z) + ")");
-    this.highlightLine.setAttribute("transform", "translate(" + interactor.cx +
-        " " + interactor.cy + ")" + " scale(" + (this.app.z) + ")");
+    const participant = this.participants[0];
+    this.line.setAttribute("transform", "translate(" + participant.cx +
+        " " + participant.cy + ")" + " scale(" + (this.app.z) + ")");
+    this.highlightLine.setAttribute("transform", "translate(" + participant.cx +
+        " " + participant.cy + ")" + " scale(" + (this.app.z) + ")");
 };
 

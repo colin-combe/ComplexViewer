@@ -85,15 +85,15 @@ Polymer.prototype.scale = function () {
         if (this.annotations) {
             const ca = this.annotations.length;
             for (let a = 0; a < ca; a++) {
-                const anno = this.annotations[a];
-                if (typeof anno.seqDatum.uncertainBegin != "undefined") {
-                    anno.fuzzyStart.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin, anno));
+                const annotation = this.annotations[a];
+                if (typeof annotation.seqDatum.uncertainBegin != "undefined") {
+                    annotation.fuzzyStart.setAttribute("d", this.getAnnotationRectPath(annotation.seqDatum.uncertainBegin, annotation.seqDatum.begin, annotation));
                 }
 
-                anno.certain.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.begin, anno.seqDatum.end, anno));
+                annotation.certain.setAttribute("d", this.getAnnotationRectPath(annotation.seqDatum.begin, annotation.seqDatum.end, annotation));
 
-                if (anno.seqDatum.uncertainEnd) {
-                    anno.fuzzyEnd.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.end, anno.seqDatum.uncertainEnd, anno));
+                if (annotation.seqDatum.uncertainEnd) {
+                    annotation.fuzzyEnd.setAttribute("d", this.getAnnotationRectPath(annotation.seqDatum.end, annotation.seqDatum.uncertainEnd, annotation));
                 }
             }
         }
