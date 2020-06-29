@@ -34,6 +34,13 @@ Complex.prototype.getPosition = function () {
 };
 
 Complex.prototype.setPosition = function () {
+    console.log("bad - called setPosition on ", this);
+};
+
+Complex.prototype.changePosition = function (dx, dy) {
+    for (let participant of this.naryLink.interactors){
+        participant.changePosition(dx, dy);
+    }
 };
 
 Complex.prototype.getResidueCoordinates = function () {

@@ -107,32 +107,7 @@ Link.prototype.filteredEvidence = function () {
 
 //used by BinaryLink and UnaryLink
 Link.prototype.hide = function () {
-    this.thickLine.remove();
+    this.thickLine.remove(); // todo - this isn't used
     this.highlightLine.remove();
     this.line.remove();
-    // const p_pLinksWide = [];
-    // const highlights = [];
-    // const p_pLinks = [];
-    //
-    // for (var i = 0; i < this.util.p_pLinksWide.childNodes.length; i++) {
-    //     p_pLinksWide[i] = this.util.p_pLinksWide.childNodes[i];
-    // }
-    //
-    // for (var i = 0; i < this.util.highlights.childNodes.length; i++) {
-    //     highlights[i] = this.util.highlights.childNodes[i];
-    // }
-    //
-    // for (var i = 0; i < this.util.p_pLinks.childNodes.length; i++) {
-    //     p_pLinks[i] = this.util.p_pLinks.childNodes[i];
-    // }
-    //
-    // if (p_pLinksWide.indexOf(this.thickLine) > -1) {
-    //     this.util.p_pLinksWide.removeChild(this.thickLine);
-    // }
-    // if (highlights.indexOf(this.highlightLine) > -1) {
-    //     this.util.highlights.removeChild(this.highlightLine);
-    // }
-    // if (p_pLinks.indexOf(this.line) > -1) {
-    //     this.util.p_pLinks.removeChild(this.line);
-    // }
 };

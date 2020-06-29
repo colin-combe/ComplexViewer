@@ -405,7 +405,7 @@ App.prototype.zoomToExtent = function () {
         let y = (deltaHeight / 2) - bbox.y;
         this.container.setAttribute("transform", "scale(" + 1 + ") translate(" + x + " " + y + ")");
     }
-    //todo - followign could be tided up by using acknowledgement bbox or positioning att's of text
+    //todo - following could be tided up by using acknowledgement bbox or positioning att's of text
     this.acknowledgement.setAttribute("transform", "translate("+(width - 150)+", " + (height - 30) + ")");
 };
 
@@ -443,19 +443,12 @@ App.prototype.mouseMove = function (evt) {
         if (this.state === this.STATES.DRAGGING) {
             // we are currently dragging things around
             let ox, oy, nx, ny;
-            if (typeof this.dragElement.cx === "undefined") { // if not an Interactor
+            if (!this.dragElement.cx) { // if not an Interactor (that makes it so-called 'naryLink')
                 const nodes = this.dragElement.interactors;
-                for (let protein of nodes) {
-                    ox = protein.cx;
-                    oy = protein.cy;
-                    nx = ox - dx;
-                    ny = oy - dy;
-                    protein.setPosition(nx, ny);
-                    protein.setAllLinkCoordinates();
+                for (let protein of nodes) { // todo - rename var
+                    protein.changePosition(dx, dy);
                 }
-                for (let node of nodes) {
-                    node.setAllLinkCoordinates();
-                }
+                this.setAllLinkCoordinates();
             } else {
                 //its a protein - drag it TODO: DRAG SELECTED
                 ox = this.dragElement.cx;
@@ -927,7 +920,7 @@ App.prototype.addColorSchemeKey = function (/*HTMLDivElement*/ div) {
     ColorSchemeKey.update(div, this);
 };
 
-App.prototype.removeColorSchemeKeylegend = function (/*HTMLDivElement*/ colorSchemeKeyDiv) {
+App.prototype.removeColorSchemeKey = function (/*HTMLDivElement*/ colorSchemeKeyDiv) {
     this.colorSchemeKeyDivs.remove(colorSchemeKeyDiv);
     colorSchemeKeyDiv.textContent = "";
 };

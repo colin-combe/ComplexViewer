@@ -89,20 +89,20 @@ Interactor.prototype.setSelected = function(select) {
 */
 
 Interactor.prototype.getPosition = function () {
-    return [this.cx, this.cy];
+    return [this.cx, this.cy]; // todo - type of return is kind of inconsistent
 };
 
-// more accurately described as setting transform for top svg elements (sets scale also)
 Interactor.prototype.setPosition = function (x, y) {
     this.cx = x;
     this.cy = y;
-    // if (this.form === 1) {
-    this.upperGroup.setAttribute("transform", "translate(" + (this.cx) + " " + this.cy + ")"); // +
-    //         " scale(" + (this.util.z) + ") " + "rotate(" + this.rotation + ")");
-    // } else {
-    //     this.upperGroup.setAttribute("transform", "translate(" + this.cx + " " + this.cy + ")" +
-    //         " scale(" + (this.util.z) + ") ");
-    // }
+    this.upperGroup.setAttribute("transform", "translate(" + (this.cx) + " " + this.cy + ")");
+};
+
+Interactor.prototype.changePosition = function (x, y) {
+    this.cx -= x;
+    this.cy -= y;
+    this.upperGroup.setAttribute("transform", "translate(" + (this.cx) + " " + this.cy + ")");
+    // this.setAllLinkCoordinates(); // todo - look at calls
 };
 
 Interactor.prototype.getAggregateSelfLinkPath = function () {
@@ -132,7 +132,7 @@ Interactor.prototype.checkLinks = function () {
         }
     }
 
-    // checkAll(this.naryLinks); // hacked out to help fix ordering of nLinks
+    // checkAll(this.naryLinks); // hacked out to fix ordering of nLinks
     checkAll(this.binaryLinks);
     checkAll(this.sequenceLinks);
     if (this.selfLink !== null) {
