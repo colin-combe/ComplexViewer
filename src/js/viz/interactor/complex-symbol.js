@@ -9,9 +9,7 @@ export function ComplexSymbol(id, app, name, json) { //, name) {
 
     this.upperGroup = document.createElementNS(svgns, "g");
     this.initLabel();
-    //for polygon
     const points = "15,0 8,-13 -7,-13 -15,0 -8,13 7,13";
-    //make blob
     this.outline = document.createElementNS(svgns, "polygon");
     this.outline.setAttribute("points", points);
     this.initOutline();
@@ -21,7 +19,7 @@ export function ComplexSymbol(id, app, name, json) { //, name) {
 ComplexSymbol.prototype = new Interactor();
 
 
-ComplexSymbol.prototype.getBlobRadius = function () {
+ComplexSymbol.prototype.getSymbolRadius = function () {
     return 20;
 };
 

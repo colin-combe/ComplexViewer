@@ -1,12 +1,8 @@
-import * as d3 from "d3"; //only used to set att's'
-// import {Interactor} from "./interactor";
 import {Polymer} from "./polymer";
 import {svgns, highlightColour} from "../../config";
 
 export function Protein(id, /*App*/ app, json, name) {
     this.init(id, app, json, name);
-
-    // this.tooltip = this.name + " [" + this.id + "]"; // + this.accession;
     // layout info
     this.cx = 40;
     this.cy = 40;
@@ -48,30 +44,39 @@ export function Protein(id, /*App*/ app, json, name) {
 
     //since form is set to 0, make this a circle, this stuff is equivalent to
     // end result of toCircle but without transition
-    const r = this.getBlobRadius();
-    d3.select(this.outline)
-        .attr("fill-opacity", 1)
-        // .attr("fill", "#ffffff")
-        .attr("x", -r).attr("y", -r)
-        .attr("width", r * 2).attr("height", r * 2)
-        .attr("rx", r).attr("ry", r);
-    d3.select(this.background)
-        .attr("x", -r).attr("y", -r)
-        .attr("width", r * 2).attr("height", r * 2)
-        .attr("rx", r).attr("ry", r);
-    d3.select(this.annotationsSvgGroup).attr("transform", "scale(1, 1)");
-    d3.select(this.highlight)
-        .attr("width", (r * 2) + 5).attr("height", (r * 2) + 5)
-        .attr("x", -r - 2.5).attr("y", -r - 2.5)
-        .attr("rx", r + 2.5).attr("ry", r + 2.5)
-        .attr("stroke-opacity", 0);
+    const r = this.getSymbolRadius();
+
+    this.outline.setAttribute("x", -r);
+    this.outline.setAttribute("y", -r);
+    this.outline.setAttribute("width", r * 2);
+    this.outline.setAttribute("height", r * 2);
+    this.outline.setAttribute("rx", r);
+    this.outline.setAttribute("ry", r);
+
+    this.background.setAttribute("x", -r);
+    this.background.setAttribute("y", -r);
+    this.background.setAttribute("width", r * 2);
+    this.background.setAttribute("height", r * 2);
+    this.background.setAttribute("rx", r);
+    this.background.setAttribute("ry", r);
+
+    this.annotationsSvgGroup.setAttribute("transform", "scale(1, 1)");
+
+    this.highlight.setAttribute("width", (r * 2) + 5);
+    this.highlight.setAttribute("height", (r * 2) + 5);
+    this.highlight.setAttribute("x", -r - 2.5);
+    this.highlight.setAttribute("y", -r - 2.5);
+    this.highlight.setAttribute("rx", r + 2.5);
+    this.highlight.setAttribute("ry", r + 2.5);
+    this.highlight.setAttribute("stroke-opacity", "0");
+
     this.labelSVG.setAttribute("transform", "translate(" + (-(r + 5)) + "," + "-5)");
 
     this.initListeners();
 
     Object.defineProperty(this, "height", {
         get: function height() {
-            return 60;//this.upperGroup.getBBox().height + 60; // * this.util.z;
+            return 60;
         }
     });
 

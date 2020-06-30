@@ -9,9 +9,7 @@ export function DNA(id, app, json, name) {
 
     this.upperGroup = document.createElementNS(svgns, "g");
     this.initLabel();
-    //for polygon
     const points = "0, -5  10, -10 0, 10 -10, -10";
-    //make blob
     this.outline = document.createElementNS(svgns, "polygon");
     this.outline.setAttribute("points", points);
     this.initOutline();

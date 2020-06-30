@@ -21,13 +21,13 @@ Polymer.prototype.setSequence = function (sequence) {
 };
 
 //by the time we get here all prot's have had their sequence set, so Polymer.MAXSIZE has correct value;
-Polymer.prototype.initSVG = function () {
+Polymer.prototype.initLinks = function () { //todo look at, not even being called now
     //this.setForm(this.form);
     if (this.selfLink) this.selfLink.initSelfLinkSVG();
     this.setAllLinkCoordinates();
 };
 
-Polymer.prototype.getBlobRadius = function () {
+Polymer.prototype.getSymbolRadius = function () {
     //~ if (this.size) {
     //~ return Math.sqrt(this.size / 2 / Math.PI);
     //~ }
@@ -196,7 +196,7 @@ Polymer.prototype.setForm = function (form, svgP) {
         } else {
             // if (this.form !== 0) {
             this.toCircle(svgP);
-            // var r = this.getBlobRadius();
+            // var r = this.getSymbolRadius();
 
         }
         // }
@@ -208,7 +208,7 @@ Polymer.prototype.toCircle = function (svgP) {
     this.busy = true;
 
     // var protLength = this.size * this.stickZoom;
-    const r = this.getBlobRadius();
+    const r = this.getSymbolRadius();
     //
     d3.select(this.background).transition()
         .attr("x", -r).attr("y", -r)
@@ -355,7 +355,7 @@ Polymer.prototype.toStick = function () {
     }
 
     const protLength = this.size * this.stickZoom;
-    const r = this.getBlobRadius();
+    const r = this.getSymbolRadius();
 
     const lengthInterpol = d3.interpolate((2 * r), protLength);
     const stickZoomInterpol = d3.interpolate(0, this.stickZoom);
@@ -462,7 +462,7 @@ Polymer.prototype.toStickNoTransition = function () {
     }
 
     const protLength = this.size * this.stickZoom;
-    const r = this.getBlobRadius();
+    const r = this.getSymbolRadius();
 
     const lengthInterpol = d3.interpolate((2 * r), protLength);
     // var stickZoomInterpol = d3.interpolate(0, this.stickZoom);
@@ -695,7 +695,7 @@ Polymer.prototype.getAnnotationPieSliceArcPath = function (startRes, endRes) {
         startAngle = ((startRes - 1) / this.size) * 360;
         endAngle = ((endRes - 1) / this.size) * 360;
     }
-    const radius = this.getBlobRadius() - 2;
+    const radius = this.getSymbolRadius() - 2;
     const arcStart = trig(radius, startAngle - 90);
     const arcEnd = trig(radius, endAngle - 90);
     let largeArch = 0;
@@ -719,7 +719,7 @@ Polymer.prototype.getAnnotationPieSliceApproximatePath = function (startRes, end
         startAngle = ((startRes - 1) / this.size) * 360;
         endAngle = ((endRes) / this.size) * 360;
     }
-    const pieRadius = this.getBlobRadius() - 2;
+    const pieRadius = this.getSymbolRadius() - 2;
     // var arcStart = Interactor.trig(pieRadius, startAngle - 90);
     // var arcEnd = Interactor.trig(pieRadius, endAngle - 90);
     let approximatePiePath = "M 0,0";

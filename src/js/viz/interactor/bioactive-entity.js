@@ -8,12 +8,11 @@ export function BioactiveEntity(id, app, json, name) {
     this.cy = 40;
     this.upperGroup = document.createElementNS(svgns, "g");
     this.initLabel();
-    //for polygon
     const points = "0, -10  8.66,5 -8.66,5";
-    //make blob
     this.outline = document.createElementNS(svgns, "polygon");
     this.outline.setAttribute("points", points);
     this.initOutline();
+    this.initListeners();
 }
 
 BioactiveEntity.prototype = new Interactor();

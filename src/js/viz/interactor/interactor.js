@@ -48,7 +48,7 @@ Interactor.prototype.initLabel = function (){
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
     this.labelSVG.setAttribute("transform",
-        "translate( -" + this.getBlobRadius() + " " + LABEL_Y + ")");
+        "translate( -" + this.getSymbolRadius() + " " + LABEL_Y + ")");
     this.upperGroup.appendChild(this.labelSVG);
 };
 
@@ -143,7 +143,7 @@ Interactor.prototype.mouseOut = function (evt) {
     return false;
 };
 
-Interactor.prototype.getBlobRadius = function () {
+Interactor.prototype.getSymbolRadius = function () {
     return 15;
 };
 
@@ -169,7 +169,7 @@ Interactor.prototype.changePosition = function (x, y) {
 };
 
 Interactor.prototype.getAggregateSelfLinkPath = function () {
-    const intraR = this.getBlobRadius() + 7;
+    const intraR = this.getSymbolRadius() + 7;
     const sectorSize = 45;
     const arcStart = trig(intraR, 25 + sectorSize);
     const arcEnd = trig(intraR, -25 + sectorSize);

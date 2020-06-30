@@ -311,7 +311,7 @@ App.prototype.collapseProtein = function () {
 };
 
 App.prototype.init = function () {
-    this.checkLinks(); // todo - should this really be here
+    this.checkLinks();
     let maxSeqLength = 0;
     for (let participant of this.participants.values()) {
         if (participant.size > maxSeqLength) {
@@ -351,7 +351,7 @@ App.prototype.init = function () {
             this.proteinUpper.appendChild(participant.upperGroup);
             if (participant.json.type.name === "protein") {
                 participant.stickZoom = this.defaultBarScale;
-                participant.initSVG();
+                participant.initLinks();
             }
         }
     }

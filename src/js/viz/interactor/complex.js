@@ -8,7 +8,7 @@ export function Complex(id, app) {
 
 Complex.prototype = new Interactor();
 
-Complex.prototype.initParticipant = function (naryLink) {
+Complex.prototype.initParticipant = function (naryLink) { // todo - rename to initLink?
     this.naryLink = naryLink;
     naryLink.path.setAttribute("stroke", "gray");
     naryLink.path.setAttribute("stroke-linejoin", "round");

@@ -1,4 +1,3 @@
-import * as d3 from "d3";
 import {Interactor} from "./interactor";
 import {svgns} from "../../config";
 
@@ -10,35 +9,14 @@ export function Gene(id, app, json, name) {
 
     this.upperGroup = document.createElementNS(svgns, "g");
     this.initLabel();
-    // this.background = document.createElementNS(svgns, "rect");
-    // this.background.setAttribute("fill", "#FFFFFF");
-    // this.upperGroup.appendChild(this.background);
-
-    //make outline
     this.outline = document.createElementNS(svgns, "rect");
+    this.outline.setAttribute("x", "-16");
+    this.outline.setAttribute("y", "-8");
+    this.outline.setAttribute("width", "32");
+    this.outline.setAttribute("height", "16");
+    this.outline.setAttribute("rx", "6");
+    this.outline.setAttribute("ry", "6");
     this.initOutline();
-    //todo - what is this, why transition?
-    // d3.select(this.background).transition()
-    //     .attr("x", -16).attr("y", -8)
-    //     .attr("width", 32).attr("height", 16)
-    //     .attr("rx", 6).attr("ry", 6);
-    // d3.select(this.outline).transition()
-    //     .attr("x", -16).attr("y", -8)
-    //     .attr("width", 32).attr("height", 16)
-    //     .attr("rx", 6).attr("ry", 6);
-    // d3.select(this.highlight).transition()
-    //     .attr("x", -16).attr("y", -8)
-    //     .attr("width", 32).attr("height", 16)
-    //     .attr("rx", 6).attr("ry", 6);
-    // d3.select(this.background)
-    //     .attr("x", -16).attr("y", -8)
-    //     .attr("width", 32).attr("height", 16)
-    //     .attr("rx", 6).attr("ry", 6);
-    d3.select(this.outline)
-        .attr("x", -16).attr("y", -8)
-        .attr("width", 32).attr("height", 16)
-        .attr("rx", 6).attr("ry", 6);
-
     this.initListeners();
 }
 
