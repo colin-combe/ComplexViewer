@@ -75,9 +75,11 @@ export function Protein(id, /*App*/ app, json, name) {
 
     this.initListeners();
 
+    const self = this;
     Object.defineProperty(this, "height", {
         get: function height() {
-            return 60;
+            return self.form == 1? 150:60;
+            //return 160;
         }
     });
 

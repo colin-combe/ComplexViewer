@@ -82,15 +82,13 @@ Polymer.prototype.scale = function () {
         this.labelSVG.transform.baseVal.initialize(this.app.svgElement.createSVGTransformFromMatrix(k));
 
         if (this.annotations) {
-            const ca = this.annotations.length;
-            for (let a = 0; a < ca; a++) {
-                const annotation = this.annotations[a];
-                if (typeof annotation.seqDatum.uncertainBegin != "undefined") {
+            for (let annotation of this.annotations) {
+                if (annotation.seqDatum.uncertainBegin) {
                     annotation.fuzzyStart.setAttribute("d", this.getAnnotationRectPath(annotation.seqDatum.uncertainBegin, annotation.seqDatum.begin, annotation));
                 }
-
-                annotation.certain.setAttribute("d", this.getAnnotationRectPath(annotation.seqDatum.begin, annotation.seqDatum.end, annotation));
-
+                if (annotation.seqDatum.begin && annotation.seqDatum.end) {
+                    annotation.certain.setAttribute("d", this.getAnnotationRectPath(annotation.seqDatum.begin, annotation.seqDatum.end, annotation));
+                }
                 if (annotation.seqDatum.uncertainEnd) {
                     annotation.fuzzyEnd.setAttribute("d", this.getAnnotationRectPath(annotation.seqDatum.end, annotation.seqDatum.uncertainEnd, annotation));
                 }
@@ -274,19 +272,19 @@ Polymer.prototype.toCircle = function (svgP) {
                 );
             }
 
-            // if (anno.begin && anno.end) {
-            const certain = annotation.certain;
-            d3.select(certain).transition().attr("d", this.getAnnotationPieSliceApproximatePath(annotation.seqDatum.begin, annotation.seqDatum.end))
-                .duration(Polymer.transitionTime).each("end",
-                function () {
-                    for (let annoB of self.annotations){
-                        if (this === annoB.certain) {
-                            d3.select(this).attr("d", self.getAnnotationPieSliceArcPath(annoB.seqDatum.begin, annoB.seqDatum.end));
+            if (annotation.seqDatum.begin && annotation.seqDatum.end) {
+                const certain = annotation.certain;
+                d3.select(certain).transition().attr("d", this.getAnnotationPieSliceApproximatePath(annotation.seqDatum.begin, annotation.seqDatum.end))
+                    .duration(Polymer.transitionTime).each("end",
+                    function () {
+                        for (let annoB of self.annotations) {
+                            if (this === annoB.certain) {
+                                d3.select(this).attr("d", self.getAnnotationPieSliceArcPath(annoB.seqDatum.begin, annoB.seqDatum.end));
+                            }
                         }
                     }
-                }
-            );
-            // }
+                );
+            }
 
             if (typeof annotation.seqDatum.uncertainEnd != "undefined") {
                 const fuzzyEnd = annotation.fuzzyEnd;
@@ -397,12 +395,12 @@ Polymer.prototype.toStick = function () {
                 d3.select(fuzzyStart).transition().attr("d", this.getAnnotationRectPath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin, anno))
                     .duration(Polymer.transitionTime);
             }
-            // if (anno.seqDatum.begin && anno.seqDatum.end) {
-            const certain = anno.certain;
-            certain.setAttribute("d", this.getAnnotationPieSliceApproximatePath(anno.seqDatum.begin, anno.seqDatum.end));
-            d3.select(certain).transition().attr("d", this.getAnnotationRectPath(anno.seqDatum.begin, anno.seqDatum.end, anno))
-                .duration(Polymer.transitionTime);
-            // }
+            if (anno.seqDatum.begin && anno.seqDatum.end) {
+                const certain = anno.certain;
+                certain.setAttribute("d", this.getAnnotationPieSliceApproximatePath(anno.seqDatum.begin, anno.seqDatum.end));
+                d3.select(certain).transition().attr("d", this.getAnnotationRectPath(anno.seqDatum.begin, anno.seqDatum.end, anno))
+                    .duration(Polymer.transitionTime);
+            }
             if (typeof anno.seqDatum.uncertainEnd != "undefined") {
                 const fuzzyEnd = anno.fuzzyEnd;
                 fuzzyEnd.setAttribute("d", this.getAnnotationPieSliceApproximatePath(anno.seqDatum.end, anno.seqDatum.uncertainEnd));
@@ -505,12 +503,12 @@ Polymer.prototype.toStickNoTransition = function () {
                 d3.select(fuzzyStart).attr("d", this.getAnnotationRectPath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin, anno));
                 // .duration(Polymer.transitionTime);
             }
-            // if (anno.seqDatum.begin && anno.seqDatum.end) {
-            const certain = anno.certain;
-            certain.setAttribute("d", this.getAnnotationPieSliceApproximatePath(anno.seqDatum.begin, anno.seqDatum.end));
-            d3.select(certain) /*.transition()*/ .attr("d", this.getAnnotationRectPath(anno.seqDatum.begin, anno.seqDatum.end, anno));
-            // .duration(Polymer.transitionTime);
-            // }
+            if (anno.seqDatum.begin && anno.seqDatum.end) {
+                const certain = anno.certain;
+                certain.setAttribute("d", this.getAnnotationPieSliceApproximatePath(anno.seqDatum.begin, anno.seqDatum.end));
+                d3.select(certain) /*.transition()*/ .attr("d", this.getAnnotationRectPath(anno.seqDatum.begin, anno.seqDatum.end, anno));
+                // .duration(Polymer.transitionTime);
+            }
             if (typeof anno.seqDatum.uncertainEnd != "undefined") {
                 const fuzzyEnd = anno.fuzzyEnd;
                 // fuzzyEnd.setAttribute("d", this.getAnnotationPieSliceApproximatePath(anno.seqDatum.end, anno.seqDatum.uncertainEnd));
@@ -560,12 +558,15 @@ Polymer.prototype.toStickNoTransition = function () {
 };
 
 Polymer.prototype.getResXwithStickZoom = function (r) {
+    // if (isNaN(r)) {
+    //     console.error("NOT NUMBER");
+    // }
     if (r === "n-n") {
         return (-this.size / 2 * this.stickZoom) - 20;
     } else if (r === "c-c") {
         return (this.size / 2 * this.stickZoom) + 20;
     } else {
-        return (r - (this.size / 2)) * this.stickZoom;
+    return (r - (this.size / 2)) * this.stickZoom;
     }
 };
 
@@ -627,9 +628,9 @@ Polymer.prototype.setPositionalFeatures = function (posFeats) {
                 if (typeof anno.seqDatum.uncertainBegin != "undefined") {
                     anno.fuzzyStart.setAttribute("d", this.getAnnotationPieSliceArcPath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin));
                 }
-                // if (anno.seqDatum.begin && anno.seqDatum.end) {
-                anno.certain.setAttribute("d", this.getAnnotationPieSliceArcPath(anno.seqDatum.begin, anno.seqDatum.end));
-                // }
+                if (anno.seqDatum.begin && anno.seqDatum.end) {
+                    anno.certain.setAttribute("d", this.getAnnotationPieSliceArcPath(anno.seqDatum.begin, anno.seqDatum.end));
+                }
                 if (typeof anno.seqDatum.uncertainEnd != "undefined") {
                     anno.fuzzyEnd.setAttribute("d", this.getAnnotationPieSliceArcPath(anno.seqDatum.end, anno.seqDatum.uncertainEnd));
                 }
@@ -637,9 +638,9 @@ Polymer.prototype.setPositionalFeatures = function (posFeats) {
                 if (typeof anno.seqDatum.uncertainBegin != "undefined") {
                     anno.fuzzyStart.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin, anno));
                 }
-                // if (anno.seqDatum.begin && anno.seqDatum.end) {
-                anno.certain.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.begin, anno.seqDatum.end, anno));
-                // }
+                if (anno.seqDatum.begin && anno.seqDatum.end) {
+                    anno.certain.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.begin, anno.seqDatum.end, anno));
+                }
                 if (typeof anno.seqDatum.uncertainEnd != "undefined") {
                     anno.fuzzyEnd.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.end, anno.seqDatum.uncertainEnd, anno));
                 }
@@ -687,9 +688,9 @@ Polymer.prototype.getAnnotationPieSliceArcPath = function (startRes, endRes) {
     let startAngle, endAngle;
     if (startRes === "n-n") {
         startAngle = -20; //((startRes - 1) / this.size) * 360;
-        endAngle = ((endRes - 1) / this.size) * 360;
+        endAngle = 0;//((endRes - 1) / this.size) * 360;
     } else if (endRes === "c-c") {
-        startAngle = ((startRes - 1) / this.size) * 360;
+        startAngle = 0;//((startRes - 1) / this.size) * 360;
         endAngle = +20; //((endRes) / this.size) * 360;
     } else {
         startAngle = ((startRes - 1) / this.size) * 360;
@@ -711,9 +712,9 @@ Polymer.prototype.getAnnotationPieSliceApproximatePath = function (startRes, end
     let startAngle, endAngle;
     if (startRes === "n-n") {
         startAngle = -20; //((startRes - 1) / this.size) * 360;
-        endAngle = ((endRes) / this.size) * 360;
+        endAngle = 0;//((endRes) / this.size) * 360;
     } else if (endRes === "c-c") {
-        startAngle = ((startRes - 1) / this.size) * 360;
+        startAngle = 0;//((startRes - 1) / this.size) * 360;
         endAngle = +20; //((endRes) / this.size) * 360;
     } else {
         startAngle = ((startRes - 1) / this.size) * 360;
@@ -749,11 +750,11 @@ Polymer.prototype.getAnnotationRectPath = function (startRes, endRes, annotation
 
     let annotX, annotSize, annotLength;
     if (startRes === "n-n") {
-        annotX = this.getResXwithStickZoom(0 - 0.5) - 20;
+        annotX = this.getResXwithStickZoom(0.5) - 20;
         // var annotSize = (1 + (endRes - startRes));
         annotLength = 20;//annotSize * this.stickZoom;
     } else if (endRes === "c-c") {
-        annotX = this.getResXwithStickZoom(startRes - 0 + 0.5);
+        annotX = this.getResXwithStickZoom(this.size + 0.5);
         // var annotSize = (1 + (endRes - startRes));
         annotLength = 20;//annotSize * this.stickZoom;
     } else {

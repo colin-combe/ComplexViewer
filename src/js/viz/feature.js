@@ -16,18 +16,14 @@ export function Feature(participant, sequenceDatumString) {
     this.sequenceDatumString = sequenceDatumString.trim();
 
     if (this.sequenceDatumString === "?-?") {
-        this.begin = 1;
-        this.end = 1;
+        //this.begin = 1;
+        this.end = 1; //todo - having at begin affecting shape of line, look at why
         this.uncertainEnd = participant.size;
     } else if (this.sequenceDatumString === "n-n") {
         this.uncertainBegin = "n-n";
-        this.begin = 0;
-        this.end = 0;
         participant.nTerminusFeature = true;
     } else if (this.sequenceDatumString === "c-c") {
-        this.begin = participant.size + 1;
-        this.end = participant.size + 1;
-        this.uncertainEnd = "c-c";//node.size + 21;
+        this.uncertainEnd = "c-c";
     } else {
 
         const dashPosition = sequenceDatumString.indexOf("-");

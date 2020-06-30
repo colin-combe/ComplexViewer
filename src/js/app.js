@@ -19,7 +19,7 @@ import {svgns} from "./config";
 // so continuing to use prototypical inheritance in things for time being
 
 export function App(/*HTMLDivElement*/networkDiv) {
-    // this.debug = true;
+    // this.debug = true; // todo - things aren't exactly lined up in the bbounding boxes cola is using
     this.el = networkDiv;
 
     this.STATES = {};
