@@ -572,7 +572,7 @@ Polymer.prototype.getResXwithStickZoom = function (r) {
 //calculate the  coordinates of a residue (relative to this.util.container)
 Polymer.prototype.getResidueCoordinates = function (r, yOff) {
     if (typeof r === "undefined") {
-        alert("Error: residue number is undefined");
+        console.error("ERROR: residue number is undefined");
     }
     let x = this.getResXwithStickZoom(r * 1) * this.app.z;
     let y;

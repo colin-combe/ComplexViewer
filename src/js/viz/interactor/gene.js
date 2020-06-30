@@ -21,3 +21,7 @@ export function Gene(id, app, json, name) {
 }
 
 Gene.prototype = new Interactor();
+
+Gene.prototype.getSymbolRadius = function () {
+    return 21;
+};

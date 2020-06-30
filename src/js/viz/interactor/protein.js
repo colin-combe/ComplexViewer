@@ -3,6 +3,7 @@ import {svgns, highlightColour} from "../../config";
 
 export function Protein(id, /*App*/ app, json, name) {
     this.init(id, app, json, name);
+    this.type = "protein";
     // layout info
     this.cx = 40;
     this.cy = 40;

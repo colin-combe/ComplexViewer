@@ -483,7 +483,7 @@ App.prototype.mouseUp = function (evt) {
         const p = this.getEventPoint(evt); // seems to be correct, see below
         const c = this.mouseToSVG(p.x, p.y);
 
-        if (this.dragElement && this.dragElement.cx) { // naryLink does not have .cx
+        if (this.dragElement && this.dragElement.type === "protein") {
             if (!(this.state === this.STATES.DRAGGING || this.state === this.STATES.ROTATING)) { //not dragging or rotating
                 if (this.dragElement.form === 0) {
                     this.dragElement.setForm(1);
