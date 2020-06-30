@@ -6,6 +6,8 @@ export function ComplexSymbol(id, app, name, json) { //, name) {
     // layout info
     this.cx = 40;
     this.cy = 40;
+
+    this.upperGroup = document.createElementNS(svgns, "g");
     this.initLabel();
     //for polygon
     const points = "15,0 8,-13 -7,-13 -15,0 -8,13 7,13";

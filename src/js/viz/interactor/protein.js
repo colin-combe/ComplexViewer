@@ -10,6 +10,8 @@ export function Protein(id, /*App*/ app, json, name) {
     // layout info
     this.cx = 40;
     this.cy = 40;
+
+    this.upperGroup = document.createElementNS(svgns, "g");
     this.rotation = 0;
     this.stickZoom = 1;
     this.form = 0; // 0 = blob, 1 = stick
@@ -66,22 +68,6 @@ export function Protein(id, /*App*/ app, json, name) {
     this.labelSVG.setAttribute("transform", "translate(" + (-(r + 5)) + "," + "-5)");
 
     this.initListeners();
-    // // events
-    // const self = this;
-    // //    this.upperGroup.setAttribute('pointer-events','all');
-    // //todo: move to Interactor prototype?
-    // this.upperGroup.onmousedown = function (evt) {
-    //     self.mouseDown(evt);
-    // };
-    // this.upperGroup.onmouseover = function (evt) {
-    //     self.mouseOver(evt);
-    // };
-    // this.upperGroup.onmouseout = function (evt) {
-    //     self.mouseOut(evt);
-    // };
-    // // this.upperGroup.ontouchstart = function(evt) {
-    // //     self.touchStart(evt);
-    // // };
 
     Object.defineProperty(this, "height", {
         get: function height() {

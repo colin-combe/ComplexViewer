@@ -7,6 +7,8 @@ export function Gene(id, app, json, name) {
     // layout info
     this.cx = 40;
     this.cy = 40;
+
+    this.upperGroup = document.createElementNS(svgns, "g");
     this.initLabel();
     // this.background = document.createElementNS(svgns, "rect");
     // this.background.setAttribute("fill", "#FFFFFF");

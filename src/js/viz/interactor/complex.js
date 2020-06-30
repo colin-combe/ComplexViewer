@@ -2,7 +2,6 @@ import {Interactor} from "./interactor";
 
 export function Complex(id, app) {
     this.init(id, app);
-    this.upperGroup = null; // todo, bit yucky, take it out of init
     this.type = "complex";
     this.padding = 15;
 }

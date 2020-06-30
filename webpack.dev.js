@@ -8,7 +8,7 @@ module.exports = merge(common, {
     devtool: "eval-source-map",
     module: {
         rules: [
-            // { todo - use bable for production mode - https://webpack.js.org/guides/production/
+            // {
             //     test: /\.(js)$/,
             //     use: 'babel-loader',
             //     exclude: /node_modules/

@@ -8,6 +8,7 @@ export function MoleculeSet(id, app, json, name) {
     // layout info
     this.cx = 40;
     this.cy = 40;
+    this.upperGroup = document.createElementNS(svgns, "g");
     this.initLabel();
     //make symbol
     this.outline = document.createElementNS(svgns, "rect");
@@ -47,9 +48,3 @@ MoleculeSet.prototype.getBlobRadius = function () {
 };
 
 MoleculeSet.prototype = new Interactor();
-
-/*
-MoleculeSet.prototype.getBlobRadius = function() {
-    return 20;
-}
-*/

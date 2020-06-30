@@ -195,7 +195,6 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
                     }
 
                     participant.naryLinks.set(nLinkId, nLink);
-                    //TODO: tidy up whats happening in NaryLink re interactor/participant terminology
                     if (nLink.participants.indexOf(participant) === -1) {
                         nLink.participants.push(participant);
                     }
@@ -362,7 +361,6 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
 
 
                     participant.naryLinks.set(nLinkId, nLink);
-                    //TODO: tidy up whats happening in NaryLink re interactor/participant terminology
                     if (nLink.participants.indexOf(participant) === -1) {
                         nLink.participants.push(participant);
                     }

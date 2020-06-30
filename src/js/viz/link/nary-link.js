@@ -9,7 +9,7 @@ NaryLink.orbitRadius = 20;
 
 export function NaryLink(id, app) {
     this.id = id;
-    this.participants = []; // todo: rename to participants
+    this.participants = [];
     this.sequenceLinks = new Map();
     this.binaryLinks = new Map();
     this.unaryLinks = new Map();

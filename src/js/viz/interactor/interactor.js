@@ -21,7 +21,6 @@ Interactor.prototype.init = function (id, app, json, name){
     this.binaryLinks = new Map();
     this.sequenceLinks = new Map();
     this.name = name;
-    this.upperGroup = document.createElementNS(svgns, "g");
 };
 
 Interactor.prototype.initLabel = function (){

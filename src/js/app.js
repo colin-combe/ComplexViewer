@@ -273,14 +273,13 @@ App.prototype.clear = function () {
     NaryLink.naryColors = d3.scale.ordinal().range(colorbrewer.Pastel2[8]);
     this.defs.selectAll(".feature_checkers").remove();
 
-    //todo - don't use d3 for this
-    d3.select(this.naryLinks).selectAll("*").remove();
-    d3.select(this.p_pLinksWide).selectAll("*").remove();
-    d3.select(this.highlights).selectAll("*").remove();
-    d3.select(this.p_pLinks).selectAll("*").remove();
-    d3.select(this.res_resLinks).selectAll("*").remove();
-    d3.select(this.proteinUpper).selectAll("*").remove();
-    d3.select(this.selfRes_resLinks).selectAll("*").remove();
+    this.naryLinks.textContent = "";
+    this.p_pLinksWide.textContent = "";
+    this.highlights.textContent = "";
+    this.p_pLinks.textContent = "";
+    this.res_resLinks.textContent = "";
+    this.proteinUpper.textContent = "";
+    this.selfRes_resLinks.textContent = "";
 
     // if we are dragging something at the moment - this will be the element that is dragged
     this.dragElement = null;
@@ -447,13 +446,11 @@ App.prototype.mouseMove = function (evt) {
             // we are currently dragging things around
             let ox, oy, nx, ny;
             if (!this.dragElement.cx) { // if not an Interactor (that makes it so-called 'naryLink')
-                const nodes = this.dragElement.participants;
-                for (let protein of nodes) { // todo - rename var
-                    protein.changePosition(dx, dy);
+                for (let participant of this.dragElement.participants) {
+                    participant.changePosition(dx, dy);
                 }
                 this.setAllLinkCoordinates();
             } else {
-                //its a protein - drag it TODO: DRAG SELECTED
                 ox = this.dragElement.cx;
                 oy = this.dragElement.cy;
                 nx = ox - dx;
@@ -580,7 +577,6 @@ App.prototype.preventDefaultsAndStopPropagation = function (evt) {
                     nodes[i].setAllLinkCoordinates();
                 }
             } else {
-                //its a protein - drag it TODO: DRAG SELECTED
                 ox = this.dragElement.cx;
                 oy = this.dragElement.cy;
                 nx = ox - dx;

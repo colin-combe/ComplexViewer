@@ -6,6 +6,8 @@ export function RNA(id, app, json, name) {
     // layout info
     this.cx = 40;
     this.cy = 40;
+
+    this.upperGroup = document.createElementNS(svgns, "g");
     this.initLabel();
     //for polygon
     const points = "0, -10  10, 0 0, 10 -10, 0";

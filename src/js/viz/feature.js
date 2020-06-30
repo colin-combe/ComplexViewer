@@ -1,9 +1,3 @@
-//    xiNET interaction viewer
-//    Copyright 2013 Rappsilber Laboratory
-//
-//    This product includes software developed at
-//    the Rappsilber Laboratory (http://www.rappsilberlab.org/).
-
 /* constructor parameter sequenceDatumString is string with following format:
  *
  *              "?-?" = unknown
@@ -17,22 +11,22 @@
  *              "123->256" = feature sequence w uncertain end between 256 and interactor.sequence.length
  */
 
-export function Feature(node, sequenceDatumString) {
-    this.node = node; //todo: rename to participant
+export function Feature(participant, sequenceDatumString) {
+    this.participant = participant;
     this.sequenceDatumString = sequenceDatumString.trim();
 
     if (this.sequenceDatumString === "?-?") {
-        this.begin = 0;
-        this.end = 0;
-        this.uncertainEnd = node.size;
+        this.begin = 1;
+        this.end = 1;
+        this.uncertainEnd = participant.size;
     } else if (this.sequenceDatumString === "n-n") {
         this.uncertainBegin = "n-n";
         this.begin = 0;
         this.end = 0;
-        node.nTerminusFeature = true;
+        participant.nTerminusFeature = true;
     } else if (this.sequenceDatumString === "c-c") {
-        this.begin = node.size + 1;
-        this.end = node.size + 1;
+        this.begin = participant.size + 1;
+        this.end = participant.size + 1;
         this.uncertainEnd = "c-c";//node.size + 21;
     } else {
 
@@ -63,7 +57,7 @@ export function Feature(node, sequenceDatumString) {
         }
 
         if (this.end === "c") {
-            this.uncertainEnd = node.size;
+            this.uncertainEnd = participant.size;
             this.end = this.begin;
             this.uncertainBegin = this.begin;
         }
@@ -74,7 +68,7 @@ export function Feature(node, sequenceDatumString) {
         }
         if (secondPart.indexOf(">") > -1) {
             this.end = secondPart.substring(1, firstPart.length);
-            this.uncertainEnd = node.size;
+            this.uncertainEnd = participant.size;
         }
 
         if (firstPart.indexOf(">") > -1 && secondPart.indexOf("<") > -1) {

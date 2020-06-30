@@ -1,8 +1,6 @@
 import {Link} from "./link";
 import {svgns, highlightColour} from "../../config";
 
-//todo: rename to SequenceFeatureLink
-
 export function FeatureLink(id, fromFeatPos, toFeatPos, app) {
     this.init(id, fromFeatPos, toFeatPos, app);
 }
@@ -15,7 +13,7 @@ FeatureLink.prototype.init = function (id, fromFeatPos, toFeatPos, app) {
     this.fromSequenceData = fromFeatPos;
     this.toSequenceData = toFeatPos;
 
-    this.participants = [this.fromSequenceData[0].node, this.toSequenceData[0].node]; //*
+    this.participants = [this.fromSequenceData[0].participant, this.toSequenceData[0].participant]; //*
     // *potentially, this over simplifies the situation,
     // but there is a workaround in way ReadMiJson init's links so OK for now
 };
@@ -201,8 +199,8 @@ FeatureLink.prototype.setLinkCoordinates = function () {
         return participant.getResidueCoordinates((lowestLinkedRes + highestLinkedRes) / 2, 0);
     }
 
-    const fromParticipant = this.fromSequenceData[0].node;
-    const toParticipant = this.toSequenceData[0].node;
+    const fromParticipant = this.fromSequenceData[0].participant;
+    const toParticipant = this.toSequenceData[0].participant;
     //calculate mid points of from and to sequence data
     let fMid, tMid;
     if (!fromParticipant.form) { // if not (undefined or 0)

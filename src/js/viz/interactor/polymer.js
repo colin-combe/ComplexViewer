@@ -2,7 +2,6 @@ import * as d3 from "d3"; // transitions and other stuff
 import {Interactor, trig} from "./interactor";
 import {Annotation} from "./annotation";
 import {Feature} from "../feature";
-//var Rotator = require('../../util/Rotator');
 import {svgns, LABEL_Y} from "../../config";
 
 Polymer.STICKHEIGHT = 20; //height of stick in pixels
@@ -744,7 +743,7 @@ Polymer.prototype.getAnnotationRectPath = function (startRes, endRes, annotation
         top = -Polymer.STICKHEIGHT / 2;
     } else {
         rungHeight = Polymer.STICKHEIGHT / this.annotationTypes.length;
-        top = (-Polymer.STICKHEIGHT / 2) + (rung * rungHeight); // todo - looks like top and bottom wrong way round?
+        top = (-Polymer.STICKHEIGHT / 2) + (rung * rungHeight);
         bottom = top + rungHeight;
     }
 
@@ -758,7 +757,7 @@ Polymer.prototype.getAnnotationRectPath = function (startRes, endRes, annotation
         // var annotSize = (1 + (endRes - startRes));
         annotLength = 20;//annotSize * this.stickZoom;
     } else {
-        annotX = this.getResXwithStickZoom(startRes - 0.5); // todo - look out for positions being strings
+        annotX = this.getResXwithStickZoom(startRes - 0.5);
         annotSize = (1 + (endRes - startRes));
         annotLength = annotSize * this.stickZoom;
     }
