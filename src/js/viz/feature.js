@@ -11,7 +11,7 @@
  *              "123->256" = feature sequence w uncertain end between 256 and interactor.sequence.length
  */
 
-export function Feature(participant, sequenceDatumString) {
+export function Feature(participant, sequenceDatumString) { // todo - sequenecdata is better name than feature, feature is name of larger thing in mijson
     this.participant = participant;
     this.sequenceDatumString = sequenceDatumString.trim();
 
@@ -25,10 +25,10 @@ export function Feature(participant, sequenceDatumString) {
     } else if (this.sequenceDatumString === "c-c") {
         this.uncertainEnd = "c-c";
     } else {
-
         const dashPosition = sequenceDatumString.indexOf("-");
         const firstPart = sequenceDatumString.substring(0, dashPosition);
         const secondPart = sequenceDatumString.substring(dashPosition + 1);
+
         let firstDotPosition;
         if (firstPart.indexOf(".") === -1) {
             this.begin = firstPart;
@@ -47,15 +47,17 @@ export function Feature(participant, sequenceDatumString) {
         }
 
         if (this.begin === "n") {
-            this.uncertainBegin = 0;
+            this.uncertainBegin = 1;
             this.begin = this.end;
-            this.uncertainEnd = this.end;
+            // this.uncertainEnd = this.end;
+            this.end = null;
         }
 
         if (this.end === "c") {
             this.uncertainEnd = participant.size;
             this.end = this.begin;
-            this.uncertainBegin = this.begin;
+            // this.uncertainBegin = this.begin;
+            this.begin = null;
         }
 
         if (firstPart.indexOf("<") > -1) {
@@ -70,7 +72,7 @@ export function Feature(participant, sequenceDatumString) {
         if (firstPart.indexOf(">") > -1 && secondPart.indexOf("<") > -1) {
             this.uncertainBegin = firstPart.substring(1, firstPart.length);
             this.begin = secondPart.substring(1, firstPart.length);
-            this.end = this.begin;
+            // this.end = this.begin;
         }
     }
 }

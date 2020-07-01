@@ -120,13 +120,18 @@ export function setAnnotations (annotationChoice, /*App*/ app) {
                     //ToDO - way more of these are being created than needed
                     app.createHatchedFill("checkers_" + anno.description, color);
                     const checkedFill = "url('#checkers_" + anno.description + "')";
-
-                    anno.fuzzyStart.setAttribute("fill", checkedFill);
-                    anno.fuzzyStart.setAttribute("stroke", color);
-                    anno.fuzzyEnd.setAttribute("fill", checkedFill);
-                    anno.fuzzyEnd.setAttribute("stroke", color);
-                    anno.certain.setAttribute("fill", color);
-                    anno.certain.setAttribute("stroke", color);
+                    if (anno.fuzzyStart) {
+                        anno.fuzzyStart.setAttribute("fill", checkedFill);
+                        anno.fuzzyStart.setAttribute("stroke", color);
+                    }
+                    if (anno.certain) {
+                        anno.certain.setAttribute("fill", color);
+                        anno.certain.setAttribute("stroke", color);
+                    }
+                    if (anno.fuzzyEnd) {
+                        anno.fuzzyEnd.setAttribute("fill", checkedFill);
+                        anno.fuzzyEnd.setAttribute("stroke", color);
+                    }
                 }
             }
         }
