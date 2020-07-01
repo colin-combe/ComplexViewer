@@ -600,7 +600,9 @@ Polymer.prototype.getResidueCoordinates = function (r, yOff) {
     if (typeof r === "undefined") {
         console.error("ERROR: residue number is undefined");
     }
-    let x = this.getResXwithStickZoom(r * 1) * this.app.z;
+    let x = this.getResXwithStickZoom(r * 1);// * this.app.z;
+    // console.log("***", this.app.z);
+    // coz prots don't scale, don't multiple by app.z
     let y;
     if (x !== 0) {
         const l = Math.abs(x);
@@ -609,8 +611,8 @@ Polymer.prototype.getResidueCoordinates = function (r, yOff) {
         x = l * Math.cos(rotRad + a);
         y = l * Math.sin(rotRad + a);
         if (typeof yOff !== "undefined") {
-            x += yOff * this.app.z * Math.cos(rotRad + (Math.PI / 2));
-            y += yOff * this.app.z * Math.sin(rotRad + (Math.PI / 2));
+            x += yOff /** this.app.z*/ * Math.cos(rotRad + (Math.PI / 2));
+            y += yOff /** this.app.z*/ * Math.sin(rotRad + (Math.PI / 2));
         }
     } else {
         y = yOff;

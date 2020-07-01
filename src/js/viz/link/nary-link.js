@@ -127,7 +127,7 @@ NaryLink.prototype.orbitNodes = function (mapped) {
         for (let o = 0; o < NaryLink.orbitNodes; o++) {
             const angle = (360 / NaryLink.orbitNodes) * o;
             const p = [m[0] + NaryLink.orbitRadius, m[1]];
-            orbitNodes.push(Interactor.rotatePointAboutPoint(p, m, angle));
+            orbitNodes.push(Interactor.rotatePointAboutPoint(p, m, angle)); //todo just move that func here
         }
     }
     return orbitNodes;

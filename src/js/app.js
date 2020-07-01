@@ -394,7 +394,7 @@ App.prototype.zoomToExtent = function () {
         //box.y + y = 0
         let y = -bbox.y + (20 / scaleFactor);
         this.container.setAttribute("transform", "scale(" + scaleFactor + ") translate(" + x + " " + y + ") ");
-        this.z = scaleFactor;
+        this.z = this.container.getCTM().inverse().a;
     } else {
         //console.log("fit", scaleFactor);
         // this.container.setAttribute("transform", "scale(" + 1 + ") translate(" + -(width/2) + " " + -bbox.y + ")");
