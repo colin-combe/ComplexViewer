@@ -1,19 +1,14 @@
 // eslint-disable-next-line no-unused-vars
 const exampleIndex = [
     {
-        "ac": "EBI-5260847",
-        "name": "EBI-5260847",
-        "url": "https://ebi-intact.github.io/intact-view/details/interaction/EBI-5260847",
+        "ac": "CPX-1920",
+        "name": "~CPX-1920",
+        "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-1920",
     },
     {
         "ac": "EBI-4371590",
         "name": "EBI-4371590",
         "url": "https://ebi-intact.github.io/intact-view/details/interaction/EBI-4371590",
-    },
-    {
-        "ac": "CPX-1920",
-        "name": "~CPX-1920",
-        "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-1920",
     },
     {
         "ac": "CPX-5183",
@@ -34,6 +29,11 @@ const exampleIndex = [
         "ac": "EBI-6161327",
         "name": "EBI-6161327",
         "url": "https://wwwdev.ebi.ac.uk/intact/ws/graph/interaction/export/EBI-6161327",
+    },
+    {
+        "ac": "EBI-5260847",
+        "name": "EBI-5260847",
+        "url": "https://ebi-intact.github.io/intact-view/details/interaction/EBI-5260847",
     },
     {
         "ac": "EBI-12734333",

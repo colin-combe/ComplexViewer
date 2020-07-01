@@ -181,13 +181,6 @@ Interactor.prototype.getAggregateSelfLinkPath = function () {
         " Q " + cp2.x + "," + -cp2.y + " 0,0";
 };
 
-Interactor.rotatePointAboutPoint = function (p, o, theta) {
-    theta = (theta / 360) * Math.PI * 2; //TODO: change theta arg to radians not degrees
-    const rx = Math.cos(theta) * (p[0] - o[0]) - Math.sin(theta) * (p[1] - o[1]) + o[0];
-    const ry = Math.sin(theta) * (p[0] - o[0]) + Math.cos(theta) * (p[1] - o[1]) + o[1];
-    return [rx, ry];
-};
-
 Interactor.prototype.checkLinks = function () {
     function checkAll(linkMap) {
         for (let link of linkMap.values()) {

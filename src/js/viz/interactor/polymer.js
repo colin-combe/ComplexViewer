@@ -11,7 +11,6 @@ Polymer.transitionTime = 650;
 export function Polymer() {
 }
 
-//todo - remove this.rotation
 Polymer.prototype = new Interactor();
 
 //sequence = amino acids in UPPERCASE, digits or lowercase can be used for modification info
