@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import * as colorbrewer from "colorbrewer";
 import {Annotation} from "./viz/interactor/annotation";
-import {Feature} from "./viz/feature";
+import {SequenceDatum} from "./viz/sequence-datum";
 
 
 //todo - cache annotations in memory
@@ -31,7 +31,7 @@ export function setAnnotations (annotationChoice, /*App*/ app) {
         if (app.proteinCount < 21) {
             for (let mol of app.participants.values()) {
                 if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS
-                    const annotation = new Annotation(mol.json.label, new Feature(null, 1 + "-" + mol.size));
+                    const annotation = new Annotation(mol.json.label, new SequenceDatum(null, 1 + "-" + mol.size));
                     mol.setPositionalFeatures([annotation]);
                 }
             }
@@ -64,7 +64,7 @@ export function setAnnotations (annotationChoice, /*App*/ app) {
                     const m = app.participants.get(id);
                     for (let f = 0; f < fts.length; f++) {
                         const feature = fts[f];
-                        feature.seqDatum = new Feature(null, feature.begin + "-" + feature.end);
+                        feature.seqDatum = new SequenceDatum(null, feature.begin + "-" + feature.end);
                     }
                     m.setPositionalFeatures(fts);
                     molsAnnotated++;
@@ -184,7 +184,7 @@ function getSuperFamFeatures (id, callback) {
                     const name = type.getAttribute("id");
                     const start = xmlFeature.getElementsByTagName("START")[0].textContent;
                     const end = xmlFeature.getElementsByTagName("END")[0].textContent;
-                    features.push(new Annotation(name, new Feature(null, start + "-" + end)));
+                    features.push(new Annotation(name, new SequenceDatum(null, start + "-" + end)));
                 }
             }
             //~ console.log(JSON.stringify(features));

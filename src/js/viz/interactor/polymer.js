@@ -1,7 +1,7 @@
 import * as d3 from "d3"; // transitions and other stuff
 import {Interactor, trig} from "./interactor";
 import {Annotation} from "./annotation";
-import {Feature} from "../feature";
+import {SequenceDatum} from "../sequence-datum";
 import {svgns, LABEL_Y} from "../../config";
 
 Polymer.STICKHEIGHT = 20; //height of stick in pixels
@@ -631,7 +631,7 @@ Polymer.prototype.clearPositionalFeatures = function () {
 Polymer.prototype.setPositionalFeatures = function (posFeats) {
     if (!posFeats || posFeats.length === 0) {
         this.annotations = [];
-        this.annotations.push(new Annotation("No annotations", new Feature(this, 1 + "-" + this.size)));
+        this.annotations.push(new Annotation("No annotations", new SequenceDatum(this, 1 + "-" + this.size)));
         this.annotationTypes = []; // bit paranoid, shouldn't really make a difference
     } else {
         //draw longest regions first

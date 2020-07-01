@@ -11,13 +11,13 @@
  *              "123->256" = feature sequence w uncertain end between 256 and interactor.sequence.length
  */
 
-export function Feature(participant, sequenceDatumString) { // todo - sequenecdata is better name than feature, feature is name of larger thing in mijson
+export function SequenceDatum(participant, sequenceDatumString) {
     this.participant = participant;
     this.sequenceDatumString = sequenceDatumString.trim();
 
     if (this.sequenceDatumString === "?-?") {
         //this.begin = 1;
-        this.end = 1; //todo - having at begin affecting shape of line, look at why
+        this.end = 1; //todo - having it at begining is affecting shape of line, look at why
         this.uncertainEnd = participant.size;
     } else if (this.sequenceDatumString === "n-n") {
         this.uncertainBegin = "n-n";
@@ -72,12 +72,12 @@ export function Feature(participant, sequenceDatumString) { // todo - sequenecda
         if (firstPart.indexOf(">") > -1 && secondPart.indexOf("<") > -1) {
             this.uncertainBegin = firstPart.substring(1, firstPart.length);
             this.begin = secondPart.substring(1, firstPart.length);
-            // this.end = this.begin;
+            this.end = null;//this.begin;
         }
     }
 }
 
-Feature.prototype.toString = function () {
+SequenceDatum.prototype.toString = function () {
     return this.sequenceDatumString;
 };
 //On 06/06/13 09:22, marine@ebi.ac.uk wrote:

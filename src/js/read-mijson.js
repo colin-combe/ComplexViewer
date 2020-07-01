@@ -9,7 +9,7 @@ import {ComplexSymbol} from "./viz/interactor/complex-symbol";
 import {MoleculeSet}  from "./viz/interactor/molecule-set";
 import {NaryLink} from "./viz/link/nary-link";
 import {FeatureLink} from "./viz/link/feature-link";
-import {Feature}  from "./viz/feature";
+import {SequenceDatum}  from "./viz/sequence-datum";
 import {BinaryLink} from "./viz/link/binary-link";
 import {UnaryLink}  from "./viz/link/unary-link";
 import {matrix} from "./expand";
@@ -136,7 +136,7 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
                     mID = mID + "(" + seqDatum.participantRef + ")";
                 }
                 const molecule = app.participants.get(mID);
-                const seqFeature = new Feature(molecule, seqDatum.pos);
+                const seqFeature = new SequenceDatum(molecule, seqDatum.pos);
                 const annotation = new Annotation(annotName, seqFeature);
                 if (molecule.miFeatures == null) {
                     molecule.miFeatures = [];
@@ -447,11 +447,11 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
         if (typeof sequenceLink === "undefined") {
             const fromFeaturePositions = [];
             for (let fromSeqDatum of fromSeqData) {
-                fromFeaturePositions.push(new Feature(getNode(fromSeqDatum), fromSeqDatum.pos));
+                fromFeaturePositions.push(new SequenceDatum(getNode(fromSeqDatum), fromSeqDatum.pos));
             }
             const toFeaturePositions = [];
             for (let toSeqDatum of toSeqData) {
-                toFeaturePositions.push(new Feature(getNode(toSeqDatum), toSeqDatum.pos));
+                toFeaturePositions.push(new SequenceDatum(getNode(toSeqDatum), toSeqDatum.pos));
             }
             //~ if (endsSwapped === false) {
             sequenceLink = new FeatureLink(seqLinkId, fromFeaturePositions, toFeaturePositions, app, interaction);
