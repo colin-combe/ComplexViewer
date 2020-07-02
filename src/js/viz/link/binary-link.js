@@ -3,10 +3,6 @@ import {Link} from "./link";
 import * as Intersection from "intersectionjs";
 import * as Point2D from "point2d";
 
-// BinaryLink.js
-// the class representing a binary interaction
-
-
 export function BinaryLink(id, app, fromI, toI) {
     this.id = id;
     // this.evidences = d3.map();
@@ -66,11 +62,10 @@ BinaryLink.prototype.setLinkCoordinates = function () {
 
         this.line.setAttribute("marker-start", "url(#marker_diamond)");
         this.line.setAttribute("marker-end", "url(#marker_diamond)");
-
     }
 
     if (this.participants[1].type === "complex") {
-        naryPath = this.participants[0].naryLink.hull;
+        naryPath = this.participants[1].naryLink.hull;
         iPath = [];
         for (let p of naryPath) {
             iPath.push(new Point2D(p[0], p[1]));

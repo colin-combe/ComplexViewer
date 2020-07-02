@@ -1,5 +1,7 @@
 import {Link} from "./link";
-import {svgns, highlightColour} from "../../config";
+import {svgns} from "../../config";
+// import * as Point2D from "point2d";
+// import * as Intersection from "intersectionjs";
 
 export function FeatureLink(id, fromFeatPos, toFeatPos, app) {
     this.init(id, fromFeatPos, toFeatPos, app);
@@ -116,22 +118,6 @@ FeatureLink.prototype.show = function () {
 };
 
 FeatureLink.prototype.hide = function () {
-    // let containingGroup = this.app.res_resLinks;
-    // if (this.participants[0] === this.participants[1]) {
-    //     containingGroup = this.app.selfRes_resLinks;
-    // }
-    //
-    // const groupChildren = [];
-    //
-    // for (let i = 0; i < containingGroup.childNodes.length; i++) {
-    //     groupChildren[i] = containingGroup.childNodes[i];
-    // }
-    //
-    // if (groupChildren.indexOf(this.glyph) > -1) {
-    //     containingGroup.removeChild(this.glyph);
-    //     containingGroup.removeChild(this.uncertainGlyph);
-    //     // containingGroup.removeChild(this.highlightGlyph);
-    // }
     this.glyph.remove();
     this.uncertainGlyph.remove();
 };
@@ -142,15 +128,14 @@ FeatureLink.prototype.setLinkCoordinates = function () {
         return (!isNaN(parseFloat(thing)) && isFinite(thing));
     }
 
-    function getPathSegments(midPoint, controlPoint, startRes, endRes, participant, yOffset) {
+    function getSegment(midPoint, controlPoint, startRes, endRes, participant, yOffset, originPoint) {
         let startPoint, endPoint;
         if (!participant.form) { // tests if form = undefined or 0 //TODO: maybe change this, its confusing
-            startPoint = participant.getPosition();
+            startPoint = participant.getPosition(originPoint);
             endPoint = startPoint;
         } else {
             startPoint = participant.getResidueCoordinates(startRes, yOffset);
             endPoint = participant.getResidueCoordinates(endRes, yOffset);
-
         }
         return " Q" + controlPoint[0] + "," + controlPoint[1] + " " + startPoint[0] + "," + startPoint[1] +
             " L" + endPoint[0] + "," + endPoint[1] +
@@ -197,16 +182,33 @@ FeatureLink.prototype.setLinkCoordinates = function () {
     const toParticipant = this.toSequenceData[0].participant;
     //calculate mid points of from and to sequence data
     let fMid, tMid;
-    if (!fromParticipant.form) { // if not (undefined or 0)
-        fMid = fromParticipant.getPosition();
-    } else {
+
+    if (fromParticipant.form)  {
         fMid = sequenceDataMidPoint(this.fromSequenceData, fromParticipant);
     }
-    if (!toParticipant.form) {// if not (undefined or 0)
-        tMid = toParticipant.getPosition();
-    } else {
+    if (toParticipant.form)  {
         tMid = sequenceDataMidPoint(this.toSequenceData, toParticipant);
     }
+    if (!fromParticipant.form) { // if not (undefined or 0)
+        fMid = fromParticipant.getPosition(tMid);//toOriginPoint);
+    }
+    if (!toParticipant.form) {// if not (undefined or 0)
+        tMid = toParticipant.getPosition(fMid);//fromOriginPoint);
+    }
+
+    const fromOriginPoint = fMid;//null;//[fromParticipant.cx, fromParticipant.cy];
+    const toOriginPoint = tMid;//null;//[toParticipant.cx, toParticipant.cy];
+
+    // if (!fromParticipant.form) { // if not (undefined or 0)
+    //     fMid = fromParticipant.getPosition();//toOriginPoint);
+    // } else {
+    //     fMid = sequenceDataMidPoint(this.fromSequenceData, fromParticipant);
+    // }
+    // if (!toParticipant.form) {// if not (undefined or 0)
+    //     tMid = toParticipant.getPosition();//fromOriginPoint);
+    // } else {
+    //     tMid = sequenceDataMidPoint(this.toSequenceData, toParticipant);
+    // }
 
     //calculate angle from fromParticipant mid point to toParticipant mid point
     const deltaX = fMid[0] - tMid[0];
@@ -270,18 +272,18 @@ FeatureLink.prototype.setLinkCoordinates = function () {
     for (let f = 0; f < fSDCount; f++) {
         seqDatum = this.fromSequenceData[f];
         if (isNumber(seqDatum.begin)  && isNumber(seqDatum.end)) {
-            glyphPath += getPathSegments(triPointMid, ftMid, seqDatum.begin, seqDatum.end, fromParticipant, fyOffset);
+            glyphPath += getSegment(triPointMid, ftMid, seqDatum.begin, seqDatum.end, fromParticipant, fyOffset, toOriginPoint);
         }
         // highlightStartRes = seqDatum.begin;
         // highlightEndRes = seqDatum.end;
         if (isNumber(seqDatum.uncertainBegin)) {
-            uncertainGlyphPath += getPathSegments(triPointMid, ftMid,
-                seqDatum.uncertainBegin, seqDatum.begin, fromParticipant, fyOffset);
+            uncertainGlyphPath += getSegment(triPointMid, ftMid,
+                seqDatum.uncertainBegin, seqDatum.begin, fromParticipant, fyOffset, toOriginPoint);
             // highlightStartRes = seqDatum.uncertainBegin;
         }
         if (isNumber(seqDatum.uncertainEnd)) {
-            uncertainGlyphPath += getPathSegments(triPointMid, ftMid,
-                seqDatum.end, seqDatum.uncertainEnd, fromParticipant, fyOffset);
+            uncertainGlyphPath += getSegment(triPointMid, ftMid,
+                seqDatum.end, seqDatum.uncertainEnd, fromParticipant, fyOffset, toOriginPoint);
             // highlightEndRes = seqDatum.uncertainEnd;
         }
         // highlightGlyphPath += getPathSegments(triPointMid, ftMid,
@@ -290,18 +292,18 @@ FeatureLink.prototype.setLinkCoordinates = function () {
     for (let t = 0; t < tSDCount; t++) {
         seqDatum = this.toSequenceData[t];
         if (isNumber(seqDatum.begin) && isNumber(seqDatum.end)) {
-            glyphPath += getPathSegments(triPointMid, ttMid, seqDatum.begin, seqDatum.end, toParticipant, tyOffset);
+            glyphPath += getSegment(triPointMid, ttMid, seqDatum.begin, seqDatum.end, toParticipant, tyOffset, fromOriginPoint);
         }
         // highlightStartRes = seqDatum.begin;
         // highlightEndRes = seqDatum.end;
         if (isNumber(seqDatum.uncertainBegin)) {
-            uncertainGlyphPath += getPathSegments(triPointMid, ttMid,
-                seqDatum.uncertainBegin, seqDatum.begin, toParticipant, tyOffset);
+            uncertainGlyphPath += getSegment(triPointMid, ttMid,
+                seqDatum.uncertainBegin, seqDatum.begin, toParticipant, tyOffset, fromOriginPoint);
             // highlightStartRes = seqDatum.uncertainBegin;
         }
         if (isNumber(seqDatum.uncertainEnd)) {
-            uncertainGlyphPath += getPathSegments(triPointMid, ttMid,
-                seqDatum.end, seqDatum.uncertainEnd, toParticipant, tyOffset);
+            uncertainGlyphPath += getSegment(triPointMid, ttMid,
+                seqDatum.end, seqDatum.uncertainEnd, toParticipant, tyOffset, fromOriginPoint);
             // highlightEndRes = seqDatum.uncertainEnd;
         }
         // highlightGlyphPath += getPathSegments(triPointMid, ttMid,

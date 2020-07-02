@@ -207,9 +207,11 @@ Interactor.prototype.setAllLinkCoordinates = function () {
     if (this.selfLink) {
         this.selfLink.setLinkCoordinates();
     }
-    for (let link of this.sequenceLinks.values()) {
-        link.setLinkCoordinates();
-    }
+    // if (this.form === 1) { // ? todo - check this doesn't break anything
+        for (let link of this.sequenceLinks.values()) {
+            link.setLinkCoordinates();
+        }
+    // }
 };
 
 //TODO: remove this, use rotateAboutPoint instead

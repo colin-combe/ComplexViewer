@@ -1,4 +1,6 @@
 import {Interactor} from "./interactor";
+import * as Point2D from "point2d";
+import * as Intersection from "intersectionjs";
 
 export function Complex(id, app) {
     this.init(id, app);
@@ -15,7 +17,7 @@ Complex.prototype.initParticipant = function (naryLink) { // todo - rename to in
     naryLink.path.setAttribute("stroke-width", 8);
 };
 
-Complex.prototype.getPosition = function () {
+Complex.prototype.getPosition = function (originPoint) {
     const mapped = this.naryLink.getMappedCoordinates();
     const mc = mapped.length;
     let xSum = 0,
@@ -24,11 +26,27 @@ Complex.prototype.getPosition = function () {
         xSum += mapped[m][0];
         ySum += mapped[m][1];
     }
-    return [xSum / mc, ySum / mc];
+    let center = [xSum / mc, ySum / mc];
+    if (originPoint) {
+    // if (participant.type === "complex"){
+    //     startPoint = participant.getPosition();
+        let naryPath = this.naryLink.hull;
+        let iPath = [];
+        for (let p of naryPath) {
+            iPath.push(new Point2D(p[0], p[1]));
+        }
+        let a1 = new Point2D(center[0], center[1]);
+        let a2 = new Point2D(originPoint[0], originPoint[1]);
+        let intersect = Intersection.intersectLinePolygon(a1, a2, iPath);
+        if (intersect.points[0]) {
+            return [intersect.points[0].x, intersect.points[0].y];
+        }
+    }
+    return center;
 };
 
 Complex.prototype.setPosition = function () {
-    console.log("bad - called setPosition on ", this);
+    console.error("bad - called setPosition on ", this);
 };
 
 Complex.prototype.changePosition = function (dx, dy) {
