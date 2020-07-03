@@ -74,7 +74,7 @@ NaryLink.prototype.show = function () {
 NaryLink.prototype.hide = function () {
 };
 
-NaryLink.prototype.setLinkCoordinates = function () {
+NaryLink.prototype.setLinkCoordinates = function (dontPropogate) {
     // Uses d3.geom.hull to calculate a bounding path around an array of vertices
     const calculateHullPath = function (values) {
         const hullPath = d3.geom.hull(values);
@@ -87,9 +87,9 @@ NaryLink.prototype.setLinkCoordinates = function () {
     if (hullValues) {
         this.path.setAttribute("d", hullValues);
     }
-    // if (this.complex) {
-    //     this.complex.setAllLinkCoordinates();
-    // }
+    if (this.complex && !dontPropogate) {
+        this.complex.setAllLinkCoordinates();
+    }
 };
 
 NaryLink.prototype.getMappedCoordinates = function () {

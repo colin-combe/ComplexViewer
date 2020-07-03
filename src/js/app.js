@@ -757,7 +757,7 @@ App.prototype.autoLayout = function () {
             }
         }
         self.d3cola = cola.d3adaptor();
-        self.d3cola.convergenceThreshold = 0.01;
+        // self.d3cola.convergenceThreshold = 0.01;
         //console.log("groups", groups);
         delete self.d3cola._lastStress;
         delete self.d3cola._alpha;
@@ -916,7 +916,7 @@ App.prototype.checkLinks = function () {
 App.prototype.setAllLinkCoordinates = function () {
     function setAll(linkMap) {
         for (let link of linkMap.values()) {
-            link.setLinkCoordinates();
+            link.setLinkCoordinates(true); // true means don't propogate changes from naryLink up to complex, everythings getting refreshed anyway
         }
     }
 
