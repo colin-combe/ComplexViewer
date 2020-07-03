@@ -1,6 +1,11 @@
 // eslint-disable-next-line no-unused-vars
 const exampleIndex = [
     {
+        "ac": "EBI-9008420",
+        "name": "Hemoglobin HbA complex",
+        "url": "http://www.ebi.ac.uk/intact/complex/details/EBI-9008420",
+    },
+    {
         "ac": "CPX-1920",
         "name": "~CPX-1920",
         "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-1920",
@@ -78,12 +83,6 @@ const exampleIndex = [
         "name": "Chaperonin-containing T-complex",
         "url": "http://www.ebi.ac.uk/intact/complex/details/EBI-9008283",
     },
-    {
-        "ac": "EBI-9008420",
-        "name": "Hemoglobin HbA complex",
-        "url": "http://www.ebi.ac.uk/intact/complex/details/EBI-9008420",
-    },
-
     {
         "ac": "EBI-9696567",
         "name": "Core mediator complex",

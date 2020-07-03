@@ -311,6 +311,10 @@ App.prototype.collapseProtein = function () {
 };
 
 App.prototype.init = function () {
+    if (this.d3cola) {
+        this.d3cola.stop();
+    }
+
     this.checkLinks();
     let maxSeqLength = 0;
     for (let participant of this.participants.values()) {
@@ -364,21 +368,23 @@ App.prototype.init = function () {
         }
     }
 
+    this.setAllLinkCoordinates(); // just to move them off screen at first
+
     this.autoLayout();
 };
 
 App.prototype.zoomToExtent = function () {
     const width = this.svgElement.parentNode.clientWidth;
     const height = this.svgElement.parentNode.clientHeight;
-    const bbox = this.container.getBBox();
-    let xr = width / bbox.width;
-    let yr = height / bbox.height;
+    const bbox = this.naryLinks.getBBox();
+    let xr = (width / bbox.width).toFixed(4) - 0;
+    let yr = (height / bbox.height).toFixed(4) - 0;
     let scaleFactor;
-    if (yr < xr) {
-        scaleFactor = yr;
-    } else {
+    // // if (yr < xr) {
+    //     scaleFactor = yr;
+    // // } else {
         scaleFactor = xr;
-    }
+    // }
     if (scaleFactor < 1) { ///didn't fit in div
         //console.log("no fit", scaleFactor);
         xr = (width - 40) / (bbox.width);
@@ -389,6 +395,11 @@ App.prototype.zoomToExtent = function () {
         } else {
             scaleFactor = xr;
         }        // }
+
+        scaleFactor = scaleFactor.toFixed(4) - 0;
+
+
+
         //bbox.x + x = 0;
         let x = -bbox.x + (20 / scaleFactor);
         //box.y + y = 0
@@ -408,7 +419,7 @@ App.prototype.zoomToExtent = function () {
         this.z = 1;
     }
     //todo - following could be tided up by using acknowledgement bbox or positioning att's of text
-    this.acknowledgement.setAttribute("transform", "translate("+(width - 150)+", " + (height - 30) + ")");
+    this.acknowledgement.setAttribute("transform", "translate(" + (width - 150) + ", " + (height - 30) + ")");
 };
 
 App.prototype.setAnnotations = function (annotationChoice) {
@@ -652,163 +663,218 @@ App.prototype.autoLayout = function () {
     if (this.d3cola) {
         this.d3cola.stop();
     }
-
-    //// TODO: prune leaves from network then layout, then add back leaves and layout again
-
     const self = this;
-    let nodes = Array.from(this.participants.values());
-    nodes = nodes.filter(function (value) {
-        return value.type !== "complex";
-    });
-    const nodeCount = nodes.length;
 
-    const layoutObj = {};
-    layoutObj.nodes = nodes;
-    layoutObj.links = [];
-
-    const molLookUp = {};
-    let mi = 0;
-    for (let mol of nodes) {
-        molLookUp[mol.id] = mi;
-        mi++;
+    // needed to ensure consistent results
+    for (let p of self.participants.values()) {
+        delete p.x;
+        delete p.y;
+        delete p.px;
+        delete p.py;
+        delete p.bounds;
     }
 
-    for (let binaryLink of this.allBinaryLinks.values()) {
-        const fromMol = binaryLink.participants[0];
-        const toMol = binaryLink.participants[1];
-        const source = fromMol; //molLookUp[fromMol.id];
-        const target = toMol; //molLookUp[toMol.id];
+    //// prune leaves from network then layout, then add back leaves and layout again (fixes haemoglobin)
+    function prune() {
+        // return Array.from(self.participants.values());
+        const result = [];
+        for (let participant of self.participants.values()) {
+            if (participant.binaryLinks.size > 1 && participant.type !== "complex") {
+                result.push(participant);
+            }
+        }
+        return result;
+    }
 
-        if (source !== target && nodes.indexOf(source) !== -1 && nodes.indexOf(target) !== -1) {
+    // let allNodesExceptComplexes = ;
+    const allNodesExceptComplexes = Array.from(self.participants.values()).filter(function (value) {
+        return value.type !== "complex";
+    });
+    const initialRing = prune(); //
+    if (initialRing.length < allNodesExceptComplexes.length
+        && initialRing.length > 3 && self.participants.size < 9) { //  // 9 include hemoglobin, possibly some other small cases, but is catious
+        // console.log(initialRing);
+        // for (let participant of initialRing) {
+        //     participant.showHighlight(true);
+        // }
+        doLayout(initialRing, true);
+    } else {
 
-            if (typeof source !== "undefined" && typeof target !== "undefined") {
+        doLayout(allNodesExceptComplexes, false);
+    }
+
+    function doLayout(nodes, initialRun) {
+        const nodeCount = nodes.length;
+        const layoutObj = {};
+        layoutObj.nodes = nodes;
+        layoutObj.links = [];
+
+        const molLookUp = {};
+        let mi = 0;
+        for (let mol of nodes) {
+            molLookUp[mol.id] = mi;
+            mi++;
+        }
+
+        for (let binaryLink of self.allBinaryLinks.values()) {
+            const fromMol = binaryLink.participants[0];
+            const toMol = binaryLink.participants[1];
+            const source = fromMol; //molLookUp[fromMol.id];
+            const target = toMol; //molLookUp[toMol.id];
+
+            if (source !== target && nodes.indexOf(source) !== -1 && nodes.indexOf(target) !== -1) {
                 const linkObj = {};
                 linkObj.source = molLookUp[fromMol.id];
                 linkObj.target = molLookUp[toMol.id];
                 linkObj.id = binaryLink.id;
                 layoutObj.links.push(linkObj);
-            } else {
-                alert("NOT RIGHT");
             }
         }
-    }
 
-    // todo: add containing group?
-    const groups = [];
-    if (this.complexes) {
-        for (let g of this.complexes) {
-            g.leaves = [];
-            g.groups = [];
-            for (let interactor of g.naryLink.participants) {
-                if (interactor.type !== "complex") {
-                    g.leaves.push(layoutObj.nodes.indexOf(interactor));
+        // todo: add containing group?
+        //  (equivalent to making all NaryLinks be contained in a Complex, top one currently isn't because nothing interacts with it,
+        //  this division between 'NaryLink' and 'Complex' looks like a mistake, should just be one class called Group.
+        //  On the other hand, the current structure does reflect MI-JSON.)
+        const groups = [];
+        if (!initialRun && self.complexes) {
+            for (let g of self.complexes) {
+                g.leaves = [];
+                g.groups = [];
+                for (let interactor of g.naryLink.participants) {
+                    if (interactor.type !== "complex") {
+                        g.leaves.push(layoutObj.nodes.indexOf(interactor));
+                    }
+                }
+                groups.push(g);
+            }
+            for (let g of self.complexes) {
+                for (let interactor of g.naryLink.participants) {
+                    if (interactor.type === "complex") {
+                        console.log(groups.indexOf(interactor));
+                        g.groups.push(groups.indexOf(interactor));
+                    }
                 }
             }
-            groups.push(g);
         }
-        for (let g of this.complexes) {
-            for (let interactor of g.naryLink.participants) {
-                if (interactor.type === "complex") {
-                    g.groups.push(groups.indexOf(interactor));
-                }
-            }
+        self.d3cola = cola.d3adaptor();
+        self.d3cola.convergenceThreshold = 0.01;
+        //console.log("groups", groups);
+        delete self.d3cola._lastStress;
+        delete self.d3cola._alpha;
+        delete self.d3cola._descent;
+        delete self.d3cola._rootGroup;
+
+        let linkLength = (nodes.length < 30) ? 30 : 20;
+        if (nodes.length === 2) {
+            linkLength = 50;
         }
-    }
-    this.d3cola = cola.d3adaptor();
-    //console.log("groups", groups);
-    delete this.d3cola._lastStress;
-    delete this.d3cola._alpha;
-    delete this.d3cola._descent;
-    delete this.d3cola._rootGroup;
+        const width = self.svgElement.parentNode.clientWidth;
+        const height = self.svgElement.parentNode.clientHeight;
 
-    let linkLength = (nodes.length < 30) ? 30 : 20;
-    if (nodes.length === 2) {
-        linkLength = 50;
-    }
-    const width = this.svgElement.parentNode.clientWidth;
-    const height = this.svgElement.parentNode.clientHeight;
-
-    this.d3cola.size([height - 40, width - 40]).nodes(layoutObj.nodes).groups(groups).links(layoutObj.links).avoidOverlaps(true);
-    let groupDebugSel, participantDebugSel;
-    if (self.debug) {
-        groupDebugSel = d3.select(this.svgElement).selectAll(".group")
-            .data(groups);
-
-        groupDebugSel.enter().append("rect")
-            .classed("group", true)
-            .attr({
-                rx: 5,
-                ry: 5
-            })
-            .style("stroke", "blue")
-            .style("fill", "none");
-
-        participantDebugSel = d3.select(this.svgElement).selectAll(".node")
-            .data(layoutObj.nodes);
-
-        participantDebugSel.enter().append("rect")
-            .classed("node", true)
-            .attr({
-                rx: 5,
-                ry: 5
-            })
-            .style("stroke", "red")
-            .style("fill", "none");
-
-        groupDebugSel.exit().remove();
-        participantDebugSel.exit().remove();
-    }
-
-    this.d3cola.symmetricDiffLinkLengths(linkLength).on("tick", function () {
-        const nodes = self.d3cola.nodes();
-        // console.log("nodes", nodes);
-        for (let n = 0; n < nodeCount; n++) {
-            const node = nodes[n];
-
-            // const outlineWidth = node.outline.getBBox().width;
-            // const upperGroupWidth = node.upperGroup.getBBox().width;
-
-            // const nx = node.bounds.x + upperGroupWidth - (outlineWidth / 2) + (width / 2);
-            // const ny = node.y + (height / 2);
-            node.setPosition(node.x, node.y);
-        }
-        self.setAllLinkCoordinates();
-
-        self.zoomToExtent();
-
+        self.d3cola.size([height - 40, width - 40]) // seems like funny things happen when calling size , even with constants, same starting point leads to diff outcome?
+            .nodes(layoutObj.nodes).groups(groups).links(layoutObj.links).avoidOverlaps(true);
+        let groupDebugSel, participantDebugSel;
         if (self.debug) {
-            groupDebugSel.attr({
-                x: function (d) {
-                    return d.bounds.x;// + (width / 2);
-                },
-                y: function (d) {
-                    return d.bounds.y;// + (height / 2);
-                },
-                width: function (d) {
-                    return d.bounds.width();
-                },
-                height: function (d) {
-                    return d.bounds.height();
-                }
-            });
+            groupDebugSel = d3.select(self.svgElement).selectAll(".group")
+                .data(groups);
 
-            participantDebugSel.attr({
-                x: function (d) {
-                    return d.bounds.x;// + (width / 2);
-                },
-                y: function (d) {
-                    return d.bounds.y;// + (height / 2);
-                },
-                width: function (d) {
-                    return d.bounds.width();
-                },
-                height: function (d) {
-                    return d.bounds.height();
+            groupDebugSel.enter().append("rect")
+                .classed("group", true)
+                .attr({
+                    rx: 5,
+                    ry: 5
+                })
+                .style("stroke", "blue")
+                .style("fill", "none");
+
+            participantDebugSel = d3.select(self.svgElement).selectAll(".node")
+                .data(layoutObj.nodes);
+
+            participantDebugSel.enter().append("rect")
+                .classed("node", true)
+                .attr({
+                    rx: 5,
+                    ry: 5
+                })
+                .style("stroke", "red")
+                .style("fill", "none");
+
+            groupDebugSel.exit().remove();
+            participantDebugSel.exit().remove();
+        }
+
+        self.d3cola.symmetricDiffLinkLengths(linkLength).on("tick", function () {
+            if (!initialRun) {
+                const nodes = self.d3cola.nodes();
+                // console.log("nodes", nodes);
+                for (let n = 0; n < nodeCount; n++) {
+                    const node = nodes[n];
+
+                    // const outlineWidth = node.outline.getBBox().width;
+                    // const upperGroupWidth = node.upperGroup.getBBox().width;
+
+                    // const nx = node.bounds.x + upperGroupWidth - (outlineWidth / 2) + (width / 2);
+                    // const ny = node.y + (height / 2);
+                    node.setPosition(node.x, node.y);
+                }
+                self.setAllLinkCoordinates();
+
+                if (!initialRun) {
+                    self.zoomToExtent();
+                }
+
+                if (self.debug) {
+                    groupDebugSel.attr({
+                        x: function (d) {
+                            return d.bounds.x;// + (width / 2);
+                        },
+                        y: function (d) {
+                            return d.bounds.y;// + (height / 2);
+                        },
+                        width: function (d) {
+                            return d.bounds.width();
+                        },
+                        height: function (d) {
+                            return d.bounds.height();
+                        }
+                    });
+
+                    participantDebugSel.attr({
+                        x: function (d) {
+                            return d.bounds.x;// + (width / 2);
+                        },
+                        y: function (d) {
+                            return d.bounds.y;// + (height / 2);
+                        },
+                        width: function (d) {
+                            return d.bounds.width();
+                        },
+                        height: function (d) {
+                            return d.bounds.height();
+                        }
+                    });
+                }
+            }
+        })
+            .on("end", function () {
+                if (initialRun) {
+                    //alert("initial run complete");
+                    // for (let p of layoutObj.nodes) {
+                    //         p.fixed = true;
+                    // }
+                    // let allNodesExceptComplexes = Array.from(self.participants.values());
+                    // allNodesExceptComplexes = allNodesExceptComplexes.filter(function (value) {
+                    //     return value.type !== "complex";
+                    // });
+                    doLayout(allNodesExceptComplexes, false);
                 }
             });
+        if (initialRun) {
+            self.d3cola.start(22, 0, 0);
+        } else {
+            self.d3cola.start(22, 0, 20);
         }
-    });
-    this.d3cola.start(20, 0, 20);
+    }
 };
 
 App.prototype.getSVG = function () {

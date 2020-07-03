@@ -6,9 +6,33 @@ export function Complex(id, app) {
     this.init(id, app);
     this.type = "complex";
     this.padding = 15;
+
+    // const self = this;
+    // // its bad if you end up with these getting called
+    // Object.defineProperty(this, "width", {
+    //     get: function height() {
+    //         return self.naryLink.path.getBBox().width;
+    //         //return 160;
+    //     }
+    // });
+    // Object.defineProperty(this, "height", {
+    //     get: function height() {
+    //         return self.naryLink.path.getBBox().height;
+    //         //return 160;
+    //     }
+    // });
 }
 
 Complex.prototype = new Interactor();
+
+// Complex.prototype = {
+//     get width() {
+//         return this.naryLink.path.getBBox().width;
+//     },
+//     get height() {
+//         return this.naryLink.path.getBBox().height;
+//     },
+// };
 
 Complex.prototype.initParticipant = function (naryLink) { // todo - rename to initLink?
     this.naryLink = naryLink;
@@ -18,7 +42,7 @@ Complex.prototype.initParticipant = function (naryLink) { // todo - rename to in
 };
 
 Complex.prototype.getPosition = function (originPoint) {
-    const mapped = this.naryLink.getMappedCoordinates();
+    const mapped = this.naryLink.mapped;//getMappedCoordinates();
     const mc = mapped.length;
     let xSum = 0,
         ySum = 0;

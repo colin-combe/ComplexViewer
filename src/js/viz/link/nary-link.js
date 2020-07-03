@@ -3,7 +3,7 @@ import {Link} from "./link";
 import {svgns} from "../../config";
 
 //NaryLink.naryColors; // init'ed in clear function of util
-NaryLink.orbitNodes = 16;
+NaryLink.orbitNodes = 20;
 NaryLink.orbitRadius = 20;
 
 export function NaryLink(id, app) {
@@ -82,14 +82,14 @@ NaryLink.prototype.setLinkCoordinates = function () {
         return "M" + hullPath.join("L") + "Z";
     };
     const self = this; // TODO: - tidy hack above?
-    const mapped = this.orbitNodes(this.getMappedCoordinates());
-    const hullValues = calculateHullPath(mapped);
+    this.mapped = this.orbitNodes(this.getMappedCoordinates());
+    const hullValues = calculateHullPath(this.mapped);
     if (hullValues) {
         this.path.setAttribute("d", hullValues);
     }
-    if (this.complex) {
-        this.complex.setAllLinkCoordinates();
-    }
+    // if (this.complex) {
+    //     this.complex.setAllLinkCoordinates();
+    // }
 };
 
 NaryLink.prototype.getMappedCoordinates = function () {

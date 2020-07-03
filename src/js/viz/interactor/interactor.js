@@ -5,6 +5,7 @@ export function Interactor() {
 
 Interactor.prototype = {
     get width() {
+        // console.log(this.upperGroup.getBBox().width);
         return this.upperGroup.getBBox().width;
     },
     get height() {
@@ -223,6 +224,6 @@ export function trig (radius, angleDegrees) {
         y: (radius * Math.sin(radians))
     };
 }
-
-Interactor.prototype.setForm = function () {
-};
+//
+// Interactor.prototype.setForm = function () {
+// };
