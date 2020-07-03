@@ -196,8 +196,8 @@ FeatureLink.prototype.setLinkCoordinates = function () {
         tMid = toParticipant.getPosition(fMid);//fromOriginPoint);
     }
 
-    const fromOriginPoint = fMid;//null;//[fromParticipant.cx, fromParticipant.cy];
-    const toOriginPoint = tMid;//null;//[toParticipant.cx, toParticipant.cy];
+    const fromOriginPoint = fMid;//null;//[fromParticipant.cy, fromParticipant.cy];
+    const toOriginPoint = tMid;//null;//[toParticipant.cy, toParticipant.cy];
 
     // if (!fromParticipant.form) { // if not (undefined or 0)
     //     fMid = fromParticipant.getPosition();//toOriginPoint);

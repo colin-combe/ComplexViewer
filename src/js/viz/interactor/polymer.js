@@ -48,8 +48,8 @@ Polymer.prototype.setStickScale = function (scale, svgP) {
     const oldScale = this.stickZoom;
 
     //dist from centre
-    const dx = (this.cx - svgP.x);
-    const dy = (this.cy - svgP.y);
+    const dx = (this.ix- svgP.x);
+    const dy = (this.iy - svgP.y);
 
     // new dist from centre
     const nx = dx * scale / oldScale;
@@ -64,8 +64,8 @@ Polymer.prototype.setStickScale = function (scale, svgP) {
     }
 
     //new pos
-    const x = this.cx + rx;
-    const y = this.cy + ry;
+    const x = this.ix+ rx;
+    const y = this.iy + ry;
 
     this.stickZoom = scale;
     this.scale();
@@ -244,8 +244,8 @@ Polymer.prototype.toCircle = function (svgP) {
     let xInterpol = null,
         yInterpol = null;
     if (typeof svgP !== "undefined" && svgP !== null) {
-        xInterpol = d3.interpolate(this.cx, svgP.x);
-        yInterpol = d3.interpolate(this.cy, svgP.y);
+        xInterpol = d3.interpolate(this.ix, svgP.x);
+        yInterpol = d3.interpolate(this.iy, svgP.y);
     }
 
     const self = this;
@@ -616,8 +616,8 @@ Polymer.prototype.getResidueCoordinates = function (r, yOff) {
     } else {
         y = yOff;
     }
-    x += this.cx;
-    y += this.cy;
+    x += this.ix;
+    y += this.iy;
     return [x, y];
 };
 

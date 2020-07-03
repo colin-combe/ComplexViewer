@@ -153,19 +153,53 @@ Interactor.prototype.showHighlight = function () {
 };
 
 Interactor.prototype.getPosition = function () {
-    return [this.cx, this.cy]; // todo - type of return is kind of inconsistent
+    return [this.ix, this.iy]; // todo - type of return is kind of inconsistent
+};
+/*
+Interactor.prototype.setPositionFromCola = function () {
+    let xOffset = 0;
+    // if (!this.hidden) { // todo - hacky
+    //     xOffset = (this.width / 2 - (this.getBlobRadius()) + 5)
+    //     // if (this.expanded) {
+    //     //   xOffset = xOffset + (this.participant.size / 2 * this.stickZoom );
+    //     // }
+    // }
+
+    // if (!this.hidden) {
+    //     xOffset = this.width - (this.getSymbolRadius() / 2);
+    // }
+
+    this.setPosition(this.x + xOffset, this.y);
 };
 
+//  calculate top left of interactor's glyph,
+// set this.x and this.y as cola would have them,
+//     call setPosition with same params this recieved
+
+Interactor.prototype.setPositionFromXinet = function (ix, iy) {
+    // let xOffset = 0;
+    // if (!this.hidden) { // todo - hacky
+    //     xOffset = (this.width / 2 - (this.getSymbolRadius()) + 5);
+    //     // if (this.expanded) {
+    //     //   xOffset = xOffset + (this.participant.size / 2 * this.stickZoom );
+    //     // }
+    // }
+    // this.x = ix - xOffset;
+    // this.y = iy;
+    this.setPosition(ix, iy);
+};
+*/
+
 Interactor.prototype.setPosition = function (x, y) {
-    this.cx = x;
-    this.cy = y;
-    this.upperGroup.setAttribute("transform", "translate(" + (this.cx) + " " + this.cy + ")");
+    this.ix= x;
+    this.iy = y;
+    this.upperGroup.setAttribute("transform", "translate(" + this.ix + " " + this.iy + ")");
 };
 
 Interactor.prototype.changePosition = function (x, y) {
-    this.cx -= x;
-    this.cy -= y;
-    this.upperGroup.setAttribute("transform", "translate(" + (this.cx) + " " + this.cy + ")");
+    this.ix -= x;
+    this.iy -= y;
+    this.upperGroup.setAttribute("transform", "translate(" + this.iy + " " + this.iy + ")");
     // this.setAllLinkCoordinates(); // todo - look at calls
 };
 

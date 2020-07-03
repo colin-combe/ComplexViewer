@@ -19,7 +19,7 @@ import {svgns} from "./config";
 // so continuing to use prototypical inheritance in things for time being
 
 export function App(/*HTMLDivElement*/networkDiv) {
-    // this.debug = true; // todo - things aren't exactly lined up in the bbounding boxes cola is using
+    // this.debug = true; // things aren't exactly lined up in the bounding boxes cola is using, to do so breaks symetery of some things
     this.el = networkDiv;
 
     this.STATES = {};
@@ -380,28 +380,27 @@ App.prototype.zoomToExtent = function () {
     let xr = (width / bbox.width).toFixed(4) - 0;
     let yr = (height / bbox.height).toFixed(4) - 0;
     let scaleFactor;
-    // // if (yr < xr) {
-    //     scaleFactor = yr;
-    // // } else {
+    if (yr < xr) {
+        scaleFactor = yr;
+    } else {
         scaleFactor = xr;
-    // }
+    }
     if (scaleFactor < 1) { ///didn't fit in div
         //console.log("no fit", scaleFactor);
-        xr = (width - 40) / (bbox.width);
+        const labelFudge = 80;
+        xr = (width - 40 - labelFudge) / (bbox.width);
         yr = (height - 40) / (bbox.height);
         let scaleFactor;
         if (yr < xr) {
             scaleFactor = yr;
         } else {
             scaleFactor = xr;
-        }        // }
+        }
 
         scaleFactor = scaleFactor.toFixed(4) - 0;
 
-
-
         //bbox.x + x = 0;
-        let x = -bbox.x + (20 / scaleFactor);
+        let x = -bbox.x + (20 +labelFudge / scaleFactor);
         //box.y + y = 0
         let y = -bbox.y + (20 / scaleFactor);
         this.container.setAttribute("transform", "scale(" + scaleFactor + ") translate(" + x + " " + y + ") ");
@@ -456,14 +455,14 @@ App.prototype.mouseMove = function (evt) {
         if (this.state === this.STATES.DRAGGING) {
             // we are currently dragging things around
             let ox, oy, nx, ny;
-            if (!this.dragElement.cx) { // if not an Interactor (that makes it so-called 'naryLink')
+            if (this.dragElement.type === "complex") {
                 for (let participant of this.dragElement.participants) {
                     participant.changePosition(dx, dy);
                 }
                 this.setAllLinkCoordinates();
             } else {
-                ox = this.dragElement.cx;
-                oy = this.dragElement.cy;
+                ox = this.dragElement.ix;
+                oy = this.dragElement.iy;
                 nx = ox - dx;
                 ny = oy - dy;
                 this.dragElement.setPosition(nx, ny);
@@ -572,7 +571,7 @@ App.prototype.preventDefaultsAndStopPropagation = function (evt) {
         if (this.state === this.STATES.DRAGGING) {
             // we are currently dragging things around
             var ox, oy, nx, ny;
-            if (typeof this.dragElement.cx === 'undefined') { // if not an Interactor
+            if (typeof this.dragElement.ix=== 'undefined') { // if not an Interactor
                 var nodes = this.dragElement.interactors;
                 var nodeCount = nodes.length;
                 for (var i = 0; i < nodeCount; i++) {
@@ -765,9 +764,9 @@ App.prototype.autoLayout = function () {
         delete self.d3cola._rootGroup;
 
         let linkLength = (nodes.length < 30) ? 30 : 20;
-        if (nodes.length === 2) {
-            linkLength = 50;
-        }
+        // if (nodes.length === 2) {
+        //     linkLength = 50;
+        // }
         const width = self.svgElement.parentNode.clientWidth;
         const height = self.svgElement.parentNode.clientHeight;
 
@@ -775,7 +774,7 @@ App.prototype.autoLayout = function () {
             .nodes(layoutObj.nodes).groups(groups).links(layoutObj.links).avoidOverlaps(true);
         let groupDebugSel, participantDebugSel;
         if (self.debug) {
-            groupDebugSel = d3.select(self.svgElement).selectAll(".group")
+            groupDebugSel = d3.select(self.container).selectAll(".group")
                 .data(groups);
 
             groupDebugSel.enter().append("rect")
@@ -787,7 +786,7 @@ App.prototype.autoLayout = function () {
                 .style("stroke", "blue")
                 .style("fill", "none");
 
-            participantDebugSel = d3.select(self.svgElement).selectAll(".node")
+            participantDebugSel = d3.select(self.container).selectAll(".node")
                 .data(layoutObj.nodes);
 
             participantDebugSel.enter().append("rect")

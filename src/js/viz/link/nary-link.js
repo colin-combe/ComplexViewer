@@ -124,7 +124,7 @@ NaryLink.prototype.orbitNodes = function (mapped) {
         const rx = Math.cos(theta) * (p[0] - o[0]) - Math.sin(theta) * (p[1] - o[1]) + o[0];
         const ry = Math.sin(theta) * (p[0] - o[0]) + Math.cos(theta) * (p[1] - o[1]) + o[1];
         return [rx, ry];
-    };
+    }
 
     const orbitNodes = [];
     const mc = mapped.length;

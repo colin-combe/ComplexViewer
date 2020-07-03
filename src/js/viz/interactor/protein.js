@@ -5,8 +5,8 @@ export function Protein(id, /*App*/ app, json, name) {
     this.init(id, app, json, name);
     this.type = "protein";
     // layout info
-    this.cx = 40;
-    this.cy = 40;
+    this.ix= 40;
+    this.iy = 40;
 
     this.upperGroup = document.createElementNS(svgns, "g");
     this.rotation = 0;

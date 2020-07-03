@@ -4,8 +4,8 @@ import {svgns} from "../../config";
 export function ComplexSymbol(id, app, name, json) { //, name) {
     this.init(id, app, json, name);
     // layout info
-    this.cx = 40;
-    this.cy = 40;
+    this.ix= 40;
+    this.iy = 40;
 
     this.upperGroup = document.createElementNS(svgns, "g");
     this.initLabel();
