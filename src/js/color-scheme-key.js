@@ -1,4 +1,4 @@
-import * as RGBColor from "rgbcolor";
+//import * as RGBColor from "rgbcolor";
 
 export function update(/*HTMLDivElement*/ div, /*App*/app) {
     div.textContent = "";
@@ -32,8 +32,8 @@ export function update(/*HTMLDivElement*/ div, /*App*/app) {
             const tr = featureColorTable.insertRow();
             const tc1 = tr.insertCell();
             // make transparent version of color
-            const temp = new RGBColor(range[i % 20]);
-            tc1.style.backgroundColor = "rgba(" + temp.r + "," + temp.g + "," + temp.b + ", 0.6)";
+            //const temp = new RGBColor(range[i % 20]).;
+            tc1.style.backgroundColor = range[i % 20];//"rgba(" + temp.r + "," + temp.g + "," + temp.b + ", 0.6)";
             const tc2 = tr.insertCell();
             tc2.textContent = domain[i];
         }

@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import * as colorbrewer from "colorbrewer";
+import * as d3_chromatic from "d3-scale-chromatic";
 import {Annotation} from "./viz/interactor/annotation";
 import {SequenceDatum} from "./viz/sequence-datum";
 
@@ -98,11 +98,11 @@ export function setAnnotations (annotationChoice, /*App*/ app) {
             catCount = 3;
         }
 
-        if (catCount < 9) {
-            colorScheme = d3.scale.ordinal().range(colorbrewer.Dark2[catCount].slice().reverse());
+        if (catCount < 11) {
+            colorScheme = d3.scale.ordinal().range(d3_chromatic.schemeTableau10);//colorbrewer.Dark2[catCount].slice().reverse());
         // } else if (catCount < 13) {
-        //     var reversed = colorbrewer.Paired[catCount];//.slice().reverse();
-        //     colorScheme = d3.scale.ordinal().range(reversed);
+        //     // var reversed = colorbrewer.Paired[catCount];//.slice().reverse();
+        //     colorScheme = d3.scale.ordinal().range(d3_chromatic.schemeSet3);
         } else {
             colorScheme = d3.scale.category20();
         }
@@ -112,7 +112,7 @@ export function setAnnotations (annotationChoice, /*App*/ app) {
                 for (let anno of mol.annotations) {
                     let color;
                     if (anno.description === "No annotations") {
-                        color = "#cccccc";
+                        color = "#eeeeee";
                     } else {
                         color = colorScheme(anno.description);
                     }

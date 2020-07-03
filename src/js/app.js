@@ -3,6 +3,7 @@ import * as css from "../css/xinet.css";
 import {version} from "../../package.json";
 import * as d3 from "d3";
 import * as colorbrewer from "colorbrewer";
+import * as d3_chromatic from "d3-scale-chromatic";
 import * as cola from "./cola";
 import {readMijson} from "./read-mijson";
 import {setAnnotations} from "./annotations";
@@ -31,6 +32,8 @@ export function App(/*HTMLDivElement*/networkDiv) {
 
     //avoids prob with 'save - web page complete'
     this.el.textContent = ""; //https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
+
+    this.d3cola = cola.d3adaptor();
 
     const customMenuSel = d3.select(this.el)
         .append("div").classed("custom-menu-margin", true)
@@ -265,12 +268,17 @@ App.prototype.createHatchedFill = function (name, color) {
 };
 
 App.prototype.clear = function () {
-    if (this.d3cola) {
-        this.d3cola.stop();
-    }
-    this.d3cola = null;
+    this.d3cola.stop();
 
-    NaryLink.naryColors = d3.scale.ordinal().range(colorbrewer.Pastel2[8]);
+    //lighten colors
+    const complexColors = [];
+    for (let c of d3_chromatic.schemePastel2){//colorbrewer.Pastel2[8]) {
+        const hsl = d3.hsl(c);
+        hsl.l = 0.9;
+        complexColors.push(hsl + "");
+    }
+
+    NaryLink.naryColors = d3.scale.ordinal().range(complexColors);
     this.defs.selectAll(".feature_checkers").remove();
 
     this.naryLinks.textContent = "";
@@ -294,13 +302,8 @@ App.prototype.clear = function () {
     this.complexes = [];
 
     this.proteinCount = 0;
-    // this.maxBlobRadius = 30;
-    // Interactor.MAXSIZE = 100;
-
     this.z = 1;
-
     this.hideTooltip();
-
     this.state = this.STATES.MOUSE_UP;
 };
 
@@ -311,11 +314,8 @@ App.prototype.collapseProtein = function () {
 };
 
 App.prototype.init = function () {
-    if (this.d3cola) {
-        this.d3cola.stop();
-    }
-
-    this.checkLinks();
+    this.d3cola.stop();
+    this.checkLinks(); //totally needed, not sure why tbh todo - check this out
     let maxSeqLength = 0;
     for (let participant of this.participants.values()) {
         if (participant.size > maxSeqLength) {
@@ -397,7 +397,10 @@ App.prototype.zoomToExtent = function () {
             scaleFactor = xr;
         }
 
-        scaleFactor = scaleFactor.toFixed(4) - 0;
+        //scaleFactor = scaleFactor.toFixed(4) - 0;
+        if (scaleFactor > this.z) {
+            scaleFactor = this.z;
+        }
 
         //bbox.x + x = 0;
         let x = -bbox.x + (20 +labelFudge / scaleFactor);
@@ -431,14 +434,9 @@ App.prototype.setAnnotations = function (annotationChoice) {
 App.prototype.mouseDown = function (evt) {
     //prevent default, but allow propogation
     evt.preventDefault();
-    //stop force layout
-    if (typeof this.d3cola !== "undefined" && this.d3cola != null) {
-        this.d3cola.stop();
-    }
-
+    this.d3cola.stop();
     const p = this.getEventPoint(evt); // seems to be correct, see below
     this.dragStart = this.mouseToSVG(p.x, p.y);
-
     return false;
 };
 
@@ -455,7 +453,7 @@ App.prototype.mouseMove = function (evt) {
         if (this.state === this.STATES.DRAGGING) {
             // we are currently dragging things around
             let ox, oy, nx, ny;
-            if (this.dragElement.type === "complex") {
+            if (!this.dragElement.ix) {
                 for (let participant of this.dragElement.participants) {
                     participant.changePosition(dx, dy);
                 }
@@ -659,9 +657,7 @@ App.prototype.getTouchEventPoint = function(evt) {
 };
  */
 App.prototype.autoLayout = function () {
-    if (this.d3cola) {
-        this.d3cola.stop();
-    }
+    this.d3cola.stop();
     const self = this;
 
     // needed to ensure consistent results
@@ -749,13 +745,12 @@ App.prototype.autoLayout = function () {
             for (let g of self.complexes) {
                 for (let interactor of g.naryLink.participants) {
                     if (interactor.type === "complex") {
-                        console.log(groups.indexOf(interactor));
+                        //console.log(groups.indexOf(interactor));
                         g.groups.push(groups.indexOf(interactor));
                     }
                 }
             }
         }
-        self.d3cola = cola.d3adaptor();
         // self.d3cola.convergenceThreshold = 0.01;
         //console.log("groups", groups);
         delete self.d3cola._lastStress;
@@ -770,7 +765,7 @@ App.prototype.autoLayout = function () {
         const width = self.svgElement.parentNode.clientWidth;
         const height = self.svgElement.parentNode.clientHeight;
 
-        self.d3cola.size([height - 40, width - 40]) // seems like funny things happen when calling size , even with constants, same starting point leads to diff outcome?
+        self.d3cola.size([height - 40, width - 40])
             .nodes(layoutObj.nodes).groups(groups).links(layoutObj.links).avoidOverlaps(true);
         let groupDebugSel, participantDebugSel;
         if (self.debug) {
@@ -869,9 +864,9 @@ App.prototype.autoLayout = function () {
                 }
             });
         if (initialRun) {
-            self.d3cola.start(22, 0, 0);
+            self.d3cola.start(23, 0, 0);
         } else {
-            self.d3cola.start(22, 0, 20);
+            self.d3cola.start(23, 0, 50);
         }
     }
 };

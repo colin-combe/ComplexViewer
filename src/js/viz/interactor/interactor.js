@@ -108,9 +108,7 @@ Interactor.prototype.addStoichiometryLabel = function (stoichiometry) {
 
 Interactor.prototype.mouseDown = function (evt) {
     this.app.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
-    if (typeof this.app.d3cola !== "undefined" && this.app.d3cola != null) {
-        this.app.d3cola.stop();
-    }
+    this.app.d3cola.stop();
     this.app.dragElement = this;
     const p = this.app.getEventPoint(evt);
     this.app.dragStart = this.app.mouseToSVG(p.x, p.y);
@@ -155,40 +153,6 @@ Interactor.prototype.showHighlight = function () {
 Interactor.prototype.getPosition = function () {
     return [this.ix, this.iy]; // todo - type of return is kind of inconsistent
 };
-/*
-Interactor.prototype.setPositionFromCola = function () {
-    let xOffset = 0;
-    // if (!this.hidden) { // todo - hacky
-    //     xOffset = (this.width / 2 - (this.getBlobRadius()) + 5)
-    //     // if (this.expanded) {
-    //     //   xOffset = xOffset + (this.participant.size / 2 * this.stickZoom );
-    //     // }
-    // }
-
-    // if (!this.hidden) {
-    //     xOffset = this.width - (this.getSymbolRadius() / 2);
-    // }
-
-    this.setPosition(this.x + xOffset, this.y);
-};
-
-//  calculate top left of interactor's glyph,
-// set this.x and this.y as cola would have them,
-//     call setPosition with same params this recieved
-
-Interactor.prototype.setPositionFromXinet = function (ix, iy) {
-    // let xOffset = 0;
-    // if (!this.hidden) { // todo - hacky
-    //     xOffset = (this.width / 2 - (this.getSymbolRadius()) + 5);
-    //     // if (this.expanded) {
-    //     //   xOffset = xOffset + (this.participant.size / 2 * this.stickZoom );
-    //     // }
-    // }
-    // this.x = ix - xOffset;
-    // this.y = iy;
-    this.setPosition(ix, iy);
-};
-*/
 
 Interactor.prototype.setPosition = function (x, y) {
     this.ix= x;
@@ -199,7 +163,7 @@ Interactor.prototype.setPosition = function (x, y) {
 Interactor.prototype.changePosition = function (x, y) {
     this.ix -= x;
     this.iy -= y;
-    this.upperGroup.setAttribute("transform", "translate(" + this.iy + " " + this.iy + ")");
+    this.upperGroup.setAttribute("transform", "translate(" + this.ix + " " + this.iy + ")");
     // this.setAllLinkCoordinates(); // todo - look at calls
 };
 
@@ -249,7 +213,6 @@ Interactor.prototype.setAllLinkCoordinates = function () {
     // }
 };
 
-//TODO: remove this, use rotateAboutPoint instead
 export function trig (radius, angleDegrees) {
     //x = rx + radius * cos(theta) and y = ry + radius * sin(theta)
     const radians = (angleDegrees / 360) * Math.PI * 2;

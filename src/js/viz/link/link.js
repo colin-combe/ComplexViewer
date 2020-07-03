@@ -50,10 +50,8 @@ Link.prototype.initSVG = function () {
 // event handler for starting dragging or rotation (or flipping internal links)
 Link.prototype.mouseDown = function (evt) {
     this.app.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
-    //if a force layout exists then stop it
-    if (this.app.d3cola) {
-        this.app.d3cola.stop();
-    }
+    //stop layout
+    this.app.d3cola.stop();
     this.app.dragElement = this;
     //store start location
     const p = this.app.getEventPoint(evt); // seems to be correct, see above

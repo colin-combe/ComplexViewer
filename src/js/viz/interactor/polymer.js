@@ -170,9 +170,9 @@ Polymer.prototype.setScaleGroup = function () {
         const scaleLabelGroup = document.createElementNS(svgns, "g");
         scaleLabelGroup.setAttribute("transform", "translate(" + tickX + " " + 0 + ")");
         const scaleLabel = document.createElementNS(svgns, "text");
-        scaleLabel.setAttribute("class", "Polymer xlv_text PolymerLabel");
-        scaleLabel.setAttribute("font-family", "'Courier New', monospace");
-        scaleLabel.setAttribute("font-size", "14");
+        scaleLabel.setAttribute("class", "xlv_text");
+        // scaleLabel.setAttribute("font-family", "'Courier New', monospace");
+        scaleLabel.setAttribute("font-size", "8pt"); // todo css...
         scaleLabel.setAttribute("text-anchor", "middle");
         scaleLabel.setAttribute("x", "0");
         scaleLabel.setAttribute("y", Polymer.STICKHEIGHT + 4);
@@ -667,8 +667,8 @@ Polymer.prototype.setPositionalFeatures = function (posFeats) {
             } else {
                 anno.fuzzyStart.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin, anno));
             }
-            anno.fuzzyStart.setAttribute("stroke-width", "1");
-            anno.fuzzyStart.setAttribute("fill-opacity", "0.6");
+            anno.fuzzyStart.setAttribute("stroke", "none");//-width", "1"); // todo - should be css
+            anno.fuzzyStart.setAttribute("fill-opacity", "0.8");
             anno.fuzzyStart.name = text;
             anno.fuzzyStart.onmouseover = toolTipFunc;
             this.annotationsSvgGroup.appendChild(anno.fuzzyStart);
@@ -690,7 +690,7 @@ Polymer.prototype.setPositionalFeatures = function (posFeats) {
                 anno.certain.setAttribute("d", this.getAnnotationRectPath(tempBegin, tempEnd, anno));
             }
             anno.certain.setAttribute("stroke-width", "1");
-            anno.certain.setAttribute("fill-opacity", "0.6");
+            // anno.certain.setAttribute("fill-opacity", "0.6");
             anno.certain.name = text;
             anno.certain.onmouseover = toolTipFunc;
             this.annotationsSvgGroup.appendChild(anno.certain);
@@ -702,8 +702,8 @@ Polymer.prototype.setPositionalFeatures = function (posFeats) {
             } else {
                 anno.fuzzyEnd.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.end, anno.seqDatum.uncertainEnd, anno));
             }
-            anno.fuzzyEnd.setAttribute("stroke-width", "1");
-            anno.fuzzyEnd.setAttribute("fill-opacity", "0.6");
+            anno.fuzzyEnd.setAttribute("stroke", "none"); //-width", "1");
+            anno.fuzzyEnd.setAttribute("fill-opacity", "0.8");
             anno.fuzzyEnd.name = text;
             anno.fuzzyEnd.onmouseover = toolTipFunc;
             this.annotationsSvgGroup.appendChild(anno.fuzzyEnd);
