@@ -60,8 +60,8 @@ BinaryLink.prototype.setLinkCoordinates = function () {
             pos1 = [intersect.points[0].x, intersect.points[0].y];
         }
 
-        this.line.setAttribute("marker-start", "url(#marker_diamond)");
-        this.line.setAttribute("marker-end", "url(#marker_diamond)");
+        // this.line.setAttribute("marker-start", "url(#marker_diamond)");
+        // this.line.setAttribute("marker-end", "url(#marker_diamond)");
     }
 
     if (this.participants[1].type === "complex") {
@@ -76,8 +76,8 @@ BinaryLink.prototype.setLinkCoordinates = function () {
         if (intersect.points[0]) {
             pos2 = [intersect.points[0].x, intersect.points[0].y];
         }
-        this.line.setAttribute("marker-start", "url(#marker_diamond)");
-        this.line.setAttribute("marker-end", "url(#marker_diamond)");
+        // this.line.setAttribute("marker-start", "url(#marker_diamond)");
+        // this.line.setAttribute("marker-end", "url(#marker_diamond)");
     }
 
     this.line.setAttribute("x1", pos1[0]);

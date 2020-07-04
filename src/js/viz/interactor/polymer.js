@@ -668,7 +668,7 @@ Polymer.prototype.setPositionalFeatures = function (posFeats) {
                 anno.fuzzyStart.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin, anno));
             }
             anno.fuzzyStart.setAttribute("stroke", "none");//-width", "1"); // todo - should be css
-            anno.fuzzyStart.setAttribute("fill-opacity", "0.8");
+            anno.fuzzyStart.setAttribute("fill-opacity", "0.6");
             anno.fuzzyStart.name = text;
             anno.fuzzyStart.onmouseover = toolTipFunc;
             this.annotationsSvgGroup.appendChild(anno.fuzzyStart);
@@ -703,7 +703,7 @@ Polymer.prototype.setPositionalFeatures = function (posFeats) {
                 anno.fuzzyEnd.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.end, anno.seqDatum.uncertainEnd, anno));
             }
             anno.fuzzyEnd.setAttribute("stroke", "none"); //-width", "1");
-            anno.fuzzyEnd.setAttribute("fill-opacity", "0.8");
+            anno.fuzzyEnd.setAttribute("fill-opacity", "0.6");
             anno.fuzzyEnd.name = text;
             anno.fuzzyEnd.onmouseover = toolTipFunc;
             this.annotationsSvgGroup.appendChild(anno.fuzzyEnd);

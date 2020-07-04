@@ -5,8 +5,8 @@ export function Protein(id, /*App*/ app, json, name) {
     this.init(id, app, json, name);
     this.type = "protein";
     // layout info
-    this.ix= -100;
-    this.iy = -100;
+    this.ix= -500;
+    this.iy = -500;
 
     this.upperGroup = document.createElementNS(svgns, "g");
     this.rotation = 0;
@@ -78,7 +78,7 @@ export function Protein(id, /*App*/ app, json, name) {
     const self = this;
     Object.defineProperty(this, "height", {
         get: function height() {
-            return self.form == 1? 120:60;
+            return self.form == 1? 120:40;
             //return 160;
         }
     });

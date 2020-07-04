@@ -4,8 +4,8 @@ import {svgns} from "../../config";
 export function BioactiveEntity(id, app, json, name) {
     this.init(id, app, json, name);
     // layout info
-    this.ix= -100;
-    this.iy = -100;
+    this.ix= -500;
+    this.iy = -500;
     this.upperGroup = document.createElementNS(svgns, "g");
     this.initLabel();
     const points = "0, -10  8.66,5 -8.66,5";

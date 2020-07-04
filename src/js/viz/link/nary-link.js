@@ -3,8 +3,8 @@ import {Link} from "./link";
 import {svgns} from "../../config";
 
 //NaryLink.naryColors; // init'ed in clear function of util
-NaryLink.orbitNodes = 20;
-NaryLink.orbitRadius = 20;
+NaryLink.orbitNodes = 24;
+NaryLink.orbitRadius = 24;
 
 export function NaryLink(id, app) {
     this.id = id;
@@ -133,7 +133,7 @@ NaryLink.prototype.orbitNodes = function (mapped) {
         for (let o = 0; o < NaryLink.orbitNodes; o++) {
             const angle = (360 / NaryLink.orbitNodes) * o;
             const p = [m[0] + NaryLink.orbitRadius, m[1]];
-            orbitNodes.push(rotatePointAboutPoint(p, m, angle)); //todo just move that func here
+            orbitNodes.push(rotatePointAboutPoint(p, m, angle));
         }
     }
     return orbitNodes;

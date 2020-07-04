@@ -24,7 +24,7 @@ export function matrix (json) {
         // Loop through our participants that need expanding
         participantsToExpand.forEach(function (participant) {
 
-            // Do we have an interactor? TODO: Will his affect complexes?
+            // Do we have an interactor? TODO: Will this affect complexes?
             const foundInteractor = findFirstObjWithAttr(interactors, "id", participant.interactorRef);
 
             // If we found an interactor then we need to clone it.

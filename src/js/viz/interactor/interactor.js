@@ -9,7 +9,7 @@ Interactor.prototype = {
         return this.upperGroup.getBBox().width;
     },
     get height() {
-        return this.upperGroup.getBBox().height;
+        return 40;//this.upperGroup.getBBox().height;
     },
 };
 
@@ -155,12 +155,16 @@ Interactor.prototype.getPosition = function () {
 };
 
 Interactor.prototype.setPosition = function (x, y) {
-    this.ix= x;
+    this.px = this.ix;
+    this.py = this.iy;
+    this.ix = x;
     this.iy = y;
     this.upperGroup.setAttribute("transform", "translate(" + this.ix + " " + this.iy + ")");
 };
 
 Interactor.prototype.changePosition = function (x, y) {
+    this.px = this.ix;
+    this.py = this.iy;
     this.ix -= x;
     this.iy -= y;
     this.upperGroup.setAttribute("transform", "translate(" + this.ix + " " + this.iy + ")");
@@ -206,11 +210,9 @@ Interactor.prototype.setAllLinkCoordinates = function () {
     if (this.selfLink) {
         this.selfLink.setLinkCoordinates();
     }
-    // if (this.form === 1) { // ? todo - check this doesn't break anything
-        for (let link of this.sequenceLinks.values()) {
+    for (let link of this.sequenceLinks.values()) {
             link.setLinkCoordinates();
-        }
-    // }
+    }
 };
 
 export function trig (radius, angleDegrees) {
