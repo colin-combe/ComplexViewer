@@ -270,7 +270,7 @@ App.prototype.clear = function () {
     this.d3cola.stop();
 
     this.annotationSetsShown = new Map();
-    this.annotationSetsShown.set("MI FEATURES", true);
+    // this.annotationSetsShown.set("MI FEATURES", true);
 
     //lighten colors
     const complexColors = [];
@@ -323,13 +323,13 @@ App.prototype.init = function () {
         if (participant.type != "complex") {
             // let pos = rotatePointAboutPoint([0, -500], [0, 0], (360 / this.participants.size * i));
             participant.setPosition(-500, -500);//pos[0], pos[1]);
-            if (participant.type === "protein") {
-                participant.setPositionalFeatures();
-            }
+            // if (participant.type === "protein") {
+            //     participant.setPositionalFeatures();
+            // }
         }
         // i++;
     }
-    chooseColors(this);
+    this.updateAnnotations();
     this.checkLinks(); //totally needed, not sure why tbh todo - check this out
     this.setAllLinkCoordinates(); // just to move them off screen at first
 
@@ -982,12 +982,12 @@ App.prototype.showAnnotations = function (annoChoice, show) {
     annoChoice = annoChoice.toUpperCase();
     const self = this;
     let setShown = this.annotationSetsShown.get(annoChoice);
-    if (typeof setShown === "undefined" && show) {
+    if (annoChoice !== "MIFEATURES" && show) {
         fetchAnnotations(annoChoice, this, function () {
             self.annotationSetsShown.set(annoChoice, show);
             self.updateAnnotations();
         });
-    } else {
+    } else if (!(annoChoice !== "MIFEATURES")) {
         this.annotationSetsShown.set(annoChoice, show);
         this.updateAnnotations();
     }

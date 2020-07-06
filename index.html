@@ -105,21 +105,32 @@
 
             <div>
                 <div class="controls">
-                    <label for="annotationsSelect">Annotations:</label><select class="btn btn-1 btn-1a"
-                                                                               id="annotationsSelect"
-                                                                               onChange="changeAnnotations();">
-                    <option selected='selected'>MI features</option>
-                    <option>UniprotKB</option>
-                    <option>SuperFamily</option>
-                    <option>None</option>
-                    <option>Interactor</option>
-                </select>
-                    <!-- <label>&nbsp;&nbsp;Expand Stoich.
-                    <input checked onclick="loadData()" id="chkexpansion" value="expansion" type="checkbox">
-                    </label> -->
-                    <button class="btn btn-1 btn-1a" onclick="cv.autoLayout();" style="display:inline">Layout</button>
-                    <button class="btn btn-1 btn-1a" onclick="exportSVG();" style="display:inline">Export Graphic
-                    </button>
+                    <div>
+                        Annotations:
+
+                        <input type="checkbox" id="mifeatures" name="mifeatures" value="MIFEATURES"
+                               onchange="setAnnotations(this);">
+                        <label for="mifeatures"> MI Features</label>
+                        <input type="checkbox" id="uniprotkb" name="uniprotkb" value="UNIPROTKB"
+                               onchange="setAnnotations(this);">
+                        <label for="uniprotkb"> UniprotKB Domains</label>
+                        <input type="checkbox" id="superfamily" name="superfamily" value="SUPERFAMILY"
+                               onchange="setAnnotations(this);">
+                        <label for="superfamily"> Superfamily</label>
+                        <input type="checkbox" id="interactor" name="interactor" value="INTERACTOR"
+                               onchange="setAnnotations(this);">
+                        <label for="interactor"> Interactor</label>
+                    </div>
+                    <div class="other-controls">
+                        <!-- <label>&nbsp;&nbsp;Expand Stoich.
+                        <input checked onclick="loadData()" id="chkexpansion" value="expansion" type="checkbox">
+                        </label> -->
+                        <button class="btn btn-1 btn-1a" onclick="cv.autoLayout();" style="display:inline">Layout
+                        </button>
+                        <button class="btn btn-1 btn-1a" onclick="exportSVG();" style="display:inline">Export Graphic
+                        </button>
+                    </div>
+
                 </div>
 
             </div> <!-- bottom bar -->
@@ -170,13 +181,23 @@
         const path = dataSetsSelect.options[dataSetsSelect.selectedIndex].value;
         d3.json(path, function (data) {
             cv.readMIJSON(data);//, matrixExpansion);
-            changeAnnotations();
+            resetAnnotations();
         });
     }
 
-    function changeAnnotations() {
-        const annotationSelect = document.getElementById("annotationsSelect");
-        cv.setAnnotations(annotationSelect.options[annotationSelect.selectedIndex].value);
+    function resetAnnotations() {
+        let checkbox = document.getElementById("mifeatures");
+        cv.showAnnotations(checkbox.value, checkbox.checked);
+        checkbox = document.getElementById("uniprotkb");
+        cv.showAnnotations(checkbox.value, checkbox.checked);
+        checkbox = document.getElementById("superfamily");
+        cv.showAnnotations(checkbox.value, checkbox.checked);
+        checkbox = document.getElementById("interactor");
+        cv.showAnnotations(checkbox.value, checkbox.checked);
+    }
+
+    function setAnnotations(checkbox){
+        cv.showAnnotations(checkbox.value, checkbox.checked);
     }
 
     function exportSVG() {

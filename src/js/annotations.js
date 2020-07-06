@@ -134,7 +134,6 @@ export function chooseColors(app) {
     }
 
     for (let participant of app.participants.values()) {
-        // for (let annotationSet of participant.annotationSets.values()) {
         for (let [annotationType, annotations] of participant.annotationSets) {
             if (app.annotationSetsShown.get(annotationType) === true) {
                 for (let anno of annotations) {

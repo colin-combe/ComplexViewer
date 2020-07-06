@@ -72,20 +72,12 @@ b {
 }
 
 div#middleDiv, div#networkDiv {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
 }
 
 div#innerMiddleDiv {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
     display: flex;
     flex-direction: row;
     flex-grow: 1;
@@ -95,10 +87,6 @@ div#innerMiddleDiv {
 }
 
 div#symbolKeyDiv {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
     display: flex;
     flex-grow: 1;
     flex-direction: column;
@@ -127,25 +115,18 @@ div#legendInner {
     color: #fff;
     margin-left: 0;
 
-    /*
-        display: -webkit-box;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        flex-direction: row;
-        flex-grow: 1;
-        flex-shrink: 0;
-    */
+    display: flex;
+    flex-direction: row;
+    /*flex-grow: 1;*/
+    flex-shrink: 0;
+    justify-content: space-between;
+    align-items: center;
+
 }
 
 .logoBar {
     margin-top: 5px;
     margin-bottom: 5px;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
     display: flex;
     flex-direction: row;
     flex-shrink: 0;
