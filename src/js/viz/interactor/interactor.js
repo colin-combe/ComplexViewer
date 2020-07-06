@@ -17,11 +17,15 @@ Interactor.prototype.init = function (id, app, json, name){
     this.id = id;
     this.app = app;
     this.json = json;
+    this.name = name;
+
+    //annotations indexed by annotation set name ("MI FEATURES", "SUPERFAMILY", etc)
+    this.annotationSets = new Map();
+
     //links
     this.naryLinks = new Map();
     this.binaryLinks = new Map();
     this.sequenceLinks = new Map();
-    this.name = name;
 };
 
 Interactor.prototype.initLabel = function (){

@@ -3,8 +3,8 @@ import {Link} from "./link";
 import {svgns} from "../../config";
 
 //NaryLink.naryColors; // init'ed in clear function of util
-NaryLink.orbitNodes = 24;
-NaryLink.orbitRadius = 24;
+NaryLink.orbitNodes = 20;
+NaryLink.orbitRadius = 20;
 
 export function NaryLink(id, app) {
     this.id = id;
@@ -66,7 +66,7 @@ NaryLink.prototype.check = function () {
 };
 
 NaryLink.prototype.show = function () {
-    this.path.setAttribute("stroke-width", this.app.z);
+    // this.path.setAttribute("stroke-width", this.app.z);
     this.setLinkCoordinates();
     this.app.naryLinks.appendChild(this.path);
 };

@@ -3,10 +3,7 @@ import {svgns, highlightColour} from "../../config";
 
 export function Protein(id, /*App*/ app, json, name) {
     this.init(id, app, json, name);
-    this.type = "protein";
-    // layout info
-    this.ix= -500;
-    this.iy = -500;
+    this.type = "protein"; // this isn't absolutely necessary, could do without it
 
     this.upperGroup = document.createElementNS(svgns, "g");
     this.rotation = 0;

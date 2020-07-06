@@ -163,7 +163,6 @@
     }
 
     loadData();
-    changeAnnotations();
 
     function loadData() {
         cv.clear();
@@ -171,6 +170,7 @@
         const path = dataSetsSelect.options[dataSetsSelect.selectedIndex].value;
         d3.json(path, function (data) {
             cv.readMIJSON(data);//, matrixExpansion);
+            changeAnnotations();
         });
     }
 

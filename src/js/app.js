@@ -5,7 +5,7 @@ import * as d3 from "d3";
 import * as d3_chromatic from "d3-scale-chromatic";
 import * as cola from "./cola";
 import {readMijson} from "./read-mijson";
-import {setAnnotations} from "./annotations";
+import {chooseColors, fetchAnnotations} from "./annotations";
 
 // import {SymbolKey} from "./symbol-key";
 import * as ColorSchemeKey from "./color-scheme-key";
@@ -33,7 +33,6 @@ export function App(/*HTMLDivElement*/networkDiv) {
     this.el.textContent = ""; //https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
 
     this.d3cola = cola.d3adaptor();
-    // this.d3cola.groupCompactness(1e-500000);
 
     const customMenuSel = d3.select(this.el)
         .append("div").classed("custom-menu-margin", true)
@@ -270,6 +269,9 @@ App.prototype.createHatchedFill = function (name, color) {
 App.prototype.clear = function () {
     this.d3cola.stop();
 
+    this.annotationSetsShown = new Map();
+    this.annotationSetsShown.set("MI FEATURES", true);
+
     //lighten colors
     const complexColors = [];
     for (let c of d3_chromatic.schemePastel2) {//colorbrewer.Pastel2[8]) {
@@ -315,30 +317,21 @@ App.prototype.collapseProtein = function () {
 
 App.prototype.init = function () {
     this.d3cola.stop();
-    this.checkLinks(); //totally needed, not sure why tbh todo - check this out
-
-
-
-    // function rotatePointAboutPoint (p, o, theta) {
-    //     theta = (theta / 360) * Math.PI * 2; //TODO: change theta arg to radians not degrees
-    //     const rx = Math.cos(theta) * (p[0] - o[0]) - Math.sin(theta) * (p[1] - o[1]) + o[0];
-    //     const ry = Math.sin(theta) * (p[0] - o[0]) + Math.cos(theta) * (p[1] - o[1]) + o[1];
-    //     return [rx, ry];
-    // }
 
     // let i = 0;
     for (let participant of this.participants.values()) {
         if (participant.type != "complex") {
             // let pos = rotatePointAboutPoint([0, -500], [0, 0], (360 / this.participants.size * i));
             participant.setPosition(-500, -500);//pos[0], pos[1]);
+            if (participant.type === "protein") {
+                participant.setPositionalFeatures();
+            }
         }
         // i++;
     }
-    //
+    chooseColors(this);
+    this.checkLinks(); //totally needed, not sure why tbh todo - check this out
     this.setAllLinkCoordinates(); // just to move them off screen at first
-
-
-
 
     let maxSeqLength = 0;
     for (let participant of this.participants.values()) {
@@ -349,7 +342,6 @@ App.prototype.init = function () {
     const width = this.svgElement.parentNode.clientWidth;
     const defaultPixPerRes = width * 0.8 / maxSeqLength;
     //console.log("defaultPixPerRes:" + defaultPixPerRes);
-
     // https://stackoverflow.com/questions/12141150/from-list-of-integers-get-number-closest-to-a-given-value/12141511#12141511
     function takeClosest(myList, myNumber) {
         const bisect = d3.bisector(function (d) {
@@ -368,26 +360,15 @@ App.prototype.init = function () {
     this.defaultBarScale = takeClosest(this.barScales, defaultPixPerRes);
     //console.log("default bar scale: " + this.defaultBarScale)
 
-    if (this.annotationChoice) {
-        this.setAnnotations(this.annotationChoice);
-    } else {
-        this.setAnnotations("MI FEATURES");
-    }
-
     for (let participant of this.participants.values()) {
         if (participant.type !== "complex") {
             this.proteinUpper.appendChild(participant.upperGroup);
             if (participant.json.type.name === "protein") {
+                // participant.initSelfLinkSVG(); // todo - may not even do anything, not sure its working
                 participant.stickZoom = this.defaultBarScale;
-                participant.initLinks();
-            }
-        }
-    }
-
-    if (this.participants.size < 4) {
-        for (let participant of this.participants.values()) {
-            if (participant.json.type.name === "protein") {
-                participant.toStickNoTransition();
+                if (this.participants.size < 4) {
+                    participant.toStickNoTransition();
+                }
             }
         }
     }
@@ -398,7 +379,7 @@ App.prototype.init = function () {
 App.prototype.zoomToExtent = function () {
     const width = this.svgElement.parentNode.clientWidth;
     const height = this.svgElement.parentNode.clientHeight;
-    const bbox = this.naryLinks.getBBox();
+    const bbox = this.container.getBBox();
     let xr = (width / bbox.width).toFixed(4) - 0;
     let yr = (height / bbox.height).toFixed(4) - 0;
     let scaleFactor;
@@ -409,8 +390,7 @@ App.prototype.zoomToExtent = function () {
     }
     if (scaleFactor < 1) { ///didn't fit in div
         //console.log("no fit", scaleFactor);
-        const labelFudge = 80;
-        xr = (width - 40 - labelFudge) / (bbox.width);
+        xr = (width - 40) / (bbox.width);
         yr = (height - 40) / (bbox.height);
         let scaleFactor;
         if (yr < xr) {
@@ -419,13 +399,12 @@ App.prototype.zoomToExtent = function () {
             scaleFactor = xr;
         }
 
-        //scaleFactor = scaleFactor.toFixed(4) - 0;
         if (scaleFactor > this.z) {
             scaleFactor = this.z;
         }
 
         //bbox.x + x = 0;
-        let x = -bbox.x + (20 + labelFudge / scaleFactor);
+        let x = -bbox.x + (20 / scaleFactor);
         //box.y + y = 0
         let y = -bbox.y + (20 / scaleFactor);
         this.container.setAttribute("transform", "scale(" + scaleFactor + ") translate(" + x + " " + y + ") ");
@@ -442,12 +421,9 @@ App.prototype.zoomToExtent = function () {
         this.container.setAttribute("transform", "scale(" + 1 + ") translate(" + x + " " + y + ")");
         this.z = 1;
     }
+
     //todo - following could be tided up by using acknowledgement bbox or positioning att's of text
     this.acknowledgement.setAttribute("transform", "translate(" + (width - 150) + ", " + (height - 30) + ")");
-};
-
-App.prototype.setAnnotations = function (annotationChoice) {
-    setAnnotations(annotationChoice, this);
 };
 
 //listeners also attached to mouse events by Interactor (and Rotator) and Link, those consume their events
@@ -513,7 +489,7 @@ App.prototype.mouseUp = function (evt) {
         const p = this.getEventPoint(evt); // seems to be correct, see below
         const c = this.mouseToSVG(p.x, p.y);
 
-        if (this.dragElement && this.dragElement.type === "protein") {
+        if (this.dragElement && this.dragElement.type === "protein") { /// todo be consistent about how to check if thing is protein
             if (!(this.state === this.STATES.DRAGGING || this.state === this.STATES.ROTATING)) { //not dragging or rotating
                 if (this.dragElement.form === 0) {
                     this.dragElement.setForm(1);
@@ -693,32 +669,22 @@ App.prototype.autoLayout = function () {
     }
 
     //// prune leaves from network then layout, then add back leaves and layout again (fixes haemoglobin)
-    const prunedIn = [];
-    // const prunedOut = [];
+    const pruned = [];
     for (let participant of self.participants.values()) {
         if (participant.binaryLinks.size > 2 && participant.type !== "complex") {
-            prunedIn.push(participant);
+            pruned.push(participant);
         }
-        // else if (participant.type !== "complex") {
-        //     prunedOut.push(participant);
-        // }
     }
-
-    // let allNodesExceptComplexes = ;
     const allNodesExceptComplexes = Array.from(self.participants.values()).filter(function (value) {
         return value.type !== "complex";
     });
-    // // const initialRing = prune(); //
-    if (prunedIn.length < allNodesExceptComplexes.length
-        && prunedIn.length > 3 && self.participants.size < 9) {
-        // <9 include hemoglobin, possibly some other small cases, but is catious, tends to mess other things up
-        console.log(prunedIn);
-        // for (let participant of prunedIn) {
-        //    participant.showHighlight(true);
-        // }
-        doLayout(prunedIn, true);
-    } else {
 
+    if (pruned.length < allNodesExceptComplexes.length
+        && pruned.length > 3 && self.participants.size < 9) {
+        // <9 include hemoglobin, possibly some other small cases, but is catious, tends to mess other things up
+        // console.log(prunedIn);
+        doLayout(pruned, true);
+    } else {
         doLayout(allNodesExceptComplexes, self.complexes.length > 0);
     }
 
@@ -820,7 +786,6 @@ App.prototype.autoLayout = function () {
             participantDebugSel.exit().remove();
         }
 
-        let count = 0;
         const startTime = Date.now();
         self.d3cola.symmetricDiffLinkLengths(linkLength)
             .on("tick", function () {
@@ -863,7 +828,6 @@ App.prototype.autoLayout = function () {
                         });
                     }
                 }
-                count++;
             })
             .on("end", function () {
                 if (preRun) {
@@ -892,7 +856,7 @@ App.prototype.autoLayout = function () {
     }
 };
 
-App.prototype.getSVG = function () {
+App.prototype.getSVG = function () { //todo - update after styling of svg is moved to css
     let svgXml = this.svgElement.outerHTML.replace(/<rect .*?\/rect>/i, ""); //take out white background fill
     const viewBox = "viewBox=\"0 0 " + this.svgElement.parentNode.clientWidth + " " + this.svgElement.parentNode.clientHeight + "\" ";
     svgXml = svgXml.replace("<svg ", "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:ev=\"http://www.w3.org/2001/xml-events\" " + viewBox);
@@ -1005,6 +969,49 @@ App.prototype.removeColorSchemeKey = function (/*HTMLDivElement*/ colorSchemeKey
     colorSchemeKeyDiv.textContent = "";
 };
 
+//for backwards compatibility (noe?), tbh i might have made a bit of a mess here
+App.prototype.setAnnotations = function (annoChoice) {
+    annoChoice = annoChoice.toUpperCase();
+    for (let annoType of this.annotationSetsShown.keys()) {
+        this.showAnnotations(annoType, annoChoice === annoType);
+    }
+    this.showAnnotations(annoChoice, true);
+};
+
+App.prototype.showAnnotations = function (annoChoice, show) {
+    annoChoice = annoChoice.toUpperCase();
+    const self = this;
+    let setShown = this.annotationSetsShown.get(annoChoice);
+    if (typeof setShown === "undefined" && show) {
+        fetchAnnotations(annoChoice, this, function () {
+            self.annotationSetsShown.set(annoChoice, show);
+            self.updateAnnotations();
+        });
+    } else {
+        this.annotationSetsShown.set(annoChoice, show);
+        this.updateAnnotations();
+    }
+};
+
+App.prototype.updateAnnotations = function () {
+    // //clear all annot's
+    for (let mol of this.participants.values()) {
+        if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS
+            mol.clearPositionalFeatures();
+        }
+    }
+    chooseColors(this);
+    this.colorSchemeChanged();
+
+    for (let mol of this.participants.values()) {
+        if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS
+            mol.setPositionalFeatures();
+        }
+    }
+    chooseColors(this);
+    this.colorSchemeChanged();
+};
+
 App.prototype.colorSchemeChanged = function () {
     for (let div of this.colorSchemeKeyDivs) {
         ColorSchemeKey.update(div, this);
@@ -1014,7 +1021,6 @@ App.prototype.colorSchemeChanged = function () {
 App.prototype.getComplexColors = function () {
     return NaryLink.naryColors;
 };
-
 
 App.prototype.getFeatureColors = function () {
     return this.featureColors;
@@ -1035,6 +1041,23 @@ App.prototype.expandAll = function () {
         }
     }
 };
+
+//from noe
+App.prototype.expandAndCollapseSelection = function (moleculesSelected) {
+    const molecules = this.molecules.values();
+    for (var m = 0; m < molecules.length; m++) {
+        var molecule = molecules[m];
+        var molecule_id = molecule.json.identifier.id;
+        if (moleculesSelected.includes(molecule_id)) {
+            if (molecule.form === 0) {
+                molecule.setForm(1);
+            }
+        } else if (molecule.form === 1) {
+            molecule.setForm(0);
+        }
+    }
+};
+
 
 // export function makeSymbolKey(targetDiv){
 //     new SymbolKey(targetDiv);

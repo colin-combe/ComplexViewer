@@ -3,10 +3,6 @@ import {svgns} from "../../config";
 
 export function ComplexSymbol(id, app, name, json) { //, name) {
     this.init(id, app, json, name);
-    // layout info
-    this.ix= -500;
-    this.iy = -500;
-
     this.upperGroup = document.createElementNS(svgns, "g");
     this.initLabel();
     const points = "15,0 8,-13 -7,-13 -15,0 -8,13 7,13";

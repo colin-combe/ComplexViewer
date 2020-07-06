@@ -5,111 +5,140 @@ import {SequenceDatum} from "./viz/sequence-datum";
 
 
 //todo - cache annotations in memory
-export function setAnnotations (annotationChoice, /*App*/ app) {
-    app.annotationChoice = annotationChoice;
+export function fetchAnnotations(annotationChoice, /*App*/ app, callback) {
+    annotationChoice = annotationChoice.toUpperCase();
+    // we only show annotations on proteins
+    const proteins = Array.from(app.participants.values()).filter(function (value) {
+        return value.type === "protein";
+    });
 
-    // proteins = participants.filter('blah') // todo
-
-    //clear all annot's
-    for (let mol of app.participants.values()) {
-        if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS
-            mol.clearPositionalFeatures();
+    function clearHighlights(){
+        for (let prot of proteins){
+            prot.showHighlight(false);
         }
     }
-    //app.legendChanged(null); // todo - this isn't happening?
+    let protsAnnotated = 0;
+    const molCount = proteins.length;
 
-    let molsAnnotated = 0;
-    const molCount = app.participants.size;
-    if (annotationChoice.toUpperCase() === "MI FEATURES") {
-        for (let mol of app.participants.values()) {
-            if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS
-                mol.setPositionalFeatures(mol.miFeatures);
-            }
-        }
-        chooseColors();
-    } else if (annotationChoice.toUpperCase() === "INTERACTOR") {
+    if (annotationChoice === "INTERACTOR") {
         if (app.proteinCount < 21) {
-            for (let mol of app.participants.values()) {
-                if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS
-                    const annotation = new Annotation(mol.json.label, new SequenceDatum(null, 1 + "-" + mol.size));
-                    mol.setPositionalFeatures([annotation]);
+            for (let prot of proteins) {
+                const annotation = new Annotation(prot.json.label, new SequenceDatum(null, 1 + "-" + prot.size));
+                let annotations = prot.annotationSets.get(annotationChoice);
+                if (typeof annotationSet === "undefined") {
+                    annotations = [];
+                    prot.annotationSets.set(annotationChoice, annotations);
                 }
+                annotations.push(annotation);
             }
-            chooseColors();
+            // app.annotationSetsShown.set("INTERACTOR", true);
         } else {
             alert("Too many (> 20) - can't color by interactor.");
         }
-    } else if (annotationChoice.toUpperCase() === "SUPERFAM" || annotationChoice.toUpperCase() === "SUPERFAMILY") {
-        for (let mol of app.participants.values()) {
-            if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS
-                getSuperFamFeatures(mol.id, function (id, fts) {
-                    const m = app.participants.get(id);
-                    m.setPositionalFeatures(fts);
-                    molsAnnotated++;
-                    if (molsAnnotated === molCount) {
-                        chooseColors();
-                    }
-                });
-            } else {
-                molsAnnotated++;
-                if (molsAnnotated === molCount) {
-                    chooseColors();
+        callback();
+    } else if (annotationChoice.toUpperCase() === "SUPERFAMILY") {
+        for (let prot of proteins) {
+            getSuperFamFeatures(prot, function () {
+                protsAnnotated++;
+                if (protsAnnotated === molCount) {
+                    clearHighlights();
+                    callback();
                 }
-            }
+            });
         }
-    } else if (annotationChoice.toUpperCase() === "UNIPROT" || annotationChoice.toUpperCase() === "UNIPROTKB") {
-        for (let mol of app.participants.values()) {
-            if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS
-                getUniProtFeatures(mol.id, function (id, fts) {
-                    const m = app.participants.get(id);
-                    for (let f = 0; f < fts.length; f++) {
-                        const feature = fts[f];
-                        feature.seqDatum = new SequenceDatum(null, feature.begin + "-" + feature.end);
-                    }
-                    m.setPositionalFeatures(fts);
-                    molsAnnotated++;
-                    if (molsAnnotated === molCount) {
-                        chooseColors();
-                    }
-                });
-            } else {
-                molsAnnotated++;
-                if (molsAnnotated === molCount) {
-                    chooseColors();
+    } else if (annotationChoice.toUpperCase() === "UNIPROTKB") {
+        for (let prot of proteins) {
+            getUniProtFeatures(prot, function () {
+                protsAnnotated++;
+                if (protsAnnotated === molCount) {
+                    clearHighlights();
+                    callback();
                 }
-            }
+            });
         }
     }
+}
 
-    function chooseColors() {
-        const categories = new Set();
-        for (let participant of app.participants.values()) {
-            if (participant.annotations) {
-                for (let annotation of participant.annotations) {
+function extractUniprotAccession(id) {
+    const uniprotAccRegex = new RegExp("[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}", "i");
+    const match = uniprotAccRegex.exec(id);
+    return match[0];
+}
+
+function getUniProtFeatures(prot, callback) {
+    const url = "https://www.ebi.ac.uk/proteins/api/proteins/" + extractUniprotAccession(prot.id);
+    d3.json(url, function (json) {
+        let annotations = prot.annotationSets.get("UNIPROTKB");
+        if (typeof annotations === "undefined") {
+            annotations = [];
+            prot.annotationSets.set("UNIPROTKB", annotations);
+        }
+        var uniprotJsonFeatures = json.features.filter(function (ft) {
+            return ft.type === "DOMAIN";
+        });
+        for (let feature of uniprotJsonFeatures) {
+            feature.seqDatum = new SequenceDatum(null, feature.begin + "-" + feature.end);
+            annotations.push(feature);
+        }
+        prot.showHighlight(true);
+        callback();
+    });
+}
+
+function getSuperFamFeatures(prot, callback) {
+    const url = "https://supfam.mrc-lmb.cam.ac.uk/SUPERFAMILY/cgi-bin/das/up/features?segment=" + extractUniprotAccession(prot.id);
+    d3.xml(url, function (xml) {
+        let annotations = prot.annotationSets.get("SUPERFAMILY");
+        if (typeof annotations === "undefined") {
+            annotations = [];
+            prot.annotationSets.set("SUPERFAMILY", annotations);
+        }
+        const xmlDoc = new DOMParser().parseFromString(new XMLSerializer().serializeToString(xml), "text/xml");
+        const xmlFeatures = xmlDoc.getElementsByTagName("FEATURE");
+        for (let xmlFeature of xmlFeatures) {
+            const type = xmlFeature.getElementsByTagName("TYPE")[0]; //might need to watch for text nodes getting mixed in here
+            const category = type.getAttribute("category");
+            if (category === "miscellaneous") {
+                const name = type.getAttribute("id");
+                const start = xmlFeature.getElementsByTagName("START")[0].textContent;
+                const end = xmlFeature.getElementsByTagName("END")[0].textContent;
+                annotations.push(new Annotation(name, new SequenceDatum(null, start + "-" + end)));
+            }
+        }
+        //~ console.log(JSON.stringify(features));
+        prot.showHighlight(true);
+        callback();
+    });
+}
+
+export function chooseColors(app) {
+    const categories = new Set();
+    for (let participant of app.participants.values()) {
+        for (let [annotationType, annotationSet] of participant.annotationSets) {
+            if (app.annotationSetsShown.get(annotationType) === true) {
+                for (let annotation of annotationSet.values()) {
                     categories.add(annotation.description);
                 }
             }
         }
-        let catCount = categories.size;
+    }
 
-        let colorScheme;
-
-        if (catCount < 3) {
-            catCount = 3;
-        }
-
-        if (catCount < 11) {
-            colorScheme = d3.scale.ordinal().range(d3_chromatic.schemeTableau10);//colorbrewer.Dark2[catCount].slice().reverse());
+    let colorScheme;
+    if (categories.size < 11) {
+        colorScheme = d3.scale.ordinal().range(d3_chromatic.schemeTableau10);//colorbrewer.Dark2[catCount].slice().reverse());
         // } else if (catCount < 13) {
         //     // var reversed = colorbrewer.Paired[catCount];//.slice().reverse();
         //     colorScheme = d3.scale.ordinal().range(d3_chromatic.schemeSet3);
-        } else {
-            colorScheme = d3.scale.category20();
-        }
+    } else {
+        colorScheme = d3.scale.category20();
+    }
 
-        for (let mol of app.participants.values()) {
-            if (mol.annotations) {
-                for (let anno of mol.annotations) {
+    for (let participant of app.participants.values()) {
+        // for (let annotationSet of participant.annotationSets.values()) {
+        for (let [annotationType, annotations] of participant.annotationSets) {
+            if (app.annotationSetsShown.get(annotationType) === true) {
+                for (let anno of annotations) {
+
                     let color;
                     if (anno.description === "No annotations") {
                         color = "#eeeeee";
@@ -135,59 +164,7 @@ export function setAnnotations (annotationChoice, /*App*/ app) {
                 }
             }
         }
-        app.featureColors = colorScheme;
-        app.colorSchemeChanged();
     }
-}
 
-function extractUniprotAccession (id) {
-    const uniprotAccRegex = new RegExp("[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}", "i");
-    const match = uniprotAccRegex.exec(id);
-    return match[0];
-}
-
-function fetchUniProtJson (id, callback) {
-        const url = "https://www.ebi.ac.uk/proteins/api/proteins/" + extractUniprotAccession(id);
-        d3.json(url, function (txt) {
-            callback(id, txt);
-        });
-}
-
-// function getSequence (id, callback) {
-//     fetchUniProtJson(id, function (noNeed, json) {
-//         callback(id, json.sequence.replace(/[^A-Z]/g, ""));
-//     });
-// }
-
-function getUniProtFeatures (id, callback) {
-    fetchUniProtJson(id, function (id, json) {
-        callback(id, json.features.filter(function (ft) {
-            return ft.type === "DOMAIN";
-        }));
-    });
-}
-
-function getSuperFamFeatures (id, callback) {
-        const url = "https://supfam.mrc-lmb.cam.ac.uk/SUPERFAMILY/cgi-bin/das/up/features?segment=" + extractUniprotAccession(id);
-        d3.xml(url, function (xml) {
-            //~ console.log(dasXml);
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(new XMLSerializer().serializeToString(xml), "text/xml");
-            const features = [];
-            const xmlFeatures = xmlDoc.getElementsByTagName("FEATURE");
-            const featureCount = xmlFeatures.length;
-            for (let f = 0; f < featureCount; f++) {
-                const xmlFeature = xmlFeatures[f];
-                const type = xmlFeature.getElementsByTagName("TYPE")[0]; //might need to watch for text nodes getting mixed in here
-                const category = type.getAttribute("category");
-                if (category === "miscellaneous") {
-                    const name = type.getAttribute("id");
-                    const start = xmlFeature.getElementsByTagName("START")[0].textContent;
-                    const end = xmlFeature.getElementsByTagName("END")[0].textContent;
-                    features.push(new Annotation(name, new SequenceDatum(null, start + "-" + end)));
-                }
-            }
-            //~ console.log(JSON.stringify(features));
-            callback(id, features);
-        });
+    app.featureColors = colorScheme;
 }

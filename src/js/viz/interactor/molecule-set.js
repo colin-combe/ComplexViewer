@@ -3,9 +3,6 @@ import {svgns} from "../../config";
 
 export function MoleculeSet(id, app, json, name) {
     this.init(id, app, json, name);
-    // layout info
-    this.ix= -500;
-    this.iy = -500;
     this.upperGroup = document.createElementNS(svgns, "g");
     this.initLabel();
     this.outline = document.createElementNS(svgns, "rect");

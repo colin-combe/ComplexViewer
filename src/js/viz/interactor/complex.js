@@ -5,7 +5,7 @@ import * as Intersection from "intersectionjs";
 export function Complex(id, app) {
     this.init(id, app);
     this.type = "complex";
-    this.padding = 24;
+    this.padding = 20;
 
     // const self = this;
     // // its bad if you end up with these getting called
@@ -36,9 +36,9 @@ Complex.prototype = new Interactor();
 
 Complex.prototype.initLink = function (naryLink) {
     this.naryLink = naryLink;
-    naryLink.path.setAttribute("stroke", "gray");
+    naryLink.path.setAttribute("stroke", "white");
     naryLink.path.setAttribute("stroke-linejoin", "round");
-    naryLink.path.setAttribute("stroke-width", 8);
+    naryLink.path.setAttribute("stroke-width", 4);
 };
 
 Complex.prototype.getPosition = function (originPoint) {

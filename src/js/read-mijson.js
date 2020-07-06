@@ -138,10 +138,12 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
                 const molecule = app.participants.get(mID);
                 const seqFeature = new SequenceDatum(molecule, seqDatum.pos);
                 const annotation = new Annotation(annotName, seqFeature);
-                if (molecule.miFeatures == null) {
-                    molecule.miFeatures = [];
+                let miFeatures = molecule.annotationSets.get("MI FEATURES");
+                if (!miFeatures) {
+                    miFeatures = [];
+                    molecule.annotationSets.set("MI FEATURES", miFeatures);
                 }
-                molecule.miFeatures.push(annotation);
+                miFeatures.push(annotation);
             }
         }
     }
