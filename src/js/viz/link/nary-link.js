@@ -1,6 +1,6 @@
 import * as d3 from "d3"; //used for d3.geom.hull
 import {Link} from "./link";
-import {svgns} from "../../config";
+import {svgns, rotatePointAboutPoint} from "../../config";
 
 //NaryLink.naryColors; // init'ed in clear function of util
 NaryLink.orbitNodes = 20;
@@ -119,12 +119,7 @@ NaryLink.prototype.getMappedCoordinates = function () {
 
 //'orbit' nodes - several nodes around participant positions to give margin
 NaryLink.prototype.orbitNodes = function (mapped) {
-    function rotatePointAboutPoint (p, o, theta) {
-        theta = (theta / 360) * Math.PI * 2; //TODO: change theta arg to radians not degrees
-        const rx = Math.cos(theta) * (p[0] - o[0]) - Math.sin(theta) * (p[1] - o[1]) + o[0];
-        const ry = Math.sin(theta) * (p[0] - o[0]) + Math.cos(theta) * (p[1] - o[1]) + o[1];
-        return [rx, ry];
-    }
+
 
     const orbitNodes = [];
     const mc = mapped.length;

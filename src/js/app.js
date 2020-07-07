@@ -982,12 +982,12 @@ App.prototype.showAnnotations = function (annoChoice, show) {
     annoChoice = annoChoice.toUpperCase();
     const self = this;
     let setShown = this.annotationSetsShown.get(annoChoice);
-    if (annoChoice !== "MIFEATURES" && show) {
+    if (typeof setShown === "undefined" && annoChoice !== "MIFEATURES") {
         fetchAnnotations(annoChoice, this, function () {
             self.annotationSetsShown.set(annoChoice, show);
             self.updateAnnotations();
         });
-    } else if (!(annoChoice !== "MIFEATURES")) {
+    } else {
         this.annotationSetsShown.set(annoChoice, show);
         this.updateAnnotations();
     }

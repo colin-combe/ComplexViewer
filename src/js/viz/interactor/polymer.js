@@ -2,7 +2,7 @@ import * as d3 from "d3"; // transitions and other stuff
 import {Interactor, trig} from "./interactor";
 import {Annotation} from "./annotation";
 import {SequenceDatum} from "../sequence-datum";
-import {svgns, LABEL_Y} from "../../config";
+import {svgns, LABEL_Y, rotatePointAboutPoint} from "../../config";
 
 Polymer.STICKHEIGHT = 20; //height of stick in pixels
 Polymer.MAXSIZE = 0; // residue count of longest sequence
@@ -21,7 +21,7 @@ Polymer.prototype.setSequence = function (sequence) {
 };
 
 Polymer.prototype.getSymbolRadius = function () {
-    return 10;
+    return 15;
 };
 
 Polymer.prototype.showHighlight = function (show) {
@@ -600,7 +600,7 @@ Polymer.prototype.setPositionalFeatures = function () {
             }
         }
     }
-    this.annotationTypes = Array.from(annotationTypesSet.values());
+    this.annotationTypes = Array.from(annotationTypesSet.values()).sort();
 
     for (let [annotationType, annotationSet] of this.annotationSets) {
         if (this.app.annotationSetsShown.get(annotationType) === true) {
@@ -617,7 +617,7 @@ Polymer.prototype.setPositionalFeatures = function () {
                         anno.fuzzyStart.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin, anno));
                     }
                     anno.fuzzyStart.setAttribute("stroke", "none");//-width", "1"); // todo - should be css
-                    anno.fuzzyStart.setAttribute("fill-opacity", "0.6");
+                    // anno.fuzzyStart.setAttribute("fill-opacity", "0.6");
                     anno.fuzzyStart.name = text;
                     anno.fuzzyStart.onmouseover = toolTipFunc;
                     this.annotationsSvgGroup.appendChild(anno.fuzzyStart);
@@ -638,7 +638,7 @@ Polymer.prototype.setPositionalFeatures = function () {
                     } else {
                         anno.certain.setAttribute("d", this.getAnnotationRectPath(tempBegin, tempEnd, anno));
                     }
-                    anno.certain.setAttribute("stroke-width", "1");
+                    anno.certain.setAttribute("stroke", "none");//-width", "1");
                     // anno.certain.setAttribute("fill-opacity", "0.6");
                     anno.certain.name = text;
                     anno.certain.onmouseover = toolTipFunc;
@@ -652,7 +652,7 @@ Polymer.prototype.setPositionalFeatures = function () {
                         anno.fuzzyEnd.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.end, anno.seqDatum.uncertainEnd, anno));
                     }
                     anno.fuzzyEnd.setAttribute("stroke", "none"); //-width", "1");
-                    anno.fuzzyEnd.setAttribute("fill-opacity", "0.6");
+                    // anno.fuzzyEnd.setAttribute("fill-opacity", "0.6");
                     anno.fuzzyEnd.name = text;
                     anno.fuzzyEnd.onmouseover = toolTipFunc;
                     this.annotationsSvgGroup.appendChild(anno.fuzzyEnd);
@@ -665,18 +665,23 @@ Polymer.prototype.setPositionalFeatures = function () {
 Polymer.stepsInArc = 5;
 
 Polymer.prototype.getAnnotationPieSliceArcPath = function (startRes, endRes, annotation) {
+    const radius = this.getSymbolRadius();// - 2;
 
-    // let top, bottom, rungHeight;
-    // const rung = this.annotationTypes.indexOf(annotation.description);
-    // // console.log("rung", rung, this.annotationTypes);
-    // if (rung === -1) {
-    //     bottom = Polymer.STICKHEIGHT / 2;
-    //     top = -Polymer.STICKHEIGHT / 2;
-    // } else {
-    //     rungHeight = Polymer.STICKHEIGHT / this.annotationTypes.length;
-    //     top = (-Polymer.STICKHEIGHT / 2) + (rung * rungHeight);
-    //     bottom = top + rungHeight;
-    // }
+    let top, bottom, rungHeight;
+    const rung = this.annotationTypes.indexOf(annotation.description);
+    // console.log("rung", rung, this.annotationTypes);
+    if (rung === -1) {
+        bottom = 0;
+        top = radius;
+    } else {
+        //Math.sqrt(this.participant.size / Math.PI) * 0.6
+        rungHeight = radius / this.annotationTypes.length;
+        bottom = (rung * rungHeight);
+        top = bottom + rungHeight;
+        //
+        // bottom = Math.sqrt(rung / this.annotationTypes.length) * radius;
+        // top = Math.sqrt(rung + 1 / this.annotationTypes.length) * radius;
+    }
 
     // var startAngle = ((startRes - 1) / this.size) * 360;
     // var endAngle = ((endRes - 1) / this.size) * 360;
@@ -691,15 +696,26 @@ Polymer.prototype.getAnnotationPieSliceArcPath = function (startRes, endRes, ann
         startAngle = ((startRes - 1) / this.size) * 360;
         endAngle = ((endRes - 1) / this.size) * 360;
     }
-    const radius = this.getSymbolRadius() - 2;
-    const arcStart = trig(radius, startAngle - 90);
-    const arcEnd = trig(radius, endAngle - 90);
+    // const arcStart = trig(radius, startAngle - 90);
+    // const arcEnd = trig(radius, endAngle - 90);
     let largeArch = 0;
     if ((endAngle - startAngle) > 180 || (endAngle === startAngle)) {
         largeArch = 1;
     }
-    return "M0,0 L" + arcStart.x + "," + arcStart.y + " A" + radius + "," +
-        radius + " 0 " + largeArch + " 1 " + arcEnd.x + "," + arcEnd.y + " Z";
+
+    const p1 = rotatePointAboutPoint([0, bottom], [0, 0], startAngle - 180);
+    const p2 = rotatePointAboutPoint([0, top], [0, 0], startAngle - 180);
+    const p3 = rotatePointAboutPoint([0, top], [0, 0], endAngle - 180);
+    const p4 = rotatePointAboutPoint([0, bottom], [0, 0], endAngle - 180);
+
+    //const r = (bottom + top) / 2;
+    const path = "M" + p1[0] + "," + p1[1] + " L" + p2[0] + "," + p2[1]
+        + " A" + top + "," + top + " 0 " + largeArch + " 1 " + p3[0] + "," + p3[1] + " L" + p4[0] + "," + p4[1]
+        + " A" + bottom + "," + bottom + " 0 " + largeArch + " 0 " + p1[0] + "," + p1[1] + " Z";
+    console.log("**", path);
+    return path;
+    // return "M0,0 L" + arcStart.x + "," + arcStart.y + " A" + radius + "," +
+    //     radius + " 0 " + largeArch + " 1 " + arcEnd.x + "," + arcEnd.y + " Z";
 };
 
 Polymer.prototype.getAnnotationPieSliceApproximatePath = function (startRes, endRes, annotation) {

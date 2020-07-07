@@ -41,7 +41,7 @@ export function fetchAnnotations(annotationChoice, /*App*/ app, callback) {
             getSuperFamFeatures(prot, function () {
                 protsAnnotated++;
                 if (protsAnnotated === molCount) {
-                    clearHighlights();
+                    // clearHighlights();
                     callback();
                 }
             });
@@ -51,7 +51,7 @@ export function fetchAnnotations(annotationChoice, /*App*/ app, callback) {
             getUniProtFeatures(prot, function () {
                 protsAnnotated++;
                 if (protsAnnotated === molCount) {
-                    clearHighlights();
+                    // clearHighlights();
                     callback();
                 }
             });
@@ -80,7 +80,7 @@ function getUniProtFeatures(prot, callback) {
             feature.seqDatum = new SequenceDatum(null, feature.begin + "-" + feature.end);
             annotations.push(feature);
         }
-        prot.showHighlight(true);
+        // prot.showHighlight(true);
         callback();
     });
 }
@@ -106,7 +106,7 @@ function getSuperFamFeatures(prot, callback) {
             }
         }
         //~ console.log(JSON.stringify(features));
-        prot.showHighlight(true);
+        // prot.showHighlight(true);
         callback();
     });
 }
@@ -150,15 +150,15 @@ export function chooseColors(app) {
                     const checkedFill = "url('#checkers_" + anno.description + "')";
                     if (anno.fuzzyStart) {
                         anno.fuzzyStart.setAttribute("fill", checkedFill);
-                        anno.fuzzyStart.setAttribute("stroke", color);
+                        // anno.fuzzyStart.setAttribute("stroke", color);
                     }
                     if (anno.certain) {
                         anno.certain.setAttribute("fill", color);
-                        anno.certain.setAttribute("stroke", color);
+                        // anno.certain.setAttribute("stroke", color);
                     }
                     if (anno.fuzzyEnd) {
                         anno.fuzzyEnd.setAttribute("fill", checkedFill);
-                        anno.fuzzyEnd.setAttribute("stroke", color);
+                        // anno.fuzzyEnd.setAttribute("stroke", color);
                     }
                 }
             }
