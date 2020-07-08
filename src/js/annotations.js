@@ -20,7 +20,7 @@ export function fetchAnnotations(annotationChoice, /*App*/ app, callback) {
     let protsAnnotated = 0;
     const molCount = proteins.length;
 
-    if (annotationChoice === "INTERACTOR") {
+    if (annotationChoice === "INTERACTOR") { //todo - move this out of here
         if (app.proteinCount < 21) {
             for (let prot of proteins) {
                 const annotation = new Annotation(prot.json.label, new SequenceDatum(null, 1 + "-" + prot.size));
@@ -33,7 +33,7 @@ export function fetchAnnotations(annotationChoice, /*App*/ app, callback) {
             }
             // app.annotationSetsShown.set("INTERACTOR", true);
         } else {
-            alert("Too many (> 20) - can't color by interactor.");
+            // alert("Too many (> 20) - can't color by interactor."); // people are gong to complain about why arent my interactor colours showing up
         }
         callback();
     } else if (annotationChoice.toUpperCase() === "SUPERFAMILY") {

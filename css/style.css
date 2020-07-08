@@ -57,54 +57,54 @@
 }
 
 /*tables*/
-table {
-    width: 100%;
-    font-size: 0.9em;
-    left: auto;
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    border-collapse: collapse;
-    /*
-        background-color: rgba(255, 255, 255, 1);
-    */
-    text-align: left;
-}
+/*table {*/
+/*    width: 100%;*/
+/*    font-size: 0.9em;*/
+/*    left: auto;*/
+/*    position: relative;*/
+/*    margin-left: auto;*/
+/*    margin-right: auto;*/
+/*    border-collapse: collapse;*/
+/*    !**/
+/*        background-color: rgba(255, 255, 255, 1);*/
+/*    *!*/
+/*    text-align: left;*/
+/*}*/
 
-thead {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
+/*thead {*/
+/*    margin-top: 10px;*/
+/*    margin-bottom: 10px;*/
+/*}*/
 
-th {
-    padding-left: 5px;
-    padding-right: 5px;
-    vertical-align: middle;
-    height: 30px;
-}
+/*th {*/
+/*    padding-left: 5px;*/
+/*    padding-right: 5px;*/
+/*    vertical-align: middle;*/
+/*    height: 30px;*/
+/*}*/
 
-td {
-    padding-left: 5px;
-    padding-right: 5px;
-    vertical-align: middle;
-    text-align: left;
-}
+/*td {*/
+/*    padding-left: 5px;*/
+/*    padding-right: 5px;*/
+/*    vertical-align: middle;*/
+/*    text-align: left;*/
+/*}*/
 
-th:first-child {
-    padding-left: 10px;
-}
+/*th:first-child {*/
+/*    padding-left: 10px;*/
+/*}*/
 
-th:last-child {
-    padding-right: 10px;
-}
+/*th:last-child {*/
+/*    padding-right: 10px;*/
+/*}*/
 
-td:first-child {
-    padding-left: 10px;
-}
+/*td:first-child {*/
+/*    padding-left: 10px;*/
+/*}*/
 
-td:last-child {
-    padding-right: 10px;
-}
+/*td:last-child {*/
+/*    padding-right: 10px;*/
+/*}*/
 
 /* fa */
 
@@ -152,19 +152,19 @@ body, input, select, textarea, button {
     color: #fff;
 }
 
-.tableContainer a {
-    color: #091D42;
-    text-decoration: underline;
-    -webkit-transition: all 200ms ease-in-out;
-    -moz-transition: all 200ms ease-in-out;
-    -o-transition: all 200ms ease-in-out;
-    transition: all 200ms ease-in-out;
-}
+/*.tableContainer a {*/
+/*    color: #091D42;*/
+/*    text-decoration: underline;*/
+/*    -webkit-transition: all 200ms ease-in-out;*/
+/*    -moz-transition: all 200ms ease-in-out;*/
+/*    -o-transition: all 200ms ease-in-out;*/
+/*    transition: all 200ms ease-in-out;*/
+/*}*/
 
-.tableContainer a:hover {
-    color: #ffffff !important;
-    background-color: #091D42;
-}
+/*.tableContainer a:hover {*/
+/*    color: #ffffff !important;*/
+/*    background-color: #091D42;*/
+/*}*/
 
 
 #main {
@@ -184,49 +184,6 @@ body, input, select, textarea, button {
     padding-left: 10px;
 }
 
-
-/*
-#networkDiv {
-    width:100%;
-    height:100%;
-    display:block;
-}
-*/
-
-/*.bar rect {
-    fill: steelblue;
-}
-
-.bar text {
-    fill: #fff;
-}
-
-.resize path {
-    fill: #888;
-    stroke: #000;
-    stroke-width: 2px;
-}
-
-.axis path, .axis line {
-    fill: none;
-    stroke: #000;
-    stroke-width: 1px;
-}
-
-.panelInner th {
-    font-weight: 400;
-    color: #039;
-    height: 30px;
-}
-
-.panelInner thead td {
-    color: #091D42;
-}
-
-.panelInner td, .helpPanel td {
-    color: #777;
-}*/
-
 .controls {
     background: #ecedf2;
     color: #091D42;
@@ -240,33 +197,27 @@ body, input, select, textarea, button {
 /*    margin-right: 0.5em;*/
 /*}*/
 
-label.horizontalFlow input[type=number] {
-    margin-left: 0.2em;
-}
+/*label.horizontalFlow input[type=number] {*/
+/*    margin-left: 0.2em;*/
+/*}*/
 
-/* See http://jsfiddle.net/7jx02upg/1/ */
-label.horizontalFlow input[type=radio], label.horizontalFlow input[type=checkbox] {
-    /*vertical-align: normal;*/
-}
+/*!* See http://jsfiddle.net/7jx02upg/1/ *!*/
+/*label.horizontalFlow input[type=radio], label.horizontalFlow input[type=checkbox] {*/
+/*    !*vertical-align: normal;*!*/
+/*}*/
 
-/* <label class='horizontalFlow'><span class='noBreak'>stuff you dont want split over multiple lines</span></label><more labels n spans...>
+/*!* <label class='horizontalFlow'><span class='noBreak'>stuff you dont want split over multiple lines</span></label><more labels n spans...>*/
 
-/* span.noBreak asks for no line-breaks internally */
+/*!* span.noBreak asks for no line-breaks internally *!*/
 
-span.noBreak select {
-    margin-left: 0.5em;
-}
+/*span.noBreak select {*/
+/*    margin-left: 0.5em;*/
+/*}*/
 
-/* and then put spaces after labels to give a known place for content to break */
+/*!* and then put spaces after labels to give a known place for content to break *!*/
 
-A.btn {
-    text-decoration: none;
-}
+/*A.btn {*/
+/*    text-decoration: none;*/
+/*}*/
 
-/* For use with Split.js */
-
-.btn:disabled {
-    color: gray;
-    border-color: gray;
-}
 

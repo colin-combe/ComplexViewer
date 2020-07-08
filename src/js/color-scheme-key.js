@@ -16,7 +16,7 @@ export function update(/*HTMLDivElement*/ div, /*App*/app) {
         tc1.style.backgroundColor = ccRange[i % 6];
         const tc2 = tr.insertCell();
         tc2.textContent = ccDomain[i];
-        console.log(i + " " + ccDomain[i] + " " + ccRange[i]);
+        //console.log(i + " " + ccDomain[i] + " " + ccRange[i]);
     }
     div.appendChild(complexColorTable);
 

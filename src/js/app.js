@@ -6,6 +6,7 @@ import * as d3_chromatic from "d3-scale-chromatic";
 import * as cola from "./cola";
 import {readMijson} from "./read-mijson";
 import {chooseColors, fetchAnnotations} from "./annotations";
+import {svgUtils} from "./svgexp";
 
 // import {SymbolKey} from "./symbol-key";
 import * as ColorSchemeKey from "./color-scheme-key";
@@ -131,44 +132,6 @@ export function App(/*HTMLDivElement*/networkDiv) {
 
     const svg = d3.select(this.svgElement);
     this.defs = svg.append("defs");
-    this.createHatchedFill("checkers_uncertain", "black");
-
-    //markers
-    const data = [{
-        id: 1,
-        name: "diamond",
-        path: "M 0,-7.0710768 L  0,7.0710589 L 7.0710462,0  z",
-        viewbox: "-15 -15 25 25",
-        transform: "scale(1.5) translate(-5,0)",
-        color: "black"
-    }];
-
-    this.defs.selectAll("marker")
-        .data(data)
-        .enter()
-        .append("svg:marker")
-        .attr("id", function (d) {
-            return "marker_" + d.name;
-        })
-        .attr("markerHeight", 15)
-        .attr("markerWidth", 15)
-        .attr("markerUnits", "userSpaceOnUse")
-        .attr("orient", "auto")
-        .attr("refX", 0)
-        .attr("refY", 0)
-        .attr("viewBox", function (d) {
-            return d.viewbox;
-        })
-        .append("svg:path")
-        .attr("d", function (d) {
-            return d.path;
-        })
-        .attr("fill", function (d) {
-            return d.color;
-        })
-        .attr("transform", function (d) {
-            return d.transform;
-        });
 
     this.acknowledgement = document.createElementNS(svgns, "g");
     const ackText = document.createElementNS(svgns, "text");
@@ -176,7 +139,6 @@ export function App(/*HTMLDivElement*/networkDiv) {
         + version + "</tspan></a><tspan x='0' dy='1.2em'>by <a href='http://rappsilberlab.org/' target='_blank'>Rappsilber Laboratory</a></tspan>";
 
     this.acknowledgement.appendChild(ackText);
-    ackText.classList.add("xlv_text");
     ackText.setAttribute("font-size", "8pt");
     this.svgElement.appendChild(this.acknowledgement);
 
@@ -215,24 +177,16 @@ export function App(/*HTMLDivElement*/networkDiv) {
     this.tooltip = document.createElementNS(svgns, "text");
     this.tooltip.setAttribute("x", "0");
     this.tooltip.setAttribute("y", "0");
-    this.tooltip.setAttribute("class", "xlv_text");
     const tooltipTextNode = document.createTextNode("tooltip");
+    this.tooltip.classList.add("label", "tooltip");
 
     this.tooltip.appendChild(tooltipTextNode);
 
     this.tooltip_bg = document.createElementNS(svgns, "rect");
-    this.tooltip_bg.setAttribute("class", "tooltip_bg");
-
-    this.tooltip_bg.setAttribute("fill-opacity", "0.75");
-    this.tooltip_bg.setAttribute("stroke-opacity", "1");
-    this.tooltip_bg.setAttribute("stroke-width", "1");
+    this.tooltip_bg.classList.add("tooltip-background");
 
     this.tooltip_subBg = document.createElementNS(svgns, "rect");
-    this.tooltip_subBg.setAttribute("fill", "white");
-    this.tooltip_subBg.setAttribute("stroke", "white");
-    this.tooltip_subBg.setAttribute("class", "tooltip_bg");
-    this.tooltip_subBg.setAttribute("opacity", "1");
-    this.tooltip_subBg.setAttribute("stroke-width", "1");
+    this.tooltip_subBg.classList.add("tooltip-sub-background");
 
     this.svgElement.appendChild(this.tooltip_subBg);
     this.svgElement.appendChild(this.tooltip_bg);
@@ -242,28 +196,32 @@ export function App(/*HTMLDivElement*/networkDiv) {
 }
 
 App.prototype.createHatchedFill = function (name, color) {
-    const pattern = this.defs.append("pattern")
-        .attr("id", name)
-        .attr("patternUnits", "userSpaceOnUse")
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("width", 12)
-        .attr("height", 12)
-        .attr("patternTransform", "rotate(45)");
+    if (!this.checkedHatchNames.has(name)) {
+        const pattern = this.defs.append("pattern")
+            .attr("id", name)
+            .attr("patternUnits", "userSpaceOnUse")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", 12)
+            .attr("height", 12)
+            .attr("patternTransform", "rotate(45)");
 
-    pattern.append("rect")
-        .attr("x", 0)
-        .attr("y", 2)
-        .attr("width", 12)
-        .attr("height", 4)
-        .attr("fill", color);
+        pattern.append("rect")
+            .attr("x", 0)
+            .attr("y", 2)
+            .attr("width", 12)
+            .attr("height", 4)
+            .attr("fill", color);
 
-    pattern.append("rect")
-        .attr("x", 0)
-        .attr("y", 8)
-        .attr("width", 12)
-        .attr("height", 4)
-        .attr("fill", color);
+        pattern.append("rect")
+            .attr("x", 0)
+            .attr("y", 8)
+            .attr("width", 12)
+            .attr("height", 4)
+            .attr("fill", color);
+
+        this.checkedHatchNames.add(name);
+    }
 };
 
 App.prototype.clear = function () {
@@ -271,6 +229,8 @@ App.prototype.clear = function () {
 
     this.annotationSetsShown = new Map();
     // this.annotationSetsShown.set("MI FEATURES", true);
+
+    this.checkedHatchNames = new Set();
 
     //lighten colors
     const complexColors = [];
@@ -318,16 +278,10 @@ App.prototype.collapseProtein = function () {
 App.prototype.init = function () {
     this.d3cola.stop();
 
-    // let i = 0;
     for (let participant of this.participants.values()) {
         if (participant.type != "complex") {
-            // let pos = rotatePointAboutPoint([0, -500], [0, 0], (360 / this.participants.size * i));
-            participant.setPosition(-500, -500);//pos[0], pos[1]);
-            // if (participant.type === "protein") {
-            //     participant.setPositionalFeatures();
-            // }
+            participant.setPosition(-500, -500);
         }
-        // i++;
     }
     this.updateAnnotations();
     this.checkLinks(); //totally needed, not sure why tbh todo - check this out
@@ -739,11 +693,6 @@ App.prototype.autoLayout = function () {
             }
         }
 
-        // if (preRun) {
-        //    layoutObj.nodes = layoutObj.nodes.concat(prunedOut);
-        // }
-
-        // self.d3cola.convergenceThreshold = 0.01;
         //console.log("groups", groups);
         delete self.d3cola._lastStress;
         delete self.d3cola._alpha;
@@ -789,7 +738,7 @@ App.prototype.autoLayout = function () {
         const startTime = Date.now();
         self.d3cola.symmetricDiffLinkLengths(linkLength)
             .on("tick", function () {
-                if (Date.now() - startTime > 400) {//!preRun) {
+                if (Date.now() - startTime > 750) {//!preRun) {
                     const nodes = self.d3cola.nodes();
                     for (let node of nodes) {
                         node.setPosition(node.x, node.y);
@@ -835,10 +784,6 @@ App.prototype.autoLayout = function () {
                     //     // for (let p of layoutObj.nodes) {
                     //     //         p.fixed = 1;
                     //     // }
-                    //     // let nodesExceptComplexes = Array.from(self.participants.values());
-                    //     // allNodesExceptComplexes = allNodesExceptComplexes.filter(function (value) {
-                    //     //     return value.type !== "complex";
-                    //     // });
                     doLayout(allNodesExceptComplexes, false);
                 } else {
                     for (let node of nodes) {
@@ -856,15 +801,28 @@ App.prototype.autoLayout = function () {
     }
 };
 
-App.prototype.getSVG = function () { //todo - update after styling of svg is moved to css
-    let svgXml = this.svgElement.outerHTML.replace(/<rect .*?\/rect>/i, ""); //take out white background fill
-    const viewBox = "viewBox=\"0 0 " + this.svgElement.parentNode.clientWidth + " " + this.svgElement.parentNode.clientHeight + "\" ";
-    svgXml = svgXml.replace("<svg ", "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:ev=\"http://www.w3.org/2001/xml-events\" " + viewBox);
+App.prototype.getSVG = function () { //todo - somewhat broken, annotations missing
+    var svgSel = d3.select(this.el).selectAll("svg");
+    var svgArr = [svgSel.node()];
+    var svgStrings = svgUtils.capture(svgArr);
+    var svgXML = svgUtils.makeXMLStr(new XMLSerializer(), svgStrings[0]);
 
-    return "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" +
-        "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">" +
-        svgXml;
+    return svgXML;
+
+    // var fileName = this.filenameStateString().substring(0, 240);
+    // download(svgXML, 'application/svg', fileName + ".svg");
+
 };
+
+// App.prototype.getSVG = function () {
+//     let svgXml = this.svgElement.outerHTML.replace(/<rect .*?\/rect>/i, ""); //take out white background fill
+//     const viewBox = "viewBox=\"0 0 " + this.svgElement.parentNode.clientWidth + " " + this.svgElement.parentNode.clientHeight + "\" ";
+//     svgXml = svgXml.replace("<svg ", "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:ev=\"http://www.w3.org/2001/xml-events\" " + viewBox);
+//
+//     return "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" +
+//         "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">" +
+//         svgXml;
+// };
 
 // transform the mouse-position into a position on the svg
 App.prototype.mouseToSVG = function (x, y) {
@@ -880,29 +838,33 @@ App.prototype.readMIJSON = function (miJson, expand = true) {
 };
 
 App.prototype.checkLinks = function () {
-    function checkAll(linkMap) {
-        for (let link of linkMap.values()) {
-            link.check();
-        }
+    for (let link of this.allNaryLinks.values()) {
+        link.check();
     }
-
-    checkAll(this.allNaryLinks);
-    checkAll(this.allBinaryLinks);
-    checkAll(this.allUnaryLinks);
-    checkAll(this.allSequenceLinks);
+    for (let link of this.allBinaryLinks.values()) {
+        link.check();
+    }
+    for (let link of this.allUnaryLinks.values()) {
+        link.check();
+    }
+    for (let link of this.allSequenceLinks.values()) {
+        link.check();
+    }
 };
 
 App.prototype.setAllLinkCoordinates = function () {
-    function setAll(linkMap) {
-        for (let link of linkMap.values()) {
-            link.setLinkCoordinates(true); // true means don't propogate changes from naryLink up to complex, everythings getting refreshed anyway
-        }
+    for (let link of this.allNaryLinks.values()) {
+        link.setLinkCoordinates();
     }
-
-    setAll(this.allNaryLinks);
-    setAll(this.allBinaryLinks);
-    setAll(this.allUnaryLinks);
-    setAll(this.allSequenceLinks);
+    for (let link of this.allBinaryLinks.values()) {
+        link.setLinkCoordinates();
+    }
+    for (let link of this.allUnaryLinks.values()) {
+        link.setLinkCoordinates();
+    }
+    for (let link of this.allSequenceLinks.values()) {
+        link.setLinkCoordinates();
+    }
 };
 
 App.prototype.showTooltip = function (p) {
@@ -944,6 +906,7 @@ App.prototype.setTooltip = function (text, color) {
             this.tooltip_bg.setAttribute("fill", "white");
             this.tooltip_bg.setAttribute("stroke", "grey");
         }
+        // todo - whats this height for?
         this.tooltip_bg.setAttribute("height", "28");
         this.tooltip_subBg.setAttribute("height", "28");
         this.tooltip_bg.setAttribute("display", "block");
@@ -1044,20 +1007,17 @@ App.prototype.expandAll = function () {
 
 //from noe
 App.prototype.expandAndCollapseSelection = function (moleculesSelected) {
-    const molecules = this.molecules.values();
-    for (var m = 0; m < molecules.length; m++) {
-        var molecule = molecules[m];
-        var molecule_id = molecule.json.identifier.id;
+    for (let participant of this.participants.values()) {
+        const molecule_id = participant.json.identifier.id;
         if (moleculesSelected.includes(molecule_id)) {
-            if (molecule.form === 0) {
-                molecule.setForm(1);
+            if (participant.form === 0) {
+                participant.setForm(1);
             }
-        } else if (molecule.form === 1) {
-            molecule.setForm(0);
+        } else if (participant.form === 1) {
+            participant.setForm(0);
         }
     }
 };
-
 
 // export function makeSymbolKey(targetDiv){
 //     new SymbolKey(targetDiv);

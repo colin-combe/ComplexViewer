@@ -48,11 +48,7 @@ npm run build-dev
 
 4.  Choose how to annotate proteins (this will prob, because of https://github.com/MICommunity/ComplexViewer/issues/80):
 
-                myComplexViewer.setAnnotations("MI features");	//show features from MI data 
-                myComplexViewer.setAnnotations("UniprotKB");	//show annotations from uniprot
-                myComplexViewer.setAnnotations("SuperFamily");	//from SuperFamily
-                myComplexViewer.setAnnotations("None");			//no annotations
-                myComplexViewer.setAnnotations("Interactor");	//colour bars and circles according to interactor (may help indicate stoichiometry)
+                // todo doc - see index.html for example, old way of doing should still be working
 
 5. 	To change dataset without creating a new instance of the app, 
     call the clear function, then call the readMijson() function with the new data:

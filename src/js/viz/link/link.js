@@ -8,17 +8,8 @@ Link.prototype.highlightParticipants = function (show) {
 };
 
 Link.prototype.initSVG = function () {
-    this.line.setAttribute("class", "link");
-    this.line.setAttribute("fill", "none");
-    this.line.setAttribute("stroke", "black");
-    this.line.setAttribute("stroke-width", "1");
-    this.line.setAttribute("stroke-linecap", "round");
-    this.highlightLine.setAttribute("class", "link");
-    this.highlightLine.setAttribute("fill", "none");
-    this.highlightLine.setAttribute("stroke", highlightColour);
-    this.highlightLine.setAttribute("stroke-width", "10");
-    this.highlightLine.setAttribute("stroke-linecap", "round");
-    this.highlightLine.setAttribute("stroke-opacity", "0");
+    this.line.classList.add("link","link-line");//, "certain-link");
+    this.highlightLine.classList.add("link", "highlight", "link-highlight");
     //set the events for it
     const self = this;
     this.line.onmousedown = function (evt) {

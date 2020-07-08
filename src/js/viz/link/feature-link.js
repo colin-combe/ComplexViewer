@@ -21,26 +21,8 @@ FeatureLink.prototype.init = function (id, fromFeatPos, toFeatPos, app) {
 
     this.glyph = document.createElementNS(svgns, "path");
     this.uncertainGlyph = document.createElementNS(svgns, "path");
-    // this.highlightGlyph = document.createElementNS(svgns, "path");
-    this.glyph.setAttribute("stroke-linecap", "round");
-    this.uncertainGlyph.setAttribute("stroke-linecap", "round");
-    // this.highlightGlyph.setAttribute("stroke-linecap", "round");
-    this.glyph.setAttribute("class", "link");
-    this.glyph.setAttribute("fill", "black");//"#E08214");
-    this.glyph.setAttribute("opacity", "0.6");
-    this.glyph.setAttribute("stroke", "black");//""#A08214");// // TODO: will look better with this line partly removed
-    this.glyph.setAttribute("stroke-opacity", "0.6");
-    this.glyph.setAttribute("stroke-width", "1");
-    this.uncertainGlyph.setAttribute("class", "link");
-    this.uncertainGlyph.setAttribute("fill", "black");//url('#checkers_uncertain')");//"#A01284");
-    this.uncertainGlyph.setAttribute("stroke", "black");//"none");//"#A01284");
-    this.uncertainGlyph.setAttribute("stroke-opacity", "0.2");
-    this.uncertainGlyph.setAttribute("fill-opacity", "0.2");
-    // this.highlightGlyph.setAttribute("class", "link");
-    // this.highlightGlyph.setAttribute("fill", "none");
-    // this.highlightGlyph.setAttribute("stroke", highlightColour);
-    // this.highlightGlyph.setAttribute("stroke-width", "10");
-    // this.highlightGlyph.setAttribute("stroke-opacity", "0");
+    this.glyph.classList.add("link", "feature-link", "certain-link");
+    this.uncertainGlyph.classList.add("link", "feature-link", "uncertain-link");
 
     //set the events for it
     const self = this;
@@ -271,7 +253,7 @@ FeatureLink.prototype.setLinkCoordinates = function () {
     // let highlightGlyphPath = "M" + triPointMid[0] + "," + triPointMid[1];
     for (let f = 0; f < fSDCount; f++) {
         seqDatum = this.fromSequenceData[f];
-        if (isNumber(seqDatum.begin)  && isNumber(seqDatum.end)) {
+        if (isNumber(seqDatum.begin)  && isNumber(seqDatum.end) || fromParticipant.type === "complex") {
             glyphPath += getSegment(triPointMid, ftMid, seqDatum.begin, seqDatum.end, fromParticipant, fyOffset, toOriginPoint);
         }
         // highlightStartRes = seqDatum.begin;
@@ -291,7 +273,7 @@ FeatureLink.prototype.setLinkCoordinates = function () {
     }
     for (let t = 0; t < tSDCount; t++) {
         seqDatum = this.toSequenceData[t];
-        if (isNumber(seqDatum.begin) && isNumber(seqDatum.end)) {
+        if (isNumber(seqDatum.begin) && isNumber(seqDatum.end) || toParticipant.type === "complex") {
             glyphPath += getSegment(triPointMid, ttMid, seqDatum.begin, seqDatum.end, toParticipant, tyOffset, fromOriginPoint);
         }
         // highlightStartRes = seqDatum.begin;

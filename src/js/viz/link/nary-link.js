@@ -4,7 +4,7 @@ import {svgns, rotatePointAboutPoint} from "../../config";
 
 //NaryLink.naryColors; // init'ed in clear function of util
 NaryLink.orbitNodes = 20;
-NaryLink.orbitRadius = 20;
+NaryLink.orbitRadius = 22;
 
 export function NaryLink(id, app) {
     this.id = id;
@@ -54,6 +54,22 @@ NaryLink.prototype.initSVG = function () {
     // this.path.ontouchstart = function (evt) {
     //     self.touchStart(evt);
     // };
+    // todo - prob better way todo this
+    this.path2 = document.createElementNS(svgns, "path");
+    this.path2.setAttribute("fill", "none");
+    //set the events for it
+    this.path2.onmousedown = function (evt) {
+        self.mouseDown(evt);
+    };
+    this.path2.onmouseover = function (evt) {
+        self.mouseOver(evt);
+    };
+    this.path2.onmouseout = function (evt) {
+        self.mouseOut(evt);
+    };
+    // this.path2.ontouchstart = function (evt) {
+    //     self.touchStart(evt);
+    // };
 };
 
 NaryLink.prototype.showHighlight = function (show) {
@@ -69,6 +85,7 @@ NaryLink.prototype.show = function () {
     // this.path.setAttribute("stroke-width", this.app.z);
     this.setLinkCoordinates();
     this.app.naryLinks.appendChild(this.path);
+    this.app.naryLinks.appendChild(this.path2);
 };
 
 NaryLink.prototype.hide = function () {
@@ -86,6 +103,7 @@ NaryLink.prototype.setLinkCoordinates = function (dontPropogate) {
     const hullValues = calculateHullPath(this.mapped);
     if (hullValues) {
         this.path.setAttribute("d", hullValues);
+        this.path2.setAttribute("d", hullValues);
     }
     if (this.complex && !dontPropogate) {
         this.complex.setAllLinkCoordinates();

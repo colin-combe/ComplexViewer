@@ -141,9 +141,8 @@ Polymer.prototype.setScaleGroup = function () {
             const seqLabelGroup = document.createElementNS(svgns, "g");
             seqLabelGroup.setAttribute("transform", "translate(" + this.getResXwithStickZoom(res) + " " + 0 + ")");
             const seqLabel = document.createElementNS(svgns, "text");
-            seqLabel.setAttribute("font-family", "'Courier New', monospace");
-            seqLabel.setAttribute("font-size", "10px");
-            seqLabel.setAttribute("text-anchor", "middle");
+            seqLabel.classList.add("label", "sequence");
+            //css?
             seqLabel.setAttribute("x", "0");
             seqLabel.setAttribute("y", "3");
             seqLabel.appendChild(document.createTextNode(this.sequence[res - 1]));
@@ -161,10 +160,7 @@ Polymer.prototype.setScaleGroup = function () {
         const scaleLabelGroup = document.createElementNS(svgns, "g");
         scaleLabelGroup.setAttribute("transform", "translate(" + tickX + " " + 0 + ")");
         const scaleLabel = document.createElementNS(svgns, "text");
-        scaleLabel.setAttribute("class", "xlv_text");
-        // scaleLabel.setAttribute("font-family", "'Courier New', monospace");
-        scaleLabel.setAttribute("font-size", "8pt"); // todo css...
-        scaleLabel.setAttribute("text-anchor", "middle");
+        scaleLabel.classList.add("label", "scale-label");
         scaleLabel.setAttribute("x", "0");
         scaleLabel.setAttribute("y", Polymer.STICKHEIGHT + 4);
         scaleLabel.appendChild(document.createTextNode(text));
@@ -175,11 +171,11 @@ Polymer.prototype.setScaleGroup = function () {
 
     function tickAt(self, tickX) {
         const tick = document.createElementNS(svgns, "line");
+        tick.classList.add("tick");
         tick.setAttribute("x1", tickX);
         tick.setAttribute("y1", "5");
         tick.setAttribute("x2", tickX);
         tick.setAttribute("y2", "10");
-        tick.setAttribute("stroke", "black");
         self.ticks.appendChild(tick);
     }
 };
@@ -712,7 +708,7 @@ Polymer.prototype.getAnnotationPieSliceArcPath = function (startRes, endRes, ann
     const path = "M" + p1[0] + "," + p1[1] + " L" + p2[0] + "," + p2[1]
         + " A" + top + "," + top + " 0 " + largeArch + " 1 " + p3[0] + "," + p3[1] + " L" + p4[0] + "," + p4[1]
         + " A" + bottom + "," + bottom + " 0 " + largeArch + " 0 " + p1[0] + "," + p1[1] + " Z";
-    console.log("**", path);
+    // console.log("**", path);
     return path;
     // return "M0,0 L" + arcStart.x + "," + arcStart.y + " A" + radius + "," +
     //     radius + " 0 " + largeArch + " 1 " + arcEnd.x + "," + arcEnd.y + " Z";

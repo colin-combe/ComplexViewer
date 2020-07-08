@@ -1,5 +1,5 @@
 import {Polymer} from "./polymer";
-import {svgns, highlightColour} from "../../config";
+import {svgns} from "../../config";
 
 export function Protein(id, /*App*/ app, json, name) {
     this.init(id, app, json, name);
@@ -12,9 +12,7 @@ export function Protein(id, /*App*/ app, json, name) {
 
     //make highlight
     this.highlight = document.createElementNS(svgns, "rect");
-    this.highlight.setAttribute("stroke", highlightColour);
-    this.highlight.setAttribute("stroke-width", "5");
-    this.highlight.setAttribute("fill", "none");
+    this.highlight.classList.add("highlight", "participant-highlight");
     this.upperGroup.appendChild(this.highlight);
 
     //make background
@@ -33,6 +31,7 @@ export function Protein(id, /*App*/ app, json, name) {
 
     //make outline
     this.outline = document.createElementNS(svgns, "rect");
+    // css...
     this.outline.setAttribute("stroke", "black");
     this.outline.setAttribute("stroke-width", "1");
     this.outline.setAttribute("fill", "none");

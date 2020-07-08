@@ -19,9 +19,10 @@ Interactor.prototype.init = function (id, app, json, name){
     this.json = json;
     this.name = name;
 
-    //annotations indexed by annotation set name ("MI FEATURES", "SUPERFAMILY", etc)
-    this.annotationSets = new Map();
+    //todo - think 'type' should be  a property here (except for complex, can just return json.type.name)
 
+    //annotations indexed by annotation set name ("MIFEATURES", "SUPERFAMILY", etc)
+    this.annotationSets = new Map();
     //links
     this.naryLinks = new Map();
     this.binaryLinks = new Map();
@@ -29,16 +30,10 @@ Interactor.prototype.init = function (id, app, json, name){
 };
 
 Interactor.prototype.initLabel = function (){
-
     this.labelSVG = document.createElementNS(svgns, "text");
-    this.labelSVG.setAttribute("text-anchor", "end");
-    this.labelSVG.setAttribute("fill", "black");
-    this.labelSVG.setAttribute("x", "0");
+    this.labelSVG.setAttribute("x", "0"); // css?
     this.labelSVG.setAttribute("y", "10");
-    this.labelSVG.setAttribute("class", "xlv_text proteinLabel");
-    this.labelSVG.setAttribute("font-family", "Arial");
-    this.labelSVG.setAttribute("font-size", "16");
-
+    this.labelSVG.classList.add("label");
     //choose label text
     if (this.name) {
         this.labelText = this.name;
@@ -48,7 +43,6 @@ Interactor.prototype.initLabel = function (){
     if (this.labelText.length > 25) {
         this.labelText = this.labelText.substr(0, 16) + "...";
     }
-
     this.labelText = this.name;
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
@@ -58,12 +52,7 @@ Interactor.prototype.initLabel = function (){
 };
 
 Interactor.prototype.initOutline = function (){
-    this.outline.setAttribute("stroke", "black");
-    this.outline.setAttribute("stroke-width", "1");
-    this.outline.setAttribute("stroke-opacity", "1");
-    this.outline.setAttribute("fill-opacity", "1");
-    this.outline.setAttribute("fill", "#ffffff");
-    //append outline
+    this.outline.classList.add("outline");
     this.upperGroup.appendChild(this.outline);
 };
 
@@ -227,6 +216,3 @@ export function trig (radius, angleDegrees) {
         y: (radius * Math.sin(radians))
     };
 }
-//
-// Interactor.prototype.setForm = function () {
-// };

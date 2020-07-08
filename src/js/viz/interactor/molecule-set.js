@@ -12,6 +12,7 @@ export function MoleculeSet(id, app, json, name) {
     this.outline.setAttribute("height", "20");
     this.outline.setAttribute("rx", "5");
     this.outline.setAttribute("ry", "5");
+    //todo - css... (initOutline hasn't been called so it doesn't have outlin in its classList)
     this.outline.setAttribute("stroke", "black");
     this.outline.setAttribute("stroke-width", "4");
     this.outline.setAttribute("stroke-opacity", "1");
