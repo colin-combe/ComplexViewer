@@ -5,8 +5,12 @@ export function Interactor() {
 
 Interactor.prototype = {
     get width() {
+        // todo - things not working quite right in firefox, work around...
         // console.log(this.upperGroup.getBBox().width);
-        return this.upperGroup.getBBox().width;
+        const bbox = this.upperGroup.getBBox(); //firefox buggy?
+        return bbox.width;
+
+        // return (2 * this.getSymbolRadius()) + 5 + this.labelSVG.getComputedTextLength();
     },
     get height() {
         return 40;//this.upperGroup.getBBox().height;
@@ -18,6 +22,8 @@ Interactor.prototype.init = function (id, app, json, name){
     this.app = app;
     this.json = json;
     this.name = name;
+
+    // this.type = json.type.name;
 
     //todo - think 'type' should be  a property here (except for complex, can just return json.type.name)
 

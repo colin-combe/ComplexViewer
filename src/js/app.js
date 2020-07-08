@@ -277,16 +277,6 @@ App.prototype.collapseProtein = function () {
 
 App.prototype.init = function () {
     this.d3cola.stop();
-
-    for (let participant of this.participants.values()) {
-        if (participant.type != "complex") {
-            participant.setPosition(-500, -500);
-        }
-    }
-    this.updateAnnotations();
-    this.checkLinks(); //totally needed, not sure why tbh todo - check this out
-    this.setAllLinkCoordinates(); // just to move them off screen at first
-
     let maxSeqLength = 0;
     for (let participant of this.participants.values()) {
         if (participant.size > maxSeqLength) {
@@ -315,18 +305,23 @@ App.prototype.init = function () {
     //console.log("default bar scale: " + this.defaultBarScale)
 
     for (let participant of this.participants.values()) {
-        if (participant.type !== "complex") {
+        if (participant.type != "complex") {
+            participant.setPosition(-500, -500);
             this.proteinUpper.appendChild(participant.upperGroup);
-            if (participant.json.type.name === "protein") {
-                // participant.initSelfLinkSVG(); // todo - may not even do anything, not sure its working
-                participant.stickZoom = this.defaultBarScale;
-                if (this.participants.size < 4) {
-                    participant.toStickNoTransition();
-                }
+        }
+    }
+    for (let participant of this.participants.values()) {
+        if (participant.type === "protein") {
+            // participant.initSelfLinkSVG(); // todo - may not even do anything, not sure its working
+            participant.stickZoom = this.defaultBarScale;
+            if (this.participants.size < 4) {
+                participant.toStickNoTransition();
             }
         }
     }
-
+    this.updateAnnotations();
+    this.checkLinks(); //totally needed, not sure why tbh todo - check this out
+    // this.setAllLinkCoordinates(); // just to move them off screen at first
     this.autoLayout();
 };
 
