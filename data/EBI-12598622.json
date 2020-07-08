@@ -1,0 +1,206 @@
+{
+  "data": [
+    {
+      "id": "uniprotkb_Q8IYM1",
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "Q8IYM1"
+      },
+      "label": "sep12_human",
+      "object": "interactor",
+      "organism": {
+        "common": "human",
+        "scientific": "Homo sapiens",
+        "taxid": "9606"
+      },
+      "sequence": "MDPLRRSPSPCLSSQPSSPSTPPCEMLGPVGIEAVLDQLKIKAMKMGFEFNIMVVGQSGLGKSTMVNTLFKSKVWKSNPPGLGVPTPQTLQLHSLTHVIEEKGVKLKLTVTDTPGFGDQINNDNCWDPILGYINEQYEQYLQEEILITRQRHIPDTRVHCCVYFVPPTGHCLRPLDIEFLQRLCRTVNVVPVIARADSLTMEEREAFRRRIQQNLRTHCIDVYPQMCFDEDINDKILNSKLRDRIPFAVVGADQEHLVNGRCVLGRKTKWGIIEVENMAHCEFPLLRDLLIRSHLQDLKDITHNIHYENYRVIRLNESHLLPRGPGWVNLAPASPGQLTTPRTFKVCRGAHDDSDDEF",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      }
+    },
+    {
+      "id": "uniprotkb_Q16181",
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "Q16181"
+      },
+      "label": "sept7_human",
+      "object": "interactor",
+      "organism": {
+        "common": "human",
+        "scientific": "Homo sapiens",
+        "taxid": "9606"
+      },
+      "sequence": "MSVSARSAAAEERSVNSSTMVAQQKNLEGYVGFANLPNQVYRKSVKRGFEFTLMVVGESGLGKSTLINSLFLTDLYSPEYPGPSHRIKKTVQVEQSKVLIKEGGVQLLLTIVDTPGFGDAVDNSNCWQPVIDYIDSKFEDYLNAESRVNRRQMPDNRVQCCLYFIAPSGHGLKPLDIEFMKRLHEKVNIIPLIAKADTLTPEECQQFKKQIMKEIQEHKIKIYEFPETDDEEENKLVKKIKDRLPLAVVGSNTIIEVNGKRVRGRQYPWGVAEVENGEHCDFTILRNMLIRTHMQDLKDVTNNVHYENYRSRKLAAVTYNGVDNNKNKGQLTKSPLAQMEEERREHVAKMKKMEMEMEQVFEMKVKEKVQKLKDSEAELQRRHEQMKKNLEAQHKELEEKRRQFEDEKANWEAQQRILEQQNSSRTLEKNKKKGKIF",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      }
+    },
+    {
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0007",
+          "name": "anti tag coimmunoprecipitation"
+        },
+        "figures": [
+          "4A"
+        ],
+        "host": {
+          "common": "human-nt2d1",
+          "scientific": "human NTERA-2 d.D1 (NT2D1) testicular embryonal carcinoma cell line",
+          "taxid": "9606"
+        },
+        "pubid": [
+          {
+            "db": "intact",
+            "id": "EBI-12598303"
+          },
+          {
+            "db": "pubmed",
+            "id": "25588830"
+          },
+          {
+            "db": "imex",
+            "id": "IM-25619"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0486",
+          "name": "UniProt"
+        }
+      },
+      "id": "intact_EBI-12598622",
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-12598622"
+        },
+        {
+          "db": "imex",
+          "id": "IM-25619-18"
+        }
+      ],
+      "interactionType": {
+        "id": "MI:0915",
+        "name": "physical association"
+      },
+      "object": "interaction",
+      "participants": [
+        {
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "features": [
+            {
+              "category": "experimentalFeatures",
+              "id": "2",
+              "name": "n-terminus",
+              "sequenceData": [
+                {
+                  "interactorRef": "uniprotkb_Q8IYM1",
+                  "participantRef": "1",
+                  "pos": "n-n"
+                }
+              ],
+              "type": {
+                "id": "MI:0518",
+                "name": "flag tag"
+              }
+            },
+            {
+              "InterPro": "IPR030379",
+              "category": "bindingSites",
+              "id": "3",
+              "linkedFeatures": [
+                "4"
+              ],
+              "name": "g_septin_dom",
+              "sequenceData": [
+                {
+                  "interactorRef": "uniprotkb_Q8IYM1",
+                  "participantRef": "1",
+                  "pos": "46-319"
+                }
+              ],
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              }
+            }
+          ],
+          "id": "1",
+          "identificationMethods": [
+            {
+              "id": "MI:0705",
+              "name": "anti tag western blot"
+            }
+          ],
+          "interactorRef": "uniprotkb_Q8IYM1"
+        },
+        {
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0496",
+            "name": "bait"
+          },
+          "features": [
+            {
+              "category": "experimentalFeatures",
+              "id": "6",
+              "name": "n-terminus",
+              "sequenceData": [
+                {
+                  "interactorRef": "uniprotkb_Q16181",
+                  "participantRef": "5",
+                  "pos": "n-n"
+                }
+              ],
+              "type": {
+                "id": "MI:0367",
+                "name": "green fluorescent protein tag"
+              }
+            },
+            {
+              "InterPro": "IPR030379",
+              "category": "bindingSites",
+              "id": "4",
+              "linkedFeatures": [
+                "3"
+              ],
+              "name": "g_septin_dom",
+              "sequenceData": [
+                {
+                  "interactorRef": "uniprotkb_Q16181",
+                  "participantRef": "5",
+                  "pos": "28..47-298..317"
+                }
+              ],
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              }
+            }
+          ],
+          "id": "5",
+          "identificationMethods": [
+            {
+              "id": "MI:0705",
+              "name": "anti tag western blot"
+            }
+          ],
+          "interactorRef": "uniprotkb_Q16181"
+        }
+      ]
+    }
+  ]
+}
