@@ -118,7 +118,7 @@ NaryLink.prototype.getMappedCoordinates = function () {
         const participant = participants[i];
         if (participant.type === "complex") {
             mapped = mapped.concat(this.orbitNodes(participant.naryLink.getMappedCoordinates()));
-        } else if (participant.form === 1) {
+        } else if (participant.expanded) {
             const start = participant.getResidueCoordinates(0);
             const end = participant.getResidueCoordinates(participant.size);
             if (!isNaN(start[0]) && !isNaN(start[1]) &&

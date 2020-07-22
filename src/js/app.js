@@ -440,7 +440,7 @@ App.prototype.mouseUp = function (evt) {
 
         if (this.dragElement && this.dragElement.type === "protein") { /// todo be consistent about how to check if thing is protein
             if (!(this.state === this.STATES.DRAGGING || this.state === this.STATES.ROTATING)) { //not dragging or rotating
-                if (this.dragElement.form === 0) {
+                if (!this.dragElement.expanded) {
                     this.dragElement.setForm(1);
                 } else {
                     this.contextMenuProt = this.dragElement;
@@ -566,7 +566,7 @@ App.prototype.touchEnd = function(evt) {
 
         if (this.dragElement != null) {
             if (!(this.state === this.STATES.DRAGGING || this.state === this.STATES.ROTATING)) { //not dragging or rotating
-                if (this.dragElement.form === 0) {
+                if (!this.dragElement.expanded) {
                     this.dragElement.setForm(1);
                 } else {
                     this.contextMenuProt = this.dragElement;
@@ -986,7 +986,7 @@ App.prototype.getFeatureColors = function () {
 
 App.prototype.collapseAll = function () {
     for (let participant of this.participants.values()) {
-        if (participant.form === 1) {
+        if (participant.expanded) {
             participant.setForm(0);
         }
     }
@@ -994,7 +994,7 @@ App.prototype.collapseAll = function () {
 
 App.prototype.expandAll = function () {
     for (let participant of this.participants.values()) {
-        if (participant.type === "protein" && participant.form === 0) {
+        if (participant.type === "protein" && !participant.expanded) {
             participant.setForm(1);
         }
     }
@@ -1005,10 +1005,10 @@ App.prototype.expandAndCollapseSelection = function (moleculesSelected) {
     for (let participant of this.participants.values()) {
         const molecule_id = participant.json.identifier.id;
         if (moleculesSelected.includes(molecule_id)) {
-            if (participant.form === 0) {
+            if (!participant.expanded) {
                 participant.setForm(1);
             }
-        } else if (participant.form === 1) {
+        } else if (participant.expanded) {
             participant.setForm(0);
         }
     }

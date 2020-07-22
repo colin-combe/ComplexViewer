@@ -78,7 +78,7 @@ FeatureLink.prototype.check = function () {
 FeatureLink.prototype.anyParticipantIsBar = function () {
     const ic = this.participants.length;
     for (let i = 0; i < ic; i++) {
-        if (this.participants[i].form === 1) {
+        if (this.participants[i].expanded) {
             return true;
         }
     }
@@ -112,7 +112,7 @@ FeatureLink.prototype.setLinkCoordinates = function () {
 
     function getSegment(midPoint, controlPoint, startRes, endRes, participant, yOffset, originPoint) {
         let startPoint, endPoint;
-        if (!participant.form) { // tests if form = undefined or 0 //TODO: maybe change this, its confusing
+        if (!participant.expanded) {
             startPoint = participant.getPosition(originPoint);
             endPoint = startPoint;
         } else {
@@ -165,28 +165,28 @@ FeatureLink.prototype.setLinkCoordinates = function () {
     //calculate mid points of from and to sequence data
     let fMid, tMid;
 
-    if (fromParticipant.form)  {
+    if (fromParticipant.expanded)  {
         fMid = sequenceDataMidPoint(this.fromSequenceData, fromParticipant);
     }
-    if (toParticipant.form)  {
+    if (toParticipant.expanded)  {
         tMid = sequenceDataMidPoint(this.toSequenceData, toParticipant);
     }
-    if (!fromParticipant.form) { // if not (undefined or 0)
+    if (!fromParticipant.expanded) {
         fMid = fromParticipant.getPosition(tMid);//toOriginPoint);
     }
-    if (!toParticipant.form) {// if not (undefined or 0)
+    if (!toParticipant.expanded) {
         tMid = toParticipant.getPosition(fMid);//fromOriginPoint);
     }
 
     const fromOriginPoint = fMid;//null;//[fromParticipant.cy, fromParticipant.cy];
     const toOriginPoint = tMid;//null;//[toParticipant.cy, toParticipant.cy];
 
-    // if (!fromParticipant.form) { // if not (undefined or 0)
+    // if (!fromParticipant.expanded) {
     //     fMid = fromParticipant.getPosition();//toOriginPoint);
     // } else {
     //     fMid = sequenceDataMidPoint(this.fromSequenceData, fromParticipant);
     // }
-    // if (!toParticipant.form) {// if not (undefined or 0)
+    // if (!toParticipant.expanded) {
     //     tMid = toParticipant.getPosition();//fromOriginPoint);
     // } else {
     //     tMid = sequenceDataMidPoint(this.toSequenceData, toParticipant);
@@ -233,14 +233,14 @@ FeatureLink.prototype.setLinkCoordinates = function () {
     let ftMid = [fMid[0] + (30 * Math.sin(fRotRad) * this.app.z),
         fMid[1] - (30 * Math.cos(fRotRad) * this.app.z)
     ];
-    if (!fromParticipant.form) { // if not (undefined or 0)
+    if (!fromParticipant.expanded) {
         ftMid = fMid;
     }
 
     let ttMid = [tMid[0] + (30 * Math.sin(tRotRad) * this.app.z),
         tMid[1] - (30 * Math.cos(tRotRad) * this.app.z)
     ];
-    if (!toParticipant.form) { // if not (undefined or 0)
+    if (!toParticipant.expanded) {
         ttMid = tMid;
     }
 

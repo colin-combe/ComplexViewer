@@ -17,7 +17,7 @@ export function BinaryLink(id, app, fromI, toI) {
 BinaryLink.prototype = new Link();
 
 BinaryLink.prototype.check = function () {
-    if (!this.participants[0].form && !this.participants[1].form) { //checks if form not defined or is 0
+    if (!this.participants[0].expanded && !this.participants[1].expanded) { //checks if form not defined or is 0
         this.show();
         return true;
     } else { //at least one end was in stick form

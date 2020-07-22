@@ -8,8 +8,7 @@ export function Protein(id, /*App*/ app, json, name) {
     this.upperGroup = document.createElementNS(svgns, "g");
     this.rotation = 0;
     this.stickZoom = 1;
-    this.form = 0; // 0 = blob, 1 = stick
-
+    // this.expanded = false; //done by init()
     //make highlight
     this.highlight = document.createElementNS(svgns, "rect");
     this.highlight.classList.add("highlight", "participant-highlight");
@@ -74,7 +73,7 @@ export function Protein(id, /*App*/ app, json, name) {
     const self = this;
     Object.defineProperty(this, "height", {
         get: function height() {
-            return self.form == 1? 120:40;
+            return self.expanded? 120:40;
             //return 160;
         }
     });

@@ -9,7 +9,7 @@ Interactor.prototype = {
         // console.log(this.upperGroup.getBBox().width);
         // const bbox = this.upperGroup.getBBox(); //firefox buggy?
         // return bbox.width;
-        if (this.form === 0) {
+        if (!this.expanded) {
             return (2 * this.getSymbolRadius()) + 5 + this.labelSVG.getComputedTextLength();
         } else {
             return (this.size * this.stickZoom) + 5 + this.labelSVG.getComputedTextLength();
@@ -28,7 +28,7 @@ Interactor.prototype.init = function (id, app, json, name){
 
     // this.type = json.type.name;
 
-    this.form = 0;
+    this.expanded = false;
 
     //todo - think 'type' should be  a property here (except for complex, can just return json.type.name)
 

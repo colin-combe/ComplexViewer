@@ -59,7 +59,7 @@ Polymer.prototype.setStickScale = function (scale, svgP) {
 
 Polymer.prototype.scale = function () {
     const protLength = (this.size) * this.stickZoom;
-    if (this.form === 1) {
+    if (this.expanded) {
         const labelTransform = d3.transform(this.labelSVG.getAttribute("transform"));
         const k = this.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate)
             .translate((-(((this.size / 2) * this.stickZoom) + (this.nTerminusFeature ? 25 : 10))), LABEL_Y); //.scale(z).translate(-c.x, -c.y);
@@ -152,9 +152,7 @@ Polymer.prototype.setScaleGroup = function () {
 Polymer.prototype.setForm = function (form, svgP) {
     if (this.busy !== true) {
         if (form === 1) {
-            // if (this.form !== 1) {
             this.toStick();
-            // }
         } else {
             this.toCircle(svgP);
         }
@@ -248,7 +246,7 @@ Polymer.prototype.toCircle = function (svgP) {
         self.setAllLinkCoordinates();
 
         if (interp === 1) { // finished - tidy up
-            self.form = 0;
+            self.expanded = false;
             self.checkLinks();
 
             for (let [annotationType, annotations] of self.annotationSets) {
@@ -286,7 +284,7 @@ Polymer.prototype.toCircle = function (svgP) {
 
 Polymer.prototype.toStick = function () {
     this.busy = true;
-    this.form = 1;
+    this.expanded = true;
 
     const protLength = this.size * this.stickZoom;
     const r = this.getSymbolRadius();
@@ -391,7 +389,7 @@ Polymer.prototype.toStick = function () {
 
 Polymer.prototype.toStickNoTransition = function () {
     this.busy = true;
-    this.form = 1;
+    this.expanded = true;
 
     const protLength = this.size * this.stickZoom;
     const r = this.getSymbolRadius();
@@ -567,7 +565,7 @@ Polymer.prototype.setPositionalFeatures = function () {
                 }
                 if (anno.seqDatum.uncertainBegin) {
                     anno.fuzzyStart = document.createElementNS(svgns, "path");
-                    if (this.form === 0) {
+                    if (!this.expanded) {
                         anno.fuzzyStart.setAttribute("d", this.getAnnotationPieSlicePath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin, anno));
                     } else {
                         anno.fuzzyStart.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin, anno));
@@ -589,7 +587,7 @@ Polymer.prototype.setPositionalFeatures = function () {
                     if (anno.seqDatum.uncertainEnd) {
                         tempEnd -= 1;
                     }
-                    if (this.form === 0) {
+                    if (!this.expanded ) {
                         anno.certain.setAttribute("d", this.getAnnotationPieSlicePath(tempBegin, tempEnd, anno));
                     } else {
                         anno.certain.setAttribute("d", this.getAnnotationRectPath(tempBegin, tempEnd, anno));
@@ -602,7 +600,7 @@ Polymer.prototype.setPositionalFeatures = function () {
                 }
                 if (anno.seqDatum.uncertainEnd) {
                     anno.fuzzyEnd = document.createElementNS(svgns, "path");
-                    if (this.form === 0) {
+                    if (!this.expanded) {
                         anno.fuzzyEnd.setAttribute("d", this.getAnnotationPieSlicePath(anno.seqDatum.end, anno.seqDatum.uncertainEnd, anno));
                     } else {
                         anno.fuzzyEnd.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.end, anno.seqDatum.uncertainEnd, anno));
