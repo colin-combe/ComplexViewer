@@ -77,6 +77,10 @@ feature-link {
     text-anchor: end;
 }
 
+.scale-label{
+    text-anchor: middle;
+}
+
 .tooltip{
     text-anchor: start;
 }

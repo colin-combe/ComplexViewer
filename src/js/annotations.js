@@ -150,15 +150,15 @@ export function chooseColors(app) {
                     const checkedFill = "url('#checkers_" + anno.description + "')";
                     if (anno.fuzzyStart) {
                         anno.fuzzyStart.setAttribute("fill", checkedFill);
-                        // anno.fuzzyStart.setAttribute("stroke", color);
+                        anno.fuzzyStart.setAttribute("stroke", color);
                     }
                     if (anno.certain) {
                         anno.certain.setAttribute("fill", color);
-                        // anno.certain.setAttribute("stroke", color);
+                        anno.certain.setAttribute("stroke", color);
                     }
                     if (anno.fuzzyEnd) {
                         anno.fuzzyEnd.setAttribute("fill", checkedFill);
-                        // anno.fuzzyEnd.setAttribute("stroke", color);
+                        anno.fuzzyEnd.setAttribute("stroke", color);
                     }
                 }
             }

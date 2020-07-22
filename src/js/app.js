@@ -994,7 +994,7 @@ App.prototype.collapseAll = function () {
 
 App.prototype.expandAll = function () {
     for (let participant of this.participants.values()) {
-        if (participant.form === 0) {
+        if (participant.type === "protein" && participant.form === 0) {
             participant.setForm(1);
         }
     }

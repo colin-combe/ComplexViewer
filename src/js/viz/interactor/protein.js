@@ -57,7 +57,7 @@ export function Protein(id, /*App*/ app, json, name) {
     this.background.setAttribute("rx", r);
     this.background.setAttribute("ry", r);
 
-    this.annotationsSvgGroup.setAttribute("transform", "scale(1, 1)");
+    // this.annotationsSvgGroup.setAttribute("transform", "scale(1, 1)");
 
     this.highlight.setAttribute("width", (r * 2) + 5);
     this.highlight.setAttribute("height", (r * 2) + 5);

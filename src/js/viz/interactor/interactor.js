@@ -150,7 +150,6 @@ Interactor.prototype.getSymbolRadius = function () {
     return 15;
 };
 
-
 Interactor.prototype.showHighlight = function () {
 };
 
