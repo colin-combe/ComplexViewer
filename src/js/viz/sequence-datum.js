@@ -80,6 +80,24 @@ export function SequenceDatum(participant, sequenceDatumString) {
 SequenceDatum.prototype.toString = function () {
     return this.sequenceDatumString;
 };
+
+SequenceDatum.prototype.overlaps = function (seqDatum) {
+    if (this.participant === seqDatum.participant) {
+        const first = this.uncertainBegin || this.begin || this.end || this.uncertainEnd;
+        const last = this.uncertainEnd || this.end || this.begin || this.uncertainBegin;
+
+        const otherFirst = seqDatum.uncertainBegin || seqDatum.begin || seqDatum.end;
+        const otherLast = seqDatum.uncertainEnd || seqDatum.end || seqDatum.begin;
+
+        if (first <= otherLast && otherFirst <= last) { // i wouldn't have got that tbh
+            return true;
+        }
+
+    }
+    return false;
+};
+
+
 //On 06/06/13 09:22, marine@ebi.ac.uk wrote:
 //> Concerning the ranges, I think there was a confusion :
 //>

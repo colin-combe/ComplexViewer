@@ -414,9 +414,10 @@ Polymer.prototype.toStickNoTransition = function () {
         .attr("x", this.getResXWithStickZoom(0.5) - 2.5).attr("y", (-Polymer.STICKHEIGHT / 2) - 2.5)
         .attr("rx", 0).attr("ry", 0);
 
-    self.updateAnnotationRectanglesNoTransition();
 
     const self = this;
+
+    self.updateAnnotationRectanglesNoTransition();
 
     const labelTransform = d3.transform(self.labelSVG.getAttribute("transform"));
     const k = self.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(1), LABEL_Y); //.scale(z).translate(-c.x, -c.y);
@@ -518,103 +519,120 @@ Polymer.prototype.setPositionalFeatures = function () {
         self.showHighlight(true);
     };
 
-    // const annotationTypesSet = new Set();
-    // for (let [annotationType, annotations] of this.annotationSets) {
-    //     if (this.app.annotationSetsShown.get(annotationType) === true) {
-    //         for (let annotation of annotations.values()) {
-    //
-    //             if (annotation.seqDatum.sequenceDatumString !== "n-n" && annotation.seqDatum.sequenceDatumString !== "c-c") {
-    //                 annotationTypesSet.add(annotation.description);
-    //             }
-    //         }
-    //     }
-    // }
-    // this.annotationTypes = Array.from(annotationTypesSet.values()).sort();
-
-    let rung = -1;
+    let r = -1;
     const rungs = [];
 
     function overlaps(rungArr, anno) {
-
+        for (let earlierAnno of rungArr) {
+            if (earlierAnno.seqDatum.overlaps(anno.seqDatum)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     for (let [annotationType, annotations] of this.annotationSets) {
         if (this.app.annotationSetsShown.get(annotationType) === true) {
             if (annotations) {
-                rung++;
-                rungs[rung] = [];
+                r++;
+                rungs[r] = [];
             }
-            for (let anno of annotations.values()) {
-                if (anno.seqDatum.sequenceDatumString === "n-n" || anno.seqDatum.sequenceDatumString === "c-c") {
-                    anno.rung = -1;
-                } else {
-                    anno.rung = rung;
+            const dupCheck = new Set();
+            //need to sort by description
+            const sortedAnnos = Array.from(annotations.values()).sort(function (a, b) {
+                const nameA = a.description;
+                const nameB = b.description;
+                if (nameA < nameB) {
+                    return -1;
+                }
+                if (nameA > nameB) {
+                    return 1;
+                }
+                // names must be equal
+                return 0;
+            });
+            for (let anno of sortedAnnos) {
+                if (!dupCheck.has(anno.toString())) {
+                    dupCheck.add(anno.toString());
+                    if (anno.seqDatum.sequenceDatumString === "n-n" || anno.seqDatum.sequenceDatumString === "c-c") {
+                        anno.rung = -1;
+                    } else {
+                        let rung = rungs[r];
+                        if (overlaps(rung, anno)) {
+                            r++;
+                            rungs[r] = [];
+                            rung = rungs[r];
+                        }
+                        anno.rung = r;
+                        rung.push(anno);
+                        console.log(anno.description, anno);
+
+                    }
                 }
             }
         }
     }
-    this.rungCount = rung + 1;
+    this.rungCount = r + 1;
 
     for (let [annotationType, annotations] of this.annotationSets) {
         if (this.app.annotationSetsShown.get(annotationType) === true) {
+            const dupCheck = new Set();
             for (let anno of annotations.values()) {
-
-                let text = annotationType + ":" + anno.description + " [" + (anno.seqDatum ? anno.seqDatum.toString() : anno.seqDatum.begin + " - " + anno.seqDatum.end) + "]";
-                if (anno.description === "No annotations") {
-                    text = "No annotations";
-                }
-                if (anno.seqDatum.uncertainBegin) {
-                    anno.fuzzyStart = document.createElementNS(svgns, "path");
-                    if (!this.expanded) {
-                        anno.fuzzyStart.setAttribute("d", this.getAnnotationPieSlicePath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin, anno));
-                    } else {
-                        anno.fuzzyStart.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin, anno));
-                    }
-                    anno.fuzzyStart.setAttribute("stroke-width", "1"); // todo - should be css
-                    // anno.fuzzyStart.setAttribute("fill-opacity", "0.6");
-                    anno.fuzzyStart.name = text;
-                    anno.fuzzyStart.onmouseover = toolTipFunc;
-                    this.annotationsSvgGroup.appendChild(anno.fuzzyStart);
-                }
-
-                if (anno.seqDatum.begin && anno.seqDatum.end) {
-                    anno.certain = document.createElementNS(svgns, "path");
-                    let tempBegin = anno.seqDatum.begin; //todo - might be better to have seperate att in SequenceData for end of uncertain start
-                    let tempEnd = anno.seqDatum.end;
+                if (!dupCheck.has(anno.toString())) {
+                    dupCheck.add(anno.toString());
+                    let text = anno.toString();
                     if (anno.seqDatum.uncertainBegin) {
-                        tempBegin += 1;
+                        anno.fuzzyStart = document.createElementNS(svgns, "path");
+                        if (!this.expanded) {
+                            anno.fuzzyStart.setAttribute("d", this.getAnnotationPieSlicePath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin, anno));
+                        } else {
+                            anno.fuzzyStart.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin, anno));
+                        }
+                        anno.fuzzyStart.setAttribute("stroke-width", "1"); // todo - should be css
+                        anno.fuzzyStart.setAttribute("fill-opacity", "0.6");
+                        anno.fuzzyStart.name = text;
+                        anno.fuzzyStart.onmouseover = toolTipFunc;
+                        this.annotationsSvgGroup.appendChild(anno.fuzzyStart);
+                    }
+
+                    if (anno.seqDatum.begin && anno.seqDatum.end) {
+                        anno.certain = document.createElementNS(svgns, "path");
+                        let tempBegin = anno.seqDatum.begin; //todo - might be better to have seperate att in SequenceData for end of uncertain start
+                        let tempEnd = anno.seqDatum.end;
+                        if (anno.seqDatum.uncertainBegin) {
+                            tempBegin += 1;
+                        }
+                        if (anno.seqDatum.uncertainEnd) {
+                            tempEnd -= 1;
+                        }
+                        if (!this.expanded) {
+                            anno.certain.setAttribute("d", this.getAnnotationPieSlicePath(tempBegin, tempEnd, anno));
+                        } else {
+                            anno.certain.setAttribute("d", this.getAnnotationRectPath(tempBegin, tempEnd, anno));
+                        }
+                        anno.certain.setAttribute("stroke-width", "1");
+                        // anno.certain.setAttribute("fill-opacity", "0.6");
+                        anno.certain.name = text;
+                        anno.certain.onmouseover = toolTipFunc;
+                        this.annotationsSvgGroup.appendChild(anno.certain);
                     }
                     if (anno.seqDatum.uncertainEnd) {
-                        tempEnd -= 1;
+                        anno.fuzzyEnd = document.createElementNS(svgns, "path");
+                        if (!this.expanded) {
+                            anno.fuzzyEnd.setAttribute("d", this.getAnnotationPieSlicePath(anno.seqDatum.end, anno.seqDatum.uncertainEnd, anno));
+                        } else {
+                            anno.fuzzyEnd.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.end, anno.seqDatum.uncertainEnd, anno));
+                        }
+                        anno.fuzzyEnd.setAttribute("stroke-width", "1");
+                        anno.fuzzyEnd.setAttribute("fill-opacity", "0.6");
+                        anno.fuzzyEnd.name = text;
+                        anno.fuzzyEnd.onmouseover = toolTipFunc;
+                        this.annotationsSvgGroup.appendChild(anno.fuzzyEnd);
                     }
-                    if (!this.expanded ) {
-                        anno.certain.setAttribute("d", this.getAnnotationPieSlicePath(tempBegin, tempEnd, anno));
-                    } else {
-                        anno.certain.setAttribute("d", this.getAnnotationRectPath(tempBegin, tempEnd, anno));
-                    }
-                    anno.certain.setAttribute("stroke-width", "1");
-                    // anno.certain.setAttribute("fill-opacity", "0.6");
-                    anno.certain.name = text;
-                    anno.certain.onmouseover = toolTipFunc;
-                    this.annotationsSvgGroup.appendChild(anno.certain);
-                }
-                if (anno.seqDatum.uncertainEnd) {
-                    anno.fuzzyEnd = document.createElementNS(svgns, "path");
-                    if (!this.expanded) {
-                        anno.fuzzyEnd.setAttribute("d", this.getAnnotationPieSlicePath(anno.seqDatum.end, anno.seqDatum.uncertainEnd, anno));
-                    } else {
-                        anno.fuzzyEnd.setAttribute("d", this.getAnnotationRectPath(anno.seqDatum.end, anno.seqDatum.uncertainEnd, anno));
-                    }
-                    anno.fuzzyEnd.setAttribute("stroke-width", "1");
-                    // anno.fuzzyEnd.setAttribute("fill-opacity", "0.6");
-                    anno.fuzzyEnd.name = text;
-                    anno.fuzzyEnd.onmouseover = toolTipFunc;
-                    this.annotationsSvgGroup.appendChild(anno.fuzzyEnd);
                 }
             }
         }
     }
-
 };
 
 Polymer.stepsInArc = 5;
@@ -719,7 +737,7 @@ Polymer.prototype.getAnnotationRectPath = function (startRes, endRes, annotation
     //'left' edge
     let path = "M" + annoX + "," + bottom + " L" + annoX + "," + top;
     //top edge
-   for (let sia = 0; sia <= Polymer.stepsInArc; sia++) {
+    for (let sia = 0; sia <= Polymer.stepsInArc; sia++) {
         const step = annoX + (annoLength * (sia / Polymer.stepsInArc));
         path += " L " + step + "," + top;
     }

@@ -830,6 +830,7 @@ App.prototype.mouseToSVG = function (x, y) {
 // reads MI JSON format
 App.prototype.readMIJSON = function (miJson, expand = true) {
     readMijson(miJson, this, expand);
+    this.init();
 };
 
 App.prototype.checkLinks = function () {

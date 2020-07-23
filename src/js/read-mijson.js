@@ -148,8 +148,6 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
         }
     }
 
-    app.init();
-
     function readStoichExpanded() {
         //get maximum stoichiometry
         let maxStoich = 0;
@@ -387,7 +385,6 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
         }
 
     }
-
 
     function getNaryLinkIdFromInteraction(interaction) {
         if (interaction.naryId) {
