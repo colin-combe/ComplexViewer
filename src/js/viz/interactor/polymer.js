@@ -565,8 +565,6 @@ Polymer.prototype.setPositionalFeatures = function () {
                         }
                         anno.rung = r;
                         rung.push(anno);
-                        console.log(anno.description, anno);
-
                     }
                 }
             }

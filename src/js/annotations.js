@@ -77,8 +77,9 @@ function getUniProtFeatures(prot, callback) {
             return ft.type === "DOMAIN";
         });
         for (let feature of uniprotJsonFeatures) {
-            feature.seqDatum = new SequenceDatum(null, feature.begin + "-" + feature.end);
-            annotations.push(feature);
+            const anno = new Annotation(feature.description, new SequenceDatum(null, feature.begin + "-" + feature.end));
+            // feature.seqDatum = new SequenceDatum(null, feature.begin + "-" + feature.end);
+            annotations.push(anno);
         }
         // prot.showHighlight(true);
         callback();
@@ -146,8 +147,8 @@ export function chooseColors(app) {
                     }
 
                     //ToDO - way more of these are being created than needed
-                    app.createHatchedFill("checkers_" + anno.description, color);
-                    const checkedFill = "url('#checkers_" + anno.description + "')";
+                    app.createHatchedFill("checkers_" + anno.description + "_" +  color.toString(), color);
+                    const checkedFill = "url('#checkers_" + anno.description  + "_" +  color.toString() + "')";
                     if (anno.fuzzyStart) {
                         anno.fuzzyStart.setAttribute("fill", checkedFill);
                         anno.fuzzyStart.setAttribute("stroke", color);

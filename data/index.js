@@ -1,6 +1,11 @@
 // eslint-disable-next-line no-unused-vars
 const exampleIndex = [
     {
+        "ac": "EBI-4371590",
+        "name": "EBI-4371590",
+        "url": "https://ebi-intact.github.io/intact-view/details/interaction/EBI-4371590",
+    },
+    {
         "ac": "CPX-1920",
         "name": "~CPX-1920",
         "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-1920",
@@ -14,11 +19,6 @@ const exampleIndex = [
         "ac": "EBI-12598622",
         "name": "EBI-12598622",
         "url": "https://ebi-intact.github.io/intact-view/details/interaction/EBI-12598622",
-    },
-    {
-        "ac": "EBI-4371590",
-        "name": "EBI-4371590",
-        "url": "https://ebi-intact.github.io/intact-view/details/interaction/EBI-4371590",
     },
     {
         "ac": "CPX-5183",

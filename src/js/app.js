@@ -897,7 +897,7 @@ App.prototype.setTooltip = function (text, color) {
         if (typeof color !== "undefined" && color != null) {
             this.tooltip_bg.setAttribute("fill", color);
             this.tooltip_bg.setAttribute("stroke", color);
-            this.tooltip_bg.setAttribute("fill-opacity", "0.5");
+            this.tooltip_bg.setAttribute("fill-opacity", "0.0");
         } else {
             this.tooltip_bg.setAttribute("fill", "white");
             this.tooltip_bg.setAttribute("stroke", "grey");
