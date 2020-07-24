@@ -45,6 +45,11 @@ div#centre {
 
 }
 
+.complexViewerSVG{
+    display: flex;
+    flex-grow:1;
+}
+
 div#detailsDiv {
     display: -webkit-box;
     display: -moz-box;

@@ -5,7 +5,7 @@ import * as d3 from "d3";
 import * as d3_chromatic from "d3-scale-chromatic";
 import * as cola from "./cola";
 import {readMijson} from "./read-mijson";
-import {chooseColors, fetchAnnotations} from "./annotations";
+import {chooseColors, fetchAnnotations} from "./annotationUtils";
 import {svgUtils} from "./svgexp";
 
 // import {SymbolKey} from "./symbol-key";
@@ -86,7 +86,7 @@ export function App(/*HTMLDivElement*/networkDiv) {
 
     //create SVG element
     this.svgElement = document.createElementNS(svgns, "svg");
-    this.svgElement.setAttribute("id", "complexViewerSVG");
+    this.svgElement.classList.add("complexViewerSVG");
 
     //add listeners
     this.svgElement.onmousedown = function (evt) {
@@ -192,6 +192,12 @@ export function App(/*HTMLDivElement*/networkDiv) {
     this.svgElement.appendChild(this.tooltip_bg);
     this.svgElement.appendChild(this.tooltip);
 
+    this.annotationSetsShown = new Map();
+    this.annotationSetsShown.set("INTERACTOR", false);
+    this.annotationSetsShown.set("MIFEATURES", true);
+    this.annotationSetsShown.set("UNIPROTKB", false);
+    this.annotationSetsShown.set("SUPERFAMILY", false);
+
     this.clear();
 }
 
@@ -227,11 +233,6 @@ App.prototype.createHatchedFill = function (name, color) {
 App.prototype.clear = function () {
     this.d3cola.stop();
 
-    this.annotationSetsShown = new Map();
-    // this.annotationSetsShown.set("MI FEATURES", true);
-
-    this.checkedHatchNames = new Set();
-
     //lighten colors
     const complexColors = [];
     for (let c of d3_chromatic.schemePastel2) {//colorbrewer.Pastel2[8]) {
@@ -241,7 +242,8 @@ App.prototype.clear = function () {
     }
 
     NaryLink.naryColors = d3.scale.ordinal().range(complexColors);
-    this.defs.selectAll(".feature_checkers").remove();
+    this.defs.textContent = "";
+    this.checkedHatchNames = new Set();
 
     this.naryLinks.textContent = "";
     this.p_pLinksWide.textContent = "";
@@ -320,8 +322,10 @@ App.prototype.init = function () {
         }
     }
     this.updateAnnotations();
+    const self = this;
+    fetchAnnotations(this, function(){self.updateAnnotations();});
+
     this.checkLinks(); //totally needed, not sure why tbh todo - check this out
-    // this.setAllLinkCoordinates(); // just to move them off screen at first
     this.autoLayout();
 };
 
@@ -934,28 +938,17 @@ App.prototype.setAnnotations = function (annoChoice) {
     for (let annoType of this.annotationSetsShown.keys()) {
         this.showAnnotations(annoType, annoChoice === annoType);
     }
-    this.showAnnotations(annoChoice, true);
 };
 
 App.prototype.showAnnotations = function (annoChoice, show) {
-    annoChoice = annoChoice.toUpperCase();
-    const self = this;
-    let setShown = this.annotationSetsShown.get(annoChoice);
-    if (typeof setShown === "undefined" && annoChoice !== "MIFEATURES") {
-        fetchAnnotations(annoChoice, this, function () {
-            self.annotationSetsShown.set(annoChoice, show);
-            self.updateAnnotations();
-        });
-    } else {
-        this.annotationSetsShown.set(annoChoice, show);
-        this.updateAnnotations();
-    }
+    this.annotationSetsShown.set(annoChoice, show);
+    this.updateAnnotations();
 };
 
 App.prototype.updateAnnotations = function () {
     // //clear all annot's
     for (let mol of this.participants.values()) {
-        if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS
+        if (mol.type === "protein") {
             mol.clearPositionalFeatures();
         }
     }
@@ -963,8 +956,8 @@ App.prototype.updateAnnotations = function () {
     this.colorSchemeChanged();
 
     for (let mol of this.participants.values()) {
-        if (mol.id.indexOf("uniprotkb_") === 0) { //LIMIT IT TO PROTEINS
-            mol.setPositionalFeatures();
+        if (mol.type === "protein") {
+            mol.updatePositionalFeatures();
         }
     }
     chooseColors(this);

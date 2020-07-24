@@ -5,57 +5,28 @@ import {SequenceDatum} from "./viz/sequence-datum";
 
 
 //todo - cache annotations in memory
-export function fetchAnnotations(annotationChoice, /*App*/ app, callback) {
-    annotationChoice = annotationChoice.toUpperCase();
+export function fetchAnnotations(/*App*/ app, callback) {
     // we only show annotations on proteins
     const proteins = Array.from(app.participants.values()).filter(function (value) {
         return value.type === "protein";
     });
 
-    function clearHighlights(){
-        for (let prot of proteins){
-            prot.showHighlight(false);
-        }
-    }
     let protsAnnotated = 0;
     const molCount = proteins.length;
 
-    if (annotationChoice === "INTERACTOR") { //todo - move this out of here
-        if (app.proteinCount < 21) {
-            for (let prot of proteins) {
-                const annotation = new Annotation(prot.json.label, new SequenceDatum(null, 1 + "-" + prot.size));
-                let annotations = prot.annotationSets.get(annotationChoice);
-                if (typeof annotationSet === "undefined") {
-                    annotations = [];
-                    prot.annotationSets.set(annotationChoice, annotations);
-                }
-                annotations.push(annotation);
+    for (let prot of proteins) {
+        getSuperFamFeatures(prot, function () {
+            protsAnnotated++;
+            if (protsAnnotated === molCount) {
+                callback();
             }
-            // app.annotationSetsShown.set("INTERACTOR", true);
-        } else {
-            // alert("Too many (> 20) - can't color by interactor."); // people are gong to complain about why arent my interactor colours showing up
-        }
-        callback();
-    } else if (annotationChoice.toUpperCase() === "SUPERFAMILY") {
-        for (let prot of proteins) {
-            getSuperFamFeatures(prot, function () {
-                protsAnnotated++;
-                if (protsAnnotated === molCount) {
-                    // clearHighlights();
-                    callback();
-                }
-            });
-        }
-    } else if (annotationChoice.toUpperCase() === "UNIPROTKB") {
-        for (let prot of proteins) {
-            getUniProtFeatures(prot, function () {
-                protsAnnotated++;
-                if (protsAnnotated === molCount) {
-                    // clearHighlights();
-                    callback();
-                }
-            });
-        }
+        });
+        getUniProtFeatures(prot, function () {
+            protsAnnotated++;
+            if (protsAnnotated === molCount) {
+                callback();
+            }
+        });
     }
 }
 
@@ -127,9 +98,6 @@ export function chooseColors(app) {
     let colorScheme;
     if (categories.size < 11) {
         colorScheme = d3.scale.ordinal().range(d3_chromatic.schemeTableau10);//colorbrewer.Dark2[catCount].slice().reverse());
-        // } else if (catCount < 13) {
-        //     // var reversed = colorbrewer.Paired[catCount];//.slice().reverse();
-        //     colorScheme = d3.scale.ordinal().range(d3_chromatic.schemeSet3);
     } else {
         colorScheme = d3.scale.category20();
     }
@@ -147,8 +115,8 @@ export function chooseColors(app) {
                     }
 
                     //ToDO - way more of these are being created than needed
-                    app.createHatchedFill("checkers_" + anno.description + "_" +  color.toString(), color);
-                    const checkedFill = "url('#checkers_" + anno.description  + "_" +  color.toString() + "')";
+                    app.createHatchedFill("checkers_" + anno.description + "_" + color.toString(), color);
+                    const checkedFill = "url('#checkers_" + anno.description + "_" + color.toString() + "')";
                     if (anno.fuzzyStart) {
                         anno.fuzzyStart.setAttribute("fill", checkedFill);
                         anno.fuzzyStart.setAttribute("stroke", color);

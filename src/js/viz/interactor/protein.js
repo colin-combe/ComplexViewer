@@ -1,7 +1,9 @@
 import {Polymer} from "./polymer";
 import {svgns} from "../../config";
+import {Annotation} from "./annotation";
+import {SequenceDatum} from "../sequence-datum";
 
-export function Protein(id, /*App*/ app, json, name) {
+export function Protein(id, /*App*/ app, json, name, sequence) {
     this.init(id, app, json, name);
     this.type = "protein"; // this isn't absolutely necessary, could do without it
 
@@ -73,12 +75,25 @@ export function Protein(id, /*App*/ app, json, name) {
     const self = this;
     Object.defineProperty(this, "height", {
         get: function height() {
-            return self.expanded? 120:40;
+            return self.expanded ? 120 : 40;
             //return 160;
         }
     });
 
     this.showHighlight(false);
+
+    //sequence = amino acids in UPPERCASE, digits or lowercase can be used for modification info
+    if (!sequence) {
+        sequence = "SEQUENCEMISSING";
+    }
+    this.sequence = sequence.replace(/[^A-Z]/g, "");//remove modification site info from sequence
+    this.size = this.sequence.length;
+
+    //annotations indexed by annotation set name ("MIFEATURES", "SUPERFAMILY", etc)
+    //this.annotationSets // = new Map(); is declared in Interactor, other types of interactor can have features from MIJSON
+
+    this.annotationSets.set("INTERACTOR", [new Annotation(this.json.label, new SequenceDatum(null, 1 + "-" + this.size))]);
+
 }
 
 Protein.prototype = new Polymer();

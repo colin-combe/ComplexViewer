@@ -246,17 +246,7 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
         ) {
             participant = new BioactiveEntity(participantId, app, interactor, interactor.label);
         } else if (interactor.type.id === "MI:0326" || interactor.type.id === "MI:0327") { // proteins, peptides
-            participant = new Protein(participantId, app, interactor, interactor.label);
-            if (typeof interactor.sequence !== "undefined") {
-                participant.setSequence(interactor.sequence);
-            } else {
-                //should look it up using accession number
-                // if (participantId.indexOf("uniprotkb") === 0) {
-                //     needsSequence.add(participantId);
-                // } else {
-                    participant.setSequence("SEQUENCEMISSING");
-                // }
-            }
+            participant = new Protein(participantId, app, interactor, interactor.label, interactor.sequence);
         } else if (interactor.type.id === "MI:0250") { //genes
             participant = new Gene(participantId, app, interactor, interactor.label);
         } else if (interactor.type.id === "MI:0320" // RNA

@@ -13,12 +13,6 @@ export function Polymer() {
 
 Polymer.prototype = new Interactor();
 
-//sequence = amino acids in UPPERCASE, digits or lowercase can be used for modification info
-Polymer.prototype.setSequence = function (sequence) {
-    this.sequence = sequence.replace(/[^A-Z]/g, "");//remove modification site info from sequence
-    this.size = this.sequence.length;
-};
-
 Polymer.prototype.getSymbolRadius = function () {
     return 15;
 };
@@ -509,7 +503,7 @@ Polymer.prototype.clearPositionalFeatures = function () {
     this.annotationsSvgGroup.textContent = "";
 };
 
-Polymer.prototype.setPositionalFeatures = function () {
+Polymer.prototype.updatePositionalFeatures = function () {
     const self = this;
 
     const toolTipFunc = function (evt) {

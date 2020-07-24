@@ -163,7 +163,7 @@
     cv = new complexviewer.App(networkTargetDiv);
     cv.addColorSchemeKey(document.getElementById("colors"));
     //todo - er, use css
-    cv.svgElement.setAttribute("style", "display: -webkit-box;display: -moz-box;display: -ms-flexbox; display: -webkit-flex;display: flex;flex-grow:1;");
+   // cv.svgElement.setAttribute("style", "display: -webkit-box;display: -moz-box;display: -ms-flexbox; display: -webkit-flex;display: flex;flex-grow:1;");
 
     for (let example of exampleIndex) {
         const dataSetsSelect = document.getElementById("dataSets");
@@ -180,20 +180,8 @@
         const dataSetsSelect = document.getElementById("dataSets");
         const path = "./data/" + dataSetsSelect.options[dataSetsSelect.selectedIndex].value + ".json";
         d3.json(path, function (data) {
-            cv.readMIJSON(data);//, matrixExpansion);
-            resetAnnotations();
+            cv.readMIJSON(data);
         });
-    }
-
-    function resetAnnotations() {
-        let checkbox = document.getElementById("mifeatures");
-        cv.showAnnotations(checkbox.value, checkbox.checked);
-        checkbox = document.getElementById("uniprotkb");
-        cv.showAnnotations(checkbox.value, checkbox.checked);
-        checkbox = document.getElementById("superfamily");
-        cv.showAnnotations(checkbox.value, checkbox.checked);
-        checkbox = document.getElementById("interactor");
-        cv.showAnnotations(checkbox.value, checkbox.checked);
     }
 
     function setAnnotations(checkbox) {
