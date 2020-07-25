@@ -14,22 +14,12 @@ body {
     line-height: 1;
 }
 
-/*
-ol, ul {
-    list-style: none;
-}
-*/
 blockquote, q {
     quotes: none;
 }
 
 blockquote:after, blockquote:before, q:after, q:before {
     content: none;
-}
-
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
 }
 
 body {

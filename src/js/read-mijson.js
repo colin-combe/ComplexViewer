@@ -135,6 +135,7 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
                 if (expand) {
                     mID = mID + "(" + seqDatum.participantRef + ")";
                 }
+                // console.log("*", mID, seqDatum);
                 const molecule = app.participants.get(mID);
                 const seqFeature = new SequenceDatum(molecule, seqDatum.pos);
                 const annotation = new Annotation(annotName, seqFeature);
@@ -303,6 +304,17 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
                     const fCount = features.length;
                     for (let f = 0; f < fCount; f++) {
                         const feature = features[f];
+
+                        // jami workaround, not entirely inline with mi-json schema, but looks like mi-json has redundant info here
+                        for (let seqDatum of feature.sequenceData) {
+                            if (!seqDatum.interactorRef) {
+                                seqDatum.interactorRef = jsonParticipant.interactorRef;
+                            }
+                            if (!seqDatum.participantRef) {
+                                seqDatum.participantRef = feature.parentParticipant;
+                            }
+                        }
+
                         app.features.set(feature.id, feature);
                     }
                 }

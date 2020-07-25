@@ -91,20 +91,23 @@ div#innerMiddleDiv {
 
 }
 
-div#symbolKeyDiv {
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
-    width: 300px;
-    max-width: 300px;
-    /*
-        background:#ecedf2;
-    */
-    color: #091D42;
-    overflow: auto;
-    min-height: 0; /* NEW */
-    min-width: 0; /* NEW */
+td {
+    vertical-align: middle;
 }
+/*div#symbolKeyDiv {*/
+/*    display: flex;*/
+/*    flex-grow: 1;*/
+/*    flex-direction: column;*/
+/*    width: 300px;*/
+/*    max-width: 300px;*/
+/*    !**/
+/*        background:#ecedf2;*/
+/*    *!*/
+/*    color: #091D42;*/
+/*    overflow: auto;*/
+/*    min-height: 0; !* NEW *!*/
+/*    min-width: 0; !* NEW *!*/
+/*}*/
 
 /*
 div#legendInner {

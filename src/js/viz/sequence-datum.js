@@ -23,7 +23,7 @@ export function SequenceDatum(participant, sequenceDatumString) {
     if (this.sequenceDatumString === "?-?") {
         //this.begin = 1;
         this.end = 1; //todo - having it at begining is affecting shape of line, look at why
-        this.uncertainEnd = participant.size? participant.size : 1;
+        this.uncertainEnd = participant.size ? participant.size : 1;
     } else if (this.sequenceDatumString === "n-n") {
         this.uncertainBegin = "n-n";
         participant.nTerminusFeature = true;

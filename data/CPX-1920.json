@@ -1,101 +1,69 @@
 {
   "data": [
     {
-      "id": "uniprotkb_P09871",
-      "identifier": {
-        "db": "uniprotkb",
-        "id": "P09871"
-      },
-      "label": "c1s_human",
       "object": "interactor",
-      "organism": {
-        "common": "human",
-        "scientific": "Homo sapiens",
-        "taxid": "9606"
-      },
-      "sequence": "MWCIVLFSLLAWVYAEPTMYGEILSPNYPQAYPSEVEKSWDIEVPEGYGIHLYFTHLDIELSENCAYDSVQIISGDTEEGRLCGQRSSNNPHSPIVEEFQVPYNKLQVIFKSDFSNEERFTGFAAYYVATDINECTDFVDVPCSHFCNNFIGGYFCSCPPEYFLHDDMKNCGVNCSGDVFTALIGEIASPNYPKPYPENSRCEYQIRLEKGFQVVVTLRREDFDVEAADSAGNCLDSLVFVAGDRQFGPYCGHGFPGPLNIETKSNALDIIFQTDLTGQKKGWKLRYHGDPMPCPKEDTPNSVWEPAKAKYVFRDVVQITCLDGFEVVEGRVGATSFYSTCQSNGKWSNSKLKCQPVDCGIPESIENGKVEDPESTLFGSVIRYTCEEPYYYMENGGGGEYHCAGNGSWVNEVLGPELPKCVPVCGVPREPFEEKQRIIGGSDADIKNFPWQVFFDNPWAGGALINEYWVLTAAHVVEGNREPTMYVGSTSVQTSRLAKSKMLTPEHVFIHPGWKLLEVPEGRTNFDNDIALVRLKDPVKMGPTVSPICLPGTSSDYNLMDGDLGLISGWGRTEKRDRAVRLKAARLPVAPLRKCKEVKVEKPTADAEAYVFTPNMICAGGEKGMDSCKGDSGGAFAVQDPNDKTKFYAAGLVSWGPQCGTYGLYTRVKNYVDWIMKTMQENSTPRED",
-      "type": {
-        "id": "MI:0326",
-        "name": "protein"
-      }
-    },
-    {
-      "id": "uniprotkb_P00736",
-      "identifier": {
-        "db": "uniprotkb",
-        "id": "P00736"
-      },
-      "label": "c1r_human",
-      "object": "interactor",
-      "organism": {
-        "common": "human",
-        "scientific": "Homo sapiens",
-        "taxid": "9606"
-      },
-      "sequence": "MWLLYLLVPALFCRAGGSIPIPQKLFGEVTSPLFPKPYPNNFETTTVITVPTGYRVKLVFQQFDLEPSEGCFYDYVKISADKKSLGRFCGQLGSPLGNPPGKKEFMSQGNKMLLTFHTDFSNEENGTIMFYKGFLAYYQAVDLDECASRSKSGEEDPQPQCQHLCHNYVGGYFCSCRPGYELQEDTHSCQAECSSELYTEASGYISSLEYPRSYPPDLRCNYSIRVERGLTLHLKFLEPFDIDDHQQVHCPYDQLQIYANGKNIGEFCGKQRPPDLDTSSNAVDLLFFTDESGDSRGWKLRYTTEIIKCPQPKTLDEFTIIQNLQPQYQFRDYFIATCKQGYQLIEGNQVLHSFTAVCQDDGTWHRAMPRCKIKDCGQPRNLPNGDFRYTTTMGVNTYKARIQYYCHEPYYKMQTRAGSRESEQGVYTCTAQGIWKNEQKGEKIPRCLPVCGKPVNPVEQRQRIIGGQKAKMGNFPWQVFTNIHGRGGGALLGDRWILTAAHTLYPKEHEAQSNASLDVFLGHTNVEELMKLGNHPIRRVSVHPDYRQDESYNFEGDIALLELENSVTLGPNLLPICLPDNDTFYDLGLMGYVSGFGVMEEKIAHDLRFVRLPVANPQACENWLRGKNRMDVFSQNMFCAGHPSLKQDACQGDSGGVFAVRDPNTDRWVATGIVSWGIGCSRGYGFYTKVLNYVDWIKKEMEEED",
-      "type": {
-        "id": "MI:0326",
-        "name": "protein"
-      }
-    },
-    {
       "id": "uniprotkb_P02746",
-      "identifier": {
-        "db": "uniprotkb",
-        "id": "P02746"
-      },
-      "label": "c1qb_human",
-      "object": "interactor",
-      "organism": {
-        "common": "human",
-        "scientific": "Homo sapiens",
-        "taxid": "9606"
-      },
       "sequence": "MMMKIPWGSIPVLMLLLLLGLIDISQAQLSCTGPPAIPGIPGIPGTPGPDGQPGTPGIKGEKGLPGLAGDHGEFGEKGDPGIPGNPGKVGPKGPMGPKGGPGAPGAPGPKGESGDYKATQKIAFSATRTINVPLRRDQTIRFDHVITNMNNNYEPRSGKFTCKVPGLYYFTYHASSRGNLCVNLMRGRERAQKVVTFCDYAYNTFQVTTGGMVLKLEQGENVFLQATDKNSLLGMEGANSIFSGFLLFPDMEA",
       "type": {
         "id": "MI:0326",
         "name": "protein"
-      }
-    },
-    {
-      "id": "uniprotkb_P02745",
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
       "identifier": {
         "db": "uniprotkb",
-        "id": "P02745"
+        "id": "P02746"
       },
-      "label": "c1qa_human",
-      "object": "interactor",
-      "organism": {
-        "common": "human",
-        "scientific": "Homo sapiens",
-        "taxid": "9606"
-      },
-      "sequence": "MEGPRGWLVLCVLAISLASMVTEDLCRAPDGKKGEAGRPGRRGRPGLKGEQGEPGAPGIRTGIQGLKGDQGEPGPSGNPGKVGYPGPSGPLGARGIPGIKGTKGSPGNIKDQPRPAFSAIRRNPPMGGNVVIFDTVITNQEEPYQNHSGRFVCTVPGYYYFTFQVLSQWEICLSIVSSSRGQVRRSLGFCDTTNKGLFQVVSGGMVLQLQQGDQVWVEKDPKKGHIYQGSEADSVFSGFLIFPSA",
-      "type": {
-        "id": "MI:0326",
-        "name": "protein"
-      }
+      "label": "c1qb_human"
     },
     {
+      "object": "interactor",
       "id": "uniprotkb_P02747",
-      "identifier": {
-        "db": "uniprotkb",
-        "id": "P02747"
-      },
-      "label": "c1qc_human",
-      "object": "interactor",
-      "organism": {
-        "common": "human",
-        "scientific": "Homo sapiens",
-        "taxid": "9606"
-      },
       "sequence": "MDVGPSSLPHLGLKLLLLLLLLPLRGQANTGCYGIPGMPGLPGAPGKDGYDGLPGPKGEPGIPAIPGIRGPKGQKGEPGLPGHPGKNGPMGPPGMPGVPGPMGIPGEPGEEGRYKQKFQSVFTVTRQTHQPPAPNSLIRFNAVLTNPQGDYDTSTGKFTCKVPGLYYFVYHASHTANLCVLLYRSGVKVVTFCGHTSKTNQVNSGGVLLRLQVGEEVWLAVNDYYDMVGIQGSDSVFSGFLLFPD",
       "type": {
         "id": "MI:0326",
         "name": "protein"
-      }
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P02747"
+      },
+      "label": "c1qc_human"
     },
     {
+      "object": "interactor",
+      "id": "uniprotkb_P02745",
+      "sequence": "MEGPRGWLVLCVLAISLASMVTEDLCRAPDGKKGEAGRPGRRGRPGLKGEQGEPGAPGIRTGIQGLKGDQGEPGPSGNPGKVGYPGPSGPLGARGIPGIKGTKGSPGNIKDQPRPAFSAIRRNPPMGGNVVIFDTVITNQEEPYQNHSGRFVCTVPGYYYFTFQVLSQWEICLSIVSSSRGQVRRSLGFCDTTNKGLFQVVSGGMVLQLQQGDQVWVEKDPKKGHIYQGSEADSVFSGFLIFPSA",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P02745"
+      },
+      "label": "c1qa_human"
+    },
+    {
+      "object": "interaction",
+      "id": "complex portal_CPX-1919",
+      "interactionType": {
+        "id": "MI:0915",
+        "name": "physical association"
+      },
       "complexType": {
         "id": "MI:1302",
         "name": "stable complex"
@@ -104,20 +72,12 @@
         "id": "ECO:0000353",
         "name": "physical interaction evidence used in manual assertion"
       },
-      "id": "complex portal_CPX-1919",
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
       "identifiers": [
-        {
-          "db": "matrixdb",
-          "id": "MULT_82_human"
-        },
-        {
-          "db": "reactome",
-          "id": "R-HSA-173579"
-        },
-        {
-          "db": "wwpdb",
-          "id": "1PK6"
-        },
         {
           "db": "wwpdb",
           "id": "2wnv"
@@ -135,10 +95,6 @@
           "id": "2wnu"
         },
         {
-          "db": "omim",
-          "id": "OMIM:613652"
-        },
-        {
           "db": "reactome",
           "id": "R-HSA-173588"
         },
@@ -147,926 +103,1016 @@
           "id": "CPX-1919"
         },
         {
+          "db": "matrixdb",
+          "id": "MULT_82_human"
+        },
+        {
+          "db": "reactome",
+          "id": "R-HSA-173579"
+        },
+        {
+          "db": "wwpdb",
+          "id": "1PK6"
+        },
+        {
           "db": "intact",
           "id": "EBI-6264901"
         }
       ],
-      "interactionType": {
-        "id": "MI:0915",
-        "name": "physical association"
-      },
-      "object": "interaction",
-      "organism": {
-        "common": "human",
-        "scientific": "Homo sapiens",
-        "taxid": "9606"
-      },
       "participants": [
         {
+          "id": "1",
+          "interactorRef": "uniprotkb_P02746",
+          "stoichiometry": "1",
           "bioRole": {
             "id": "MI:0499",
             "name": "unspecified role"
           },
           "features": [
             {
-              "category": "bindingSites",
               "id": "2",
-              "linkedFeatures": [
-                "3"
-              ],
               "name": "cys-31",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02746",
-                  "participantRef": "1",
-                  "pos": "31-31"
-                }
-              ],
+              "category": "otherFeatures",
               "type": {
                 "id": "MI:1125",
                 "name": "direct binding region"
-              }
+              },
+              "sequenceData": [
+                {
+                  "pos": "31-31",
+                  "interactorRef": "uniprotkb_P02746",
+                  "participantRef": "1"
+                }
+              ],
+              "linkedFeatures": [
+                "3"
+              ]
             },
             {
-              "category": "bindingSites",
               "id": "4",
+              "name": "c1qac binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "118-253",
+                  "interactorRef": "uniprotkb_P02746",
+                  "participantRef": "1"
+                }
+              ],
               "linkedFeatures": [
                 "5",
                 "6"
-              ],
-              "name": "c1qac binding region",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02746",
-                  "participantRef": "1",
-                  "pos": "118-253"
-                }
-              ],
-              "type": {
-                "id": "MI:0117",
-                "name": "binding-associated region"
-              }
+              ]
             }
-          ],
-          "id": "1",
-          "interactorRef": "uniprotkb_P02746",
-          "stoichiometry": "1"
+          ]
         },
         {
+          "id": "7",
+          "interactorRef": "uniprotkb_P02747",
+          "stoichiometry": "1",
           "bioRole": {
             "id": "MI:0499",
             "name": "unspecified role"
           },
           "features": [
             {
+              "id": "5",
+              "name": "c1ab binding region",
               "category": "bindingSites",
-              "id": "3",
-              "linkedFeatures": [
-                "2"
-              ],
-              "name": "cys-26",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
               "sequenceData": [
                 {
-                  "interactorRef": "uniprotkb_P02745",
-                  "participantRef": "7",
-                  "pos": "26-26"
+                  "pos": "115-245",
+                  "interactorRef": "uniprotkb_P02747",
+                  "participantRef": "7"
                 }
               ],
+              "linkedFeatures": [
+                "6",
+                "4",
+                "6"
+              ]
+            },
+            {
+              "id": "8",
+              "name": "cys-32",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "32-32",
+                  "interactorRef": "uniprotkb_P02747",
+                  "participantRef": "7"
+                }
+              ],
+              "linkedFeatures": [
+                "9",
+                "10"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "11",
+          "interactorRef": "uniprotkb_P02745",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "3",
+              "name": "cys-26",
+              "category": "otherFeatures",
               "type": {
                 "id": "MI:1125",
                 "name": "direct binding region"
-              }
-            },
-            {
-              "category": "bindingSites",
-              "id": "5",
-              "linkedFeatures": [
-                "4",
-                "6"
-              ],
-              "name": "c1qbc binding region",
+              },
               "sequenceData": [
                 {
+                  "pos": "26-26",
                   "interactorRef": "uniprotkb_P02745",
-                  "participantRef": "7",
-                  "pos": "112-245"
+                  "participantRef": "11"
                 }
               ],
-              "type": {
-                "id": "MI:0117",
-                "name": "binding-associated region"
-              }
-            }
-          ],
-          "id": "7",
-          "interactorRef": "uniprotkb_P02745",
-          "stoichiometry": "1"
-        },
-        {
-          "bioRole": {
-            "id": "MI:0499",
-            "name": "unspecified role"
-          },
-          "features": [
-            {
-              "category": "bindingSites",
-              "id": "6",
               "linkedFeatures": [
-                "4",
-                "5"
-              ],
-              "name": "c1ab binding region",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02747",
-                  "participantRef": "8",
-                  "pos": "115-245"
-                }
-              ],
-              "type": {
-                "id": "MI:0117",
-                "name": "binding-associated region"
-              }
+                "2"
+              ]
             },
             {
+              "id": "6",
+              "name": "c1qbc binding region",
               "category": "bindingSites",
-              "id": "9",
-              "linkedFeatures": [
-                "10",
-                "11"
-              ],
-              "name": "cys-32",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02747",
-                  "participantRef": "8",
-                  "pos": "32-32"
-                }
-              ],
               "type": {
                 "id": "MI:0117",
                 "name": "binding-associated region"
-              }
+              },
+              "sequenceData": [
+                {
+                  "pos": "112-245",
+                  "interactorRef": "uniprotkb_P02745",
+                  "participantRef": "11"
+                }
+              ],
+              "linkedFeatures": [
+                "5",
+                "5",
+                "4"
+              ]
             }
-          ],
-          "id": "8",
-          "interactorRef": "uniprotkb_P02747",
-          "stoichiometry": "1"
+          ]
         },
         {
+          "id": "12",
+          "interactorRef": "uniprotkb_P02747",
+          "stoichiometry": "1",
           "bioRole": {
             "id": "MI:0499",
             "name": "unspecified role"
           },
           "features": [
             {
-              "category": "bindingSites",
               "id": "13",
+              "name": "c1ab binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "115-245",
+                  "interactorRef": "uniprotkb_P02747",
+                  "participantRef": "12"
+                }
+              ],
               "linkedFeatures": [
                 "14",
                 "15"
-              ],
-              "name": "c1ab binding region",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02747",
-                  "participantRef": "12",
-                  "pos": "115-245"
-                }
-              ],
-              "type": {
-                "id": "MI:0117",
-                "name": "binding-associated region"
-              }
+              ]
             },
             {
-              "category": "bindingSites",
-              "id": "10",
-              "linkedFeatures": [
-                "9",
-                "16"
-              ],
+              "id": "9",
               "name": "cys-32",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02747",
-                  "participantRef": "12",
-                  "pos": "32-32"
-                }
-              ],
+              "category": "bindingSites",
               "type": {
                 "id": "MI:0117",
                 "name": "binding-associated region"
-              }
+              },
+              "sequenceData": [
+                {
+                  "pos": "32-32",
+                  "interactorRef": "uniprotkb_P02747",
+                  "participantRef": "12"
+                }
+              ],
+              "linkedFeatures": [
+                "16",
+                "8"
+              ]
             }
-          ],
-          "id": "12",
-          "interactorRef": "uniprotkb_P02747",
-          "stoichiometry": "1"
+          ]
         },
         {
+          "id": "17",
+          "interactorRef": "uniprotkb_P02746",
+          "stoichiometry": "1",
           "bioRole": {
             "id": "MI:0499",
             "name": "unspecified role"
           },
           "features": [
             {
-              "category": "bindingSites",
               "id": "18",
+              "name": "cys-31",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:1125",
+                "name": "direct binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "31-31",
+                  "interactorRef": "uniprotkb_P02746",
+                  "participantRef": "17"
+                }
+              ],
               "linkedFeatures": [
                 "19"
-              ],
-              "name": "cys-26",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02745",
-                  "participantRef": "17",
-                  "pos": "26-26"
-                }
-              ],
-              "type": {
-                "id": "MI:1125",
-                "name": "direct binding region"
-              }
+              ]
             },
             {
+              "id": "14",
+              "name": "c1qac binding region",
               "category": "bindingSites",
-              "id": "15",
-              "linkedFeatures": [
-                "14",
-                "13"
-              ],
-              "name": "c1qbc binding region",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02745",
-                  "participantRef": "17",
-                  "pos": "112-245"
-                }
-              ],
               "type": {
                 "id": "MI:0117",
                 "name": "binding-associated region"
-              }
-            }
-          ],
-          "id": "17",
-          "interactorRef": "uniprotkb_P02745",
-          "stoichiometry": "1"
-        },
-        {
-          "bioRole": {
-            "id": "MI:0499",
-            "name": "unspecified role"
-          },
-          "features": [
-            {
-              "category": "bindingSites",
-              "id": "19",
-              "linkedFeatures": [
-                "18"
-              ],
-              "name": "cys-31",
+              },
               "sequenceData": [
                 {
+                  "pos": "118-253",
                   "interactorRef": "uniprotkb_P02746",
-                  "participantRef": "20",
-                  "pos": "31-31"
+                  "participantRef": "17"
                 }
               ],
-              "type": {
-                "id": "MI:1125",
-                "name": "direct binding region"
-              }
-            },
-            {
-              "category": "bindingSites",
-              "id": "14",
               "linkedFeatures": [
                 "15",
                 "13"
-              ],
-              "name": "c1qac binding region",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02746",
-                  "participantRef": "20",
-                  "pos": "118-253"
-                }
-              ],
-              "type": {
-                "id": "MI:0117",
-                "name": "binding-associated region"
-              }
+              ]
             }
-          ],
+          ]
+        },
+        {
           "id": "20",
-          "interactorRef": "uniprotkb_P02746",
-          "stoichiometry": "1"
-        },
-        {
+          "interactorRef": "uniprotkb_P02745",
+          "stoichiometry": "1",
           "bioRole": {
             "id": "MI:0499",
             "name": "unspecified role"
           },
           "features": [
             {
-              "category": "bindingSites",
-              "id": "22",
+              "id": "19",
               "name": "cys-26",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02745",
-                  "participantRef": "21",
-                  "pos": "26-26"
-                }
-              ],
+              "category": "otherFeatures",
               "type": {
                 "id": "MI:1125",
                 "name": "direct binding region"
-              }
-            },
-            {
-              "category": "bindingSites",
-              "id": "23",
-              "linkedFeatures": [
-                "24",
-                "25"
-              ],
-              "name": "c1qbc binding region",
+              },
               "sequenceData": [
                 {
+                  "pos": "26-26",
                   "interactorRef": "uniprotkb_P02745",
-                  "participantRef": "21",
-                  "pos": "112-245"
+                  "participantRef": "20"
                 }
               ],
+              "linkedFeatures": [
+                "18"
+              ]
+            },
+            {
+              "id": "15",
+              "name": "c1qbc binding region",
+              "category": "bindingSites",
               "type": {
                 "id": "MI:0117",
                 "name": "binding-associated region"
-              }
+              },
+              "sequenceData": [
+                {
+                  "pos": "112-245",
+                  "interactorRef": "uniprotkb_P02745",
+                  "participantRef": "20"
+                }
+              ],
+              "linkedFeatures": [
+                "14",
+                "13"
+              ]
             }
-          ],
+          ]
+        },
+        {
           "id": "21",
-          "interactorRef": "uniprotkb_P02745",
-          "stoichiometry": "1"
-        },
-        {
-          "bioRole": {
-            "id": "MI:0499",
-            "name": "unspecified role"
-          },
-          "features": [
-            {
-              "category": "bindingSites",
-              "id": "27",
-              "linkedFeatures": [
-                "28"
-              ],
-              "name": "cys-26",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02745",
-                  "participantRef": "26",
-                  "pos": "26-26"
-                }
-              ],
-              "type": {
-                "id": "MI:1125",
-                "name": "direct binding region"
-              }
-            },
-            {
-              "category": "bindingSites",
-              "id": "29",
-              "linkedFeatures": [
-                "30",
-                "31"
-              ],
-              "name": "c1qbc binding region",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02745",
-                  "participantRef": "26",
-                  "pos": "112-245"
-                }
-              ],
-              "type": {
-                "id": "MI:0117",
-                "name": "binding-associated region"
-              }
-            }
-          ],
-          "id": "26",
-          "interactorRef": "uniprotkb_P02745",
-          "stoichiometry": "1"
-        },
-        {
-          "bioRole": {
-            "id": "MI:0499",
-            "name": "unspecified role"
-          },
-          "features": [
-            {
-              "category": "bindingSites",
-              "id": "30",
-              "linkedFeatures": [
-                "29",
-                "31"
-              ],
-              "name": "c1qac binding region",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02746",
-                  "participantRef": "32",
-                  "pos": "118-253"
-                }
-              ],
-              "type": {
-                "id": "MI:0117",
-                "name": "binding-associated region"
-              }
-            },
-            {
-              "category": "bindingSites",
-              "id": "28",
-              "linkedFeatures": [
-                "27"
-              ],
-              "name": "cys-31",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02746",
-                  "participantRef": "32",
-                  "pos": "31-31"
-                }
-              ],
-              "type": {
-                "id": "MI:1125",
-                "name": "direct binding region"
-              }
-            }
-          ],
-          "id": "32",
-          "interactorRef": "uniprotkb_P02746",
-          "stoichiometry": "1"
-        },
-        {
-          "bioRole": {
-            "id": "MI:0499",
-            "name": "unspecified role"
-          },
-          "features": [
-            {
-              "category": "bindingSites",
-              "id": "31",
-              "linkedFeatures": [
-                "30",
-                "29"
-              ],
-              "name": "c1ab binding region",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02747",
-                  "participantRef": "33",
-                  "pos": "115-245"
-                }
-              ],
-              "type": {
-                "id": "MI:0117",
-                "name": "binding-associated region"
-              }
-            },
-            {
-              "category": "bindingSites",
-              "id": "11",
-              "linkedFeatures": [
-                "34",
-                "9"
-              ],
-              "name": "cys-32",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02747",
-                  "participantRef": "33",
-                  "pos": "32-32"
-                }
-              ],
-              "type": {
-                "id": "MI:0117",
-                "name": "binding-associated region"
-              }
-            }
-          ],
-          "id": "33",
           "interactorRef": "uniprotkb_P02747",
-          "stoichiometry": "1"
-        },
-        {
+          "stoichiometry": "1",
           "bioRole": {
             "id": "MI:0499",
             "name": "unspecified role"
           },
           "features": [
             {
+              "id": "22",
+              "name": "c1ab binding region",
               "category": "bindingSites",
-              "id": "36",
-              "name": "cys-31",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
               "sequenceData": [
                 {
-                  "interactorRef": "uniprotkb_P02746",
-                  "participantRef": "35",
-                  "pos": "31-31"
+                  "pos": "115-245",
+                  "interactorRef": "uniprotkb_P02747",
+                  "participantRef": "21"
                 }
               ],
-              "type": {
-                "id": "MI:1125",
-                "name": "direct binding region"
-              }
-            },
-            {
-              "category": "bindingSites",
-              "id": "24",
               "linkedFeatures": [
                 "23",
-                "25"
-              ],
-              "name": "c1qac binding region",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02746",
-                  "participantRef": "35",
-                  "pos": "118-253"
-                }
-              ],
-              "type": {
-                "id": "MI:0117",
-                "name": "binding-associated region"
-              }
-            }
-          ],
-          "id": "35",
-          "interactorRef": "uniprotkb_P02746",
-          "stoichiometry": "1"
-        },
-        {
-          "bioRole": {
-            "id": "MI:0499",
-            "name": "unspecified role"
-          },
-          "features": [
-            {
-              "category": "bindingSites",
-              "id": "25",
-              "linkedFeatures": [
-                "24",
-                "23"
-              ],
-              "name": "c1ab binding region",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02747",
-                  "participantRef": "37",
-                  "pos": "115-245"
-                }
-              ],
-              "type": {
-                "id": "MI:0117",
-                "name": "binding-associated region"
-              }
+                "24"
+              ]
             },
             {
-              "category": "bindingSites",
               "id": "16",
-              "linkedFeatures": [
-                "10",
-                "38"
-              ],
               "name": "cys-32",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02747",
-                  "participantRef": "37",
-                  "pos": "32-32"
-                }
-              ],
+              "category": "bindingSites",
               "type": {
                 "id": "MI:0117",
                 "name": "binding-associated region"
-              }
+              },
+              "sequenceData": [
+                {
+                  "pos": "32-32",
+                  "interactorRef": "uniprotkb_P02747",
+                  "participantRef": "21"
+                }
+              ],
+              "linkedFeatures": [
+                "25",
+                "9"
+              ]
             }
-          ],
-          "id": "37",
-          "interactorRef": "uniprotkb_P02747",
-          "stoichiometry": "1"
+          ]
         },
         {
+          "id": "26",
+          "interactorRef": "uniprotkb_P02746",
+          "stoichiometry": "1",
           "bioRole": {
             "id": "MI:0499",
             "name": "unspecified role"
           },
           "features": [
             {
-              "category": "bindingSites",
-              "id": "40",
-              "linkedFeatures": [
-                "41"
-              ],
-              "name": "cys-26",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02745",
-                  "participantRef": "39",
-                  "pos": "26-26"
-                }
-              ],
+              "id": "27",
+              "name": "cys-31",
+              "category": "otherFeatures",
               "type": {
                 "id": "MI:1125",
                 "name": "direct binding region"
-              }
+              },
+              "sequenceData": [
+                {
+                  "pos": "31-31",
+                  "interactorRef": "uniprotkb_P02746",
+                  "participantRef": "26"
+                }
+              ],
+              "linkedFeatures": [
+                "28"
+              ]
             },
             {
+              "id": "23",
+              "name": "c1qac binding region",
               "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "118-253",
+                  "interactorRef": "uniprotkb_P02746",
+                  "participantRef": "26"
+                }
+              ],
+              "linkedFeatures": [
+                "24",
+                "22"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "29",
+          "interactorRef": "uniprotkb_P02747",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "30",
+              "name": "c1ab binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "115-245",
+                  "interactorRef": "uniprotkb_P02747",
+                  "participantRef": "29"
+                }
+              ],
+              "linkedFeatures": [
+                "31",
+                "32"
+              ]
+            },
+            {
+              "id": "10",
+              "name": "cys-32",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "32-32",
+                  "interactorRef": "uniprotkb_P02747",
+                  "participantRef": "29"
+                }
+              ],
+              "linkedFeatures": [
+                "8",
+                "33"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "34",
+          "interactorRef": "uniprotkb_P02746",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "31",
+              "name": "c1qac binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "118-253",
+                  "interactorRef": "uniprotkb_P02746",
+                  "participantRef": "34"
+                }
+              ],
+              "linkedFeatures": [
+                "32",
+                "30"
+              ]
+            },
+            {
+              "id": "35",
+              "name": "cys-31",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:1125",
+                "name": "direct binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "31-31",
+                  "interactorRef": "uniprotkb_P02746",
+                  "participantRef": "34"
+                }
+              ],
+              "linkedFeatures": [
+                "36"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "37",
+          "interactorRef": "uniprotkb_P02745",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "36",
+              "name": "cys-26",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:1125",
+                "name": "direct binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "26-26",
+                  "interactorRef": "uniprotkb_P02745",
+                  "participantRef": "37"
+                }
+              ],
+              "linkedFeatures": [
+                "35"
+              ]
+            },
+            {
+              "id": "32",
+              "name": "c1qbc binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "112-245",
+                  "interactorRef": "uniprotkb_P02745",
+                  "participantRef": "37"
+                }
+              ],
+              "linkedFeatures": [
+                "31",
+                "30"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "38",
+          "interactorRef": "uniprotkb_P02745",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "28",
+              "name": "cys-26",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:1125",
+                "name": "direct binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "26-26",
+                  "interactorRef": "uniprotkb_P02745",
+                  "participantRef": "38"
+                }
+              ],
+              "linkedFeatures": [
+                "27"
+              ]
+            },
+            {
+              "id": "24",
+              "name": "c1qbc binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "112-245",
+                  "interactorRef": "uniprotkb_P02745",
+                  "participantRef": "38"
+                }
+              ],
+              "linkedFeatures": [
+                "23",
+                "22"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "39",
+          "interactorRef": "uniprotkb_P02746",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "40",
+              "name": "cys-31",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:1125",
+                "name": "direct binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "31-31",
+                  "interactorRef": "uniprotkb_P02746",
+                  "participantRef": "39"
+                }
+              ],
+              "linkedFeatures": [
+                "41"
+              ]
+            },
+            {
               "id": "42",
+              "name": "c1qac binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "118-253",
+                  "interactorRef": "uniprotkb_P02746",
+                  "participantRef": "39"
+                }
+              ],
               "linkedFeatures": [
                 "43",
                 "44"
-              ],
-              "name": "c1qbc binding region",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02745",
-                  "participantRef": "39",
-                  "pos": "112-245"
-                }
-              ],
-              "type": {
-                "id": "MI:0117",
-                "name": "binding-associated region"
-              }
+              ]
             }
-          ],
-          "id": "39",
-          "interactorRef": "uniprotkb_P02745",
-          "stoichiometry": "1"
+          ]
         },
         {
+          "id": "45",
+          "interactorRef": "uniprotkb_P02745",
+          "stoichiometry": "1",
           "bioRole": {
             "id": "MI:0499",
             "name": "unspecified role"
           },
           "features": [
             {
-              "category": "bindingSites",
               "id": "41",
-              "linkedFeatures": [
-                "40"
-              ],
-              "name": "cys-31",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02746",
-                  "participantRef": "45",
-                  "pos": "31-31"
-                }
-              ],
+              "name": "cys-26",
+              "category": "otherFeatures",
               "type": {
                 "id": "MI:1125",
                 "name": "direct binding region"
-              }
+              },
+              "sequenceData": [
+                {
+                  "pos": "26-26",
+                  "interactorRef": "uniprotkb_P02745",
+                  "participantRef": "45"
+                }
+              ],
+              "linkedFeatures": [
+                "40"
+              ]
             },
             {
-              "category": "bindingSites",
               "id": "43",
+              "name": "c1qbc binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "112-245",
+                  "interactorRef": "uniprotkb_P02745",
+                  "participantRef": "45"
+                }
+              ],
               "linkedFeatures": [
                 "42",
                 "44"
-              ],
-              "name": "c1qac binding region",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02746",
-                  "participantRef": "45",
-                  "pos": "118-253"
-                }
-              ],
-              "type": {
-                "id": "MI:0117",
-                "name": "binding-associated region"
-              }
+              ]
             }
-          ],
-          "id": "45",
-          "interactorRef": "uniprotkb_P02746",
-          "stoichiometry": "1"
+          ]
         },
         {
-          "bioRole": {
-            "id": "MI:0499",
-            "name": "unspecified role"
-          },
-          "features": [
-            {
-              "category": "bindingSites",
-              "id": "44",
-              "linkedFeatures": [
-                "43",
-                "42"
-              ],
-              "name": "c1ab binding region",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02747",
-                  "participantRef": "46",
-                  "pos": "115-245"
-                }
-              ],
-              "type": {
-                "id": "MI:0117",
-                "name": "binding-associated region"
-              }
-            },
-            {
-              "category": "bindingSites",
-              "id": "38",
-              "linkedFeatures": [
-                "16",
-                "34"
-              ],
-              "name": "cys-32",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02747",
-                  "participantRef": "46",
-                  "pos": "32-32"
-                }
-              ],
-              "type": {
-                "id": "MI:0117",
-                "name": "binding-associated region"
-              }
-            }
-          ],
           "id": "46",
           "interactorRef": "uniprotkb_P02747",
-          "stoichiometry": "1"
-        },
-        {
+          "stoichiometry": "1",
           "bioRole": {
             "id": "MI:0499",
             "name": "unspecified role"
           },
           "features": [
             {
-              "category": "bindingSites",
-              "id": "48",
-              "linkedFeatures": [
-                "49"
-              ],
-              "name": "cys-26",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02745",
-                  "participantRef": "47",
-                  "pos": "26-26"
-                }
-              ],
-              "type": {
-                "id": "MI:1125",
-                "name": "direct binding region"
-              }
-            },
-            {
-              "category": "bindingSites",
-              "id": "50",
-              "linkedFeatures": [
-                "51",
-                "51",
-                "52"
-              ],
-              "name": "c1qbc binding region",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02745",
-                  "participantRef": "47",
-                  "pos": "112-245"
-                }
-              ],
-              "type": {
-                "id": "MI:0117",
-                "name": "binding-associated region"
-              }
-            }
-          ],
-          "id": "47",
-          "interactorRef": "uniprotkb_P02745",
-          "stoichiometry": "1"
-        },
-        {
-          "bioRole": {
-            "id": "MI:0499",
-            "name": "unspecified role"
-          },
-          "features": [
-            {
-              "category": "bindingSites",
-              "id": "51",
-              "linkedFeatures": [
-                "50",
-                "52",
-                "50"
-              ],
+              "id": "44",
               "name": "c1ab binding region",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02747",
-                  "participantRef": "53",
-                  "pos": "115-245"
-                }
-              ],
+              "category": "bindingSites",
               "type": {
                 "id": "MI:0117",
                 "name": "binding-associated region"
-              }
+              },
+              "sequenceData": [
+                {
+                  "pos": "115-245",
+                  "interactorRef": "uniprotkb_P02747",
+                  "participantRef": "46"
+                }
+              ],
+              "linkedFeatures": [
+                "42",
+                "43"
+              ]
             },
             {
-              "category": "bindingSites",
-              "id": "34",
-              "linkedFeatures": [
-                "38",
-                "11"
-              ],
+              "id": "25",
               "name": "cys-32",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02747",
-                  "participantRef": "53",
-                  "pos": "32-32"
-                }
-              ],
+              "category": "bindingSites",
               "type": {
                 "id": "MI:0117",
                 "name": "binding-associated region"
-              }
+              },
+              "sequenceData": [
+                {
+                  "pos": "32-32",
+                  "interactorRef": "uniprotkb_P02747",
+                  "participantRef": "46"
+                }
+              ],
+              "linkedFeatures": [
+                "33",
+                "16"
+              ]
             }
-          ],
-          "id": "53",
-          "interactorRef": "uniprotkb_P02747",
-          "stoichiometry": "1"
+          ]
         },
         {
+          "id": "47",
+          "interactorRef": "uniprotkb_P02747",
+          "stoichiometry": "1",
           "bioRole": {
             "id": "MI:0499",
             "name": "unspecified role"
           },
           "features": [
             {
+              "id": "48",
+              "name": "c1ab binding region",
               "category": "bindingSites",
-              "id": "49",
-              "linkedFeatures": [
-                "48"
-              ],
-              "name": "cys-31",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02746",
-                  "participantRef": "54",
-                  "pos": "31-31"
-                }
-              ],
-              "type": {
-                "id": "MI:1125",
-                "name": "direct binding region"
-              }
-            },
-            {
-              "category": "bindingSites",
-              "id": "52",
-              "linkedFeatures": [
-                "51",
-                "50"
-              ],
-              "name": "c1qac binding region",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P02746",
-                  "participantRef": "54",
-                  "pos": "118-253"
-                }
-              ],
               "type": {
                 "id": "MI:0117",
                 "name": "binding-associated region"
-              }
+              },
+              "sequenceData": [
+                {
+                  "pos": "115-245",
+                  "interactorRef": "uniprotkb_P02747",
+                  "participantRef": "47"
+                }
+              ],
+              "linkedFeatures": [
+                "49",
+                "50"
+              ]
+            },
+            {
+              "id": "33",
+              "name": "cys-32",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "32-32",
+                  "interactorRef": "uniprotkb_P02747",
+                  "participantRef": "47"
+                }
+              ],
+              "linkedFeatures": [
+                "25",
+                "10"
+              ]
             }
-          ],
+          ]
+        },
+        {
+          "id": "51",
+          "interactorRef": "uniprotkb_P02745",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "52",
+              "name": "cys-26",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:1125",
+                "name": "direct binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "26-26",
+                  "interactorRef": "uniprotkb_P02745",
+                  "participantRef": "51"
+                }
+              ],
+              "linkedFeatures": [
+                "53"
+              ]
+            },
+            {
+              "id": "50",
+              "name": "c1qbc binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "112-245",
+                  "interactorRef": "uniprotkb_P02745",
+                  "participantRef": "51"
+                }
+              ],
+              "linkedFeatures": [
+                "49",
+                "48"
+              ]
+            }
+          ]
+        },
+        {
           "id": "54",
           "interactorRef": "uniprotkb_P02746",
-          "stoichiometry": "1"
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "53",
+              "name": "cys-31",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:1125",
+                "name": "direct binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "31-31",
+                  "interactorRef": "uniprotkb_P02746",
+                  "participantRef": "54"
+                }
+              ],
+              "linkedFeatures": [
+                "52"
+              ]
+            },
+            {
+              "id": "49",
+              "name": "c1qac binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "118-253",
+                  "interactorRef": "uniprotkb_P02746",
+                  "participantRef": "54"
+                }
+              ],
+              "linkedFeatures": [
+                "50",
+                "48"
+              ]
+            }
+          ]
         }
       ]
     },
     {
+      "object": "interactor",
+      "id": "uniprotkb_P09871-PRO_0000027588",
+      "sequence": "IIGGSDADIKNFPWQVFFDNPWAGGALINEYWVLTAAHVVEGNREPTMYVGSTSVQTSRLAKSKMLTPEHVFIHPGWKLLEVPEGRTNFDNDIALVRLKDPVKMGPTVSPICLPGTSSDYNLMDGDLGLISGWGRTEKRDRAVRLKAARLPVAPLRKCKEVKVEKPTADAEAYVFTPNMICAGGEKGMDSCKGDSGGAFAVQDPNDKTKFYAAGLVSWGPQCGTYGLYTRVKNYVDWIMKTMQENSTPRED",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P09871-PRO_0000027588"
+      },
+      "label": "p09871-pro_0000027588"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P00736-PRO_0000027579",
+      "sequence": "IIGGQKAKMGNFPWQVFTNIHGRGGGALLGDRWILTAAHTLYPKEHEAQSNASLDVFLGHTNVEELMKLGNHPIRRVSVHPDYRQDESYNFEGDIALLELENSVTLGPNLLPICLPDNDTFYDLGLMGYVSGFGVMEEKIAHDLRFVRLPVANPQACENWLRGKNRMDVFSQNMFCAGHPSLKQDACQGDSGGVFAVRDPNTDRWVATGIVSWGIGCSRGYGFYTKVLNYVDWIKKEMEEED",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P00736-PRO_0000027579"
+      },
+      "label": "p00736-pro_0000027579"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P09871-PRO_0000027587",
+      "sequence": "EPTMYGEILSPNYPQAYPSEVEKSWDIEVPEGYGIHLYFTHLDIELSENCAYDSVQIISGDTEEGRLCGQRSSNNPHSPIVEEFQVPYNKLQVIFKSDFSNEERFTGFAAYYVATDINECTDFVDVPCSHFCNNFIGGYFCSCPPEYFLHDDMKNCGVNCSGDVFTALIGEIASPNYPKPYPENSRCEYQIRLEKGFQVVVTLRREDFDVEAADSAGNCLDSLVFVAGDRQFGPYCGHGFPGPLNIETKSNALDIIFQTDLTGQKKGWKLRYHGDPMPCPKEDTPNSVWEPAKAKYVFRDVVQITCLDGFEVVEGRVGATSFYSTCQSNGKWSNSKLKCQPVDCGIPESIENGKVEDPESTLFGSVIRYTCEEPYYYMENGGGGEYHCAGNGSWVNEVLGPELPKCVPVCGVPREPFEEKQR",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P09871-PRO_0000027587"
+      },
+      "label": "p09871-pro_0000027587"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P00736-PRO_0000027578",
+      "sequence": "SIPIPQKLFGEVTSPLFPKPYPNNFETTTVITVPTGYRVKLVFQQFDLEPSEGCFYDYVKISADKKSLGRFCGQLGSPLGNPPGKKEFMSQGNKMLLTFHTDFSNEENGTIMFYKGFLAYYQAVDLDECASRSKSGEEDPQPQCQHLCHNYVGGYFCSCRPGYELQEDTHSCQAECSSELYTEASGYISSLEYPRSYPPDLRCNYSIRVERGLTLHLKFLEPFDIDDHQQVHCPYDQLQIYANGKNIGEFCGKQRPPDLDTSSNAVDLLFFTDESGDSRGWKLRYTTEIIKCPQPKTLDEFTIIQNLQPQYQFRDYFIATCKQGYQLIEGNQVLHSFTAVCQDDGTWHRAMPRCKIKDCGQPRNLPNGDFRYTTTMGVNTYKARIQYYCHEPYYKMQTRAGSRESEQGVYTCTAQGIWKNEQKGEKIPRCLPVCGKPVNPVEQRQR",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P00736-PRO_0000027578"
+      },
+      "label": "p00736-pro_0000027578"
+    },
+    {
+      "object": "interaction",
+      "id": "complex portal_CPX-1920",
+      "interactionType": {
+        "id": "MI:0915",
+        "name": "physical association"
+      },
       "complexType": {
         "id": "MI:1302",
         "name": "stable complex"
@@ -1075,7 +1121,11 @@
         "id": "ECO:0005547",
         "name": "biological system reconstruction evidence based on inference from background scientific knowledge used in manual assertion"
       },
-      "id": "complex portal_CPX-1920",
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
       "identifiers": [
         {
           "db": "complex portal",
@@ -1102,265 +1152,427 @@
           "id": "3.4.21.41"
         },
         {
+          "db": "matrixdb",
+          "id": "MULT_83_human"
+        },
+        {
           "db": "intact",
           "id": "EBI-6269273"
         }
       ],
-      "interactionType": {
-        "id": "MI:0915",
-        "name": "physical association"
-      },
-      "object": "interaction",
-      "organism": {
-        "common": "human",
-        "scientific": "Homo sapiens",
-        "taxid": "9606"
-      },
       "participants": [
         {
-          "bioRole": {
-            "id": "MI:0499",
-            "name": "unspecified role"
-          },
-          "features": [
-            {
-              "category": "bindingSites",
-              "id": "56",
-              "linkedFeatures": [
-                "57"
-              ],
-              "name": "c1q binding region",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P09871",
-                  "participantRef": "55",
-                  "pos": "17-292"
-                }
-              ],
-              "type": {
-                "id": "MI:0117",
-                "name": "binding-associated region"
-              }
-            },
-            {
-              "category": "bindingSites",
-              "id": "58",
-              "linkedFeatures": [
-                "59"
-              ],
-              "name": "c1r binding region",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P09871",
-                  "participantRef": "55",
-                  "pos": "16-292"
-                }
-              ],
-              "type": {
-                "id": "MI:0117",
-                "name": "binding-associated region"
-              }
-            }
-          ],
           "id": "55",
-          "interactorRef": "uniprotkb_P09871",
-          "stoichiometry": "1"
-        },
-        {
+          "interactorRef": "complex portal_CPX-1919",
+          "stoichiometry": "1",
           "bioRole": {
             "id": "MI:0499",
             "name": "unspecified role"
           },
           "features": [
             {
-              "category": "bindingSites",
-              "id": "59",
-              "linkedFeatures": [
-                "58"
-              ],
+              "id": "56",
               "name": "c1s binding region",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P00736",
-                  "participantRef": "60",
-                  "pos": "18-308"
-                }
-              ],
+              "category": "bindingSites",
               "type": {
                 "id": "MI:0117",
                 "name": "binding-associated region"
-              }
-            },
-            {
-              "InterPro": "IPR000436",
-              "category": "bindingSites",
-              "id": "61",
-              "linkedFeatures": [
-                "62"
-              ],
-              "name": "dimerization domain",
+              },
               "sequenceData": [
                 {
-                  "interactorRef": "uniprotkb_P00736",
-                  "participantRef": "60",
-                  "pos": "309-463"
-                }
-              ],
-              "type": {
-                "id": "MI:0117",
-                "name": "binding-associated region"
-              }
-            }
-          ],
-          "id": "60",
-          "interactorRef": "uniprotkb_P00736",
-          "stoichiometry": "1"
-        },
-        {
-          "bioRole": {
-            "id": "MI:0499",
-            "name": "unspecified role"
-          },
-          "features": [
-            {
-              "category": "bindingSites",
-              "id": "64",
-              "linkedFeatures": [
-                "65"
-              ],
-              "name": "c1s binding region",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P00736",
-                  "participantRef": "63",
-                  "pos": "18-308"
-                }
-              ],
-              "type": {
-                "id": "MI:0117",
-                "name": "binding-associated region"
-              }
-            },
-            {
-              "InterPro": "IPR001254",
-              "category": "bindingSites",
-              "id": "62",
-              "linkedFeatures": [
-                "61"
-              ],
-              "name": "dimerization domain",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P00736",
-                  "participantRef": "63",
-                  "pos": "464-705"
-                }
-              ],
-              "type": {
-                "id": "MI:0117",
-                "name": "binding-associated region"
-              }
-            }
-          ],
-          "id": "63",
-          "interactorRef": "uniprotkb_P00736",
-          "stoichiometry": "1"
-        },
-        {
-          "bioRole": {
-            "id": "MI:0499",
-            "name": "unspecified role"
-          },
-          "features": [
-            {
-              "category": "bindingSites",
-              "id": "67",
-              "name": "dimerization region",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P09871",
-                  "participantRef": "66",
-                  "pos": "16-174"
-                }
-              ],
-              "type": {
-                "id": "MI:0442",
-                "name": "sufficient binding region"
-              }
-            },
-            {
-              "category": "bindingSites",
-              "id": "68",
-              "linkedFeatures": [
-                "57"
-              ],
-              "name": "c1q binding region",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P09871",
-                  "participantRef": "66",
-                  "pos": "17-292"
-                }
-              ],
-              "type": {
-                "id": "MI:0117",
-                "name": "binding-associated region"
-              }
-            },
-            {
-              "category": "bindingSites",
-              "id": "65",
-              "linkedFeatures": [
-                "64"
-              ],
-              "name": "c1r binding region",
-              "sequenceData": [
-                {
-                  "interactorRef": "uniprotkb_P09871",
-                  "participantRef": "66",
-                  "pos": "16-292"
-                }
-              ],
-              "type": {
-                "id": "MI:0117",
-                "name": "binding-associated region"
-              }
-            }
-          ],
-          "id": "66",
-          "interactorRef": "uniprotkb_P09871",
-          "stoichiometry": "1"
-        },
-        {
-          "bioRole": {
-            "id": "MI:0499",
-            "name": "unspecified role"
-          },
-          "features": [
-            {
-              "category": "bindingSites",
-              "id": "57",
-              "linkedFeatures": [
-                "56",
-                "68"
-              ],
-              "name": "c1s binding region",
-              "sequenceData": [
-                {
-                  "interactorRef": "complex portal_CPX-1919",
-                  "participantRef": "69",
                   "pos": "?-?"
                 }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "57",
+          "interactorRef": "uniprotkb_P09871-PRO_0000027588",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "features": [
+            {
+              "id": "58",
+              "name": "c1s binding region",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:1090",
+                "name": "bimane label"
+              },
+              "sequenceData": [
+                {
+                  "pos": "112-112",
+                  "interactorRef": "uniprotkb_P09871-PRO_0000027588",
+                  "participantRef": "57"
+                }
               ],
+              "linkedFeatures": [
+                "59"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "60",
+          "interactorRef": "uniprotkb_P09871-PRO_0000027588",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "features": [
+            {
+              "id": "61",
+              "name": "c1s binding region",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:1090",
+                "name": "bimane label"
+              },
+              "sequenceData": [
+                {
+                  "pos": "112-112",
+                  "interactorRef": "uniprotkb_P09871-PRO_0000027588",
+                  "participantRef": "60"
+                }
+              ],
+              "linkedFeatures": [
+                "62"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "63",
+          "interactorRef": "uniprotkb_P00736-PRO_0000027579",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "features": [
+            {
+              "id": "64",
+              "name": "c1r binding region",
+              "category": "bindingSites",
               "type": {
                 "id": "MI:0117",
                 "name": "binding-associated region"
-              }
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P00736-PRO_0000027579",
+                  "participantRef": "63"
+                }
+              ],
+              "linkedFeatures": [
+                "65"
+              ]
+            },
+            {
+              "id": "66",
+              "name": "c1r binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "114-114",
+                  "interactorRef": "uniprotkb_P00736-PRO_0000027579",
+                  "participantRef": "63"
+                }
+              ],
+              "linkedFeatures": [
+                "67"
+              ]
             }
-          ],
-          "id": "69",
-          "interactorRef": "complex portal_CPX-1919",
-          "stoichiometry": "1"
+          ]
+        },
+        {
+          "id": "68",
+          "interactorRef": "uniprotkb_P00736-PRO_0000027579",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "features": [
+            {
+              "id": "65",
+              "name": "c1r binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P00736-PRO_0000027579",
+                  "participantRef": "68"
+                }
+              ],
+              "linkedFeatures": [
+                "64"
+              ]
+            },
+            {
+              "id": "69",
+              "name": "c1r binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "114-114",
+                  "interactorRef": "uniprotkb_P00736-PRO_0000027579",
+                  "participantRef": "68"
+                }
+              ],
+              "linkedFeatures": [
+                "70"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "71",
+          "interactorRef": "uniprotkb_P09871-PRO_0000027587",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "72",
+              "name": "c1q binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-277",
+                  "interactorRef": "uniprotkb_P09871-PRO_0000027587",
+                  "participantRef": "71"
+                }
+              ]
+            },
+            {
+              "id": "62",
+              "name": "c1s binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "410-410",
+                  "interactorRef": "uniprotkb_P09871-PRO_0000027587",
+                  "participantRef": "71"
+                }
+              ],
+              "linkedFeatures": [
+                "61"
+              ]
+            },
+            {
+              "id": "73",
+              "name": "c1r binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-277",
+                  "interactorRef": "uniprotkb_P09871-PRO_0000027587",
+                  "participantRef": "71"
+                }
+              ],
+              "linkedFeatures": [
+                "74"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "75",
+          "interactorRef": "uniprotkb_P00736-PRO_0000027578",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "74",
+              "name": "c1s binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P00736-PRO_0000027578",
+                  "participantRef": "75"
+                }
+              ],
+              "linkedFeatures": [
+                "73"
+              ]
+            },
+            {
+              "id": "70",
+              "name": "c1r binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "434-434",
+                  "interactorRef": "uniprotkb_P00736-PRO_0000027578",
+                  "participantRef": "75"
+                }
+              ],
+              "linkedFeatures": [
+                "69"
+              ],
+              "InterPro": "IPR001254"
+            }
+          ]
+        },
+        {
+          "id": "76",
+          "interactorRef": "uniprotkb_P00736-PRO_0000027578",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "77",
+              "name": "c1s binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P00736-PRO_0000027578",
+                  "participantRef": "76"
+                }
+              ],
+              "linkedFeatures": [
+                "78"
+              ]
+            },
+            {
+              "id": "67",
+              "name": "c1r binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "434-434",
+                  "interactorRef": "uniprotkb_P00736-PRO_0000027578",
+                  "participantRef": "76"
+                }
+              ],
+              "linkedFeatures": [
+                "66"
+              ],
+              "InterPro": "IPR000436"
+            }
+          ]
+        },
+        {
+          "id": "79",
+          "interactorRef": "uniprotkb_P09871-PRO_0000027587",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "80",
+              "name": "c1q binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-277",
+                  "interactorRef": "uniprotkb_P09871-PRO_0000027587",
+                  "participantRef": "79"
+                }
+              ]
+            },
+            {
+              "id": "59",
+              "name": "c1s binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "410-410",
+                  "interactorRef": "uniprotkb_P09871-PRO_0000027587",
+                  "participantRef": "79"
+                }
+              ],
+              "linkedFeatures": [
+                "58"
+              ]
+            },
+            {
+              "id": "78",
+              "name": "c1r binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-277",
+                  "interactorRef": "uniprotkb_P09871-PRO_0000027587",
+                  "participantRef": "79"
+                }
+              ],
+              "linkedFeatures": [
+                "77"
+              ]
+            }
+          ]
         }
       ]
     }
