@@ -39,10 +39,10 @@ function extractUniprotAccession(id) {
 function getUniProtFeatures(prot, callback) {
     const url = "https://www.ebi.ac.uk/proteins/api/proteins/" + extractUniprotAccession(prot.id);
     d3.json(url, function (json) {
-        let annotations = prot.annotationSets.get("UNIPROTKB");
+        let annotations = prot.annotationSets.get("UniprotKB");
         if (typeof annotations === "undefined") {
             annotations = [];
-            prot.annotationSets.set("UNIPROTKB", annotations);
+            prot.annotationSets.set("UniprotKB", annotations);
         }
         var uniprotJsonFeatures = json.features.filter(function (ft) {
             return ft.type === "DOMAIN";
@@ -60,10 +60,10 @@ function getUniProtFeatures(prot, callback) {
 function getSuperFamFeatures(prot, callback) {
     const url = "https://supfam.mrc-lmb.cam.ac.uk/SUPERFAMILY/cgi-bin/das/up/features?segment=" + extractUniprotAccession(prot.id);
     d3.xml(url, function (xml) {
-        let annotations = prot.annotationSets.get("SUPERFAMILY");
+        let annotations = prot.annotationSets.get("Superfamily");
         if (typeof annotations === "undefined") {
             annotations = [];
-            prot.annotationSets.set("SUPERFAMILY", annotations);
+            prot.annotationSets.set("Superfamily", annotations);
         }
         const xmlDoc = new DOMParser().parseFromString(new XMLSerializer().serializeToString(xml), "text/xml");
         const xmlFeatures = xmlDoc.getElementsByTagName("FEATURE");

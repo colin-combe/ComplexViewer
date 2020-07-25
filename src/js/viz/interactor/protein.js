@@ -89,10 +89,10 @@ export function Protein(id, /*App*/ app, json, name, sequence) {
     this.sequence = sequence.replace(/[^A-Z]/g, "");//remove modification site info from sequence
     this.size = this.sequence.length;
 
-    //annotations indexed by annotation set name ("MIFEATURES", "SUPERFAMILY", etc)
+    //annotations indexed by annotation set name ("MI Features", "Superfamily", etc)
     //this.annotationSets // = new Map(); is declared in Interactor, other types of interactor can have features from MIJSON
 
-    this.annotationSets.set("INTERACTOR", [new Annotation(this.json.label, new SequenceDatum(null, 1 + "-" + this.size))]);
+    this.annotationSets.set("Interactor", [new Annotation(this.json.label, new SequenceDatum(null, 1 + "-" + this.size))]);
 
 }
 

@@ -152,7 +152,7 @@ feature-link {
 }
 
 .tooltip-background {
-    fill-opacity: 0.75;
+    fill-opacity: 0.6;
     stroke-opacity: 1;
     stroke-width: 1;
 }
@@ -162,4 +162,8 @@ feature-link {
     stroke: white;
     opacity: 1;
     stroke-width: 1;
+}
+
+.color-key tr td:first-of-type {
+    width:90px;
 }

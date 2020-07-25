@@ -32,7 +32,7 @@ Interactor.prototype.init = function (id, app, json, name){
 
     //todo - think 'type' should be  a property here (except for complex, can just return json.type.name)
 
-    //annotations indexed by annotation set name ("MIFEATURES", "SUPERFAMILY", etc)
+    //annotations indexed by annotation set name ("MI Features", "Superfamily", etc)
     this.annotationSets = new Map();
     //links
     this.naryLinks = new Map();

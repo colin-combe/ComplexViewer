@@ -193,10 +193,10 @@ export function App(/*HTMLDivElement*/networkDiv) {
     this.svgElement.appendChild(this.tooltip);
 
     this.annotationSetsShown = new Map();
-    this.annotationSetsShown.set("INTERACTOR", false);
-    this.annotationSetsShown.set("MIFEATURES", true);
-    this.annotationSetsShown.set("UNIPROTKB", false);
-    this.annotationSetsShown.set("SUPERFAMILY", false);
+    this.annotationSetsShown.set("Interactor", false);
+    this.annotationSetsShown.set("MI Features", true);
+    this.annotationSetsShown.set("UniprotKB", false);
+    this.annotationSetsShown.set("Superfamily", false);
 
     this.clear();
 }

@@ -527,7 +527,7 @@ Polymer.prototype.updatePositionalFeatures = function () {
 
     for (let [annotationType, annotations] of this.annotationSets) {
         if (this.app.annotationSetsShown.get(annotationType) === true) {
-            if (annotations) {
+            if (annotations && annotations.length > 0) {
                 r++;
                 rungs[r] = [];
             }
