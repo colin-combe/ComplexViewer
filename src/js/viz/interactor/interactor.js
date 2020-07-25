@@ -74,10 +74,10 @@ Interactor.prototype.initListeners = function (){
     this.upperGroup.onmousedown = function (evt) {
         self.mouseDown(evt);
     };
-    this.upperGroup.onmouseover = function (evt) {
+    this.upperGroup.onmouseenter = function (evt) {
         self.mouseOver(evt);
     };
-    this.upperGroup.onmouseout = function (evt) {
+    this.upperGroup.onmouseleave = function (evt) {
         self.mouseOut(evt);
     };
     // this.upperGroup.ontouchstart = function (evt) {
@@ -135,7 +135,7 @@ Interactor.prototype.mouseDown = function (evt) {
 Interactor.prototype.mouseOver = function (evt) {
     this.app.preventDefaultsAndStopPropagation(evt);
     this.showHighlight(true);
-    //~ this.util.setTooltip(this.id);
+    this.app.notifyHoverListeners([this.json.id]);
     return false;
 };
 
@@ -143,6 +143,7 @@ Interactor.prototype.mouseOut = function (evt) {
     this.app.preventDefaultsAndStopPropagation(evt);
     this.showHighlight(false);
     this.app.hideTooltip();
+    this.app.notifyHoverListeners([]);
     return false;
 };
 

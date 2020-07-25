@@ -162,8 +162,7 @@
     const networkTargetDiv = document.getElementById("networkDiv");
     cv = new complexviewer.App(networkTargetDiv);
     cv.addColorSchemeKey(document.getElementById("colors"));
-    //todo - er, use css
-   // cv.svgElement.setAttribute("style", "display: -webkit-box;display: -moz-box;display: -ms-flexbox; display: -webkit-flex;display: flex;flex-grow:1;");
+    cv.addHoverListener(function(interactorIdArr){ console.log("HOVER: ", interactorIdArr);});
 
     for (let example of exampleIndex) {
         const dataSetsSelect = document.getElementById("dataSets");

@@ -121,8 +121,10 @@ export function App(/*HTMLDivElement*/networkDiv) {
         return false; // works with traditional, not with attachEvent or addEventListener
     };
 
-    //legend changed callbacks
+    //updated if legend changed
     this.colorSchemeKeyDivs = new Set();
+    //functions that get interactor id of hover over thing
+    this.hoverListeners = new Set();
 
     this.el.appendChild(this.svgElement);
 
@@ -1007,6 +1009,22 @@ App.prototype.expandAndCollapseSelection = function (moleculesSelected) {
         }
     }
 };
+
+
+App.prototype.addHoverListener = function (hoverListener) {
+    this.hoverListeners.add(hoverListener);
+};
+
+App.prototype.removeHoverListener = function (hoverListener) {
+    this.hoverListeners.remove(hoverListener);
+};
+
+App.prototype.notifyHoverListeners = function (interactorIdArr) {
+    for (let hl of this.hoverListeners) {
+        hl(interactorIdArr)
+    }
+};
+
 
 // export function makeSymbolKey(targetDiv){
 //     new SymbolKey(targetDiv);
