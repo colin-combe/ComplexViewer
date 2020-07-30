@@ -3,6 +3,7 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     padding: 0;
     border: 0;
     font: inherit;
+    /*font-size: 1em;*/
     vertical-align: baseline;
 }
 

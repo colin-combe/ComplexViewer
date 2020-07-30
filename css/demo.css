@@ -9,14 +9,10 @@ body, html {
     left: 0;
     right: 0;
 
-    /*display: -webkit-box;*/
-    /*display: -moz-box;*/
-    /*display: -ms-flexbox;*/
-    /*display: -webkit-flex;*/
     display: flex;
     flex-direction: column;
 
-    min-height: 0; /* NEW these are needed */
+    min-height: 0; /* NEW these are needed, i'm not sure exactly when or why */
     min-width: 0; /* NEW */
     max-height: 100%;
     max-width: 100%;
@@ -24,19 +20,25 @@ body, html {
     width: 100%;
 }
 
-.page-header {
-    flex-grow: 0;
+.controls {
+    flex: none;
+}
 
-    width: 100%;
+.space-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.protein-buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .centre {
-    flex-grow: 1;
+    flex: auto;
 
-    /*display: -webkit-box;*/
-    /*display: -moz-box;*/
-    /*display: -ms-flexbox;*/
-    /*display: -webkit-flex;*/
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -44,94 +46,55 @@ body, html {
     min-width: 0; /* NEW */
 }
 
-
 .middleDiv {
-    flex-grow: 1;
+    flex: auto;
 
     display: flex;
     flex-direction: column;
+    min-height: 0; /* NEW */
+    min-width: 0; /* NEW */
 }
 
-
 .innerMiddleDiv {
-    flex-grow: 1;
+    flex: auto;
 
     display: flex;
-    flex-direction: row;
     min-height: 0; /* NEW */
     min-width: 0; /* NEW */
 }
 
 #networkDiv {
-    flex-grow: 1;
+    flex: auto;
 
     display: flex;
+    min-height: 0; /* NEW */
+    min-width: 0; /* NEW */
 }
 
-.complexViewerSVG{
-    flex-grow: 1;
+.complexViewerSVG {
+    flex: auto;
+
+    min-height: 0; /* NEW */
+    min-width: 0; /* NEW */
 }
 
 
-
-.color-key{
-    width: 300px;
-    min-width: 300px;
-    max-width: 300px;
+.color-key {
+    /*max-width: 300px;*/
 }
 
 td {
     vertical-align: middle;
 }
-.symbolKeyDiv {
-    flex-grow: 0;
-/*    display: flex;*/
-/*    flex-grow: 1;*/
-/*    flex-direction: column;*/
-/*    width: 300px;*/
-/*    max-width: 300px;*/
-/*    !**/
-/*        background:#ecedf2;*/
-/*    *!*/
-/*    color: #091D42;*/
+
+.legend {
+    flex: none;
     overflow: auto;
-/*    min-height: 0; !* NEW *!*/
-/*    min-width: 0; !* NEW *!*/
 }
 
-/*
-div#legendInner {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-
-}
-*/
-
-/*.controls {*/
-/*    background-color: #091D42;*/
-/*    !*color: #fff;*!*/
-/*    !*margin-left: 0;*!*/
-/*    */
-/*    !*display: flex;*!*/
-/*    !*flex-direction: row;*!*/
-/*    !*!*flex-grow: 1;*!*!*/
-/*    !*flex-shrink: 0;*!*/
-/*    !*justify-content: space-between;*!*/
-/*    !*align-items: center;*!*/
-
-/*}*/
-
-.logoBar {
-flex-grow: 0;
-
-/*    margin-top: 5px;*/
-/*    margin-bottom: 5px;*/
-/*    display: flex;*/
-/*    flex-direction: row;*/
-/*    flex-shrink: 0;*/
-/*    flex-wrap: wrap;*/
-/*    height: 70px;*/
+.logo-bar {
+    flex: none;
+    user-select: none;
 }
 
 .logo {
@@ -140,5 +103,12 @@ flex-grow: 0;
 
 img {
     vertical-align: middle;
-    /*margin: 3px;*/
+    margin: 3px;
+}
+
+
+@media only screen and (max-width : 1140px) {
+    .logo-bar{
+        display:none;
+    }
 }

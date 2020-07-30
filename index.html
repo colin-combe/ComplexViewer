@@ -18,15 +18,15 @@
 <!-- Main -->
 <div class="main">
 
-    <div class="controls">
-        <div class="">
+    <div class="controls space-between">
+        <div>
             <h1>
                 <i class="fa fa-github" onclick="window.location = 'https://github.com/MICommunity/ComplexViewer';"
                    title="GitHub project"></i>
                 <a href="https://doi.org/10.1093/bioinformatics/btx497" target="_blank" title="Publication">ComplexViewer</a>
             </h1>
         </div>
-        <div class="">
+        <div>
             <label for="dataSets">Example:</label>
             <select id="dataSets" onChange="loadData();"></select>
         </div>
@@ -37,7 +37,8 @@
             <div class="innerMiddleDiv">
 
                 <div id="networkDiv"></div>
-                <div class="symbolKeyDiv">
+
+                <div class="legend">
                     <table>
                         <tr>
                             <td>
@@ -92,38 +93,38 @@
                             <td>Protein (click to toggle)</td>
                         </tr>
                     </table>
-                    <div class="controls" style="height:46px;">Proteins:
-                        <button class="btn btn-1 btn-1a" onclick="cv.expandAll();">Expand</button>
-                        <button class="btn btn-1 btn-1a" onclick="cv.collapseAll();">Collapse</button>
+                    <div class="controls protein-buttons">Proteins:&nbsp;
+                        <button class="btn btn-1 btn-1a" onclick="cv.expandAll();">Expand All</button>
+                        <button class="btn btn-1 btn-1a" onclick="cv.collapseAll();">Collapse All</button>
                     </div>
                     <div id="colors"></div>
-
                 </div><!-- legend -->
 
             </div> <!-- innerMiddleDiv -->
 
             <div>
-                <div class="controls">
+                <div class="controls space-between">
                     <div>
                         Annotations:
 
                         <input type="checkbox" id="mifeatures" name="mifeatures" value="MI Features" checked
+                               autocomplete="off"
                                onchange="setAnnotations(this);">
                         <label for="mifeatures"> MI Features</label>
                         <input type="checkbox" id="uniprotkb" name="uniprotkb" value="UniprotKB"
+                               autocomplete="off"
                                onchange="setAnnotations(this);">
                         <label for="uniprotkb"> UniprotKB Domains</label>
                         <input type="checkbox" id="superfamily" name="superfamily" value="Superfamily"
+                               autocomplete="off"
                                onchange="setAnnotations(this);">
                         <label for="superfamily"> Superfamily</label>
                         <input type="checkbox" id="interactor" name="interactor" value="Interactor"
+                               autocomplete="off"
                                onchange="setAnnotations(this);">
                         <label for="interactor"> Interactor</label>
                     </div>
                     <div class="">
-                        <!-- <label>&nbsp;&nbsp;Expand Stoich.
-                        <input checked onclick="loadData()" id="chkexpansion" value="expansion" type="checkbox">
-                        </label> -->
                         <button class="btn btn-1 btn-1a" onclick="cv.autoLayout();" style="display:inline">Layout
                         </button>
                         <button class="btn btn-1 btn-1a" onclick="exportSVG();" style="display:inline">Export Graphic
@@ -137,7 +138,7 @@
 
     </div> <!-- centreDiv -->
 
-    <div class="">
+    <div class="logo-bar space-between">
         <a class="logo" href="http://rappsilberlab.org/" target="_blank"><img src="images/logos/rappsilber-logo.png"
                                                                               alt="Rappsilber Laboratory"></a>
         <a class="logo" href="http://www.ed.ac.uk/" target="_blank"><img src="./images/logos/eduni.jpeg"
@@ -152,7 +153,7 @@
                                                                            alt="Cambridge University"></a>
     </div>
 
-</div><!-- MAIN -->
+</div><!-- main-->
 
 <script type="text/javascript">
     //<![CDATA[
