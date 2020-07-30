@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>ComplexViewer Demo</title>
     <meta content="ComplexViewer Demo" name="ComplexViewer Demo">
-    <meta content="initial-scale=1, maximum-scale=1" name="viewport">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- css -->
     <link href="./css/reset.css" rel="stylesheet" type='text/css'>
     <link href="./css/style.css" rel="stylesheet" type='text/css'>
@@ -16,29 +16,28 @@
 </head>
 <body>
 <!-- Main -->
-<div id="main">
+<div class="main">
 
-    <div class="page-header">
-        <i class="fa fa-github" onclick="window.location = 'https://github.com/MICommunity/ComplexViewer';"
-           style="margin-right:5px;" title="GitHub project"></i>
-        <h1><a href="https://doi.org/10.1093/bioinformatics/btx497" target="_blank"
-               title="Publication">ComplexViewer</a></h1>
-        <div class="examples-dropdown">
+    <div class="controls">
+        <div class="">
+            <h1>
+                <i class="fa fa-github" onclick="window.location = 'https://github.com/MICommunity/ComplexViewer';"
+                   title="GitHub project"></i>
+                <a href="https://doi.org/10.1093/bioinformatics/btx497" target="_blank" title="Publication">ComplexViewer</a>
+            </h1>
+        </div>
+        <div class="">
             <label for="dataSets">Example:</label>
-            <select class="noShrink" id="dataSets"
-                    onChange="/*document.getElementById('chkexpansion').checked = true;*/loadData();"></select>
-            <br>
+            <select id="dataSets" onChange="loadData();"></select>
         </div>
     </div>
 
-    <div id="centre">
+    <div class="centre">
+        <div class="middleDiv">
+            <div class="innerMiddleDiv">
 
-        <!--        <div id="detailsDiv"></div>-->
-
-        <div id="middleDiv">
-            <div id="innerMiddleDiv">
                 <div id="networkDiv"></div>
-                <div id="symbolKeyDiv">
+                <div class="symbolKeyDiv">
                     <table>
                         <tr>
                             <td>
@@ -121,7 +120,7 @@
                                onchange="setAnnotations(this);">
                         <label for="interactor"> Interactor</label>
                     </div>
-                    <div class="other-controls">
+                    <div class="">
                         <!-- <label>&nbsp;&nbsp;Expand Stoich.
                         <input checked onclick="loadData()" id="chkexpansion" value="expansion" type="checkbox">
                         </label> -->
@@ -132,14 +131,13 @@
                     </div>
 
                 </div>
-
             </div> <!-- bottom bar -->
 
         </div> <!-- middleDiv -->
 
     </div> <!-- centreDiv -->
 
-    <div class="logoBar">
+    <div class="">
         <a class="logo" href="http://rappsilberlab.org/" target="_blank"><img src="images/logos/rappsilber-logo.png"
                                                                               alt="Rappsilber Laboratory"></a>
         <a class="logo" href="http://www.ed.ac.uk/" target="_blank"><img src="./images/logos/eduni.jpeg"
@@ -159,18 +157,21 @@
 <script type="text/javascript">
     //<![CDATA[
 
-    const networkTargetDiv = document.getElementById("networkDiv");
-    cv = new complexviewer.App(networkTargetDiv);
-    cv.addColorSchemeKey(document.getElementById("colors"));
-    cv.addHoverListener(function(interactorIdArr){ console.log("HOVER: ", interactorIdArr);});
-
-    for (let example of exampleIndex) {
+    for (var i = 0; i < exampleIndex.length; i++) {
+        var example = exampleIndex[i];
         const dataSetsSelect = document.getElementById("dataSets");
         const opt = document.createElement("option");
         opt.value = example.ac;
         opt.innerHTML = example.name;
         dataSetsSelect.appendChild(opt);
     }
+
+    const networkTargetDiv = document.getElementById("networkDiv");
+    cv = new complexviewer.App(networkTargetDiv);
+    cv.addColorSchemeKey(document.getElementById("colors"));
+    cv.addHoverListener(function (interactorIdArr) {
+        console.log("HOVER: ", interactorIdArr);
+    });
 
     loadData();
 

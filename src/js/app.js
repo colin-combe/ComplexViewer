@@ -196,9 +196,9 @@ export function App(/*HTMLDivElement*/networkDiv) {
 
     this.annotationSetsShown = new Map();
     this.annotationSetsShown.set("Interactor", false);
-    this.annotationSetsShown.set("MI Features", true);
     this.annotationSetsShown.set("UniprotKB", false);
     this.annotationSetsShown.set("Superfamily", false);
+    this.annotationSetsShown.set("MI Features", true);
 
     this.clear();
 }

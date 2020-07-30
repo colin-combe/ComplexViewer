@@ -50,7 +50,7 @@
     "clean": "rm dist/*",
     "start:dev": "webpack-dev-server --open --config webpack.dev.js",
     "build-dev": "rm dist/*; webpack -d --mode development --config webpack.dev.js",
-    "build-prod": "rm dist/*; webpack -p --mode production --config webpack.common.js"
+    "build-prod": "rm dist/*; webpack -p --mode production --config webpack.prod.js"
   },
   "engines": {
     "node": ">=14.0.0"
