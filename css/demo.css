@@ -2,6 +2,11 @@ body, html {
     height: 100%;
 }
 
+
+body, html, select, button {
+    font-size: 1em;
+}
+
 .main {
     position: absolute;
     top: 0;
@@ -21,14 +26,30 @@ body, html {
 }
 
 .controls {
-    flex: none;
+    flex: initial;
+
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .space-between {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
+
+.top-bar {
+    flex: initial;
+
+    display: flex;
+    /*flex-wrap: nowrap;*/
+}
+
+.fa-github {
+    margin-right: 5px;
+}
+
 
 .protein-buttons {
     display: flex;
@@ -78,22 +99,28 @@ body, html {
     min-width: 0; /* NEW */
 }
 
-
 .color-key {
-    /*max-width: 300px;*/
+    max-width: 400px;
+}
+
+.color-key tr td:first-of-type {
+    width:90px;
 }
 
 td {
     vertical-align: middle;
 }
+td:first-of-type{
+    text-align: end;
+}
 
 .legend {
-    flex: none;
+    flex: initial;
     overflow: auto;
 }
 
 .logo-bar {
-    flex: none;
+    flex: initial;
     user-select: none;
 }
 
@@ -108,7 +135,35 @@ img {
 
 
 @media only screen and (max-width : 1140px) {
+    body, html, select, button {
+        font-size: 0.8em;
+    }
+
+    img {
+        height: 50%;
+    }
+
+    .color-key {
+        max-width: 150px;
+    }
+
+    .legend table tr td:first-of-type{
+        max-width: 60px;
+    }
+
+    /*.color-key tr td:first-of-type {*/
+    /*    width:60px;*/
+    /*}*/
+
     .logo-bar{
         display:none;
+    }
+
+    .protein-expand-label{
+        display:none;
+    }
+
+    select{
+        max-width: 150px;
     }
 }

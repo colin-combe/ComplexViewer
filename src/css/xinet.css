@@ -146,7 +146,7 @@ feature-link {
     background-color: #DEF;
 }
 
-.barScale {
+.bar-scale {
     display: inline;
     padding-left: 10px;
 }
@@ -164,6 +164,3 @@ feature-link {
     stroke-width: 1;
 }
 
-.color-key tr td:first-of-type {
-    width:90px;
-}

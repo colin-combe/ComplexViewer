@@ -72,28 +72,9 @@ body, input, select, textarea, button {
     background: white;
 }
 
-h1 > a {
+.top-bar > a {
     color: #fff;
 }
-
-
-/*.page-header {*/
-/*    !*padding: 10px;*!*/
-/*    background-color: #091D42;*/
-/*    color: #fff;*/
-/*}*/
-
-/*.page-header p {*/
-/*    display: inline-block;*/
-/*    !*padding-right: 1px;*!*/
-/*    !*padding-left: 10px;*!*/
-/*}*/
-
-
-/*.page-header h1 {*/
-/*    color: white;*/
-/*    text-decoration: underline;*/
-/*}*/
 
 .controls {
     background-color: #091D42;
@@ -104,22 +85,6 @@ h1 > a {
     user-select: none;
 }
 
-
-select, button {
-    font-size: 1em;
-}
-
-/*b {*/
-/*    font-weight: bold;*/
+/*h1 {*/
+/*    font-size: 1.4em;*/
 /*}*/
-
-
-/*.examples-dropdown {*/
-/*    float: right;*/
-/*    margin-top: 5px;*/
-/*    margin-right: 10px;*/
-/*}*/
-
-h1 {
-    font-size: 1.4em;
-}

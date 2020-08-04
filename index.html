@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>ComplexViewer Demo</title>
     <meta content="ComplexViewer Demo" name="ComplexViewer Demo">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- css -->
     <link href="./css/reset.css" rel="stylesheet" type='text/css'>
     <link href="./css/style.css" rel="stylesheet" type='text/css'>
@@ -19,14 +19,15 @@
 <div class="main">
 
     <div class="controls space-between">
-        <div>
-            <h1>
-                <i class="fa fa-github" onclick="window.location = 'https://github.com/MICommunity/ComplexViewer';"
-                   title="GitHub project"></i>
-                <a href="https://doi.org/10.1093/bioinformatics/btx497" target="_blank" title="Publication">ComplexViewer</a>
-            </h1>
+        <div class="top-bar">
+            <!--            <h1>-->
+            <i class="fa fa-github" onclick="window.location = 'https://github.com/MICommunity/ComplexViewer';"
+               title="GitHub project"></i>
+            <a href="https://doi.org/10.1093/bioinformatics/btx497" target="_blank"
+               title="Publication">ComplexViewer</a>
+            <!--            </h1>-->
         </div>
-        <div>
+        <div class="top-bar">
             <label for="dataSets">Example:</label>
             <select id="dataSets" onChange="loadData();"></select>
         </div>
@@ -42,58 +43,43 @@
                     <table>
                         <tr>
                             <td>
-                                <div style="float:right">
-                                    <img alt="Bioactive Entity" src="./src/imgs/key-svg/molecule-set.svg">
-                                </div>
+                                <img src="./src/imgs/key-svg/molecule-set.svg">
                             </td>
                             <td>Molecule Set</td>
                         </tr>
                         <tr>
                             <td>
-                                <div style="float:right">
-                                    <img alt="Bioactive Entity" src="./src/imgs/key-svg/small-molecule.svg">
-                                </div>
+                                <img src="./src/imgs/key-svg/small-molecule.svg">
                             </td>
                             <td>Bioactive Entity</td>
                         </tr>
-
                         <tr>
                             <td>
-                                <div style="float:right">
-                                    <img alt="Gene" src="./src/imgs/key-svg/gene.svg">
-                                </div>
+                                <img src="./src/imgs/key-svg/gene.svg">
                             </td>
                             <td>Gene</td>
                         </tr>
                         <tr>
                             <td>
-                                <div style="float:right">
-                                    <img alt="DNA" src="./src/imgs/key-svg/dna.svg">
-                                </div>
+                                <img src="./src/imgs/key-svg/dna.svg">
                             </td>
                             <td>DNA</td>
                         </tr>
                         <tr>
                             <td>
-                                <div style="float:right">
-                                    <img alt="RNA" src="./src/imgs/key-svg/rna.svg">
-                                </div>
+                                <img src="./src/imgs/key-svg/rna.svg">
                             </td>
                             <td>RNA</td>
                         </tr>
                         <tr style="border: 1px grey;">
                             <td>
-                                <div style="float:right">
-                                    <img alt="Protein" src="./src/imgs/key-svg/protein-circle.svg">
-                                </div>
-                                <div style="float:right">
-                                    <img alt="Protein" src="./src/imgs/key-svg/protein-bar.svg">
-                                </div>
+                                <img src="./src/imgs/key-svg/protein-circle.svg">
+                                <img src="./src/imgs/key-svg/protein-bar.svg">
                             </td>
-                            <td>Protein (click to toggle)</td>
+                            <td>Protein <br> (click to toggle)</td>
                         </tr>
                     </table>
-                    <div class="controls protein-buttons">Proteins:&nbsp;
+                    <div class="controls protein-buttons"><p class="protein-expand-label">Proteins:&nbsp;</p>
                         <button class="btn btn-1 btn-1a" onclick="cv.expandAll();">Expand All</button>
                         <button class="btn btn-1 btn-1a" onclick="cv.collapseAll();">Collapse All</button>
                     </div>
@@ -104,7 +90,7 @@
 
             <div>
                 <div class="controls space-between">
-                    <div>
+                    <div class="controls">
                         Annotations:
 
                         <input type="checkbox" id="mifeatures" name="mifeatures" value="MI Features" checked
@@ -124,7 +110,7 @@
                                onchange="setAnnotations(this);">
                         <label for="interactor"> Interactor</label>
                     </div>
-                    <div class="">
+                    <div class="controls">
                         <button class="btn btn-1 btn-1a" onclick="cv.autoLayout();" style="display:inline">Layout
                         </button>
                         <button class="btn btn-1 btn-1a" onclick="exportSVG();" style="display:inline">Export Graphic
