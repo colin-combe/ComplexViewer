@@ -103,16 +103,16 @@ export function App(/*HTMLDivElement*/networkDiv) {
     };
     this.lastMouseUp = new Date().getTime();
 
-    this.svgElement.ontouchstart = function(evt) {
-        console.log("svgElement touch start");
+    this.svgElement.ontouchstart = function (evt) {
+        //console.log("svgElement touch start");
         self.touchStart(evt);
     };
-    this.svgElement.ontouchmove = function(evt) {
-        console.log("svgElement touch move");
+    this.svgElement.ontouchmove = function (evt) {
+        // console.log("svgElement touch move");
         self.touchMove(evt);
     };
-    this.svgElement.ontouchend = function(evt) {
-        console.log("svgElement touch end");
+    this.svgElement.ontouchend = function (evt) {
+        // console.log("svgElement touch end");
         self.mouseUp(evt);
     };
 
@@ -329,7 +329,9 @@ App.prototype.init = function () {
     }
     this.updateAnnotations();
     const self = this;
-    fetchAnnotations(this, function(){self.updateAnnotations();});
+    fetchAnnotations(this, function () {
+        self.updateAnnotations();
+    });
 
     this.checkLinks(); //totally needed, not sure why tbh todo - check this out
     this.autoLayout();
@@ -397,7 +399,7 @@ App.prototype.mouseDown = function (evt) {
 };
 
 
-App.prototype.touchStart = function(evt) {
+App.prototype.touchStart = function (evt) {
     //prevent default, but allow propogation
     evt.preventDefault();
     this.d3cola.stop();
@@ -411,7 +413,7 @@ App.prototype.mouseMove = function (evt) {
     this.move(evt);
 };
 
-App.prototype.touchMove = function(evt) {
+App.prototype.touchMove = function (evt) {
     // const p = this.getTouchEventPoint(evt); // seems to be correct, see below
     this.move(evt);
 };
@@ -466,32 +468,32 @@ App.prototype.mouseUp = function (evt) { //could be tidied up
     //eliminate some spurious mouse up events
     // if ((time - this.lastMouseUp) > 150) {
 
-        let p = this.getEventPoint(evt);
-        if (isNaN(p.x)){
-            p = this.getEventPoint(this.dragStart);
-        }
-        const c = this.mouseToSVG(p.x, p.y);
+    let p = this.getEventPoint(evt);
+    if (isNaN(p.x)) {
+        p = this.getEventPoint(this.dragStart);
+    }
+    const c = this.mouseToSVG(p.x, p.y);
 
-        if (this.dragElement && this.dragElement.type === "protein") { /// todo be consistent about how to check if thing is protein
-            if (!(this.state === this.STATES.DRAGGING || this.state === this.STATES.ROTATING)) { //not dragging or rotating
-                if (!this.dragElement.expanded) {
-                    this.dragElement.setForm(1);
+    if (this.dragElement && this.dragElement.type === "protein") { /// todo be consistent about how to check if thing is protein
+        if (!(this.state === this.STATES.DRAGGING || this.state === this.STATES.ROTATING)) { //not dragging or rotating
+            if (!this.dragElement.expanded) {
+                this.dragElement.setForm(1);
+            } else {
+                this.contextMenuProt = this.dragElement;
+                this.contextMenuPoint = c;
+                const menu = d3.select(".custom-menu-margin");
+                let pageX, pageY;
+                if (evt.pageX) {
+                    pageX = evt.pageX;
+                    pageY = evt.pageY;
                 } else {
-                    this.contextMenuProt = this.dragElement;
-                    this.contextMenuPoint = c;
-                    const menu = d3.select(".custom-menu-margin");
-                    let pageX, pageY;
-                    if (evt.pageX) {
-                        pageX = evt.pageX;
-                        pageY = evt.pageY;
-                    } else {
-                        pageX = this.dragStart.touches[0].pageX;
-                        pageY = this.dragStart.touches[0].pageY;
-                    }
-                    menu.style("top", (pageY - 20) + "px").style("left", (pageX - 20) + "px").style("display", "block");
-                    d3.select(".scaleButton_" + (this.dragElement.stickZoom * 100)).property("checked", true);
+                    pageX = this.dragStart.touches[0].pageX;
+                    pageY = this.dragStart.touches[0].pageY;
                 }
+                menu.style("top", (pageY - 20) + "px").style("left", (pageX - 20) + "px").style("display", "block");
+                d3.select(".scaleButton_" + (this.dragElement.stickZoom * 100)).property("checked", true);
             }
+        }
         // }
     }
 
@@ -734,12 +736,10 @@ App.prototype.autoLayout = function () {
 };
 
 App.prototype.getSVG = function () { //todo - somewhat broken, annotations missing
-    var svgSel = d3.select(this.el).selectAll("svg");
-    var svgArr = [svgSel.node()];
-    var svgStrings = svgUtils.capture(svgArr);
-    var svgXML = svgUtils.makeXMLStr(new XMLSerializer(), svgStrings[0]);
-
-    return svgXML;
+    const svgSel = d3.select(this.el).selectAll("svg");
+    const svgArr = [svgSel.node()];
+    const svgStrings = svgUtils.capture(svgArr);
+    return svgUtils.makeXMLStr(new XMLSerializer(), svgStrings[0]);
 };
 
 // transform the mouse-position into a position on the svg
@@ -938,7 +938,7 @@ App.prototype.removeHoverListener = function (hoverListener) {
 
 App.prototype.notifyHoverListeners = function (interactorIdArr) {
     for (let hl of this.hoverListeners) {
-        hl(interactorIdArr)
+        hl(interactorIdArr);
     }
 };
 

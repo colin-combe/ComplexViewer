@@ -44,7 +44,7 @@ function getUniProtFeatures(prot, callback) {
             annotations = [];
             prot.annotationSets.set("UniprotKB", annotations);
         }
-        var uniprotJsonFeatures = json.features.filter(function (ft) {
+        const uniprotJsonFeatures = json.features.filter(function (ft) {
             return ft.type === "DOMAIN";
         });
         for (let feature of uniprotJsonFeatures) {

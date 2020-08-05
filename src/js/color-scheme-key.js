@@ -31,7 +31,7 @@ export function update(/*HTMLDivElement*/ div, /*App*/app) {
                 const dupCheck = new Set();
                 for (let p of app.participants.values()){
                     if (p.type === "protein"){
-                        var annos = p.annotationSets.get(annotationSet);
+                        const annos = p.annotationSets.get(annotationSet);
                         if (annos) {
                             for (let anno of annos) {
                                 const desc = anno.description;

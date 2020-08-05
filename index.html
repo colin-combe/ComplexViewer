@@ -90,7 +90,7 @@
 
             <div>
                 <div class="controls space-between">
-                    <div class="controls">
+                    <div class="">
                         <label for="mifeatures"> MI Features</label>
                         <input type="checkbox" id="mifeatures" name="mifeatures" value="MI Features" checked
                                autocomplete="off"
@@ -108,7 +108,7 @@
                                autocomplete="off"
                                onchange="setAnnotations(this);">
                     </div>
-                    <div class="controls">
+                    <div class="">
                         <button class="btn btn-1 btn-1a" onclick="cv.autoLayout();" style="display:inline">Layout
                         </button>
                         <button class="btn btn-1 btn-1a" onclick="exportSVG();" style="display:inline">Export Graphic
@@ -155,7 +155,7 @@
     cv = new complexviewer.App(networkTargetDiv);
     cv.addColorSchemeKey(document.getElementById("colors"));
     cv.addHoverListener(function (interactorIdArr) {
-        console.log("HOVER: ", interactorIdArr);
+        console.log("HOVER: ", interactorIdArr.toString());
     });
 
     loadData();
@@ -174,7 +174,6 @@
     }
 
     function exportSVG() {
-        // todo
         const svgXML = cv.getSVG();
         const dataSetsSelect = document.getElementById("dataSets");
         download(svgXML, "application/svg", dataSetsSelect.options[dataSetsSelect.selectedIndex].value + ".svg");

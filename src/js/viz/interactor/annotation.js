@@ -7,4 +7,4 @@ export function Annotation(annotationName, seqDatum) {
 
 Annotation.prototype.toString = function () {
     return this.description + " [" + (this.seqDatum ? this.seqDatum.toString() : this.seqDatum.begin + " - " + this.seqDatum.end) + "]";
-}
+};

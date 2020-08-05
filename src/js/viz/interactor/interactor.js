@@ -80,30 +80,10 @@ Interactor.prototype.initListeners = function () {
     this.upperGroup.onmouseleave = function (evt) {
         self.mouseOut(evt);
     };
-
     this.upperGroup.ontouchstart = function (evt) {
-        console.log("interactor touch start");
+        //console.log("interactor touch start");
         self.touchStart(evt);
     };
-
-    // this.upperGroup.ontouchend = function (evt) {
-    //     console.log("interactor touch end");
-    //     self.mouseOut(evt);
-    // };
-
-    // this.upperGroup.ontouchmove = function(evt) {};
-    //~ this.upperGroup.ontouchenter = function(evt) {
-    //~ self.message("protein touch enter");
-    //~ self.touchStart(evt);
-    //~ };
-    //~ this.upperGroup.ontouchleave = function(evt) {
-    //~ self.message("protein touch leave");
-    //~ self.mouseOut(evt);
-    //~ };
-    //~ this.upperGroup.ontouchcancel = function(evt) {
-    //~ self.message("protein touch cancel");
-    //~ self.mouseOut(evt);
-    //~ };
 };
 
 Interactor.prototype.addStoichiometryLabel = function (stoichiometry) {
