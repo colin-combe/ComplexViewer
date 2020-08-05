@@ -1,15 +1,16 @@
 import {Polymer} from "./polymer";
 import {svgns} from "../../config";
+import {Annotation} from "./annotation";
+import {SequenceDatum} from "../sequence-datum";
 
-export function Protein(id, /*App*/ app, json, name) {
+export function Protein(id, /*App*/ app, json, name, sequence) {
     this.init(id, app, json, name);
     this.type = "protein"; // this isn't absolutely necessary, could do without it
 
     this.upperGroup = document.createElementNS(svgns, "g");
     this.rotation = 0;
     this.stickZoom = 1;
-    this.form = 0; // 0 = blob, 1 = stick
-
+    // this.expanded = false; //done by init()
     //make highlight
     this.highlight = document.createElementNS(svgns, "rect");
     this.highlight.classList.add("highlight", "participant-highlight");
@@ -57,7 +58,7 @@ export function Protein(id, /*App*/ app, json, name) {
     this.background.setAttribute("rx", r);
     this.background.setAttribute("ry", r);
 
-    this.annotationsSvgGroup.setAttribute("transform", "scale(1, 1)");
+    // this.annotationsSvgGroup.setAttribute("transform", "scale(1, 1)");
 
     this.highlight.setAttribute("width", (r * 2) + 5);
     this.highlight.setAttribute("height", (r * 2) + 5);
@@ -74,12 +75,25 @@ export function Protein(id, /*App*/ app, json, name) {
     const self = this;
     Object.defineProperty(this, "height", {
         get: function height() {
-            return self.form == 1? 120:40;
+            return self.expanded ? 120 : 40;
             //return 160;
         }
     });
 
     this.showHighlight(false);
+
+    //sequence = amino acids in UPPERCASE, digits or lowercase can be used for modification info
+    if (!sequence) {
+        sequence = "SEQUENCEMISSING";
+    }
+    this.sequence = sequence.replace(/[^A-Z]/g, "");//remove modification site info from sequence
+    this.size = this.sequence.length;
+
+    //annotations indexed by annotation set name ("MI Features", "Superfamily", etc)
+    //this.annotationSets // = new Map(); is declared in Interactor, other types of interactor can have features from MIJSON
+
+    this.annotationSets.set("Interactor", [new Annotation(this.json.label, new SequenceDatum(null, 1 + "-" + this.size))]);
+
 }
 
 Protein.prototype = new Polymer();

@@ -23,7 +23,7 @@ UnaryLink.prototype.initSelfLinkSVG = function () {
 };
 
 UnaryLink.prototype.check = function () {
-    if (this.participants[0].form !== 1) {
+    if (!this.participants[0].expanded) {
         this.show();
         return true;
     } else {

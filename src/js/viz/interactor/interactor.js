@@ -9,7 +9,7 @@ Interactor.prototype = {
         // console.log(this.upperGroup.getBBox().width);
         // const bbox = this.upperGroup.getBBox(); //firefox buggy?
         // return bbox.width;
-        if (this.form === 0) {
+        if (!this.expanded) {
             return (2 * this.getSymbolRadius()) + 5 + this.labelSVG.getComputedTextLength();
         } else {
             return (this.size * this.stickZoom) + 5 + this.labelSVG.getComputedTextLength();
@@ -20,7 +20,7 @@ Interactor.prototype = {
     },
 };
 
-Interactor.prototype.init = function (id, app, json, name){
+Interactor.prototype.init = function (id, app, json, name) {
     this.id = id;
     this.app = app;
     this.json = json;
@@ -28,11 +28,11 @@ Interactor.prototype.init = function (id, app, json, name){
 
     // this.type = json.type.name;
 
-    this.form = 0;
+    this.expanded = false;
 
     //todo - think 'type' should be  a property here (except for complex, can just return json.type.name)
 
-    //annotations indexed by annotation set name ("MIFEATURES", "SUPERFAMILY", etc)
+    //annotations indexed by annotation set name ("MI Features", "Superfamily", etc)
     this.annotationSets = new Map();
     //links
     this.naryLinks = new Map();
@@ -40,7 +40,7 @@ Interactor.prototype.init = function (id, app, json, name){
     this.sequenceLinks = new Map();
 };
 
-Interactor.prototype.initLabel = function (){
+Interactor.prototype.initLabel = function () {
     this.labelSVG = document.createElementNS(svgns, "text");
     this.labelSVG.setAttribute("x", "0"); // css?
     this.labelSVG.setAttribute("y", "10");
@@ -62,45 +62,28 @@ Interactor.prototype.initLabel = function (){
     this.upperGroup.appendChild(this.labelSVG);
 };
 
-Interactor.prototype.initOutline = function (){
+Interactor.prototype.initOutline = function () {
     this.outline.classList.add("outline");
     this.upperGroup.appendChild(this.outline);
 };
 
-Interactor.prototype.initListeners = function (){
+Interactor.prototype.initListeners = function () {
     // events
     const self = this;
     //    this.upperGroup.setAttribute('pointer-events','all');
     this.upperGroup.onmousedown = function (evt) {
         self.mouseDown(evt);
     };
-    this.upperGroup.onmouseover = function (evt) {
+    this.upperGroup.onmouseenter = function (evt) {
         self.mouseOver(evt);
     };
-    this.upperGroup.onmouseout = function (evt) {
+    this.upperGroup.onmouseleave = function (evt) {
         self.mouseOut(evt);
     };
-    // this.upperGroup.ontouchstart = function (evt) {
-    //     self.touchStart(evt);
-    // };
-
-    //~ this.upperGroup.ontouchmove = function(evt) {};
-    //~ this.upperGroup.ontouchend = function(evt) {
-    //~ self.ctrl.message("protein touch end");
-    //~ self.mouseOut(evt);
-    //~ };
-    //~ this.upperGroup.ontouchenter = function(evt) {
-    //~ self.message("protein touch enter");
-    //~ self.touchStart(evt);
-    //~ };
-    //~ this.upperGroup.ontouchleave = function(evt) {
-    //~ self.message("protein touch leave");
-    //~ self.mouseOut(evt);
-    //~ };
-    //~ this.upperGroup.ontouchcancel = function(evt) {
-    //~ self.message("protein touch cancel");
-    //~ self.mouseOut(evt);
-    //~ };
+    this.upperGroup.ontouchstart = function (evt) {
+        //console.log("interactor touch start");
+        self.touchStart(evt);
+    };
 };
 
 Interactor.prototype.addStoichiometryLabel = function (stoichiometry) {
@@ -111,31 +94,25 @@ Interactor.prototype.addStoichiometryLabel = function (stoichiometry) {
 };
 
 Interactor.prototype.mouseDown = function (evt) {
-    this.app.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
+    this.app.preventDefaultsAndStopPropagation(evt);
     this.app.d3cola.stop();
     this.app.dragElement = this;
-    const p = this.app.getEventPoint(evt);
-    this.app.dragStart = this.app.mouseToSVG(p.x, p.y);
+    this.app.dragStart = evt;
     return false;
 };
 
-//// TODO: test on touch screen
-// Interactor.prototype.touchStart = function(evt) {
-//     this.util.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
-//     if (this.util.d3cola !== undefined) {
-//         this.util.d3cola.stop();
-//     }
-//     this.util.dragElement = this;
-//     //store start location
-//     var p = this.util.getTouchEventPoint(evt);
-//     this.util.dragStart = this.util.mouseToSVG(p.x, p.y);
-//     return false;
-// };
+Interactor.prototype.touchStart = function (evt) {
+    this.app.preventDefaultsAndStopPropagation(evt);
+    this.app.d3cola.stop();
+    this.app.dragElement = this;
+    this.app.dragStart = evt;
+    return false;
+};
 
 Interactor.prototype.mouseOver = function (evt) {
     this.app.preventDefaultsAndStopPropagation(evt);
     this.showHighlight(true);
-    //~ this.util.setTooltip(this.id);
+    this.app.notifyHoverListeners([this.json.id]);
     return false;
 };
 
@@ -143,13 +120,13 @@ Interactor.prototype.mouseOut = function (evt) {
     this.app.preventDefaultsAndStopPropagation(evt);
     this.showHighlight(false);
     this.app.hideTooltip();
+    this.app.notifyHoverListeners([]);
     return false;
 };
 
 Interactor.prototype.getSymbolRadius = function () {
     return 15;
 };
-
 
 Interactor.prototype.showHighlight = function () {
 };
@@ -215,11 +192,11 @@ Interactor.prototype.setAllLinkCoordinates = function () {
         this.selfLink.setLinkCoordinates();
     }
     for (let link of this.sequenceLinks.values()) {
-            link.setLinkCoordinates();
+        link.setLinkCoordinates();
     }
 };
 
-export function trig (radius, angleDegrees) {
+export function trig(radius, angleDegrees) {
     //x = rx + radius * cos(theta) and y = ry + radius * sin(theta)
     const radians = (angleDegrees / 360) * Math.PI * 2;
     return {

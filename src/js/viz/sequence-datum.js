@@ -15,10 +15,15 @@ export function SequenceDatum(participant, sequenceDatumString) {
     this.participant = participant;
     this.sequenceDatumString = sequenceDatumString.trim();
 
+    function tidyPosition(pos){
+        if (parseInt(pos)) return parseInt(pos);
+        else return pos;
+    }
+
     if (this.sequenceDatumString === "?-?") {
         //this.begin = 1;
         this.end = 1; //todo - having it at begining is affecting shape of line, look at why
-        this.uncertainEnd = participant.size? participant.size : 1;
+        this.uncertainEnd = participant.size ? participant.size : 1;
     } else if (this.sequenceDatumString === "n-n") {
         this.uncertainBegin = "n-n";
         participant.nTerminusFeature = true;
@@ -31,47 +36,47 @@ export function SequenceDatum(participant, sequenceDatumString) {
 
         let firstDotPosition;
         if (firstPart.indexOf(".") === -1) {
-            this.begin = firstPart;
+            this.begin = tidyPosition(firstPart);
         } else {
             firstDotPosition = firstPart.indexOf(".");
-            this.uncertainBegin = firstPart.substring(0, firstDotPosition) * 1;
-            this.begin = firstPart.substring(firstDotPosition + 2) * 1;
+            this.uncertainBegin = tidyPosition(firstPart.substring(0, firstDotPosition));
+            this.begin = tidyPosition(firstPart.substring(firstDotPosition + 2));
         }
 
         if (secondPart.indexOf(".") === -1) {
-            this.end = secondPart;
+            this.end = tidyPosition(secondPart);
         } else {
             firstDotPosition = secondPart.indexOf(".");
-            this.end = secondPart.substring(0, firstDotPosition) * 1;
-            this.uncertainEnd = secondPart.substring(firstDotPosition + 2) * 1;
+            this.end = tidyPosition(secondPart.substring(0, firstDotPosition));
+            this.uncertainEnd = tidyPosition(secondPart.substring(firstDotPosition + 2));
         }
 
         if (this.begin === "n") {
             this.uncertainBegin = 1;
-            this.begin = this.end;
+            this.begin = tidyPosition(this.end);
             // this.uncertainEnd = this.end;
             this.end = null;
         }
 
         if (this.end === "c") {
             this.uncertainEnd = participant.size;
-            this.end = this.begin;
+            this.end = tidyPosition(this.begin);
             // this.uncertainBegin = this.begin;
             this.begin = null;
         }
 
         if (firstPart.indexOf("<") > -1) {
             this.uncertainBegin = 0;
-            this.begin = firstPart.substring(1, firstPart.length);
+            this.begin = tidyPosition(firstPart.substring(1, firstPart.length));
         }
         if (secondPart.indexOf(">") > -1) {
-            this.end = secondPart.substring(1, firstPart.length);
+            this.end = tidyPosition(secondPart.substring(1, firstPart.length));
             this.uncertainEnd = participant.size;
         }
 
         if (firstPart.indexOf(">") > -1 && secondPart.indexOf("<") > -1) {
-            this.uncertainBegin = firstPart.substring(1, firstPart.length);
-            this.begin = secondPart.substring(1, firstPart.length);
+            this.uncertainBegin = tidyPosition(firstPart.substring(1, firstPart.length));
+            this.begin = tidyPosition(secondPart.substring(1, firstPart.length));
             this.end = null;//this.begin;
         }
     }
@@ -80,6 +85,24 @@ export function SequenceDatum(participant, sequenceDatumString) {
 SequenceDatum.prototype.toString = function () {
     return this.sequenceDatumString;
 };
+
+SequenceDatum.prototype.overlaps = function (seqDatum) {
+    if (this.participant === seqDatum.participant) {
+        const first = this.uncertainBegin || this.begin || this.end || this.uncertainEnd;
+        const last = this.uncertainEnd || this.end || this.begin || this.uncertainBegin;
+
+        const otherFirst = seqDatum.uncertainBegin || seqDatum.begin || seqDatum.end;
+        const otherLast = seqDatum.uncertainEnd || seqDatum.end || seqDatum.begin;
+
+        if (first <= otherLast && otherFirst <= last) { // i wouldn't have got that tbh
+            return true;
+        }
+
+    }
+    return false;
+};
+
+
 //On 06/06/13 09:22, marine@ebi.ac.uk wrote:
 //> Concerning the ranges, I think there was a confusion :
 //>

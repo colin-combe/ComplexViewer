@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>ComplexViewer Demo</title>
     <meta content="ComplexViewer Demo" name="ComplexViewer Demo">
-    <meta content="initial-scale=1, maximum-scale=1" name="viewport">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <!-- css -->
     <link href="./css/reset.css" rel="stylesheet" type='text/css'>
     <link href="./css/style.css" rel="stylesheet" type='text/css'>
@@ -16,115 +16,99 @@
 </head>
 <body>
 <!-- Main -->
-<div id="main">
+<div class="main">
 
-    <div class="page-header">
-        <i class="fa fa-github" onclick="window.location = 'https://github.com/MICommunity/ComplexViewer';"
-           style="margin-right:5px;" title="GitHub project"></i>
-        <h1><a href="https://doi.org/10.1093/bioinformatics/btx497" target="_blank"
-               title="Publication">ComplexViewer</a></h1>
-        <div class="examples-dropdown">
+    <div class="controls space-between">
+        <div class="top-bar">
+            <!--            <h1>-->
+            <i class="fa fa-github" onclick="window.location = 'https://github.com/MICommunity/ComplexViewer';"
+               title="GitHub project"></i>
+            <a href="https://doi.org/10.1093/bioinformatics/btx497" target="_blank"
+               title="Publication">ComplexViewer</a>
+            <!--            </h1>-->
+        </div>
+        <div class="top-bar">
             <label for="dataSets">Example:</label>
-            <select class="noShrink" id="dataSets"
-                    onChange="/*document.getElementById('chkexpansion').checked = true;*/loadData();"></select>
-            <br>
+            <select id="dataSets" onChange="loadData();"></select>
         </div>
     </div>
 
-    <div id="centre">
+    <div class="centre">
+        <div class="middleDiv">
+            <div class="innerMiddleDiv">
 
-        <!--        <div id="detailsDiv"></div>-->
-
-        <div id="middleDiv">
-            <div id="innerMiddleDiv">
                 <div id="networkDiv"></div>
-                <div id="symbolKeyDiv">
+
+                <div class="legend">
                     <table>
                         <tr>
                             <td>
-                                <div style="float:right">
-                                    <img alt="Bioactive Entity" src="./src/imgs/key-svg/molecule-set.svg">
-                                </div>
+                                <img src="./src/imgs/key-svg/molecule-set.svg">
                             </td>
                             <td>Molecule Set</td>
                         </tr>
                         <tr>
                             <td>
-                                <div style="float:right">
-                                    <img alt="Bioactive Entity" src="./src/imgs/key-svg/small-molecule.svg">
-                                </div>
+                                <img src="./src/imgs/key-svg/small-molecule.svg">
                             </td>
                             <td>Bioactive Entity</td>
                         </tr>
-
                         <tr>
                             <td>
-                                <div style="float:right">
-                                    <img alt="Gene" src="./src/imgs/key-svg/gene.svg">
-                                </div>
+                                <img src="./src/imgs/key-svg/gene.svg">
                             </td>
                             <td>Gene</td>
                         </tr>
                         <tr>
                             <td>
-                                <div style="float:right">
-                                    <img alt="DNA" src="./src/imgs/key-svg/dna.svg">
-                                </div>
+                                <img src="./src/imgs/key-svg/dna.svg">
                             </td>
                             <td>DNA</td>
                         </tr>
                         <tr>
                             <td>
-                                <div style="float:right">
-                                    <img alt="RNA" src="./src/imgs/key-svg/rna.svg">
-                                </div>
+                                <img src="./src/imgs/key-svg/rna.svg">
                             </td>
                             <td>RNA</td>
                         </tr>
                         <tr style="border: 1px grey;">
                             <td>
-                                <div style="float:right">
-                                    <img alt="Protein" src="./src/imgs/key-svg/protein-circle.svg">
-                                </div>
-                                <div style="float:right">
-                                    <img alt="Protein" src="./src/imgs/key-svg/protein-bar.svg">
-                                </div>
+                                <img src="./src/imgs/key-svg/protein-circle.svg">
+                                <img src="./src/imgs/key-svg/protein-bar.svg">
                             </td>
-                            <td>Protein - click to toggle between circle and bar</td>
+                            <td>Protein <br> (click to toggle)</td>
                         </tr>
                     </table>
-                    <div class="controls" style="height:46px;">Proteins:
-                        <button class="btn btn-1 btn-1a" onclick="cv.expandAll();">Expand</button>
-                        <button class="btn btn-1 btn-1a" onclick="cv.collapseAll();">Collapse</button>
+                    <div class="controls protein-buttons"><p class="protein-expand-label">Proteins:&nbsp;</p>
+                        <button class="btn btn-1 btn-1a" onclick="cv.expandAll();">Expand All</button>
+                        <button class="btn btn-1 btn-1a" onclick="cv.collapseAll();">Collapse All</button>
                     </div>
                     <div id="colors"></div>
-
                 </div><!-- legend -->
 
             </div> <!-- innerMiddleDiv -->
 
             <div>
-                <div class="controls">
-                    <div>
-                        Annotations:
-
-                        <input type="checkbox" id="mifeatures" name="mifeatures" value="MIFEATURES" checked
-                               onchange="setAnnotations(this);">
+                <div class="controls space-between">
+                    <div class="">
                         <label for="mifeatures"> MI Features</label>
-                        <input type="checkbox" id="uniprotkb" name="uniprotkb" value="UNIPROTKB"
+                        <input type="checkbox" id="mifeatures" name="mifeatures" value="MI Features" checked
+                               autocomplete="off"
                                onchange="setAnnotations(this);">
                         <label for="uniprotkb"> UniprotKB Domains</label>
-                        <input type="checkbox" id="superfamily" name="superfamily" value="SUPERFAMILY"
+                        <input type="checkbox" id="uniprotkb" name="uniprotkb" value="UniprotKB"
+                               autocomplete="off"
                                onchange="setAnnotations(this);">
                         <label for="superfamily"> Superfamily</label>
-                        <input type="checkbox" id="interactor" name="interactor" value="INTERACTOR"
+                        <input type="checkbox" id="superfamily" name="superfamily" value="Superfamily"
+                               autocomplete="off"
                                onchange="setAnnotations(this);">
                         <label for="interactor"> Interactor</label>
+                        <input type="checkbox" id="interactor" name="interactor" value="Interactor"
+                               autocomplete="off"
+                               onchange="setAnnotations(this);">
                     </div>
-                    <div class="other-controls">
-                        <!-- <label>&nbsp;&nbsp;Expand Stoich.
-                        <input checked onclick="loadData()" id="chkexpansion" value="expansion" type="checkbox">
-                        </label> -->
+                    <div class="">
                         <button class="btn btn-1 btn-1a" onclick="cv.autoLayout();" style="display:inline">Layout
                         </button>
                         <button class="btn btn-1 btn-1a" onclick="exportSVG();" style="display:inline">Export Graphic
@@ -132,14 +116,13 @@
                     </div>
 
                 </div>
-
             </div> <!-- bottom bar -->
 
         </div> <!-- middleDiv -->
 
     </div> <!-- centreDiv -->
 
-    <div class="logoBar">
+    <div class="logo-bar space-between">
         <a class="logo" href="http://rappsilberlab.org/" target="_blank"><img src="images/logos/rappsilber-logo.png"
                                                                               alt="Rappsilber Laboratory"></a>
         <a class="logo" href="http://www.ed.ac.uk/" target="_blank"><img src="./images/logos/eduni.jpeg"
@@ -154,24 +137,26 @@
                                                                            alt="Cambridge University"></a>
     </div>
 
-</div><!-- MAIN -->
+</div><!-- main-->
 
 <script type="text/javascript">
     //<![CDATA[
 
-    const networkTargetDiv = document.getElementById("networkDiv");
-    cv = new complexviewer.App(networkTargetDiv);
-    cv.addColorSchemeKey(document.getElementById("colors"));
-    //todo - er, use css
-    cv.svgElement.setAttribute("style", "display: -webkit-box;display: -moz-box;display: -ms-flexbox; display: -webkit-flex;display: flex;flex-grow:1;");
-
-    for (let example of exampleIndex) {
+    for (var i = 0; i < exampleIndex.length; i++) {
+        var example = exampleIndex[i];
         const dataSetsSelect = document.getElementById("dataSets");
         const opt = document.createElement("option");
         opt.value = example.ac;
         opt.innerHTML = example.name;
         dataSetsSelect.appendChild(opt);
     }
+
+    const networkTargetDiv = document.getElementById("networkDiv");
+    cv = new complexviewer.App(networkTargetDiv);
+    cv.addColorSchemeKey(document.getElementById("colors"));
+    cv.addHoverListener(function (interactorIdArr) {
+        console.log("HOVER: ", interactorIdArr.toString());
+    });
 
     loadData();
 
@@ -180,20 +165,8 @@
         const dataSetsSelect = document.getElementById("dataSets");
         const path = "./data/" + dataSetsSelect.options[dataSetsSelect.selectedIndex].value + ".json";
         d3.json(path, function (data) {
-            cv.readMIJSON(data);//, matrixExpansion);
-            resetAnnotations();
+            cv.readMIJSON(data);
         });
-    }
-
-    function resetAnnotations() {
-        let checkbox = document.getElementById("mifeatures");
-        cv.showAnnotations(checkbox.value, checkbox.checked);
-        checkbox = document.getElementById("uniprotkb");
-        cv.showAnnotations(checkbox.value, checkbox.checked);
-        checkbox = document.getElementById("superfamily");
-        cv.showAnnotations(checkbox.value, checkbox.checked);
-        checkbox = document.getElementById("interactor");
-        cv.showAnnotations(checkbox.value, checkbox.checked);
     }
 
     function setAnnotations(checkbox) {
@@ -201,7 +174,6 @@
     }
 
     function exportSVG() {
-        // todo
         const svgXML = cv.getSVG();
         const dataSetsSelect = document.getElementById("dataSets");
         download(svgXML, "application/svg", dataSetsSelect.options[dataSetsSelect.selectedIndex].value + ".svg");

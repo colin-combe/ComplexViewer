@@ -1,6 +1,6 @@
 {
   "name": "complexviewer",
-  "version": "2.0.0-beta",
+  "version": "2.0.0",
   "description": "A network visualisation that displays molecular interaction data, including detailed residue-level information such as binding sites. Used in EBI's Complex Portal and elsewhere.",
   "author": {
     "name": "Colin Combe",
@@ -50,7 +50,7 @@
     "clean": "rm dist/*",
     "start:dev": "webpack-dev-server --open --config webpack.dev.js",
     "build-dev": "rm dist/*; webpack -d --mode development --config webpack.dev.js",
-    "build-prod": "rm dist/*; webpack -p --mode production --config webpack.common.js"
+    "build-prod": "rm dist/*; webpack -p --mode production --config webpack.prod.js"
   },
   "engines": {
     "node": ">=14.0.0"

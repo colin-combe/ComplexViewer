@@ -1,141 +1,131 @@
-#main {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    flex-direction: column;
-    min-height: 0; /* NEW */
-    min-width: 0; /* NEW */
-    max-height: 100%;
+body, html {
     height: 100%;
 }
 
-.page-header {
-    width: 100%;
-}
 
-.page-header h1 {
-    color: white;
-    text-decoration: underline;
-}
-
-.examples-dropdown {
-    float: right;
-    margin-top: 5px;
-    margin-right: 10px;
-}
-
-h1 {
-    font-size: 1.6em;
-    display: inline;
-}
-
-div#centre {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    flex-direction: row;
-    flex-grow: 1;
-    width: 100%;
-    min-height: 0; /* NEW */
-    min-width: 0; /* NEW */
-
-}
-
-div#detailsDiv {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
-    min-height: 0; /* NEW */
-    min-width: 0; /* NEW */
-    width: 350px;
-    max-width: 350px;
-    background: #ecedf2;
-    color: #091D42;
-    padding: 10px;
-    margin: 10px;
-}
-
-select, button {
+body, html, select, button {
     font-size: 1em;
 }
 
-b {
-    font-weight: bold;
+label {
+    vertical-align: top;
 }
 
-div#middleDiv, div#networkDiv {
+.main {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
-}
 
-div#innerMiddleDiv {
-    display: flex;
-    flex-direction: row;
-    flex-grow: 1;
-    min-height: 0; /* NEW */
+    min-height: 0; /* NEW these are needed, i'm not sure exactly when or why */
     min-width: 0; /* NEW */
-
+    max-height: 100%;
+    max-width: 100%;
+    height: 100%;
+    width: 100%;
 }
-
-div#symbolKeyDiv {
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
-    width: 300px;
-    max-width: 300px;
-    /*
-        background:#ecedf2;
-    */
-    color: #091D42;
-    overflow: auto;
-    min-height: 0; /* NEW */
-    min-width: 0; /* NEW */
-}
-
-/*
-div#legendInner {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-
-}
-*/
 
 .controls {
-    background-color: #091D42;
-    color: #fff;
-    margin-left: 0;
+    flex: initial;
 
     display: flex;
-    flex-direction: row;
-    /*flex-grow: 1;*/
-    flex-shrink: 0;
+    /*flex-wrap: wrap;*/
+}
+
+.space-between {
+    display: flex;
     justify-content: space-between;
     align-items: center;
-
+    /*width: 100%;*/
 }
 
-.logoBar {
-    margin-top: 5px;
-    margin-bottom: 5px;
+.top-bar {
+    flex: initial;
+
+    display: flex;
+    /*flex-wrap: nowrap;*/
+}
+
+.fa-github {
+    margin-right: 5px;
+}
+
+
+.protein-buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.centre {
+    flex: auto;
+
     display: flex;
     flex-direction: row;
-    flex-shrink: 0;
-    flex-wrap: wrap;
-    height: 70px;
+    width: 100%;
+    min-height: 0; /* NEW */
+    min-width: 0; /* NEW */
 }
 
-.noShrink {
-    flex-shrink: 0;
+.middleDiv {
+    flex: auto;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* NEW */
+    min-width: 0; /* NEW */
+}
+
+.innerMiddleDiv {
+    flex: auto;
+
+    display: flex;
+    min-height: 0; /* NEW */
+    min-width: 0; /* NEW */
+}
+
+#networkDiv {
+    flex: auto;
+
+    display: flex;
+    min-height: 0; /* NEW */
+    min-width: 0; /* NEW */
+}
+
+.complexViewerSVG {
+    flex: auto;
+
+    min-height: 0; /* NEW */
+    min-width: 0; /* NEW */
+}
+
+.color-key {
+    max-width: 400px;
+}
+
+.color-key tr td:first-of-type {
+    width:90px;
+}
+
+td {
+    vertical-align: middle;
+}
+td:first-of-type{
+    text-align: end;
+}
+
+.legend {
+    flex: initial;
+    overflow: auto;
+}
+
+.logo-bar {
+    flex: initial;
+    user-select: none;
 }
 
 .logo {
@@ -144,5 +134,40 @@ div#legendInner {
 
 img {
     vertical-align: middle;
-    /*margin: 3px;*/
+    margin: 3px;
+}
+
+
+@media only screen and (max-width : 1140px) {
+    body, html, select, button {
+        font-size: 0.8em;
+    }
+
+    img {
+        height: 50%;
+    }
+
+    .color-key {
+        max-width: 150px;
+    }
+
+    .legend table tr td:first-of-type{
+        max-width: 60px;
+    }
+
+    /*.color-key tr td:first-of-type {*/
+    /*    width:60px;*/
+    /*}*/
+
+    .logo-bar{
+        display:none;
+    }
+
+    .protein-expand-label{
+        display:none;
+    }
+
+    select{
+        max-width: 150px;
+    }
 }

@@ -77,6 +77,10 @@ feature-link {
     text-anchor: end;
 }
 
+.scale-label{
+    text-anchor: middle;
+}
+
 .tooltip{
     text-anchor: start;
 }
@@ -142,13 +146,13 @@ feature-link {
     background-color: #DEF;
 }
 
-.barScale {
+.bar-scale {
     display: inline;
     padding-left: 10px;
 }
 
 .tooltip-background {
-    fill-opacity: 0.75;
+    fill-opacity: 0.6;
     stroke-opacity: 1;
     stroke-width: 1;
 }
@@ -158,4 +162,10 @@ feature-link {
     stroke: white;
     opacity: 1;
     stroke-width: 1;
+}
+
+@media only screen and (max-width : 1140px) {
+    .label {
+        text-shadow: none;
+    }
 }
