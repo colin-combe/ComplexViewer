@@ -40,13 +40,12 @@ Link.prototype.initSVG = function () {
 };
 // event handler for starting dragging or rotation (or flipping internal links)
 Link.prototype.mouseDown = function (evt) {
-    this.app.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
+    this.app.preventDefaultsAndStopPropagation(evt);
     //stop layout
     this.app.d3cola.stop();
     this.app.dragElement = this;
     //store start location
-    const p = this.app.getEventPoint(evt); // seems to be correct, see above
-    this.app.dragStart = this.app.mouseToSVG(p.x, p.y);
+    this.app.dragStart = evt;
     return false;
 };
 
@@ -66,22 +65,16 @@ Link.prototype.mouseOut = function (evt) {
     return false;
 };
 
-/*
+
 Link.prototype.touchStart = function (evt) {
     this.app.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
-    //if a force layout exists then stop it
-    if (this.app.layout !== undefined) {
-        this.app.layout.stop();
-    }
+    //stop layout
+    this.app.d3cola.stop();
     this.app.dragElement = this;
-    this.app.clearSelection();
-    //    this.setSelected(true);
     //store start location
-    const p = this.app.getTouchEventPoint(evt); // seems to be correct, see above
-    this.app.dragStart = this.app.mouseToSVG(p.x, p.y);
-    //~ this.showData();
+    this.app.dragStart = evt;
     return false;
-};*/
+};
 
 //used by BinaryLink and UnaryLink
 Link.prototype.hide = function () {

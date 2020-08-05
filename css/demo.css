@@ -7,6 +7,10 @@ body, html, select, button {
     font-size: 1em;
 }
 
+label {
+    vertical-align: top;
+}
+
 .main {
     position: absolute;
     top: 0;

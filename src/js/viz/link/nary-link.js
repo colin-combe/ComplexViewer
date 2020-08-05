@@ -51,9 +51,9 @@ NaryLink.prototype.initSVG = function () {
     this.path.onmouseout = function (evt) {
         self.mouseOut(evt);
     };
-    // this.path.ontouchstart = function (evt) {
-    //     self.touchStart(evt);
-    // };
+    this.path.ontouchstart = function (evt) {
+        self.touchStart(evt);
+    };
     // todo - prob better way todo this
     this.path2 = document.createElementNS(svgns, "path");
     this.path2.setAttribute("fill", "none");
@@ -67,9 +67,9 @@ NaryLink.prototype.initSVG = function () {
     this.path2.onmouseout = function (evt) {
         self.mouseOut(evt);
     };
-    // this.path2.ontouchstart = function (evt) {
-    //     self.touchStart(evt);
-    // };
+    this.path2.ontouchstart = function (evt) {
+        self.touchStart(evt);
+    };
 };
 
 NaryLink.prototype.showHighlight = function (show) {

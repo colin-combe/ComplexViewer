@@ -20,7 +20,7 @@ Interactor.prototype = {
     },
 };
 
-Interactor.prototype.init = function (id, app, json, name){
+Interactor.prototype.init = function (id, app, json, name) {
     this.id = id;
     this.app = app;
     this.json = json;
@@ -40,7 +40,7 @@ Interactor.prototype.init = function (id, app, json, name){
     this.sequenceLinks = new Map();
 };
 
-Interactor.prototype.initLabel = function (){
+Interactor.prototype.initLabel = function () {
     this.labelSVG = document.createElementNS(svgns, "text");
     this.labelSVG.setAttribute("x", "0"); // css?
     this.labelSVG.setAttribute("y", "10");
@@ -62,12 +62,12 @@ Interactor.prototype.initLabel = function (){
     this.upperGroup.appendChild(this.labelSVG);
 };
 
-Interactor.prototype.initOutline = function (){
+Interactor.prototype.initOutline = function () {
     this.outline.classList.add("outline");
     this.upperGroup.appendChild(this.outline);
 };
 
-Interactor.prototype.initListeners = function (){
+Interactor.prototype.initListeners = function () {
     // events
     const self = this;
     //    this.upperGroup.setAttribute('pointer-events','all');
@@ -80,15 +80,18 @@ Interactor.prototype.initListeners = function (){
     this.upperGroup.onmouseleave = function (evt) {
         self.mouseOut(evt);
     };
-    // this.upperGroup.ontouchstart = function (evt) {
-    //     self.touchStart(evt);
+
+    this.upperGroup.ontouchstart = function (evt) {
+        console.log("interactor touch start");
+        self.touchStart(evt);
+    };
+
+    // this.upperGroup.ontouchend = function (evt) {
+    //     console.log("interactor touch end");
+    //     self.mouseOut(evt);
     // };
 
-    //~ this.upperGroup.ontouchmove = function(evt) {};
-    //~ this.upperGroup.ontouchend = function(evt) {
-    //~ self.ctrl.message("protein touch end");
-    //~ self.mouseOut(evt);
-    //~ };
+    // this.upperGroup.ontouchmove = function(evt) {};
     //~ this.upperGroup.ontouchenter = function(evt) {
     //~ self.message("protein touch enter");
     //~ self.touchStart(evt);
@@ -111,26 +114,20 @@ Interactor.prototype.addStoichiometryLabel = function (stoichiometry) {
 };
 
 Interactor.prototype.mouseDown = function (evt) {
-    this.app.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
+    this.app.preventDefaultsAndStopPropagation(evt);
     this.app.d3cola.stop();
     this.app.dragElement = this;
-    const p = this.app.getEventPoint(evt);
-    this.app.dragStart = this.app.mouseToSVG(p.x, p.y);
+    this.app.dragStart = evt;
     return false;
 };
 
-//// TODO: test on touch screen
-// Interactor.prototype.touchStart = function(evt) {
-//     this.util.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
-//     if (this.util.d3cola !== undefined) {
-//         this.util.d3cola.stop();
-//     }
-//     this.util.dragElement = this;
-//     //store start location
-//     var p = this.util.getTouchEventPoint(evt);
-//     this.util.dragStart = this.util.mouseToSVG(p.x, p.y);
-//     return false;
-// };
+Interactor.prototype.touchStart = function (evt) {
+    this.app.preventDefaultsAndStopPropagation(evt);
+    this.app.d3cola.stop();
+    this.app.dragElement = this;
+    this.app.dragStart = evt;
+    return false;
+};
 
 Interactor.prototype.mouseOver = function (evt) {
     this.app.preventDefaultsAndStopPropagation(evt);
@@ -215,11 +212,11 @@ Interactor.prototype.setAllLinkCoordinates = function () {
         this.selfLink.setLinkCoordinates();
     }
     for (let link of this.sequenceLinks.values()) {
-            link.setLinkCoordinates();
+        link.setLinkCoordinates();
     }
 };
 
-export function trig (radius, angleDegrees) {
+export function trig(radius, angleDegrees) {
     //x = rx + radius * cos(theta) and y = ry + radius * sin(theta)
     const radians = (angleDegrees / 360) * Math.PI * 2;
     return {

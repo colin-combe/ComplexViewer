@@ -53,7 +53,7 @@ export function App(/*HTMLDivElement*/networkDiv) {
         .data(this.barScales)
         .enter()
         .append("div")
-        .attr("class", "barScale")
+        .attr("class", "bar-scale")
         .append("label");
     scaleButtons.append("span")
         .text(function (d) {
@@ -102,16 +102,19 @@ export function App(/*HTMLDivElement*/networkDiv) {
         self.hideTooltip(evt);
     };
     this.lastMouseUp = new Date().getTime();
-    /*this.svgElement.ontouchstart = function(evt) {
+
+    this.svgElement.ontouchstart = function(evt) {
+        console.log("svgElement touch start");
         self.touchStart(evt);
     };
     this.svgElement.ontouchmove = function(evt) {
+        console.log("svgElement touch move");
         self.touchMove(evt);
     };
     this.svgElement.ontouchend = function(evt) {
-        self.touchEnd(evt);
+        console.log("svgElement touch end");
+        self.mouseUp(evt);
     };
-    */
 
     this.el.oncontextmenu = function (evt) {
         if (evt.preventDefault) { // necessary for addEventListener, works with traditional
@@ -164,6 +167,7 @@ export function App(/*HTMLDivElement*/networkDiv) {
     this.p_pLinks.setAttribute("id", "p_pLinks");
     this.container.appendChild(this.p_pLinks);
 
+    //todo - have links above interactors?
     this.proteinUpper = document.createElementNS(svgns, "g");
     this.proteinUpper.setAttribute("id", "proteinUpper");
     this.container.appendChild(this.proteinUpper);
@@ -388,20 +392,42 @@ App.prototype.mouseDown = function (evt) {
     //prevent default, but allow propogation
     evt.preventDefault();
     this.d3cola.stop();
-    const p = this.getEventPoint(evt); // seems to be correct, see below
-    this.dragStart = this.mouseToSVG(p.x, p.y);
+    this.dragStart = evt;
+    return false;
+};
+
+
+App.prototype.touchStart = function(evt) {
+    //prevent default, but allow propogation
+    evt.preventDefault();
+    this.d3cola.stop();
+    this.dragStart = evt;
     return false;
 };
 
 // dragging/rotation/panning/selecting
 App.prototype.mouseMove = function (evt) {
-    const p = this.getEventPoint(evt); // seems to be correct, see below
+    // const p = this.getEventPoint(evt); // seems to be correct, see below
+    this.move(evt);
+};
+
+App.prototype.touchMove = function(evt) {
+    // const p = this.getTouchEventPoint(evt); // seems to be correct, see below
+    this.move(evt);
+};
+
+App.prototype.move = function (evt) {
+    const p = this.getEventPoint(evt);
     const c = this.mouseToSVG(p.x, p.y);
 
     if (this.dragElement != null) { //dragging or rotating
         this.hideTooltip();
-        const dx = this.dragStart.x - c.x;
-        const dy = this.dragStart.y - c.y;
+
+        const startPoint = this.getEventPoint(this.dragStart);
+        const svgStartPoint = this.mouseToSVG(startPoint.x, startPoint.y);
+
+        const dx = svgStartPoint.x - c.x;
+        const dy = svgStartPoint.y - c.y;
 
         if (this.state === this.STATES.DRAGGING) {
             // we are currently dragging things around
@@ -419,12 +445,11 @@ App.prototype.mouseMove = function (evt) {
                 this.dragElement.setPosition(nx, ny);
                 this.dragElement.setAllLinkCoordinates();
             }
-            this.dragStart = c;
+            this.dragStart = evt;
         } else { //not dragging or rotating yet, maybe we should start
             // don't start dragging just on a click - we need to move the mouse a bit first
             if (Math.sqrt(dx * dx + dy * dy) > (5 * this.z)) {
                 this.state = this.STATES.DRAGGING;
-
             }
         }
     } else {
@@ -434,14 +459,17 @@ App.prototype.mouseMove = function (evt) {
 };
 
 // this ends all dragging and rotating
-App.prototype.mouseUp = function (evt) {
+App.prototype.mouseUp = function (evt) { //could be tidied up
     const time = new Date().getTime();
     //console.log("Mouse up: " + evt.srcElement + " " + (time - this.lastMouseUp));
     this.preventDefaultsAndStopPropagation(evt);
     //eliminate some spurious mouse up events
-    if ((time - this.lastMouseUp) > 150) {
+    // if ((time - this.lastMouseUp) > 150) {
 
-        const p = this.getEventPoint(evt); // seems to be correct, see below
+        let p = this.getEventPoint(evt);
+        if (isNaN(p.x)){
+            p = this.getEventPoint(this.dragStart);
+        }
         const c = this.mouseToSVG(p.x, p.y);
 
         if (this.dragElement && this.dragElement.type === "protein") { /// todo be consistent about how to check if thing is protein
@@ -452,21 +480,30 @@ App.prototype.mouseUp = function (evt) {
                     this.contextMenuProt = this.dragElement;
                     this.contextMenuPoint = c;
                     const menu = d3.select(".custom-menu-margin");
-                    menu.style("top", (evt.pageY - 20) + "px").style("left", (evt.pageX - 20) + "px").style("display", "block");
+                    let pageX, pageY;
+                    if (evt.pageX) {
+                        pageX = evt.pageX;
+                        pageY = evt.pageY;
+                    } else {
+                        pageX = this.dragStart.touches[0].pageX;
+                        pageY = this.dragStart.touches[0].pageY;
+                    }
+                    menu.style("top", (pageY - 20) + "px").style("left", (pageX - 20) + "px").style("display", "block");
                     d3.select(".scaleButton_" + (this.dragElement.stickZoom * 100)).property("checked", true);
                 }
             }
-        }
+        // }
     }
 
     this.dragElement = null;
+    this.dragStart = {};
     this.state = this.STATES.MOUSE_UP;
 
     this.lastMouseUp = time;
     return false;
 };
 
-//gets mouse position
+//gets mouse position - is there a better way?
 App.prototype.getEventPoint = function (evt) {
     const p = this.svgElement.createSVGPoint();
     let element = this.svgElement.parentNode;
@@ -477,8 +514,19 @@ App.prototype.getEventPoint = function (evt) {
         left += element.offsetLeft || 0;
         element = element.offsetParent;
     } while (element);
-    p.x = evt.pageX - left;
-    p.y = evt.pageY - top;
+    let pageX, pageY;
+    if (evt.touches && evt.touches.length > 0) {
+        pageX = evt.touches[0].pageX;
+        pageY = evt.touches[0].pageY;
+    } else if (evt.pageX) {
+        pageX = evt.pageX;
+        pageY = evt.pageY;
+    }
+    // else { //looks like bad idea
+    //     return this.getEventPoint(this.dragStart); //touch events ending
+    // }
+    p.x = pageX - left;
+    p.y = pageY - top;
     return p;
 };
 
@@ -492,123 +540,6 @@ App.prototype.preventDefaultsAndStopPropagation = function (evt) {
         evt.preventDefault();
 };
 
-/**
- * Handle touchstart event.
-
- App.prototype.touchStart = function(evt) {
-    //prevent default, but allow propogation
-    evt.preventDefault();
-
-    //stop force layout
-    if (typeof this.d3cola !== 'undefined' && this.d3cola != null) {
-        this.d3cola.stop();
-    }
-
-    var p = this.getTouchEventPoint(evt); // seems to be correct, see below
-    this.dragStart = this.mouseToSVG(p.x, p.y);
-};
-
- // dragging/rotation/panning/selecting
- App.prototype.touchMove = function(evt) {
-    // if (this.sequenceInitComplete) { // just being cautious
-    var p = this.getTouchEventPoint(evt); // seems to be correct, see below
-    var c = this.mouseToSVG(p.x, p.y);
-
-    if (this.dragElement != null) { //dragging or rotating
-        this.hideTooltip();
-        var dx = this.dragStart.x - c.x;
-        var dy = this.dragStart.y - c.y;
-
-        if (this.state === this.STATES.DRAGGING) {
-            // we are currently dragging things around
-            var ox, oy, nx, ny;
-            if (typeof this.dragElement.ix=== 'undefined') { // if not an Interactor
-                var nodes = this.dragElement.interactors;
-                var nodeCount = nodes.length;
-                for (var i = 0; i < nodeCount; i++) {
-                    var protein = nodes[i];
-                    ox = protein.cx;
-                    oy = protein.cy;
-                    nx = ox - dx;
-                    ny = oy - dy;
-                    protein.setPosition(nx, ny);
-                    protein.setAllLinkCoordinates();
-                }
-                for (i = 0; i < nodeCount; i++) {
-                    nodes[i].setAllLinkCoordinates();
-                }
-            } else {
-                ox = this.dragElement.cx;
-                oy = this.dragElement.cy;
-                nx = ox - dx;
-                ny = oy - dy;
-                this.dragElement.setPosition(nx, ny);
-                this.dragElement.setAllLinkCoordinates();
-            }
-            this.dragStart = c;
-        } else { //not dragging or rotating yet, maybe we should start
-            // don't start dragging just on a click - we need to move the mouse a bit first
-            if (Math.sqrt(dx * dx + dy * dy) > (5 * this.z)) {
-                this.state = this.STATES.DRAGGING;
-
-            }
-        }
-    } else {
-        this.showTooltip(p);
-    }
-    return false;
-};
-
-// this ends all dragging and rotating
-App.prototype.touchEnd = function(evt) {
-    var time = new Date().getTime();
-    //console.log("Mouse up: " + evt.srcElement + " " + (time - this.lastMouseUp));
-    this.preventDefaultsAndStopPropagation(evt);
-    //eliminate some spurious mouse up events
-    if ((time - this.lastMouseUp) > 150) {
-
-        var p = this.getTouchEventPoint(evt); // seems to be correct, see below
-        var c = this.mouseToSVG(p.x, p.y);
-
-        if (this.dragElement != null) {
-            if (!(this.state === this.STATES.DRAGGING || this.state === this.STATES.ROTATING)) { //not dragging or rotating
-                if (!this.dragElement.expanded) {
-                    this.dragElement.setForm(1);
-                } else {
-                    this.contextMenuProt = this.dragElement;
-                    this.contextMenuPoint = c;
-                    var menu = d3.select(".custom-menu-margin")
-                    menu.style("top", (evt.pageY - 20) + "px").style("left", (evt.pageX - 20) + "px").style("display", "block");
-                    d3.select(".scaleButton_" + (this.dragElement.stickZoom * 100)).property("checked", true)
-                }
-            }
-        }
-    }
-
-    this.dragElement = null;
-    this.whichRotator = -1;
-    this.state = this.STATES.MOUSE_UP;
-
-    this.lastMouseUp = time;
-    return false;
-};
-
-//gets mouse position
-App.prototype.getTouchEventPoint = function(evt) {
-    var p = this.svgElement.createSVGPoint();
-    var element = this.svgElement.parentNode;
-    var top = 0,
-        left = 0;
-    do {
-        top += element.offsetTop || 0;
-        left += element.offsetLeft || 0;
-        element = element.offsetParent;
-    } while (element);
-    p.x = evt.touches[0].pageX - left;
-    p.y = evt.touches[0].pageY - top;
-    return p;
-};
- */
 App.prototype.autoLayout = function () {
     this.d3cola.stop();
     const self = this;
@@ -809,21 +740,7 @@ App.prototype.getSVG = function () { //todo - somewhat broken, annotations missi
     var svgXML = svgUtils.makeXMLStr(new XMLSerializer(), svgStrings[0]);
 
     return svgXML;
-
-    // var fileName = this.filenameStateString().substring(0, 240);
-    // download(svgXML, 'application/svg', fileName + ".svg");
-
 };
-
-// App.prototype.getSVG = function () {
-//     let svgXml = this.svgElement.outerHTML.replace(/<rect .*?\/rect>/i, ""); //take out white background fill
-//     const viewBox = "viewBox=\"0 0 " + this.svgElement.parentNode.clientWidth + " " + this.svgElement.parentNode.clientHeight + "\" ";
-//     svgXml = svgXml.replace("<svg ", "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:ev=\"http://www.w3.org/2001/xml-events\" " + viewBox);
-//
-//     return "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" +
-//         "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">" +
-//         svgXml;
-// };
 
 // transform the mouse-position into a position on the svg
 App.prototype.mouseToSVG = function (x, y) {
