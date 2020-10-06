@@ -5,11 +5,11 @@ const exampleIndex = [
         "name": "~CPX-1920",
         "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-1920",
     },
-    // {
-    //     "ac": "CPX-1920",
-    //     "name": "CPX-1920",
-    //     "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-1920",
-    // },
+    {
+        "ac": "CPX-1920",
+        "name": "CPX-1920",
+        "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-1920",
+    },
     {
         "ac": "EBI-9008420",
         "name": "Hemoglobin HbA complex",

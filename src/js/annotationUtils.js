@@ -15,29 +15,27 @@ export function fetchAnnotations(/*App*/ app, callback) {
     const molCount = proteins.length;
 
     for (let prot of proteins) {
-        getSuperFamFeatures(prot, function () {
-            protsAnnotated++;
-            if (protsAnnotated === molCount) {
-                callback();
-            }
-        });
-        getUniProtFeatures(prot, function () {
-            protsAnnotated++;
-            if (protsAnnotated === molCount) {
-                callback();
-            }
-        });
+        const uniprotAccRegex = new RegExp("[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}![-]", "i");
+        const match = uniprotAccRegex.exec(prot.json.identifier.id);
+        if (match && match[0] == prot.json.identifier.id.trim()) {
+            getSuperFamFeatures(prot, function () {
+                protsAnnotated++;
+                if (protsAnnotated === molCount) {
+                    callback();
+                }
+            });
+            getUniProtFeatures(prot, function () {
+                protsAnnotated++;
+                if (protsAnnotated === molCount) {
+                    callback();
+                }
+            });
+        }
     }
 }
 
-function extractUniprotAccession(id) {
-    const uniprotAccRegex = new RegExp("[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}", "i");
-    const match = uniprotAccRegex.exec(id);
-    return match[0];
-}
-
 function getUniProtFeatures(prot, callback) {
-    const url = "https://www.ebi.ac.uk/proteins/api/proteins/" + extractUniprotAccession(prot.id);
+    const url = "https://www.ebi.ac.uk/proteins/api/proteins/" + prot.json.identifier.id.trim();
     d3.json(url, function (json) {
         let annotations = prot.annotationSets.get("UniprotKB");
         if (typeof annotations === "undefined") {
@@ -58,7 +56,7 @@ function getUniProtFeatures(prot, callback) {
 }
 
 function getSuperFamFeatures(prot, callback) {
-    const url = "https://supfam.mrc-lmb.cam.ac.uk/SUPERFAMILY/cgi-bin/das/up/features?segment=" + extractUniprotAccession(prot.id);
+    const url = "https://supfam.mrc-lmb.cam.ac.uk/SUPERFAMILY/cgi-bin/das/up/features?segment=" + prot.json.identifier.id.trim();
     d3.xml(url, function (xml) {
         let annotations = prot.annotationSets.get("Superfamily");
         if (typeof annotations === "undefined") {
