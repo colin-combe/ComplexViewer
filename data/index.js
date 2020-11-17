@@ -6,6 +6,21 @@ const exampleIndex = [
         "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-1920",
     },
     {
+        "ac": "EBI-25816865",
+        "name": "EBI-25816865",
+        "url": "http://www.ebi.ac.uk/intact/complex/details/EBI-25816865",
+    },
+    {
+        "ac": "EBI-25570228",
+        "name": "EBI-25570228",
+        "url": "http://www.ebi.ac.uk/intact/complex/details/EBI-25570228",
+    },
+    {
+        "ac": "~EBI-6884640",
+        "name": "~EBI-6884640",
+        "url": "http://www.ebi.ac.uk/intact/complex/details/EBI-6884640",
+    },
+    {
         "ac": "CPX-1920",
         "name": "CPX-1920",
         "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-1920",
