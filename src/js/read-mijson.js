@@ -275,6 +275,10 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
             interactor.type.id === "MI:0609" // RNA - small nucleolar
             ||
             interactor.type.id === "MI:0325" // RNA - transfer
+            ||
+            interactor.type.id === "IA:2966" // RNA - double stranded ribonucleic acid
+            ||
+            interactor.type.id === "MI:0318" // nucleic acid
         ) {
             participant = new RNA(participantId, app, interactor, interactor.label);
         } else if (interactor.type.id === "MI:0319" // DNA
