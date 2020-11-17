@@ -137,14 +137,18 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
                 }
                 // console.log("*", mID, seqDatum);
                 const molecule = app.participants.get(mID);
-                const seqFeature = new SequenceDatum(molecule, seqDatum.pos);
-                const annotation = new Annotation(annotName, seqFeature);
-                let miFeatures = molecule.annotationSets.get("MI Features");
-                if (!miFeatures) {
-                    miFeatures = [];
-                    molecule.annotationSets.set("MI Features", miFeatures);
+                if (molecule) {
+                    const seqFeature = new SequenceDatum(molecule, seqDatum.pos);
+                    const annotation = new Annotation(annotName, seqFeature);
+                    let miFeatures = molecule.annotationSets.get("MI Features");
+                    if (!miFeatures) {
+                        miFeatures = [];
+                        molecule.annotationSets.set("MI Features", miFeatures);
+                    }
+                    miFeatures.push(annotation);
+                } else {
+                    console.log("participant " + mID + " not found!");
                 }
-                miFeatures.push(annotation);
             }
         }
     }
@@ -275,6 +279,10 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
             interactor.type.id === "MI:0609" // RNA - small nucleolar
             ||
             interactor.type.id === "MI:0325" // RNA - transfer
+            ||
+            interactor.type.id === "IA:2966" // RNA - double stranded ribonucleic acid
+            ||
+            interactor.type.id === "MI:0318" // nucleic acid
         ) {
             participant = new RNA(participantId, app, interactor, interactor.label);
         } else if (interactor.type.id === "MI:0319" // DNA
