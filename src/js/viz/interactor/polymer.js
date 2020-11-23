@@ -387,7 +387,6 @@ Polymer.prototype.toStickNoTransition = function () {
 
     const protLength = this.size * this.stickZoom;
     const r = this.getSymbolRadius();
-
     const lengthInterpol = d3.interpolate((2 * r), protLength);
     const labelTranslateInterpol = d3.interpolate(-(r + 5), -(((this.size / 2) * this.stickZoom) + (this.nTerminusFeature ? 25 : 10)));
 
