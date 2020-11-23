@@ -12,7 +12,7 @@ Interactor.prototype = {
         if (!this.expanded) {
             return (2 * this.getSymbolRadius()) + 5 + this.labelSVG.getComputedTextLength();
         } else {
-            return (this.size * this.stickZoom) + 5 + this.labelSVG.getComputedTextLength();
+            return (this.size * this.stickZoom) + 45 + this.labelSVG.getComputedTextLength();
         }
     },
     get height() {
@@ -138,7 +138,11 @@ Interactor.prototype.getPosition = function () {
 Interactor.prototype.setPosition = function (x, y) {
     this.px = this.ix;
     this.py = this.iy;
-    this.ix = x;
+    let xOffset = (this.width / 2 - (this.getSymbolRadius()));
+    if (this.expanded) {
+        xOffset = xOffset - (this.size / 2 * this.stickZoom );
+    }
+    this.ix = x + xOffset;
     this.iy = y;
     this.upperGroup.setAttribute("transform", "translate(" + this.ix + " " + this.iy + ")");
 };

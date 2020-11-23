@@ -20,7 +20,7 @@ import {svgns} from "./config";
 // so continuing to use prototypical inheritance in things for time being
 
 export function App(/*HTMLDivElement*/networkDiv) {
-    // this.debug = true; // things aren't exactly lined up in the bounding boxes cola is using, to do so breaks symetery of some things
+    //this.debug = true;
     this.el = networkDiv;
 
     this.STATES = {};
@@ -433,18 +433,13 @@ App.prototype.move = function (evt) {
 
         if (this.state === this.STATES.DRAGGING) {
             // we are currently dragging things around
-            let ox, oy, nx, ny;
             if (!this.dragElement.ix) {
                 for (let participant of this.dragElement.participants) {
                     participant.changePosition(dx, dy);
                 }
                 this.setAllLinkCoordinates();
             } else {
-                ox = this.dragElement.ix;
-                oy = this.dragElement.iy;
-                nx = ox - dx;
-                ny = oy - dy;
-                this.dragElement.setPosition(nx, ny);
+                this.dragElement.changePosition(dx, dy);
                 this.dragElement.setAllLinkCoordinates();
             }
             this.dragStart = evt;
@@ -908,9 +903,10 @@ App.prototype.collapseAll = function () {
 App.prototype.expandAll = function () {
     for (let participant of this.participants.values()) {
         if (participant.type === "protein" && !participant.expanded) {
-            participant.setForm(1);
+            participant.toStickNoTransition();//setForm(1);
         }
     }
+    this.autoLayout();
 };
 
 //from noe
