@@ -276,6 +276,132 @@ Polymer.prototype.toCircle = function (svgP) {
     }
 };
 
+//TODO - this can be tidied up
+Polymer.prototype.toCircleNoTransition = function (svgP) {
+    //svgP = null;// temp hack - you can uncomment this is you experience things 'flying off screen'
+    // this.busy = true;
+
+    const r = this.getSymbolRadius();
+    //
+    d3.select(this.background)
+        .attr("x", -r).attr("y", -r)
+        .attr("width", r * 2).attr("height", r * 2)
+        .attr("rx", r).attr("ry", r);
+        // .duration(Polymer.transitionTime);
+    d3.select(this.outline)
+        .attr("x", -r).attr("y", -r)
+        .attr("width", r * 2).attr("height", r * 2)
+        .attr("rx", r).attr("ry", r);
+        // .duration(Polymer.transitionTime);
+    d3.select(this.highlight)
+        .attr("width", (r * 2) + 5).attr("height", (r * 2) + 5)
+        .attr("x", -r - 2.5).attr("y", -r - 2.5)
+        .attr("rx", r + 2.5).attr("ry", r + 2.5);
+        // .duration(Polymer.transitionTime);
+
+    const stickZoomInterpol = d3.interpolate(this.stickZoom, 0);
+    // var rotationInterpol = d3.interpolate((this.rotation > 180) ? this.rotation - 360 : this.rotation, 0);
+    const labelTransform = d3.transform(this.labelSVG.getAttribute("transform"));
+    const labelStartPoint = labelTransform.translate[0];
+    const labelTranslateInterpol = d3.interpolate(labelStartPoint, -(r + 5));
+
+    let xInterpol = null,
+        yInterpol = null;
+    if (typeof svgP !== "undefined" && svgP !== null) {
+        xInterpol = d3.interpolate(this.ix, svgP.x);
+        yInterpol = d3.interpolate(this.iy, svgP.y);
+    }
+
+    const self = this;
+    d3.select(this.ticks).transition().attr("opacity", 0).duration(Polymer.transitionTime / 4)
+        .each("end",
+            function () {
+                d3.select(this).selectAll("*").remove();
+            }
+        );
+
+    for (let [annotationType, annotations] of this.annotationSets) {
+        if (this.app.annotationSetsShown.get(annotationType) === true) {
+            for (let anno of annotations) {
+                if (anno.fuzzyStart) {
+                    const fuzzyStart = anno.fuzzyStart;
+                    d3.select(fuzzyStart).attr("d", this.getAnnotationPieSlicePath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin, anno, false));
+                        // .duration(Polymer.transitionTime);
+                }
+
+                if (anno.certain) {
+                    const certain = anno.certain;
+                    d3.select(certain).attr("d", this.getAnnotationPieSlicePath(anno.seqDatum.begin, anno.seqDatum.end, anno, false));
+                        // .duration(Polymer.transitionTime);
+                }
+
+                if (anno.fuzzyEnd) {
+                    const fuzzyEnd = anno.fuzzyEnd;
+                    d3.select(fuzzyEnd).attr("d", this.getAnnotationPieSlicePath(anno.seqDatum.end, anno.seqDatum.uncertainEnd, anno, false));
+                        // .duration(Polymer.transitionTime);
+                }
+            }
+        }
+    }
+
+    const originalStickZoom = this.stickZoom;
+    const originalRotation = this.rotation;
+    const cubicInOut = d3.ease("cubic-in-out");
+    // d3.timer(function (elapsed) {
+    //     return update(elapsed / Polymer.transitionTime);
+    // });
+    update(1);
+
+
+    function update(interp) {
+        const labelTransform = d3.transform(self.labelSVG.getAttribute("transform"));
+        const k = self.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), LABEL_Y); //.scale(z).translate(-c.x, -c.y);
+        self.labelSVG.transform.baseVal.initialize(self.app.svgElement.createSVGTransformFromMatrix(k));
+        //~
+        if (xInterpol !== null) {
+            self.setPosition(xInterpol(cubicInOut(interp)), yInterpol(cubicInOut(interp)));
+        }
+
+        self.stickZoom = stickZoomInterpol(cubicInOut(interp));
+        self.setAllLinkCoordinates();
+
+        if (interp === 1) { // finished - tidy up
+            self.expanded = false;
+            self.checkLinks();
+
+            for (let [annotationType, annotations] of self.annotationSets) {
+                if (self.app.annotationSetsShown.get(annotationType) === true) {
+                    for (let anno of annotations) {
+                        if (anno.fuzzyStart) {
+                            const fuzzyStart = anno.fuzzyStart;
+                            d3.select(fuzzyStart).attr("d", self.getAnnotationPieSlicePath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin, anno));
+                        }
+
+                        if (anno.certain) {
+                            const certain = anno.certain;
+                            d3.select(certain).attr("d", self.getAnnotationPieSlicePath(anno.seqDatum.begin, anno.seqDatum.end, anno));
+                        }
+
+                        if (anno.fuzzyEnd) {
+                            const fuzzyEnd = anno.fuzzyEnd;
+                            d3.select(fuzzyEnd).attr("d", self.getAnnotationPieSlicePath(anno.seqDatum.end, anno.seqDatum.uncertainEnd, anno));
+                        }
+                    }
+                }
+            }
+
+            self.stickZoom = originalStickZoom;
+            self.rotation = originalRotation;
+            self.busy = false;
+            return true;
+        } else if (interp > 1) {
+            return update(1);
+        } else {
+            return false;
+        }
+    }
+};
+
 Polymer.prototype.toStick = function () {
     this.busy = true;
     this.expanded = true;
