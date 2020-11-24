@@ -898,6 +898,7 @@ App.prototype.collapseAll = function () {
             participant.setForm(0);
         }
     }
+    this.autoLayout();
 };
 
 App.prototype.expandAll = function () {
