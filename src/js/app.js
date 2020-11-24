@@ -895,9 +895,10 @@ App.prototype.getFeatureColors = function () {
 App.prototype.collapseAll = function () {
     for (let participant of this.participants.values()) {
         if (participant.expanded) {
-            participant.setForm(0);
+            participant.toCircleNoTransition();//.setForm(0);
         }
     }
+    this.autoLayout();
 };
 
 App.prototype.expandAll = function () {
