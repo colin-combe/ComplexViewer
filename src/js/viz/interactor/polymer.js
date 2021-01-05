@@ -1,7 +1,7 @@
 import * as d3 from "d3"; // transitions and other stuff
-import {Interactor, trig} from "./interactor";
-import {Annotation} from "./annotation";
-import {SequenceDatum} from "../sequence-datum";
+import {Interactor} from "./interactor";
+// import {Annotation} from "./annotation";
+// import {SequenceDatum} from "../sequence-datum";
 import {svgns, LABEL_Y, rotatePointAboutPoint} from "../../config";
 
 Polymer.STICKHEIGHT = 20; //height of stick in pixels

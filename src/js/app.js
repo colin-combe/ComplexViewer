@@ -924,7 +924,6 @@ App.prototype.expandAndCollapseSelection = function (moleculesSelected) {
     }
 };
 
-
 App.prototype.addHoverListener = function (hoverListener) {
     this.hoverListeners.add(hoverListener);
 };

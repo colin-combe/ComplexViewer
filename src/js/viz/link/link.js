@@ -1,4 +1,3 @@
-import {highlightColour} from "../../config";
 export function Link () {}
 
 Link.prototype.highlightParticipants = function (show) {
