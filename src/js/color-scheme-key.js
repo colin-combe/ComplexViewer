@@ -1,5 +1,5 @@
 //import * as RGBColor from "rgbcolor";
-
+//todo - move out of component?
 export function update(/*HTMLDivElement*/ div, /*App*/app) {
     div.textContent = "";
 

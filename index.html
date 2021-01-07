@@ -154,8 +154,15 @@
     const networkTargetDiv = document.getElementById("networkDiv");
     cv = new complexviewer.App(networkTargetDiv);
     cv.addColorSchemeKey(document.getElementById("colors"));
-    cv.addHoverListener(function (interactorIdArr) {
-        console.log("HOVER: ", interactorIdArr.toString());
+
+    //hover listener example
+    // cv.addHoverListener(function (participantArr) {
+    //     console.log("HOVER: ", participantArr);
+    // });
+
+    //expand listener example
+    cv.addExpandListener(function (participantArr) {
+        console.log("EXPANDED: ", participantArr);
     });
 
     loadData();
@@ -170,7 +177,7 @@
     }
 
     function setAnnotations(checkbox) {
-        cv.showAnnotations(checkbox.value, checkbox.checked);
+        console.log(cv.showAnnotations(checkbox.value, checkbox.checked));
     }
 
     function exportSVG() {
@@ -179,6 +186,7 @@
         download(svgXML, "application/svg", dataSetsSelect.options[dataSetsSelect.selectedIndex].value + ".svg");
     }
 
+    //todo - download function move into component?
     function download(content, contentType, fileName) {
         var oldToNewTypes = {
             "application/svg": "image/svg+xml;charset=utf-8",

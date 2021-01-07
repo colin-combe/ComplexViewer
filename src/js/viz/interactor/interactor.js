@@ -29,6 +29,7 @@ Interactor.prototype.init = function (id, app, json, name) {
     // this.type = json.type.name;
 
     this.expanded = false;
+    this.postAnimExpanded = false; // bit of a hack, used for updating listeners before anim complete, todo - is there better way
 
     //todo - think 'type' should be  a property here (except for complex, can just return json.type.name)
 
@@ -112,7 +113,7 @@ Interactor.prototype.touchStart = function (evt) {
 Interactor.prototype.mouseOver = function (evt) {
     this.app.preventDefaultsAndStopPropagation(evt);
     this.showHighlight(true);
-    this.app.notifyHoverListeners([this.json.id]);
+    this.app.notifyHoverListeners([this.json]);
     return false;
 };
 

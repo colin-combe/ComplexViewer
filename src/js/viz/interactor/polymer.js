@@ -143,6 +143,7 @@ Polymer.prototype.setScaleGroup = function () {
     }
 };
 
+//todo - renamt to setExpanded
 Polymer.prototype.setForm = function (form, svgP) {
     if (this.busy !== true) {
         if (form === 1) {
@@ -155,6 +156,7 @@ Polymer.prototype.setForm = function (form, svgP) {
 
 Polymer.prototype.toCircle = function (svgP) {
     //svgP = null;// temp hack - you can uncomment this is you experience things 'flying off screen'
+    this.postAnimExpanded = false; // bit of a hack, used for updating listeners before anim complete, todo - is there better way
     this.busy = true;
 
     const r = this.getSymbolRadius();
@@ -280,6 +282,7 @@ Polymer.prototype.toCircle = function (svgP) {
 Polymer.prototype.toCircleNoTransition = function (svgP) {
     //svgP = null;// temp hack - you can uncomment this is you experience things 'flying off screen'
     // this.busy = true;
+    this.postAnimExpanded = false; // bit of a hack, used for updating listeners before anim complete, todo - is there better way
 
     const r = this.getSymbolRadius();
     //
@@ -405,6 +408,7 @@ Polymer.prototype.toCircleNoTransition = function (svgP) {
 Polymer.prototype.toStick = function () {
     this.busy = true;
     this.expanded = true;
+    this.postAnimExpanded = true; // bit of a hack, used for updating listeners before anim complete, todo - is there better way
 
     const protLength = this.size * this.stickZoom;
     const r = this.getSymbolRadius();
@@ -508,6 +512,7 @@ Polymer.prototype.toStick = function () {
 };
 
 Polymer.prototype.toStickNoTransition = function () {
+    this.postAnimExpanded = true; // bit of a hack, used for updating listeners before anim complete, todo - is there better way
     this.busy = true;
     this.expanded = true;
 
