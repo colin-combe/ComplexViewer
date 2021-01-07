@@ -8,7 +8,6 @@ import {readMijson} from "./read-mijson";
 import {chooseColors, fetchAnnotations} from "./annotationUtils";
 import {svgUtils} from "./svgexp";
 
-// import {SymbolKey} from "./symbol-key";
 import * as ColorSchemeKey from "./color-scheme-key";
 import {NaryLink} from "./viz/link/nary-link";
 import {svgns} from "./config";
@@ -93,7 +92,7 @@ export function App(/*HTMLDivElement*/networkDiv) {
         self.mouseDown(evt);
     };
     this.svgElement.onmousemove = function (evt) {
-        self.mouseMove(evt);
+        self.move(evt);
     };
     this.svgElement.onmouseup = function (evt) {
         self.mouseUp(evt);
@@ -109,7 +108,7 @@ export function App(/*HTMLDivElement*/networkDiv) {
     };
     this.svgElement.ontouchmove = function (evt) {
         // console.log("svgElement touch move");
-        self.touchMove(evt);
+        self.move(evt);
     };
     this.svgElement.ontouchend = function (evt) {
         // console.log("svgElement touch end");
@@ -128,6 +127,7 @@ export function App(/*HTMLDivElement*/networkDiv) {
     this.colorSchemeKeyDivs = new Set();
     //functions that get interactor id of hover over thing
     this.hoverListeners = new Set();
+    this.expandListeners = new Set();
 
     this.el.appendChild(this.svgElement);
 
@@ -281,6 +281,7 @@ App.prototype.collapseProtein = function () {
     d3.select(".custom-menu-margin").style("display", "none");
     this.contextMenuProt.setForm(0, this.contextMenuPoint);
     this.contextMenuProt = null;
+    this.notifyExpandListeners();
 };
 
 App.prototype.init = function () {
@@ -313,7 +314,7 @@ App.prototype.init = function () {
     //console.log("default bar scale: " + this.defaultBarScale)
 
     for (let participant of this.participants.values()) {
-        if (participant.type != "complex") {
+        if (participant.type !== "complex") {
             participant.setPosition(-500, -500);
             this.proteinUpper.appendChild(participant.upperGroup);
         }
@@ -398,24 +399,12 @@ App.prototype.mouseDown = function (evt) {
     return false;
 };
 
-
 App.prototype.touchStart = function (evt) {
     //prevent default, but allow propogation
     evt.preventDefault();
     this.d3cola.stop();
     this.dragStart = evt;
     return false;
-};
-
-// dragging/rotation/panning/selecting
-App.prototype.mouseMove = function (evt) {
-    // const p = this.getEventPoint(evt); // seems to be correct, see below
-    this.move(evt);
-};
-
-App.prototype.touchMove = function (evt) {
-    // const p = this.getTouchEventPoint(evt); // seems to be correct, see below
-    this.move(evt);
 };
 
 App.prototype.move = function (evt) {
@@ -461,35 +450,36 @@ App.prototype.mouseUp = function (evt) { //could be tidied up
     //console.log("Mouse up: " + evt.srcElement + " " + (time - this.lastMouseUp));
     this.preventDefaultsAndStopPropagation(evt);
     //eliminate some spurious mouse up events
-    // if ((time - this.lastMouseUp) > 150) {
+    if ((time - this.lastMouseUp) > 150) {
 
-    let p = this.getEventPoint(evt);
-    if (isNaN(p.x)) {
-        p = this.getEventPoint(this.dragStart);
-    }
-    const c = this.mouseToSVG(p.x, p.y);
+        let p = this.getEventPoint(evt);
+        if (isNaN(p.x)) {
+            p = this.getEventPoint(this.dragStart);
+        }
+        const c = this.mouseToSVG(p.x, p.y);
 
-    if (this.dragElement && this.dragElement.type === "protein") { /// todo be consistent about how to check if thing is protein
-        if (!(this.state === this.STATES.DRAGGING || this.state === this.STATES.ROTATING)) { //not dragging or rotating
-            if (!this.dragElement.expanded) {
-                this.dragElement.setForm(1);
-            } else {
-                this.contextMenuProt = this.dragElement;
-                this.contextMenuPoint = c;
-                const menu = d3.select(".custom-menu-margin");
-                let pageX, pageY;
-                if (evt.pageX) {
-                    pageX = evt.pageX;
-                    pageY = evt.pageY;
+        if (this.dragElement && this.dragElement.type === "protein") { /// todo be consistent about how to check if thing is protein
+            if (!(this.state === this.STATES.DRAGGING || this.state === this.STATES.ROTATING)) { //not dragging or rotating
+                if (!this.dragElement.expanded) {
+                    this.dragElement.setForm(1);
+                    this.notifyExpandListeners();
                 } else {
-                    pageX = this.dragStart.touches[0].pageX;
-                    pageY = this.dragStart.touches[0].pageY;
+                    this.contextMenuProt = this.dragElement;
+                    this.contextMenuPoint = c;
+                    const menu = d3.select(".custom-menu-margin");
+                    let pageX, pageY;
+                    if (evt.pageX) {
+                        pageX = evt.pageX;
+                        pageY = evt.pageY;
+                    } else {
+                        pageX = this.dragStart.touches[0].pageX;
+                        pageY = this.dragStart.touches[0].pageY;
+                    }
+                    menu.style("top", (pageY - 20) + "px").style("left", (pageX - 20) + "px").style("display", "block");
+                    d3.select(".scaleButton_" + (this.dragElement.stickZoom * 100)).property("checked", true);
                 }
-                menu.style("top", (pageY - 20) + "px").style("left", (pageX - 20) + "px").style("display", "block");
-                d3.select(".scaleButton_" + (this.dragElement.stickZoom * 100)).property("checked", true);
             }
         }
-        // }
     }
 
     this.dragElement = null;
@@ -551,7 +541,7 @@ App.prototype.autoLayout = function () {
         p.fixed = 0;
     }
 
-    //// prune leaves from network then layout, then add back leaves and layout again (fixes haemoglobin)
+    // prune leaves from network then layout, then add back leaves and layout again (fixes haemoglobin)
     const pruned = [];
     for (let participant of self.participants.values()) {
         if (participant.binaryLinks.size > 2 && participant.type !== "complex") {
@@ -846,17 +836,19 @@ App.prototype.removeColorSchemeKey = function (/*HTMLDivElement*/ colorSchemeKey
     colorSchemeKeyDiv.textContent = "";
 };
 
-//for backwards compatibility (noe?), tbh i might have made a bit of a mess here
+//for backwards compatibility (noe?)
 App.prototype.setAnnotations = function (annoChoice) {
     annoChoice = annoChoice.toUpperCase();
     for (let annoType of this.annotationSetsShown.keys()) {
         this.showAnnotations(annoType, annoChoice === annoType);
     }
+    return this.getColorKeyJson();
 };
 
 App.prototype.showAnnotations = function (annoChoice, show) {
     this.annotationSetsShown.set(annoChoice, show);
     this.updateAnnotations();
+    return this.getColorKeyJson();
 };
 
 App.prototype.updateAnnotations = function () {
@@ -892,6 +884,38 @@ App.prototype.getFeatureColors = function () {
     return this.featureColors;
 };
 
+App.prototype.getColorKeyJson = function () {
+    const json = {"Complex":[]};
+    for (let name of NaryLink.naryColors.domain()) {
+        json.Complex.push({"name":name, "color": NaryLink.naryColors(name)});
+    }
+
+    if (this.featureColors) {
+        for (let [annotationSet, shown] of this.annotationSetsShown){
+            if (shown){
+                const featureTypes = [];
+                const dupCheck = new Set();
+                for (let p of this.participants.values()){
+                    if (p.type === "protein"){
+                        const annos = p.annotationSets.get(annotationSet);
+                        if (annos) {
+                            for (let anno of annos) {
+                                const desc = anno.description;
+                                if (!dupCheck.has(desc)) {
+                                    dupCheck.add(desc);
+                                    featureTypes.push({"name":desc, "color": this.featureColors(desc)});
+                                }
+                            }
+                        }
+                    }
+                }
+                json[annotationSet] = featureTypes;
+            }
+        }
+    }
+    return json;
+};
+
 App.prototype.collapseAll = function () {
     for (let participant of this.participants.values()) {
         if (participant.expanded) {
@@ -899,6 +923,7 @@ App.prototype.collapseAll = function () {
         }
     }
     this.autoLayout();
+    this.notifyExpandListeners();
 };
 
 App.prototype.expandAll = function () {
@@ -908,12 +933,13 @@ App.prototype.expandAll = function () {
         }
     }
     this.autoLayout();
+    this.notifyExpandListeners();
 };
 
 //from noe
-App.prototype.expandAndCollapseSelection = function (moleculesSelected) {
+App.prototype.expandAndCollapseSelection = function (moleculesSelected, idType) {
     for (let participant of this.participants.values()) {
-        const molecule_id = participant.json.identifier.id;
+        const molecule_id = participant.json.identifier[idType];
         if (moleculesSelected.includes(molecule_id)) {
             if (!participant.expanded) {
                 participant.setForm(1);
@@ -922,8 +948,8 @@ App.prototype.expandAndCollapseSelection = function (moleculesSelected) {
             participant.setForm(0);
         }
     }
+    this.notifyExpandListeners();
 };
-
 
 App.prototype.addHoverListener = function (hoverListener) {
     this.hoverListeners.add(hoverListener);
@@ -933,13 +959,33 @@ App.prototype.removeHoverListener = function (hoverListener) {
     this.hoverListeners.remove(hoverListener);
 };
 
-App.prototype.notifyHoverListeners = function (interactorIdArr) {
+App.prototype.notifyHoverListeners = function (interactorArr) {
     for (let hl of this.hoverListeners) {
-        hl(interactorIdArr);
+        hl(interactorArr);
     }
 };
 
+App.prototype.addExpandListener = function (expandListener) {
+    this.expandListeners.add(expandListener);
+};
 
-// export function makeSymbolKey(targetDiv){
-//     new SymbolKey(targetDiv);
-// }
+App.prototype.removeExpandListener = function (expandListener) {
+    this.expandListeners.remove(expandListener);
+};
+
+App.prototype.notifyExpandListeners = function () {
+    const expandedParticipants = this.getExpandedParticipants();
+    for (let hl of this.expandListeners) {
+        hl(expandedParticipants);
+    }
+};
+
+App.prototype.getExpandedParticipants = function () {
+    const expanded = [];
+    for (let participant of this.participants.values()){
+        if (participant.postAnimExpanded) {
+            expanded.push(participant.json);
+        }
+    }
+    return expanded;
+};

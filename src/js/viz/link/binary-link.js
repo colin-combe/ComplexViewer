@@ -47,8 +47,8 @@ BinaryLink.prototype.setLinkCoordinates = function () {
     let pos2 = this.participants[1].getPosition();
 
     let naryPath, iPath, a1, a2, intersect;
-    if (this.participants[0].type === "complex") {
-        naryPath = this.participants[0].naryLink.hull;
+    const complexPosition = function (participant) {
+        naryPath = participant.naryLink.hull;
         iPath = [];
         for (let p of naryPath) {
             iPath.push(new Point2D(p[0], p[1]));
@@ -57,27 +57,22 @@ BinaryLink.prototype.setLinkCoordinates = function () {
         a2 = new Point2D(pos2[0], pos2[1]);
         intersect = Intersection.intersectLinePolygon(a1, a2, iPath);
         if (intersect.points[0]) {
-            pos1 = [intersect.points[0].x, intersect.points[0].y];
+            return [intersect.points[0].x, intersect.points[0].y];
         }
+    };
 
-        // this.line.setAttribute("marker-start", "url(#marker_diamond)");
-        // this.line.setAttribute("marker-end", "url(#marker_diamond)");
+    if (this.participants[0].type === "complex") {
+        const cPos = complexPosition(this.participants[0]);
+        if (cPos) {
+            pos1 = cPos;
+        }
     }
 
     if (this.participants[1].type === "complex") {
-        naryPath = this.participants[1].naryLink.hull;
-        iPath = [];
-        for (let p of naryPath) {
-            iPath.push(new Point2D(p[0], p[1]));
+        const cPos = complexPosition(this.participants[1]);
+        if (cPos) {
+            pos2 = cPos;
         }
-        a1 = new Point2D(pos1[0], pos1[1]);
-        a2 = new Point2D(pos2[0], pos2[1]);
-        intersect = Intersection.intersectLinePolygon(a1, a2, iPath);
-        if (intersect.points[0]) {
-            pos2 = [intersect.points[0].x, intersect.points[0].y];
-        }
-        // this.line.setAttribute("marker-start", "url(#marker_diamond)");
-        // this.line.setAttribute("marker-end", "url(#marker_diamond)");
     }
 
     this.line.setAttribute("x1", pos1[0]);
