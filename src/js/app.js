@@ -939,7 +939,7 @@ App.prototype.expandAll = function () {
 //from noe
 App.prototype.expandAndCollapseSelection = function (moleculesSelected, idType) {
     for (let participant of this.participants.values()) {
-        const molecule_id = participant.json.identifier[idType];
+        const molecule_id = participant.json.identifier.id;
         if (moleculesSelected.includes(molecule_id)) {
             if (!participant.expanded) {
                 participant.setForm(1);
