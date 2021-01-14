@@ -103,16 +103,11 @@ feature-link {
     stroke: black;
 }
 
-.tick-labels {
-    font-size: 8pt;
-    text-anchor: middle;
-}
-
-/*not working right*/
 .sequence {
     font-family: 'Courier New', monospace;
     font-size: 10px;
     text-anchor: middle;
+    pointer-events: none;
 }
 
 .custom-menu-margin {
