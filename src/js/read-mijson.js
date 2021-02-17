@@ -165,7 +165,7 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
                 }
             }
         }
-        if (maxStoich < 30) {
+        if (maxStoich < 20) {
             miJson = matrix(miJson);
         }
 
