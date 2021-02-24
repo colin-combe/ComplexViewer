@@ -172,11 +172,57 @@
         const path = "./data/" + dataSetsSelect.options[dataSetsSelect.selectedIndex].value + ".json";
         d3.json(path, function (data) {
             cv.readMIJSON(data);
+            makeLegend(cv.getColorKeyJson());
         });
     }
 
     function setAnnotations(checkbox) {
-        console.log(cv.showAnnotations(checkbox.value, checkbox.checked));
+        var json = cv.showAnnotations(checkbox.value, checkbox.checked);
+        console.log(json);
+        makeLegend(json);
+    }
+
+    // you can use code below as template to make legend from json
+    function makeLegend(json) {
+        const div = document.getElementById("colors");
+        div.textContent = "";
+
+        const colorTable = document.createElement("table");
+        for (let majorClass in json) {
+            const th = colorTable.insertRow();
+            const tc0 = th.insertCell();
+            tc0.textContent = majorClass;
+            tc0.colSpan = 3;
+            for (let legendEntry of json[majorClass]) {
+                const tr = colorTable.insertRow();
+                if (legendEntry.certain && legendEntry.uncertain) {
+                    const tc1 = tr.insertCell();
+                    tc1.style.backgroundColor = legendEntry.certain.color;
+                    tc1.style.width = "45px";
+                    const tc2 = tr.insertCell();
+                    tc2.style.backgroundColor = legendEntry.uncertain.color;
+                    tc2.style.width = "45px";
+                }
+                else if (legendEntry.certain) {
+                    const tc1 = tr.insertCell();
+                    tc1.style.backgroundColor = legendEntry.certain.color;
+                    tc1.style.width = "90px";
+                    tc1.colSpan = 2;
+                }
+                else if (legendEntry.uncertain) {
+                    const tc1 = tr.insertCell();
+                    // tc1.style.backgroundColor = legendEntry.uncertain.color;
+
+                    tc1.style.background = "repeating-linear-gradient(45deg, #606dbc, #606dbc 10px, #465298 10px, #465298 20px)";
+
+                    tc1.style.width = "90px";
+                    tc1.colSpan = 2;
+                }
+                const tc3 = tr.insertCell();
+                tc3.textContent = legendEntry.name;
+            }
+        }
+        div.appendChild(colorTable);
     }
 
     function exportSVG() {

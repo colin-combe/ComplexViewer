@@ -10,6 +10,7 @@ import {svgUtils} from "./svgexp";
 
 import {NaryLink} from "./viz/link/nary-link";
 import {svgns} from "./config";
+import * as rgb_color from "rgb-color";
 
 // could refactor everything to use ES6 class syntax
 // but https://benmccormick.org/2015/04/07/es6-classes-and-backbone-js
@@ -203,14 +204,7 @@ export function App(/*HTMLDivElement*/networkDiv) {
     this.annotationSetsShown.set("Superfamily", false);
     this.annotationSetsShown.set("MI Features", true);
 
-    //lighten complex colors
-    const complexColors = [];
-    for (let c of d3_chromatic.schemePastel2) {//colorbrewer.Pastel2[8]) {
-        const hsl = d3.hsl(c);
-        hsl.l = 0.9;
-        complexColors.push(hsl + "");
-    }
-    NaryLink.naryColors = d3.scale.ordinal().range(complexColors);
+
 
     this.clear();
 }
@@ -236,6 +230,15 @@ App.prototype.clear = function () {
     this.allUnaryLinks = new Map();
     this.allSequenceLinks = new Map();
     this.complexes = [];
+
+    //lighten complex colors
+    let complexColors = [];
+    for (let c of d3_chromatic.schemePastel2) {//colorbrewer.Pastel2[8]) {
+        const hsl = d3.hsl(c);
+        hsl.l = 0.9;
+        complexColors.push(hsl + "");
+    }
+    NaryLink.naryColors = d3.scale.ordinal().range(complexColors);
 
     this.proteinCount = 0;
     this.z = 1;
@@ -794,8 +797,9 @@ App.prototype.hideTooltip = function () {
 App.prototype.setAnnotations = function (annoChoice) {
     annoChoice = annoChoice.toUpperCase();
     for (let annoType of this.annotationSetsShown.keys()) {
-        this.showAnnotations(annoType, annoChoice === annoType);
+        this.annotationSetsShown.set(annoType, annoChoice === annoType);
     }
+    this.updateAnnotations();
     return this.getColorKeyJson();
 };
 
@@ -806,13 +810,7 @@ App.prototype.showAnnotations = function (annoChoice, show) {
 };
 
 App.prototype.updateAnnotations = function () {
-    // clear all annot's from proteins
-    for (let mol of this.participants.values()) {
-        if (mol.type === "protein") {
-            mol.clearPositionalFeatures();
-        }
-    }
-    //clear other stuff
+    //clear stuff
     this.defs.textContent = ""; // clears hatched fills
     this.uncertainCategories = new Set();
     this.certainCategories = new Set();
@@ -828,7 +826,7 @@ App.prototype.updateAnnotations = function () {
             }
         }
     }
-
+    //choose appropriate color scheme
     let colorScheme;
     if (categories.size < 11) {
         colorScheme = d3.scale.ordinal().range(d3_chromatic.schemeTableau10);
@@ -837,78 +835,78 @@ App.prototype.updateAnnotations = function () {
     }
 
     const self = this;
-
     function createHatchedFill(name, color) {
-        if (!self.uncertainCategories.has(name)) {
-            const pattern = self.defs.append("pattern")
-                .attr("id", name)
-                .attr("patternUnits", "userSpaceOnUse")
-                .attr("x", 0)
-                .attr("y", 0)
-                .attr("width", 12)
-                .attr("height", 12)
-                .attr("patternTransform", "rotate(45)");
-            pattern.append("rect")
-                .attr("x", 0)
-                .attr("y", 2)
-                .attr("width", 12)
-                .attr("height", 4)
-                .attr("fill", color);
-
-            pattern.append("rect")
-                .attr("x", 0)
-                .attr("y", 8)
-                .attr("width", 12)
-                .attr("height", 4)
-                .attr("fill", color);
-            self.uncertainCategories.add(name);
-        }
+        const pattern = self.defs.append("pattern")
+            .attr("id", name)
+            .attr("patternUnits", "userSpaceOnUse")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", 12)
+            .attr("height", 12)
+            .attr("patternTransform", "rotate(45)");
+        pattern.append("rect")
+            .attr("x", 0)
+            .attr("y", 2)
+            .attr("width", 12)
+            .attr("height", 4)
+            .attr("fill", color);
+        pattern.append("rect")
+            .attr("x", 0)
+            .attr("y", 8)
+            .attr("width", 12)
+            .attr("height", 4)
+            .attr("fill", color);
     }
 
     for (let participant of this.participants.values()) {
-        for (let [annotationType, annotations] of participant.annotationSets) {
-            if (this.annotationSetsShown.get(annotationType) === true) {
-                for (let anno of annotations) {
-                    let color;
-                    if (anno.description === "No annotations") {
-                        color = "#eeeeee";
-                    } else {
-                        color = colorScheme(anno.description);
-                    }
-                    //ToDO - way more of these are being created than needed
-                    createHatchedFill("checkers_" + anno.description + "_" + color.toString(), color);
-                    const checkedFill = "url('#checkers_" + anno.description + "_" + color.toString() + "')";
-                    if (anno.fuzzyStart) {
-                        anno.fuzzyStart.setAttribute("fill", checkedFill);
-                        anno.fuzzyStart.setAttribute("stroke", color);
-                    }
-                    if (anno.certain) {
-                        anno.certain.setAttribute("fill", color);
-                        anno.certain.setAttribute("stroke", color);
-                    }
-                    if (anno.fuzzyEnd) {
-                        anno.fuzzyEnd.setAttribute("fill", checkedFill);
-                        anno.fuzzyEnd.setAttribute("stroke", color);
+        if (participant.type === "protein") {
+            participant.clearPositionalFeatures();
+            participant.updatePositionalFeatures();
+            for (let [annotationType, annotations] of participant.annotationSets) {
+                if (this.annotationSetsShown.get(annotationType) === true) {
+                    for (let anno of annotations) {
+                        let color;
+                        if (anno.description === "No annotations") {
+                            color = "#eeeeee";
+                        } else {
+                            color = colorScheme(anno.description);
+                        }
+                        if (anno.certain) {
+                            anno.certain.setAttribute("fill", color);
+                            anno.certain.setAttribute("stroke", color);
+                            this.certainCategories.add(anno.description);
+                        }
+                        if (anno.fuzzyStart || anno.fuzzyEnd) {
+                            if (!this.uncertainCategories.has(name)) {
+                                // make transparent version of color
+                                const temp = new rgb_color(color);
+                                const transpColor = "rgba(" + temp.r + "," + temp.g + "," + temp.b + ", 0.6)";
+                                createHatchedFill("hatched_" + anno.description + "_" + color.toString(), transpColor);
+                                this.uncertainCategories.add(anno.description);
+                            }
+                            const checkedFill = "url('#hatched_" + anno.description + "_" + color.toString() + "')";
+                            if (anno.fuzzyStart) {
+                                anno.fuzzyStart.setAttribute("fill", checkedFill);
+                                anno.fuzzyStart.setAttribute("stroke", color);
+                            }
+                            if (anno.fuzzyEnd) {
+                                anno.fuzzyEnd.setAttribute("fill", checkedFill);
+                                anno.fuzzyEnd.setAttribute("stroke", color);
+                            }
+                        }
                     }
                 }
             }
         }
     }
-
     this.featureColors = colorScheme;
-
-    for (let mol of this.participants.values()) {
-        if (mol.type === "protein") {
-            mol.updatePositionalFeatures();
-        }
-    }
 };
+
 App.prototype.getColorKeyJson = function () {
     const json = {"Complex": []};
     for (let name of NaryLink.naryColors.domain()) {
-        json.Complex.push({"name": name, "color": NaryLink.naryColors(name)});
+        json.Complex.push({"name": name, "certain":{"color": NaryLink.naryColors(name)}});
     }
-
     if (this.featureColors) {
         for (let [annotationSet, shown] of this.annotationSetsShown) {
             if (shown) {
@@ -922,12 +920,19 @@ App.prototype.getColorKeyJson = function () {
                                 const desc = anno.description;
                                 if (!dupCheck.has(desc)) {
                                     dupCheck.add(desc);
-
-                                    if (this.hatchedNames.has(desc)) {
-                                        console.log(desc + "is hatched");
+                                    const featureType = {
+                                        "name": desc
+                                    };
+                                    if (this.certainCategories.has(desc)) {
+                                      featureType.certain = {"color": this.featureColors(desc)};
                                     }
-
-                                    featureTypes.push({"name": desc, "color": this.featureColors(desc)});
+                                    if (this.uncertainCategories.has(desc)) {
+                                        // make transparent version of color
+                                        const temp = new rgb_color(this.featureColors(desc));
+                                        const transpColor = "rgba(" + temp.r + "," + temp.g + "," + temp.b + ", 0.6)";
+                                        featureType.uncertain = {"color": transpColor};
+                                    }
+                                    featureTypes.push(featureType);
                                 }
                             }
                         }

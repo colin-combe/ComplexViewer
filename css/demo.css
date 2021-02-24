@@ -103,19 +103,12 @@ label {
     min-width: 0; /* NEW */
 }
 
-.color-key {
+.colors {
     max-width: 400px;
-}
-
-.color-key tr td:first-of-type {
-    width:90px;
 }
 
 td {
     vertical-align: middle;
-}
-td:first-of-type{
-    text-align: end;
 }
 
 .legend {
