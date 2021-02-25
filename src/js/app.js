@@ -1020,7 +1020,7 @@ App.prototype.getExpandedParticipants = function () {
     return expanded;
 };
 
-App.prototype.download = function (fileName) {
+App.prototype.downloadSVG = function (fileName) {
     if (!fileName) {
         fileName = "complexViewer";
     }
