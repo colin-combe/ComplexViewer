@@ -253,7 +253,7 @@ FeatureLink.prototype.setLinkCoordinates = function () {
     // let highlightGlyphPath = "M" + triPointMid[0] + "," + triPointMid[1];
     for (let f = 0; f < fSDCount; f++) {
         seqDatum = this.fromSequenceData[f];
-        if (isNumber(seqDatum.begin)  && isNumber(seqDatum.end) || fromParticipant.type === "complex") {
+        if (isNumber(seqDatum.begin)  && isNumber(seqDatum.end) || fromParticipant.type !== "protein") {
             glyphPath += getSegment(triPointMid, ftMid, seqDatum.begin, seqDatum.end, fromParticipant, fyOffset, toOriginPoint);
         }
         // highlightStartRes = seqDatum.begin;
@@ -273,7 +273,7 @@ FeatureLink.prototype.setLinkCoordinates = function () {
     }
     for (let t = 0; t < tSDCount; t++) {
         seqDatum = this.toSequenceData[t];
-        if (isNumber(seqDatum.begin) && isNumber(seqDatum.end) || toParticipant.type === "complex") {
+        if (isNumber(seqDatum.begin) && isNumber(seqDatum.end) || toParticipant.type !== "protein") {
             glyphPath += getSegment(triPointMid, ttMid, seqDatum.begin, seqDatum.end, toParticipant, tyOffset, fromOriginPoint);
         }
         // highlightStartRes = seqDatum.begin;

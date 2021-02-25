@@ -96,6 +96,7 @@ Interactor.prototype.addStoichiometryLabel = function (stoichiometry) {
 
 Interactor.prototype.mouseDown = function (evt) {
     this.app.preventDefaultsAndStopPropagation(evt);
+    this.app.layoutInterupted = true;
     this.app.d3cola.stop();
     this.app.dragElement = this;
     this.app.dragStart = evt;
@@ -104,6 +105,7 @@ Interactor.prototype.mouseDown = function (evt) {
 
 Interactor.prototype.touchStart = function (evt) {
     this.app.preventDefaultsAndStopPropagation(evt);
+    this.app.layoutInterupted = true;
     this.app.d3cola.stop();
     this.app.dragElement = this;
     this.app.dragStart = evt;

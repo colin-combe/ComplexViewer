@@ -1,0 +1,272 @@
+{
+  "data": [
+    {
+      "object": "interactor",
+      "id": "uniprotkb_Q00987",
+      "sequence": "MCNTNMSVPTDGAVTTSQIPASEQETLVRPKPLLLKLLKSVGAQKDTYTMKEVLFYLGQYIMTKRLYDEKQQHIVYCSNDLLGDLFGVPSFSVKEHRKIYTMIYRNLVVVNQQESSDSGTSVSENRCHLEGGSDQKDLVQELQEEKPSSSHLVSRPSTSSRRRAISETEENSDELSGERQRKRHKSDSISLSFDESLALCVIREICCERSSSSESTGTPSNPDLDAGVSEHSGDWLDQDSVSDQFSVEFEVESLDSEDYSLSEEGQELSDEDDEVYQVTVYQAGESDTDSFEEDPEISLADYWKCTSCNEMNPPLPSHCNRCWALRENWLPEDKGKDKGEISEKAKLENSTQAEEGFDVPDCKKTIVNDSRESCVEENDDKITQASQSQESEDYSQPSTSSSIIYSSQEDVKEFEREETQDKEESVESSLPLNAIEPCVICQGRPKNGCIVHGKTGHLMACFTCAKKLKKRNKPCPVCRQPIQMIVLTYFP",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "Q00987"
+      },
+      "label": "mdm2_human"
+    },
+    {
+      "object": "interaction",
+      "id": "intact_EBI-7156290",
+      "interactionType": {
+        "id": "MI:0915",
+        "name": "physical association"
+      },
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0007",
+          "name": "anti tag coimmunoprecipitation"
+        },
+        "host": {
+          "taxid": "9606",
+          "common": "human-293",
+          "scientific": "Homo sapiens transformed primary embryonal kidney cells",
+          "cellType": {
+            "id": "ACC 305",
+            "name": "Transformed human primary embryonal kidney cells."
+          }
+        },
+        "pubid": [
+          {
+            "db": "intact",
+            "id": "EBI-7156191"
+          },
+          {
+            "db": "doi",
+            "id": "10.1038\/sj.emboj.7601469"
+          },
+          {
+            "db": "mint",
+            "id": "MINT-4054328"
+          },
+          {
+            "db": "mint",
+            "id": "MINT-5219425"
+          },
+          {
+            "db": "pubmed",
+            "id": "17159902"
+          },
+          {
+            "db": "imex",
+            "id": "IM-11399"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0471",
+          "name": "MINT, Dpt of Biology, University of Rome Tor Vergata"
+        },
+        "figures": [
+          "f3b",
+          "f3a"
+        ]
+      },
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-7156290"
+        },
+        {
+          "db": "mint",
+          "id": "MINT-4054318"
+        },
+        {
+          "db": "imex",
+          "id": "IM-11399-1"
+        }
+      ],
+      "participants": [
+        {
+          "id": "1",
+          "interactorRef": "uniprotkb_Q00987",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0396",
+              "name": "predetermined participant"
+            },
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ],
+          "features": [
+            {
+              "id": "2",
+              "name": "mutation increasing interaction",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:0382",
+                "name": "mutation increasing interaction"
+              },
+              "detmethods": [
+                {
+                  "id": "MI:0074",
+                  "name": "mutation analysis"
+                }
+              ],
+              "sequenceData": [
+                {
+                  "pos": "489-489",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_Q00987",
+                  "participantRef": "1"
+                }
+              ]
+            },
+            {
+              "id": "3",
+              "name": "mutation disrupting interaction",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:0573",
+                "name": "mutation disrupting interaction"
+              },
+              "detmethods": [
+                {
+                  "id": "MI:0033",
+                  "name": "deletion analysis"
+                }
+              ],
+              "sequenceData": [
+                {
+                  "pos": "245-295",
+                  "interactorRef": "uniprotkb_Q00987",
+                  "participantRef": "1"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "4",
+          "interactorRef": "uniprotkb_Q00987",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0496",
+            "name": "bait"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0396",
+              "name": "predetermined participant"
+            },
+            {
+              "id": "MI:0078",
+              "name": "nucleotide sequence identification"
+            }
+          ],
+          "features": [
+            {
+              "id": "5",
+              "name": "gfp tagged",
+              "category": "experimentalFeatures",
+              "type": {
+                "id": "MI:0367",
+                "name": "green fluorescent protein tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_Q00987",
+                  "participantRef": "4"
+                }
+              ]
+            },
+            {
+              "id": "6",
+              "name": "mutation disrupting interaction",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:0573",
+                "name": "mutation disrupting interaction"
+              },
+              "detmethods": [
+                {
+                  "id": "MI:0074",
+                  "name": "mutation analysis"
+                }
+              ],
+              "sequenceData": [
+                {
+                  "pos": "489-489",
+                  "interactorRef": "uniprotkb_Q00987",
+                  "participantRef": "4"
+                }
+              ]
+            },
+            {
+              "id": "7",
+              "name": "mutation increasing interaction",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:0382",
+                "name": "mutation increasing interaction"
+              },
+              "detmethods": [
+                {
+                  "id": "MI:0074",
+                  "name": "mutation analysis"
+                }
+              ],
+              "sequenceData": [
+                {
+                  "pos": "488-488",
+                  "interactorRef": "uniprotkb_Q00987",
+                  "participantRef": "4"
+                }
+              ]
+            },
+            {
+              "id": "8",
+              "name": "binding site",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "detmethods": [
+                {
+                  "id": "MI:0033",
+                  "name": "deletion analysis"
+                }
+              ],
+              "sequenceData": [
+                {
+                  "pos": "438-479",
+                  "interactorRef": "uniprotkb_Q00987",
+                  "participantRef": "4"
+                }
+              ],
+              "InterPro": "IPR001841"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -17,7 +17,7 @@ export function fetchAnnotations(/*App*/ app, callback) {
     for (let prot of proteins) {
         const uniprotAccRegex = new RegExp("[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}![-]", "i");
         const match = uniprotAccRegex.exec(prot.json.identifier.id);
-        if (match && match[0] == prot.json.identifier.id.trim()) {
+        if (match && match[0] === prot.json.identifier.id.trim()) {
             getSuperFamFeatures(prot, function () {
                 protsAnnotated++;
                 if (protsAnnotated === molCount) {
@@ -47,10 +47,8 @@ function getUniProtFeatures(prot, callback) {
         });
         for (let feature of uniprotJsonFeatures) {
             const anno = new Annotation(feature.description, new SequenceDatum(null, feature.begin + "-" + feature.end));
-            // feature.seqDatum = new SequenceDatum(null, feature.begin + "-" + feature.end);
             annotations.push(anno);
         }
-        // prot.showHighlight(true);
         callback();
     });
 }
@@ -75,62 +73,6 @@ function getSuperFamFeatures(prot, callback) {
                 annotations.push(new Annotation(name, new SequenceDatum(null, start + "-" + end)));
             }
         }
-        //~ console.log(JSON.stringify(features));
-        // prot.showHighlight(true);
         callback();
     });
-}
-
-export function chooseColors(app) {
-    const categories = new Set();
-    for (let participant of app.participants.values()) {
-        for (let [annotationType, annotationSet] of participant.annotationSets) {
-            if (app.annotationSetsShown.get(annotationType) === true) {
-                for (let annotation of annotationSet.values()) {
-                    categories.add(annotation.description);
-                }
-            }
-        }
-    }
-
-    let colorScheme;
-    if (categories.size < 11) {
-        colorScheme = d3.scale.ordinal().range(d3_chromatic.schemeTableau10);//colorbrewer.Dark2[catCount].slice().reverse());
-    } else {
-        colorScheme = d3.scale.category20();
-    }
-
-    for (let participant of app.participants.values()) {
-        for (let [annotationType, annotations] of participant.annotationSets) {
-            if (app.annotationSetsShown.get(annotationType) === true) {
-                for (let anno of annotations) {
-
-                    let color;
-                    if (anno.description === "No annotations") {
-                        color = "#eeeeee";
-                    } else {
-                        color = colorScheme(anno.description);
-                    }
-
-                    //ToDO - way more of these are being created than needed
-                    app.createHatchedFill("checkers_" + anno.description + "_" + color.toString(), color);
-                    const checkedFill = "url('#checkers_" + anno.description + "_" + color.toString() + "')";
-                    if (anno.fuzzyStart) {
-                        anno.fuzzyStart.setAttribute("fill", checkedFill);
-                        anno.fuzzyStart.setAttribute("stroke", color);
-                    }
-                    if (anno.certain) {
-                        anno.certain.setAttribute("fill", color);
-                        anno.certain.setAttribute("stroke", color);
-                    }
-                    if (anno.fuzzyEnd) {
-                        anno.fuzzyEnd.setAttribute("fill", checkedFill);
-                        anno.fuzzyEnd.setAttribute("stroke", color);
-                    }
-                }
-            }
-        }
-    }
-
-    app.featureColors = colorScheme;
 }

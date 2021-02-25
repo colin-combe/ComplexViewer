@@ -1,0 +1,474 @@
+{
+  "data": [
+    {
+      "object": "interactor",
+      "id": "chebi_CHEBI:57692",
+      "type": {
+        "id": "MI:0328",
+        "name": "small molecule"
+      },
+      "organism": {
+        "taxid": "-2",
+        "common": "chemical synthesis",
+        "scientific": "Chemical synthesis (Chemical synthesis)"
+      },
+      "identifier": {
+        "db": "chebi",
+        "id": "CHEBI:57692"
+      },
+      "label": "fad(3-)"
+    },
+    {
+      "object": "interactor",
+      "id": "chebi_CHEBI:83088",
+      "type": {
+        "id": "MI:0328",
+        "name": "small molecule"
+      },
+      "organism": {
+        "taxid": "-2",
+        "common": "chemical synthesis",
+        "scientific": "Chemical synthesis (Chemical synthesis)"
+      },
+      "identifier": {
+        "db": "chebi",
+        "id": "CHEBI:83088"
+      },
+      "label": "(r)-lipoate"
+    },
+    {
+      "object": "interactor",
+      "id": "chebi_CHEBI:58937",
+      "type": {
+        "id": "MI:0328",
+        "name": "small molecule"
+      },
+      "organism": {
+        "taxid": "-2",
+        "common": "chemical synthesis",
+        "scientific": "Chemical synthesis (Chemical synthesis)"
+      },
+      "identifier": {
+        "db": "chebi",
+        "id": "CHEBI:58937"
+      },
+      "label": "thiamine(1+) diphosphate(3-)"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P11182",
+      "sequence": "MAAVRMLRTWSRNAGKLICVRYFQTCGNVHVLKPNYVCFFGYPSFKYSHPHHFLKTTAALRGQVVQFKLSDIGEGIREVTVKEWYVKEGDTVSQFDSICEVQSDKASVTITSRYDGVIKKLYYNLDDIAYVGKPLVDIETEALKDSEEDVVETPAVSHDEHTHQEIKGRKTLATPAVRRLAMENNIKLSEVVGSGKDGRILKEDILNYLEKQTGAILPPSPKVEIMPPPPKPKDMTVPILVSKPPVFTGKDKTEPIKGFQKAMVKTMSAALKIPHFGYCDEIDLTELVKLREELKPIAFARGIKLSFMPFFLKAASLGLLQFPILNASVDENCQNITYKASHNIGIAMDTEQGLIVPNVKNVQICSIFDIATELNRLQKLGSVGQLSTTDLTGGTFTLSNIGSIGGTFAKPVIMPPEVAIGALGSIKAIPRFNQKGEVYKAQIMNVSWSADHRVIDGATMSRFSNLWKSYLENPAFMLLDLK",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P11182"
+      },
+      "label": "odb2_human"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P09622",
+      "sequence": "MQSWSRVYCSLAKRGHFNRISHGLQGLSAVPLRTYADQPIDADVTVIGSGPGGYVAAIKAAQLGFKTVCIEKNETLGGTCLNVGCIPSKALLNNSHYYHMAHGKDFASRGIEMSEVRLNLDKMMEQKSTAVKALTGGIAHLFKQNKVVHVNGYGKITGKNQVTATKADGGTQVIDTKNILIATGSEVTPFPGITIDEDTIVSSTGALSLKKVPEKMVVIGAGVIGVELGSVWQRLGADVTAVEFLGHVGGVGIDMEISKNFQRILQKQGFKFKLNTKVTGATKKSDGKIDVSIEAASGGKAEVITCDVLLVCIGRRPFTKNLGLEELGIELDPRGRIPVNTRFQTKIPNIYAIGDVVAGPMLAHKAEDEGIICVEGMAGGAVHIDYNCVPSVIYTHPEVAWVGKSEEQLKEEGIEYKVGKFPFAANSRAKTNADTDGMVKILGQKSTDRVLGAHILGPGAGEMVNEAALALEYGASCEDIARVCHAHPTLSEAFREANLAASFGKSINF",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P09622"
+      },
+      "label": "dldh_human"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P21953",
+      "sequence": "MAVVAAAAGWLLRLRAAGAEGHWRRLPGAGLARGFLHPAATVEDAAQRRQVAHFTFQPDPEPREYGQTQKMNLFQSVTSALDNSLAKDPTAVIFGEDVAFGGVFRCTVGLRDKYGKDRVFNTPLCEQGIVGFGIGIAVTGATAIAEIQFADYIFPAFDQIVNEAAKYRYRSGDLFNCGSLTIRSPWGCVGHGALYHSQSPEAFFAHCPGIKVVIPRSPFQAKGLLLSCIEDKNPCIFFEPKILYRAAAEEVPIEPYNIPLSQAEVIQEGSDVTLVAWGTQVHVIREVASMAKEKLGVSCEVIDLRTIIPWDVDTICKSVIKTGRLLISHEAPLTGGFASEISSTVQEECFLNLEAPISRVCGYDTPFPHIFEPFYIPDKWKCYDALRKMINY",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P21953"
+      },
+      "label": "odbb_human"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P12694",
+      "sequence": "MAVAIAAARVWRLNRGLSQAALLLLRQPGARGLARSHPPRQQQQFSSLDDKPQFPGASAEFIDKLEFIQPNVISGIPIYRVMDRQGQIINPSEDPHLPKEKVLKLYKSMTLLNTMDRILYESQRQGRISFYMTNYGEEGTHVGSAAALDNTDLVFGQYREAGVLMYRDYPLELFMAQCYGNISDLGKGRQMPVHYGCKERHFVTISSPLATQIPQAVGAAYAAKRANANRVVICYFGEGAASEGDAHAGFNFAATLECPIIFFCRNNGYAISTPTSEQYRGDGIAARGPGYGIMSIRVDGNDVFAVYNATKEARRRAVAENQPFLIEAMTYRIGHHSTSDDSSAYRSVDEVNYWDKQDHPISRLRHYLLSQGWWDEEQEKAWRKQSRRKVMEAFEQAERKPKPNPNLLFSDVYQEMPAQLRKQQESLARHLQTYGEHYPLDHFDK",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P12694"
+      },
+      "label": "odba_human"
+    },
+    {
+      "object": "interaction",
+      "id": "complex portal_CPX-2216",
+      "interactionType": {
+        "id": "MI:0915",
+        "name": "physical association"
+      },
+      "complexType": {
+        "id": "MI:1302",
+        "name": "stable complex"
+      },
+      "evidenceType": {
+        "id": "ECO:0005547",
+        "name": "biological system reconstruction evidence based on inference from background scientific knowledge used in manual assertion"
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifiers": [
+        {
+          "db": "complex portal",
+          "id": "CPX-2216"
+        },
+        {
+          "db": "intenz",
+          "id": "1.8.1.4"
+        },
+        {
+          "db": "rhea",
+          "id": "RHEA:15045"
+        },
+        {
+          "db": "intenz",
+          "id": "1.2.4.4"
+        },
+        {
+          "db": "rhea",
+          "id": "RHEA:13457"
+        },
+        {
+          "db": "intenz",
+          "id": "2.3.1.168"
+        },
+        {
+          "db": "rhea",
+          "id": "RHEA:18865"
+        },
+        {
+          "db": "reactome",
+          "id": "R-HSA-5693120"
+        },
+        {
+          "db": "reactome",
+          "id": "R-HSA-70019"
+        },
+        {
+          "db": "intact",
+          "id": "EBI-9009633"
+        }
+      ],
+      "participants": [
+        {
+          "id": "1",
+          "interactorRef": "chebi_CHEBI:57692",
+          "stoichiometry": "12",
+          "bioRole": {
+            "id": "MI:0682",
+            "name": "cofactor"
+          },
+          "features": [
+            {
+              "id": "2",
+              "name": "dld binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "chebi_CHEBI:57692",
+                  "participantRef": "1"
+                }
+              ],
+              "linkedFeatures": [
+                "3"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "4",
+          "interactorRef": "chebi_CHEBI:83088",
+          "bioRole": {
+            "id": "MI:0682",
+            "name": "cofactor"
+          },
+          "features": [
+            {
+              "id": "5",
+              "name": "dbt binding regon",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "chebi_CHEBI:83088",
+                  "participantRef": "4"
+                }
+              ],
+              "linkedFeatures": [
+                "6"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "7",
+          "interactorRef": "chebi_CHEBI:58937",
+          "bioRole": {
+            "id": "MI:0682",
+            "name": "cofactor"
+          },
+          "features": [
+            {
+              "id": "8",
+              "name": "bckdha binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "chebi_CHEBI:58937",
+                  "participantRef": "7"
+                }
+              ],
+              "linkedFeatures": [
+                "9"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "10",
+          "interactorRef": "uniprotkb_P11182",
+          "stoichiometry": "24",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "features": [
+            {
+              "id": "6",
+              "name": "lipoyl binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "64-139",
+                  "interactorRef": "uniprotkb_P11182",
+                  "participantRef": "10"
+                }
+              ],
+              "linkedFeatures": [
+                "5"
+              ]
+            },
+            {
+              "id": "11",
+              "name": "dld binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "165-213",
+                  "interactorRef": "uniprotkb_P11182",
+                  "participantRef": "10"
+                }
+              ],
+              "linkedFeatures": [
+                "12"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "13",
+          "interactorRef": "uniprotkb_P09622",
+          "stoichiometry": "12",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "features": [
+            {
+              "id": "3",
+              "name": "fad binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "154-154",
+                  "interactorRef": "uniprotkb_P09622",
+                  "participantRef": "13"
+                },
+                {
+                  "pos": "89-89",
+                  "interactorRef": "uniprotkb_P09622",
+                  "participantRef": "13"
+                },
+                {
+                  "pos": "355-355",
+                  "interactorRef": "uniprotkb_P09622",
+                  "participantRef": "13"
+                }
+              ],
+              "linkedFeatures": [
+                "2"
+              ]
+            },
+            {
+              "id": "12",
+              "name": "dbt binding regon",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-410",
+                  "interactorRef": "uniprotkb_P09622",
+                  "participantRef": "13"
+                }
+              ],
+              "linkedFeatures": [
+                "11"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "14",
+          "interactorRef": "uniprotkb_P21953",
+          "stoichiometry": "12",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "features": [
+            {
+              "id": "15",
+              "name": "bckdha binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "51-392",
+                  "interactorRef": "uniprotkb_P21953",
+                  "participantRef": "14"
+                }
+              ],
+              "linkedFeatures": [
+                "16"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "17",
+          "interactorRef": "uniprotkb_P12694",
+          "stoichiometry": "12",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "features": [
+            {
+              "id": "9",
+              "name": "thiamine phosphate binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "157-159",
+                  "interactorRef": "uniprotkb_P12694",
+                  "participantRef": "17"
+                }
+              ],
+              "linkedFeatures": [
+                "8"
+              ]
+            },
+            {
+              "id": "16",
+              "name": "bckdhb binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "46-445",
+                  "interactorRef": "uniprotkb_P12694",
+                  "participantRef": "17"
+                }
+              ],
+              "linkedFeatures": [
+                "15"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
