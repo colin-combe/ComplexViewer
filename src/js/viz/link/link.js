@@ -41,6 +41,7 @@ Link.prototype.initSVG = function () {
 Link.prototype.mouseDown = function (evt) {
     this.app.preventDefaultsAndStopPropagation(evt);
     //stop layout
+    this.app.layoutInterupted = true;
     this.app.d3cola.stop();
     this.app.dragElement = this;
     //store start location
@@ -64,10 +65,10 @@ Link.prototype.mouseOut = function (evt) {
     return false;
 };
 
-
 Link.prototype.touchStart = function (evt) {
     this.app.preventDefaultsAndStopPropagation(evt); //see MouseEvents.js
     //stop layout
+    this.app.layoutInterupted = true;
     this.app.d3cola.stop();
     this.app.dragElement = this;
     //store start location

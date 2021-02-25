@@ -362,6 +362,7 @@ App.prototype.zoomToExtent = function () {
 App.prototype.mouseDown = function (evt) {
     //prevent default, but allow propogation
     evt.preventDefault();
+    this.layoutInterupted = true;
     this.d3cola.stop();
     this.dragStart = evt;
     return false;
@@ -370,6 +371,7 @@ App.prototype.mouseDown = function (evt) {
 App.prototype.touchStart = function (evt) {
     //prevent default, but allow propogation
     evt.preventDefault();
+    this.layoutInterupted = true;
     this.d3cola.stop();
     this.dragStart = evt;
     return false;
@@ -520,6 +522,7 @@ App.prototype.autoLayout = function () {
         return value.type !== "complex";
     });
 
+    self.layoutInterupted = false;
     if (pruned.length < allNodesExceptComplexes.length
         && pruned.length > 3 && self.participants.size < 9) {
         // <9 include hemoglobin, possibly some other small cases, but is catious, tends to mess other things up
@@ -665,7 +668,7 @@ App.prototype.autoLayout = function () {
                 }
             })
             .on("end", function () {
-                if (preRun) {
+                if (preRun && !self.layoutInterupted) {
                     // alert("initial run complete");
                     //     // for (let p of layoutObj.nodes) {
                     //     //         p.fixed = 1;
