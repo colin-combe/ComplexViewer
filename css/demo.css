@@ -111,6 +111,10 @@ td {
     vertical-align: middle;
 }
 
+.symbols td:first-of-type{
+    text-align: end;
+}
+
 .legend {
     flex: initial;
     overflow: auto;

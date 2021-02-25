@@ -40,7 +40,7 @@
                 <div id="networkDiv"></div>
 
                 <div class="legend">
-                    <table>
+                    <table class="symbols">
                         <tr>
                             <td>
                                 <img src="./src/imgs/key-svg/molecule-set.svg">
@@ -71,7 +71,7 @@
                             </td>
                             <td>RNA</td>
                         </tr>
-                        <tr style="border: 1px grey;">
+                        <tr>
                             <td>
                                 <img src="./src/imgs/key-svg/protein-circle.svg">
                                 <img src="./src/imgs/key-svg/protein-bar.svg">
@@ -186,13 +186,11 @@
     function makeLegend(json) {
         const div = document.getElementById("colors");
         div.textContent = "";
-
         const colorTable = document.createElement("table");
         for (let majorClass in json) {
-            const th = colorTable.insertRow();
-            const tc0 = th.insertCell();
-            tc0.textContent = majorClass;
-            tc0.colSpan = 3;
+            const headerCell = colorTable.insertRow().insertCell();
+            headerCell.textContent = majorClass;
+            headerCell.colSpan = 3;
             for (let legendEntry of json[majorClass]) {
                 const tr = colorTable.insertRow();
                 if (legendEntry.certain && legendEntry.uncertain) {
@@ -200,7 +198,8 @@
                     tc1.style.backgroundColor = legendEntry.certain.color;
                     tc1.style.width = "45px";
                     const tc2 = tr.insertCell();
-                    tc2.style.backgroundColor = legendEntry.uncertain.color;
+                    const color = legendEntry.uncertain.color
+                    tc2.style.background = "repeating-linear-gradient(45deg, #ffffff, #ffffff 6px, "+color+" 6px, "+color+" 12px)";
                     tc2.style.width = "45px";
                 }
                 else if (legendEntry.certain) {
@@ -211,14 +210,13 @@
                 }
                 else if (legendEntry.uncertain) {
                     const tc1 = tr.insertCell();
-                    // tc1.style.backgroundColor = legendEntry.uncertain.color;
-
-                    tc1.style.background = "repeating-linear-gradient(45deg, #606dbc, #606dbc 10px, #465298 10px, #465298 20px)";
-
+                    const color = legendEntry.uncertain.color
+                    tc1.style.background = "repeating-linear-gradient(45deg, #ffffff, #ffffff 6px, "+color+" 6px, "+color+" 12px)";
                     tc1.style.width = "90px";
                     tc1.colSpan = 2;
                 }
                 const tc3 = tr.insertCell();
+                tc3.style.paddingLeft = "10px";
                 tc3.textContent = legendEntry.name;
             }
         }

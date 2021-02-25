@@ -1021,6 +1021,10 @@ App.prototype.getExpandedParticipants = function () {
 };
 
 App.prototype.download = function (fileName) {
+    if (!fileName) {
+        fileName = "complexViewer";
+    }
+
     const content = this.getSVG();
     const newContentType = "image/svg+xml;charset=utf-8";
 
