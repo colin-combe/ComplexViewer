@@ -79,6 +79,7 @@ feature-link {
 
 .scale-label{
     text-anchor: middle;
+    pointer-events: none;
 }
 
 .tooltip{
@@ -101,6 +102,7 @@ feature-link {
 /*for protein bar scale*/
 .tick {
     stroke: black;
+    pointer-events: none;
 }
 
 .sequence {
