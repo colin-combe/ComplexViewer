@@ -58,7 +58,7 @@ Polymer.prototype.scale = function () {
     if (this.expanded) {
         const labelTransform = d3.transform(this.labelSVG.getAttribute("transform"));
         const k = this.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate)
-            .translate((-(((this.size / 2) * this.stickZoom) + (this.cTermFeatures.length > 0 ? 10 : 25))), LABEL_Y); //.scale(z).translate(-c.x, -c.y);
+            .translate((-(((this.size / 2) * this.stickZoom) + (this.nTermFeatures.length > 0 ? 25 : 10))), LABEL_Y); //.scale(z).translate(-c.x, -c.y);
         this.labelSVG.transform.baseVal.initialize(this.app.svgElement.createSVGTransformFromMatrix(k));
         this.updateAnnotationRectanglesNoTransition();
 
@@ -418,7 +418,7 @@ Polymer.prototype.toStick = function () {
 
     const lengthInterpol = d3.interpolate((2 * r), protLength);
     const stickZoomInterpol = d3.interpolate(0, this.stickZoom);
-    const labelTranslateInterpol = d3.interpolate(-(r + 5), -(((this.size / 2) * this.stickZoom) + (this.cTermFeatures.length > 0 ? 10 : 25)));
+    const labelTranslateInterpol = d3.interpolate(-(r + 5), -(((this.size / 2) * this.stickZoom) + (this.nTermFeatures.length > 0 ? 25 : 10)));
 
     const origStickZoom = this.stickZoom;
     this.stickZoom = 0;
@@ -520,7 +520,7 @@ Polymer.prototype.toStickNoTransition = function () {
     const protLength = this.size * this.stickZoom;
     const r = this.getSymbolRadius();
     const lengthInterpol = d3.interpolate((2 * r), protLength);
-    const labelTranslateInterpol = d3.interpolate(-(r + 5), -(((this.size / 2) * this.stickZoom) + (this.cTermFeatures.length > 0 ? 10 : 25)));
+    const labelTranslateInterpol = d3.interpolate(-(r + 5), -(((this.size / 2) * this.stickZoom) + (this.nTermFeatures.length > 0 ? 25 : 10)));
 
     this.checkLinks();
 
