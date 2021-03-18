@@ -1,0 +1,195 @@
+{
+  "data": [
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P0DTC2",
+      "sequence": "MFVFLVLLPLVSSQCVNLTTRTQLPPAYTNSFTRGVYYPDKVFRSSVLHSTQDLFLPFFSNVTWFHAIHVSGTNGTKRFDNPVLPFNDGVYFASTEKSNIIRGWIFGTTLDSKTQSLLIVNNATNVVIKVCEFQFCNDPFLGVYYHKNNKSWMESEFRVYSSANNCTFEYVSQPFLMDLEGKQGNFKNLREFVFKNIDGYFKIYSKHTPINLVRDLPQGFSALEPLVDLPIGINITRFQTLLALHRSYLTPGDSSSGWTAGAAAYYVGYLQPRTFLLKYNENGTITDAVDCALDPLSETKCTLKSFTVEKGIYQTSNFRVQPTESIVRFPNITNLCPFGEVFNATRFASVYAWNRKRISNCVADYSVLYNSASFSTFKCYGVSPTKLNDLCFTNVYADSFVIRGDEVRQIAPGQTGKIADYNYKLPDDFTGCVIAWNSNNLDSKVGGNYNYLYRLFRKSNLKPFERDISTEIYQAGSTPCNGVEGFNCYFPLQSYGFQPTNGVGYQPYRVVVLSFELLHAPATVCGPKKSTNLVKNKCVNFNFNGLTGTGVLTESNKKFLPFQQFGRDIADTTDAVRDPQTLEILDITPCSFGGVSVITPGTNTSNQVAVLYQDVNCTEVPVAIHADQLTPTWRVYSTGSNVFQTRAGCLIGAEHVNNSYECDIPIGAGICASYQTQTNSPRRARSVASQSIIAYTMSLGAENSVAYSNNSIAIPTNFTISVTTEILPVSMTKTSVDCTMYICGDSTECSNLLLQYGSFCTQLNRALTGIAVEQDKNTQEVFAQVKQIYKTPPIKDFGGFNFSQILPDPSKPSKRSFIEDLLFNKVTLADAGFIKQYGDCLGDIAARDLICAQKFNGLTVLPPLLTDEMIAQYTSALLAGTITSGWTFGAGAALQIPFAMQMAYRFNGIGVTQNVLYENQKLIANQFNSAIGKIQDSLSSTASALGKLQDVVNQNAQALNTLVKQLSSNFGAISSVLNDILSRLDKVEAEVQIDRLITGRLQSLQTYVTQQLIRAAEIRASANLAATKMSECVLGQSKRVDFCGKGYHLMSFPQSAPHGVVFLHVTYVPAQEKNFTTAPAICHDGKAHFPREGVFVSNGTHWFVTQRNFYEPQIITTDNTFVSGNCDVVIGIVNNTVYDPLQPELDSFKEELDKYFKNHTSPDVDLGDISGINASVVNIQKEIDRLNEVAKNLNESLIDLQELGKYEQYIKWPWYIWLGFIAGLIAIVMVTIMLCCMTSCCSCLKGCCSCGSCCKFDEDDSEPVLKGVKLHYT",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "2697049",
+        "common": "SARS-CoV-2",
+        "scientific": "SARS-CoV-2"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P0DTC2"
+      },
+      "label": "spike_sars2-1"
+    },
+    {
+      "object": "interaction",
+      "id": "intact_EBI-25776165",
+      "interactionType": {
+        "id": "MI:0407",
+        "name": "direct interaction"
+      },
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0071",
+          "name": "molecular sieving"
+        },
+        "host": {
+          "taxid": "-1",
+          "common": "in vitro",
+          "scientific": "In vitro"
+        },
+        "pubid": [
+          {
+            "db": "intact",
+            "id": "EBI-25776142"
+          },
+          {
+            "db": "doi",
+            "id": "10.1101\/2020.05.21.109157"
+          },
+          {
+            "db": "pmc",
+            "id": "PPR166043"
+          },
+          {
+            "db": "pubmed",
+            "id": "unassigned2614"
+          },
+          {
+            "db": "imex",
+            "id": "IM-28261"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0469",
+          "name": "European Bioinformatics Institute"
+        },
+        "figures": [
+          "Fig. 1D"
+        ]
+      },
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-25776165"
+        },
+        {
+          "db": "imex",
+          "id": "IM-28261-1"
+        }
+      ],
+      "participants": [
+        {
+          "id": "1",
+          "interactorRef": "uniprotkb_P0DTC2",
+          "stoichiometry": "3",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0396",
+              "name": "predetermined participant"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "9606",
+            "common": "human-293f",
+            "scientific": "Homo sapiens HEK293F cell line",
+            "cellType": {
+              "id": "MINT-4303051",
+              "name": "embryonic kidney cell 293f"
+            }
+          },
+          "features": [
+            {
+              "id": "2",
+              "name": "c-terminus",
+              "category": "experimentalFeatures",
+              "type": {
+                "id": "MI:0521",
+                "name": "his tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "c-c",
+                  "interactorRef": "uniprotkb_P0DTC2",
+                  "participantRef": "1"
+                }
+              ]
+            },
+            {
+              "id": "3",
+              "name": "P0DTC2:p.Arg682_Arg685delinsAla",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:0118",
+                "name": "mutation"
+              },
+              "sequenceData": [
+                {
+                  "pos": "682-685",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0DTC2",
+                  "participantRef": "1"
+                }
+              ]
+            },
+            {
+              "id": "4",
+              "name": "P0DTC2:p.Lys986_Val987delinsProPro",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:0118",
+                "name": "mutation"
+              },
+              "sequenceData": [
+                {
+                  "pos": "986-987",
+                  "resultingSequence": "PP",
+                  "interactorRef": "uniprotkb_P0DTC2",
+                  "participantRef": "1"
+                }
+              ]
+            },
+            {
+              "id": "5",
+              "name": "ectodomain",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-1213",
+                  "interactorRef": "uniprotkb_P0DTC2",
+                  "participantRef": "1"
+                }
+              ]
+            },
+            {
+              "id": "6",
+              "name": "T4 foldon trimerization domain",
+              "category": "experimentalFeatures",
+              "type": {
+                "id": "MI:0507",
+                "name": "tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "c-c",
+                  "interactorRef": "uniprotkb_P0DTC2",
+                  "participantRef": "1"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
