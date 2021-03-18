@@ -9,6 +9,8 @@ Polymer.MAXSIZE = 0; // residue count of longest sequence
 Polymer.transitionTime = 650;
 
 export function Polymer() {
+    this.nTermFeatures = [];
+    this.cTermFeatures = [];
 }
 
 Polymer.prototype = new Interactor();
@@ -56,7 +58,7 @@ Polymer.prototype.scale = function () {
     if (this.expanded) {
         const labelTransform = d3.transform(this.labelSVG.getAttribute("transform"));
         const k = this.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate)
-            .translate((-(((this.size / 2) * this.stickZoom) + (this.nTerminusFeature ? 25 : 10))), LABEL_Y); //.scale(z).translate(-c.x, -c.y);
+            .translate((-(((this.size / 2) * this.stickZoom) + (this.nTermFeatures.length > 0 ? 25 : 10))), LABEL_Y); //.scale(z).translate(-c.x, -c.y);
         this.labelSVG.transform.baseVal.initialize(this.app.svgElement.createSVGTransformFromMatrix(k));
         this.updateAnnotationRectanglesNoTransition();
 
@@ -143,10 +145,9 @@ Polymer.prototype.setScaleGroup = function () {
     }
 };
 
-//todo - renamt to setExpanded
-Polymer.prototype.setForm = function (form, svgP) {
+Polymer.prototype.setExpanded = function (form, svgP) {
     if (this.busy !== true) {
-        if (form === 1) {
+        if (form) {
             this.toStick();
         } else {
             this.toCircle(svgP);
@@ -417,7 +418,7 @@ Polymer.prototype.toStick = function () {
 
     const lengthInterpol = d3.interpolate((2 * r), protLength);
     const stickZoomInterpol = d3.interpolate(0, this.stickZoom);
-    const labelTranslateInterpol = d3.interpolate(-(r + 5), -(((this.size / 2) * this.stickZoom) + (this.nTerminusFeature ? 25 : 10)));
+    const labelTranslateInterpol = d3.interpolate(-(r + 5), -(((this.size / 2) * this.stickZoom) + (this.nTermFeatures.length > 0 ? 25 : 10)));
 
     const origStickZoom = this.stickZoom;
     this.stickZoom = 0;
@@ -519,7 +520,7 @@ Polymer.prototype.toStickNoTransition = function () {
     const protLength = this.size * this.stickZoom;
     const r = this.getSymbolRadius();
     const lengthInterpol = d3.interpolate((2 * r), protLength);
-    const labelTranslateInterpol = d3.interpolate(-(r + 5), -(((this.size / 2) * this.stickZoom) + (this.nTerminusFeature ? 25 : 10)));
+    const labelTranslateInterpol = d3.interpolate(-(r + 5), -(((this.size / 2) * this.stickZoom) + (this.nTermFeatures.length > 0 ? 25 : 10)));
 
     this.checkLinks();
 
@@ -631,6 +632,9 @@ Polymer.prototype.clearPositionalFeatures = function () {
     this.annotations = [];
     this.annotationTypes = [];
     this.annotationsSvgGroup.textContent = "";
+
+    this.nTermFeatures = [];
+    this.cTermFeatures = [];
 };
 
 Polymer.prototype.updatePositionalFeatures = function () {
@@ -679,8 +683,19 @@ Polymer.prototype.updatePositionalFeatures = function () {
                 if (!dupCheck.has(anno.toString())) {
                     dupCheck.add(anno.toString());
                     if (anno.seqDatum.sequenceDatumString === "n-n" || anno.seqDatum.sequenceDatumString === "c-c") {
-                        anno.rung = -1;
-                    } else {
+
+                        //anno.rung = -1;
+
+                        if (anno.seqDatum.sequenceDatumString === "n-n"){
+                            anno.rung = this.nTermFeatures.length;
+                            this.nTermFeatures.push(anno);
+                        } else {
+                            anno.rung = this.cTermFeatures.length;
+                            this.cTermFeatures.push(anno);
+                        }
+
+                    }
+                    else {
                         let rung = rungs[r];
                         if (overlaps(rung, anno)) {
                             r++;
@@ -755,6 +770,9 @@ Polymer.prototype.updatePositionalFeatures = function () {
             }
         }
     }
+    //todo - tidy so this not needed
+    this.scale();
+
 };
 
 Polymer.stepsInArc = 5;
@@ -832,29 +850,24 @@ Polymer.prototype.getAnnotationPieSlicePath = function (startRes, endRes, annota
 };
 
 Polymer.prototype.getAnnotationRectPath = function (startRes, endRes, annotation) {
-    //domain as rectangle path
-    let top, bottom, rungHeight;
-    const rung = annotation.rung;
-    if (rung === -1) {
-        bottom = Polymer.STICKHEIGHT / 2;
-        top = -Polymer.STICKHEIGHT / 2;
-    } else {
-        rungHeight = Polymer.STICKHEIGHT / this.rungCount;//annotationTypes.length;
-        top = (-Polymer.STICKHEIGHT / 2) + (rung * rungHeight);
-        bottom = top + rungHeight;
-    }
-    let annoX, annoSize, annoLength;
+    let annoX, annoSize, annoLength, rungHeight;
     if (startRes === "n-n") {
         annoX = this.getResXWithStickZoom(0.5) - 20;
         annoLength = 20;
+        rungHeight = Polymer.STICKHEIGHT / this.nTermFeatures.length;
     } else if (endRes === "c-c") {
         annoX = this.getResXWithStickZoom(this.size + 0.5);
         annoLength = 20;
+        rungHeight = Polymer.STICKHEIGHT / this.cTermFeatures.length;
     } else {
         annoX = this.getResXWithStickZoom(startRes - 0.5);
         annoSize = (1 + (endRes - startRes));
         annoLength = annoSize * this.stickZoom;
+        rungHeight = Polymer.STICKHEIGHT / this.rungCount;
     }
+
+    const top = (-Polymer.STICKHEIGHT / 2) + (annotation.rung * rungHeight);
+    const bottom = top + rungHeight;
 
     //'left' edge
     let path = "M" + annoX + "," + bottom + " L" + annoX + "," + top;

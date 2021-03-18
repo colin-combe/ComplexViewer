@@ -26,7 +26,6 @@ export function SequenceDatum(participant, sequenceDatumString) {
         this.uncertainEnd = participant.size ? participant.size : 1;
     } else if (this.sequenceDatumString === "n-n") {
         this.uncertainBegin = "n-n";
-        participant.nTerminusFeature = true;
     } else if (this.sequenceDatumString === "c-c") {
         this.uncertainEnd = "c-c";
     } else {

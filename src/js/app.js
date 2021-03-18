@@ -248,7 +248,7 @@ App.prototype.clear = function () {
 
 App.prototype.collapseProtein = function () {
     d3.select(".custom-menu-margin").style("display", "none");
-    this.contextMenuProt.setForm(0, this.contextMenuPoint);
+    this.contextMenuProt.setExpanded(false, this.contextMenuPoint);
     this.contextMenuProt = null;
     this.notifyExpandListeners();
 };
@@ -431,7 +431,7 @@ App.prototype.mouseUp = function (evt) { //could be tidied up
         if (this.dragElement && this.dragElement.type === "protein") { /// todo be consistent about how to check if thing is protein
             if (!(this.state === this.STATES.DRAGGING || this.state === this.STATES.ROTATING)) { //not dragging or rotating
                 if (!this.dragElement.expanded) {
-                    this.dragElement.setForm(1);
+                    this.dragElement.setExpanded(true);
                     this.notifyExpandListeners();
                 } else {
                     this.contextMenuProt = this.dragElement;
@@ -951,7 +951,7 @@ App.prototype.getColorKeyJson = function () {
 App.prototype.collapseAll = function () {
     for (let participant of this.participants.values()) {
         if (participant.expanded) {
-            participant.toCircleNoTransition();//.setForm(0);
+            participant.toCircleNoTransition();//.setExpanded(0);
         }
     }
     this.autoLayout();
@@ -961,7 +961,7 @@ App.prototype.collapseAll = function () {
 App.prototype.expandAll = function () {
     for (let participant of this.participants.values()) {
         if (participant.type === "protein" && !participant.expanded) {
-            participant.toStickNoTransition();//setForm(1);
+            participant.toStickNoTransition();//setExpanded(1);
         }
     }
     this.autoLayout();
@@ -975,10 +975,10 @@ App.prototype.expandAndCollapseSelection = function (moleculesSelected) { // , i
         const molecule_id = participant.json.identifier.id;
         if (moleculesSelected.includes(molecule_id)) {
             if (!participant.expanded) {
-                participant.setForm(1);
+                participant.setExpanded(true);
             }
         } else if (participant.expanded) {
-            participant.setForm(0);
+            participant.setExpanded(false);
         }
     }
     this.notifyExpandListeners();
