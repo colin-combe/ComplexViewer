@@ -6,6 +6,11 @@ const exampleIndex = [
         "url": "https://intact-portal.github.io/intact-portal-view/details/interaction/EBI-25776165",
     },
     {
+        "ac": "EBI-25437853",
+        "name": "EBI-25437853",
+        "url": "https://wwwdev.ebi.ac.uk/intact/beta/details/interaction/EBI-25437853",
+    },
+    {
         "ac": "CPX-2216",
         "name": "CPX-2216",
         "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-2216",
