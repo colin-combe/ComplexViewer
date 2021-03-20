@@ -1,6 +1,11 @@
 // eslint-disable-next-line no-unused-vars
 const exampleIndex = [
     {
+        "ac": "EBI-25437853",
+        "name": "EBI-25437853",
+        "url": "https://wwwdev.ebi.ac.uk/intact/beta/details/interaction/EBI-25437853",
+    },
+    {
         "ac": "EBI-25776165",
         "name": "EBI-25776165",
         "url": "https://intact-portal.github.io/intact-portal-view/details/interaction/EBI-25776165",

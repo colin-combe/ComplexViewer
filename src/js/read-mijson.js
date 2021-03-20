@@ -226,8 +226,7 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
                     break;
                 }
             }
-
-
+            
             if (interactionExists) {
                 participant = new Complex(participantId, app, interactorRef);
                 complexes.set(participantId, participant);
@@ -283,6 +282,8 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
             interactor.type.id === "IA:2966" // RNA - double stranded ribonucleic acid
             ||
             interactor.type.id === "MI:0318" // nucleic acid
+            ||
+            interactor.type.id === "MI:2204" // micro RNA
         ) {
             participant = new RNA(participantId, app, interactor, interactor.label);
         } else if (interactor.type.id === "MI:0319" // DNA
