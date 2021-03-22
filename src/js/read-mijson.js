@@ -247,9 +247,13 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
             interactor.type.id === "MI:0904" // bioactive entity - polysaccharide
             ||
             interactor.type.id === "MI:0328" //bioactive entity - small mol
+            ||
+            interactor.type.id === "MI:2258" // bioactive entity - xenobiotic
         ) {
             participant = new BioactiveEntity(participantId, app, interactor, interactor.label);
-        } else if (interactor.type.id === "MI:0326" || interactor.type.id === "MI:0327") { // proteins, peptides
+        } else if (interactor.type.id === "MI:0326"
+            ||
+            interactor.type.id === "MI:0327") { // proteins, peptides
             participant = new Protein(participantId, app, interactor, interactor.label, interactor.sequence);
         } else if (interactor.type.id === "MI:0250") { //genes
             participant = new Gene(participantId, app, interactor, interactor.label);
@@ -279,7 +283,9 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
             ||
             interactor.type.id === "MI:0325" // RNA - transfer
             ||
-            interactor.type.id === "IA:2966" // RNA - double stranded ribonucleic acid
+            interactor.type.id === "IA:2966" // RNA - double stranded ribonucleic acid (old)
+            ||
+            interactor.type.id === "MI:2359" // RNA - double stranded ribonucleic acid
             ||
             interactor.type.id === "MI:0318" // nucleic acid
             ||
