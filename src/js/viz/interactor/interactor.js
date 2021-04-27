@@ -10,7 +10,7 @@ Interactor.prototype = {
         // const bbox = this.upperGroup.getBBox(); //firefox buggy?
         // return bbox.width;
         if (!this.expanded) {
-            return (2 * this.getSymbolRadius()) + 5 + this.labelSVG.getComputedTextLength();
+            return (2 * this.getSymbolRadius()) + 15 + this.labelSVG.getComputedTextLength();
         } else {
             return (this.size * this.stickZoom) + 45 + this.labelSVG.getComputedTextLength();
         }
@@ -96,7 +96,6 @@ Interactor.prototype.addStoichiometryLabel = function (stoichiometry) {
 
 Interactor.prototype.mouseDown = function (evt) {
     this.app.preventDefaultsAndStopPropagation(evt);
-    this.app.layoutInterupted = true;
     this.app.d3cola.stop();
     this.app.dragElement = this;
     this.app.dragStart = evt;
@@ -105,7 +104,6 @@ Interactor.prototype.mouseDown = function (evt) {
 
 Interactor.prototype.touchStart = function (evt) {
     this.app.preventDefaultsAndStopPropagation(evt);
-    this.app.layoutInterupted = true;
     this.app.d3cola.stop();
     this.app.dragElement = this;
     this.app.dragStart = evt;

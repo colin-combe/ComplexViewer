@@ -32,7 +32,7 @@ export function App(/*HTMLDivElement*/networkDiv) {
     //avoids prob with 'save - web page complete'
     this.el.textContent = ""; //https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
 
-    this.d3cola = cola.d3adaptor();
+    this.d3cola = cola.d3adaptor().groupCompactness(Number.MIN_VALUE).avoidOverlaps(true); //1e-5
 
     const customMenuSel = d3.select(this.el)
         .append("div").classed("custom-menu-margin", true)
@@ -362,7 +362,6 @@ App.prototype.zoomToExtent = function () {
 App.prototype.mouseDown = function (evt) {
     //prevent default, but allow propogation
     evt.preventDefault();
-    this.layoutInterupted = true;
     this.d3cola.stop();
     this.dragStart = evt;
     return false;
@@ -371,7 +370,6 @@ App.prototype.mouseDown = function (evt) {
 App.prototype.touchStart = function (evt) {
     //prevent default, but allow propogation
     evt.preventDefault();
-    this.layoutInterupted = true;
     this.d3cola.stop();
     this.dragStart = evt;
     return false;
@@ -487,7 +485,7 @@ App.prototype.getEventPoint = function (evt) {
     return p;
 };
 
-//stop event propogation and defaults; only do what we ask
+//stop event propagation and defaults; only do what we ask
 App.prototype.preventDefaultsAndStopPropagation = function (evt) {
     if (evt.stopPropagation)
         evt.stopPropagation();
@@ -513,24 +511,19 @@ App.prototype.autoLayout = function () {
 
     // prune leaves from network then layout, then add back leaves and layout again (fixes haemoglobin)
     const pruned = [];
+    const allNodesExceptComplexes = [];
     for (let participant of self.participants.values()) {
         if (participant.binaryLinks.size > 2 && participant.type !== "complex") {
             pruned.push(participant);
         }
+        if (participant.type != "complex"){
+            allNodesExceptComplexes.push(participant);
+        }
     }
-    const allNodesExceptComplexes = Array.from(self.participants.values()).filter(function (value) {
-        return value.type !== "complex";
-    });
 
-    self.layoutInterupted = false;
-    if (pruned.length < allNodesExceptComplexes.length
-        && pruned.length > 3 && self.participants.size < 9) {
-        // <9 include hemoglobin, possibly some other small cases, but is catious, tends to mess other things up
-        // console.log(prunedIn);
-        doLayout(pruned, true);
-    } else {
-        doLayout(allNodesExceptComplexes, self.complexes.length > 0);
-    }
+    doLayout(pruned, true);
+    doLayout(allNodesExceptComplexes, true);
+    doLayout(allNodesExceptComplexes, false);
 
     function doLayout(nodes, preRun) {
         const layoutObj = {}; // todo get rid
@@ -547,7 +540,6 @@ App.prototype.autoLayout = function () {
         for (let binaryLink of self.allBinaryLinks.values()) {
             const fromMol = binaryLink.participants[0];
             const toMol = binaryLink.participants[1];
-            // if (preRun || (fromMol.binaryLinks.size === 4 || toMol.binaryLinks.size == 4)) {
             const source = fromMol; //molLookUp[fromMol.id];
             const target = toMol; //molLookUp[toMol.id];
 
@@ -558,7 +550,6 @@ App.prototype.autoLayout = function () {
                 linkObj.id = binaryLink.id;
                 layoutObj.links.push(linkObj);
             }
-            // }
         }
 
         const groups = [];
@@ -593,8 +584,11 @@ App.prototype.autoLayout = function () {
         const height = self.svgElement.parentNode.clientHeight;
         //console.log("**", layoutObj);
         self.d3cola.size([height - 40, width - 40])
-            .nodes(layoutObj.nodes).groups(groups).links(layoutObj.links).avoidOverlaps(true);
-        let groupDebugSel, participantDebugSel;
+            .nodes(layoutObj.nodes)
+            .groups(groups)
+            .links(layoutObj.links)
+            .symmetricDiffLinkLengths(linkLength);
+        /*let groupDebugSel, participantDebugSel;
         if (self.debug) {
             groupDebugSel = d3.select(self.container).selectAll(".group")
                 .data(groups);
@@ -622,70 +616,61 @@ App.prototype.autoLayout = function () {
 
             groupDebugSel.exit().remove();
             participantDebugSel.exit().remove();
-        }
+        }*/
 
-        const startTime = Date.now();
-        self.d3cola.symmetricDiffLinkLengths(linkLength)
-            .on("tick", function () {
-                if (Date.now() - startTime > 750) {//!preRun) {
-                    const nodes = self.d3cola.nodes();
-                    for (let node of nodes) {
-                        node.setPosition(node.x, node.y);
-                    }
-                    self.setAllLinkCoordinates();
-                    self.zoomToExtent();
-                    if (self.debug) {
-                        groupDebugSel.attr({
-                            x: function (d) {
-                                return d.bounds.x;// + (width / 2);
-                            },
-                            y: function (d) {
-                                return d.bounds.y;// + (height / 2);
-                            },
-                            width: function (d) {
-                                return d.bounds.width();
-                            },
-                            height: function (d) {
-                                return d.bounds.height();
-                            }
-                        });
-
-                        participantDebugSel.attr({
-                            x: function (d) {
-                                return d.bounds.x;// + (width / 2);
-                            },
-                            y: function (d) {
-                                return d.bounds.y;// + (height / 2);
-                            },
-                            width: function (d) {
-                                return d.bounds.width();
-                            },
-                            height: function (d) {
-                                return d.bounds.height();
-                            }
-                        });
-                    }
-                }
-            })
-            .on("end", function () {
-                if (preRun && !self.layoutInterupted) {
-                    // alert("initial run complete");
-                    //     // for (let p of layoutObj.nodes) {
-                    //     //         p.fixed = 1;
-                    //     // }
-                    doLayout(allNodesExceptComplexes, false);
-                } else {
-                    for (let node of nodes) {
-                        node.setPosition(node.x, node.y);
-                    }
-                    self.setAllLinkCoordinates();
-                    self.zoomToExtent();
-                }
-            });
         if (preRun) {
-            self.d3cola.start(23, 23, 0, 0, true);//, false, false);
+            self.d3cola.start(23, 23, 0, 0, false);
+                for (let node of nodes) {
+                    node.setPosition(node.x, node.y);
+                }
+                self.setAllLinkCoordinates();
+                self.zoomToExtent();
         } else {
-            self.d3cola.start(0, 23, 23, 0, true);//, false, false);
+            self.d3cola.start(0, 23, 1, 0, true).on("end", function () {
+                for (let node of nodes) {
+                    node.setPosition(node.x, node.y);
+                }
+                self.setAllLinkCoordinates();
+                self.zoomToExtent();
+            }).on("tick", function () {
+                const nodes = self.d3cola.nodes();
+                for (let node of nodes) {
+                    node.setPosition(node.x, node.y);
+                }
+                self.setAllLinkCoordinates();
+                self.zoomToExtent();
+                /*if (self.debug) {
+                    groupDebugSel.attr({
+                        x: function (d) {
+                            return d.bounds.x;// + (width / 2);
+                        },
+                        y: function (d) {
+                            return d.bounds.y;// + (height / 2);
+                        },
+                        width: function (d) {
+                            return d.bounds.width();
+                        },
+                        height: function (d) {
+                            return d.bounds.height();
+                        }
+                    });
+
+                    participantDebugSel.attr({
+                        x: function (d) {
+                            return d.bounds.x;// + (width / 2);
+                        },
+                        y: function (d) {
+                            return d.bounds.y;// + (height / 2);
+                        },
+                        width: function (d) {
+                            return d.bounds.width();
+                        },
+                        height: function (d) {
+                            return d.bounds.height();
+                        }
+                    });
+                }*/
+            });
         }
     }
 };
