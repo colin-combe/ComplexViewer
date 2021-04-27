@@ -42,12 +42,14 @@ function getUniProtFeatures(prot, callback) {
             annotations = [];
             prot.annotationSets.set("UniprotKB", annotations);
         }
-        const uniprotJsonFeatures = json.features.filter(function (ft) {
-            return ft.type === "DOMAIN";
-        });
-        for (let feature of uniprotJsonFeatures) {
-            const anno = new Annotation(feature.description, new SequenceDatum(null, feature.begin + "-" + feature.end));
-            annotations.push(anno);
+        if (json) {
+            const uniprotJsonFeatures = json.features.filter(function (ft) {
+                return ft.type === "DOMAIN";
+            });
+            for (let feature of uniprotJsonFeatures) {
+                const anno = new Annotation(feature.description, new SequenceDatum(null, feature.begin + "-" + feature.end));
+                annotations.push(anno);
+            }
         }
         callback();
     });
@@ -61,16 +63,18 @@ function getSuperFamFeatures(prot, callback) {
             annotations = [];
             prot.annotationSets.set("Superfamily", annotations);
         }
-        const xmlDoc = new DOMParser().parseFromString(new XMLSerializer().serializeToString(xml), "text/xml");
-        const xmlFeatures = xmlDoc.getElementsByTagName("FEATURE");
-        for (let xmlFeature of xmlFeatures) {
-            const type = xmlFeature.getElementsByTagName("TYPE")[0]; //might need to watch for text nodes getting mixed in here
-            const category = type.getAttribute("category");
-            if (category === "miscellaneous") {
-                const name = type.getAttribute("id");
-                const start = xmlFeature.getElementsByTagName("START")[0].textContent;
-                const end = xmlFeature.getElementsByTagName("END")[0].textContent;
-                annotations.push(new Annotation(name, new SequenceDatum(null, start + "-" + end)));
+        if (xml) {
+            const xmlDoc = new DOMParser().parseFromString(new XMLSerializer().serializeToString(xml), "text/xml");
+            const xmlFeatures = xmlDoc.getElementsByTagName("FEATURE");
+            for (let xmlFeature of xmlFeatures) {
+                const type = xmlFeature.getElementsByTagName("TYPE")[0]; //might need to watch for text nodes getting mixed in here
+                const category = type.getAttribute("category");
+                if (category === "miscellaneous") {
+                    const name = type.getAttribute("id");
+                    const start = xmlFeature.getElementsByTagName("START")[0].textContent;
+                    const end = xmlFeature.getElementsByTagName("END")[0].textContent;
+                    annotations.push(new Annotation(name, new SequenceDatum(null, start + "-" + end)));
+                }
             }
         }
         callback();
