@@ -497,10 +497,16 @@ App.prototype.preventDefaultsAndStopPropagation = function (evt) {
 
 App.prototype.autoLayout = function () {
     this.d3cola.stop();
-    const self = this;
 
-    // needed to ensure consistent results
-    for (let p of self.participants.values()) {
+    const pruned = [], allNodesExceptComplexes = [], self = this;
+    for (let p of this.participants.values()) {
+        if (p.type != "complex"){
+            allNodesExceptComplexes.push(p);
+            if (p.binaryLinks.size > 2) {
+                pruned.push(p);
+            }
+        }
+        // needed to ensure consistent results
         delete p.x;
         delete p.y;
         delete p.px;
@@ -509,26 +515,23 @@ App.prototype.autoLayout = function () {
         p.fixed = 0;
     }
 
-    // prune leaves from network then layout, then add back leaves and layout again (fixes haemoglobin)
-    const pruned = [];
-    const allNodesExceptComplexes = [];
-    for (let participant of self.participants.values()) {
-        if (participant.binaryLinks.size > 2 && participant.type !== "complex") {
-            pruned.push(participant);
-        }
-        if (participant.type != "complex"){
-            allNodesExceptComplexes.push(participant);
-        }
-    }
+    const linkLength = (allNodesExceptComplexes.length < 30) ? 30 : 20;
+    const width = this.svgElement.parentNode.clientWidth;
+    const height = this.svgElement.parentNode.clientHeight;
+    this.d3cola.size([height - 40, width - 40]).symmetricDiffLinkLengths(linkLength);
 
     doLayout(pruned, true);
     doLayout(allNodesExceptComplexes, true);
     doLayout(allNodesExceptComplexes, false);
 
     function doLayout(nodes, preRun) {
-        const layoutObj = {}; // todo get rid
-        layoutObj.nodes = nodes;
-        layoutObj.links = [];
+        //don't know how necessary these deletions are
+        delete self.d3cola._lastStress;
+        delete self.d3cola._alpha;
+        delete self.d3cola._descent;
+        delete self.d3cola._rootGroup;
+
+        const links = [];
 
         const molLookUp = {};
         let mi = 0;
@@ -548,46 +551,12 @@ App.prototype.autoLayout = function () {
                 linkObj.source = molLookUp[fromMol.id];
                 linkObj.target = molLookUp[toMol.id];
                 linkObj.id = binaryLink.id;
-                layoutObj.links.push(linkObj);
+                links.push(linkObj);
             }
         }
 
-        const groups = [];
-        if (!preRun && self.complexes) {
-            for (let g of self.complexes) {
-                g.leaves = [];
-                g.groups = [];
-                for (let interactor of g.naryLink.participants) {
-                    if (interactor.type !== "complex") {
-                        g.leaves.push(layoutObj.nodes.indexOf(interactor));
-                    }
-                }
-                groups.push(g);
-            }
-            for (let g of self.complexes) {
-                for (let interactor of g.naryLink.participants) {
-                    if (interactor.type === "complex") {
-                        g.groups.push(groups.indexOf(interactor));
-                    }
-                }
-            }
-        }
+        self.d3cola.nodes(nodes).links(links);
 
-        //console.log("groups", groups);
-        delete self.d3cola._lastStress;
-        delete self.d3cola._alpha;
-        delete self.d3cola._descent;
-        delete self.d3cola._rootGroup;
-
-        let linkLength = (nodes.length < 30) ? 30 : 20;
-        const width = self.svgElement.parentNode.clientWidth;
-        const height = self.svgElement.parentNode.clientHeight;
-        //console.log("**", layoutObj);
-        self.d3cola.size([height - 40, width - 40])
-            .nodes(layoutObj.nodes)
-            .groups(groups)
-            .links(layoutObj.links)
-            .symmetricDiffLinkLengths(linkLength);
         /*let groupDebugSel, participantDebugSel;
         if (self.debug) {
             groupDebugSel = d3.select(self.container).selectAll(".group")
@@ -619,14 +588,30 @@ App.prototype.autoLayout = function () {
         }*/
 
         if (preRun) {
-            self.d3cola.start(23, 23, 0, 0, false);
-                for (let node of nodes) {
-                    node.setPosition(node.x, node.y);
-                }
-                self.setAllLinkCoordinates();
-                self.zoomToExtent();
+            self.d3cola.groups([]).start(23, 10, 0, 0, false);
         } else {
-            self.d3cola.start(0, 23, 1, 0, true).on("end", function () {
+            if (self.complexes) {
+                const groups = [];
+                for (let g of self.complexes) {
+                    g.leaves = [];
+                    g.groups = [];
+                    for (let interactor of g.naryLink.participants) {
+                        if (interactor.type !== "complex") {
+                            g.leaves.push(nodes.indexOf(interactor));
+                        }
+                    }
+                    groups.push(g);
+                }
+                for (let g of self.complexes) {
+                    for (let interactor of g.naryLink.participants) {
+                        if (interactor.type === "complex") {
+                            g.groups.push(groups.indexOf(interactor));
+                        }
+                    }
+                }
+                self.d3cola.groups(groups);
+            }
+            self.d3cola.start(0, 10, 1, 0, true).on("end", function () {
                 for (let node of nodes) {
                     node.setPosition(node.x, node.y);
                 }
@@ -639,6 +624,7 @@ App.prototype.autoLayout = function () {
                 }
                 self.setAllLinkCoordinates();
                 self.zoomToExtent();
+
                 /*if (self.debug) {
                     groupDebugSel.attr({
                         x: function (d) {

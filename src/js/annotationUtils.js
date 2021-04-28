@@ -1,5 +1,4 @@
 import * as d3 from "d3";
-import * as d3_chromatic from "d3-scale-chromatic";
 import {Annotation} from "./viz/interactor/annotation";
 import {SequenceDatum} from "./viz/sequence-datum";
 

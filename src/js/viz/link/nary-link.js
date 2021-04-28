@@ -4,7 +4,7 @@ import {svgns, rotatePointAboutPoint} from "../../config";
 
 //NaryLink.naryColors; // init'ed in clear function of util
 NaryLink.orbitNodes = 20;
-NaryLink.orbitRadius = 22;
+NaryLink.orbitRadius = 28;
 
 export function NaryLink(id, app) {
     this.id = id;
@@ -83,7 +83,7 @@ NaryLink.prototype.check = function () {
 
 NaryLink.prototype.show = function () {
     // this.path.setAttribute("stroke-width", this.app.z);
-    this.setLinkCoordinates();
+    // this.setLinkCoordinates(); // todo - having this here slows down start up. instead see lines 41-44 complex.js
     this.app.naryLinks.appendChild(this.path);
     this.app.naryLinks.appendChild(this.path2);
 };
@@ -137,8 +137,6 @@ NaryLink.prototype.getMappedCoordinates = function () {
 
 //'orbit' nodes - several nodes around participant positions to give margin
 NaryLink.prototype.orbitNodes = function (mapped) {
-
-
     const orbitNodes = [];
     const mc = mapped.length;
     for (let mi = 0; mi < mc; mi++) {

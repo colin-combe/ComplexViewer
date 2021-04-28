@@ -683,9 +683,6 @@ Polymer.prototype.updatePositionalFeatures = function () {
                 if (!dupCheck.has(anno.toString())) {
                     dupCheck.add(anno.toString());
                     if (anno.seqDatum.sequenceDatumString === "n-n" || anno.seqDatum.sequenceDatumString === "c-c") {
-
-                        //anno.rung = -1;
-
                         if (anno.seqDatum.sequenceDatumString === "n-n"){
                             anno.rung = this.nTermFeatures.length;
                             this.nTermFeatures.push(anno);
@@ -693,9 +690,7 @@ Polymer.prototype.updatePositionalFeatures = function () {
                             anno.rung = this.cTermFeatures.length;
                             this.cTermFeatures.push(anno);
                         }
-
-                    }
-                    else {
+                    } else {
                         let rung = rungs[r];
                         if (overlaps(rung, anno)) {
                             r++;

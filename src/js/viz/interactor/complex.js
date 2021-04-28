@@ -5,7 +5,7 @@ import * as Intersection from "intersectionjs";
 export function Complex(id, app) {
     this.init(id, app);
     this.type = "complex";
-    this.padding = 22;
+    this.padding = 28;
 
     // const self = this;
     // // its bad if you end up with these getting called
@@ -37,7 +37,11 @@ Complex.prototype.setLinked = function () {
 
 
 Complex.prototype.getPosition = function (originPoint) {
-    const mapped = this.naryLink.mapped;//getMappedCoordinates();
+    let mapped = this.naryLink.mapped;//getMappedCoordinates();
+    if (!mapped){
+        this.naryLink.setLinkCoordinates();
+        mapped = this.naryLink.mapped;//this.naryLink.orbitNodes(this.naryLink.getMappedCoordinates());
+    }
     const mc = mapped.length;
     let xSum = 0,
         ySum = 0;
