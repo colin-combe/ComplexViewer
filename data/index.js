@@ -33,7 +33,7 @@ const exampleIndex = [
     {
         "ac": "~CPX-5897",
         "name": "~CPX-5897",
-        "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-5605",
+        "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-5897",
     },
 
     {

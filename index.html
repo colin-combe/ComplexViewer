@@ -189,7 +189,7 @@
         const colorTable = document.createElement("table");
         for (let majorClass in json) {
             const tr = colorTable.insertRow();
-            headerCell = tr.insertCell();
+            const headerCell = tr.insertCell();
             headerCell.textContent = majorClass;
             headerCell.colSpan = 3;
             for (let legendEntry of json[majorClass]) {
