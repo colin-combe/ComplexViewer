@@ -1,9 +1,8 @@
 import * as d3 from "d3"; //used for d3.geom.hull
 import {Link} from "./link";
-import {svgns, rotatePointAboutPoint} from "../../config";
 
 //NaryLink.naryColors; // init'ed in clear function of util
-NaryLink.orbitNodes = 20;
+// NaryLink.orbitNodeCount = 20;
 NaryLink.orbitRadius = 28;
 
 export function NaryLink(id, app) {
@@ -37,7 +36,7 @@ NaryLink.prototype.getTotalParticipantCount = function () {
 */
 
 NaryLink.prototype.initSVG = function () {
-    this.path = document.createElementNS(svgns, "path");
+    this.path = document.createElementNS(this.app.svgns, "path");
     this.color = NaryLink.naryColors(this.id);
     this.path.setAttribute("fill", this.color);
     //set the events for it
@@ -55,7 +54,7 @@ NaryLink.prototype.initSVG = function () {
         self.touchStart(evt);
     };
     // todo - prob better way todo this
-    this.path2 = document.createElementNS(svgns, "path");
+    this.path2 = document.createElementNS(this.app.svgns, "path");
     this.path2.setAttribute("fill", "none");
     //set the events for it
     this.path2.onmousedown = function (evt) {
@@ -88,9 +87,6 @@ NaryLink.prototype.show = function () {
     this.app.naryLinks.appendChild(this.path2);
 };
 
-NaryLink.prototype.hide = function () {
-};
-
 NaryLink.prototype.setLinkCoordinates = function (dontPropogate) {
     // Uses d3.geom.hull to calculate a bounding path around an array of vertices
     const calculateHullPath = function (values) {
@@ -117,7 +113,8 @@ NaryLink.prototype.getMappedCoordinates = function () {
     for (let i = 0; i < ic; i++) {
         const participant = participants[i];
         if (participant.type === "complex") {
-            mapped = mapped.concat(this.orbitNodes(participant.naryLink.getMappedCoordinates()));
+            //use some kind of caching?
+            mapped = mapped.concat(this.orbitNodes(participant.naryLink.getMappedCoordinates(), 20));
         } else if (participant.expanded) {
             const start = participant.getResidueCoordinates(0);
             const end = participant.getResidueCoordinates(participant.size);
@@ -136,15 +133,15 @@ NaryLink.prototype.getMappedCoordinates = function () {
 };
 
 //'orbit' nodes - several nodes around participant positions to give margin
-NaryLink.prototype.orbitNodes = function (mapped) {
+NaryLink.prototype.orbitNodes = function (mapped, orbitNodeCount = 20) { // add orbit node count as param? cut it down for subcomplexes?
     const orbitNodes = [];
     const mc = mapped.length;
     for (let mi = 0; mi < mc; mi++) {
         const m = mapped[mi];
-        for (let o = 0; o < NaryLink.orbitNodes; o++) {
-            const angle = (360 / NaryLink.orbitNodes) * o;
+        for (let o = 0; o < orbitNodeCount; o++) {
+            const angle = (360 / orbitNodeCount) * o;
             const p = [m[0] + NaryLink.orbitRadius, m[1]];
-            orbitNodes.push(rotatePointAboutPoint(p, m, angle));
+            orbitNodes.push(this.app.rotatePointAboutPoint(p, m, angle));
         }
     }
     return orbitNodes;

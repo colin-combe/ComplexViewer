@@ -1,5 +1,3 @@
-import {LABEL_Y, svgns} from "../../config";
-
 export function Interactor() {
 }
 
@@ -18,6 +16,9 @@ Interactor.prototype = {
     get height() {
         return 40;//this.upperGroup.getBBox().height;
     },
+    get labelY() {
+        return -5;
+    }
 };
 
 Interactor.prototype.init = function (id, app, json, name) {
@@ -42,7 +43,7 @@ Interactor.prototype.init = function (id, app, json, name) {
 };
 
 Interactor.prototype.initLabel = function () {
-    this.labelSVG = document.createElementNS(svgns, "text");
+    this.labelSVG = document.createElementNS(this.app.svgns, "text");
     this.labelSVG.setAttribute("x", "0"); // css?
     this.labelSVG.setAttribute("y", "10");
     this.labelSVG.classList.add("label");
@@ -59,7 +60,7 @@ Interactor.prototype.initLabel = function () {
     this.labelTextNode = document.createTextNode(this.labelText);
     this.labelSVG.appendChild(this.labelTextNode);
     this.labelSVG.setAttribute("transform",
-        "translate( -" + this.getSymbolRadius() + " " + LABEL_Y + ")");
+        "translate( -" + this.getSymbolRadius() + " " + this.labelY + ")");
     this.upperGroup.appendChild(this.labelSVG);
 };
 
@@ -141,7 +142,7 @@ Interactor.prototype.setPosition = function (x, y) {
     this.py = this.iy;
     let xOffset = (this.width / 2 - (this.getSymbolRadius()));
     if (this.expanded) {
-        xOffset = xOffset - (this.size / 2 * this.stickZoom );
+        xOffset = xOffset - (this.size / 2 * this.stickZoom);
     }
     this.ix = x + xOffset;
     this.iy = y;

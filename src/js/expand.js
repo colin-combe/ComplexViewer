@@ -1,4 +1,4 @@
-export function matrix (json) {
+export function matrix(json) {
 
     // We'll need collections of our interactions and interactors for later..
     const interactions = json.data.filter(function (interaction) {

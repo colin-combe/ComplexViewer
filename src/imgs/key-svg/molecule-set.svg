@@ -53,7 +53,6 @@
             id="defs2042">
         <pattern
                 id="checkers_uncertain"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -85,7 +84,6 @@
         </marker>
         <pattern
                 id="checkers_psf1 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -108,7 +106,6 @@
         </pattern>
         <pattern
                 id="checkers_sld5 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -131,7 +128,6 @@
         </pattern>
         <pattern
                 id="checkers_mcm6 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -154,7 +150,6 @@
         </pattern>
         <pattern
                 id="checkers_mcm5 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -177,7 +172,6 @@
         </pattern>
         <pattern
                 id="checkers_mcm2 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -200,7 +194,6 @@
         </pattern>
         <pattern
                 id="checkers_mcm4 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -223,7 +216,6 @@
         </pattern>
         <pattern
                 id="pattern42"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -246,7 +238,6 @@
         </pattern>
         <pattern
                 id="checkers_mcm7 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -269,7 +260,6 @@
         </pattern>
         <pattern
                 id="pattern53"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -292,7 +282,6 @@
         </pattern>
         <pattern
                 id="pattern59"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -315,7 +304,6 @@
         </pattern>
         <pattern
                 id="pattern65"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -338,7 +326,6 @@
         </pattern>
         <pattern
                 id="checkers_mcm3 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -361,7 +348,6 @@
         </pattern>
         <pattern
                 id="pattern76"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -384,7 +370,6 @@
         </pattern>
         <pattern
                 id="pattern82"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -407,7 +392,6 @@
         </pattern>
         <pattern
                 id="pattern88"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -430,7 +414,6 @@
         </pattern>
         <pattern
                 id="pattern94"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -453,7 +436,6 @@
         </pattern>
         <pattern
                 id="pattern100"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -476,7 +458,6 @@
         </pattern>
         <pattern
                 id="pattern106"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -499,7 +480,6 @@
         </pattern>
         <pattern
                 id="pattern112"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -522,7 +502,6 @@
         </pattern>
         <pattern
                 id="pattern118"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -545,7 +524,6 @@
         </pattern>
         <pattern
                 id="pattern124"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -568,7 +546,6 @@
         </pattern>
         <pattern
                 id="pattern130"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -591,7 +568,6 @@
         </pattern>
         <pattern
                 id="pattern136"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -614,7 +590,6 @@
         </pattern>
         <pattern
                 id="pattern142"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -637,7 +612,6 @@
         </pattern>
         <pattern
                 id="pattern148"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -660,7 +634,6 @@
         </pattern>
         <pattern
                 id="pattern154"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -683,7 +656,6 @@
         </pattern>
         <pattern
                 id="pattern160"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -706,7 +678,6 @@
         </pattern>
         <pattern
                 id="pattern166"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -729,7 +700,6 @@
         </pattern>
         <pattern
                 id="checkers_c1q binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -752,7 +722,6 @@
         </pattern>
         <pattern
                 id="checkers_c1r binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -775,7 +744,6 @@
         </pattern>
         <pattern
                 id="checkers_c1s binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -798,7 +766,6 @@
         </pattern>
         <pattern
                 id="checkers_dimerization domain"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -821,7 +788,6 @@
         </pattern>
         <pattern
                 id="pattern192"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -844,7 +810,6 @@
         </pattern>
         <pattern
                 id="pattern198"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -867,7 +832,6 @@
         </pattern>
         <pattern
                 id="pattern204"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -890,7 +854,6 @@
         </pattern>
         <pattern
                 id="checkers_dimerization region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -913,7 +876,6 @@
         </pattern>
         <pattern
                 id="pattern215"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -936,7 +898,6 @@
         </pattern>
         <pattern
                 id="checkers_cys-31"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -959,7 +920,6 @@
         </pattern>
         <pattern
                 id="checkers_c1qac binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -982,7 +942,6 @@
         </pattern>
         <pattern
                 id="checkers_cys-26"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1005,7 +964,6 @@
         </pattern>
         <pattern
                 id="checkers_c1qbc binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1028,7 +986,6 @@
         </pattern>
         <pattern
                 id="checkers_c1ab binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1051,7 +1008,6 @@
         </pattern>
         <pattern
                 id="checkers_cys-32"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1074,7 +1030,6 @@
         </pattern>
         <pattern
                 id="pattern251"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1097,7 +1052,6 @@
         </pattern>
         <pattern
                 id="pattern257"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1120,7 +1074,6 @@
         </pattern>
         <pattern
                 id="pattern263"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1143,7 +1096,6 @@
         </pattern>
         <pattern
                 id="pattern269"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1166,7 +1118,6 @@
         </pattern>
         <pattern
                 id="pattern275"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1189,7 +1140,6 @@
         </pattern>
         <pattern
                 id="pattern281"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1212,7 +1162,6 @@
         </pattern>
         <pattern
                 id="pattern287"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1235,7 +1184,6 @@
         </pattern>
         <pattern
                 id="pattern293"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1258,7 +1206,6 @@
         </pattern>
         <pattern
                 id="pattern299"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1281,7 +1228,6 @@
         </pattern>
         <pattern
                 id="pattern305"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1304,7 +1250,6 @@
         </pattern>
         <pattern
                 id="pattern311"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1327,7 +1272,6 @@
         </pattern>
         <pattern
                 id="pattern317"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1350,7 +1294,6 @@
         </pattern>
         <pattern
                 id="pattern323"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1373,7 +1316,6 @@
         </pattern>
         <pattern
                 id="pattern329"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1396,7 +1338,6 @@
         </pattern>
         <pattern
                 id="pattern335"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1419,7 +1360,6 @@
         </pattern>
         <pattern
                 id="pattern341"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1442,7 +1382,6 @@
         </pattern>
         <pattern
                 id="pattern347"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1465,7 +1404,6 @@
         </pattern>
         <pattern
                 id="pattern353"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1488,7 +1426,6 @@
         </pattern>
         <pattern
                 id="pattern359"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1511,7 +1448,6 @@
         </pattern>
         <pattern
                 id="pattern365"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1534,7 +1470,6 @@
         </pattern>
         <pattern
                 id="pattern371"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1557,7 +1492,6 @@
         </pattern>
         <pattern
                 id="pattern377"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1580,7 +1514,6 @@
         </pattern>
         <pattern
                 id="pattern383"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1603,7 +1536,6 @@
         </pattern>
         <pattern
                 id="pattern389"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1626,7 +1558,6 @@
         </pattern>
         <pattern
                 id="pattern395"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1649,7 +1580,6 @@
         </pattern>
         <pattern
                 id="pattern401"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1672,7 +1602,6 @@
         </pattern>
         <pattern
                 id="pattern407"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1695,7 +1624,6 @@
         </pattern>
         <pattern
                 id="pattern413"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1718,7 +1646,6 @@
         </pattern>
         <pattern
                 id="pattern419"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1741,7 +1668,6 @@
         </pattern>
         <pattern
                 id="pattern425"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1764,7 +1690,6 @@
         </pattern>
         <pattern
                 id="checkers_his tag"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1787,7 +1712,6 @@
         </pattern>
         <pattern
                 id="pattern436"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1810,7 +1734,6 @@
         </pattern>
         <pattern
                 id="pattern442"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1833,7 +1756,6 @@
         </pattern>
         <pattern
                 id="checkers_casp9 without card region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1856,7 +1778,6 @@
         </pattern>
         <pattern
                 id="checkers_p.Asp315Ala"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1879,7 +1800,6 @@
         </pattern>
         <pattern
                 id="checkers_deletion 30l"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1902,7 +1822,6 @@
         </pattern>
         <pattern
                 id="pattern463"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1925,7 +1844,6 @@
         </pattern>
         <pattern
                 id="checkers_region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1948,7 +1866,6 @@
         </pattern>
         <pattern
                 id="checkers_sirtuin homology domain"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1971,7 +1888,6 @@
         </pattern>
         <pattern
                 id="pattern479"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -1994,7 +1910,6 @@
         </pattern>
         <pattern
                 id="checkers_cbf1/su(h)"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2017,7 +1932,6 @@
         </pattern>
         <pattern
                 id="checkers_n-terminus"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2040,7 +1954,6 @@
         </pattern>
         <pattern
                 id="checkers_g_septin_dom"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2063,7 +1976,6 @@
         </pattern>
         <pattern
                 id="pattern500"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2086,7 +1998,6 @@
         </pattern>
         <pattern
                 id="pattern506"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2109,7 +2020,6 @@
         </pattern>
         <pattern
                 id="checkers_Binding site"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2132,7 +2042,6 @@
         </pattern>
         <pattern
                 id="checkers_Europium label"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2155,7 +2064,6 @@
         </pattern>
         <pattern
                 id="checkers_bp binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2178,7 +2086,6 @@
         </pattern>
         <pattern
                 id="checkers_e1 alpha binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2201,7 +2108,6 @@
         </pattern>
         <pattern
                 id="pattern532"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2224,7 +2130,6 @@
         </pattern>
         <pattern
                 id="checkers_self-binding site"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2247,7 +2152,6 @@
         </pattern>
         <pattern
                 id="checkers_e1 beta binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2270,7 +2174,6 @@
         </pattern>
         <pattern
                 id="checkers_e3 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2293,7 +2196,6 @@
         </pattern>
         <pattern
                 id="checkers_e2 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2316,7 +2218,6 @@
         </pattern>
         <pattern
                 id="checkers_terf2 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2339,7 +2240,6 @@
         </pattern>
         <pattern
                 id="checkers_terf1 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2362,7 +2262,6 @@
         </pattern>
         <pattern
                 id="pattern568"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2385,7 +2284,6 @@
         </pattern>
         <pattern
                 id="checkers_tinf2 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2408,7 +2306,6 @@
         </pattern>
         <pattern
                 id="pattern579"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2431,7 +2328,6 @@
         </pattern>
         <pattern
                 id="checkers_pot1 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2454,7 +2350,6 @@
         </pattern>
         <pattern
                 id="pattern590"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2477,7 +2372,6 @@
         </pattern>
         <pattern
                 id="pattern596"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2500,7 +2394,6 @@
         </pattern>
         <pattern
                 id="checkers_acd binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2523,7 +2416,6 @@
         </pattern>
         <pattern
                 id="pattern607"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2546,7 +2438,6 @@
         </pattern>
         <pattern
                 id="pattern613"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2569,7 +2460,6 @@
         </pattern>
         <pattern
                 id="pattern619"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2592,7 +2482,6 @@
         </pattern>
         <pattern
                 id="checkers_terf2ip binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2615,7 +2504,6 @@
         </pattern>
         <pattern
                 id="pattern630"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2638,7 +2526,6 @@
         </pattern>
         <pattern
                 id="pattern636"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2661,7 +2548,6 @@
         </pattern>
         <pattern
                 id="checkers_receptor beta binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2684,7 +2570,6 @@
         </pattern>
         <pattern
                 id="checkers_dimerisation domain"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2707,7 +2592,6 @@
         </pattern>
         <pattern
                 id="checkers_receptor alpha binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2730,7 +2614,6 @@
         </pattern>
         <pattern
                 id="checkers_PDGF binding region 2"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2753,7 +2636,6 @@
         </pattern>
         <pattern
                 id="checkers_PDGF binding region 1"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2776,7 +2658,6 @@
         </pattern>
         <pattern
                 id="checkers_pdgf receptor beta binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2799,7 +2680,6 @@
         </pattern>
         <pattern
                 id="pattern672"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2822,7 +2702,6 @@
         </pattern>
         <pattern
                 id="checkers_pdgf receptor alpha binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2845,7 +2724,6 @@
         </pattern>
         <pattern
                 id="pattern683"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2868,7 +2746,6 @@
         </pattern>
         <pattern
                 id="pattern689"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2891,7 +2768,6 @@
         </pattern>
         <pattern
                 id="pattern695"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2914,7 +2790,6 @@
         </pattern>
         <pattern
                 id="pattern701"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2937,7 +2812,6 @@
         </pattern>
         <pattern
                 id="checkers_hexamerisation region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2960,7 +2834,6 @@
         </pattern>
         <pattern
                 id="pattern712"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -2983,7 +2856,6 @@
         </pattern>
         <pattern
                 id="pattern718"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3006,7 +2878,6 @@
         </pattern>
         <pattern
                 id="pattern724"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3029,7 +2900,6 @@
         </pattern>
         <pattern
                 id="pattern730"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3052,7 +2922,6 @@
         </pattern>
         <pattern
                 id="pattern736"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3075,7 +2944,6 @@
         </pattern>
         <pattern
                 id="pattern742"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3098,7 +2966,6 @@
         </pattern>
         <pattern
                 id="pattern748"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3121,7 +2988,6 @@
         </pattern>
         <pattern
                 id="pattern754"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3144,7 +3010,6 @@
         </pattern>
         <pattern
                 id="pattern760"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3167,7 +3032,6 @@
         </pattern>
         <pattern
                 id="pattern766"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3190,7 +3054,6 @@
         </pattern>
         <pattern
                 id="pattern772"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3213,7 +3076,6 @@
         </pattern>
         <pattern
                 id="checkers_tusa binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3236,7 +3098,6 @@
         </pattern>
         <pattern
                 id="checkers_dimerisation region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3259,7 +3120,6 @@
         </pattern>
         <pattern
                 id="checkers_iscs binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3282,7 +3142,6 @@
         </pattern>
         <pattern
                 id="pattern793"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3305,7 +3164,6 @@
         </pattern>
         <pattern
                 id="pattern799"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3328,7 +3186,6 @@
         </pattern>
         <pattern
                 id="pattern805"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3351,7 +3208,6 @@
         </pattern>
         <pattern
                 id="checkers_cct6 binding site"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3374,7 +3230,6 @@
         </pattern>
         <pattern
                 id="checkers_cct3 binding site"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3397,7 +3252,6 @@
         </pattern>
         <pattern
                 id="pattern821"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3420,7 +3274,6 @@
         </pattern>
         <pattern
                 id="pattern827"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3443,7 +3296,6 @@
         </pattern>
         <pattern
                 id="checkers_cct5 binding site"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3466,7 +3318,6 @@
         </pattern>
         <pattern
                 id="checkers_cct7 binding site"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3489,7 +3340,6 @@
         </pattern>
         <pattern
                 id="pattern843"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3512,7 +3362,6 @@
         </pattern>
         <pattern
                 id="pattern849"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3535,7 +3384,6 @@
         </pattern>
         <pattern
                 id="checkers_cct2 binding site"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3558,7 +3406,6 @@
         </pattern>
         <pattern
                 id="pattern860"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3581,7 +3428,6 @@
         </pattern>
         <pattern
                 id="pattern866"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3604,7 +3450,6 @@
         </pattern>
         <pattern
                 id="pattern872"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3627,7 +3472,6 @@
         </pattern>
         <pattern
                 id="checkers_tcp1 binding site"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3650,7 +3494,6 @@
         </pattern>
         <pattern
                 id="checkers_cct4 binding site"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3673,7 +3516,6 @@
         </pattern>
         <pattern
                 id="pattern888"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3696,7 +3538,6 @@
         </pattern>
         <pattern
                 id="pattern894"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3719,7 +3560,6 @@
         </pattern>
         <pattern
                 id="pattern900"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3742,7 +3582,6 @@
         </pattern>
         <pattern
                 id="pattern906"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3765,7 +3604,6 @@
         </pattern>
         <pattern
                 id="pattern912"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3788,7 +3626,6 @@
         </pattern>
         <pattern
                 id="pattern918"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3811,7 +3648,6 @@
         </pattern>
         <pattern
                 id="pattern924"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3834,7 +3670,6 @@
         </pattern>
         <pattern
                 id="checkers_cct8 binding site"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3857,7 +3692,6 @@
         </pattern>
         <pattern
                 id="pattern935"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3880,7 +3714,6 @@
         </pattern>
         <pattern
                 id="pattern941"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3903,7 +3736,6 @@
         </pattern>
         <pattern
                 id="pattern947"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3926,7 +3758,6 @@
         </pattern>
         <pattern
                 id="pattern953"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3949,7 +3780,6 @@
         </pattern>
         <pattern
                 id="pattern959"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3972,7 +3802,6 @@
         </pattern>
         <pattern
                 id="pattern965"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -3995,7 +3824,6 @@
         </pattern>
         <pattern
                 id="pattern971"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4018,7 +3846,6 @@
         </pattern>
         <pattern
                 id="pattern977"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4041,7 +3868,6 @@
         </pattern>
         <pattern
                 id="pattern983"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4064,7 +3890,6 @@
         </pattern>
         <pattern
                 id="pattern989"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4087,7 +3912,6 @@
         </pattern>
         <pattern
                 id="pattern995"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4110,7 +3934,6 @@
         </pattern>
         <pattern
                 id="pattern1001"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4133,7 +3956,6 @@
         </pattern>
         <pattern
                 id="pattern1007"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4156,7 +3978,6 @@
         </pattern>
         <pattern
                 id="pattern1013"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4179,7 +4000,6 @@
         </pattern>
         <pattern
                 id="pattern1019"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4202,7 +4022,6 @@
         </pattern>
         <pattern
                 id="pattern1025"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4225,7 +4044,6 @@
         </pattern>
         <pattern
                 id="pattern1031"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4248,7 +4066,6 @@
         </pattern>
         <pattern
                 id="pattern1037"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4271,7 +4088,6 @@
         </pattern>
         <pattern
                 id="pattern1043"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4294,7 +4110,6 @@
         </pattern>
         <pattern
                 id="pattern1049"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4317,7 +4132,6 @@
         </pattern>
         <pattern
                 id="pattern1055"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4340,7 +4154,6 @@
         </pattern>
         <pattern
                 id="pattern1061"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4363,7 +4176,6 @@
         </pattern>
         <pattern
                 id="pattern1067"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4386,7 +4198,6 @@
         </pattern>
         <pattern
                 id="pattern1073"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4409,7 +4220,6 @@
         </pattern>
         <pattern
                 id="pattern1079"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4432,7 +4242,6 @@
         </pattern>
         <pattern
                 id="pattern1085"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4455,7 +4264,6 @@
         </pattern>
         <pattern
                 id="pattern1091"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4478,7 +4286,6 @@
         </pattern>
         <pattern
                 id="pattern1097"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4501,7 +4308,6 @@
         </pattern>
         <pattern
                 id="pattern1103"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4524,7 +4330,6 @@
         </pattern>
         <pattern
                 id="pattern1109"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4547,7 +4352,6 @@
         </pattern>
         <pattern
                 id="pattern1115"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4570,7 +4374,6 @@
         </pattern>
         <pattern
                 id="pattern1121"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4593,7 +4396,6 @@
         </pattern>
         <pattern
                 id="pattern1127"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4616,7 +4418,6 @@
         </pattern>
         <pattern
                 id="pattern1133"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4639,7 +4440,6 @@
         </pattern>
         <pattern
                 id="pattern1139"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4662,7 +4462,6 @@
         </pattern>
         <pattern
                 id="pattern1145"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4685,7 +4484,6 @@
         </pattern>
         <pattern
                 id="pattern1151"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4708,7 +4506,6 @@
         </pattern>
         <pattern
                 id="pattern1157"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4731,7 +4528,6 @@
         </pattern>
         <pattern
                 id="pattern1163"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4754,7 +4550,6 @@
         </pattern>
         <pattern
                 id="pattern1169"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4777,7 +4572,6 @@
         </pattern>
         <pattern
                 id="pattern1175"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4800,7 +4594,6 @@
         </pattern>
         <pattern
                 id="pattern1181"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4823,7 +4616,6 @@
         </pattern>
         <pattern
                 id="checkers_heme binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4846,7 +4638,6 @@
         </pattern>
         <pattern
                 id="checkers_hba binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4869,7 +4660,6 @@
         </pattern>
         <pattern
                 id="pattern1197"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4892,7 +4682,6 @@
         </pattern>
         <pattern
                 id="checkers_hbb binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4915,7 +4704,6 @@
         </pattern>
         <pattern
                 id="pattern1208"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4938,7 +4726,6 @@
         </pattern>
         <pattern
                 id="pattern1214"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4961,7 +4748,6 @@
         </pattern>
         <pattern
                 id="pattern1220"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -4984,7 +4770,6 @@
         </pattern>
         <pattern
                 id="pattern1226"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5007,7 +4792,6 @@
         </pattern>
         <pattern
                 id="pattern1232"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5030,7 +4814,6 @@
         </pattern>
         <pattern
                 id="pattern1238"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5053,7 +4836,6 @@
         </pattern>
         <pattern
                 id="pattern1244"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5076,7 +4858,6 @@
         </pattern>
         <pattern
                 id="pattern1250"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5099,7 +4880,6 @@
         </pattern>
         <pattern
                 id="checkers_med7 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5122,7 +4902,6 @@
         </pattern>
         <pattern
                 id="checkers_med1 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5145,7 +4924,6 @@
         </pattern>
         <pattern
                 id="checkers_med21 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5168,7 +4946,6 @@
         </pattern>
         <pattern
                 id="checkers_med10 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5191,7 +4968,6 @@
         </pattern>
         <pattern
                 id="checkers_med31 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5214,7 +4990,6 @@
         </pattern>
         <pattern
                 id="checkers_med26 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5237,7 +5012,6 @@
         </pattern>
         <pattern
                 id="pattern1286"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5260,7 +5034,6 @@
         </pattern>
         <pattern
                 id="checkers_med20 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5283,7 +5056,6 @@
         </pattern>
         <pattern
                 id="checkers_med28 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5306,7 +5078,6 @@
         </pattern>
         <pattern
                 id="checkers_med30 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5329,7 +5100,6 @@
         </pattern>
         <pattern
                 id="checkers_med8 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5352,7 +5122,6 @@
         </pattern>
         <pattern
                 id="checkers_med22 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5375,7 +5144,6 @@
         </pattern>
         <pattern
                 id="checkers_med29 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5398,7 +5166,6 @@
         </pattern>
         <pattern
                 id="checkers_med27 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5421,7 +5188,6 @@
         </pattern>
         <pattern
                 id="checkers_med11 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5444,7 +5210,6 @@
         </pattern>
         <pattern
                 id="checkers_med6 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5467,7 +5232,6 @@
         </pattern>
         <pattern
                 id="checkers_med19 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5490,7 +5254,6 @@
         </pattern>
         <pattern
                 id="pattern1342"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5513,7 +5276,6 @@
         </pattern>
         <pattern
                 id="pattern1348"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5536,7 +5298,6 @@
         </pattern>
         <pattern
                 id="pattern1354"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5559,7 +5320,6 @@
         </pattern>
         <pattern
                 id="pattern1360"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5582,7 +5342,6 @@
         </pattern>
         <pattern
                 id="checkers_med25 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5605,7 +5364,6 @@
         </pattern>
         <pattern
                 id="checkers_med14 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5628,7 +5386,6 @@
         </pattern>
         <pattern
                 id="checkers_med16 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5651,7 +5408,6 @@
         </pattern>
         <pattern
                 id="pattern1381"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5674,7 +5430,6 @@
         </pattern>
         <pattern
                 id="pattern1387"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5697,7 +5452,6 @@
         </pattern>
         <pattern
                 id="checkers_med18 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5720,7 +5474,6 @@
         </pattern>
         <pattern
                 id="pattern1398"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5743,7 +5496,6 @@
         </pattern>
         <pattern
                 id="pattern1404"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5766,7 +5518,6 @@
         </pattern>
         <pattern
                 id="pattern1410"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5789,7 +5540,6 @@
         </pattern>
         <pattern
                 id="pattern1416"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5812,7 +5562,6 @@
         </pattern>
         <pattern
                 id="checkers_med17 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5835,7 +5584,6 @@
         </pattern>
         <pattern
                 id="pattern1427"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5858,7 +5606,6 @@
         </pattern>
         <pattern
                 id="pattern1433"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5881,7 +5628,6 @@
         </pattern>
         <pattern
                 id="pattern1439"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5904,7 +5650,6 @@
         </pattern>
         <pattern
                 id="pattern1445"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5927,7 +5672,6 @@
         </pattern>
         <pattern
                 id="pattern1451"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5950,7 +5694,6 @@
         </pattern>
         <pattern
                 id="pattern1457"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5973,7 +5716,6 @@
         </pattern>
         <pattern
                 id="pattern1463"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -5996,7 +5738,6 @@
         </pattern>
         <pattern
                 id="pattern1469"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6019,7 +5760,6 @@
         </pattern>
         <pattern
                 id="pattern1475"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6042,7 +5782,6 @@
         </pattern>
         <pattern
                 id="pattern1481"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6065,7 +5804,6 @@
         </pattern>
         <pattern
                 id="pattern1487"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6088,7 +5826,6 @@
         </pattern>
         <pattern
                 id="pattern1493"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6111,7 +5848,6 @@
         </pattern>
         <pattern
                 id="checkers_med4 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6134,7 +5870,6 @@
         </pattern>
         <pattern
                 id="pattern1504"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6157,7 +5892,6 @@
         </pattern>
         <pattern
                 id="pattern1510"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6180,7 +5914,6 @@
         </pattern>
         <pattern
                 id="pattern1516"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6203,7 +5936,6 @@
         </pattern>
         <pattern
                 id="pattern1522"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6226,7 +5958,6 @@
         </pattern>
         <pattern
                 id="pattern1528"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6249,7 +5980,6 @@
         </pattern>
         <pattern
                 id="pattern1534"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6272,7 +6002,6 @@
         </pattern>
         <pattern
                 id="pattern1540"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6295,7 +6024,6 @@
         </pattern>
         <pattern
                 id="checkers_med9 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6318,7 +6046,6 @@
         </pattern>
         <pattern
                 id="pattern1551"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6341,7 +6068,6 @@
         </pattern>
         <pattern
                 id="pattern1557"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6364,7 +6090,6 @@
         </pattern>
         <pattern
                 id="pattern1563"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6387,7 +6112,6 @@
         </pattern>
         <pattern
                 id="pattern1569"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6410,7 +6134,6 @@
         </pattern>
         <pattern
                 id="pattern1575"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6433,7 +6156,6 @@
         </pattern>
         <pattern
                 id="pattern1581"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6456,7 +6178,6 @@
         </pattern>
         <pattern
                 id="pattern1587"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6479,7 +6200,6 @@
         </pattern>
         <pattern
                 id="pattern1593"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6502,7 +6222,6 @@
         </pattern>
         <pattern
                 id="pattern1599"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6525,7 +6244,6 @@
         </pattern>
         <pattern
                 id="pattern1605"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6548,7 +6266,6 @@
         </pattern>
         <pattern
                 id="pattern1611"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6571,7 +6288,6 @@
         </pattern>
         <pattern
                 id="pattern1617"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6594,7 +6310,6 @@
         </pattern>
         <pattern
                 id="pattern1623"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6617,7 +6332,6 @@
         </pattern>
         <pattern
                 id="pattern1629"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6640,7 +6354,6 @@
         </pattern>
         <pattern
                 id="pattern1635"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6663,7 +6376,6 @@
         </pattern>
         <pattern
                 id="pattern1641"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6686,7 +6398,6 @@
         </pattern>
         <pattern
                 id="checkers_med15 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6709,7 +6420,6 @@
         </pattern>
         <pattern
                 id="checkers_med23 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6732,7 +6442,6 @@
         </pattern>
         <pattern
                 id="checkers_med24 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6755,7 +6464,6 @@
         </pattern>
         <pattern
                 id="pattern1662"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6778,7 +6486,6 @@
         </pattern>
         <pattern
                 id="pattern1668"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6801,7 +6508,6 @@
         </pattern>
         <pattern
                 id="pattern1674"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6824,7 +6530,6 @@
         </pattern>
         <pattern
                 id="pattern1680"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6847,7 +6552,6 @@
         </pattern>
         <pattern
                 id="pattern1686"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6870,7 +6574,6 @@
         </pattern>
         <pattern
                 id="pattern1692"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6893,7 +6596,6 @@
         </pattern>
         <pattern
                 id="pattern1698"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6916,7 +6618,6 @@
         </pattern>
         <pattern
                 id="pattern1704"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6939,7 +6640,6 @@
         </pattern>
         <pattern
                 id="pattern1710"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6962,7 +6662,6 @@
         </pattern>
         <pattern
                 id="pattern1716"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -6985,7 +6684,6 @@
         </pattern>
         <pattern
                 id="pattern1722"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7008,7 +6706,6 @@
         </pattern>
         <pattern
                 id="pattern1728"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7031,7 +6728,6 @@
         </pattern>
         <pattern
                 id="pattern1734"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7054,7 +6750,6 @@
         </pattern>
         <pattern
                 id="pattern1740"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7077,7 +6772,6 @@
         </pattern>
         <pattern
                 id="pattern1746"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7100,7 +6794,6 @@
         </pattern>
         <pattern
                 id="pattern1752"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7123,7 +6816,6 @@
         </pattern>
         <pattern
                 id="pattern1758"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7146,7 +6838,6 @@
         </pattern>
         <pattern
                 id="pattern1764"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7169,7 +6860,6 @@
         </pattern>
         <pattern
                 id="pattern1770"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7192,7 +6882,6 @@
         </pattern>
         <pattern
                 id="pattern1776"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7215,7 +6904,6 @@
         </pattern>
         <pattern
                 id="pattern1782"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7238,7 +6926,6 @@
         </pattern>
         <pattern
                 id="pattern1788"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7261,7 +6948,6 @@
         </pattern>
         <pattern
                 id="pattern1794"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7284,7 +6970,6 @@
         </pattern>
         <pattern
                 id="pattern1800"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7307,7 +6992,6 @@
         </pattern>
         <pattern
                 id="pattern1806"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7330,7 +7014,6 @@
         </pattern>
         <pattern
                 id="pattern1812"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7353,7 +7036,6 @@
         </pattern>
         <pattern
                 id="pattern1818"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7376,7 +7058,6 @@
         </pattern>
         <pattern
                 id="pattern1824"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7399,7 +7080,6 @@
         </pattern>
         <pattern
                 id="pattern1830"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7422,7 +7102,6 @@
         </pattern>
         <pattern
                 id="pattern1836"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7445,7 +7124,6 @@
         </pattern>
         <pattern
                 id="pattern1842"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7468,7 +7146,6 @@
         </pattern>
         <pattern
                 id="pattern1848"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7491,7 +7168,6 @@
         </pattern>
         <pattern
                 id="pattern1854"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7514,7 +7190,6 @@
         </pattern>
         <pattern
                 id="pattern1860"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7537,7 +7212,6 @@
         </pattern>
         <pattern
                 id="pattern1866"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7560,7 +7234,6 @@
         </pattern>
         <pattern
                 id="pattern1872"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7583,7 +7256,6 @@
         </pattern>
         <pattern
                 id="pattern1878"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7606,7 +7278,6 @@
         </pattern>
         <pattern
                 id="pattern1884"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7629,7 +7300,6 @@
         </pattern>
         <pattern
                 id="pattern1890"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7652,7 +7322,6 @@
         </pattern>
         <pattern
                 id="pattern1896"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7675,7 +7344,6 @@
         </pattern>
         <pattern
                 id="pattern1902"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7698,7 +7366,6 @@
         </pattern>
         <pattern
                 id="pattern1908"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7721,7 +7388,6 @@
         </pattern>
         <pattern
                 id="pattern1914"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7744,7 +7410,6 @@
         </pattern>
         <pattern
                 id="pattern1920"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7767,7 +7432,6 @@
         </pattern>
         <pattern
                 id="pattern1926"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7790,7 +7454,6 @@
         </pattern>
         <pattern
                 id="pattern1932"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7813,7 +7476,6 @@
         </pattern>
         <pattern
                 id="pattern1938"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7836,7 +7498,6 @@
         </pattern>
         <pattern
                 id="pattern1944"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7859,7 +7520,6 @@
         </pattern>
         <pattern
                 id="pattern1950"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7882,7 +7542,6 @@
         </pattern>
         <pattern
                 id="pattern1956"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7905,7 +7564,6 @@
         </pattern>
         <pattern
                 id="pattern1962"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7928,7 +7586,6 @@
         </pattern>
         <pattern
                 id="pattern1968"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7951,7 +7608,6 @@
         </pattern>
         <pattern
                 id="pattern1974"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7974,7 +7630,6 @@
         </pattern>
         <pattern
                 id="pattern1980"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -7997,7 +7652,6 @@
         </pattern>
         <pattern
                 id="pattern1986"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -8020,7 +7674,6 @@
         </pattern>
         <pattern
                 id="pattern1992"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -8043,7 +7696,6 @@
         </pattern>
         <pattern
                 id="checkers_tlc1 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -8066,7 +7718,6 @@
         </pattern>
         <pattern
                 id="checkers_est3 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -8089,7 +7740,6 @@
         </pattern>
         <pattern
                 id="pattern2008"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -8112,7 +7762,6 @@
         </pattern>
         <pattern
                 id="pattern2014"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -8135,7 +7784,6 @@
         </pattern>
         <pattern
                 id="checkers_est1 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -8158,7 +7806,6 @@
         </pattern>
         <pattern
                 id="checkers_est2 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -8181,7 +7828,6 @@
         </pattern>
         <pattern
                 id="checkers_gli3 binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -8204,7 +7850,6 @@
         </pattern>
         <pattern
                 id="pattern2035"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"
@@ -8227,7 +7872,6 @@
         </pattern>
         <pattern
                 id="checkers_sufu binding region"
-                patternUnits="userSpaceOnUse"
                 x="0"
                 y="0"
                 width="12"

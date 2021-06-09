@@ -62,7 +62,8 @@
     "d3-scale-chromatic": "^1.5.0",
     "intersectionjs": "^1.0.1",
     "point2d": "^0.0.1",
-    "rgb-color": "2.1.2"
+    "rgb-color": "2.1.2",
+    "jquery": "~3.6.0"
   },
   "keywords": [
     "biojs",

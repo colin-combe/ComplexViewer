@@ -38,9 +38,9 @@ Complex.prototype.setLinked = function () {
 
 Complex.prototype.getPosition = function (originPoint) {
     let mapped = this.naryLink.mapped;//getMappedCoordinates();
-    if (!mapped){
+    if (!mapped) {
         this.naryLink.setLinkCoordinates();
-        mapped = this.naryLink.mapped;//this.naryLink.orbitNodes(this.naryLink.getMappedCoordinates());
+        mapped = this.naryLink.mapped;//this.naryLink.orbitNodeCount(this.naryLink.getMappedCoordinates());
     }
     const mc = mapped.length;
     let xSum = 0,
@@ -51,8 +51,8 @@ Complex.prototype.getPosition = function (originPoint) {
     }
     let center = [xSum / mc, ySum / mc];
     if (originPoint) {
-    // if (participant.type === "complex"){
-    //     startPoint = participant.getPosition();
+        // if (participant.type === "complex"){
+        //     startPoint = participant.getPosition();
         let naryPath = this.naryLink.hull;
         let iPath = [];
         for (let p of naryPath) {
@@ -74,7 +74,7 @@ Complex.prototype.setPosition = function () {
 };
 
 Complex.prototype.changePosition = function (dx, dy) {
-    for (let participant of this.naryLink.participants){
+    for (let participant of this.naryLink.participants) {
         participant.changePosition(dx, dy);
     }
 };

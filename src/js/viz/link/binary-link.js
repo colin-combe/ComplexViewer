@@ -1,4 +1,3 @@
-import {svgns} from "../../config";
 import {Link} from "./link";
 import * as Intersection from "intersectionjs";
 import * as Point2D from "point2d";
@@ -9,8 +8,8 @@ export function BinaryLink(id, app, fromI, toI) {
     this.participants = [fromI, toI];
     this.sequenceLinks = new Map();
     this.app = app;
-    this.line = document.createElementNS(svgns, "line");
-    this.highlightLine = document.createElementNS(svgns, "line");
+    this.line = document.createElementNS(this.app.svgns, "line");
+    this.highlightLine = document.createElementNS(this.app.svgns, "line");
     this.initSVG();
 }
 

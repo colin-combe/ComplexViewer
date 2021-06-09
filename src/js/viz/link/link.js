@@ -1,4 +1,5 @@
-export function Link () {}
+export function Link() {
+}
 
 Link.prototype.highlightParticipants = function (show) {
     for (let participant of this.participants) {
@@ -7,7 +8,7 @@ Link.prototype.highlightParticipants = function (show) {
 };
 
 Link.prototype.initSVG = function () {
-    this.line.classList.add("link","link-line");//, "certain-link");
+    this.line.classList.add("link", "link-line");//, "certain-link");
     this.highlightLine.classList.add("link", "highlight", "link-highlight");
     //set the events for it
     const self = this;

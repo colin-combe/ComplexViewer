@@ -1,24 +1,26 @@
 import {Annotation} from "./viz/interactor/annotation";
 import {Protein} from "./viz/interactor/protein";
-import {BioactiveEntity}  from "./viz/interactor/bioactive-entity";
+import {BioactiveEntity} from "./viz/interactor/bioactive-entity";
 import {Gene} from "./viz/interactor/gene";
 import {DNA} from "./viz/interactor/dna";
 import {RNA} from "./viz/interactor/rna";
 import {Complex} from "./viz/interactor/complex";
 import {ComplexSymbol} from "./viz/interactor/complex-symbol";
-import {MoleculeSet}  from "./viz/interactor/molecule-set";
+import {MoleculeSet} from "./viz/interactor/molecule-set";
 import {NaryLink} from "./viz/link/nary-link";
 import {FeatureLink} from "./viz/link/feature-link";
-import {SequenceDatum}  from "./viz/sequence-datum";
+import {SequenceDatum} from "./viz/sequence-datum";
 import {BinaryLink} from "./viz/link/binary-link";
-import {UnaryLink}  from "./viz/link/unary-link";
+import {UnaryLink} from "./viz/link/unary-link";
 import {matrix} from "./expand";
 
 // reads MI JSON format
-export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
+export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
     //check that we've got a parsed javascript object here, not a String
     miJson = (typeof miJson === "object") ? miJson : JSON.parse(miJson);
+
     miJson.data = miJson.data.reverse();
+
     app.features = new Map();
 
     const complexes = new Map();
@@ -226,14 +228,14 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
                     break;
                 }
             }
-            
+
             if (interactionExists) {
                 participant = new Complex(participantId, app, interactorRef);
                 complexes.set(participantId, participant);
             } else {
                 participant = new ComplexSymbol(participantId, app, interactorRef, interactor);
             }
-        }else if (interactor.type.id === "MI:1304" //molecule set
+        } else if (interactor.type.id === "MI:1304" //molecule set
             ||
             interactor.type.id === "MI:1305" //molecule set - candidate set
             ||

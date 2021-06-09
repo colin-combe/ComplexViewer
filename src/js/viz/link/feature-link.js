@@ -1,5 +1,4 @@
 import {Link} from "./link";
-import {svgns} from "../../config";
 // import * as Point2D from "point2d";
 // import * as Intersection from "intersectionjs";
 
@@ -19,8 +18,8 @@ FeatureLink.prototype.init = function (id, fromFeatPos, toFeatPos, app) {
     // *potentially, this over simplifies the situation,
     // but there is a workaround in way ReadMiJson init's links so OK for now
 
-    this.glyph = document.createElementNS(svgns, "path");
-    this.uncertainGlyph = document.createElementNS(svgns, "path");
+    this.glyph = document.createElementNS(this.app.svgns, "path");
+    this.uncertainGlyph = document.createElementNS(this.app.svgns, "path");
     this.glyph.classList.add("link", "feature-link", "certain-link");
     this.uncertainGlyph.classList.add("link", "feature-link", "uncertain-link");
 
@@ -165,10 +164,10 @@ FeatureLink.prototype.setLinkCoordinates = function () {
     //calculate mid points of from and to sequence data
     let fMid, tMid;
 
-    if (fromParticipant.expanded)  {
+    if (fromParticipant.expanded) {
         fMid = sequenceDataMidPoint(this.fromSequenceData, fromParticipant);
     }
-    if (toParticipant.expanded)  {
+    if (toParticipant.expanded) {
         tMid = sequenceDataMidPoint(this.toSequenceData, toParticipant);
     }
     if (!fromParticipant.expanded) {
@@ -253,7 +252,7 @@ FeatureLink.prototype.setLinkCoordinates = function () {
     // let highlightGlyphPath = "M" + triPointMid[0] + "," + triPointMid[1];
     for (let f = 0; f < fSDCount; f++) {
         seqDatum = this.fromSequenceData[f];
-        if (isNumber(seqDatum.begin)  && isNumber(seqDatum.end) || fromParticipant.type !== "protein") {
+        if (isNumber(seqDatum.begin) && isNumber(seqDatum.end) || fromParticipant.type !== "protein") {
             glyphPath += getSegment(triPointMid, ftMid, seqDatum.begin, seqDatum.end, fromParticipant, fyOffset, toOriginPoint);
         }
         // highlightStartRes = seqDatum.begin;

@@ -1,7 +1,7 @@
 //todo - is this even working? you never see it
 
-import {svgns} from "../../config";
 import {Link} from "./link";
+
 // var FeatureLink = require('./FeatureLink');
 
 export function UnaryLink(id, app, participant) {
@@ -9,8 +9,8 @@ export function UnaryLink(id, app, participant) {
     this.participants = [participant];
     this.sequenceLinks = new Map();
     this.app = app;
-    this.line = document.createElementNS(svgns, "path");
-    this.highlightLine = document.createElementNS(svgns, "path");
+    this.line = document.createElementNS(this.app.svgns, "path");
+    this.highlightLine = document.createElementNS(this.app.svgns, "path");
     this.initSVG();
 }
 
@@ -33,9 +33,9 @@ UnaryLink.prototype.check = function () {
 };
 
 UnaryLink.prototype.show = function () {
-    this.line.setAttribute("transform", "translate(" + this.participants[0].ix+
+    this.line.setAttribute("transform", "translate(" + this.participants[0].ix +
         " " + this.participants[0].iy + ")" + " scale(" + (this.app.z) + ")");
-    this.highlightLine.setAttribute("transform", "translate(" + this.participants[0].ix+
+    this.highlightLine.setAttribute("transform", "translate(" + this.participants[0].ix +
         " " + this.participants[0].iy + ")" + " scale(" + (this.app.z) + ")");
     this.app.highlights.appendChild(this.highlightLine);
     this.app.p_pLinks.appendChild(this.line);
@@ -44,9 +44,9 @@ UnaryLink.prototype.show = function () {
 
 UnaryLink.prototype.setLinkCoordinates = function () {
     const participant = this.participants[0];
-    this.line.setAttribute("transform", "translate(" + participant.ix+
+    this.line.setAttribute("transform", "translate(" + participant.ix +
         " " + participant.iy + ")" + " scale(" + (this.app.z) + ")");
-    this.highlightLine.setAttribute("transform", "translate(" + participant.ix+
+    this.highlightLine.setAttribute("transform", "translate(" + participant.ix +
         " " + participant.iy + ")" + " scale(" + (this.app.z) + ")");
 };
 

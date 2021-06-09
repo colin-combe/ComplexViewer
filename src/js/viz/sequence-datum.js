@@ -15,7 +15,7 @@ export function SequenceDatum(participant, sequenceDatumString) {
     this.participant = participant;
     this.sequenceDatumString = sequenceDatumString.trim();
 
-    function tidyPosition(pos){
+    function tidyPosition(pos) {
         if (parseInt(pos)) return parseInt(pos);
         else return pos;
     }

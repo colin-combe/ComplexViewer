@@ -9,8 +9,9 @@ import {fetchAnnotations} from "./annotationUtils";
 import {svgUtils} from "./svgexp";
 
 import {NaryLink} from "./viz/link/nary-link";
-import {svgns} from "./config";
-import * as rgb_color from "rgb-color";
+import * as Rgb_color from "rgb-color";
+
+import * as $ from "jquery";
 
 // could refactor everything to use ES6 class syntax
 // but https://benmccormick.org/2015/04/07/es6-classes-and-backbone-js
@@ -20,6 +21,7 @@ import * as rgb_color from "rgb-color";
 
 export function App(/*HTMLDivElement*/networkDiv) {
     //this.debug = true;
+    this.svgns = "http://www.w3.org/2000/svg";
     this.el = networkDiv;
 
     this.STATES = {};
@@ -84,7 +86,7 @@ export function App(/*HTMLDivElement*/networkDiv) {
 
 
     //create SVG element
-    this.svgElement = document.createElementNS(svgns, "svg");
+    this.svgElement = document.createElementNS(this.svgns, "svg");
     this.svgElement.classList.add("complexViewerSVG");
 
     //add listeners
@@ -132,14 +134,14 @@ export function App(/*HTMLDivElement*/networkDiv) {
     this.el.appendChild(this.svgElement);
 
     // various groups needed
-    this.container = document.createElementNS(svgns, "g");
+    this.container = document.createElementNS(this.svgns, "g");
     this.container.setAttribute("id", "container");
 
     const svg = d3.select(this.svgElement);
     this.defs = svg.append("defs");
 
-    this.acknowledgement = document.createElementNS(svgns, "g");
-    const ackText = document.createElementNS(svgns, "text");
+    this.acknowledgement = document.createElementNS(this.svgns, "g");
+    const ackText = document.createElementNS(this.svgns, "text");
     ackText.innerHTML = "<a href='https://academic.oup.com/bioinformatics/article/33/22/3673/4061280' target='_blank'><tspan x='0' dy='1.2em' style='text-decoration: underline'>ComplexViewer "
         + version + "</tspan></a><tspan x='0' dy='1.2em'>by <a href='http://rappsilberlab.org/' target='_blank'>Rappsilber Laboratory</a></tspan>";
 
@@ -147,32 +149,32 @@ export function App(/*HTMLDivElement*/networkDiv) {
     ackText.setAttribute("font-size", "8pt");
     this.svgElement.appendChild(this.acknowledgement);
 
-    this.naryLinks = document.createElementNS(svgns, "g");
+    this.naryLinks = document.createElementNS(this.svgns, "g");
     this.naryLinks.setAttribute("id", "naryLinks");
     this.container.appendChild(this.naryLinks);
 
-    this.p_pLinksWide = document.createElementNS(svgns, "g");
+    this.p_pLinksWide = document.createElementNS(this.svgns, "g");
     this.p_pLinksWide.setAttribute("id", "p_pLinksWide");
     this.container.appendChild(this.p_pLinksWide);
 
-    this.highlights = document.createElementNS(svgns, "g");
+    this.highlights = document.createElementNS(this.svgns, "g");
     this.highlights.setAttribute("class", "highlights"); //interactors also contain highlight groups
     this.container.appendChild(this.highlights);
 
-    this.res_resLinks = document.createElementNS(svgns, "g");
+    this.res_resLinks = document.createElementNS(this.svgns, "g");
     this.res_resLinks.setAttribute("id", "res_resLinks");
     this.container.appendChild(this.res_resLinks);
 
-    this.p_pLinks = document.createElementNS(svgns, "g");
+    this.p_pLinks = document.createElementNS(this.svgns, "g");
     this.p_pLinks.setAttribute("id", "p_pLinks");
     this.container.appendChild(this.p_pLinks);
 
     //todo - have links above interactors?
-    this.proteinUpper = document.createElementNS(svgns, "g");
+    this.proteinUpper = document.createElementNS(this.svgns, "g");
     this.proteinUpper.setAttribute("id", "proteinUpper");
     this.container.appendChild(this.proteinUpper);
 
-    this.selfRes_resLinks = document.createElementNS(svgns, "g");
+    this.selfRes_resLinks = document.createElementNS(this.svgns, "g");
     this.selfRes_resLinks.setAttribute("id", "res_resLinks");
     this.container.appendChild(this.selfRes_resLinks);
 
@@ -180,7 +182,7 @@ export function App(/*HTMLDivElement*/networkDiv) {
 
     //showing title as tooltips is NOT part of svg spec (even though some browsers do this)
     //also more responsive / more control if we do out own
-    this.tooltip = document.createElementNS(svgns, "text");
+    this.tooltip = document.createElementNS(this.svgns, "text");
     this.tooltip.setAttribute("x", "0");
     this.tooltip.setAttribute("y", "0");
     const tooltipTextNode = document.createTextNode("tooltip");
@@ -188,10 +190,10 @@ export function App(/*HTMLDivElement*/networkDiv) {
 
     this.tooltip.appendChild(tooltipTextNode);
 
-    this.tooltip_bg = document.createElementNS(svgns, "rect");
+    this.tooltip_bg = document.createElementNS(this.svgns, "rect");
     this.tooltip_bg.classList.add("tooltip-background");
 
-    this.tooltip_subBg = document.createElementNS(svgns, "rect");
+    this.tooltip_subBg = document.createElementNS(this.svgns, "rect");
     this.tooltip_subBg.classList.add("tooltip-sub-background");
 
     this.svgElement.appendChild(this.tooltip_subBg);
@@ -203,8 +205,6 @@ export function App(/*HTMLDivElement*/networkDiv) {
     this.annotationSetsShown.set("UniprotKB", false);
     this.annotationSetsShown.set("Superfamily", false);
     this.annotationSetsShown.set("MI Features", true);
-
-
 
     this.clear();
 }
@@ -458,8 +458,10 @@ App.prototype.mouseUp = function (evt) { //could be tidied up
     return false;
 };
 
-//gets mouse position - is there a better way?
 App.prototype.getEventPoint = function (evt) {
+    // *****!$$$ finally, cross-browser
+    // return {x: evt.pageX - $(this.el).offset().left, y: evt.pageY - $(this.el).offset().top};
+
     const p = this.svgElement.createSVGPoint();
     let element = this.svgElement.parentNode;
     let top = 0,
@@ -500,7 +502,7 @@ App.prototype.autoLayout = function () {
 
     const pruned = [], allNodesExceptComplexes = [], self = this;
     for (let p of this.participants.values()) {
-        if (p.type != "complex"){
+        if (p.type != "complex") {
             allNodesExceptComplexes.push(p);
             if (p.binaryLinks.size > 2) {
                 pruned.push(p);
@@ -520,40 +522,41 @@ App.prototype.autoLayout = function () {
     const height = this.svgElement.parentNode.clientHeight;
     this.d3cola.size([height - 40, width - 40]).symmetricDiffLinkLengths(linkLength);
 
-    doLayout(pruned, true);
-    doLayout(allNodesExceptComplexes, true);
-    doLayout(allNodesExceptComplexes, false);
 
-    function doLayout(nodes, preRun) {
-        //don't know how necessary these deletions are
-        delete self.d3cola._lastStress;
-        delete self.d3cola._alpha;
-        delete self.d3cola._descent;
-        delete self.d3cola._rootGroup;
-
+    function makeLinks(nodes){
         const links = [];
-
         const molLookUp = {};
         let mi = 0;
         for (let mol of nodes) {
             molLookUp[mol.id] = mi;
             mi++;
         }
-
         for (let binaryLink of self.allBinaryLinks.values()) {
-            const fromMol = binaryLink.participants[0];
-            const toMol = binaryLink.participants[1];
-            const source = fromMol; //molLookUp[fromMol.id];
-            const target = toMol; //molLookUp[toMol.id];
-
+            const source = binaryLink.participants[0];
+            const target = binaryLink.participants[1];
             if (source !== target && nodes.indexOf(source) !== -1 && nodes.indexOf(target) !== -1) { // todo - check what this is doing
                 const linkObj = {};
-                linkObj.source = molLookUp[fromMol.id];
-                linkObj.target = molLookUp[toMol.id];
+                linkObj.source = molLookUp[source.id];
+                linkObj.target = molLookUp[target.id];
                 linkObj.id = binaryLink.id;
                 links.push(linkObj);
             }
         }
+        return links;
+    }
+
+    doLayout(pruned, makeLinks(pruned), true);
+    const links = makeLinks(allNodesExceptComplexes);
+    doLayout(allNodesExceptComplexes, links, true); //todo - some work is repeated (links array), refactor so more efficient
+    doLayout(allNodesExceptComplexes, links, false);
+
+    // function doLayout(nodes, links, preRun) {
+    function doLayout(nodes, links, preRun) {
+        //don't know how necessary these deletions are
+        delete self.d3cola._lastStress;
+        delete self.d3cola._alpha;
+        delete self.d3cola._descent;
+        delete self.d3cola._rootGroup;
 
         self.d3cola.nodes(nodes).links(links);
 
@@ -590,8 +593,8 @@ App.prototype.autoLayout = function () {
         if (preRun) {
             self.d3cola.groups([]).start(23, 10, 0, 0, false);
         } else {
+            const groups = [];
             if (self.complexes) {
-                const groups = [];
                 for (let g of self.complexes) {
                     g.leaves = [];
                     g.groups = [];
@@ -609,59 +612,60 @@ App.prototype.autoLayout = function () {
                         }
                     }
                 }
-                self.d3cola.groups(groups);
             }
-            self.d3cola.start(0, 10, 1, 0, true).on("end", function () {
-                for (let node of nodes) {
-                    node.setPosition(node.x, node.y);
-                }
-                self.setAllLinkCoordinates();
-                self.zoomToExtent();
-            }).on("tick", function () {
-                const nodes = self.d3cola.nodes();
-                for (let node of nodes) {
-                    node.setPosition(node.x, node.y);
-                }
-                self.setAllLinkCoordinates();
-                self.zoomToExtent();
+            self.d3cola.groups(groups).start(0, 10, 1, 0, true)
+                //     .on("end", function () {
+                //     for (let node of nodes) {
+                //         node.setPosition(node.x, node.y);
+                //     }
+                //     self.setAllLinkCoordinates();
+                //     self.zoomToExtent();
+                // })
+                .on("tick", function () {
+                    const nodes = self.d3cola.nodes();
+                    for (let node of nodes) {
+                        node.setPosition(node.x, node.y);
+                    }
+                    self.setAllLinkCoordinates();
+                    self.zoomToExtent();
 
-                /*if (self.debug) {
-                    groupDebugSel.attr({
-                        x: function (d) {
-                            return d.bounds.x;// + (width / 2);
-                        },
-                        y: function (d) {
-                            return d.bounds.y;// + (height / 2);
-                        },
-                        width: function (d) {
-                            return d.bounds.width();
-                        },
-                        height: function (d) {
-                            return d.bounds.height();
-                        }
-                    });
+                    /*if (self.debug) {
+                        groupDebugSel.attr({
+                            x: function (d) {
+                                return d.bounds.x;// + (width / 2);
+                            },
+                            y: function (d) {
+                                return d.bounds.y;// + (height / 2);
+                            },
+                            width: function (d) {
+                                return d.bounds.width();
+                            },
+                            height: function (d) {
+                                return d.bounds.height();
+                            }
+                        });
 
-                    participantDebugSel.attr({
-                        x: function (d) {
-                            return d.bounds.x;// + (width / 2);
-                        },
-                        y: function (d) {
-                            return d.bounds.y;// + (height / 2);
-                        },
-                        width: function (d) {
-                            return d.bounds.width();
-                        },
-                        height: function (d) {
-                            return d.bounds.height();
-                        }
-                    });
-                }*/
-            });
+                        participantDebugSel.attr({
+                            x: function (d) {
+                                return d.bounds.x;// + (width / 2);
+                            },
+                            y: function (d) {
+                                return d.bounds.y;// + (height / 2);
+                            },
+                            width: function (d) {
+                                return d.bounds.width();
+                            },
+                            height: function (d) {
+                                return d.bounds.height();
+                            }
+                        });
+                    }*/
+                });
         }
     }
 };
 
-App.prototype.getSVG = function () { //todo - somewhat broken, annotations missing
+App.prototype.getSVG = function () {
     const svgSel = d3.select(this.el).selectAll("svg");
     const svgArr = [svgSel.node()];
     const svgStrings = svgUtils.capture(svgArr);
@@ -809,6 +813,7 @@ App.prototype.updateAnnotations = function () {
     }
 
     const self = this;
+
     function createHatchedFill(name, color) {
         const pattern = self.defs.append("pattern")
             .attr("id", name)
@@ -853,7 +858,7 @@ App.prototype.updateAnnotations = function () {
                         if (anno.fuzzyStart || anno.fuzzyEnd) {
                             if (!this.uncertainCategories.has(name)) {
                                 // make transparent version of color
-                                const temp = new rgb_color(color);
+                                const temp = new Rgb_color(color);
                                 const transpColor = "rgba(" + temp.r + "," + temp.g + "," + temp.b + ", 0.6)";
                                 createHatchedFill("hatched_" + anno.description + "_" + color.toString(), transpColor);
                                 this.uncertainCategories.add(anno.description);
@@ -879,7 +884,7 @@ App.prototype.updateAnnotations = function () {
 App.prototype.getColorKeyJson = function () {
     const json = {"Complex": []};
     for (let name of NaryLink.naryColors.domain()) {
-        json.Complex.push({"name": name, "certain":{"color": NaryLink.naryColors(name)}});
+        json.Complex.push({"name": name, "certain": {"color": NaryLink.naryColors(name)}});
     }
     if (this.featureColors) {
         for (let [annotationSet, shown] of this.annotationSetsShown) {
@@ -898,11 +903,11 @@ App.prototype.getColorKeyJson = function () {
                                         "name": desc
                                     };
                                     if (this.certainCategories.has(desc)) {
-                                      featureType.certain = {"color": this.featureColors(desc)};
+                                        featureType.certain = {"color": this.featureColors(desc)};
                                     }
                                     if (this.uncertainCategories.has(desc)) {
                                         // make transparent version of color
-                                        const temp = new rgb_color(this.featureColors(desc));
+                                        const temp = new Rgb_color(this.featureColors(desc));
                                         const transpColor = "rgba(" + temp.r + "," + temp.g + "," + temp.b + ", 0.6)";
                                         featureType.uncertain = {"color": transpColor};
                                     }
@@ -992,6 +997,13 @@ App.prototype.getExpandedParticipants = function () {
         }
     }
     return expanded;
+};
+
+App.prototype.rotatePointAboutPoint = function (p, o, theta) {
+    theta = (theta / 360) * Math.PI * 2; //TODO: change theta arg to radians not degrees
+    const rx = Math.cos(theta) * (p[0] - o[0]) - Math.sin(theta) * (p[1] - o[1]) + o[0];
+    const ry = Math.sin(theta) * (p[0] - o[0]) + Math.cos(theta) * (p[1] - o[1]) + o[1];
+    return [rx, ry];
 };
 
 App.prototype.downloadSVG = function (fileName) {
