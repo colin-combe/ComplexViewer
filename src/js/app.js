@@ -5,7 +5,7 @@ import * as d3 from "d3";
 import * as d3_chromatic from "d3-scale-chromatic";
 import * as cola from "./cola";
 import {readMijson} from "./read-mijson";
-import {fetchAnnotations} from "./annotationUtils";
+import {fetchAnnotations} from "./annotation-utils";
 import {svgUtils} from "./svgexp";
 
 import {NaryLink} from "./viz/link/nary-link";
