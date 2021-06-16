@@ -144,17 +144,9 @@ img {
         height: 50%;
     }
 
-    .color-key {
-        max-width: 150px;
-    }
-
     .legend table tr td:first-of-type{
         max-width: 60px;
     }
-
-    /*.color-key tr td:first-of-type {*/
-    /*    width:60px;*/
-    /*}*/
 
     .logo-bar{
         display:none;
