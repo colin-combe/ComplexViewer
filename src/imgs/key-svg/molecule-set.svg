@@ -1,54 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-        xmlns:dc="http://purl.org/dc/elements/1.1/"
-        xmlns:cc="http://creativecommons.org/ns#"
-        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-        xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-        xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 54.990067 27.000111"
         id="complexViewerSVG"
         version="1.1"
-        sodipodi:docname="molSet.svg"
         width="54.990067"
-        height="27.000111"
-        inkscape:version="0.92.1 r15371">
+        height="27.000111">
     <metadata
             id="metadata2599">
-        <rdf:RDF>
-            <cc:Work
-                    rdf:about="">
-                <dc:format>image/svg+xml</dc:format>
-                <dc:type
-                        rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-                <dc:title></dc:title>
-            </cc:Work>
-        </rdf:RDF>
     </metadata>
-    <sodipodi:namedview
-            pagecolor="#ffffff"
-            bordercolor="#666666"
-            borderopacity="1"
-            objecttolerance="10"
-            gridtolerance="10"
-            guidetolerance="10"
-            inkscape:pageopacity="0"
-            inkscape:pageshadow="2"
-            inkscape:window-width="2560"
-            inkscape:window-height="1377"
-            id="namedview2597"
-            showgrid="false"
-            fit-margin-top="0"
-            fit-margin-left="0"
-            fit-margin-right="0"
-            fit-margin-bottom="0"
-            inkscape:zoom="0.5"
-            inkscape:cx="-22.705953"
-            inkscape:cy="54.5"
-            inkscape:window-x="0"
-            inkscape:window-y="26"
-            inkscape:window-maximized="1"
-            inkscape:current-layer="complexViewerSVG"/>
     <defs
             id="defs2042">
         <pattern
@@ -79,7 +39,6 @@
                     d="M 0,-7.0710768 V 7.0710589 L 7.0710462,0 Z"
                     transform="matrix(1.5,0,0,1.5,-7.5,0)"
                     id="path5"
-                    inkscape:connector-curvature="0"
                     style="fill:#000000"/>
         </marker>
         <pattern
