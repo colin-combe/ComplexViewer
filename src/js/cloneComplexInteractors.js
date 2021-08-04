@@ -47,6 +47,27 @@ export function cloneComplexInteractors(json) {
                 if (i > 1) {
                     participantComplex.interactorRef = participantComplex.interactorRef + "_" + i;
 
+                    // update features of complex
+                    if (participantComplex.features) {
+                        participantComplex.features.forEach(function (feature) {
+
+                            feature.copiedfrom = feature.id;
+                            // feature.id = feature.id + "_" + i;
+                            // Also, adjust our sequence data
+                            feature.sequenceData.forEach(function (sequenceData) {
+                                sequenceData.participantRef = sequenceData.participantRef  + "_" + i;
+                                //~ sequenceData.interactorRef = clonedInteractor.id;
+                            });
+
+                            // const lnCount = feature.linkedFeatures.length;
+                            // for (let ln = 0; ln < lnCount; ln++){
+                            //     // console.log(linkedFeature);
+                            //     feature.linkedFeatures[ln] = feature.linkedFeatures[ln] + "_" + i;
+                            // }
+
+                        });
+                    }
+
                     const clonedInteractor = JSON.parse(JSON.stringify(foundInteractor));
                     clonedInteractor.id = clonedInteractor.id + "_" + i;
 
