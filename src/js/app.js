@@ -73,7 +73,6 @@ export class App {
                 self.preventDefaultsAndStopPropagation(d);
                 self.contextMenuProt.setStickScale(d, self.contextMenuPoint);
             });
-
         const contextMenu = d3.select(".custom-menu-margin").node();
         contextMenu.onmouseout = function (evt) {
             let e = evt.relatedTarget;
@@ -309,8 +308,8 @@ export class App {
         const width = this.svgElement.parentNode.clientWidth;
         const height = this.svgElement.parentNode.clientHeight;
         const bbox = this.container.getBBox();
-        let xr = (width / bbox.width).toFixed(4) - 0;
-        let yr = (height / bbox.height).toFixed(4) - 0;
+        let xr = (width / bbox.width).toFixed(4);
+        let yr = (height / bbox.height).toFixed(4);
         let scaleFactor;
         if (yr < xr) {
             scaleFactor = yr;

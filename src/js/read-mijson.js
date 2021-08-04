@@ -13,6 +13,7 @@ import {SequenceDatum} from "./viz/sequence-datum";
 import {BinaryLink} from "./viz/link/binary-link";
 import {UnaryLink} from "./viz/link/unary-link";
 import {matrix} from "./expand";
+import {cloneComplexInteractors} from "./cloneComplexInteractors";
 
 // reads MI JSON format
 export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
@@ -24,8 +25,8 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
     app.features = new Map();
 
     const complexes = new Map();
-    // todo - make sequence required in miJSON rather than optional, JAMI's always adding it
-    //const needsSequence = new Set(); //things that need seq looked up
+
+    miJson = cloneComplexInteractors(miJson);
 
     //get interactors
     app.proteinCount = 0;

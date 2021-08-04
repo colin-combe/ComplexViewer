@@ -9,7 +9,7 @@ export function matrix(json) {
         return interactor.object === "interactor";
     });
 
-    const newParticipants = [];
+    // const newParticipants = [];
 
     // Loop through our interactions
     interactions.forEach(function (interaction) {
@@ -58,7 +58,7 @@ export function matrix(json) {
                     }
 
                     interaction.participants.push(clonedParticipant);
-                    newParticipants.push(clonedParticipant);
+                    // newParticipants.push(clonedParticipant);
 
                 }
             }
