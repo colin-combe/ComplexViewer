@@ -1,4 +1,5 @@
 import {Link} from "./link";
+import {svgns} from "../../svgns";
 // import * as Point2D from "point2d";
 // import * as Intersection from "intersectionjs";
 
@@ -18,8 +19,8 @@ export class FeatureLink extends Link {
         // *potentially, this over simplifies the situation,
         // but there is a workaround in way ReadMiJson init's links so OK for now
 
-        this.glyph = document.createElementNS(this.app.svgns, "path");
-        this.uncertainGlyph = document.createElementNS(this.app.svgns, "path");
+        this.glyph = document.createElementNS(svgns, "path");
+        this.uncertainGlyph = document.createElementNS(svgns, "path");
         this.glyph.classList.add("link", "feature-link", "certain-link");
         this.uncertainGlyph.classList.add("link", "feature-link", "uncertain-link");
 

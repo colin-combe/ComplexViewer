@@ -13,7 +13,7 @@ import {SequenceDatum} from "./viz/sequence-datum";
 import {BinaryLink} from "./viz/link/binary-link";
 import {UnaryLink} from "./viz/link/unary-link";
 import {matrix} from "./expand";
-import {cloneComplexInteractors} from "./cloneComplexInteractors";
+import {cloneComplexInteractors} from "./clone-complex-interactors";
 
 // reads MI JSON format
 export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {

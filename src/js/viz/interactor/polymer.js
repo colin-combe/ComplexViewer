@@ -1,4 +1,6 @@
 import * as d3 from "d3"; // transitions and other stuff
+import {rotatePointAboutPoint} from "../../geom";
+import {svgns} from "../../svgns";
 import {Interactor} from "./interactor";
 // import {Annotation} from "./annotation";
 // import {SequenceDatum} from "../sequence-datum";
@@ -73,7 +75,6 @@ export class Polymer extends Interactor {
     }
 
     setScaleGroup() {
-        const svgns = this.app.svgns;
         this.upperGroup.appendChild(this.ticks); //will do nothing if this.ticks already appended to this.uppergroup
         this.ticks.textContent = "";
         this.scaleLabels = [];
@@ -98,16 +99,30 @@ export class Polymer extends Interactor {
                 }
             }
             if (this.stickZoom >= 8) {
-                const seqLabelGroup = document.createElementNS(this.app.svgns, "g");
+                const seqLabelGroup = document.createElementNS(svgns, "g");
                 seqLabelGroup.setAttribute("transform", "translate(" + this.getResXWithStickZoom(res) + " " + 0 + ")");
+
                 const seqLabel = document.createElementNS(svgns, "text");
                 seqLabel.classList.add("label", "sequence");
                 //css?
                 seqLabel.setAttribute("x", "0");
                 seqLabel.setAttribute("y", "3");
                 seqLabel.appendChild(document.createTextNode(this.sequence[res - 1]));
+
+
+                const seqLabelOutline = document.createElementNS(svgns, "text");
+                seqLabelOutline.classList.add("label", "sequence-outline");
+                //css?
+                seqLabelOutline.setAttribute("x", "0");
+                seqLabelOutline.setAttribute("y", "3");
+                seqLabelOutline.appendChild(document.createTextNode(this.sequence[res - 1]));
+
+
+                seqLabelGroup.appendChild(seqLabelOutline);
+                this.scaleLabels.push(seqLabelOutline);
                 seqLabelGroup.appendChild(seqLabel);
                 this.scaleLabels.push(seqLabel);
+
                 this.ticks.appendChild(seqLabelGroup);
             }
         }
@@ -554,7 +569,7 @@ export class Polymer extends Interactor {
                         dupCheck.add(anno.toString());
                         let text = anno.toString();
                         if (anno.seqDatum.uncertainBegin) {
-                            anno.fuzzyStart = document.createElementNS(this.app.svgns, "path");
+                            anno.fuzzyStart = document.createElementNS(svgns, "path");
                             if (!this.expanded) {
                                 anno.fuzzyStart.setAttribute("d", this.getAnnotationPieSlicePath(anno.seqDatum.uncertainBegin, anno.seqDatum.begin, anno));
                             } else {
@@ -568,7 +583,7 @@ export class Polymer extends Interactor {
                         }
 
                         if (anno.seqDatum.begin && anno.seqDatum.end) {
-                            anno.certain = document.createElementNS(this.app.svgns, "path");
+                            anno.certain = document.createElementNS(svgns, "path");
                             let tempBegin = anno.seqDatum.begin; //todo - might be better to have seperate att in SequenceData for end of uncertain start
                             let tempEnd = anno.seqDatum.end;
                             if (anno.seqDatum.uncertainBegin) {
@@ -589,7 +604,7 @@ export class Polymer extends Interactor {
                             this.annotationsSvgGroup.appendChild(anno.certain);
                         }
                         if (anno.seqDatum.uncertainEnd) {
-                            anno.fuzzyEnd = document.createElementNS(this.app.svgns, "path");
+                            anno.fuzzyEnd = document.createElementNS(svgns, "path");
                             if (!this.expanded) {
                                 anno.fuzzyEnd.setAttribute("d", this.getAnnotationPieSlicePath(anno.seqDatum.end, anno.seqDatum.uncertainEnd, anno));
                             } else {
@@ -640,10 +655,10 @@ export class Polymer extends Interactor {
             largeArch = 1;
         }
 
-        const p1 = this.app.rotatePointAboutPoint([0, bottom], [0, 0], startAngle - 180);
-        const p2 = this.app.rotatePointAboutPoint([0, top], [0, 0], startAngle - 180);
-        const p3 = this.app.rotatePointAboutPoint([0, top], [0, 0], endAngle - 180);
-        const p4 = this.app.rotatePointAboutPoint([0, bottom], [0, 0], endAngle - 180);
+        const p1 = rotatePointAboutPoint([0, bottom], [0, 0], startAngle - 180);
+        const p2 = rotatePointAboutPoint([0, top], [0, 0], startAngle - 180);
+        const p3 = rotatePointAboutPoint([0, top], [0, 0], endAngle - 180);
+        const p4 = rotatePointAboutPoint([0, bottom], [0, 0], endAngle - 180);
 
         //'left' edge
         let path = "M" + p1[0] + "," + p1[1] + " L" + p2[0] + "," + p2[1];
@@ -655,7 +670,7 @@ export class Polymer extends Interactor {
             //path += " L" + p3[0] + "," + p3[1];
             for (let sia = 0; sia <= Polymer.stepsInArc; sia++) {
                 const angle = startAngle + ((endAngle - startAngle) / Polymer.stepsInArc) * sia;
-                const p = this.app.rotatePointAboutPoint([0, top], [0, 0], angle - 180);
+                const p = rotatePointAboutPoint([0, top], [0, 0], angle - 180);
                 path += " L" + p[0] + "," + p[1];
             }
         }
@@ -671,7 +686,7 @@ export class Polymer extends Interactor {
             //bottom edge
             for (let sia = Polymer.stepsInArc; sia >= 0; sia--) {
                 const angle = startAngle + ((endAngle - startAngle) / Polymer.stepsInArc) * sia;
-                const p = this.app.rotatePointAboutPoint([0, bottom], [0, 0], angle - 180);
+                const p = rotatePointAboutPoint([0, bottom], [0, 0], angle - 180);
                 path += " L" + p[0] + "," + p[1];
             }
         }

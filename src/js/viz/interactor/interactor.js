@@ -1,3 +1,5 @@
+import {svgns} from "../../svgns";
+
 export class Interactor {
     constructor() {
     }
@@ -44,7 +46,7 @@ export class Interactor {
     }
 
     initLabel() {
-        this.labelSVG = document.createElementNS(this.app.svgns, "text");
+        this.labelSVG = document.createElementNS(svgns, "text");
         this.labelSVG.setAttribute("x", "0"); // css?
         this.labelSVG.setAttribute("y", "10");
         this.labelSVG.classList.add("label");

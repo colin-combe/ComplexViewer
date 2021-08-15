@@ -1,12 +1,13 @@
 import {Interactor} from "./interactor";
+import {svgns} from "../../svgns";
 
 export class MoleculeSet extends Interactor {
     constructor(id, app, json, name) {
         super();
         this.init(id, app, json, name);
-        this.upperGroup = document.createElementNS(this.app.svgns, "g");
+        this.upperGroup = document.createElementNS(svgns, "g");
         this.initLabel();
-        this.outline = document.createElementNS(this.app.svgns, "rect");
+        this.outline = document.createElementNS(svgns, "rect");
         this.outline.setAttribute("x", "-20");
         this.outline.setAttribute("y", "-10");
         this.outline.setAttribute("width", "40");
@@ -21,7 +22,7 @@ export class MoleculeSet extends Interactor {
         this.outline.setAttribute("fill", "#ffffff");
         //append outline
         this.upperGroup.appendChild(this.outline);
-        this.upperLine = document.createElementNS(this.app.svgns, "rect");
+        this.upperLine = document.createElementNS(svgns, "rect");
         this.upperLine.setAttribute("x", "-20");
         this.upperLine.setAttribute("y", "-10");
         this.upperLine.setAttribute("width", "40");

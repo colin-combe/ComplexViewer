@@ -1,13 +1,14 @@
 import {Interactor} from "./interactor";
+import {svgns} from "../../svgns";
 
 export class BioactiveEntity extends Interactor{
     constructor(id, app, json, name) {
         super();
         this.init(id, app, json, name);
-        this.upperGroup = document.createElementNS(this.app.svgns, "g");
+        this.upperGroup = document.createElementNS(svgns, "g");
         this.initLabel();
         const points = "0, -10  8.66,5 -8.66,5";
-        this.outline = document.createElementNS(this.app.svgns, "polygon");
+        this.outline = document.createElementNS(svgns, "polygon");
         this.outline.setAttribute("points", points);
         this.initOutline();
         this.initListeners();

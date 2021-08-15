@@ -4,37 +4,24 @@ import {version} from "../../package.json";
 import * as d3 from "d3";
 import * as d3_chromatic from "d3-scale-chromatic";
 import * as cola from "./cola";
-import {readMijson} from "./read-mijson";
-import {fetchAnnotations} from "./annotation-utils";
-import {svgUtils} from "./svgexp";
-
-import {NaryLink} from "./viz/link/nary-link";
 import * as Rgb_color from "rgb-color";
 
-// import * as $ from "jquery";
+import {svgUtils} from "./svgexp";
+import {readMijson} from "./read-mijson";
+import {fetchAnnotations} from "./annotation-utils";
 
-// could refactor everything to use ES6 class syntax
-// but https://benmccormick.org/2015/04/07/es6-classes-and-backbone-js
-// "ES6 classes don’t support adding properties directly to the class instance, only functions/methods"
-// so backbone doesn't work
-// so continuing to use prototypical inheritance in things for time being
+import {NaryLink} from "./viz/link/nary-link";
+import {svgns} from "./svgns";
+
+// import * as _ from "underscore";
 
 export class App {
-    constructor(/*HTMLDivElement*/networkDiv) {
+    constructor(/*HTMLDivElement*/networkDiv, maxCountInitiallyExpanded = 4) {
         //this.debug = true;
-        this.svgns = "http://www.w3.org/2000/svg";
         this.el = networkDiv;
-
-        this.STATES = {};
-        this.STATES.MOUSE_UP = 0; //start state, also set when mouse up on svgElement
-        this.STATES.PANNING = 1; //set by mouse down on svgElement - left button, no shift or util
-        this.STATES.DRAGGING = 2; //set by mouse down on Protein or Link
-        this.STATES.ROTATING = 3; //set by mouse down on Rotator, drag?
-        this.STATES.SELECTING = 4; //set by mouse down on svgElement- right button or left button shift or util, drag
-
         //avoids prob with 'save - web page complete'
         this.el.textContent = ""; //https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
-
+        this.maxCountInitiallyExpanded = maxCountInitiallyExpanded;
         this.d3cola = cola.d3adaptor().groupCompactness(Number.MIN_VALUE).avoidOverlaps(true); //1e-5
 
         const customMenuSel = d3.select(this.el)
@@ -50,9 +37,8 @@ export class App {
         };
         const scaleButtonsListItemSel = customMenuSel.append("li").text("Scale: ");
 
-        this.barScales = [0.01, 0.2, 1, 2, 4, 8];
         const scaleButtons = scaleButtonsListItemSel.selectAll("ul.custom-menu")
-            .data(this.barScales)
+            .data(App.barScales)
             .enter()
             .append("div")
             .attr("class", "bar-scale")
@@ -86,24 +72,27 @@ export class App {
 
 
         //create SVG element
-        this.svgElement = document.createElementNS(this.svgns, "svg");
+        this.svgElement = document.createElementNS(svgns, "svg");
         this.svgElement.classList.add("complexViewerSVG");
 
         //add listeners
+        // this.debouncedMouseDown = _.debounce(self.mouseDown, 100);
         this.svgElement.onmousedown = function (evt) {
             self.mouseDown(evt);
         };
+        // this.debouncedMove = _.debounce(self.move, 50);
         this.svgElement.onmousemove = function (evt) {
             self.move(evt);
         };
+        // this.debouncedMouseUp = _.debounce(self.mouseUp, 50);
         this.svgElement.onmouseup = function (evt) {
             self.mouseUp(evt);
         };
+        // this.debouncedMouseOut = _.debounce(self.mouseOut, 100);
         this.svgElement.onmouseout = function (evt) {
-            self.hideTooltip(evt);
+            self.mouseOut(evt);
         };
-        this.lastMouseUp = new Date().getTime();
-
+        // const debouncedTouchStart = _debounce()
         this.svgElement.ontouchstart = function (evt) {
             //console.log("svgElement touch start");
             self.touchStart(evt);
@@ -116,6 +105,7 @@ export class App {
             // console.log("svgElement touch end");
             self.mouseUp(evt);
         };
+        this.lastMouseUp = new Date().getTime();
 
         this.el.oncontextmenu = function (evt) {
             if (evt.preventDefault) { // necessary for addEventListener, works with traditional
@@ -125,6 +115,19 @@ export class App {
             return false; // works with traditional, not with attachEvent or addEventListener
         };
 
+
+        const mouseWheelEvt = (/Firefox/i.test(navigator.userAgent)) ? "DOMMouseScroll" : "mousewheel"; //FF doesn't recognize mousewheel as of FF3.x
+        if (document.attachEvent) { //if IE (and Opera depending on user setting)
+            this.svgElement.attachEvent("on" + mouseWheelEvt, function (evt) {
+                self.mouseWheel(evt);
+            });
+        } else if (document.addEventListener) { //WC3 browsers
+            this.svgElement.addEventListener(mouseWheelEvt, function (evt) {
+                self.mouseWheel(evt);
+            }, false);
+        }
+
+
         //functions that get interactor id of hover over thing
         this.hoverListeners = new Set();
         this.expandListeners = new Set();
@@ -132,14 +135,14 @@ export class App {
         this.el.appendChild(this.svgElement);
 
         // various groups needed
-        this.container = document.createElementNS(this.svgns, "g");
+        this.container = document.createElementNS(svgns, "g");
         this.container.setAttribute("id", "container");
 
         const svg = d3.select(this.svgElement);
         this.defs = svg.append("defs");
 
-        this.acknowledgement = document.createElementNS(this.svgns, "g");
-        const ackText = document.createElementNS(this.svgns, "text");
+        this.acknowledgement = document.createElementNS(svgns, "g");
+        const ackText = document.createElementNS(svgns, "text");
         ackText.innerHTML = "<a href='https://academic.oup.com/bioinformatics/article/33/22/3673/4061280' target='_blank'><tspan x='0' dy='1.2em' style='text-decoration: underline'>ComplexViewer "
             + version + "</tspan></a><tspan x='0' dy='1.2em'>by <a href='http://rappsilberlab.org/' target='_blank'>Rappsilber Laboratory</a></tspan>";
 
@@ -147,32 +150,32 @@ export class App {
         ackText.setAttribute("font-size", "8pt");
         this.svgElement.appendChild(this.acknowledgement);
 
-        this.naryLinks = document.createElementNS(this.svgns, "g");
+        this.naryLinks = document.createElementNS(svgns, "g");
         this.naryLinks.setAttribute("id", "naryLinks");
         this.container.appendChild(this.naryLinks);
 
-        this.p_pLinksWide = document.createElementNS(this.svgns, "g");
+        this.p_pLinksWide = document.createElementNS(svgns, "g");
         this.p_pLinksWide.setAttribute("id", "p_pLinksWide");
         this.container.appendChild(this.p_pLinksWide);
 
-        this.highlights = document.createElementNS(this.svgns, "g");
+        this.highlights = document.createElementNS(svgns, "g");
         this.highlights.setAttribute("class", "highlights"); //interactors also contain highlight groups
         this.container.appendChild(this.highlights);
 
-        this.res_resLinks = document.createElementNS(this.svgns, "g");
+        this.res_resLinks = document.createElementNS(svgns, "g");
         this.res_resLinks.setAttribute("id", "res_resLinks");
         this.container.appendChild(this.res_resLinks);
 
-        this.p_pLinks = document.createElementNS(this.svgns, "g");
+        this.p_pLinks = document.createElementNS(svgns, "g");
         this.p_pLinks.setAttribute("id", "p_pLinks");
         this.container.appendChild(this.p_pLinks);
 
         //todo - have links above interactors?
-        this.proteinUpper = document.createElementNS(this.svgns, "g");
+        this.proteinUpper = document.createElementNS(svgns, "g");
         this.proteinUpper.setAttribute("id", "proteinUpper");
         this.container.appendChild(this.proteinUpper);
 
-        this.selfRes_resLinks = document.createElementNS(this.svgns, "g");
+        this.selfRes_resLinks = document.createElementNS(svgns, "g");
         this.selfRes_resLinks.setAttribute("id", "res_resLinks");
         this.container.appendChild(this.selfRes_resLinks);
 
@@ -180,7 +183,7 @@ export class App {
 
         //showing title as tooltips is NOT part of svg spec (even though some browsers do this)
         //also more responsive / more control if we do out own
-        this.tooltip = document.createElementNS(this.svgns, "text");
+        this.tooltip = document.createElementNS(svgns, "text");
         this.tooltip.setAttribute("x", "0");
         this.tooltip.setAttribute("y", "0");
         const tooltipTextNode = document.createTextNode("tooltip");
@@ -188,10 +191,10 @@ export class App {
 
         this.tooltip.appendChild(tooltipTextNode);
 
-        this.tooltip_bg = document.createElementNS(this.svgns, "rect");
+        this.tooltip_bg = document.createElementNS(svgns, "rect");
         this.tooltip_bg.classList.add("tooltip-background");
 
-        this.tooltip_subBg = document.createElementNS(this.svgns, "rect");
+        this.tooltip_subBg = document.createElementNS(svgns, "rect");
         this.tooltip_subBg.classList.add("tooltip-sub-background");
 
         this.svgElement.appendChild(this.tooltip_subBg);
@@ -241,7 +244,7 @@ export class App {
         this.proteinCount = 0;
         this.z = 1;
         this.hideTooltip();
-        this.state = this.STATES.MOUSE_UP;
+        this.state = App.STATES.MOUSE_UP;
     }
 
     collapseProtein() {
@@ -277,7 +280,7 @@ export class App {
             return myList[pos - 1];
         }
 
-        this.defaultBarScale = takeClosest(this.barScales, defaultPixPerRes);
+        this.defaultBarScale = takeClosest(App.barScales, defaultPixPerRes);
 
         for (let participant of this.participants.values()) {
             if (participant.type !== "complex") {
@@ -289,7 +292,7 @@ export class App {
             if (participant.type === "protein") {
                 // participant.initSelfLinkSVG(); // todo - may not even do anything, not sure its working
                 participant.stickZoom = this.defaultBarScale;
-                if (this.participants.size < 4) {
+                if (this.participants.size < this.maxCountInitiallyExpanded) {
                     participant.toStickNoTransition();
                 }
             }
@@ -352,147 +355,6 @@ export class App {
 
         //todo - following could be tided up by using acknowledgement bbox or positioning att's of text
         this.acknowledgement.setAttribute("transform", "translate(" + (width - 150) + ", " + (height - 30) + ")");
-    }
-
-//listeners also attached to mouse events by Interactor (and Rotator) and Link, those consume their events
-//mouse down on svgElement must be allowed to propogate (to fire event on Prots/Links)
-
-    mouseDown(evt) {
-        //prevent default, but allow propogation
-        evt.preventDefault();
-        this.d3cola.stop();
-        this.dragStart = evt;
-        return false;
-    }
-
-    touchStart(evt) {
-        //prevent default, but allow propogation
-        evt.preventDefault();
-        this.d3cola.stop();
-        this.dragStart = evt;
-        return false;
-    }
-
-    move(evt) {
-        const p = this.getEventPoint(evt);
-        const c = this.mouseToSVG(p.x, p.y);
-
-        if (this.dragElement != null) { //dragging or rotating
-            this.hideTooltip();
-
-            const startPoint = this.getEventPoint(this.dragStart);
-            const svgStartPoint = this.mouseToSVG(startPoint.x, startPoint.y);
-
-            const dx = svgStartPoint.x - c.x;
-            const dy = svgStartPoint.y - c.y;
-
-            if (this.state === this.STATES.DRAGGING) {
-                // we are currently dragging things around
-                if (!this.dragElement.ix) {
-                    for (let participant of this.dragElement.participants) {
-                        participant.changePosition(dx, dy);
-                    }
-                    this.setAllLinkCoordinates();
-                } else {
-                    this.dragElement.changePosition(dx, dy);
-                    this.dragElement.setAllLinkCoordinates();
-                }
-                this.dragStart = evt;
-            } else { //not dragging or rotating yet, maybe we should start
-                // don't start dragging just on a click - we need to move the mouse a bit first
-                if (Math.sqrt(dx * dx + dy * dy) > (5 * this.z)) {
-                    this.state = this.STATES.DRAGGING;
-                }
-            }
-        } else {
-            this.showTooltip(p);
-        }
-        return false;
-    }
-
-// this ends all dragging and rotating
-    mouseUp (evt) { //could be tidied up
-        const time = new Date().getTime();
-        //console.log("Mouse up: " + evt.srcElement + " " + (time - this.lastMouseUp));
-        this.preventDefaultsAndStopPropagation(evt);
-        //eliminate some spurious mouse up events
-        if ((time - this.lastMouseUp) > 150) {
-
-            let p = this.getEventPoint(evt);
-            if (isNaN(p.x)) {
-                p = this.getEventPoint(this.dragStart);
-            }
-            const c = this.mouseToSVG(p.x, p.y);
-
-            if (this.dragElement && this.dragElement.type === "protein") { /// todo be consistent about how to check if thing is protein
-                if (!(this.state === this.STATES.DRAGGING || this.state === this.STATES.ROTATING)) { //not dragging or rotating
-                    if (!this.dragElement.expanded) {
-                        this.dragElement.setExpanded(true);
-                        this.notifyExpandListeners();
-                    } else {
-                        this.contextMenuProt = this.dragElement;
-                        this.contextMenuPoint = c;
-                        const menu = d3.select(".custom-menu-margin");
-                        let pageX, pageY;
-                        if (evt.pageX) {
-                            pageX = evt.pageX;
-                            pageY = evt.pageY;
-                        } else {
-                            pageX = this.dragStart.touches[0].pageX;
-                            pageY = this.dragStart.touches[0].pageY;
-                        }
-                        menu.style("top", (pageY - 20) + "px").style("left", (pageX - 20) + "px").style("display", "block");
-                        d3.select(".scaleButton_" + (this.dragElement.stickZoom * 100)).property("checked", true);
-                    }
-                }
-            }
-        }
-
-        this.dragElement = null;
-        this.dragStart = {};
-        this.state = this.STATES.MOUSE_UP;
-
-        this.lastMouseUp = time;
-        return false;
-    }
-
-    getEventPoint(evt) {
-        // *****!$$$ finally, cross-browser
-        // return {x: evt.pageX - $(this.el).offset().left, y: evt.pageY - $(this.el).offset().top};
-
-        const p = this.svgElement.createSVGPoint();
-        let element = this.svgElement.parentNode;
-        let top = 0,
-            left = 0;
-        do {
-            top += element.offsetTop || 0;
-            left += element.offsetLeft || 0;
-            element = element.offsetParent;
-        } while (element);
-        let pageX, pageY;
-        if (evt.touches && evt.touches.length > 0) {
-            pageX = evt.touches[0].pageX;
-            pageY = evt.touches[0].pageY;
-        } else if (evt.pageX) {
-            pageX = evt.pageX;
-            pageY = evt.pageY;
-        }
-        // else { //looks like bad idea
-        //     return this.getEventPoint(this.dragStart); //touch events ending
-        // }
-        p.x = pageX - left;
-        p.y = pageY - top;
-        return p;
-    }
-
-//stop event propagation and defaults; only do what we ask
-    preventDefaultsAndStopPropagation(evt) {
-        if (evt.stopPropagation)
-            evt.stopPropagation();
-        if (evt.cancelBubble != null)
-            evt.cancelBubble = true;
-        if (evt.preventDefault)
-            evt.preventDefault();
     }
 
     autoLayout() {
@@ -671,12 +533,12 @@ export class App {
     }
 
 // transform the mouse-position into a position on the svg
-    mouseToSVG(x, y) {
-        const p = this.svgElement.createSVGPoint();
-        p.x = x;
-        p.y = y;
-        return p.matrixTransform(this.container.getCTM().inverse());
-    }
+//     mouseToSVG(x, y) {
+//         const p = this.svgElement.createSVGPoint();
+//         p.x = x;
+//         p.y = y;
+//         return p.matrixTransform(this.container.getCTM().inverse());
+//     }
 
 // reads MI JSON format
     readMIJSON(miJson, expand = true) {
@@ -714,7 +576,7 @@ export class App {
         }
     }
 
-    showTooltip (p) {
+    showTooltip(p) {
         let ttX, ttY;
         const length = this.tooltip.getComputedTextLength() + 16;
         const width = this.svgElement.parentNode.clientWidth;
@@ -738,7 +600,7 @@ export class App {
         this.tooltip_subBg.setAttribute("y", ttY + 28);
     }
 
-    setTooltip (text, color) {
+    setTooltip(text, color) {
         if (text) {
             this.tooltip.firstChild.data = text.toString().replace(/&(quot);/g, "\"");
             this.tooltip.setAttribute("display", "block");
@@ -942,8 +804,8 @@ export class App {
         this.notifyExpandListeners();
     }
 
-// IntAct needs to select which att to use as id (idType param) but they require changes to JAMI json first
-//from noe
+    // IntAct needs to select which att to use as id (idType param) but they require changes to JAMI json first
+    // function from noe:
     expandAndCollapseSelection(moleculesSelected) { // , idType) {
         for (let participant of this.participants.values()) {
             const molecule_id = participant.json.identifier.id;
@@ -997,11 +859,164 @@ export class App {
         return expanded;
     }
 
-    rotatePointAboutPoint(p, o, theta) {
-        theta = (theta / 360) * Math.PI * 2; //TODO: change theta arg to radians not degrees
-        const rx = Math.cos(theta) * (p[0] - o[0]) - Math.sin(theta) * (p[1] - o[1]) + o[0];
-        const ry = Math.sin(theta) * (p[0] - o[0]) + Math.cos(theta) * (p[1] - o[1]) + o[1];
-        return [rx, ry];
+    setCTM(element, matrix) {
+        const s = "matrix(" + matrix.a + "," + matrix.b + "," + matrix.c + "," + matrix.d + "," + matrix.e + "," + matrix.f + ")";
+        element.setAttribute("transform", s);
+    }
+
+    //listeners also attached to mouse events by Interactor (and Rotator) and Link, those consume their events
+    //mouse down on svgElement must be allowed to propogate (to fire event on Prots/Links)
+    mouseDown(evt) {
+        evt.preventDefault();
+        this.d3cola.stop();
+        this.dragStart = evt;
+        this.state = App.STATES.SELECT_PAN;
+        d3.select(".custom-menu-margin").style("display", "none");
+    }
+
+    touchStart(evt) {
+        evt.preventDefault();
+        this.d3cola.stop();
+        this.dragStart = evt;
+        this.state = App.STATES.SELECT_PAN;
+        d3.select(".custom-menu-margin").style("display", "none");
+    }
+
+    move(evt) {
+        if (this.dragStart) {
+            const p = this.getEventPoint(evt);
+            const c = p.matrixTransform(this.container.getCTM().inverse());
+            const ds = this.getEventPoint(this.dragStart).matrixTransform(this.container.getCTM().inverse());
+            const dx = ds.x - c.x;
+            const dy = ds.y - c.y;
+            if (this.dragElement != null) {
+                this.hideTooltip(); //?
+                if (this.state === App.STATES.DRAGGING) {
+                    if (!this.dragElement.ix) {
+                        for (let participant of this.dragElement.participants) {
+                            participant.changePosition(dx, dy);
+                        }
+                        this.setAllLinkCoordinates();
+                    } else {
+                        this.dragElement.changePosition(dx, dy);
+                        this.dragElement.setAllLinkCoordinates();
+                    }
+                    this.dragStart = evt;
+                } else if (Math.sqrt(dx * dx + dy * dy) > (5 * this.z)){//this.mouseMoved) { //not dragging or rotating yet, maybe we should start
+                    this.state = App.STATES.DRAGGING;
+                }
+            } else if (this.state === App.STATES.SELECT_PAN) {
+                this.setCTM(this.container, this.container.getCTM().translate(c.x - ds.x, c.y - ds.y));
+                this.dragStart = evt;
+            } else {
+                this.showTooltip(p);
+            }
+        }
+    }
+
+    // this ends all dragging and rotating
+    mouseUp(evt) { //could be tidied up
+        this.preventDefaultsAndStopPropagation(evt);
+        const time = new Date().getTime();
+        //eliminate some spurious mouse up events - a simple version of debouncing but it seems to work better than for e.g. _.debounce
+        if ((time - this.lastMouseUp) > 150) {
+            let p = this.getEventPoint(evt);
+            if (isNaN(p.x)) { //?
+                p = this.getEventPoint(this.dragStart);
+            }
+            const c = p.matrixTransform(this.container.getCTM().inverse());
+            if (this.dragElement && this.dragElement.type === "protein" && this.state !== App.STATES.DRAGGING) {
+                if (!this.dragElement.expanded) {
+                    this.dragElement.setExpanded(true);
+                    this.notifyExpandListeners();
+                } else {
+                    this.contextMenuProt = this.dragElement;
+                    this.contextMenuPoint = c;
+                    const menu = d3.select(".custom-menu-margin");
+                    let pageX, pageY;
+                    if (evt.pageX) {
+                        pageX = evt.pageX;
+                        pageY = evt.pageY;
+                    } else {
+                        pageX = this.dragStart.touches[0].pageX;
+                        pageY = this.dragStart.touches[0].pageY;
+                    }
+                    menu.style("top", (pageY - 20) + "px").style("left", (pageX - 20) + "px").style("display", "block");
+                    d3.select(".scaleButton_" + (this.dragElement.stickZoom * 100)).property("checked", true);
+                }
+            }
+        }
+        this.dragElement = null;
+        this.dragStart = {};
+        this.state = App.STATES.MOUSE_UP;
+        this.lastMouseUp = time;
+        return false;
+    }
+
+    mouseWheel(evt) {
+        this.preventDefaultsAndStopPropagation(evt);
+        this.d3cola.stop();
+        let delta;
+        //see http://stackoverflow.com/questions/5527601/normalizing-mousewheel-speed-across-browsers
+        if (evt.wheelDelta) {
+            delta = evt.wheelDelta / 3600; // Chrome/Safari
+        } else {
+            delta = evt.detail / -90; // Mozilla
+        }
+        const z = 1 + delta;
+        const g = this.container;
+        const p = this.getEventPoint(evt);
+        const c = p.matrixTransform(g.getCTM().inverse());
+        const k = this.svgElement.createSVGMatrix().translate(c.x, c.y).scale(z).translate(-c.x, -c.y);
+        this.setCTM(g, g.getCTM().multiply(k));
+        //this.scale();
+        return false;
+    }
+
+    mouseOut(evt) {
+        this.hideTooltip();
+        // don't, causes prob's - RenderedInteractor mouseOut getting propogated?
+        // d3.select(".custom-menu-margin").style("display", "none");
+        // d3.select(".group-custom-menu-margin").style("display", "none");
+    }
+
+    getEventPoint(evt) {
+        // *****!$$$ finally, cross-browser
+        // return {x: evt.pageX - $(this.el).offset().left, y: evt.pageY - $(this.el).offset().top};
+
+        const p = this.svgElement.createSVGPoint();
+        let element = this.svgElement.parentNode;
+        let top = 0,
+            left = 0;
+        do {
+            top += element.offsetTop || 0;
+            left += element.offsetLeft || 0;
+            element = element.offsetParent;
+        } while (element);
+        let pageX, pageY;
+        if (evt.touches && evt.touches.length > 0) {
+            pageX = evt.touches[0].pageX;
+            pageY = evt.touches[0].pageY;
+        } else if (evt.pageX) {
+            pageX = evt.pageX;
+            pageY = evt.pageY;
+        }
+        // else { //looks like bad idea
+        //     return this.getEventPoint(this.dragStart); //touch events ending
+        // }
+        p.x = pageX - left;
+        p.y = pageY - top;
+        return p;
+    }
+
+    //stop event propagation and defaults; only do what we ask
+    preventDefaultsAndStopPropagation(evt) {
+        if (evt.stopPropagation)
+            evt.stopPropagation();
+        if (evt.cancelBubble != null)
+            evt.cancelBubble = true;
+        if (evt.preventDefault)
+            evt.preventDefault();
     }
 
     downloadSVG(fileName) {
@@ -1075,4 +1090,14 @@ export class App {
 
         blob = null;
     }
+
 }
+
+//static values signifying Controller's status
+App.STATES = {
+    MOUSE_UP: 0, //start state, also set when mouse up on svgElement
+    SELECT_PAN: 1, //set by mouse down on svgElement - //left button only?
+    DRAGGING: 2 //set by mouse down on Protein or Link
+};
+
+App.barScales = [0.01, 0.015, 0.2, 1, 2, 4, 8];

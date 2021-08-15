@@ -9,8 +9,6 @@ export function cloneComplexInteractors(json) {
         return interactor.object === "interactor";
     });
 
-    // const newParticipants = [];
-
     const instanceCount = new Map();
 
     // Loop through our interactions
@@ -42,15 +40,12 @@ export function cloneComplexInteractors(json) {
 
                 let i = count;
 
-
-                // for (let i = 0; i < participant.stoichiometry - 1; i++) {
                 if (i > 1) {
                     participantComplex.interactorRef = participantComplex.interactorRef + "_" + i;
 
                     // update features of complex
                     if (participantComplex.features) {
                         participantComplex.features.forEach(function (feature) {
-
                             feature.copiedfrom = feature.id;
                             // feature.id = feature.id + "_" + i;
                             // Also, adjust our sequence data
@@ -58,13 +53,6 @@ export function cloneComplexInteractors(json) {
                                 sequenceData.participantRef = sequenceData.participantRef  + "_" + i;
                                 //~ sequenceData.interactorRef = clonedInteractor.id;
                             });
-
-                            // const lnCount = feature.linkedFeatures.length;
-                            // for (let ln = 0; ln < lnCount; ln++){
-                            //     // console.log(linkedFeature);
-                            //     feature.linkedFeatures[ln] = feature.linkedFeatures[ln] + "_" + i;
-                            // }
-
                         });
                     }
 
@@ -77,13 +65,7 @@ export function cloneComplexInteractors(json) {
                         /********** PARTICIPANTS **********/
                         const clonedParticipant = participant;//JSON.parse(JSON.stringify(participant));
 
-                        //~ clonedParticipant.interactorRef = clonedInteractor.id;
                         clonedParticipant.id = clonedParticipant.id + "_" + i;
-
-                        // Store a reference from where we were cloned
-                        // clonedParticipant.copiedParentID = participant.id;
-                        // clonedParticipant.copiedIteration = i;
-                        // participant.copied = true;
 
                         // We need to relink to our binding site IDs:
                         if (clonedParticipant.features) {
@@ -105,60 +87,13 @@ export function cloneComplexInteractors(json) {
 
                             });
                         }
-
-                        // interaction.participants.push(clonedParticipant);
-                        // newParticipants.push(clonedParticipant);
                     }
                 }
             }
         });
 
-
-        // Get ALL of our features.
-    //     const featureMap = new Map();
-    //     interaction.participants.forEach(function (participant) {
-    //         if (participant.features) {
-    //             participant.features.forEach(function (feature) {
-    //                 feature.parentParticipant = participant.id;
-    //                 featureMap.set(feature.id, feature);
-    //             });
-    //         }
-    //     });
-    //
-    //
-    //     const values = Array.from(featureMap.values());
-    //
-    //     values.forEach(function (feature) {
-    //         if (feature.clonedfrom) {
-    //             // Find all binding sites that have a linked feature to me and add the clone id
-    //             values.forEach(function (nFeature) {
-    //                 const linkedFeatures = nFeature.linkedFeatures;
-    //                 if (linkedFeatures) {
-    //                     // if (linkedFeatures.indexOf(feature.clonedfrom) > -1) {
-    //                     //     const clonedFeature = JSON.parse(JSON.stringify(nFeature));
-    //                     //     clonedFeature.id = nFeature.id + "_" + feature.id;
-    //                     //     clonedFeature.linkedFeatures = [];
-    //                     //     clonedFeature.linkedFeatures.push(feature.id);
-    //                     //
-    //                     //     const parts = findFirstObjWithAttr(interaction.participants, "id", clonedFeature.parentParticipant);
-    //                     //     parts.features.push(clonedFeature);
-    //                     // }
-    //                 }
-    //             });
-    //         }
-    //     });
     });
 
-
-    //clear stoichiometry info from participant?
-    // interactions.forEach(function (interaction) {
-    //     interaction.participants.forEach(function (participant) {
-    //         participant.stoichiometry = null;
-    //     });
-    // });
-
-    //actually the expansion code doesn't seem to take up that much time
-    //console.log("Expand time:" + ( +new Date() - startTime));
     return json;
 }
 

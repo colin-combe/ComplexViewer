@@ -1,6 +1,7 @@
 //todo - is this even working? you never see it
 
 import {Link} from "./link";
+import {svgns} from "../../svgns";
 
 // var FeatureLink = require('./FeatureLink');
 
@@ -11,8 +12,8 @@ export class UnaryLink extends Link {
         this.participants = [participant];
         this.sequenceLinks = new Map();
         this.app = app;
-        this.line = document.createElementNS(this.app.svgns, "path");
-        this.highlightLine = document.createElementNS(this.app.svgns, "path");
+        this.line = document.createElementNS(svgns, "path");
+        this.highlightLine = document.createElementNS(svgns, "path");
         this.initSVG();
     }
 

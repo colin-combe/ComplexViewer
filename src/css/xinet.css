@@ -110,6 +110,29 @@ svg {
     font-size: 10px;
     text-anchor: middle;
     pointer-events: none;
+
+    /*text-shadow: -2px -2px 0 white,*/
+    /*2px -2px 0 white,*/
+    /*-2px 2px 0 white,*/
+    /*2px 2px 0 white;*/
+
+}
+
+
+.sequence-outline {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    text-anchor: middle;
+    pointer-events: none;
+
+    stroke-width:4px;
+    stroke:white;
+
+    /*text-shadow: -2px -2px 0 white,*/
+    /*2px -2px 0 white,*/
+    /*-2px 2px 0 white,*/
+    /*2px 2px 0 white;*/
+
 }
 
 .custom-menu-margin {

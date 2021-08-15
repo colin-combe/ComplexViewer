@@ -1,6 +1,7 @@
 import {Link} from "./link";
 import * as Intersection from "intersectionjs";
 import * as Point2D from "point2d";
+import {svgns} from "../../svgns";
 
 export class BinaryLink extends Link {
     constructor(id, app, fromI, toI) {
@@ -10,8 +11,8 @@ export class BinaryLink extends Link {
         this.participants = [fromI, toI];
         this.sequenceLinks = new Map();
         this.app = app;
-        this.line = document.createElementNS(this.app.svgns, "line");
-        this.highlightLine = document.createElementNS(this.app.svgns, "line");
+        this.line = document.createElementNS(svgns, "line");
+        this.highlightLine = document.createElementNS(svgns, "line");
         this.initSVG();
     }
 

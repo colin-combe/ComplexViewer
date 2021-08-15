@@ -1,5 +1,7 @@
 import * as d3 from "d3"; //used for d3.geom.hull
 import {Link} from "./link";
+import {rotatePointAboutPoint} from "../../geom";
+import {svgns} from "../../svgns";
 
 export class NaryLink extends Link {
     constructor(id, app) {
@@ -32,7 +34,7 @@ export class NaryLink extends Link {
     */
 
     initSVG() {
-        this.path = document.createElementNS(this.app.svgns, "path");
+        this.path = document.createElementNS(svgns, "path");
         this.color = NaryLink.naryColors(this.id);
         this.path.setAttribute("fill", this.color);
         //set the events for it
@@ -50,7 +52,7 @@ export class NaryLink extends Link {
             self.touchStart(evt);
         };
         // todo - prob better way todo this
-        this.path2 = document.createElementNS(this.app.svgns, "path");
+        this.path2 = document.createElementNS(svgns, "path");
         this.path2.setAttribute("fill", "none");
         //set the events for it
         this.path2.onmousedown = function (evt) {
@@ -137,7 +139,7 @@ export class NaryLink extends Link {
             for (let o = 0; o < orbitNodeCount; o++) {
                 const angle = (360 / orbitNodeCount) * o;
                 const p = [m[0] + NaryLink.orbitRadius, m[1]];
-                orbitNodes.push(this.app.rotatePointAboutPoint(p, m, angle));
+                orbitNodes.push(rotatePointAboutPoint(p, m, angle));
             }
         }
         return orbitNodes;
