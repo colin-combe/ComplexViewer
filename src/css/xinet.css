@@ -109,7 +109,7 @@ svg {
     font-family: 'Courier New', monospace;
     font-size: 10px;
     text-anchor: middle;
-    pointer-events: none;
+    /*pointer-events: none;*/
 
     /*text-shadow: -2px -2px 0 white,*/
     /*2px -2px 0 white,*/
@@ -123,11 +123,12 @@ svg {
     font-family: 'Courier New', monospace;
     font-size: 10px;
     text-anchor: middle;
-    pointer-events: none;
+    /*pointer-events: none;*/
 
     stroke-width:4px;
     stroke:white;
-
+    stroke-linecap:round;
+    stroke-linejoin: round;
     /*text-shadow: -2px -2px 0 white,*/
     /*2px -2px 0 white,*/
     /*-2px 2px 0 white,*/
