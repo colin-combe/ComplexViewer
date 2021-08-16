@@ -1,23 +1,23 @@
 import {Interactor} from "./interactor";
-import {svgns} from "../../config";
+import {svgns} from "../../svgns";
 
-export function ComplexSymbol(id, app, name, json) { //, name) {
-    this.init(id, app, json, name);
-    this.upperGroup = document.createElementNS(svgns, "g");
-    this.initLabel();
-    const points = "15,0 8,-13 -7,-13 -15,0 -8,13 7,13";
-    this.outline = document.createElementNS(svgns, "polygon");
-    this.outline.setAttribute("points", points);
-    this.initOutline();
-    this.initListeners();
- }
+export class ComplexSymbol extends Interactor {
+    constructor(id, app, name, json) { //, name) {
+        super();
+        this.init(id, app, json, name);
+        this.upperGroup = document.createElementNS(svgns, "g");
+        this.initLabel();
+        const points = "15,0 8,-13 -7,-13 -15,0 -8,13 7,13";
+        this.outline = document.createElementNS(svgns, "polygon");
+        this.outline.setAttribute("points", points);
+        this.initOutline();
+        this.initListeners();
+    }
 
-ComplexSymbol.prototype = new Interactor();
-
-
-ComplexSymbol.prototype.getSymbolRadius = function () {
-    return 20;
-};
+    getSymbolRadius () {
+        return 20;
+    }
+}
 
 /*
 ComplexSymbol.prototype.showData = function() {

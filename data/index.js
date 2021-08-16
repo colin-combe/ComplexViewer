@@ -6,6 +6,16 @@ const exampleIndex = [
         "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-5684",
     },
     {
+        "ac": "CPX-5605",
+        "name": "CPX-5605",
+        "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-5605",
+    },
+    {
+        "ac": "CPX-5897",
+        "name": "CPX-5897",
+        "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-5897",
+    },
+    {
         "ac": "EBI-25776165",
         "name": "EBI-25776165",
         "url": "https://intact-portal.github.io/intact-portal-view/details/interaction/EBI-25776165",
@@ -25,17 +35,6 @@ const exampleIndex = [
         "name": "~CPX-1920",
         "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-1920",
     },
-    {
-        "ac": "~CPX-5605",
-        "name": "~CPX-5605",
-        "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-5605",
-    },
-    {
-        "ac": "~CPX-5897",
-        "name": "~CPX-5897",
-        "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-5897",
-    },
-
     {
         "ac": "EBI-25816865",
         "name": "EBI-25816865",

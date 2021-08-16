@@ -1,18 +1,19 @@
 import {Interactor} from "./interactor";
-import {svgns} from "../../config";
+import {svgns} from "../../svgns";
 
-export function BioactiveEntity(id, app, json, name) {
-    this.init(id, app, json, name);
-    this.upperGroup = document.createElementNS(svgns, "g");
-    this.initLabel();
-    const points = "0, -10  8.66,5 -8.66,5";
-    this.outline = document.createElementNS(svgns, "polygon");
-    this.outline.setAttribute("points", points);
-    this.initOutline();
-    this.initListeners();
+export class BioactiveEntity extends Interactor{
+    constructor(id, app, json, name) {
+        super();
+        this.init(id, app, json, name);
+        this.upperGroup = document.createElementNS(svgns, "g");
+        this.initLabel();
+        const points = "0, -10  8.66,5 -8.66,5";
+        this.outline = document.createElementNS(svgns, "polygon");
+        this.outline.setAttribute("points", points);
+        this.initOutline();
+        this.initListeners();
+    }
 }
-
-BioactiveEntity.prototype = new Interactor();
 
 /*
 BioactiveEntity.prototype.showData = function() {
