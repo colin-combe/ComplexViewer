@@ -886,31 +886,37 @@ export class App {
         if (this.dragStart) {
             const p = this.getEventPoint(evt);
             const c = p.matrixTransform(this.container.getCTM().inverse());
-            const ds = this.getEventPoint(this.dragStart).matrixTransform(this.container.getCTM().inverse());
-            const dx = ds.x - c.x;
-            const dy = ds.y - c.y;
-            if (this.dragElement != null) {
-                this.hideTooltip(); //?
-                if (this.state === App.STATES.DRAGGING) {
-                    if (!this.dragElement.ix) {
-                        for (let participant of this.dragElement.participants) {
-                            participant.changePosition(dx, dy);
+            // console.log("YO!!", c.x);
+            if (c.x) {
+                const ds = this.getEventPoint(this.dragStart).matrixTransform(this.container.getCTM().inverse());
+                const dx = ds.x - c.x;
+                const dy = ds.y - c.y;
+                if (this.dragElement != null) {
+                    this.hideTooltip(); //?
+                    if (this.state === App.STATES.DRAGGING) {
+                        if (!this.dragElement.ix) {
+                            for (let participant of this.dragElement.participants) {
+                                participant.changePosition(dx, dy);
+                            }
+                            this.setAllLinkCoordinates();
+                        } else {
+                            this.dragElement.changePosition(dx, dy);
+                            this.dragElement.setAllLinkCoordinates();
                         }
-                        this.setAllLinkCoordinates();
-                    } else {
-                        this.dragElement.changePosition(dx, dy);
-                        this.dragElement.setAllLinkCoordinates();
+                        this.dragStart = evt;
+                    } else if (Math.sqrt(dx * dx + dy * dy) > (5 * this.z)) {//this.mouseMoved) { //not dragging or rotating yet, maybe we should start
+                        this.state = App.STATES.DRAGGING;
                     }
+                } else if (this.state === App.STATES.SELECT_PAN) {
+                    this.setCTM(this.container, this.container.getCTM().translate(c.x - ds.x, c.y - ds.y));
                     this.dragStart = evt;
-                } else if (Math.sqrt(dx * dx + dy * dy) > (5 * this.z)){//this.mouseMoved) { //not dragging or rotating yet, maybe we should start
-                    this.state = App.STATES.DRAGGING;
+                } else {
+                    this.showTooltip(p);
                 }
-            } else if (this.state === App.STATES.SELECT_PAN) {
-                this.setCTM(this.container, this.container.getCTM().translate(c.x - ds.x, c.y - ds.y));
-                this.dragStart = evt;
-            } else {
-                this.showTooltip(p);
             }
+            // else {
+            //     this.mouseUp(evt);
+            // }
         }
     }
 
@@ -920,17 +926,18 @@ export class App {
         const time = new Date().getTime();
         //eliminate some spurious mouse up events - a simple version of debouncing but it seems to work better than for e.g. _.debounce
         if ((time - this.lastMouseUp) > 150) {
-            let p = this.getEventPoint(evt);
-            if (isNaN(p.x)) { //?
-                p = this.getEventPoint(this.dragStart);
-            }
-            const c = p.matrixTransform(this.container.getCTM().inverse());
             if (this.dragElement && this.dragElement.type === "protein" && this.state !== App.STATES.DRAGGING) {
                 if (!this.dragElement.expanded) {
                     this.dragElement.setExpanded(true);
                     this.notifyExpandListeners();
                 } else {
                     this.contextMenuProt = this.dragElement;
+                    let p = this.getEventPoint(evt);
+                    if (isNaN(p.x)) { //?
+                        p = this.getEventPoint(this.dragStart);
+                    }
+                    const c = p.matrixTransform(this.container.getCTM().inverse());
+
                     this.contextMenuPoint = c;
                     const menu = d3.select(".custom-menu-margin");
                     let pageX, pageY;
