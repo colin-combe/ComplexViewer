@@ -4,7 +4,7 @@ import {version} from "../../package.json";
 import * as d3 from "d3";
 import * as d3_chromatic from "d3-scale-chromatic";
 import * as cola from "./cola";
-import * as Rgb_color from "rgb-color";
+import * as rgb_color from "rgb-color";
 
 import {svgUtils} from "./svgexp";
 import {readMijson} from "./read-mijson";
@@ -13,7 +13,7 @@ import {fetchAnnotations} from "./annotation-utils";
 import {NaryLink} from "./viz/link/nary-link";
 import {svgns} from "./svgns";
 
-// import * as _ from "underscore";
+import * as $ from "jquery";
 
 export class App {
     constructor(/*HTMLDivElement*/networkDiv, maxCountInitiallyExpanded = 4) {
@@ -76,33 +76,25 @@ export class App {
         this.svgElement.classList.add("complexViewerSVG");
 
         //add listeners
-        // this.debouncedMouseDown = _.debounce(self.mouseDown, 100);
         this.svgElement.onmousedown = function (evt) {
             self.mouseDown(evt);
         };
-        // this.debouncedMove = _.debounce(self.move, 50);
         this.svgElement.onmousemove = function (evt) {
             self.move(evt);
         };
-        // this.debouncedMouseUp = _.debounce(self.mouseUp, 50);
         this.svgElement.onmouseup = function (evt) {
             self.mouseUp(evt);
         };
-        // this.debouncedMouseOut = _.debounce(self.mouseOut, 100);
         this.svgElement.onmouseout = function (evt) {
             self.mouseOut(evt);
         };
-        // const debouncedTouchStart = _debounce()
         this.svgElement.ontouchstart = function (evt) {
-            //console.log("svgElement touch start");
             self.touchStart(evt);
         };
         this.svgElement.ontouchmove = function (evt) {
-            // console.log("svgElement touch move");
             self.move(evt);
         };
         this.svgElement.ontouchend = function (evt) {
-            // console.log("svgElement touch end");
             self.mouseUp(evt);
         };
         this.lastMouseUp = new Date().getTime();
@@ -223,7 +215,7 @@ export class App {
         // if we are dragging something at the moment - this will be the element that is dragged
         this.dragElement = null;
         // from where did we start dragging
-        this.dragStart = {};
+        this.dragStart = null;//{};
 
         this.participants = new Map();
         this.allNaryLinks = new Map();
@@ -297,7 +289,7 @@ export class App {
                 }
             }
         }
-        this.updateAnnotations();
+        this.updateAnnotations(); //?
         const self = this;
         fetchAnnotations(this, function () {
             self.updateAnnotations();
@@ -362,7 +354,7 @@ export class App {
 
         const pruned = [], allNodesExceptComplexes = [], self = this;
         for (let p of this.participants.values()) {
-            if (p.type != "complex") {
+            if (p.type !== "complex") {
                 allNodesExceptComplexes.push(p);
                 if (p.binaryLinks.size > 2) {
                     pruned.push(p);
@@ -532,15 +524,7 @@ export class App {
         return svgUtils.makeXMLStr(new XMLSerializer(), svgStrings[0]);
     }
 
-// transform the mouse-position into a position on the svg
-//     mouseToSVG(x, y) {
-//         const p = this.svgElement.createSVGPoint();
-//         p.x = x;
-//         p.y = y;
-//         return p.matrixTransform(this.container.getCTM().inverse());
-//     }
-
-// reads MI JSON format
+    // reads MI JSON format
     readMIJSON(miJson, expand = true) {
         readMijson(miJson, this, expand);
         this.init();
@@ -718,7 +702,7 @@ export class App {
                             if (anno.fuzzyStart || anno.fuzzyEnd) {
                                 if (!this.uncertainCategories.has(name)) {
                                     // make transparent version of color
-                                    const temp = new Rgb_color(color);
+                                    const temp = new rgb_color(color);
                                     const transpColor = "rgba(" + temp.r + "," + temp.g + "," + temp.b + ", 0.6)";
                                     createHatchedFill("hatched_" + anno.description + "_" + color.toString(), transpColor);
                                     this.uncertainCategories.add(anno.description);
@@ -767,7 +751,7 @@ export class App {
                                         }
                                         if (this.uncertainCategories.has(desc)) {
                                             // make transparent version of color
-                                            const temp = new Rgb_color(this.featureColors(desc));
+                                            const temp = new rgb_color(this.featureColors(desc));
                                             const transpColor = "rgba(" + temp.r + "," + temp.g + "," + temp.b + ", 0.6)";
                                             featureType.uncertain = {"color": transpColor};
                                         }
@@ -883,40 +867,41 @@ export class App {
     }
 
     move(evt) {
-        if (this.dragStart) {
-            const p = this.getEventPoint(evt);
-            const c = p.matrixTransform(this.container.getCTM().inverse());
-            // console.log("YO!!", c.x);
-            if (c.x) {
+        const p = this.getEventPoint(evt);
+        const c = p.matrixTransform(this.container.getCTM().inverse());
+        if (c.x) { // if mouse is off screen then !c.x
+            if (this.dragStart) { //initially set by mouse down on container svg element, participant or link
+                this.hideTooltip();
                 const ds = this.getEventPoint(this.dragStart).matrixTransform(this.container.getCTM().inverse());
-                const dx = ds.x - c.x;
-                const dy = ds.y - c.y;
-                if (this.dragElement != null) {
-                    this.hideTooltip(); //?
-                    if (this.state === App.STATES.DRAGGING) {
-                        if (!this.dragElement.ix) {
+                if (this.dragElement != null) { // mouse down on participant or link
+                    // console.log("DRAG!");
+                    const dx = ds.x - c.x;
+                    const dy = ds.y - c.y;
+                    if (this.state === App.STATES.DRAGGING) { // if mouse moved sufficiently to start dragging
+                        // console.log("DRAG ACTIVE!");
+                        if (!this.dragElement.ix) { //if is link or complex
                             for (let participant of this.dragElement.participants) {
                                 participant.changePosition(dx, dy);
                             }
                             this.setAllLinkCoordinates();
-                        } else {
+                        } else { // else its an individual biomolecule
                             this.dragElement.changePosition(dx, dy);
                             this.dragElement.setAllLinkCoordinates();
                         }
                         this.dragStart = evt;
-                    } else if (Math.sqrt(dx * dx + dy * dy) > (5 * this.z)) {//this.mouseMoved) { //not dragging or rotating yet, maybe we should start
+                    } else if (Math.sqrt(dx * dx + dy * dy) > (5 * this.z)) {//not dragging or rotating yet, maybe we should start
+                        // console.log("MAKING DRAG ACTIVE!");
                         this.state = App.STATES.DRAGGING;
                     }
-                } else if (this.state === App.STATES.SELECT_PAN) {
+                } else if (this.state === App.STATES.SELECT_PAN) { // mouse down on container svg element
+                    // console.log("PAN!");
                     this.setCTM(this.container, this.container.getCTM().translate(c.x - ds.x, c.y - ds.y));
                     this.dragStart = evt;
-                } else {
-                    this.showTooltip(p);
                 }
+            } else { // !this.dragStart
+                // console.log("TOOLTIP POSITION!");
+                this.showTooltip(p);
             }
-            // else {
-            //     this.mouseUp(evt);
-            // }
         }
     }
 
@@ -934,11 +919,10 @@ export class App {
                     this.contextMenuProt = this.dragElement;
                     let p = this.getEventPoint(evt);
                     if (isNaN(p.x)) { //?
+                        alert(p.x);
                         p = this.getEventPoint(this.dragStart);
                     }
-                    const c = p.matrixTransform(this.container.getCTM().inverse());
-
-                    this.contextMenuPoint = c;
+                    this.contextMenuPoint = p.matrixTransform(this.container.getCTM().inverse());
                     const menu = d3.select(".custom-menu-margin");
                     let pageX, pageY;
                     if (evt.pageX) {
@@ -954,7 +938,7 @@ export class App {
             }
         }
         this.dragElement = null;
-        this.dragStart = {};
+        this.dragStart = null;//{};// should prob make that null here and use it as a check in move()
         this.state = App.STATES.MOUSE_UP;
         this.lastMouseUp = time;
         return false;
@@ -988,31 +972,10 @@ export class App {
     }
 
     getEventPoint(evt) {
-        // *****!$$$ finally, cross-browser
-        // return {x: evt.pageX - $(this.el).offset().left, y: evt.pageY - $(this.el).offset().top};
-
         const p = this.svgElement.createSVGPoint();
-        let element = this.svgElement.parentNode;
-        let top = 0,
-            left = 0;
-        do {
-            top += element.offsetTop || 0;
-            left += element.offsetLeft || 0;
-            element = element.offsetParent;
-        } while (element);
-        let pageX, pageY;
-        if (evt.touches && evt.touches.length > 0) {
-            pageX = evt.touches[0].pageX;
-            pageY = evt.touches[0].pageY;
-        } else if (evt.pageX) {
-            pageX = evt.pageX;
-            pageY = evt.pageY;
-        }
-        // else { //looks like bad idea
-        //     return this.getEventPoint(this.dragStart); //touch events ending
-        // }
-        p.x = pageX - left;
-        p.y = pageY - top;
+        // *****!$$$ finally, cross-browser
+        p.x = evt.pageX - $(this.el).offset().left;
+        p.y = evt.pageY - $(this.el).offset().top;
         return p;
     }
 

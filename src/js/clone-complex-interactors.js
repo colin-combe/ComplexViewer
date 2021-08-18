@@ -5,10 +5,6 @@ export function cloneComplexInteractors(json) {
         return interaction.object === "interaction";
     });
 
-    const interactors = json.data.filter(function (interactor) {
-        return interactor.object === "interactor";
-    });
-
     const instanceCount = new Map();
 
     // Loop through our interactions

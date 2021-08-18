@@ -25,27 +25,27 @@ export class Polymer extends Interactor {
 
         //dist from centre
         const dx = (this.ix - svgP.x);
-        const dy = (this.iy - svgP.y);
+        // const dy = (this.iy - svgP.y);
 
         // new dist from centre
         const nx = dx * scale / oldScale;
-        const ny = dy * scale / oldScale;
+        // const ny = dy * scale / oldScale;
 
         //required change
         const rx = nx - dx;
-        let ry = ny - dy;
+        // let ry = ny - dy;
 
-        if (this.rotation === 0 || this.rotation === 180) {
-            ry = 0;
-        }
+        // if (this.rotation === 0 || this.rotation === 180) {
+        //     ry = 0;
+        // }
 
         //new pos
         const x = this.ix + rx;
-        const y = this.iy + ry;
+        // const y = this.iy + ry;
 
         this.stickZoom = scale;
         this.scale();
-        this.setPosition(x, y);
+        this.setPosition(x, this.iy);//y);
         this.setAllLinkCoordinates();
     }
 
