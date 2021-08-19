@@ -4,7 +4,7 @@ import {version} from "../../package.json";
 import * as d3 from "d3";
 import * as d3_chromatic from "d3-scale-chromatic";
 import * as cola from "./cola";
-import * as Rgb_color from "rgb-color";
+import * as rgb_color from "rgb-color";
 
 import {svgUtils} from "./svgexp";
 import {readMijson} from "./read-mijson";
@@ -13,7 +13,7 @@ import {fetchAnnotations} from "./annotation-utils";
 import {NaryLink} from "./viz/link/nary-link";
 import {svgns} from "./svgns";
 
-// import * as _ from "underscore";
+import * as $ from "jquery";
 
 export class App {
     constructor(/*HTMLDivElement*/networkDiv, maxCountInitiallyExpanded = 4) {
@@ -57,7 +57,7 @@ export class App {
             .attr("type", "radio")
             .on("change", function (d) {
                 self.preventDefaultsAndStopPropagation(d);
-                self.contextMenuProt.setStickScale(d, self.contextMenuPoint);
+                self.contextMenuProt.setStickScale(d, self.contextMenuResNo, self.contextMenuPoint);
             });
         const contextMenu = d3.select(".custom-menu-margin").node();
         contextMenu.onmouseout = function (evt) {
@@ -76,33 +76,25 @@ export class App {
         this.svgElement.classList.add("complexViewerSVG");
 
         //add listeners
-        // this.debouncedMouseDown = _.debounce(self.mouseDown, 100);
         this.svgElement.onmousedown = function (evt) {
             self.mouseDown(evt);
         };
-        // this.debouncedMove = _.debounce(self.move, 50);
         this.svgElement.onmousemove = function (evt) {
             self.move(evt);
         };
-        // this.debouncedMouseUp = _.debounce(self.mouseUp, 50);
         this.svgElement.onmouseup = function (evt) {
             self.mouseUp(evt);
         };
-        // this.debouncedMouseOut = _.debounce(self.mouseOut, 100);
         this.svgElement.onmouseout = function (evt) {
             self.mouseOut(evt);
         };
-        // const debouncedTouchStart = _debounce()
         this.svgElement.ontouchstart = function (evt) {
-            //console.log("svgElement touch start");
             self.touchStart(evt);
         };
         this.svgElement.ontouchmove = function (evt) {
-            // console.log("svgElement touch move");
             self.move(evt);
         };
         this.svgElement.ontouchend = function (evt) {
-            // console.log("svgElement touch end");
             self.mouseUp(evt);
         };
         this.lastMouseUp = new Date().getTime();
@@ -144,7 +136,7 @@ export class App {
         this.acknowledgement = document.createElementNS(svgns, "g");
         const ackText = document.createElementNS(svgns, "text");
         ackText.innerHTML = "<a href='https://academic.oup.com/bioinformatics/article/33/22/3673/4061280' target='_blank'><tspan x='0' dy='1.2em' style='text-decoration: underline'>ComplexViewer "
-            + version + "</tspan></a><tspan x='0' dy='1.2em'>by <a href='http://rappsilberlab.org/' target='_blank'>Rappsilber Laboratory</a></tspan>";
+            + version + "</tspan></a><tspan x='0' dy='1.2em'>by <a href='https://rappsilberlab.org/' target='_blank'>Rappsilber Laboratory</a></tspan>";
 
         this.acknowledgement.appendChild(ackText);
         ackText.setAttribute("font-size", "8pt");
@@ -223,7 +215,7 @@ export class App {
         // if we are dragging something at the moment - this will be the element that is dragged
         this.dragElement = null;
         // from where did we start dragging
-        this.dragStart = {};
+        this.dragStart = null;//{};
 
         this.participants = new Map();
         this.allNaryLinks = new Map();
@@ -293,11 +285,11 @@ export class App {
                 // participant.initSelfLinkSVG(); // todo - may not even do anything, not sure its working
                 participant.stickZoom = this.defaultBarScale;
                 if (this.participants.size < this.maxCountInitiallyExpanded) {
-                    participant.toStickNoTransition();
+                    participant.toStick(false);//param means don't animate change to circle
                 }
             }
         }
-        this.updateAnnotations();
+        this.updateAnnotations(); //?
         const self = this;
         fetchAnnotations(this, function () {
             self.updateAnnotations();
@@ -362,7 +354,7 @@ export class App {
 
         const pruned = [], allNodesExceptComplexes = [], self = this;
         for (let p of this.participants.values()) {
-            if (p.type != "complex") {
+            if (p.type !== "complex") {
                 allNodesExceptComplexes.push(p);
                 if (p.binaryLinks.size > 2) {
                     pruned.push(p);
@@ -420,22 +412,22 @@ export class App {
 
             self.d3cola.nodes(nodes).links(links);
 
-            /*let groupDebugSel, participantDebugSel;
+            let groupDebugSel, participantDebugSel;
             if (self.debug) {
-                groupDebugSel = d3.select(self.container).selectAll(".group")
-                    .data(groups);
-
-                groupDebugSel.enter().append("rect")
-                    .classed("group", true)
-                    .attr({
-                        rx: 5,
-                        ry: 5
-                    })
-                    .style("stroke", "blue")
-                    .style("fill", "none");
-
+                // groupDebugSel = d3.select(self.container).selectAll(".group")
+                //     .data(groups);
+                //
+                // groupDebugSel.enter().append("rect")
+                //     .classed("group", true)
+                //     .attr({
+                //         rx: 5,
+                //         ry: 5
+                //     })
+                //     .style("stroke", "blue")
+                //     .style("fill", "none");
+                //
                 participantDebugSel = d3.select(self.container).selectAll(".node")
-                    .data(layoutObj.nodes);
+                    .data(nodes);
 
                 participantDebugSel.enter().append("rect")
                     .classed("node", true)
@@ -446,9 +438,9 @@ export class App {
                     .style("stroke", "red")
                     .style("fill", "none");
 
-                groupDebugSel.exit().remove();
+                // groupDebugSel.exit().remove();
                 participantDebugSel.exit().remove();
-            }*/
+            }
 
             if (preRun) {
                 self.d3cola.groups([]).start(23, 10, 0, 0, false);
@@ -489,21 +481,21 @@ export class App {
                         self.setAllLinkCoordinates();
                         self.zoomToExtent();
 
-                        /*if (self.debug) {
-                            groupDebugSel.attr({
-                                x: function (d) {
-                                    return d.bounds.x;// + (width / 2);
-                                },
-                                y: function (d) {
-                                    return d.bounds.y;// + (height / 2);
-                                },
-                                width: function (d) {
-                                    return d.bounds.width();
-                                },
-                                height: function (d) {
-                                    return d.bounds.height();
-                                }
-                            });
+                        if (self.debug) {
+                            // groupDebugSel.attr({
+                            //     x: function (d) {
+                            //         return d.bounds.x;// + (width / 2);
+                            //     },
+                            //     y: function (d) {
+                            //         return d.bounds.y;// + (height / 2);
+                            //     },
+                            //     width: function (d) {
+                            //         return d.bounds.width();
+                            //     },
+                            //     height: function (d) {
+                            //         return d.bounds.height();
+                            //     }
+                            // });
 
                             participantDebugSel.attr({
                                 x: function (d) {
@@ -519,7 +511,7 @@ export class App {
                                     return d.bounds.height();
                                 }
                             });
-                        }*/
+                        }
                     });
             }
         }
@@ -532,15 +524,7 @@ export class App {
         return svgUtils.makeXMLStr(new XMLSerializer(), svgStrings[0]);
     }
 
-// transform the mouse-position into a position on the svg
-//     mouseToSVG(x, y) {
-//         const p = this.svgElement.createSVGPoint();
-//         p.x = x;
-//         p.y = y;
-//         return p.matrixTransform(this.container.getCTM().inverse());
-//     }
-
-// reads MI JSON format
+    // reads MI JSON format
     readMIJSON(miJson, expand = true) {
         readMijson(miJson, this, expand);
         this.init();
@@ -718,7 +702,7 @@ export class App {
                             if (anno.fuzzyStart || anno.fuzzyEnd) {
                                 if (!this.uncertainCategories.has(name)) {
                                     // make transparent version of color
-                                    const temp = new Rgb_color(color);
+                                    const temp = new rgb_color(color);
                                     const transpColor = "rgba(" + temp.r + "," + temp.g + "," + temp.b + ", 0.6)";
                                     createHatchedFill("hatched_" + anno.description + "_" + color.toString(), transpColor);
                                     this.uncertainCategories.add(anno.description);
@@ -767,7 +751,7 @@ export class App {
                                         }
                                         if (this.uncertainCategories.has(desc)) {
                                             // make transparent version of color
-                                            const temp = new Rgb_color(this.featureColors(desc));
+                                            const temp = new rgb_color(this.featureColors(desc));
                                             const transpColor = "rgba(" + temp.r + "," + temp.g + "," + temp.b + ", 0.6)";
                                             featureType.uncertain = {"color": transpColor};
                                         }
@@ -787,7 +771,7 @@ export class App {
     collapseAll() {
         for (let participant of this.participants.values()) {
             if (participant.expanded) {
-                participant.toCircleNoTransition();//.setExpanded(0);
+                participant.toCircle(false);//param means don't animate change to circle
             }
         }
         this.autoLayout();
@@ -797,7 +781,7 @@ export class App {
     expandAll() {
         for (let participant of this.participants.values()) {
             if (participant.type === "protein" && !participant.expanded) {
-                participant.toStickNoTransition();//setExpanded(1);
+                participant.toStick(false);//param means don't animate change to circle
             }
         }
         this.autoLayout();
@@ -883,40 +867,41 @@ export class App {
     }
 
     move(evt) {
-        if (this.dragStart) {
-            const p = this.getEventPoint(evt);
-            const c = p.matrixTransform(this.container.getCTM().inverse());
-            // console.log("YO!!", c.x);
-            if (c.x) {
+        const p = this.getEventPoint(evt);
+        const c = p.matrixTransform(this.container.getCTM().inverse());
+        if (c.x) { // if mouse is off screen then !c.x
+            if (this.dragStart) { //initially set by mouse down on container svg element, participant or link
+                this.hideTooltip();
                 const ds = this.getEventPoint(this.dragStart).matrixTransform(this.container.getCTM().inverse());
-                const dx = ds.x - c.x;
-                const dy = ds.y - c.y;
-                if (this.dragElement != null) {
-                    this.hideTooltip(); //?
-                    if (this.state === App.STATES.DRAGGING) {
-                        if (!this.dragElement.ix) {
+                if (this.dragElement != null) { // mouse down on participant or link
+                    // console.log("DRAG!");
+                    const dx = ds.x - c.x;
+                    const dy = ds.y - c.y;
+                    if (this.state === App.STATES.DRAGGING) { // if mouse moved sufficiently to start dragging
+                        // console.log("DRAG ACTIVE!");
+                        if (!this.dragElement.ix) { //if is link or complex
                             for (let participant of this.dragElement.participants) {
                                 participant.changePosition(dx, dy);
                             }
                             this.setAllLinkCoordinates();
-                        } else {
+                        } else { // else its an individual biomolecule
                             this.dragElement.changePosition(dx, dy);
                             this.dragElement.setAllLinkCoordinates();
                         }
                         this.dragStart = evt;
-                    } else if (Math.sqrt(dx * dx + dy * dy) > (5 * this.z)) {//this.mouseMoved) { //not dragging or rotating yet, maybe we should start
+                    } else if (Math.sqrt(dx * dx + dy * dy) > (5 * this.z)) {//not dragging or rotating yet, maybe we should start
+                        // console.log("MAKING DRAG ACTIVE!");
                         this.state = App.STATES.DRAGGING;
                     }
-                } else if (this.state === App.STATES.SELECT_PAN) {
+                } else if (this.state === App.STATES.SELECT_PAN) { // mouse down on container svg element
+                    // console.log("PAN!");
                     this.setCTM(this.container, this.container.getCTM().translate(c.x - ds.x, c.y - ds.y));
                     this.dragStart = evt;
-                } else {
-                    this.showTooltip(p);
                 }
+            } else { // !this.dragStart
+                // console.log("TOOLTIP POSITION!");
+                this.showTooltip(p);
             }
-            // else {
-            //     this.mouseUp(evt);
-            // }
         }
     }
 
@@ -932,13 +917,28 @@ export class App {
                     this.notifyExpandListeners();
                 } else {
                     this.contextMenuProt = this.dragElement;
-                    let p = this.getEventPoint(evt);
-                    if (isNaN(p.x)) { //?
-                        p = this.getEventPoint(this.dragStart);
-                    }
-                    const c = p.matrixTransform(this.container.getCTM().inverse());
 
-                    this.contextMenuPoint = c;
+                    let p = this.getEventPoint(evt);
+                    // if (isNaN(p.x)) { //?
+                    //     alert("isNaN", p);
+                    //     alert(p.x);
+                    //     p = this.getEventPoint(this.dragStart);
+                    // }
+                    // this.contextMenuPoint = p.matrixTransform(this.container.getCTM().inverse());
+                    //
+
+                    /*
+                            let xOffset = (this.width / 2 - (this.getSymbolRadius()));
+        if (this.expanded) {
+            xOffset = xOffset - (this.size / 2 * this.stickZoom);
+        }
+                     */
+
+                    // this.contextMenuResNo = ((p.x - this.dragElement.ix) / (this.z * this.dragElement.stickZoom ))
+                    // + (this.dragElement.size / 2);//+
+                    // console.log(this.contextMenuResNo);
+
+
                     const menu = d3.select(".custom-menu-margin");
                     let pageX, pageY;
                     if (evt.pageX) {
@@ -954,7 +954,7 @@ export class App {
             }
         }
         this.dragElement = null;
-        this.dragStart = {};
+        this.dragStart = null;//{};// should prob make that null here and use it as a check in move()
         this.state = App.STATES.MOUSE_UP;
         this.lastMouseUp = time;
         return false;
@@ -980,7 +980,7 @@ export class App {
         return false;
     }
 
-    mouseOut(evt) {
+    mouseOut() {
         this.hideTooltip();
         // don't, causes prob's - RenderedInteractor mouseOut getting propogated?
         // d3.select(".custom-menu-margin").style("display", "none");
@@ -988,31 +988,10 @@ export class App {
     }
 
     getEventPoint(evt) {
-        // *****!$$$ finally, cross-browser
-        // return {x: evt.pageX - $(this.el).offset().left, y: evt.pageY - $(this.el).offset().top};
-
         const p = this.svgElement.createSVGPoint();
-        let element = this.svgElement.parentNode;
-        let top = 0,
-            left = 0;
-        do {
-            top += element.offsetTop || 0;
-            left += element.offsetLeft || 0;
-            element = element.offsetParent;
-        } while (element);
-        let pageX, pageY;
-        if (evt.touches && evt.touches.length > 0) {
-            pageX = evt.touches[0].pageX;
-            pageY = evt.touches[0].pageY;
-        } else if (evt.pageX) {
-            pageX = evt.pageX;
-            pageY = evt.pageY;
-        }
-        // else { //looks like bad idea
-        //     return this.getEventPoint(this.dragStart); //touch events ending
-        // }
-        p.x = pageX - left;
-        p.y = pageY - top;
+        // *****!$$$ finally, cross-browser
+        p.x = evt.pageX - $(this.el).offset().left;
+        p.y = evt.pageY - $(this.el).offset().top;
         return p;
     }
 
@@ -1107,4 +1086,4 @@ App.STATES = {
     DRAGGING: 2 //set by mouse down on Protein or Link
 };
 
-App.barScales = [0.01, 0.015, 0.2, 1, 2, 4, 8];
+App.barScales = [0.01, /*0.015,*/ 0.2, 1, 2, 4, 8];

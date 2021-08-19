@@ -70,7 +70,7 @@ export class Complex extends Interactor {
     }
 
     setPosition () {
-        console.error("bad - called setPosition on ", this);
+        console.error("error - called setPosition on ", this);
     }
 
     changePosition (dx, dy) {

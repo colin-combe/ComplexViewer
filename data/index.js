@@ -38,17 +38,17 @@ const exampleIndex = [
     {
         "ac": "EBI-25816865",
         "name": "EBI-25816865",
-        "url": "http://www.ebi.ac.uk/intact/complex/details/EBI-25816865",
+        "url": "https://www.ebi.ac.uk/intact/complex/details/EBI-25816865",
     },
     {
         "ac": "EBI-25570228",
         "name": "EBI-25570228",
-        "url": "http://www.ebi.ac.uk/intact/complex/details/EBI-25570228",
+        "url": "https://www.ebi.ac.uk/intact/complex/details/EBI-25570228",
     },
     {
         "ac": "~EBI-6884640",
         "name": "~EBI-6884640",
-        "url": "http://www.ebi.ac.uk/intact/complex/details/EBI-6884640",
+        "url": "https://www.ebi.ac.uk/intact/complex/details/EBI-6884640",
     },
     {
         "ac": "CPX-1920",
@@ -58,7 +58,7 @@ const exampleIndex = [
     {
         "ac": "EBI-9008420",
         "name": "Hemoglobin HbA complex",
-        "url": "http://www.ebi.ac.uk/intact/complex/details/EBI-9008420",
+        "url": "https://www.ebi.ac.uk/intact/complex/details/EBI-9008420",
     },
     {
         "ac": "EBI-4371590",
@@ -121,37 +121,37 @@ const exampleIndex = [
     {
         "ac": "EBI-1202920",
         "name": "PCNA homotrimer",
-        "url": "http://www.ebi.ac.uk/intact/complex/details/EBI-1202920",
+        "url": "https://www.ebi.ac.uk/intact/complex/details/EBI-1202920",
     },
     {
         "ac": "EBI-6554207",
         "name": "DnaB helicase complex",
-        "url": "http://www.ebi.ac.uk/intact/complex/details/EBI-6554207",
+        "url": "https://www.ebi.ac.uk/intact/complex/details/EBI-6554207",
     },
     {
         "ac": "EBI-8869931",
         "name": "IscS-TusA complex",
-        "url": "http://www.ebi.ac.uk/intact/complex/details/EBI-8869931",
+        "url": "https://www.ebi.ac.uk/intact/complex/details/EBI-8869931",
     },
     {
         "ac": "EBI-9008283",
         "name": "Chaperonin-containing T-complex",
-        "url": "http://www.ebi.ac.uk/intact/complex/details/EBI-9008283",
+        "url": "https://www.ebi.ac.uk/intact/complex/details/EBI-9008283",
     },
     {
         "ac": "EBI-9696567",
         "name": "Core mediator complex",
-        "url": "http://www.ebi.ac.uk/intact/complex/details/EBI-9696567",
+        "url": "https://www.ebi.ac.uk/intact/complex/details/EBI-9696567",
     },
     {
         "ac": "EBI-9997373",
         "name": "Telomerase holoenzyme complex",
-        "url": "http://www.ebi.ac.uk/intact/complex/details/EBI-9997373",
+        "url": "https://www.ebi.ac.uk/intact/complex/details/EBI-9997373",
     },
     {
         "ac": "EBI-10828997",
         "name": "GLI3-SUFU complex",
-        "url": "http://www.ebi.ac.uk/intact/complex/details/EBI-10828997",
+        "url": "https://www.ebi.ac.uk/intact/complex/details/EBI-10828997",
     },
     {
         "ac": "CPX-1599",
