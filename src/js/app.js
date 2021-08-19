@@ -57,7 +57,7 @@ export class App {
             .attr("type", "radio")
             .on("change", function (d) {
                 self.preventDefaultsAndStopPropagation(d);
-                self.contextMenuProt.setStickScale(d, self.contextMenuPoint);
+                self.contextMenuProt.setStickScale(d, self.contextMenuResNo, self.contextMenuPoint);
             });
         const contextMenu = d3.select(".custom-menu-margin").node();
         contextMenu.onmouseout = function (evt) {
@@ -136,7 +136,7 @@ export class App {
         this.acknowledgement = document.createElementNS(svgns, "g");
         const ackText = document.createElementNS(svgns, "text");
         ackText.innerHTML = "<a href='https://academic.oup.com/bioinformatics/article/33/22/3673/4061280' target='_blank'><tspan x='0' dy='1.2em' style='text-decoration: underline'>ComplexViewer "
-            + version + "</tspan></a><tspan x='0' dy='1.2em'>by <a href='http://rappsilberlab.org/' target='_blank'>Rappsilber Laboratory</a></tspan>";
+            + version + "</tspan></a><tspan x='0' dy='1.2em'>by <a href='https://rappsilberlab.org/' target='_blank'>Rappsilber Laboratory</a></tspan>";
 
         this.acknowledgement.appendChild(ackText);
         ackText.setAttribute("font-size", "8pt");
@@ -285,7 +285,7 @@ export class App {
                 // participant.initSelfLinkSVG(); // todo - may not even do anything, not sure its working
                 participant.stickZoom = this.defaultBarScale;
                 if (this.participants.size < this.maxCountInitiallyExpanded) {
-                    participant.toStickNoTransition();
+                    participant.toStick(false);//param means don't animate change to circle
                 }
             }
         }
@@ -412,22 +412,22 @@ export class App {
 
             self.d3cola.nodes(nodes).links(links);
 
-            /*let groupDebugSel, participantDebugSel;
+            let groupDebugSel, participantDebugSel;
             if (self.debug) {
-                groupDebugSel = d3.select(self.container).selectAll(".group")
-                    .data(groups);
-
-                groupDebugSel.enter().append("rect")
-                    .classed("group", true)
-                    .attr({
-                        rx: 5,
-                        ry: 5
-                    })
-                    .style("stroke", "blue")
-                    .style("fill", "none");
-
+                // groupDebugSel = d3.select(self.container).selectAll(".group")
+                //     .data(groups);
+                //
+                // groupDebugSel.enter().append("rect")
+                //     .classed("group", true)
+                //     .attr({
+                //         rx: 5,
+                //         ry: 5
+                //     })
+                //     .style("stroke", "blue")
+                //     .style("fill", "none");
+                //
                 participantDebugSel = d3.select(self.container).selectAll(".node")
-                    .data(layoutObj.nodes);
+                    .data(nodes);
 
                 participantDebugSel.enter().append("rect")
                     .classed("node", true)
@@ -438,9 +438,9 @@ export class App {
                     .style("stroke", "red")
                     .style("fill", "none");
 
-                groupDebugSel.exit().remove();
+                // groupDebugSel.exit().remove();
                 participantDebugSel.exit().remove();
-            }*/
+            }
 
             if (preRun) {
                 self.d3cola.groups([]).start(23, 10, 0, 0, false);
@@ -481,21 +481,21 @@ export class App {
                         self.setAllLinkCoordinates();
                         self.zoomToExtent();
 
-                        /*if (self.debug) {
-                            groupDebugSel.attr({
-                                x: function (d) {
-                                    return d.bounds.x;// + (width / 2);
-                                },
-                                y: function (d) {
-                                    return d.bounds.y;// + (height / 2);
-                                },
-                                width: function (d) {
-                                    return d.bounds.width();
-                                },
-                                height: function (d) {
-                                    return d.bounds.height();
-                                }
-                            });
+                        if (self.debug) {
+                            // groupDebugSel.attr({
+                            //     x: function (d) {
+                            //         return d.bounds.x;// + (width / 2);
+                            //     },
+                            //     y: function (d) {
+                            //         return d.bounds.y;// + (height / 2);
+                            //     },
+                            //     width: function (d) {
+                            //         return d.bounds.width();
+                            //     },
+                            //     height: function (d) {
+                            //         return d.bounds.height();
+                            //     }
+                            // });
 
                             participantDebugSel.attr({
                                 x: function (d) {
@@ -511,7 +511,7 @@ export class App {
                                     return d.bounds.height();
                                 }
                             });
-                        }*/
+                        }
                     });
             }
         }
@@ -771,7 +771,7 @@ export class App {
     collapseAll() {
         for (let participant of this.participants.values()) {
             if (participant.expanded) {
-                participant.toCircleNoTransition();//.setExpanded(0);
+                participant.toCircle(false);//param means don't animate change to circle
             }
         }
         this.autoLayout();
@@ -781,7 +781,7 @@ export class App {
     expandAll() {
         for (let participant of this.participants.values()) {
             if (participant.type === "protein" && !participant.expanded) {
-                participant.toStickNoTransition();//setExpanded(1);
+                participant.toStick(false);//param means don't animate change to circle
             }
         }
         this.autoLayout();
@@ -917,12 +917,28 @@ export class App {
                     this.notifyExpandListeners();
                 } else {
                     this.contextMenuProt = this.dragElement;
+
                     let p = this.getEventPoint(evt);
-                    if (isNaN(p.x)) { //?
-                        alert(p.x);
-                        p = this.getEventPoint(this.dragStart);
-                    }
-                    this.contextMenuPoint = p.matrixTransform(this.container.getCTM().inverse());
+                    // if (isNaN(p.x)) { //?
+                    //     alert("isNaN", p);
+                    //     alert(p.x);
+                    //     p = this.getEventPoint(this.dragStart);
+                    // }
+                    // this.contextMenuPoint = p.matrixTransform(this.container.getCTM().inverse());
+                    //
+
+                    /*
+                            let xOffset = (this.width / 2 - (this.getSymbolRadius()));
+        if (this.expanded) {
+            xOffset = xOffset - (this.size / 2 * this.stickZoom);
+        }
+                     */
+
+                    // this.contextMenuResNo = ((p.x - this.dragElement.ix) / (this.z * this.dragElement.stickZoom ))
+                    // + (this.dragElement.size / 2);//+
+                    // console.log(this.contextMenuResNo);
+
+
                     const menu = d3.select(".custom-menu-margin");
                     let pageX, pageY;
                     if (evt.pageX) {
@@ -964,7 +980,7 @@ export class App {
         return false;
     }
 
-    mouseOut(evt) {
+    mouseOut() {
         this.hideTooltip();
         // don't, causes prob's - RenderedInteractor mouseOut getting propogated?
         // d3.select(".custom-menu-margin").style("display", "none");
@@ -1070,4 +1086,4 @@ App.STATES = {
     DRAGGING: 2 //set by mouse down on Protein or Link
 };
 
-App.barScales = [0.01, 0.015, 0.2, 1, 2, 4, 8];
+App.barScales = [0.01, /*0.015,*/ 0.2, 1, 2, 4, 8];

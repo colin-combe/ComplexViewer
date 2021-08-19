@@ -20,32 +20,26 @@ export class Polymer extends Interactor {
         this.highlight.setAttribute("stroke-opacity", show ? "1" : "0");
     }
 
-    setStickScale(scale, svgP) {
-        const oldScale = this.stickZoom;
+    setStickScale(scale, residuePos, svgP) { // scale to @scale, leaving residue number @residuePos at position @svgP
 
-        //dist from centre
-        const dx = (this.ix - svgP.x);
-        // const dy = (this.iy - svgP.y);
 
-        // new dist from centre
-        const nx = dx * scale / oldScale;
-        // const ny = dy * scale / oldScale;
 
-        //required change
-        const rx = nx - dx;
-        // let ry = ny - dy;
-
-        // if (this.rotation === 0 || this.rotation === 180) {
-        //     ry = 0;
-        // }
-
-        //new pos
-        const x = this.ix + rx;
-        // const y = this.iy + ry;
+        // const oldScale = this.stickZoom;
+        // //dist from centre
+        // const dx = (this.ix - svgP.x);
+        // // new dist from centre
+        // const nx = dx * scale / oldScale;
+        // //required change
+        // const rx = nx - dx;
+        // //new pos
+        // const x = this.ix + rx;
+        // // const y = this.iy + ry;
 
         this.stickZoom = scale;
+        // const x = (-1 * ((residuePos - (this.size / 2)) * this.stickZoom)) + svgP.x;
+
         this.scale();
-        this.setPosition(x, this.iy);//y);
+      //  this.setPosition(this.ix, this.iy);//y);
         this.setAllLinkCoordinates();
     }
 
@@ -294,11 +288,6 @@ export class Polymer extends Interactor {
         }
     }
 
-//TODO - this can be tidied up
-    toCircleNoTransition() {
-        this.toCircle(false);
-    }
-
     toStick(transition = true) {
         const transitionTime = transition ? Polymer.transitionTime : 0;
 
@@ -409,10 +398,6 @@ export class Polymer extends Interactor {
         this.setScaleGroup();
         d3.select(this.ticks).transition().attr("opacity", 1)
             .delay(transitionTime * 0.8).duration(transitionTime / 2);
-    }
-
-    toStickNoTransition() {
-        this.toStick(false);
     }
 
     updateAnnotationRectanglesNoTransition() {
