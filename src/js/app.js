@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import * as css from "../css/xinet.css";
-import {version} from "../../package.json";
+import packageInfo from "../../package.json";
 import * as d3 from "d3";
 import * as d3_chromatic from "d3-scale-chromatic";
 import * as cola from "./cola";
@@ -136,7 +136,7 @@ export class App {
         this.acknowledgement = document.createElementNS(svgns, "g");
         const ackText = document.createElementNS(svgns, "text");
         ackText.innerHTML = "<a href='https://academic.oup.com/bioinformatics/article/33/22/3673/4061280' target='_blank'><tspan x='0' dy='1.2em' style='text-decoration: underline'>ComplexViewer "
-            + version + "</tspan></a><tspan x='0' dy='1.2em'>by <a href='https://rappsilberlab.org/' target='_blank'>Rappsilber Laboratory</a></tspan>";
+            + packageInfo.version + "</tspan></a><tspan x='0' dy='1.2em'>by <a href='https://rappsilberlab.org/' target='_blank'>Rappsilber Laboratory</a></tspan>";
 
         this.acknowledgement.appendChild(ackText);
         ackText.setAttribute("font-size", "8pt");
