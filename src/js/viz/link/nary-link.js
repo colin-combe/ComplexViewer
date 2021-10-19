@@ -1,4 +1,5 @@
-import * as d3 from "d3"; //used for d3.geom.hull
+// import * as d3 from "d3"; //used for d3.geom.hull
+import {polygonHull} from "d3-polygon";
 import {Link} from "./link";
 import {rotatePointAboutPoint} from "../../geom";
 import {svgns} from "../../svgns";
@@ -88,7 +89,7 @@ export class NaryLink extends Link {
     setLinkCoordinates(dontPropogate) {
         // Uses d3.geom.hull to calculate a bounding path around an array of vertices
         const calculateHullPath = function (values) {
-            const hullPath = d3.geom.hull(values);
+            const hullPath = polygonHull(values);
             self.hull = hullPath; //hack?
             return "M" + hullPath.join("L") + "Z";
         };
