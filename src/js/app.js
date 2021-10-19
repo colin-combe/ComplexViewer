@@ -1,10 +1,9 @@
-// eslint-disable-next-line no-unused-vars
-import * as css from "../css/xinet.css";
+import "../css/xinet.css";
 import packageInfo from "../../package.json";
 import * as d3 from "d3";
 import * as d3_chromatic from "d3-scale-chromatic";
 import * as cola from "./cola";
-import * as rgb_color from "rgb-color";
+import * as Rgb_color from "rgb-color";
 
 import {svgUtils} from "./svgexp";
 import {readMijson} from "./read-mijson";
@@ -17,7 +16,7 @@ import * as $ from "jquery";
 
 export class App {
     constructor(/*HTMLDivElement*/networkDiv, maxCountInitiallyExpanded = 4) {
-        //this.debug = true;
+        // this.debug = true;
         this.el = networkDiv;
         //avoids prob with 'save - web page complete'
         this.el.textContent = ""; //https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
@@ -57,7 +56,7 @@ export class App {
             .attr("type", "radio")
             .on("change", function (d) {
                 self.preventDefaultsAndStopPropagation(d);
-                self.contextMenuProt.setStickScale(d, self.contextMenuResNo, self.contextMenuPoint);
+                self.contextMenuProt.setStickScale(d, self.contextMenuPoint);
             });
         const contextMenu = d3.select(".custom-menu-margin").node();
         contextMenu.onmouseout = function (evt) {
@@ -233,7 +232,6 @@ export class App {
         }
         NaryLink.naryColors = d3.scale.ordinal().range(complexColors);
 
-        this.proteinCount = 0;
         this.z = 1;
         this.hideTooltip();
         this.state = App.STATES.MOUSE_UP;
@@ -412,7 +410,7 @@ export class App {
 
             self.d3cola.nodes(nodes).links(links);
 
-            let groupDebugSel, participantDebugSel;
+            let /*groupDebugSel,*/ participantDebugSel;
             if (self.debug) {
                 // groupDebugSel = d3.select(self.container).selectAll(".group")
                 //     .data(groups);
@@ -476,7 +474,7 @@ export class App {
                     .on("tick", function () {
                         const nodes = self.d3cola.nodes();
                         for (let node of nodes) {
-                            node.setPosition(node.x, node.y);
+                            node.setPositionFromCola(node.x, node.y);
                         }
                         self.setAllLinkCoordinates();
                         self.zoomToExtent();
@@ -702,7 +700,7 @@ export class App {
                             if (anno.fuzzyStart || anno.fuzzyEnd) {
                                 if (!this.uncertainCategories.has(name)) {
                                     // make transparent version of color
-                                    const temp = new rgb_color(color);
+                                    const temp = new Rgb_color(color);
                                     const transpColor = "rgba(" + temp.r + "," + temp.g + "," + temp.b + ", 0.6)";
                                     createHatchedFill("hatched_" + anno.description + "_" + color.toString(), transpColor);
                                     this.uncertainCategories.add(anno.description);
@@ -751,7 +749,7 @@ export class App {
                                         }
                                         if (this.uncertainCategories.has(desc)) {
                                             // make transparent version of color
-                                            const temp = new rgb_color(this.featureColors(desc));
+                                            const temp = new Rgb_color(this.featureColors(desc));
                                             const transpColor = "rgba(" + temp.r + "," + temp.g + "," + temp.b + ", 0.6)";
                                             featureType.uncertain = {"color": transpColor};
                                         }
@@ -849,7 +847,7 @@ export class App {
     }
 
     //listeners also attached to mouse events by Interactor (and Rotator) and Link, those consume their events
-    //mouse down on svgElement must be allowed to propogate (to fire event on Prots/Links)
+    //mouse down on svgElement must be allowed to propagate (to fire event on interactors/links)
     mouseDown(evt) {
         evt.preventDefault();
         this.d3cola.stop();
@@ -911,7 +909,7 @@ export class App {
         const time = new Date().getTime();
         //eliminate some spurious mouse up events - a simple version of debouncing but it seems to work better than for e.g. _.debounce
         if ((time - this.lastMouseUp) > 150) {
-            if (this.dragElement && this.dragElement.type === "protein" && this.state !== App.STATES.DRAGGING) {
+            if (this.dragElement && this.dragElement.type === "protein" && this.state !== App.STATES.DRAGGING && !this.dragElement.busy) {
                 if (!this.dragElement.expanded) {
                     this.dragElement.setExpanded(true);
                     this.notifyExpandListeners();
@@ -920,25 +918,11 @@ export class App {
 
                     let p = this.getEventPoint(evt);
                     // if (isNaN(p.x)) { //?
-                    //     alert("isNaN", p);
-                    //     alert(p.x);
+                    //     // alert("isNaN", p);
+                    //     // alert(p.x);
                     //     p = this.getEventPoint(this.dragStart);
                     // }
-                    // this.contextMenuPoint = p.matrixTransform(this.container.getCTM().inverse());
-                    //
-
-                    /*
-                            let xOffset = (this.width / 2 - (this.getSymbolRadius()));
-        if (this.expanded) {
-            xOffset = xOffset - (this.size / 2 * this.stickZoom);
-        }
-                     */
-
-                    // this.contextMenuResNo = ((p.x - this.dragElement.ix) / (this.z * this.dragElement.stickZoom ))
-                    // + (this.dragElement.size / 2);//+
-                    // console.log(this.contextMenuResNo);
-
-
+                    this.contextMenuPoint = p.matrixTransform(this.container.getCTM().inverse());
                     const menu = d3.select(".custom-menu-margin");
                     let pageX, pageY;
                     if (evt.pageX) {
@@ -982,9 +966,6 @@ export class App {
 
     mouseOut() {
         this.hideTooltip();
-        // don't, causes prob's - RenderedInteractor mouseOut getting propogated?
-        // d3.select(".custom-menu-margin").style("display", "none");
-        // d3.select(".group-custom-menu-margin").style("display", "none");
     }
 
     getEventPoint(evt) {

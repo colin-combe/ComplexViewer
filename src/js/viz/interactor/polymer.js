@@ -20,26 +20,25 @@ export class Polymer extends Interactor {
         this.highlight.setAttribute("stroke-opacity", show ? "1" : "0");
     }
 
-    setStickScale(scale, residuePos, svgP) { // scale to @scale, leaving residue number @residuePos at position @svgP
-
-
-
-        // const oldScale = this.stickZoom;
+    setStickScale(scale, svgP) { // scale to @scale, leaving same residue under mouse
+        const oldScale = this.stickZoom;
         // //dist from centre
-        // const dx = (this.ix - svgP.x);
-        // // new dist from centre
-        // const nx = dx * scale / oldScale;
+        const dIx = (this.ix - svgP.x);
+        // console.log("dist from centre ", dIx);
+        // new dist from centre
+        const nx = dIx * scale / oldScale;
+        // console.log("new dist from centre ", nx);
+
         // //required change
-        // const rx = nx - dx;
+        const rx = nx - dIx;
+
         // //new pos
-        // const x = this.ix + rx;
-        // // const y = this.iy + ry;
+        const x = this.ix + rx;
 
         this.stickZoom = scale;
-        // const x = (-1 * ((residuePos - (this.size / 2)) * this.stickZoom)) + svgP.x;
 
         this.scale();
-      //  this.setPosition(this.ix, this.iy);//y);
+        this.setPosition(x, this.iy);//y);
         this.setAllLinkCoordinates();
     }
 
@@ -161,13 +160,10 @@ export class Polymer extends Interactor {
 
     toCircle(transition = true, svgP) {
         const transitionTime = transition ? Polymer.transitionTime : 0;
-
-        //svgP = null;// temp hack - you can uncomment this is you experience things 'flying off screen'
         this.postAnimExpanded = false; // bit of a hack, used for updating listeners before anim complete, todo - is there better way
         this.busy = true;
-
         const r = this.getSymbolRadius();
-        //
+
         d3.select(this.background).transition()
             .attr("x", -r).attr("y", -r)
             .attr("width", r * 2).attr("height", r * 2)
@@ -185,16 +181,15 @@ export class Polymer extends Interactor {
             .duration(transitionTime);
 
         const stickZoomInterpol = d3.interpolate(this.stickZoom, 0);
-        // var rotationInterpol = d3.interpolate((this.rotation > 180) ? this.rotation - 360 : this.rotation, 0);
         const labelTransform = d3.transform(this.labelSVG.getAttribute("transform"));
         const labelStartPoint = labelTransform.translate[0];
         const labelTranslateInterpol = d3.interpolate(labelStartPoint, -(r + 5));
 
-        let xInterpol = null,
-            yInterpol = null;
+        let xInterpol = null;//,
+            // yInterpol = null;
         if (typeof svgP !== "undefined" && svgP !== null) {
             xInterpol = d3.interpolate(this.ix, svgP.x);
-            yInterpol = d3.interpolate(this.iy, svgP.y);
+            // yInterpol = d3.interpolate(this.iy, svgP.y);
         }
 
         const self = this;
@@ -243,9 +238,9 @@ export class Polymer extends Interactor {
             const labelTransform = d3.transform(self.labelSVG.getAttribute("transform"));
             const k = self.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), self.labelY); //.scale(z).translate(-c.x, -c.y);
             self.labelSVG.transform.baseVal.initialize(self.app.svgElement.createSVGTransformFromMatrix(k));
-            //~
+
             if (xInterpol !== null) {
-                self.setPosition(xInterpol(cubicInOut(interp)), yInterpol(cubicInOut(interp)));
+                self.setPosition(xInterpol(cubicInOut(interp)), self.iy);//yInterpol(cubicInOut(interp)));
             }
 
             self.stickZoom = stickZoomInterpol(cubicInOut(interp));
