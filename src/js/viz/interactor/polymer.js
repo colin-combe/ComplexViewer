@@ -1,4 +1,6 @@
 import * as d3 from "d3"; // transitions and other stuff
+import {transform} from "d3-transform";
+import {easeCubicInOut} from "d3-ease";
 import {rotatePointAboutPoint} from "../../geom";
 import {svgns} from "../../svgns";
 import {Interactor} from "./interactor";
@@ -45,7 +47,7 @@ export class Polymer extends Interactor {
     scale() {
         const protLength = (this.size) * this.stickZoom;
         if (this.expanded) {
-            const labelTransform = d3.transform(this.labelSVG.getAttribute("transform"));
+            const labelTransform = transform(this.labelSVG.getAttribute("transform"));
             const k = this.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate)
                 .translate((-(((this.size / 2) * this.stickZoom) + (this.nTermFeatures.length > 0 ? 25 : 10))), this.labelY); //.scale(z).translate(-c.x, -c.y);
             this.labelSVG.transform.baseVal.initialize(this.app.svgElement.createSVGTransformFromMatrix(k));
@@ -196,7 +198,7 @@ export class Polymer extends Interactor {
             .duration(transitionTime);
 
         const stickZoomInterpol = d3.interpolate(this.stickZoom, 0);
-        const labelTransform = d3.transform(this.labelSVG.getAttribute("transform"));
+        const labelTransform = transform(this.labelSVG.getAttribute("transform"));
         const labelStartPoint = labelTransform.translate[0];
         const labelTranslateInterpol = d3.interpolate(labelStartPoint, -(r + 5));
 
@@ -209,7 +211,7 @@ export class Polymer extends Interactor {
 
         const self = this;
         d3.select(this.ticks).transition().attr("opacity", 0).duration(transitionTime / 4)
-            .each("end",
+            .on("end",
                 function () {
                     d3.select(this).selectAll("*").remove();
                 }
@@ -217,7 +219,7 @@ export class Polymer extends Interactor {
 
         const originalStickZoom = this.stickZoom;
         const originalRotation = this.rotation;
-        const cubicInOut = d3.ease("cubic-in-out");
+        const cubicInOut = easeCubicInOut;
         if (transition) {
             for (let [annotationType, annotations] of this.annotationSets) {
                 if (this.app.annotationSetsShown.get(annotationType) === true) {
@@ -250,7 +252,7 @@ export class Polymer extends Interactor {
         }
 
         function update(interp) {
-            const labelTransform = d3.transform(self.labelSVG.getAttribute("transform"));
+            const labelTransform = transform(self.labelSVG.getAttribute("transform"));
             const k = self.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), self.labelY); //.scale(z).translate(-c.x, -c.y);
             self.labelSVG.transform.baseVal.initialize(self.app.svgElement.createSVGTransformFromMatrix(k));
 
@@ -339,7 +341,7 @@ export class Polymer extends Interactor {
 
 
         const self = this;
-        const cubicInOut = d3.ease("cubic-in-out");
+        const cubicInOut = easeCubicInOut;
         if (transition) {
             for (let [annotationType, annotations] of this.annotationSets) {
                 if (this.app.annotationSetsShown.get(annotationType) === true) {
@@ -382,7 +384,7 @@ export class Polymer extends Interactor {
         }
 
         function update(interp) {
-            const labelTransform = d3.transform(self.labelSVG.getAttribute("transform"));
+            const labelTransform = transform(self.labelSVG.getAttribute("transform"));
             const k = self.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), self.labelY); //.scale(z).translate(-c.x, -c.y);
             self.labelSVG.transform.baseVal.initialize(self.app.svgElement.createSVGTransformFromMatrix(k));
 
