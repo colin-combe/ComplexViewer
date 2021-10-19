@@ -159,6 +159,21 @@ export class Polymer extends Interactor {
     }
 
     toCircle(transition = true, svgP) {
+
+        if (!svgP) {
+            const width = this.app.svgElement.parentNode.clientWidth;
+            const ctm = this.app.container.getCTM().inverse();
+            const z = this.app.container.getCTM().inverse().a;
+            if (this.ix < ctm.e){
+                console.log("off left edge");
+                svgP = {x:ctm.e  + ((this.getSymbolRadius() + 15 + this.labelSVG.getComputedTextLength())), y:this.iy};
+            }
+            if (this.ix > ctm.e + (width * z)){
+                console.log("off right edge");
+                svgP = {x:ctm.e + (width * z)  - ((this.getSymbolRadius() + 5)), y:this.iy};
+            }
+        }
+
         const transitionTime = transition ? Polymer.transitionTime : 0;
         this.postAnimExpanded = false; // bit of a hack, used for updating listeners before anim complete, todo - is there better way
         this.busy = true;

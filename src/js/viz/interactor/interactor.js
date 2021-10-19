@@ -148,8 +148,12 @@ export class Interactor {
         //remember previous position
         this.px = this.x;
         this.py = this.y;
-
         let xOffset = (this.width / 2 - (this.getSymbolRadius()));
+        /*
+        // let xOffset = (15 + this.labelSVG.getComputedTextLength()) / 2;
+        // would also work because
+        // width = (2 * this.getSymbolRadius()) + 15 + this.labelSVG.getComputedTextLength();
+        */
         if (this.expanded) {
             xOffset = xOffset - (this.size / 2 * this.stickZoom);
         }
