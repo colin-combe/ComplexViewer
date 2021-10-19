@@ -917,11 +917,11 @@ export class App {
                     this.contextMenuProt = this.dragElement;
 
                     let p = this.getEventPoint(evt);
-                    if (isNaN(p.x)) { //?
-                        alert("isNaN", p);
-                        alert(p.x);
-                        // p = this.getEventPoint(this.dragStart);
-                    }
+                    // if (isNaN(p.x)) { //?
+                    //     // alert("isNaN", p);
+                    //     // alert(p.x);
+                    //     p = this.getEventPoint(this.dragStart);
+                    // }
                     this.contextMenuPoint = p.matrixTransform(this.container.getCTM().inverse());
                     const menu = d3.select(".custom-menu-margin");
                     let pageX, pageY;
