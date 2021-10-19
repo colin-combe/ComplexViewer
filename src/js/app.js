@@ -239,7 +239,7 @@ export class App {
 
     collapseProtein() {
         d3.select(".custom-menu-margin").style("display", "none");
-        this.contextMenuProt.setExpanded(false);//, this.contextMenuPoint);
+        this.contextMenuProt.setExpanded(false, this.contextMenuPoint);
         this.contextMenuProt = null;
         this.notifyExpandListeners();
     }
