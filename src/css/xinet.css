@@ -45,7 +45,7 @@ svg {
     stroke-width: 1;
 }
 
-feature-link {
+.feature-link {
     fill: black;
 }
 
@@ -69,19 +69,20 @@ feature-link {
     1px -1px 0 white,
     -1px 1px 0 white,
     1px 1px 0 white;
-       /*-2px -1px 0 white,*/
-       /* 2px -1px 0 white,*/
-       /* -2px 1px 0 white,*/
-       /* 2px 1px 0 white;*/
+    /*-2px -1px 0 white,*/
+    /* 2px -1px 0 white,*/
+    /* -2px 1px 0 white,*/
+    /* 2px 1px 0 white;*/
     fill: black;
     text-anchor: end;
 }
 
-.scale-label{
+.scale-label {
     text-anchor: middle;
+    pointer-events: none;
 }
 
-.tooltip{
+.tooltip {
     text-anchor: start;
 }
 
@@ -101,18 +102,38 @@ feature-link {
 /*for protein bar scale*/
 .tick {
     stroke: black;
+    pointer-events: none;
 }
 
-.tick-labels {
-    font-size: 8pt;
-    text-anchor: middle;
-}
-
-/*not working right*/
 .sequence {
     font-family: 'Courier New', monospace;
     font-size: 10px;
     text-anchor: middle;
+    pointer-events: none;
+
+    /*text-shadow: -2px -2px 0 white,*/
+    /*2px -2px 0 white,*/
+    /*-2px 2px 0 white,*/
+    /*2px 2px 0 white;*/
+
+}
+
+
+.sequence-outline {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    text-anchor: middle;
+    pointer-events: none;
+
+    stroke-width:4px;
+    stroke:white;
+    stroke-linecap:round;
+    stroke-linejoin: round;
+    /*text-shadow: -2px -2px 0 white,*/
+    /*2px -2px 0 white,*/
+    /*-2px 2px 0 white,*/
+    /*2px 2px 0 white;*/
+
 }
 
 .custom-menu-margin {
@@ -164,7 +185,7 @@ feature-link {
     stroke-width: 1;
 }
 
-@media only screen and (max-width : 1140px) {
+@media only screen and (max-width: 1140px) {
     .label {
         text-shadow: none;
     }

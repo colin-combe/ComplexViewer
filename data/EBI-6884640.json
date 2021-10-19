@@ -1,0 +1,226 @@
+{
+  "data": [
+    {
+      "object": "interactor",
+      "id": "uniprotkb_Q9VT76",
+      "sequence": "MPIAHPLPLCVAWLLLLVVIVMSDMTNGGVQGPIEGYNSLDDLLTTTPTPGQAALLLPTAPTAAYTHPKWMEPYFDPSTPRNVTALMGKSAYLSCRVRNLANKTVSWIRHRDIHILTVGSYTYTSDQRFQATHHQDTEDWTLQIKWAQKRDAGMYECQISTQPVRSYFVRLNVVVPTATILGGPDLHVDKGSTINLTCTVKFSPEPPAYIFWYHHEEVINYDSSRGGVSVITEKGDVTTSFLLIQNADLADSGKYSCAPSNADVASVRVHVLNGKYPLPCPTL",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "7227",
+        "common": "drome",
+        "scientific": "Drosophila melanogaster (Fruit fly)"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "Q9VT76"
+      },
+      "label": "q9vt76_drome"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_Q961T8",
+      "sequence": "MRWRHAVRATFTSTTATESSPLIGKVISNSRAPQIAHEMLVEYFMALLVIMGLTAPVDKQSRRSSQYFGHLAAAEELSNLIPDNYDAIDPVFDNTTDREVIAALGTTARLHCRVRHLGDRAVSWIRQRDLHILTIGIMTYTNDQRFLARHIDNSDEWVLKIVSVQQRDAGVYECQVSTEPKISLAYKLVVVTSKAQILANRELFIQSGSDINLTCIAPQAPGPYTHMLWHKDTELVSDSARGGIRVESEQQMKTSNLVISRVQHTDSGNYTCSADNSNSDSVFVHIIKSEQHAAMQHELGSRLLLPPLPLLLLAVLLVVLLGPTSSLQIRTPLSTR",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "7227",
+        "common": "drome",
+        "scientific": "Drosophila melanogaster (Fruit fly)"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "Q961T8"
+      },
+      "label": "q961t8_drome"
+    },
+    {
+      "object": "interaction",
+      "id": "intact_EBI-6884640",
+      "interactionType": {
+        "id": "MI:0915",
+        "name": "physical association"
+      },
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0892",
+          "name": "solid phase assay"
+        },
+        "host": {
+          "taxid": "-1",
+          "common": "in vitro",
+          "scientific": "In vitro"
+        },
+        "pubid": [
+          {
+            "db": "intact",
+            "id": "EBI-6881205"
+          },
+          {
+            "db": "pubmed",
+            "id": "23827685"
+          },
+          {
+            "db": "imex",
+            "id": "IM-20952"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0469",
+          "name": "European Bioinformatics Institute"
+        },
+        "experimentModifications": [
+          "The bait\/prey relationship for proteins only described in Fig. 4 could not be ascertained. Bait protein construct contain a C-terminal Biotin tag."
+        ],
+        "figures": [
+          "Fig. 1, Supp. Table 2"
+        ]
+      },
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-6884640"
+        },
+        {
+          "db": "imex",
+          "id": "IM-20952-106"
+        }
+      ],
+      "participants": [
+        {
+          "id": "1",
+          "interactorRef": "uniprotkb_Q9VT76",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0496",
+            "name": "bait"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0980",
+              "name": "tag visualisation by enzyme assay"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "7227",
+            "common": "drome-schneider_2",
+            "scientific": "Drosophila melanogaster late embryo cells",
+            "cellType": {
+              "id": "ACC 130",
+              "name": "Established from the late embryo of Drosophila melanogaster"
+            }
+          },
+          "features": [
+            {
+              "id": "2",
+              "name": "extracellular region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "23-283",
+                  "interactorRef": "uniprotkb_Q9VT76",
+                  "participantRef": "1"
+                }
+              ],
+              "linkedFeatures": [
+                "3"
+              ]
+            },
+            {
+              "id": "4",
+              "name": "region",
+              "category": "experimentalFeatures",
+              "type": {
+                "id": "MI:0975",
+                "name": "fc-igg tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_Q9VT76",
+                  "participantRef": "1"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "5",
+          "interactorRef": "uniprotkb_Q961T8",
+          "stoichiometry": "5",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0980",
+              "name": "tag visualisation by enzyme assay"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "7227",
+            "common": "drome-schneider_2",
+            "scientific": "Drosophila melanogaster late embryo cells",
+            "cellType": {
+              "id": "ACC 130",
+              "name": "Established from the late embryo of Drosophila melanogaster"
+            }
+          },
+          "features": [
+            {
+              "id": "6",
+              "name": "region",
+              "category": "experimentalFeatures",
+              "type": {
+                "id": "MI:0366",
+                "name": "alkaline phosphatase tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_Q961T8",
+                  "participantRef": "5"
+                }
+              ]
+            },
+            {
+              "id": "3",
+              "name": "extracellular region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "58-308",
+                  "interactorRef": "uniprotkb_Q9VT76",
+                  "participantRef": "1"
+                }
+              ],
+              "linkedFeatures": [
+                "2"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

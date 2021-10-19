@@ -1,18 +1,19 @@
 import {Interactor} from "./interactor";
-import {svgns} from "../../config";
+import {svgns} from "../../svgns";
 
-export function RNA(id, app, json, name) {
-    this.init(id, app, json, name);
-    this.upperGroup = document.createElementNS(svgns, "g");
-    this.initLabel();
-    const points = "0, -10  10, 0 0, 10 -10, 0";
-    this.outline = document.createElementNS(svgns, "polygon");
-    this.outline.setAttribute("points", points);
-    this.initOutline();
-    this.initListeners();
+export class RNA extends Interactor {
+    constructor(id, app, json, name) {
+        super();
+        this.init(id, app, json, name);
+        this.upperGroup = document.createElementNS(svgns, "g");
+        this.initLabel();
+        const points = "0, -10  10, 0 0, 10 -10, 0";
+        this.outline = document.createElementNS(svgns, "polygon");
+        this.outline.setAttribute("points", points);
+        this.initOutline();
+        this.initListeners();
+    }
 }
-
-RNA.prototype = new Interactor();
 
 /*
 RNA.prototype.showData = function(evt) {

@@ -40,7 +40,7 @@
                 <div id="networkDiv"></div>
 
                 <div class="legend">
-                    <table>
+                    <table class="symbols">
                         <tr>
                             <td>
                                 <img src="./src/imgs/key-svg/molecule-set.svg">
@@ -71,7 +71,7 @@
                             </td>
                             <td>RNA</td>
                         </tr>
-                        <tr style="border: 1px grey;">
+                        <tr>
                             <td>
                                 <img src="./src/imgs/key-svg/protein-circle.svg">
                                 <img src="./src/imgs/key-svg/protein-bar.svg">
@@ -123,15 +123,15 @@
     </div> <!-- centreDiv -->
 
     <div class="logo-bar space-between">
-        <a class="logo" href="http://rappsilberlab.org/" target="_blank"><img src="images/logos/rappsilber-logo.png"
+        <a class="logo" href="https://rappsilberlab.org/" target="_blank"><img src="images/logos/rappsilber-logo.png"
                                                                               alt="Rappsilber Laboratory"></a>
-        <a class="logo" href="http://www.ed.ac.uk/" target="_blank"><img src="./images/logos/eduni.jpeg"
+        <a class="logo" href="https://www.ed.ac.uk/" target="_blank"><img src="./images/logos/eduni.jpeg"
                                                                          alt="Edinburgh University"></a>
-        <a class="logo" href="http://www.wcb.ed.ac.uk/" target="_blank"><img src="images/logos/wtccb.png"
+        <a class="logo" href="https://www.wcb.ed.ac.uk/" target="_blank"><img src="images/logos/wtccb.png"
                                                                              alt="Wellcome Trust Centre for Cell Biology"></a>
-        <a class="logo" href="http://www.ebi.ac.uk/" target="_blank"><img src="images/logos/ebi-logo.jpeg"
+        <a class="logo" href="https://www.ebi.ac.uk/" target="_blank"><img src="images/logos/ebi-logo.jpeg"
                                                                           alt="European Bioinformatics Institute"></a>
-        <a class="logo" href="http://intermine.org/" target="_blank"><img src="./images/logos/intermine.png"
+        <a class="logo" href="https://intermine.org/" target="_blank"><img src="./images/logos/intermine.png"
                                                                           alt="Intermine"></a>
         <a class="logo" href="https://www.cam.ac.uk/" target="_blank"><img src="./images/logos/cambridge-blue.png"
                                                                            alt="Cambridge University"></a>
@@ -153,9 +153,15 @@
 
     const networkTargetDiv = document.getElementById("networkDiv");
     cv = new complexviewer.App(networkTargetDiv);
-    cv.addColorSchemeKey(document.getElementById("colors"));
-    cv.addHoverListener(function (interactorIdArr) {
-        console.log("HOVER: ", interactorIdArr.toString());
+
+    //hover listener example
+    // cv.addHoverListener(function (participantArr) {
+    //     console.log("HOVER: ", participantArr);
+    // });
+
+    //expand listener example
+    cv.addExpandListener(function (participantArr) {
+        console.log("EXPANDED: ", participantArr);
     });
 
     loadData();
@@ -166,90 +172,62 @@
         const path = "./data/" + dataSetsSelect.options[dataSetsSelect.selectedIndex].value + ".json";
         d3.json(path, function (data) {
             cv.readMIJSON(data);
+            makeLegend(cv.getColorKeyJson());
         });
     }
 
     function setAnnotations(checkbox) {
-        cv.showAnnotations(checkbox.value, checkbox.checked);
+        var json = cv.showAnnotations(checkbox.value, checkbox.checked);
+        console.log(json);
+        makeLegend(json);
+    }
+
+    // you can use code below as template to make legend from json
+    function makeLegend(json) {
+        const div = document.getElementById("colors");
+        div.textContent = "";
+        const colorTable = document.createElement("table");
+        for (let majorClass in json) {
+            const tr = colorTable.insertRow();
+            const headerCell = tr.insertCell();
+            headerCell.textContent = majorClass;
+            headerCell.colSpan = 3;
+            for (let legendEntry of json[majorClass]) {
+                const tr = colorTable.insertRow();
+                if (legendEntry.certain && legendEntry.uncertain) {
+                    const tc1 = tr.insertCell();
+                    tc1.style.backgroundColor = legendEntry.certain.color;
+                    tc1.style.width = "45px";
+                    const tc2 = tr.insertCell();
+                    const color = legendEntry.uncertain.color
+                    tc2.style.background = "repeating-linear-gradient(45deg, #ffffff, #ffffff 6px, "+color+" 6px, "+color+" 12px)";
+                    tc2.style.width = "45px";
+                }
+                else if (legendEntry.certain) {
+                    const tc1 = tr.insertCell();
+                    tc1.style.backgroundColor = legendEntry.certain.color;
+                    tc1.style.width = "90px";
+                    tc1.colSpan = 2;
+                }
+                else if (legendEntry.uncertain) {
+                    const tc1 = tr.insertCell();
+                    const color = legendEntry.uncertain.color
+                    tc1.style.background = "repeating-linear-gradient(45deg, #ffffff, #ffffff 6px, "+color+" 6px, "+color+" 12px)";
+                    tc1.style.width = "90px";
+                    tc1.colSpan = 2;
+                }
+                const tc3 = tr.insertCell();
+                tc3.style.paddingLeft = "10px";
+                tc3.textContent = legendEntry.name;
+            }
+        }
+        div.appendChild(colorTable);
     }
 
     function exportSVG() {
-        const svgXML = cv.getSVG();
         const dataSetsSelect = document.getElementById("dataSets");
-        download(svgXML, "application/svg", dataSetsSelect.options[dataSetsSelect.selectedIndex].value + ".svg");
-    }
-
-    function download(content, contentType, fileName) {
-        var oldToNewTypes = {
-            "application/svg": "image/svg+xml;charset=utf-8",
-            "plain/text": "plain/text;charset=utf-8",
-        };
-        var newContentType = oldToNewTypes[contentType] || contentType;
-
-        function dataURItoBlob(binary) {
-            var array = [];
-            var te;
-
-            try {
-                te = new TextEncoder("utf-8");
-            } catch (e) {
-                te = undefined;
-            }
-
-            if (te) {
-                array = te.encode(binary); // html5 encoding api way
-            } else {
-                // https://stackoverflow.com/a/18729931/368214
-                // fixes unicode bug
-                for (var i = 0; i < binary.length; i++) {
-                    var charcode = binary.charCodeAt(i);
-                    if (charcode < 0x80) array.push(charcode);
-                    else if (charcode < 0x800) {
-                        array.push(0xc0 | (charcode >> 6),
-                            0x80 | (charcode & 0x3f));
-                    } else if (charcode < 0xd800 || charcode >= 0xe000) {
-                        array.push(0xe0 | (charcode >> 12),
-                            0x80 | ((charcode >> 6) & 0x3f),
-                            0x80 | (charcode & 0x3f));
-                    }
-                    // surrogate pair
-                    else {
-                        i++;
-                        // UTF-16 encodes 0x10000-0x10FFFF by
-                        // subtracting 0x10000 and splitting the
-                        // 20 bits of 0x0-0xFFFFF into two halves
-                        charcode = 0x10000 + (((charcode & 0x3ff) << 10) |
-                            (binary.charCodeAt(i) & 0x3ff));
-                        array.push(0xf0 | (charcode >> 18),
-                            0x80 | ((charcode >> 12) & 0x3f),
-                            0x80 | ((charcode >> 6) & 0x3f),
-                            0x80 | (charcode & 0x3f));
-                    }
-                }
-            }
-
-            return new Blob([new Uint8Array(array)], {
-                type: newContentType
-            });
-        }
-
-        var blob = dataURItoBlob(content);
-
-        if (navigator.msSaveOrOpenBlob) {
-            navigator.msSaveOrOpenBlob(blob, fileName);
-        } else {
-            var a = document.createElement("a");
-            a.href = window.URL.createObjectURL(blob);
-            // Give filename you wish to download
-            a.download = fileName;
-            a.style.display = "none";
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(a.href); // clear up url reference to blob so it can be g.c.'ed
-        }
-
-        blob = null;
+        const fileName = dataSetsSelect.options[dataSetsSelect.selectedIndex].value + ".svg"
+        cv.downloadSVG(fileName);
     }
 
     //]]>

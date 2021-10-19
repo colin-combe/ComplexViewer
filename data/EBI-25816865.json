@@ -1,0 +1,277 @@
+{
+  "data": [
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P0DTD1-PRO_0000449630",
+      "sequence": "AVGACVLCNSQTSLRCGACIRRPFLCCKCCYDHVISTSHKLVLSVNPYVCNAPGCDVTDVTQLYLGGMSYYCKSHKPPISFPLCANGQVFGLYKNTCVGSDNVTDFNAIATCDWTNAGDYILANTCTERLKLFAAETLKATEETFKLSYGIATVREVLSDRELHLSWEVGKPRPPLNRNYVFTGYRVTKNSKVQIGEYTFEKGDYGDAVVYRGTTTYKLNVGDYFVLTSHTVMPLSAPTLVPQEHYVRITGLYPTLNISDEFSSNVANYQKVGMQKYSTLQGPPGTGKSHFAIGLALYYPSARIVYTACSHAAVDALCEKALKYLPIDKCSRIIPARARVECFDKFKVNSTLEQYVFCTVNALPETTADIVVFDEISMATNYDLSVVNARLRAKHYVYIGDPAQLPAPRTLLTKGTLEPEYFNSVCRLMKTIGPDMFLGTCRRCPAEIVDTVSALVYDNKLKAHKDKSAQCFKMFYKGVITHDVSSAINRPQIGVVREFLTRNPAWRKAVFISPYNSQNAVASKILGLPTQTVDSSQGSEYDYVIFTQTTETAHSCNVNRFNVAITRAKVGILCIMSDRDLYDKLQFTSLEIPRRNVATLQ",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "2697049",
+        "common": "SARS-CoV-2",
+        "scientific": "SARS-CoV-2"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P0DTD1-PRO_0000449630"
+      },
+      "label": "p0dtd1-pro_0000449630"
+    },
+    {
+      "object": "interactor",
+      "id": "intact_EBI-25816901",
+      "sequence": "CGCGUAGCAUGCUACGUCAUUCUCCUAAGAAGCUA",
+      "type": {
+        "id": "IA:2966",
+        "name": "double stranded ribonucleic acid"
+      },
+      "organism": {
+        "taxid": "32630",
+        "common": "synthetic construct",
+        "scientific": "synthetic construct"
+      },
+      "identifier": {
+        "db": "intact",
+        "id": "EBI-25816901"
+      },
+      "label": "product-rna"
+    },
+    {
+      "object": "interactor",
+      "id": "intact_EBI-25816965",
+      "sequence": "CUAUCCCCAUGUGAUUUUAAUAGCUUCUUAGGAGAAUGACGUAGCAUGCUACGCG",
+      "type": {
+        "id": "MI:0318",
+        "name": "nucleic acid"
+      },
+      "organism": {
+        "taxid": "32630",
+        "common": "synthetic construct",
+        "scientific": "synthetic construct"
+      },
+      "identifier": {
+        "db": "intact",
+        "id": "EBI-25816965"
+      },
+      "label": "template-rna"
+    },
+    {
+      "object": "interactor",
+      "id": "complex portal_CPX-5742",
+      "type": {
+        "id": "MI:1302",
+        "name": "stable complex"
+      },
+      "organism": {
+        "taxid": "2697049",
+        "common": "SARS-CoV-2",
+        "scientific": "SARS-CoV-2"
+      },
+      "identifier": {
+        "db": "complex portal",
+        "id": "CPX-5742"
+      },
+      "label": "nsp7-nsp8-nsp12_sars2"
+    },
+    {
+      "object": "interaction",
+      "id": "intact_EBI-25816865",
+      "interactionType": {
+        "id": "MI:0915",
+        "name": "physical association"
+      },
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0410",
+          "name": "3D electron microscopy"
+        },
+        "host": {
+          "taxid": "-1",
+          "common": "in vitro",
+          "scientific": "In vitro"
+        },
+        "pubid": [
+          {
+            "db": "intact",
+            "id": "EBI-25815170"
+          },
+          {
+            "db": "pubmed",
+            "id": "32676607"
+          },
+          {
+            "db": "imex",
+            "id": "IM-28291"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0469",
+          "name": "European Bioinformatics Institute"
+        },
+        "figures": [
+          "Table S1"
+        ]
+      },
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-25816865"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6XEZ"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22160"
+        },
+        {
+          "db": "imex",
+          "id": "IM-28291-1"
+        }
+      ],
+      "participants": [
+        {
+          "id": "1",
+          "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+          "stoichiometry": "2",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:2287",
+              "name": "identification by structure determination"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "83333",
+            "common": "ecoli",
+            "scientific": "Escherichia coli (strain K12)"
+          }
+        },
+        {
+          "id": "2",
+          "interactorRef": "intact_EBI-25816901",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:2287",
+              "name": "identification by structure determination"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "32630",
+            "common": "synthetic construct",
+            "scientific": "synthetic construct"
+          },
+          "features": [
+            {
+              "id": "3",
+              "name": "whole molecule",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "intact_EBI-25816901",
+                  "participantRef": "2"
+                }
+              ],
+              "linkedFeatures": [
+                "4"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "5",
+          "interactorRef": "intact_EBI-25816965",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:2287",
+              "name": "identification by structure determination"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "32630",
+            "common": "synthetic construct",
+            "scientific": "synthetic construct"
+          },
+          "features": [
+            {
+              "id": "4",
+              "name": "whole molecule",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "intact_EBI-25816901",
+                  "participantRef": "2"
+                }
+              ],
+              "linkedFeatures": [
+                "3"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "6",
+          "interactorRef": "complex portal_CPX-5742",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:2287",
+              "name": "identification by structure determination"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "83333",
+            "common": "ecoli",
+            "scientific": "Escherichia coli (strain K12)"
+          }
+        }
+      ]
+    }
+  ]
+}

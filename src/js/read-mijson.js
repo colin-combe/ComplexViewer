@@ -1,39 +1,38 @@
 import {Annotation} from "./viz/interactor/annotation";
 import {Protein} from "./viz/interactor/protein";
-import {BioactiveEntity}  from "./viz/interactor/bioactive-entity";
+import {BioactiveEntity} from "./viz/interactor/bioactive-entity";
 import {Gene} from "./viz/interactor/gene";
 import {DNA} from "./viz/interactor/dna";
 import {RNA} from "./viz/interactor/rna";
 import {Complex} from "./viz/interactor/complex";
 import {ComplexSymbol} from "./viz/interactor/complex-symbol";
-import {MoleculeSet}  from "./viz/interactor/molecule-set";
+import {MoleculeSet} from "./viz/interactor/molecule-set";
 import {NaryLink} from "./viz/link/nary-link";
 import {FeatureLink} from "./viz/link/feature-link";
-import {SequenceDatum}  from "./viz/sequence-datum";
+import {SequenceDatum} from "./viz/sequence-datum";
 import {BinaryLink} from "./viz/link/binary-link";
-import {UnaryLink}  from "./viz/link/unary-link";
+import {UnaryLink} from "./viz/link/unary-link";
 import {matrix} from "./expand";
+import {cloneComplexInteractors} from "./clone-complex-interactors";
 
 // reads MI JSON format
-export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
+export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
     //check that we've got a parsed javascript object here, not a String
     miJson = (typeof miJson === "object") ? miJson : JSON.parse(miJson);
+
     miJson.data = miJson.data.reverse();
+
     app.features = new Map();
 
     const complexes = new Map();
-    // todo - make sequence required in miJSON rather than optional, JAMI's always adding it
-    //const needsSequence = new Set(); //things that need seq looked up
+
+    miJson = cloneComplexInteractors(miJson);
 
     //get interactors
-    app.proteinCount = 0;
     app.interactors = new Map();
     for (let datum of miJson.data) {
         if (datum.object === "interactor") {
             app.interactors.set(datum.id, datum);
-            if (datum.id.indexOf("uniprotkb_") === 0) { // todo - is this best way to test this?
-                app.proteinCount++;
-            }
         }
     }
 
@@ -137,14 +136,18 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
                 }
                 // console.log("*", mID, seqDatum);
                 const molecule = app.participants.get(mID);
-                const seqFeature = new SequenceDatum(molecule, seqDatum.pos);
-                const annotation = new Annotation(annotName, seqFeature);
-                let miFeatures = molecule.annotationSets.get("MI Features");
-                if (!miFeatures) {
-                    miFeatures = [];
-                    molecule.annotationSets.set("MI Features", miFeatures);
+                if (molecule) {
+                    const seqFeature = new SequenceDatum(molecule, seqDatum.pos);
+                    const annotation = new Annotation(annotName, seqFeature);
+                    let miFeatures = molecule.annotationSets.get("MI Features");
+                    if (!miFeatures) {
+                        miFeatures = [];
+                        molecule.annotationSets.set("MI Features", miFeatures);
+                    }
+                    miFeatures.push(annotation);
+                } else {
+                    console.log("participant " + mID + " not found!");
                 }
-                miFeatures.push(annotation);
             }
         }
     }
@@ -161,7 +164,7 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
                 }
             }
         }
-        if (maxStoich < 30) {
+        if (maxStoich < 20) {
             miJson = matrix(miJson);
         }
 
@@ -223,14 +226,13 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
                 }
             }
 
-
             if (interactionExists) {
                 participant = new Complex(participantId, app, interactorRef);
                 complexes.set(participantId, participant);
             } else {
                 participant = new ComplexSymbol(participantId, app, interactorRef, interactor);
             }
-        }else if (interactor.type.id === "MI:1304" //molecule set
+        } else if (interactor.type.id === "MI:1304" //molecule set
             ||
             interactor.type.id === "MI:1305" //molecule set - candidate set
             ||
@@ -244,9 +246,13 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
             interactor.type.id === "MI:0904" // bioactive entity - polysaccharide
             ||
             interactor.type.id === "MI:0328" //bioactive entity - small mol
+            ||
+            interactor.type.id === "MI:2258" // bioactive entity - xenobiotic
         ) {
             participant = new BioactiveEntity(participantId, app, interactor, interactor.label);
-        } else if (interactor.type.id === "MI:0326" || interactor.type.id === "MI:0327") { // proteins, peptides
+        } else if (interactor.type.id === "MI:0326"
+            ||
+            interactor.type.id === "MI:0327") { // proteins, peptides
             participant = new Protein(participantId, app, interactor, interactor.label, interactor.sequence);
         } else if (interactor.type.id === "MI:0250") { //genes
             participant = new Gene(participantId, app, interactor, interactor.label);
@@ -275,6 +281,14 @@ export function readMijson (/*miJson*/miJson, /*App*/ app, expand = true) {
             interactor.type.id === "MI:0609" // RNA - small nucleolar
             ||
             interactor.type.id === "MI:0325" // RNA - transfer
+            ||
+            interactor.type.id === "IA:2966" // RNA - double stranded ribonucleic acid (old)
+            ||
+            interactor.type.id === "MI:2359" // RNA - double stranded ribonucleic acid
+            ||
+            interactor.type.id === "MI:0318" // nucleic acid
+            ||
+            interactor.type.id === "MI:2204" // micro RNA
         ) {
             participant = new RNA(participantId, app, interactor, interactor.label);
         } else if (interactor.type.id === "MI:0319" // DNA

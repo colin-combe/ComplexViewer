@@ -1,0 +1,1558 @@
+{
+  "data": [
+    {
+      "object": "interactor",
+      "id": "uniprotkb_Q9BYF1",
+      "sequence": "MSSSSWLLLSLVAVTAAQSTIEEQAKTFLDKFNHEAEDLFYQSSLASWNYNTNITEENVQNMNNAGDKWSAFLKEQSTLAQMYPLQEIQNLTVKLQLQALQQNGSSVLSEDKSKRLNTILNTMSTIYSTGKVCNPDNPQECLLLEPGLNEIMANSLDYNERLWAWESWRSEVGKQLRPLYEEYVVLKNEMARANHYEDYGDYWRGDYEVNGVDGYDYSRGQLIEDVEHTFEEIKPLYEHLHAYVRAKLMNAYPSYISPIGCLPAHLLGDMWGRFWTNLYSLTVPFGQKPNIDVTDAMVDQAWDAQRIFKEAEKFFVSVGLPNMTQGFWENSMLTDPGNVQKAVCHPTAWDLGKGDFRILMCTKVTMDDFLTAHHEMGHIQYDMAYAAQPFLLRNGANEGFHEAVGEIMSLSAATPKHLKSIGLLSPDFQEDNETEINFLLKQALTIVGTLPFTYMLEKWRWMVFKGEIPKDQWMKKWWEMKREIVGVVEPVPHDETYCDPASLFHVSNDYSFIRYYTRTLYQFQFQEALCQAAKHEGPLHKCDISNSTEAGQKLFNMLRLGKSEPWTLALENVVGAKNMNVRPLLNYFEPLFTWLKDQNKNSFVGWSTDWSPYADQSIKVRISLKSALGDKAYEWNDNEMYLFRSSVAYAMRQYFLKVKNQMILFGEEDVRVANLKPRISFNFFVTAPKNVSDIIPRTEVEKAIRMSRSRINDAFRLNDNSLEFLGIQPTLGPPNQPPVSIWLIVFGVVMGVIVVGIVILIFTGIRDRKKKNKARSGENPYASIDISKGENNPGFQNTDDVQTSF",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "Q9BYF1"
+      },
+      "label": "ACE2"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_Q695T7",
+      "sequence": "MVRLVLPNPGLDARIPSLAELETIEQEEASSRPKWDNKAQYMLTCLGFCVGLGNVWRFPYLCQSHGGGAFMIPFLILLVLEGIPLLYLEFAIGQRLRRGSLGVWSSIHPALKGLGLASMLTSFMVGLYYNTIISWIMWYLFNSFQEPLPWSDCPLNENQTGYVDECARSSPVDYFWYRETLNISTSISDSGSIQWWMLLCLACAWSVLYMCTIRGIETTGKAVYITSTLPYVVLTIFLIRGLTLKGATNGIVFLFTPNVTELAQPDTWLDAGAQVFFSFSLAFGGLISFSSYNSVHNNCEKDSVIVSIINGFTSVYVAIVVYSVIGFRATQRYDDCFSTNILTLINGFDLPEGNVTQENFVDMQQRCNASDPAAYAQLVFQTCDINAFLSEAVEGTGLAFIVFTEAITKMPLSPLWSVLFFIMLFCLGLSSMFGNMEGVVVPLQDLRVIPPKWPKEVLTGLICLGTFLIGFIFTLNSGQYWLSLLDSYAGSIPLLIIAFCEMFSVVYVYGVDRFNKDIEFMIGHKPNIFWQVTWRVVSPLLMLIIFLFFFVVEVSQELTYSIWDPGYEEFPKSQKISYPNWVYVVVVIVAGVPSLTIPGYAIYKLIRNHCQKPGDHQGLVSTLSTASMNGDLKY",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "Q695T7"
+      },
+      "label": "SLC6A19"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P0DTC2-PRO_0000449648",
+      "sequence": "SVASQSIIAYTMSLGAENSVAYSNNSIAIPTNFTISVTTEILPVSMTKTSVDCTMYICGDSTECSNLLLQYGSFCTQLNRALTGIAVEQDKNTQEVFAQVKQIYKTPPIKDFGGFNFSQILPDPSKPSKRSFIEDLLFNKVTLADAGFIKQYGDCLGDIAARDLICAQKFNGLTVLPPLLTDEMIAQYTSALLAGTITSGWTFGAGAALQIPFAMQMAYRFNGIGVTQNVLYENQKLIANQFNSAIGKIQDSLSSTASALGKLQDVVNQNAQALNTLVKQLSSNFGAISSVLNDILSRLDKVEAEVQIDRLITGRLQSLQTYVTQQLIRAAEIRASANLAATKMSECVLGQSKRVDFCGKGYHLMSFPQSAPHGVVFLHVTYVPAQEKNFTTAPAICHDGKAHFPREGVFVSNGTHWFVTQRNFYEPQIITTDNTFVSGNCDVVIGIVNNTVYDPLQPELDSFKEELDKYFKNHTSPDVDLGDISGINASVVNIQKEIDRLNEVAKNLNESLIDLQELGKYEQYIKWPWYIWLGFIAGLIAIVMVTIMLCCMTSCCSCLKGCCSCGSCCKFDEDDSEPVLKGVKLHYT",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "2697049",
+        "common": "SARS-CoV-2",
+        "scientific": "SARS-CoV-2"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P0DTC2-PRO_0000449648"
+      },
+      "label": "P0DTC2-PRO_0000449648"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P0DTC2-PRO_0000449647",
+      "sequence": "SQCVNLTTRTQLPPAYTNSFTRGVYYPDKVFRSSVLHSTQDLFLPFFSNVTWFHAIHVSGTNGTKRFDNPVLPFNDGVYFASTEKSNIIRGWIFGTTLDSKTQSLLIVNNATNVVIKVCEFQFCNDPFLGVYYHKNNKSWMESEFRVYSSANNCTFEYVSQPFLMDLEGKQGNFKNLREFVFKNIDGYFKIYSKHTPINLVRDLPQGFSALEPLVDLPIGINITRFQTLLALHRSYLTPGDSSSGWTAGAAAYYVGYLQPRTFLLKYNENGTITDAVDCALDPLSETKCTLKSFTVEKGIYQTSNFRVQPTESIVRFPNITNLCPFGEVFNATRFASVYAWNRKRISNCVADYSVLYNSASFSTFKCYGVSPTKLNDLCFTNVYADSFVIRGDEVRQIAPGQTGKIADYNYKLPDDFTGCVIAWNSNNLDSKVGGNYNYLYRLFRKSNLKPFERDISTEIYQAGSTPCNGVEGFNCYFPLQSYGFQPTNGVGYQPYRVVVLSFELLHAPATVCGPKKSTNLVKNKCVNFNFNGLTGTGVLTESNKKFLPFQQFGRDIADTTDAVRDPQTLEILDITPCSFGGVSVITPGTNTSNQVAVLYQDVNCTEVPVAIHADQLTPTWRVYSTGSNVFQTRAGCLIGAEHVNNSYECDIPIGAGICASYQTQTNSPRRAR",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "2697049",
+        "common": "SARS-CoV-2",
+        "scientific": "SARS-CoV-2"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P0DTC2-PRO_0000449647"
+      },
+      "label": "P0DTC2-PRO_0000449647"
+    },
+    {
+      "object": "interaction",
+      "id": "complex portal_CPX-5682",
+      "interactionType": {
+        "id": "MI:0915",
+        "name": "physical association"
+      },
+      "complexType": {
+        "id": "MI:1302",
+        "name": "stable complex"
+      },
+      "evidenceType": {
+        "id": "ECO:0000353",
+        "name": "physical interaction evidence used in manual assertion"
+      },
+      "organism": {
+        "taxid": "2697049",
+        "common": "SARS-CoV-2",
+        "scientific": "SARS-CoV-2"
+      },
+      "identifiers": [
+        {
+          "db": "wwpdb",
+          "id": "6zp7"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22083"
+        },
+        {
+          "db": "wwpdb",
+          "id": "EMD-22254"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22255"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22251"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22253"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-11497"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-11173"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-11336"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-11328"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-11337"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-11333"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-11331"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-11332"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-11330"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22301"
+        },
+        {
+          "db": "complex portal",
+          "id": "CPX-5682"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6vsb"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6vxx"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6vyb"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-21375"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-21452"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-21457"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6zdg"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6zp5"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6zow"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6zwv"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6xm5"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22256"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6zp1"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6x79"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6xm3"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6xm4"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6xlu"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6xm0"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6zge"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6zgi"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6zgg"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7l7k"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-23215"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6xf6"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22161"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22162"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-21374"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6xs6"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6zoy"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6zoz"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6zox"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6zp0"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6zp2"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6xr8"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6xkl"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6wpt"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-21865"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7c01"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6x2b"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22000"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6x29"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-21997"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6x2c"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22001"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6x2a"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-21999"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6wps"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-21864"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7jjj"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22354"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7kmk"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22925"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7ks9"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7jji"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22352"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7cn9"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-30419"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7kml"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22926"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-23016"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6x6p"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6xra"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6z43"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-11068"
+        },
+        {
+          "db": "reactome",
+          "id": "R-COV-9698334"
+        },
+        {
+          "db": "reactome",
+          "id": "R-COV-9696883"
+        },
+        {
+          "db": "reactome",
+          "id": "R-COV-9696901"
+        },
+        {
+          "db": "reactome",
+          "id": "R-COV-9697195"
+        },
+        {
+          "db": "reactome",
+          "id": "R-COV-9697194"
+        },
+        {
+          "db": "reactome",
+          "id": "R-COV-9697197"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7k8w"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22733"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7a29"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-11617"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7k8z"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22736"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7k8s"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22732"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7k8y"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7a93"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-11683"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7jzl"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22532"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7kkl"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22910"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7kkk"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22907"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-30492"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7cxm"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7kec"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22838"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7kdi"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22823"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7kdg"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22821"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7ke7"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22833"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7ke4"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22160"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22831"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7ke9"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22835"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7kdh"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22822"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7kdj"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22824"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7ke6"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22832"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7ke8"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22834"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7kdk"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22825"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7kea"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22836"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7kdl"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22826"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7ad1"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-11719"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7a4n"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-11639"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7keb"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22837"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7cwn"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-30484"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22729"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7k8u"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22731"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7k8x"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22734"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7k8v"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22735"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7k90"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22737"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7k8t"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22730"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6zb5"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-11145"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6zb4"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-11144"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6zxn"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-11526"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7jzn"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22534"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7kni"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-30660"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7df3"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22950"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7cab"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-30325"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7cwu"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-30488"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7dd2"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-30642"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7dcx"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-30641"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7dd8"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-30649"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7dk7"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-30705"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7dk5"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-30703"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7dk4"
+        },
+        {
+          "db": "wwpdb",
+          "id": "EMD-30702"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7dcc"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-30635"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7a25"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-11616"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7ddn"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-30654"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7ddd"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-30651"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7jwy"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22515"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7bno"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-12231"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7l3n"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-23156"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7kxj"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-23064"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7kxk"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-23065"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7bnm"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-12229"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7l02"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-23094"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7l06"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-23095"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7l09"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-23097"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7bnn"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-12230"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7ksg"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-23018"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7lcn"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7ld1"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-23279"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-23277"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7cwl"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-30482"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7cws"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7cwm"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-30486"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-30483"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7dk3"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-30701"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7jv6"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22494"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7jv4"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22492"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7jw0"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22512"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7jvc"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22506"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7jwb"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22514"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7k43"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22659"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7k4n"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22668"
+        },
+        {
+          "db": "reactome",
+          "id": "R-COV-9698338"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6xf5"
+        },
+        {
+          "db": "intact",
+          "id": "EBI-25490330"
+        }
+      ],
+      "participants": [
+        {
+          "id": "1",
+          "interactorRef": "uniprotkb_P0DTC2-PRO_0000449648",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "2",
+              "name": "s1 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P0DTC2-PRO_0000449648",
+                  "participantRef": "1"
+                }
+              ],
+              "linkedFeatures": [
+                "3"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "4",
+          "interactorRef": "uniprotkb_P0DTC2-PRO_0000449647",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "3",
+              "name": "s2 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P0DTC2-PRO_0000449647",
+                  "participantRef": "4"
+                }
+              ],
+              "linkedFeatures": [
+                "2"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "5",
+          "interactorRef": "uniprotkb_P0DTC2-PRO_0000449648",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "6",
+              "name": "s1 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P0DTC2-PRO_0000449648",
+                  "participantRef": "5"
+                }
+              ],
+              "linkedFeatures": [
+                "7"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "8",
+          "interactorRef": "uniprotkb_P0DTC2-PRO_0000449647",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "7",
+              "name": "s2 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P0DTC2-PRO_0000449647",
+                  "participantRef": "8"
+                }
+              ],
+              "linkedFeatures": [
+                "6"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "9",
+          "interactorRef": "uniprotkb_P0DTC2-PRO_0000449648",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "10",
+              "name": "s1 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P0DTC2-PRO_0000449648",
+                  "participantRef": "9"
+                }
+              ],
+              "linkedFeatures": [
+                "11"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "12",
+          "interactorRef": "uniprotkb_P0DTC2-PRO_0000449647",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "11",
+              "name": "s2 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P0DTC2-PRO_0000449647",
+                  "participantRef": "12"
+                }
+              ],
+              "linkedFeatures": [
+                "10"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "object": "interaction",
+      "id": "complex portal_CPX-5684",
+      "interactionType": {
+        "id": "MI:0915",
+        "name": "physical association"
+      },
+      "complexType": {
+        "id": "MI:1302",
+        "name": "stable complex"
+      },
+      "evidenceType": {
+        "id": "ECO:0000353",
+        "name": "physical interaction evidence used in manual assertion"
+      },
+      "organism": {
+        "taxid": "2697049",
+        "common": "SARS-CoV-2",
+        "scientific": "SARS-CoV-2"
+      },
+      "identifiers": [
+        {
+          "db": "complex portal",
+          "id": "CPX-5684"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6m17"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-30039"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-30042"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-30043"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-30046"
+        },
+        {
+          "db": "intact",
+          "id": "EBI-25491798"
+        }
+      ],
+      "participants": [
+        {
+          "id": "13",
+          "interactorRef": "uniprotkb_Q9BYF1",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "14",
+              "name": "ace2_slc6a19_s binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_Q9BYF1",
+                  "participantRef": "13"
+                }
+              ],
+              "linkedFeatures": [
+                "15",
+                "16",
+                "17",
+                "18",
+                "19"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "20",
+          "interactorRef": "uniprotkb_Q9BYF1",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "15",
+              "name": "ace2_slc6a19_s binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_Q9BYF1",
+                  "participantRef": "20"
+                }
+              ],
+              "linkedFeatures": [
+                "14",
+                "21",
+                "22",
+                "23",
+                "24"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "25",
+          "interactorRef": "uniprotkb_Q695T7",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "19",
+              "name": "ace2 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_Q695T7",
+                  "participantRef": "25"
+                }
+              ],
+              "linkedFeatures": [
+                "14"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "26",
+          "interactorRef": "complex portal_CPX-5682",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "18",
+              "name": "ACE2 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P0DTC2-PRO_0000449647",
+                  "participantRef": "12"
+                }
+              ],
+              "linkedFeatures": [
+                "14"
+              ]
+            },
+            {
+              "id": "16",
+              "name": "ACE2 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P0DTC2-PRO_0000449647",
+                  "participantRef": "4"
+                }
+              ],
+              "linkedFeatures": [
+                "14"
+              ]
+            },
+            {
+              "id": "17",
+              "name": "ACE2 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P0DTC2-PRO_0000449647",
+                  "participantRef": "8"
+                }
+              ],
+              "linkedFeatures": [
+                "14"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "27",
+          "interactorRef": "uniprotkb_Q695T7",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "23",
+              "name": "ace2 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_Q695T7",
+                  "participantRef": "27"
+                }
+              ],
+              "linkedFeatures": [
+                "15"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "28",
+          "interactorRef": "complex portal_CPX-5682",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "24",
+              "name": "ACE2 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P0DTC2-PRO_0000449647",
+                  "participantRef": "12"
+                }
+              ],
+              "linkedFeatures": [
+                "15"
+              ]
+            },
+            {
+              "id": "21",
+              "name": "ACE2 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P0DTC2-PRO_0000449647",
+                  "participantRef": "4"
+                }
+              ],
+              "linkedFeatures": [
+                "15"
+              ]
+            },
+            {
+              "id": "22",
+              "name": "ACE2 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P0DTC2-PRO_0000449647",
+                  "participantRef": "8"
+                }
+              ],
+              "linkedFeatures": [
+                "15"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
