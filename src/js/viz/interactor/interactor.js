@@ -140,21 +140,32 @@ export class Interactor {
         return [this.ix, this.iy]; // todo - type of return is kind of inconsistent
     }
 
-    setPosition(x, y) {
-        this.px = this.ix;
-        this.py = this.iy;
+    /* leave this.x and this.y as they were set by cola (notice lack of parameters to function),
+    calculate centre of interactor's glyph (i.e. centre of symbol excluding label),
+    call setPosition with those
+*/
+    setPositionFromCola() {
+        //remember previous position
+        this.px = this.x;
+        this.py = this.y;
+
         let xOffset = (this.width / 2 - (this.getSymbolRadius()));
         if (this.expanded) {
             xOffset = xOffset - (this.size / 2 * this.stickZoom);
         }
-        this.ix = x + xOffset;
+
+        this.setPosition(this.x + xOffset, this.y);
+    }
+
+    setPosition(x, y) {
+        this.ix = x;
         this.iy = y;
         this.upperGroup.setAttribute("transform", "translate(" + this.ix + " " + this.iy + ")");
     }
 
     changePosition(x, y) {
-        this.px = this.ix;
-        this.py = this.iy;
+        // this.px = this.ix; //no need to remember previous position (?)
+        // this.py = this.iy;
         this.ix -= x;
         this.iy -= y;
         this.upperGroup.setAttribute("transform", "translate(" + this.ix + " " + this.iy + ")");

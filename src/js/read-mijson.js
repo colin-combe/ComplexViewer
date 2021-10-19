@@ -29,14 +29,10 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
     miJson = cloneComplexInteractors(miJson);
 
     //get interactors
-    app.proteinCount = 0;
     app.interactors = new Map();
     for (let datum of miJson.data) {
         if (datum.object === "interactor") {
             app.interactors.set(datum.id, datum);
-            if (datum.id.indexOf("uniprotkb_") === 0) { // todo - is this best way to test this?
-                app.proteinCount++;
-            }
         }
     }
 
