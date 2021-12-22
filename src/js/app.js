@@ -395,9 +395,9 @@ export class App {
             return links;
         }
 
-        doLayout(pruned, makeLinks(pruned), true);
+        // doLayout(pruned, makeLinks(pruned), true);
         const links = makeLinks(allNodesExceptComplexes);
-        doLayout(allNodesExceptComplexes, links, true); //todo - some work is repeated (links array), refactor so more efficient
+        // doLayout(allNodesExceptComplexes, links, true); //todo - some work is repeated (links array), refactor so more efficient
         doLayout(allNodesExceptComplexes, links, false);
 
         // function doLayout(nodes, links, preRun) {

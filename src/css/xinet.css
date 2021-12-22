@@ -34,9 +34,9 @@ svg {
 }
 
 .complex-outline {
-    stroke: white;
+    stroke: black;
     stroke-linejoin: round;
-    stroke-width: 7;
+    stroke-width: 1;
 }
 
 .linked-complex {

@@ -1,0 +1,2839 @@
+{
+  "data": [
+    {
+      "object": "interactor",
+      "id": "chebi_CHEBI:17677",
+      "type": {
+        "id": "MI:0328",
+        "name": "small molecule"
+      },
+      "organism": {
+        "taxid": "-2",
+        "common": "chemical synthesis",
+        "scientific": "Chemical synthesis (Chemical synthesis)"
+      },
+      "identifier": {
+        "db": "chebi",
+        "id": "CHEBI:17677"
+      },
+      "label": "ctp"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P0DTD1-PRO_0000449630",
+      "sequence": "AVGACVLCNSQTSLRCGACIRRPFLCCKCCYDHVISTSHKLVLSVNPYVCNAPGCDVTDVTQLYLGGMSYYCKSHKPPISFPLCANGQVFGLYKNTCVGSDNVTDFNAIATCDWTNAGDYILANTCTERLKLFAAETLKATEETFKLSYGIATVREVLSDRELHLSWEVGKPRPPLNRNYVFTGYRVTKNSKVQIGEYTFEKGDYGDAVVYRGTTTYKLNVGDYFVLTSHTVMPLSAPTLVPQEHYVRITGLYPTLNISDEFSSNVANYQKVGMQKYSTLQGPPGTGKSHFAIGLALYYPSARIVYTACSHAAVDALCEKALKYLPIDKCSRIIPARARVECFDKFKVNSTLEQYVFCTVNALPETTADIVVFDEISMATNYDLSVVNARLRAKHYVYIGDPAQLPAPRTLLTKGTLEPEYFNSVCRLMKTIGPDMFLGTCRRCPAEIVDTVSALVYDNKLKAHKDKSAQCFKMFYKGVITHDVSSAINRPQIGVVREFLTRNPAWRKAVFISPYNSQNAVASKILGLPTQTVDSSQGSEYDYVIFTQTTETAHSCNVNRFNVAITRAKVGILCIMSDRDLYDKLQFTSLEIPRRNVATLQ",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "2697049",
+        "common": "SARS-CoV-2",
+        "scientific": "SARS-CoV-2"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P0DTD1-PRO_0000449630"
+      },
+      "label": "P0DTD1-PRO_0000449630"
+    },
+    {
+      "object": "interaction",
+      "id": "intact_EBI-26430394",
+      "interactionType": {
+        "id": "MI:0881",
+        "name": "nucleoside triphosphatase reaction"
+      },
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0879",
+          "name": "nucleoside triphosphatase assay"
+        },
+        "host": {
+          "taxid": "-1",
+          "common": "in vitro",
+          "scientific": "In vitro"
+        },
+        "pubid": [
+          {
+            "db": "pubmed",
+            "id": "32500504"
+          },
+          {
+            "db": "intact",
+            "id": "EBI-26368558"
+          },
+          {
+            "db": "imex",
+            "id": "IM-28459"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0469",
+          "name": "European Bioinformatics Institute"
+        },
+        "experimentModifications": [
+          "Phosphate release was measured  using a colorimetric method based on phosphate complexation with malachite green and molybdate."
+        ],
+        "figures": [
+          "1A"
+        ]
+      },
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-26430394"
+        },
+        {
+          "db": "imex",
+          "id": "IM-28459-21"
+        }
+      ],
+      "participants": [
+        {
+          "id": "1",
+          "interactorRef": "chebi_CHEBI:17677",
+          "bioRole": {
+            "id": "MI:0502",
+            "name": "enzyme target"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0396",
+              "name": "predetermined participant"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "-2",
+            "common": "chemical synthesis",
+            "scientific": "Chemical synthesis (Chemical synthesis)"
+          }
+        },
+        {
+          "id": "2",
+          "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0396",
+              "name": "predetermined participant"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "83333",
+            "common": "ecoli",
+            "scientific": "Escherichia coli (strain K12)"
+          },
+          "features": [
+            {
+              "id": "3",
+              "name": "n-terminus",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0578",
+                "name": "maltose binding protein tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "n-n",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "2"
+                }
+              ]
+            },
+            {
+              "id": "4",
+              "name": "region",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-586",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "2"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "object": "interactor",
+      "id": "chebi_CHEBI:15713",
+      "type": {
+        "id": "MI:0328",
+        "name": "small molecule"
+      },
+      "organism": {
+        "taxid": "-2",
+        "common": "chemical synthesis",
+        "scientific": "Chemical synthesis (Chemical synthesis)"
+      },
+      "identifier": {
+        "db": "chebi",
+        "id": "CHEBI:15713"
+      },
+      "label": "utp"
+    },
+    {
+      "object": "interaction",
+      "id": "intact_EBI-26430401",
+      "interactionType": {
+        "id": "MI:0881",
+        "name": "nucleoside triphosphatase reaction"
+      },
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0879",
+          "name": "nucleoside triphosphatase assay"
+        },
+        "host": {
+          "taxid": "-1",
+          "common": "in vitro",
+          "scientific": "In vitro"
+        },
+        "pubid": [
+          {
+            "db": "pubmed",
+            "id": "32500504"
+          },
+          {
+            "db": "intact",
+            "id": "EBI-26368558"
+          },
+          {
+            "db": "imex",
+            "id": "IM-28459"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0469",
+          "name": "European Bioinformatics Institute"
+        },
+        "experimentModifications": [
+          "Phosphate release was measured  using a colorimetric method based on phosphate complexation with malachite green and molybdate."
+        ],
+        "figures": [
+          "1A"
+        ]
+      },
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-26430401"
+        },
+        {
+          "db": "imex",
+          "id": "IM-28459-1"
+        }
+      ],
+      "participants": [
+        {
+          "id": "5",
+          "interactorRef": "chebi_CHEBI:15713",
+          "bioRole": {
+            "id": "MI:0502",
+            "name": "enzyme target"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0396",
+              "name": "predetermined participant"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "-2",
+            "common": "chemical synthesis",
+            "scientific": "Chemical synthesis (Chemical synthesis)"
+          }
+        },
+        {
+          "id": "6",
+          "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0396",
+              "name": "predetermined participant"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "83333",
+            "common": "ecoli",
+            "scientific": "Escherichia coli (strain K12)"
+          },
+          "features": [
+            {
+              "id": "7",
+              "name": "n-terminus",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0578",
+                "name": "maltose binding protein tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "n-n",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "6"
+                }
+              ]
+            },
+            {
+              "id": "8",
+              "name": "region",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-586",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "6"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "object": "interactor",
+      "id": "chebi_CHEBI:15422",
+      "type": {
+        "id": "MI:0328",
+        "name": "small molecule"
+      },
+      "organism": {
+        "taxid": "-2",
+        "common": "chemical synthesis",
+        "scientific": "Chemical synthesis (Chemical synthesis)"
+      },
+      "identifier": {
+        "db": "chebi",
+        "id": "CHEBI:15422"
+      },
+      "label": "atp"
+    },
+    {
+      "object": "interaction",
+      "id": "intact_EBI-26430442",
+      "interactionType": {
+        "id": "MI:0882",
+        "name": "atpase reaction"
+      },
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0880",
+          "name": "atpase assay"
+        },
+        "host": {
+          "taxid": "-1",
+          "common": "in vitro",
+          "scientific": "In vitro"
+        },
+        "pubid": [
+          {
+            "db": "pubmed",
+            "id": "32500504"
+          },
+          {
+            "db": "intact",
+            "id": "EBI-26368558"
+          },
+          {
+            "db": "imex",
+            "id": "IM-28459"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0469",
+          "name": "European Bioinformatics Institute"
+        },
+        "experimentModifications": [
+          "Phosphate release was measured  using a colorimetric method based on phosphate complexation with malachite green and molybdate."
+        ],
+        "figures": [
+          "1 A-D, 5A"
+        ]
+      },
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-26430442"
+        },
+        {
+          "db": "imex",
+          "id": "IM-28459-3"
+        }
+      ],
+      "participants": [
+        {
+          "id": "9",
+          "interactorRef": "chebi_CHEBI:15422",
+          "bioRole": {
+            "id": "MI:0502",
+            "name": "enzyme target"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0396",
+              "name": "predetermined participant"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "-2",
+            "common": "chemical synthesis",
+            "scientific": "Chemical synthesis (Chemical synthesis)"
+          }
+        },
+        {
+          "id": "10",
+          "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0396",
+              "name": "predetermined participant"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "83333",
+            "common": "ecoli",
+            "scientific": "Escherichia coli (strain K12)"
+          },
+          "features": [
+            {
+              "id": "11",
+              "name": "n-terminus",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0578",
+                "name": "maltose binding protein tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "n-n",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "12",
+              "name": "region",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-586",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "10"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "object": "interactor",
+      "id": "chebi_CHEBI:15996",
+      "type": {
+        "id": "MI:0328",
+        "name": "small molecule"
+      },
+      "organism": {
+        "taxid": "-2",
+        "common": "chemical synthesis",
+        "scientific": "Chemical synthesis (Chemical synthesis)"
+      },
+      "identifier": {
+        "db": "chebi",
+        "id": "CHEBI:15996"
+      },
+      "label": "gtp"
+    },
+    {
+      "object": "interaction",
+      "id": "intact_EBI-26430449",
+      "interactionType": {
+        "id": "MI:0883",
+        "name": "gtpase reaction"
+      },
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0419",
+          "name": "gtpase assay"
+        },
+        "host": {
+          "taxid": "-1",
+          "common": "in vitro",
+          "scientific": "In vitro"
+        },
+        "pubid": [
+          {
+            "db": "pubmed",
+            "id": "32500504"
+          },
+          {
+            "db": "intact",
+            "id": "EBI-26368558"
+          },
+          {
+            "db": "imex",
+            "id": "IM-28459"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0469",
+          "name": "European Bioinformatics Institute"
+        },
+        "experimentModifications": [
+          "Phosphate release was measured  using a colorimetric method based on phosphate complexation with malachite green and molybdate."
+        ],
+        "figures": [
+          "1A"
+        ]
+      },
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-26430449"
+        },
+        {
+          "db": "imex",
+          "id": "IM-28459-5"
+        }
+      ],
+      "participants": [
+        {
+          "id": "13",
+          "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0396",
+              "name": "predetermined participant"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "83333",
+            "common": "ecoli",
+            "scientific": "Escherichia coli (strain K12)"
+          },
+          "features": [
+            {
+              "id": "14",
+              "name": "n-terminus",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0578",
+                "name": "maltose binding protein tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "n-n",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "13"
+                }
+              ]
+            },
+            {
+              "id": "15",
+              "name": "region",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-586",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "13"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "16",
+          "interactorRef": "chebi_CHEBI:15996",
+          "bioRole": {
+            "id": "MI:0502",
+            "name": "enzyme target"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0396",
+              "name": "predetermined participant"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "-2",
+            "common": "chemical synthesis",
+            "scientific": "Chemical synthesis (Chemical synthesis)"
+          }
+        }
+      ]
+    },
+    {
+      "object": "interactor",
+      "id": "intact_EBI-26434661",
+      "sequence": "CAUUAUCGGAUAGUGGAACCUAGCUUCGACUAUCGGAUAAUC",
+      "type": {
+        "id": "MI:0320",
+        "name": "ribonucleic acid"
+      },
+      "organism": {
+        "taxid": "32630",
+        "common": "synthetic construct",
+        "scientific": "synthetic construct"
+      },
+      "identifier": {
+        "db": "intact",
+        "id": "EBI-26434661"
+      },
+      "label": "rna_1_long"
+    },
+    {
+      "object": "interactor",
+      "id": "intact_EBI-26434666",
+      "sequence": "AUAGUCGAAGCUAGGUUCCACUAU",
+      "type": {
+        "id": "MI:0320",
+        "name": "ribonucleic acid"
+      },
+      "organism": {
+        "taxid": "-1",
+        "common": "in vitro",
+        "scientific": "In vitro"
+      },
+      "identifier": {
+        "db": "intact",
+        "id": "EBI-26434666"
+      },
+      "label": "rna_2_short"
+    },
+    {
+      "object": "interaction",
+      "id": "intact_EBI-26434652",
+      "interactionType": {
+        "id": "MI:0414",
+        "name": "enzymatic reaction"
+      },
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0415",
+          "name": "enzymatic study"
+        },
+        "host": {
+          "taxid": "-1",
+          "common": "in vitro",
+          "scientific": "In vitro"
+        },
+        "pubid": [
+          {
+            "db": "pubmed",
+            "id": "32500504"
+          },
+          {
+            "db": "intact",
+            "id": "EBI-26368558"
+          },
+          {
+            "db": "imex",
+            "id": "IM-28459"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0469",
+          "name": "European Bioinformatics Institute"
+        },
+        "experimentModifications": [
+          "Helicase Assay:(Duplex) Nucleic acid unwinding assay.\r\nStrand separation was monitored by SDS-PAGE; the HEX (Fluorescein) labeled RNA strand is released from dsRNA in the presence of Nsp13."
+        ],
+        "figures": [
+          "2B-D, (5B), 6"
+        ]
+      },
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-26434652"
+        },
+        {
+          "db": "imex",
+          "id": "IM-28459-7"
+        }
+      ],
+      "participants": [
+        {
+          "id": "17",
+          "interactorRef": "intact_EBI-26434661",
+          "bioRole": {
+            "id": "MI:0502",
+            "name": "enzyme target"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "32630",
+            "common": "synthetic construct",
+            "scientific": "synthetic construct"
+          },
+          "features": [
+            {
+              "id": "18",
+              "name": "5-prime",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0939",
+                "name": "fluorescein label"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-1",
+                  "interactorRef": "intact_EBI-26434661",
+                  "participantRef": "17"
+                }
+              ]
+            },
+            {
+              "id": "19",
+              "name": "whole molecule",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-42",
+                  "interactorRef": "intact_EBI-26434661",
+                  "participantRef": "17"
+                }
+              ],
+              "linkedFeatures": [
+                "20"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "21",
+          "interactorRef": "intact_EBI-26434666",
+          "bioRole": {
+            "id": "MI:0502",
+            "name": "enzyme target"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "-1",
+            "common": "in vitro",
+            "scientific": "In vitro"
+          },
+          "features": [
+            {
+              "id": "20",
+              "name": "whole molecule",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-24",
+                  "interactorRef": "intact_EBI-26434666",
+                  "participantRef": "21"
+                }
+              ],
+              "linkedFeatures": [
+                "19"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "22",
+          "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "83333",
+            "common": "ecoli",
+            "scientific": "Escherichia coli (strain K12)"
+          },
+          "features": [
+            {
+              "id": "23",
+              "name": "n-terminus",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0578",
+                "name": "maltose binding protein tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "n-n",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "22"
+                }
+              ]
+            },
+            {
+              "id": "24",
+              "name": "region",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-586",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "22"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "object": "interactor",
+      "id": "intact_EBI-26434737",
+      "sequence": "CGAUAGUCGAAGCUAGGUUCCACUAUCC",
+      "type": {
+        "id": "MI:0320",
+        "name": "ribonucleic acid"
+      },
+      "organism": {
+        "taxid": "-1",
+        "common": "in vitro",
+        "scientific": "In vitro"
+      },
+      "identifier": {
+        "db": "intact",
+        "id": "EBI-26434737"
+      },
+      "label": "rna_3_short"
+    },
+    {
+      "object": "interaction",
+      "id": "intact_EBI-26434694",
+      "interactionType": {
+        "id": "MI:0414",
+        "name": "enzymatic reaction"
+      },
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0415",
+          "name": "enzymatic study"
+        },
+        "host": {
+          "taxid": "-1",
+          "common": "in vitro",
+          "scientific": "In vitro"
+        },
+        "pubid": [
+          {
+            "db": "pubmed",
+            "id": "32500504"
+          },
+          {
+            "db": "intact",
+            "id": "EBI-26368558"
+          },
+          {
+            "db": "imex",
+            "id": "IM-28459"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0469",
+          "name": "European Bioinformatics Institute"
+        },
+        "experimentModifications": [
+          "Helicase Assay:(Duplex) Nucleic acid unwinding assay.\r\nStrand separation was monitored by SDS-PAGE; the HEX (Fluorescein) labeled RNA strand is released from dsRNA in the presence of Nsp13."
+        ],
+        "figures": [
+          "3"
+        ]
+      },
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-26434694"
+        },
+        {
+          "db": "imex",
+          "id": "IM-28459-9"
+        }
+      ],
+      "participants": [
+        {
+          "id": "25",
+          "interactorRef": "intact_EBI-26434661",
+          "bioRole": {
+            "id": "MI:0502",
+            "name": "enzyme target"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "32630",
+            "common": "synthetic construct",
+            "scientific": "synthetic construct"
+          },
+          "features": [
+            {
+              "id": "26",
+              "name": "5-prime",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0939",
+                "name": "fluorescein label"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-1",
+                  "interactorRef": "intact_EBI-26434661",
+                  "participantRef": "25"
+                }
+              ]
+            },
+            {
+              "id": "27",
+              "name": "whole molecule",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-42",
+                  "interactorRef": "intact_EBI-26434661",
+                  "participantRef": "25"
+                }
+              ],
+              "linkedFeatures": [
+                "28"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "29",
+          "interactorRef": "intact_EBI-26434737",
+          "bioRole": {
+            "id": "MI:0502",
+            "name": "enzyme target"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "-1",
+            "common": "in vitro",
+            "scientific": "In vitro"
+          },
+          "features": [
+            {
+              "id": "28",
+              "name": "whole molecule",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-28",
+                  "interactorRef": "intact_EBI-26434737",
+                  "participantRef": "29"
+                }
+              ],
+              "linkedFeatures": [
+                "27"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "30",
+          "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "83333",
+            "common": "ecoli",
+            "scientific": "Escherichia coli (strain K12)"
+          },
+          "features": [
+            {
+              "id": "31",
+              "name": "n-terminus",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0578",
+                "name": "maltose binding protein tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "n-n",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "30"
+                }
+              ]
+            },
+            {
+              "id": "32",
+              "name": "region",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-586",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "30"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "object": "interactor",
+      "id": "intact_EBI-26434791",
+      "sequence": "GAUUAUCCGAUAGUCGAAGCUAGG",
+      "type": {
+        "id": "MI:0320",
+        "name": "ribonucleic acid"
+      },
+      "organism": {
+        "taxid": "-1",
+        "common": "in vitro",
+        "scientific": "In vitro"
+      },
+      "identifier": {
+        "db": "intact",
+        "id": "EBI-26434791"
+      },
+      "label": "rna_4_short"
+    },
+    {
+      "object": "interaction",
+      "id": "intact_EBI-26434768",
+      "interactionType": {
+        "id": "MI:0414",
+        "name": "enzymatic reaction"
+      },
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0415",
+          "name": "enzymatic study"
+        },
+        "host": {
+          "taxid": "-1",
+          "common": "in vitro",
+          "scientific": "In vitro"
+        },
+        "pubid": [
+          {
+            "db": "pubmed",
+            "id": "32500504"
+          },
+          {
+            "db": "intact",
+            "id": "EBI-26368558"
+          },
+          {
+            "db": "imex",
+            "id": "IM-28459"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0469",
+          "name": "European Bioinformatics Institute"
+        },
+        "experimentModifications": [
+          "Helicase Assay:(Duplex) Nucleic acid unwinding assay.\r\nStrand separation was monitored by SDS-PAGE; the HEX (Fluorescein) labeled RNA strand is released from dsRNA in the presence of Nsp13."
+        ],
+        "figures": [
+          "4, no 1"
+        ]
+      },
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-26434768"
+        },
+        {
+          "db": "imex",
+          "id": "IM-28459-11"
+        }
+      ],
+      "participants": [
+        {
+          "id": "33",
+          "interactorRef": "intact_EBI-26434661",
+          "bioRole": {
+            "id": "MI:0502",
+            "name": "enzyme target"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "32630",
+            "common": "synthetic construct",
+            "scientific": "synthetic construct"
+          },
+          "features": [
+            {
+              "id": "34",
+              "name": "5-prime",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0939",
+                "name": "fluorescein label"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-1",
+                  "interactorRef": "intact_EBI-26434661",
+                  "participantRef": "33"
+                }
+              ]
+            },
+            {
+              "id": "35",
+              "name": "whole molecule",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-42",
+                  "interactorRef": "intact_EBI-26434661",
+                  "participantRef": "33"
+                }
+              ],
+              "linkedFeatures": [
+                "36"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "37",
+          "interactorRef": "intact_EBI-26434791",
+          "bioRole": {
+            "id": "MI:0502",
+            "name": "enzyme target"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "-1",
+            "common": "in vitro",
+            "scientific": "In vitro"
+          },
+          "features": [
+            {
+              "id": "36",
+              "name": "whole molecule",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-24",
+                  "interactorRef": "intact_EBI-26434791",
+                  "participantRef": "37"
+                }
+              ],
+              "linkedFeatures": [
+                "35"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "38",
+          "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "83333",
+            "common": "ecoli",
+            "scientific": "Escherichia coli (strain K12)"
+          },
+          "features": [
+            {
+              "id": "39",
+              "name": "n-terminus",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0578",
+                "name": "maltose binding protein tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "n-n",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "38"
+                }
+              ]
+            },
+            {
+              "id": "40",
+              "name": "region",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-586",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "38"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "object": "interactor",
+      "id": "intact_EBI-26434815",
+      "sequence": "GCUAGGUUCCACUAUCCGAUAAUG",
+      "type": {
+        "id": "MI:0320",
+        "name": "ribonucleic acid"
+      },
+      "organism": {
+        "taxid": "-1",
+        "common": "in vitro",
+        "scientific": "In vitro"
+      },
+      "identifier": {
+        "db": "intact",
+        "id": "EBI-26434815"
+      },
+      "label": "rna_5_short"
+    },
+    {
+      "object": "interaction",
+      "id": "intact_EBI-26434798",
+      "interactionType": {
+        "id": "MI:0414",
+        "name": "enzymatic reaction"
+      },
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0415",
+          "name": "enzymatic study"
+        },
+        "host": {
+          "taxid": "-1",
+          "common": "in vitro",
+          "scientific": "In vitro"
+        },
+        "pubid": [
+          {
+            "db": "pubmed",
+            "id": "32500504"
+          },
+          {
+            "db": "intact",
+            "id": "EBI-26368558"
+          },
+          {
+            "db": "imex",
+            "id": "IM-28459"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0469",
+          "name": "European Bioinformatics Institute"
+        },
+        "experimentModifications": [
+          "Helicase Assay:(Duplex) Nucleic acid unwinding assay.\r\nStrand separation was monitored by SDS-PAGE; the HEX (Fluorescein) labeled RNA strand is released from dsRNA in the presence of Nsp13."
+        ],
+        "figures": [
+          "4, no 2"
+        ]
+      },
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-26434798"
+        },
+        {
+          "db": "imex",
+          "id": "IM-28459-23"
+        }
+      ],
+      "participants": [
+        {
+          "id": "41",
+          "interactorRef": "intact_EBI-26434661",
+          "bioRole": {
+            "id": "MI:0502",
+            "name": "enzyme target"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "32630",
+            "common": "synthetic construct",
+            "scientific": "synthetic construct"
+          },
+          "features": [
+            {
+              "id": "42",
+              "name": "5-prime",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0939",
+                "name": "fluorescein label"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-1",
+                  "interactorRef": "intact_EBI-26434661",
+                  "participantRef": "41"
+                }
+              ]
+            },
+            {
+              "id": "43",
+              "name": "whole molecule",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-42",
+                  "interactorRef": "intact_EBI-26434661",
+                  "participantRef": "41"
+                }
+              ],
+              "linkedFeatures": [
+                "44"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "45",
+          "interactorRef": "intact_EBI-26434815",
+          "bioRole": {
+            "id": "MI:0502",
+            "name": "enzyme target"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "-1",
+            "common": "in vitro",
+            "scientific": "In vitro"
+          },
+          "features": [
+            {
+              "id": "44",
+              "name": "whole molecule",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-24",
+                  "interactorRef": "intact_EBI-26434815",
+                  "participantRef": "45"
+                }
+              ],
+              "linkedFeatures": [
+                "43"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "46",
+          "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "83333",
+            "common": "ecoli",
+            "scientific": "Escherichia coli (strain K12)"
+          },
+          "features": [
+            {
+              "id": "47",
+              "name": "n-terminus",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0578",
+                "name": "maltose binding protein tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "n-n",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "46"
+                }
+              ]
+            },
+            {
+              "id": "48",
+              "name": "region",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-586",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "46"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "object": "interactor",
+      "id": "chebi_CHEBI:77596",
+      "type": {
+        "id": "MI:0328",
+        "name": "small molecule"
+      },
+      "organism": {
+        "taxid": "-2",
+        "common": "chemical synthesis",
+        "scientific": "Chemical synthesis (Chemical synthesis)"
+      },
+      "identifier": {
+        "db": "chebi",
+        "id": "CHEBI:77596"
+      },
+      "label": "ranitidine bismuth citrate"
+    },
+    {
+      "object": "interaction",
+      "id": "intact_EBI-26434849",
+      "interactionType": {
+        "id": "MI:0882",
+        "name": "atpase reaction"
+      },
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0880",
+          "name": "atpase assay"
+        },
+        "host": {
+          "taxid": "-1",
+          "common": "in vitro",
+          "scientific": "In vitro"
+        },
+        "pubid": [
+          {
+            "db": "pubmed",
+            "id": "32500504"
+          },
+          {
+            "db": "intact",
+            "id": "EBI-26368558"
+          },
+          {
+            "db": "imex",
+            "id": "IM-28459"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0469",
+          "name": "European Bioinformatics Institute"
+        },
+        "experimentModifications": [
+          "Phosphate release was measured  using a colorimetric method based on phosphate complexation with malachite green and molybdate."
+        ],
+        "figures": [
+          "5A, 6D"
+        ]
+      },
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-26434849"
+        },
+        {
+          "db": "imex",
+          "id": "IM-28459-13"
+        }
+      ],
+      "participants": [
+        {
+          "id": "49",
+          "interactorRef": "chebi_CHEBI:77596",
+          "bioRole": {
+            "id": "MI:0586",
+            "name": "inhibitor"
+          },
+          "expRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0396",
+              "name": "predetermined participant"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "-2",
+            "common": "chemical synthesis",
+            "scientific": "Chemical synthesis (Chemical synthesis)"
+          }
+        },
+        {
+          "id": "50",
+          "interactorRef": "chebi_CHEBI:15422",
+          "bioRole": {
+            "id": "MI:0502",
+            "name": "enzyme target"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0396",
+              "name": "predetermined participant"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "-2",
+            "common": "chemical synthesis",
+            "scientific": "Chemical synthesis (Chemical synthesis)"
+          }
+        },
+        {
+          "id": "51",
+          "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0396",
+              "name": "predetermined participant"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "83333",
+            "common": "ecoli",
+            "scientific": "Escherichia coli (strain K12)"
+          },
+          "features": [
+            {
+              "id": "52",
+              "name": "n-terminus",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0578",
+                "name": "maltose binding protein tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "n-n",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "51"
+                }
+              ]
+            },
+            {
+              "id": "53",
+              "name": "region",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-586",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "51"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "object": "interactor",
+      "id": "chebi_CHEBI:157699",
+      "type": {
+        "id": "MI:0328",
+        "name": "small molecule"
+      },
+      "organism": {
+        "taxid": "-2",
+        "common": "chemical synthesis",
+        "scientific": "Chemical synthesis (Chemical synthesis)"
+      },
+      "identifier": {
+        "db": "chebi",
+        "id": "CHEBI:157699"
+      },
+      "label": "bpc"
+    },
+    {
+      "object": "interaction",
+      "id": "intact_EBI-26434864",
+      "interactionType": {
+        "id": "MI:0882",
+        "name": "atpase reaction"
+      },
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0880",
+          "name": "atpase assay"
+        },
+        "host": {
+          "taxid": "-1",
+          "common": "in vitro",
+          "scientific": "In vitro"
+        },
+        "pubid": [
+          {
+            "db": "pubmed",
+            "id": "32500504"
+          },
+          {
+            "db": "intact",
+            "id": "EBI-26368558"
+          },
+          {
+            "db": "imex",
+            "id": "IM-28459"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0469",
+          "name": "European Bioinformatics Institute"
+        },
+        "experimentModifications": [
+          "Phosphate release was measured  using a colorimetric method based on phosphate complexation with malachite green and molybdate."
+        ],
+        "figures": [
+          "5A, 6A"
+        ]
+      },
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-26434864"
+        },
+        {
+          "db": "imex",
+          "id": "IM-28459-25"
+        }
+      ],
+      "participants": [
+        {
+          "id": "54",
+          "interactorRef": "chebi_CHEBI:157699",
+          "bioRole": {
+            "id": "MI:0586",
+            "name": "inhibitor"
+          },
+          "expRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0396",
+              "name": "predetermined participant"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "-2",
+            "common": "chemical synthesis",
+            "scientific": "Chemical synthesis (Chemical synthesis)"
+          }
+        },
+        {
+          "id": "55",
+          "interactorRef": "chebi_CHEBI:15422",
+          "bioRole": {
+            "id": "MI:0502",
+            "name": "enzyme target"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0396",
+              "name": "predetermined participant"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "-2",
+            "common": "chemical synthesis",
+            "scientific": "Chemical synthesis (Chemical synthesis)"
+          }
+        },
+        {
+          "id": "56",
+          "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0396",
+              "name": "predetermined participant"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "83333",
+            "common": "ecoli",
+            "scientific": "Escherichia coli (strain K12)"
+          },
+          "features": [
+            {
+              "id": "57",
+              "name": "n-terminus",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0578",
+                "name": "maltose binding protein tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "n-n",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "56"
+                }
+              ]
+            },
+            {
+              "id": "58",
+              "name": "region",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-586",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "56"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "object": "interactor",
+      "id": "chebi_CHEBI:157700",
+      "type": {
+        "id": "MI:0328",
+        "name": "small molecule"
+      },
+      "organism": {
+        "taxid": "-2",
+        "common": "chemical synthesis",
+        "scientific": "Chemical synthesis (Chemical synthesis)"
+      },
+      "identifier": {
+        "db": "chebi",
+        "id": "CHEBI:157700"
+      },
+      "label": "bc"
+    },
+    {
+      "object": "interaction",
+      "id": "intact_EBI-26434876",
+      "interactionType": {
+        "id": "MI:0882",
+        "name": "atpase reaction"
+      },
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0880",
+          "name": "atpase assay"
+        },
+        "host": {
+          "taxid": "-1",
+          "common": "in vitro",
+          "scientific": "In vitro"
+        },
+        "pubid": [
+          {
+            "db": "pubmed",
+            "id": "32500504"
+          },
+          {
+            "db": "intact",
+            "id": "EBI-26368558"
+          },
+          {
+            "db": "imex",
+            "id": "IM-28459"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0469",
+          "name": "European Bioinformatics Institute"
+        },
+        "experimentModifications": [
+          "Phosphate release was measured  using a colorimetric method based on phosphate complexation with malachite green and molybdate."
+        ],
+        "figures": [
+          "5A"
+        ]
+      },
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-26434876"
+        },
+        {
+          "db": "imex",
+          "id": "IM-28459-15"
+        }
+      ],
+      "participants": [
+        {
+          "id": "59",
+          "interactorRef": "chebi_CHEBI:157700",
+          "bioRole": {
+            "id": "MI:0586",
+            "name": "inhibitor"
+          },
+          "expRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0396",
+              "name": "predetermined participant"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "-2",
+            "common": "chemical synthesis",
+            "scientific": "Chemical synthesis (Chemical synthesis)"
+          }
+        },
+        {
+          "id": "60",
+          "interactorRef": "chebi_CHEBI:15422",
+          "bioRole": {
+            "id": "MI:0502",
+            "name": "enzyme target"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0396",
+              "name": "predetermined participant"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "-2",
+            "common": "chemical synthesis",
+            "scientific": "Chemical synthesis (Chemical synthesis)"
+          }
+        },
+        {
+          "id": "61",
+          "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0396",
+              "name": "predetermined participant"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "83333",
+            "common": "ecoli",
+            "scientific": "Escherichia coli (strain K12)"
+          },
+          "features": [
+            {
+              "id": "62",
+              "name": "n-terminus",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0578",
+                "name": "maltose binding protein tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "n-n",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "61"
+                }
+              ]
+            },
+            {
+              "id": "63",
+              "name": "region",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-586",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "61"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "object": "interaction",
+      "id": "intact_EBI-26434905",
+      "interactionType": {
+        "id": "MI:0414",
+        "name": "enzymatic reaction"
+      },
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0415",
+          "name": "enzymatic study"
+        },
+        "host": {
+          "taxid": "-1",
+          "common": "in vitro",
+          "scientific": "In vitro"
+        },
+        "pubid": [
+          {
+            "db": "pubmed",
+            "id": "32500504"
+          },
+          {
+            "db": "intact",
+            "id": "EBI-26368558"
+          },
+          {
+            "db": "imex",
+            "id": "IM-28459"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0469",
+          "name": "European Bioinformatics Institute"
+        },
+        "experimentModifications": [
+          "Helicase Assay:(Duplex) Nucleic acid unwinding assay.\r\nStrand separation was monitored by SDS-PAGE; the HEX (Fluorescein) labeled RNA strand is released from dsRNA in the presence of Nsp13."
+        ],
+        "figures": [
+          "5B, 6 A-C."
+        ]
+      },
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-26434905"
+        },
+        {
+          "db": "imex",
+          "id": "IM-28459-17"
+        }
+      ],
+      "participants": [
+        {
+          "id": "64",
+          "interactorRef": "chebi_CHEBI:157699",
+          "bioRole": {
+            "id": "MI:0586",
+            "name": "inhibitor"
+          },
+          "expRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "-2",
+            "common": "chemical synthesis",
+            "scientific": "Chemical synthesis (Chemical synthesis)"
+          }
+        },
+        {
+          "id": "65",
+          "interactorRef": "intact_EBI-26434661",
+          "bioRole": {
+            "id": "MI:0502",
+            "name": "enzyme target"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "32630",
+            "common": "synthetic construct",
+            "scientific": "synthetic construct"
+          },
+          "features": [
+            {
+              "id": "66",
+              "name": "5-prime",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0939",
+                "name": "fluorescein label"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-1",
+                  "interactorRef": "intact_EBI-26434661",
+                  "participantRef": "65"
+                }
+              ]
+            },
+            {
+              "id": "67",
+              "name": "whole molecule",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-42",
+                  "interactorRef": "intact_EBI-26434661",
+                  "participantRef": "65"
+                }
+              ],
+              "linkedFeatures": [
+                "68"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "69",
+          "interactorRef": "intact_EBI-26434666",
+          "bioRole": {
+            "id": "MI:0502",
+            "name": "enzyme target"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "-1",
+            "common": "in vitro",
+            "scientific": "In vitro"
+          },
+          "features": [
+            {
+              "id": "68",
+              "name": "whole molecule",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-24",
+                  "interactorRef": "intact_EBI-26434666",
+                  "participantRef": "69"
+                }
+              ],
+              "linkedFeatures": [
+                "67"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "70",
+          "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "83333",
+            "common": "ecoli",
+            "scientific": "Escherichia coli (strain K12)"
+          },
+          "features": [
+            {
+              "id": "71",
+              "name": "n-terminus",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0578",
+                "name": "maltose binding protein tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "n-n",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "70"
+                }
+              ]
+            },
+            {
+              "id": "72",
+              "name": "region",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-586",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "70"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "object": "interaction",
+      "id": "intact_EBI-26434923",
+      "interactionType": {
+        "id": "MI:0414",
+        "name": "enzymatic reaction"
+      },
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0415",
+          "name": "enzymatic study"
+        },
+        "host": {
+          "taxid": "-1",
+          "common": "in vitro",
+          "scientific": "In vitro"
+        },
+        "pubid": [
+          {
+            "db": "pubmed",
+            "id": "32500504"
+          },
+          {
+            "db": "intact",
+            "id": "EBI-26368558"
+          },
+          {
+            "db": "imex",
+            "id": "IM-28459"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0469",
+          "name": "European Bioinformatics Institute"
+        },
+        "experimentModifications": [
+          "Helicase Assay:(Duplex) Nucleic acid unwinding assay.\r\nStrand separation was monitored by SDS-PAGE; the HEX (Fluorescein) labeled RNA strand is released from dsRNA in the presence of Nsp13."
+        ],
+        "figures": [
+          "5B, 6 D-F."
+        ]
+      },
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-26434923"
+        },
+        {
+          "db": "imex",
+          "id": "IM-28459-19"
+        }
+      ],
+      "participants": [
+        {
+          "id": "73",
+          "interactorRef": "chebi_CHEBI:77596",
+          "bioRole": {
+            "id": "MI:0586",
+            "name": "inhibitor"
+          },
+          "expRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "-2",
+            "common": "chemical synthesis",
+            "scientific": "Chemical synthesis (Chemical synthesis)"
+          }
+        },
+        {
+          "id": "74",
+          "interactorRef": "intact_EBI-26434661",
+          "bioRole": {
+            "id": "MI:0502",
+            "name": "enzyme target"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "32630",
+            "common": "synthetic construct",
+            "scientific": "synthetic construct"
+          },
+          "features": [
+            {
+              "id": "75",
+              "name": "5-prime",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0939",
+                "name": "fluorescein label"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-1",
+                  "interactorRef": "intact_EBI-26434661",
+                  "participantRef": "74"
+                }
+              ]
+            },
+            {
+              "id": "76",
+              "name": "whole molecule",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-42",
+                  "interactorRef": "intact_EBI-26434661",
+                  "participantRef": "74"
+                }
+              ],
+              "linkedFeatures": [
+                "77"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "78",
+          "interactorRef": "intact_EBI-26434666",
+          "bioRole": {
+            "id": "MI:0502",
+            "name": "enzyme target"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "-1",
+            "common": "in vitro",
+            "scientific": "In vitro"
+          },
+          "features": [
+            {
+              "id": "77",
+              "name": "whole molecule",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-24",
+                  "interactorRef": "intact_EBI-26434666",
+                  "participantRef": "78"
+                }
+              ],
+              "linkedFeatures": [
+                "76"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "79",
+          "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "83333",
+            "common": "ecoli",
+            "scientific": "Escherichia coli (strain K12)"
+          },
+          "features": [
+            {
+              "id": "80",
+              "name": "n-terminus",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0578",
+                "name": "maltose binding protein tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "n-n",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "79"
+                }
+              ]
+            },
+            {
+              "id": "81",
+              "name": "region",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-586",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "79"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "object": "interaction",
+      "id": "intact_EBI-26434941",
+      "interactionType": {
+        "id": "MI:0414",
+        "name": "enzymatic reaction"
+      },
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0415",
+          "name": "enzymatic study"
+        },
+        "host": {
+          "taxid": "-1",
+          "common": "in vitro",
+          "scientific": "In vitro"
+        },
+        "pubid": [
+          {
+            "db": "pubmed",
+            "id": "32500504"
+          },
+          {
+            "db": "intact",
+            "id": "EBI-26368558"
+          },
+          {
+            "db": "imex",
+            "id": "IM-28459"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0469",
+          "name": "European Bioinformatics Institute"
+        },
+        "experimentModifications": [
+          "Helicase Assay:(Duplex) Nucleic acid unwinding assay.\r\nStrand separation was monitored by SDS-PAGE; the HEX (Fluorescein) labeled RNA strand is released from dsRNA in the presence of Nsp13."
+        ],
+        "figures": [
+          "5B"
+        ]
+      },
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-26434941"
+        },
+        {
+          "db": "imex",
+          "id": "IM-28459-27"
+        }
+      ],
+      "participants": [
+        {
+          "id": "82",
+          "interactorRef": "chebi_CHEBI:157700",
+          "bioRole": {
+            "id": "MI:0586",
+            "name": "inhibitor"
+          },
+          "expRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "-2",
+            "common": "chemical synthesis",
+            "scientific": "Chemical synthesis (Chemical synthesis)"
+          }
+        },
+        {
+          "id": "83",
+          "interactorRef": "intact_EBI-26434661",
+          "bioRole": {
+            "id": "MI:0502",
+            "name": "enzyme target"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "32630",
+            "common": "synthetic construct",
+            "scientific": "synthetic construct"
+          },
+          "features": [
+            {
+              "id": "84",
+              "name": "5-prime",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0939",
+                "name": "fluorescein label"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-1",
+                  "interactorRef": "intact_EBI-26434661",
+                  "participantRef": "83"
+                }
+              ]
+            },
+            {
+              "id": "85",
+              "name": "whole molecule",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-42",
+                  "interactorRef": "intact_EBI-26434661",
+                  "participantRef": "83"
+                }
+              ],
+              "linkedFeatures": [
+                "86"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "87",
+          "interactorRef": "intact_EBI-26434666",
+          "bioRole": {
+            "id": "MI:0502",
+            "name": "enzyme target"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "-1",
+            "common": "in vitro",
+            "scientific": "In vitro"
+          },
+          "features": [
+            {
+              "id": "86",
+              "name": "whole molecule",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-24",
+                  "interactorRef": "intact_EBI-26434666",
+                  "participantRef": "87"
+                }
+              ],
+              "linkedFeatures": [
+                "85"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "88",
+          "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "expressedIn": {
+            "taxid": "83333",
+            "common": "ecoli",
+            "scientific": "Escherichia coli (strain K12)"
+          },
+          "features": [
+            {
+              "id": "89",
+              "name": "n-terminus",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0578",
+                "name": "maltose binding protein tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "n-n",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "88"
+                }
+              ]
+            },
+            {
+              "id": "90",
+              "name": "region",
+              "category": "otherFeatures",
+              "type": {
+                "id": "MI:0442",
+                "name": "sufficient binding region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-586",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "88"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

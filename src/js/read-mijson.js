@@ -186,6 +186,19 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
                 }
                 //nLink.addEvidence(datum);
 
+                const intRef = datum.id;
+                const partRef = datum.id;
+                const participantId = intRef + "(" + partRef + ")";
+                let participant = app.participants.get(participantId);
+                if (typeof participant === "undefined") {
+                    const interactor = app.interactors.get(intRef);
+                    participant = newParticipant(interactor, participantId, intRef);
+                    app.participants.set(participantId, participant);
+                }
+                else {
+                    alert("dup interaction");
+                }
+
                 //init participants
                 for (let jsonParticipant of datum.participants) {
                     const intRef = jsonParticipant.interactorRef;
@@ -357,10 +370,31 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
                 let nLink = app.allNaryLinks.get(nLinkId);
                 if (typeof nLink === "undefined") {
                     //doesn't already exist, make new nLink
-                    nLink = new NaryLink(nLinkId, app);
-                    app.allNaryLinks.set(nLinkId, nLink);
+
+                    // if (participantCount == 2) {
+                    //     const fromInteractor = app.participants.get(datum.participants[0].interactorRef);
+                    //     const toInteractor = app.participants.get(datum.participants[1].interactorRef);
+                    //     nLink = new BinaryLink(fromInteractor, toInteractor, datum);
+                    //     app.allNaryLinks.set(nLinkId, nLink);
+                    // } else {
+
+                        nLink = new NaryLink(nLinkId, app);
+                        app.allNaryLinks.set(nLinkId, nLink);
+                    // }
                 }
                 //nLink.addEvidence(datum);
+
+                // const intRef = datum.id;
+                // // const participantId = intRef + "(" + partRef + ")";
+                // let participant = app.participants.get(intRef);
+                // if (typeof participant === "undefined") {
+                //     const interactor = app.interactors.get(intRef);
+                //     participant = newParticipant(interactor, intRef, intRef);
+                //     app.participants.set(intRef, participant);
+                // }
+                // else {
+                //     alert("dup interaction");
+                // }
 
                 //~ //init participants
                 for (let pi = 0; pi < participantCount; pi++) {
