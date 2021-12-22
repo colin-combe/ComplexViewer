@@ -48,7 +48,7 @@ export class Polymer extends Interactor {
         const protLength = (this.size) * this.stickZoom;
         if (this.expanded) {
             const labelTransform = transform(this.labelSVG.getAttribute("transform"));
-            const k = this.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate)
+            const k = this.app.svgElement.createSVGMatrix()
                 .translate((-(((this.size / 2) * this.stickZoom) + (this.nTermFeatures.length > 0 ? 25 : 10))), this.labelY); //.scale(z).translate(-c.x, -c.y);
             this.labelSVG.transform.baseVal.initialize(this.app.svgElement.createSVGTransformFromMatrix(k));
             this.updateAnnotationRectanglesNoTransition();
@@ -161,7 +161,7 @@ export class Polymer extends Interactor {
     }
 
     toCircle(transition = true, svgP) {
-
+        transition = false;
         if (!svgP) {
             const width = this.app.svgElement.parentNode.clientWidth;
             const ctm = this.app.container.getCTM().inverse();
@@ -253,7 +253,7 @@ export class Polymer extends Interactor {
 
         function update(interp) {
             const labelTransform = transform(self.labelSVG.getAttribute("transform"));
-            const k = self.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), self.labelY); //.scale(z).translate(-c.x, -c.y);
+            const k = self.app.svgElement.createSVGMatrix().translate(labelTranslateInterpol(cubicInOut(interp)), self.labelY); //.scale(z).translate(-c.x, -c.y);
             self.labelSVG.transform.baseVal.initialize(self.app.svgElement.createSVGTransformFromMatrix(k));
 
             if (xInterpol !== null) {
@@ -301,6 +301,7 @@ export class Polymer extends Interactor {
     }
 
     toStick(transition = true) {
+        transition = false;
         const transitionTime = transition ? Polymer.transitionTime : 0;
 
         this.busy = true;
@@ -385,8 +386,10 @@ export class Polymer extends Interactor {
 
         function update(interp) {
             const labelTransform = transform(self.labelSVG.getAttribute("transform"));
-            const k = self.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), self.labelY); //.scale(z).translate(-c.x, -c.y);
-            self.labelSVG.transform.baseVal.initialize(self.app.svgElement.createSVGTransformFromMatrix(k));
+            const labelTranslate = labelTranslateInterpol(cubicInOut(interp));
+            const k = self.app.svgElement.createSVGMatrix().translate(labelTranslate, self.labelY);
+            // k is all NaN
+            // self.labelSVG.transform.baseVal.initialize(self.app.svgElement.createSVGTransformFromMatrix(k));
 
             const currentLength = lengthInterpol(cubicInOut(interp));
             d3.select(self.highlight).attr("width", currentLength).attr("x", -(currentLength / 2) + (0.5 * self.stickZoom));
