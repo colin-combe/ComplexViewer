@@ -1,6 +1,7 @@
 import "../css/xinet.css";
 import packageInfo from "../../package.json";
 import * as d3 from "d3";
+import {scaleOrdinal} from "d3-scale";
 import * as d3_chromatic from "d3-scale-chromatic";
 import * as cola from "./cola";
 import * as Rgb_color from "rgb-color";
@@ -21,7 +22,7 @@ export class App {
         //avoids prob with 'save - web page complete'
         this.el.textContent = ""; //https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
         this.maxCountInitiallyExpanded = maxCountInitiallyExpanded;
-        this.d3cola = cola.d3adaptor().groupCompactness(Number.MIN_VALUE).avoidOverlaps(true); //1e-5
+        this.d3cola = cola.d3adaptor(d3).groupCompactness(Number.MIN_VALUE).avoidOverlaps(true); //1e-5
 
         const customMenuSel = d3.select(this.el)
             .append("div").classed("custom-menu-margin", true)
@@ -31,7 +32,7 @@ export class App {
         const self = this;
         const collapse = customMenuSel.append("li").classed("collapse", true); //.append("button");
         collapse.text("Collapse");
-        collapse[0][0].onclick = function (evt) {
+        collapse.node().onclick = function (evt) {
             self.collapseProtein(evt);
         };
         const scaleButtonsListItemSel = customMenuSel.append("li").text("Scale: ");
@@ -230,7 +231,7 @@ export class App {
             hsl.l = 0.9;
             complexColors.push(hsl + "");
         }
-        NaryLink.naryColors = d3.scale.ordinal().range(complexColors);
+        NaryLink.naryColors = scaleOrdinal().range(complexColors);
 
         this.z = 1;
         this.hideTooltip();
@@ -649,9 +650,9 @@ export class App {
         //choose appropriate color scheme
         let colorScheme;
         if (categories.size < 11) {
-            colorScheme = d3.scale.ordinal().range(d3_chromatic.schemeTableau10);
+            colorScheme = scaleOrdinal().range(d3_chromatic.schemeTableau10);
         } else {
-            colorScheme = d3.scale.category20();
+            colorScheme = scaleOrdinal();//d3.scale.category20();
         }
 
         const self = this;
