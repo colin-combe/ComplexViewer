@@ -164,13 +164,13 @@ export class Polymer extends Interactor {
             const width = this.app.svgElement.parentNode.clientWidth;
             const ctm = this.app.container.getCTM().inverse();
             const z = this.app.container.getCTM().inverse().a;
-            if (this.ix < ctm.e){
+            if (this.ix < ctm.e) {
                 console.log("off left edge");
-                svgP = {x:ctm.e  + ((this.getSymbolRadius() + 15 + this.labelSVG.getComputedTextLength())), y:this.iy};
+                svgP = {x: ctm.e + ((this.getSymbolRadius() + 15 + this.labelSVG.getComputedTextLength())), y: this.iy};
             }
-            if (this.ix > ctm.e + (width * z)){
+            if (this.ix > ctm.e + (width * z)) {
                 console.log("off right edge");
-                svgP = {x:ctm.e + (width * z)  - ((this.getSymbolRadius() + 5)), y:this.iy};
+                svgP = {x: ctm.e + (width * z) - ((this.getSymbolRadius() + 5)), y: this.iy};
             }
         }
 
@@ -201,7 +201,7 @@ export class Polymer extends Interactor {
         const labelTranslateInterpol = d3.interpolate(labelStartPoint, -(r + 5));
 
         let xInterpol = null;//,
-            // yInterpol = null;
+        // yInterpol = null;
         if (typeof svgP !== "undefined" && svgP !== null) {
             xInterpol = d3.interpolate(this.ix, svgP.x);
             // yInterpol = d3.interpolate(this.iy, svgP.y);
@@ -487,7 +487,7 @@ export class Polymer extends Interactor {
         this.cTermFeatures = [];
     }
 
-    updatePositionalFeatures () {
+    updatePositionalFeatures() {
         const self = this;
 
         const toolTipFunc = function (evt) {
@@ -627,11 +627,16 @@ export class Polymer extends Interactor {
         if (rung === -1) {
             bottom = 0;
             top = radius;
+        } else if (startRes === "n-n") {
+            rungHeight = radius / this.nTermFeatures.length;
+        } else if (endRes === "c-c") {
+            rungHeight = radius / this.cTermFeatures.length;
         } else {
             rungHeight = radius / this.rungCount;
-            bottom = (rung * rungHeight);
-            top = bottom + rungHeight;
         }
+
+        bottom = (rung * rungHeight);
+        top = bottom + rungHeight;
 
         let startAngle, endAngle;
         if (startRes === "n-n") {
@@ -732,8 +737,8 @@ export class Polymer extends Interactor {
     }
 }
 
-    Polymer.STICKHEIGHT = 20; //height of stick in pixels
-    Polymer.MAXSIZE = 0; // residue count of longest sequence
-    Polymer.transitionTime = 650;
-    Polymer.minXDist = 30;
-    Polymer.stepsInArc = 5;
+Polymer.STICKHEIGHT = 20; //height of stick in pixels
+Polymer.MAXSIZE = 0; // residue count of longest sequence
+Polymer.transitionTime = 650;
+Polymer.minXDist = 30;
+Polymer.stepsInArc = 5;

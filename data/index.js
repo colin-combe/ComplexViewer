@@ -157,5 +157,10 @@ const exampleIndex = [
         "ac": "CPX-1599",
         "name": "40S cytosolic small ribosomal subunit",
         "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-1599",
+    },
+    {
+        "ac": "EBI-29795992",
+        "name": "EBI-29795992",
+        "url": "",
     }
 ];
