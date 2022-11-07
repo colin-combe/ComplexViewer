@@ -251,7 +251,6 @@ export class Polymer extends Interactor {
         }
 
         function update(interp) {
-            const labelTransform = transform(self.labelSVG.getAttribute("transform"));
             const k = self.app.svgElement.createSVGMatrix().translate(labelTranslateInterpol(cubicInOut(interp)), self.labelY); //.scale(z).translate(-c.x, -c.y);
             self.labelSVG.transform.baseVal.initialize(self.app.svgElement.createSVGTransformFromMatrix(k));
 
@@ -384,10 +383,8 @@ export class Polymer extends Interactor {
 
         function update(interp) {
             const labelTransform = transform(self.labelSVG.getAttribute("transform"));
-            const labelTranslate = labelTranslateInterpol(cubicInOut(interp));
-            const k = self.app.svgElement.createSVGMatrix().translate(labelTranslate, self.labelY);
-            // k is all NaN
-            // self.labelSVG.transform.baseVal.initialize(self.app.svgElement.createSVGTransformFromMatrix(k));
+            const k = self.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), self.labelY)
+            self.labelSVG.transform.baseVal.initialize(self.app.svgElement.createSVGTransformFromMatrix(k));
 
             const currentLength = lengthInterpol(cubicInOut(interp));
             d3.select(self.highlight).attr("width", currentLength).attr("x", -(currentLength / 2) + (0.5 * self.stickZoom));
@@ -490,7 +487,7 @@ export class Polymer extends Interactor {
         this.cTermFeatures = [];
     }
 
-    updatePositionalFeatures () {
+    updatePositionalFeatures() {
         const self = this;
 
         const toolTipFunc = function (evt) {
