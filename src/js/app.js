@@ -76,27 +76,13 @@ export class App {
         this.svgElement.classList.add("complexViewerSVG");
 
         //add listeners
-        this.svgElement.onmousedown = function (evt) {
-            self.mouseDown(evt);
-        };
-        this.svgElement.onmousemove = function (evt) {
-            self.move(evt);
-        };
-        this.svgElement.onmouseup = function (evt) {
-            self.mouseUp(evt);
-        };
-        this.svgElement.onmouseout = function (evt) {
-            self.mouseOut(evt);
-        };
-        this.svgElement.ontouchstart = function (evt) {
-            self.touchStart(evt);
-        };
-        this.svgElement.ontouchmove = function (evt) {
-            self.move(evt);
-        };
-        this.svgElement.ontouchend = function (evt) {
-            self.mouseUp(evt);
-        };
+        this.svgElement.onmousedown = evt => self.mouseDown(evt);
+        this.svgElement.onmousemove = evt => self.move(evt);
+        this.svgElement.onmouseup = evt => self.mouseUp(evt);
+        this.svgElement.onmouseout = evt => self.mouseOut(evt);
+        this.svgElement.ontouchstart = evt => self.touchStart(evt);
+        this.svgElement.ontouchmove = evt => self.move(evt);
+        this.svgElement.ontouchend = evt => self.mouseUp(evt);
         this.lastMouseUp = new Date().getTime();
 
         this.el.oncontextmenu = function (evt) {
