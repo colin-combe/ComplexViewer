@@ -55,7 +55,7 @@ export class App {
             })
             .attr("name", "scaleButtons")
             .attr("type", "radio")
-            .on("change", function (d) {
+            .on("change", function (e, d) {
                 self.preventDefaultsAndStopPropagation(d);
                 self.contextMenuProt.setStickScale(d, self.contextMenuPoint);
             });
