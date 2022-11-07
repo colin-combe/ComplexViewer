@@ -165,13 +165,13 @@ export class Polymer extends Interactor {
             const width = this.app.svgElement.parentNode.clientWidth;
             const ctm = this.app.container.getCTM().inverse();
             const z = this.app.container.getCTM().inverse().a;
-            if (this.ix < ctm.e){
+            if (this.ix < ctm.e) {
                 console.log("off left edge");
-                svgP = {x:ctm.e  + ((this.getSymbolRadius() + 15 + this.labelSVG.getComputedTextLength())), y:this.iy};
+                svgP = {x: ctm.e + ((this.getSymbolRadius() + 15 + this.labelSVG.getComputedTextLength())), y: this.iy};
             }
-            if (this.ix > ctm.e + (width * z)){
+            if (this.ix > ctm.e + (width * z)) {
                 console.log("off right edge");
-                svgP = {x:ctm.e + (width * z)  - ((this.getSymbolRadius() + 5)), y:this.iy};
+                svgP = {x: ctm.e + (width * z) - ((this.getSymbolRadius() + 5)), y: this.iy};
             }
         }
 
