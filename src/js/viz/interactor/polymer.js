@@ -1,5 +1,5 @@
 import * as d3 from "d3"; // transitions and other stuff
-import {transform} from "d3-transform";
+import {transform} from "../../transform";
 import {easeCubicInOut} from "d3-ease";
 import {rotatePointAboutPoint} from "../../geom";
 import {svgns} from "../../svgns";
@@ -161,7 +161,6 @@ export class Polymer extends Interactor {
     }
 
     toCircle(transition = true, svgP) {
-        transition = false;
         if (!svgP) {
             const width = this.app.svgElement.parentNode.clientWidth;
             const ctm = this.app.container.getCTM().inverse();
@@ -244,8 +243,8 @@ export class Polymer extends Interactor {
                     }
                 }
             }
-            d3.timer(function (elapsed) {
-                return update(elapsed / transitionTime);
+            const t = d3.timer(function (elapsed) {
+                if (update(elapsed / transitionTime)) t.stop();
             });
         } else {
             update(1);
@@ -301,7 +300,6 @@ export class Polymer extends Interactor {
     }
 
     toStick(transition = true) {
-        transition = false;
         const transitionTime = transition ? Polymer.transitionTime : 0;
 
         this.busy = true;
@@ -377,8 +375,8 @@ export class Polymer extends Interactor {
                     }
                 }
             }
-            d3.timer(function (elapsed) {
-                return update(elapsed / transitionTime);
+            const t = d3.timer(function (elapsed) {
+                if (update(elapsed / transitionTime)) t.stop();
             });
         } else {
             update(1);
