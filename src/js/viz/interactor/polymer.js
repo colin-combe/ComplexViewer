@@ -202,7 +202,7 @@ export class Polymer extends Interactor {
         const labelTranslateInterpol = d3.interpolate(labelStartPoint, -(r + 5));
 
         let xInterpol = null;//,
-            // yInterpol = null;
+        // yInterpol = null;
         if (typeof svgP !== "undefined" && svgP !== null) {
             xInterpol = d3.interpolate(this.ix, svgP.x);
             // yInterpol = d3.interpolate(this.iy, svgP.y);
@@ -627,11 +627,16 @@ export class Polymer extends Interactor {
         if (rung === -1) {
             bottom = 0;
             top = radius;
+        } else if (startRes === "n-n") {
+            rungHeight = radius / this.nTermFeatures.length;
+        } else if (endRes === "c-c") {
+            rungHeight = radius / this.cTermFeatures.length;
         } else {
             rungHeight = radius / this.rungCount;
-            bottom = (rung * rungHeight);
-            top = bottom + rungHeight;
         }
+
+        bottom = (rung * rungHeight);
+        top = bottom + rungHeight;
 
         let startAngle, endAngle;
         if (startRes === "n-n") {
