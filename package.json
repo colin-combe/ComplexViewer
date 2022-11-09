@@ -1,6 +1,6 @@
 {
   "name": "complexviewer",
-  "version": "2.1.17",
+  "version": "2.2.0",
   "description": "A network visualisation that displays molecular interaction data, including detailed residue-level information such as binding sites. Used in EBI's Complex Portal and elsewhere.",
   "author": {
     "name": "Colin Combe",
@@ -22,6 +22,10 @@
     {
       "name": "Marine Dumousseau",
       "email": ""
+    },
+    {
+      "name": "Eliot Ragueneau",
+      "email": "eragueneau@ebi.ac.uk"
     }
   ],
   "license": "Apache-2.0",
