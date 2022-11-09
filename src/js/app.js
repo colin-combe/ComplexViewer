@@ -635,10 +635,31 @@ export class App {
         }
         //choose appropriate color scheme
         let colorScheme;
-        if (categories.size < 11) {
+        if (categories.size <= 10) {
             colorScheme = scaleOrdinal().range(d3_chromatic.schemeTableau10);
         } else {
-            colorScheme = scaleOrdinal();//d3.scale.category20();
+            colorScheme = d3.scaleOrdinal().range([
+                "#38cae3",
+                "#d4582b",
+                "#7d5fd7",
+                "#7cd352",
+                "#ce4bbb",
+                "#5aa33c",
+                "#93539d",
+                "#d2c33b",
+                "#5c83d4",
+                "#e19a46",
+                "#d891d7",
+                "#65da9a",
+                "#9d772f",
+                "#d43f4c",
+                "#4db186",
+                "#cf4b7e",
+                "#477c3a",
+                "#c46d5c",
+                "#b6c671",
+                "#798126"
+            ]); // Generated from https://medialab.github.io/iwanthue/
         }
 
         const self = this;
