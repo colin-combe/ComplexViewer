@@ -66,7 +66,7 @@ function getSuperFamFeatures(prot, callback) {
                 const type = xmlFeature.getElementsByTagName("TYPE")[0]; //might need to watch for text nodes getting mixed in here
                 const category = type.getAttribute("category");
                 if (category === "miscellaneous") {
-                    const name = type.getAttribute("id");
+                    const name = decodeHTML(type.getAttribute("id"));
                     const start = xmlFeature.getElementsByTagName("START")[0].textContent;
                     const end = xmlFeature.getElementsByTagName("END")[0].textContent;
                     annotations.push(new Annotation(name, new SequenceDatum(null, `${start}-${end}`)));
@@ -75,4 +75,22 @@ function getSuperFamFeatures(prot, callback) {
         }
         callback();
     });
+}
+
+
+function decodeHTML(text) {
+    return text.replace(/&([^;]+);/gm, (match, entity) => entities[entity] || match)
+}
+
+const entities = {
+    'amp': '&',
+    'apos': '\'',
+    '#x27': '\'',
+    '#x2F': '/',
+    '#39': '\'',
+    '#47': '/',
+    'lt': '<',
+    'gt': '>',
+    'nbsp': ' ',
+    'quot': '"'
 }
