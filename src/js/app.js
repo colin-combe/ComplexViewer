@@ -1,6 +1,7 @@
 import "../css/xinet.css";
 import packageInfo from "../../package.json";
 import * as d3 from "d3";
+import {scaleOrdinal} from "d3-scale";
 import * as d3_chromatic from "d3-scale-chromatic";
 import * as cola from "./cola";
 import * as Rgb_color from "rgb-color";
@@ -21,7 +22,7 @@ export class App {
         //avoids prob with 'save - web page complete'
         this.el.textContent = ""; //https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
         this.maxCountInitiallyExpanded = maxCountInitiallyExpanded;
-        this.d3cola = cola.d3adaptor().groupCompactness(Number.MIN_VALUE).avoidOverlaps(true); //1e-5
+        this.d3cola = cola.d3adaptor(d3).groupCompactness(Number.MIN_VALUE).avoidOverlaps(true); //1e-5
 
         const customMenuSel = d3.select(this.el)
             .append("div").classed("custom-menu-margin", true)
@@ -31,7 +32,7 @@ export class App {
         const self = this;
         const collapse = customMenuSel.append("li").classed("collapse", true); //.append("button");
         collapse.text("Collapse");
-        collapse[0][0].onclick = function (evt) {
+        collapse.node().onclick = function (evt) {
             self.collapseProtein(evt);
         };
         const scaleButtonsListItemSel = customMenuSel.append("li").text("Scale: ");
@@ -54,7 +55,7 @@ export class App {
             })
             .attr("name", "scaleButtons")
             .attr("type", "radio")
-            .on("change", function (d) {
+            .on("change", function (e, d) {
                 self.preventDefaultsAndStopPropagation(d);
                 self.contextMenuProt.setStickScale(d, self.contextMenuPoint);
             });
@@ -75,27 +76,13 @@ export class App {
         this.svgElement.classList.add("complexViewerSVG");
 
         //add listeners
-        this.svgElement.onmousedown = function (evt) {
-            self.mouseDown(evt);
-        };
-        this.svgElement.onmousemove = function (evt) {
-            self.move(evt);
-        };
-        this.svgElement.onmouseup = function (evt) {
-            self.mouseUp(evt);
-        };
-        this.svgElement.onmouseout = function (evt) {
-            self.mouseOut(evt);
-        };
-        this.svgElement.ontouchstart = function (evt) {
-            self.touchStart(evt);
-        };
-        this.svgElement.ontouchmove = function (evt) {
-            self.move(evt);
-        };
-        this.svgElement.ontouchend = function (evt) {
-            self.mouseUp(evt);
-        };
+        this.svgElement.onmousedown = evt => self.mouseDown(evt);
+        this.svgElement.onmousemove = evt => self.move(evt);
+        this.svgElement.onmouseup = evt => self.mouseUp(evt);
+        this.svgElement.onmouseout = evt => self.mouseOut(evt);
+        this.svgElement.ontouchstart = evt => self.touchStart(evt);
+        this.svgElement.ontouchmove = evt => self.move(evt);
+        this.svgElement.ontouchend = evt => self.mouseUp(evt);
         this.lastMouseUp = new Date().getTime();
 
         this.el.oncontextmenu = function (evt) {
@@ -230,7 +217,7 @@ export class App {
             hsl.l = 0.9;
             complexColors.push(hsl + "");
         }
-        NaryLink.naryColors = d3.scale.ordinal().range(complexColors);
+        NaryLink.naryColors = scaleOrdinal().range(complexColors);
 
         this.z = 1;
         this.hideTooltip();
@@ -648,10 +635,31 @@ export class App {
         }
         //choose appropriate color scheme
         let colorScheme;
-        if (categories.size < 11) {
-            colorScheme = d3.scale.ordinal().range(d3_chromatic.schemeTableau10);
+        if (categories.size <= 10) {
+            colorScheme = scaleOrdinal().range(d3_chromatic.schemeTableau10);
         } else {
-            colorScheme = d3.scale.category20();
+            colorScheme = d3.scaleOrdinal().range([
+                "#38cae3",
+                "#d4582b",
+                "#7d5fd7",
+                "#7cd352",
+                "#ce4bbb",
+                "#5aa33c",
+                "#93539d",
+                "#d2c33b",
+                "#5c83d4",
+                "#e19a46",
+                "#d891d7",
+                "#65da9a",
+                "#9d772f",
+                "#d43f4c",
+                "#4db186",
+                "#cf4b7e",
+                "#477c3a",
+                "#c46d5c",
+                "#b6c671",
+                "#798126"
+            ]); // Generated from https://medialab.github.io/iwanthue/
         }
 
         const self = this;
