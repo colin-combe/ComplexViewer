@@ -1,20 +1,35 @@
 //todo - is this even working? you never see it
 
 import {Link} from "./link";
-import {svgns} from "../../svgns";
-
-// var FeatureLink = require('./FeatureLink');
 
 export class UnaryLink extends Link {
     constructor(id, app, participant) {
-        super();
-        this.id = id;
+        super(id, app);
         this.participants = [participant];
-        this.sequenceLinks = new Map();
-        this.app = app;
-        this.line = document.createElementNS(svgns, "path");
-        this.highlightLine = document.createElementNS(svgns, "path");
-        this.initSVG();
+    }
+
+    get line (){
+        if (!this._line) {
+            this._line = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            this._line.classList.add("link", "link-line");//, "certain-link");
+            const self = this;
+            this._line.onmousedown = evt => self.mouseDown(evt);
+            this._line.onmouseover = evt => self.mouseOver(evt);
+            this._line.onmouseout = evt => self.mouseOut(evt);
+        }
+        return this._line;
+    }
+
+    get highlightLine (){
+        if (!this._highlightLine) {
+            this._highlightLine = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            this._highlightLine.classList.add("link", "highlight", "link-highlight");
+            const self = this;
+            this._highlightLine.onmousedown = evt => self.mouseDown(evt);
+            this._highlightLine.onmouseover = evt => self.mouseOver(evt);
+            this._highlightLine.onmouseout = evt => self.mouseOut(evt);
+        }
+        return this._highlightLine;
     }
 
     initSelfLinkSVG () {
@@ -34,6 +49,7 @@ export class UnaryLink extends Link {
     }
 
     show() {
+        this.initSelfLinkSVG();
         this.line.setAttribute("transform", "translate(" + this.participants[0].ix +
             " " + this.participants[0].iy + ")" + " scale(" + (this.app.z) + ")");
         this.highlightLine.setAttribute("transform", "translate(" + this.participants[0].ix +

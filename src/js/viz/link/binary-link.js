@@ -1,23 +1,40 @@
 import {Link} from "./link";
 import * as Intersection from "intersectionjs";
 import * as Point2D from "point2d";
-import {svgns} from "../../svgns";
 
 export class BinaryLink extends Link {
     constructor(id, app, fromI, toI) {
-        super();
-        this.id = id;
-        // this.evidences = d3.map();
+        super(id, app);
         this.participants = [fromI, toI];
         this.sequenceLinks = new Map();
-        this.app = app;
-        this.line = document.createElementNS(svgns, "line");
-        this.highlightLine = document.createElementNS(svgns, "line");
-        this.initSVG();
+    }
+
+    get line (){
+        if (!this._line) {
+            this._line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            this._line.classList.add("link", "link-line");//, "certain-link");
+            const self = this;
+            this._line.onmousedown = evt => self.mouseDown(evt);
+            this._line.onmouseover = evt => self.mouseOver(evt);
+            this._line.onmouseout = evt => self.mouseOut(evt);
+        }
+        return this._line;
+    }
+
+    get highlightLine (){
+        if (!this._highlightLine) {
+            this._highlightLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            this._highlightLine.classList.add("link", "highlight", "link-highlight");
+            const self = this;
+            this._highlightLine.onmousedown = evt => self.mouseDown(evt);
+            this._highlightLine.onmouseover = evt => self.mouseOver(evt);
+            this._highlightLine.onmouseout = evt => self.mouseOut(evt);
+        }
+        return this._highlightLine;
     }
 
     check() {
-        if (!this.participants[0].expanded && !this.participants[1].expanded) { //checks if form not defined or is 0
+        if (!this.participants[0].expanded && !this.participants[1].expanded) {
             this.show();
             return true;
         } else { //at least one end was in stick form
@@ -27,9 +44,6 @@ export class BinaryLink extends Link {
     }
 
     show() {
-        // if (typeof this.line === "undefined") {
-        //     this.initSVG();
-        // }
         this.line.setAttribute("stroke-width", this.app.z * 1);
         this.highlightLine.setAttribute("stroke-width", this.app.z * 10);
         this.setLinkCoordinates(this.participants[0]);
@@ -39,9 +53,6 @@ export class BinaryLink extends Link {
     }
 
     setLinkCoordinates() {
-        if (typeof this.line === "undefined") {
-            this.initSVG();
-        }
         let pos1 = this.participants[0].getPosition();
         let pos2 = this.participants[1].getPosition();
 
