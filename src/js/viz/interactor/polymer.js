@@ -1,4 +1,6 @@
 import * as d3 from "d3"; // transitions and other stuff
+import {transform} from "../../transform";
+import {easeCubicInOut} from "d3-ease";
 import {rotatePointAboutPoint} from "../../geom";
 import {svgns} from "../../svgns";
 import {Interactor} from "./interactor";
@@ -45,8 +47,8 @@ export class Polymer extends Interactor {
     scale() {
         const protLength = (this.size) * this.stickZoom;
         if (this.expanded) {
-            const labelTransform = d3.transform(this.labelSVG.getAttribute("transform"));
-            const k = this.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate)
+            const labelTransform = transform(this.labelSVG.getAttribute("transform"));
+            const k = this.app.svgElement.createSVGMatrix()
                 .translate((-(((this.size / 2) * this.stickZoom) + (this.nTermFeatures.length > 0 ? 25 : 10))), this.labelY); //.scale(z).translate(-c.x, -c.y);
             this.labelSVG.transform.baseVal.initialize(this.app.svgElement.createSVGTransformFromMatrix(k));
             this.updateAnnotationRectanglesNoTransition();
@@ -159,18 +161,17 @@ export class Polymer extends Interactor {
     }
 
     toCircle(transition = true, svgP) {
-
         if (!svgP) {
             const width = this.app.svgElement.parentNode.clientWidth;
             const ctm = this.app.container.getCTM().inverse();
             const z = this.app.container.getCTM().inverse().a;
-            if (this.ix < ctm.e){
+            if (this.ix < ctm.e) {
                 console.log("off left edge");
-                svgP = {x:ctm.e  + ((this.getSymbolRadius() + 15 + this.labelSVG.getComputedTextLength())), y:this.iy};
+                svgP = {x: ctm.e + ((this.getSymbolRadius() + 15 + this.labelSVG.getComputedTextLength())), y: this.iy};
             }
-            if (this.ix > ctm.e + (width * z)){
+            if (this.ix > ctm.e + (width * z)) {
                 console.log("off right edge");
-                svgP = {x:ctm.e + (width * z)  - ((this.getSymbolRadius() + 5)), y:this.iy};
+                svgP = {x: ctm.e + (width * z) - ((this.getSymbolRadius() + 5)), y: this.iy};
             }
         }
 
@@ -196,12 +197,12 @@ export class Polymer extends Interactor {
             .duration(transitionTime);
 
         const stickZoomInterpol = d3.interpolate(this.stickZoom, 0);
-        const labelTransform = d3.transform(this.labelSVG.getAttribute("transform"));
+        const labelTransform = transform(this.labelSVG.getAttribute("transform"));
         const labelStartPoint = labelTransform.translate[0];
         const labelTranslateInterpol = d3.interpolate(labelStartPoint, -(r + 5));
 
         let xInterpol = null;//,
-            // yInterpol = null;
+        // yInterpol = null;
         if (typeof svgP !== "undefined" && svgP !== null) {
             xInterpol = d3.interpolate(this.ix, svgP.x);
             // yInterpol = d3.interpolate(this.iy, svgP.y);
@@ -209,7 +210,7 @@ export class Polymer extends Interactor {
 
         const self = this;
         d3.select(this.ticks).transition().attr("opacity", 0).duration(transitionTime / 4)
-            .each("end",
+            .on("end",
                 function () {
                     d3.select(this).selectAll("*").remove();
                 }
@@ -217,7 +218,7 @@ export class Polymer extends Interactor {
 
         const originalStickZoom = this.stickZoom;
         const originalRotation = this.rotation;
-        const cubicInOut = d3.ease("cubic-in-out");
+        const cubicInOut = easeCubicInOut;
         if (transition) {
             for (let [annotationType, annotations] of this.annotationSets) {
                 if (this.app.annotationSetsShown.get(annotationType) === true) {
@@ -242,16 +243,15 @@ export class Polymer extends Interactor {
                     }
                 }
             }
-            d3.timer(function (elapsed) {
-                return update(elapsed / transitionTime);
+            const t = d3.timer(function (elapsed) {
+                if (update(elapsed / transitionTime)) t.stop();
             });
         } else {
             update(1);
         }
 
         function update(interp) {
-            const labelTransform = d3.transform(self.labelSVG.getAttribute("transform"));
-            const k = self.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), self.labelY); //.scale(z).translate(-c.x, -c.y);
+            const k = self.app.svgElement.createSVGMatrix().translate(labelTranslateInterpol(cubicInOut(interp)), self.labelY); //.scale(z).translate(-c.x, -c.y);
             self.labelSVG.transform.baseVal.initialize(self.app.svgElement.createSVGTransformFromMatrix(k));
 
             if (xInterpol !== null) {
@@ -339,7 +339,7 @@ export class Polymer extends Interactor {
 
 
         const self = this;
-        const cubicInOut = d3.ease("cubic-in-out");
+        const cubicInOut = easeCubicInOut;
         if (transition) {
             for (let [annotationType, annotations] of this.annotationSets) {
                 if (this.app.annotationSetsShown.get(annotationType) === true) {
@@ -374,16 +374,16 @@ export class Polymer extends Interactor {
                     }
                 }
             }
-            d3.timer(function (elapsed) {
-                return update(elapsed / transitionTime);
+            const t = d3.timer(function (elapsed) {
+                if (update(elapsed / transitionTime)) t.stop();
             });
         } else {
             update(1);
         }
 
         function update(interp) {
-            const labelTransform = d3.transform(self.labelSVG.getAttribute("transform"));
-            const k = self.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), self.labelY); //.scale(z).translate(-c.x, -c.y);
+            const labelTransform = transform(self.labelSVG.getAttribute("transform"));
+            const k = self.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), self.labelY)
             self.labelSVG.transform.baseVal.initialize(self.app.svgElement.createSVGTransformFromMatrix(k));
 
             const currentLength = lengthInterpol(cubicInOut(interp));
@@ -487,7 +487,7 @@ export class Polymer extends Interactor {
         this.cTermFeatures = [];
     }
 
-    updatePositionalFeatures () {
+    updatePositionalFeatures() {
         const self = this;
 
         const toolTipFunc = function (evt) {
@@ -627,11 +627,16 @@ export class Polymer extends Interactor {
         if (rung === -1) {
             bottom = 0;
             top = radius;
+        } else if (startRes === "n-n") {
+            rungHeight = radius / this.nTermFeatures.length;
+        } else if (endRes === "c-c") {
+            rungHeight = radius / this.cTermFeatures.length;
         } else {
             rungHeight = radius / this.rungCount;
-            bottom = (rung * rungHeight);
-            top = bottom + rungHeight;
         }
+
+        bottom = (rung * rungHeight);
+        top = bottom + rungHeight;
 
         let startAngle, endAngle;
         if (startRes === "n-n") {
@@ -732,8 +737,8 @@ export class Polymer extends Interactor {
     }
 }
 
-    Polymer.STICKHEIGHT = 20; //height of stick in pixels
-    Polymer.MAXSIZE = 0; // residue count of longest sequence
-    Polymer.transitionTime = 650;
-    Polymer.minXDist = 30;
-    Polymer.stepsInArc = 5;
+Polymer.STICKHEIGHT = 20; //height of stick in pixels
+Polymer.MAXSIZE = 0; // residue count of longest sequence
+Polymer.transitionTime = 650;
+Polymer.minXDist = 30;
+Polymer.stepsInArc = 5;
