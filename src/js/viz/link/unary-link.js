@@ -6,6 +6,7 @@ export class UnaryLink extends Link {
     constructor(id, app, participant) {
         super(id, app);
         this.participants = [participant];
+        participant.selfLink = this;
     }
 
     get line (){
