@@ -1,8 +1,8 @@
 //todo - is this even working? you never see it
 
-import {Link} from "./link";
+import {HideableLink} from "./hideable-link";
 
-export class UnaryLink extends Link {
+export class UnaryLink extends HideableLink {
     constructor(id, app, participant) {
         super(id, app);
         this.participants = [participant];

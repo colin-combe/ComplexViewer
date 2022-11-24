@@ -1,8 +1,8 @@
-import {Link} from "./link";
 import * as Intersection from "intersectionjs";
 import * as Point2D from "point2d";
+import {HideableLink} from "./hideable-link";
 
-export class BinaryLink extends Link {
+export class BinaryLink extends HideableLink {
     constructor(id, app, fromI, toI) {
         super(id, app);
         this.participants = [fromI, toI];
