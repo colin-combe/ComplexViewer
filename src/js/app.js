@@ -215,7 +215,7 @@ export class App {
         for (let c of d3_chromatic.schemePastel2) {//colorbrewer.Pastel2[8]) {
             const hsl = d3.hsl(c);
             hsl.l = 0.9;
-            complexColors.push(hsl + "");
+            complexColors.push(`${hsl}`);
         }
         NaryLink.naryColors = scaleOrdinal().range(complexColors);
 
@@ -315,23 +315,23 @@ export class App {
             let x = -bbox.x + (20 / scaleFactor);
             //box.y + y = 0
             let y = -bbox.y + (20 / scaleFactor);
-            this.container.setAttribute("transform", "scale(" + scaleFactor + ") translate(" + x + " " + y + ") ");
+            this.container.setAttribute("transform", `scale(${scaleFactor}) translate(${x} ${y}) `);
             this.z = this.container.getCTM().inverse().a;
         } else {
             //console.log("fit", scaleFactor);
-            // this.container.setAttribute("transform", "scale(" + 1 + ") translate(" + -(width/2) + " " + -bbox.y + ")");
+            // this.container.setAttribute("transform", `scale(1) translate(${-(width / 2)} ${-bbox.y})`);
             const deltaWidth = width - bbox.width;
             const deltaHeight = height - bbox.height;
             //bbox.x + x = deltaWidth /2;
             let x = (deltaWidth / 2) - bbox.x;
             //box.y + y = deltaHeight / 2
             let y = (deltaHeight / 2) - bbox.y;
-            this.container.setAttribute("transform", "scale(" + 1 + ") translate(" + x + " " + y + ")");
+            this.container.setAttribute("transform", `scale(1) translate(${x} ${y})`);
             this.z = 1;
         }
 
         //todo - following could be tided up by using acknowledgement bbox or positioning att's of text
-        this.acknowledgement.setAttribute("transform", "translate(" + (width - 150) + ", " + (height - 30) + ")");
+        this.acknowledgement.setAttribute("transform", `translate(${width - 150}, ${height - 30})`);
     }
 
     autoLayout() {
@@ -709,11 +709,11 @@ export class App {
                                 if (!this.uncertainCategories.has(name)) {
                                     // make transparent version of color
                                     const temp = new Rgb_color(color);
-                                    const transpColor = "rgba(" + temp.r + "," + temp.g + "," + temp.b + ", 0.6)";
-                                    createHatchedFill("hatched_" + anno.description + "_" + color.toString(), transpColor);
+                                    const transpColor = `rgba(${temp.r},${temp.g},${temp.b}, 0.6)`;
+                                    createHatchedFill(`hatched_${anno.description}_${color.toString()}`, transpColor);
                                     this.uncertainCategories.add(anno.description);
                                 }
-                                const checkedFill = "url('#hatched_" + anno.description + "_" + color.toString() + "')";
+                                const checkedFill = `url('#hatched_${anno.description}_${color.toString()}')`;
                                 if (anno.fuzzyStart) {
                                     anno.fuzzyStart.setAttribute("fill", checkedFill);
                                     anno.fuzzyStart.setAttribute("stroke", color);
@@ -758,7 +758,7 @@ export class App {
                                         if (this.uncertainCategories.has(desc)) {
                                             // make transparent version of color
                                             const temp = new Rgb_color(this.featureColors(desc));
-                                            const transpColor = "rgba(" + temp.r + "," + temp.g + "," + temp.b + ", 0.6)";
+                                            const transpColor = `rgba(${temp.r},${temp.g},${temp.b}, 0.6)`;
                                             featureType.uncertain = {"color": transpColor};
                                         }
                                         featureTypes.push(featureType);
@@ -850,7 +850,7 @@ export class App {
     }
 
     setCTM(element, matrix) {
-        const s = "matrix(" + matrix.a + "," + matrix.b + "," + matrix.c + "," + matrix.d + "," + matrix.e + "," + matrix.f + ")";
+        const s = `matrix(${matrix.a},${matrix.b},${matrix.c},${matrix.d},${matrix.e},${matrix.f})`;
         element.setAttribute("transform", s);
     }
 
@@ -940,8 +940,8 @@ export class App {
                         pageX = this.dragStart.touches[0].pageX;
                         pageY = this.dragStart.touches[0].pageY;
                     }
-                    menu.style("top", (pageY - 20) + "px").style("left", (pageX - 20) + "px").style("display", "block");
-                    d3.select(".scaleButton_" + (this.dragElement.stickZoom * 100)).property("checked", true);
+                    menu.style("top", `${pageY - 20}px`).style("left", `${pageX - 20}px`).style("display", "block");
+                    d3.select(`.scaleButton_${this.dragElement.stickZoom * 100}`).property("checked", true);
                 }
             }
         }

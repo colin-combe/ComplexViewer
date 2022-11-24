@@ -63,7 +63,7 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
                             for (let seqData of linkedFeature.sequenceData) {
                                 let nodeId = seqData.interactorRef;
                                 if (expand) {
-                                    nodeId = nodeId + "(" + seqData.participantRef + ")";
+                                    nodeId = `${nodeId}(${seqData.participantRef})`;
                                 }
                                 let toSequenceData = toSequenceData_indexedByNodeId.get(nodeId);
                                 if (typeof toSequenceData === "undefined") {
@@ -119,7 +119,7 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
     //make mi features into annotations
     for (let feature of app.features.values()) {
         // add features to interactors/participants/nodes
-        //console.log("FEATURE:" + feature.name, feature.sequenceData);
+        // console.log(`FEATURE:${feature.name}`, feature.sequenceData);
         let annotName = "";
         if (typeof feature.name !== "undefined") {
             annotName += feature.name + " ";
@@ -132,7 +132,7 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
             for (let seqDatum of feature.sequenceData) {
                 let mID = seqDatum.interactorRef;
                 if (expand) {
-                    mID = mID + "(" + seqDatum.participantRef + ")";
+                    mID = `${mID}(${seqDatum.participantRef})`;
                 }
                 // console.log("*", mID, seqDatum);
                 const molecule = app.participants.get(mID);
@@ -146,7 +146,7 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
                     }
                     miFeatures.push(annotation);
                 } else {
-                    console.log("participant " + mID + " not found!");
+                    console.log(`participant ${mID} not found!`);
                 }
             }
         }
@@ -190,7 +190,7 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
                 for (let jsonParticipant of datum.participants) {
                     const intRef = jsonParticipant.interactorRef;
                     const partRef = jsonParticipant.id;
-                    const participantId = intRef + "(" + partRef + ")";
+                    const participantId = `${intRef}(${partRef})`;
                     let participant = app.participants.get(participantId);
                     if (typeof participant === "undefined") {
                         const interactor = app.interactors.get(intRef);
@@ -301,7 +301,7 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
         } else {
             // MI:0329 - unknown participant ?
             // MI:0383 - biopolymer ?
-            alert("Unrecognised type:" + interactor.type.name);
+            alert(`Unrecognised type:${interactor.type.name}`);
         }
         return participant;
     }
@@ -414,7 +414,7 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
         for (let pi = 0; pi < participantCount; pi++) {
             let pID = jsonParticipants[pi].interactorRef;
             if (expand) {
-                pID = pID + "(" + jsonParticipants[pi].id + ")";
+                pID = `${pID}(${jsonParticipants[pi].id})`;
             }
             pIDs.add(pID);
         }
@@ -425,7 +425,7 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
     function getNode(seqDatum) {
         let id = seqDatum.interactorRef;
         if (expand) {
-            id = id + "(" + seqDatum.participantRef + ")";
+            id = `${id}(${seqDatum.participantRef})`;
         }
         return app.participants.get(id);
     }
@@ -438,9 +438,9 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
                 const seq = seqData[s];
                 let id = seq.interactorRef;
                 if (expand) {
-                    id = id + "(" + seq.participantRef + ")";
+                    id = `${id}(${seq.participantRef})`;
                 }
-                id = id + ":" + seq.pos;
+                id = `${id}:${seq.pos}`;
                 nodeIds.add(id);
             }
             //sort ids
@@ -452,10 +452,10 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
         const end = seqDataToString(toSeqData);
         let seqLinkId;//, endsSwapped;
         if (start < end) {
-            seqLinkId = start + "><" + end;
+            seqLinkId = `${start}><${end}`;
             //endsSwapped = false;
         } else {
-            seqLinkId = end + "><" + start;
+            seqLinkId = `${end}><${start}`;
             //endsSwapped = true;
         }
         let sequenceLink = app.allSequenceLinks.get(seqLinkId);
@@ -484,7 +484,7 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
     }
 
     function getUnaryLink(interactor, interaction) {
-        const linkID = "-" + interactor.id + "-" + interactor.id;
+        const linkID = `-${interactor.id}-${interactor.id}`;
         let link = app.allUnaryLinks.get(linkID);
         if (typeof link === "undefined") {
             link = new UnaryLink(linkID, app, interactor);
@@ -503,11 +503,11 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
         // these links are undirected and should have same ID regardless of which way round
         // source and target are
         if (sourceInteractor.id < targetInteractor.id) {
-            linkID = "-" + sourceInteractor.id + "-" + targetInteractor.id;
+            linkID = `-${sourceInteractor.id}-${targetInteractor.id}`;
             fi = sourceInteractor;
             ti = targetInteractor;
         } else {
-            linkID = "-" + targetInteractor.id + "-" + sourceInteractor.id;
+            linkID = `-${targetInteractor.id}-${sourceInteractor.id}`;
             fi = targetInteractor;
             ti = sourceInteractor;
         }

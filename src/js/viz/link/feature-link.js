@@ -5,66 +5,38 @@ import {svgns} from "../../svgns";
 
 export class FeatureLink extends Link {
     constructor(id, fromFeatPos, toFeatPos, app) {
-        super();
-        this.init(id, fromFeatPos, toFeatPos, app);
-    }
-
-    init(id, fromFeatPos, toFeatPos, app) {
-        this.id = id;
-        this.app = app;
+        super(id, app);
         this.fromSequenceData = fromFeatPos;
         this.toSequenceData = toFeatPos;
-
         this.participants = [this.fromSequenceData[0].participant, this.toSequenceData[0].participant]; //*
         // *potentially, this over simplifies the situation,
         // but there is a workaround in way ReadMiJson init's links so OK for now
-
-        this.glyph = document.createElementNS(svgns, "path");
-        this.uncertainGlyph = document.createElementNS(svgns, "path");
-        this.glyph.classList.add("link", "feature-link", "certain-link");
-        this.uncertainGlyph.classList.add("link", "feature-link", "uncertain-link");
-
-        //set the events for it
-        const self = this;
-        this.uncertainGlyph.onmousedown = function (evt) {
-            self.mouseDown(evt);
-        };
-        this.uncertainGlyph.onmouseover = function (evt) {
-            self.mouseOver(evt);
-        };
-        this.uncertainGlyph.onmouseout = function (evt) {
-            self.mouseOut(evt);
-        };
-        this.glyph.onmousedown = function (evt) {
-            self.mouseDown(evt);
-        };
-        this.glyph.onmouseover = function (evt) {
-            self.mouseOver(evt);
-        };
-        this.glyph.onmouseout = function (evt) {
-            self.mouseOut(evt);
-        };
-        // this.highlightGlyph.onmousedown = function (evt) {
-        //     self.mouseDown(evt);
-        // };
-        // this.highlightGlyph.onmouseover = function (evt) {
-        //     self.mouseOver(evt);
-        // };
-        // this.highlightGlyph.onmouseout = function (evt) {
-        //     self.mouseOut(evt);
-        // };
     }
 
-//andAlternatives means highlight alternative links in case of site ambiguity
-// FeatureLink.prototype.showHighlight = function (show) {
-//     if (show) {
-//         this.highlightGlyph.setAttribute("stroke-opacity", "1");
-//     } else {
-//         this.highlightGlyph.setAttribute("stroke-opacity", "0");
-//     }
-// };
+    get glyph() {
+        if (!this._glyph) {
+            this._glyph = document.createElementNS(svgns, "path");
+            this._glyph.classList.add("link", "feature-link", "certain-link");
+            this._glyph.onmousedown = evt => this.mouseDown(evt);
+            this._glyph.onmouseover = evt => this.mouseOver(evt);
+            this._glyph.onmouseout = evt => this.mouseOut(evt);
+        }
+        return this._glyph;
+    }
 
-//used when filter changed
+    get uncertainGlyph() {
+        if (!this._uncertainGlyph) {
+            this._uncertainGlyph = document.createElementNS(svgns, "path");
+            this._uncertainGlyph.classList.add("link", "feature-link", "uncertain-link");
+            const self = this;
+            this._uncertainGlyph.onmousedown = evt => self.mouseDown(evt);
+            this._uncertainGlyph.onmouseover = evt => self.mouseOver(evt);
+            this._uncertainGlyph.onmouseout = evt => self.mouseOut(evt);
+        }
+        return this._uncertainGlyph;
+    }
+
+    //used when filter changed
     check() {
         if (this.anyParticipantIsBar() === true) {
             this.show();
@@ -119,9 +91,9 @@ export class FeatureLink extends Link {
                 startPoint = participant.getResidueCoordinates(startRes, yOffset);
                 endPoint = participant.getResidueCoordinates(endRes, yOffset);
             }
-            return " Q" + controlPoint[0] + "," + controlPoint[1] + " " + startPoint[0] + "," + startPoint[1] +
-                " L" + endPoint[0] + "," + endPoint[1] +
-                " Q" + controlPoint[0] + "," + controlPoint[1] + " " + midPoint[0] + "," + midPoint[1];
+            return ` Q${controlPoint[0]},${controlPoint[1]} ${startPoint[0]},${startPoint[1]} ` +
+                `L${endPoint[0]},${endPoint[1]} ` +
+                `Q${controlPoint[0]},${controlPoint[1]} ${midPoint[0]},${midPoint[1]} `;
         }
 
         function sequenceDataMidPoint(sequenceData, participant) {
@@ -248,8 +220,8 @@ export class FeatureLink extends Link {
         const fSDCount = this.fromSequenceData.length;
         const tSDCount = this.toSequenceData.length;
         let seqDatum;//, highlightStartRes, highlightEndRes;
-        let glyphPath = "M" + triPointMid[0] + "," + triPointMid[1];
-        let uncertainGlyphPath = "M" + triPointMid[0] + "," + triPointMid[1];
+        let glyphPath = `M${triPointMid[0]},${triPointMid[1]}`;
+        let uncertainGlyphPath = `M${triPointMid[0]},${triPointMid[1]}`;
         // let highlightGlyphPath = "M" + triPointMid[0] + "," + triPointMid[1];
         for (let f = 0; f < fSDCount; f++) {
             seqDatum = this.fromSequenceData[f];
@@ -290,10 +262,6 @@ export class FeatureLink extends Link {
             }
             // highlightGlyphPath += getPathSegments(triPointMid, ttMid,
             //     highlightStartRes, highlightEndRes, toParticipant, tyOffset);
-        }
-
-        if (!this.glyph) {
-            this.initSVG();
         }
 
         this.glyph.setAttribute("d", glyphPath);
