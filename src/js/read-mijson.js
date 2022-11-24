@@ -17,6 +17,7 @@ import {cloneComplexInteractors} from "./clone-complex-interactors";
 
 // reads MI JSON format
 export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
+    app.stoichiometryExpanded = expand;
     //check that we've got a parsed javascript object here, not a String
     miJson = (typeof miJson === "object") ? miJson : JSON.parse(miJson);
 
