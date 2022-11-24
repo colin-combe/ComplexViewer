@@ -520,7 +520,7 @@ export class App {
         }
     }
 
-    showTooltip(p) {
+    moveTooltip(p) {
         let ttX, ttY;
         const length = this.tooltip.getComputedTextLength() + 16;
         const width = this.svgElement.parentNode.clientWidth;
@@ -545,6 +545,8 @@ export class App {
     }
 
     setTooltip(text, color) {
+        if (this.dragStart) return;
+
         if (text) {
             this.tooltip.firstChild.data = text.toString().replace(/&(quot);/g, "\"");
             this.tooltip.setAttribute("display", "block");
@@ -567,6 +569,13 @@ export class App {
         } else {
             this.hideTooltip();
         }
+    }
+
+    showTooltip(p) {
+        this.moveTooltip(p);
+        this.tooltip.setAttribute("display", "block");
+        this.tooltip_bg.setAttribute("display", "block");
+        this.tooltip_subBg.setAttribute("display", "block");
     }
 
     hideTooltip() {
@@ -881,7 +890,7 @@ export class App {
                 }
             } else { // !this.dragStart
                 // console.log("TOOLTIP POSITION!");
-                this.showTooltip(p);
+                this.moveTooltip(p);
             }
         }
     }
@@ -891,6 +900,7 @@ export class App {
         this.preventDefaultsAndStopPropagation(evt);
         const time = new Date().getTime();
         //eliminate some spurious mouse up events - a simple version of debouncing but it seems to work better than for e.g. _.debounce
+        const p = this.getEventPoint(evt);
         if ((time - this.lastMouseUp) > 150) {
             if (this.dragElement && this.dragElement.type === "protein" && this.state !== App.STATES.DRAGGING && !this.dragElement.busy) {
                 if (!this.dragElement.expanded) {
@@ -898,8 +908,6 @@ export class App {
                     this.notifyExpandListeners();
                 } else {
                     this.contextMenuProt = this.dragElement;
-
-                    let p = this.getEventPoint(evt);
                     // if (isNaN(p.x)) { //?
                     //     // alert("isNaN", p);
                     //     // alert(p.x);
@@ -920,6 +928,7 @@ export class App {
                 }
             }
         }
+        this.showTooltip(p);
         this.dragElement = null;
         this.dragStart = null;//{};// should prob make that null here and use it as a check in move()
         this.state = App.STATES.MOUSE_UP;
