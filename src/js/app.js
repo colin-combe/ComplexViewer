@@ -17,7 +17,7 @@ import * as $ from "jquery";
 
 export class App {
     constructor(/*HTMLDivElement*/networkDiv, maxCountInitiallyExpanded = 4) {
-        // this.debug = true;
+        this.debug = false;
         this.el = networkDiv;
         //avoids prob with 'save - web page complete'
         this.el.textContent = ""; //https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
@@ -29,37 +29,31 @@ export class App {
             .append("div").classed("custom-menu", true)
             .append("ul");
 
-        const self = this;
         const collapse = customMenuSel.append("li").classed("collapse", true); //.append("button");
         collapse.text("Collapse");
-        collapse.node().onclick = function (evt) {
-            self.collapseProtein(evt);
-        };
+        collapse.node().onclick = evt => this.collapseProtein(evt);
         const scaleButtonsListItemSel = customMenuSel.append("li").text("Scale: ");
-
         const scaleButtons = scaleButtonsListItemSel.selectAll("ul.custom-menu")
             .data(App.barScales)
             .enter()
             .append("div")
             .attr("class", "bar-scale")
             .append("label");
+
         scaleButtons.append("span")
-            .text(function (d) {
-                if (d === 8) return "AA";
-                else return d;
-            });
+            .text(d => d === 8 ? "AA" : d);
         scaleButtons.append("input")
             // .attr ("id", function(d) { return d*100; })
-            .attr("class", function (d) {
-                return "scaleButton scaleButton_" + (d * 100);
-            })
+            .attr("class", d => `scaleButton scaleButton_${d * 100}`)
             .attr("name", "scaleButtons")
             .attr("type", "radio")
-            .on("change", function (e, d) {
-                self.preventDefaultsAndStopPropagation(d);
-                self.contextMenuProt.setStickScale(d, self.contextMenuPoint);
+            .on("change", (e, d) => {
+                this.preventDefaultsAndStopPropagation(d);
+                this.contextMenuProt.setStickScale(d, this.contextMenuPoint);
             });
         const contextMenu = d3.select(".custom-menu-margin").node();
+
+        const self = this;
         contextMenu.onmouseout = function (evt) {
             let e = evt.relatedTarget;
             do {
@@ -76,13 +70,13 @@ export class App {
         this.svgElement.classList.add("complexViewerSVG");
 
         //add listeners
-        this.svgElement.onmousedown = evt => self.mouseDown(evt);
-        this.svgElement.onmousemove = evt => self.move(evt);
-        this.svgElement.onmouseup = evt => self.mouseUp(evt);
-        this.svgElement.onmouseout = evt => self.mouseOut(evt);
-        this.svgElement.ontouchstart = evt => self.touchStart(evt);
-        this.svgElement.ontouchmove = evt => self.move(evt);
-        this.svgElement.ontouchend = evt => self.mouseUp(evt);
+        this.svgElement.onmousedown = evt => this.mouseDown(evt);
+        this.svgElement.onmousemove = evt => this.move(evt);
+        this.svgElement.onmouseup = evt => this.mouseUp(evt);
+        this.svgElement.onmouseout = evt => this.mouseOut(evt);
+        this.svgElement.ontouchstart = evt => this.touchStart(evt);
+        this.svgElement.ontouchmove = evt => this.move(evt);
+        this.svgElement.ontouchend = evt => this.mouseUp(evt);
         this.lastMouseUp = new Date().getTime();
 
         this.el.oncontextmenu = function (evt) {
@@ -96,13 +90,9 @@ export class App {
 
         const mouseWheelEvt = (/Firefox/i.test(navigator.userAgent)) ? "DOMMouseScroll" : "mousewheel"; //FF doesn't recognize mousewheel as of FF3.x
         if (document.attachEvent) { //if IE (and Opera depending on user setting)
-            this.svgElement.attachEvent("on" + mouseWheelEvt, function (evt) {
-                self.mouseWheel(evt);
-            });
+            this.svgElement.attachEvent(`on${mouseWheelEvt}`, evt => this.mouseWheel(evt));
         } else if (document.addEventListener) { //WC3 browsers
-            this.svgElement.addEventListener(mouseWheelEvt, function (evt) {
-                self.mouseWheel(evt);
-            }, false);
+            this.svgElement.addEventListener(mouseWheelEvt, evt => this.mouseWheel(evt), false);
         }
 
 
@@ -275,11 +265,7 @@ export class App {
             }
         }
         this.updateAnnotations(); //?
-        const self = this;
-        fetchAnnotations(this, function () {
-            self.updateAnnotations();
-        });
-
+        fetchAnnotations(this, () => this.updateAnnotations());
         this.checkLinks();
         this.autoLayout();
     }
@@ -416,10 +402,7 @@ export class App {
 
                 participantDebugSel.enter().append("rect")
                     .classed("node", true)
-                    .attr({
-                        rx: 5,
-                        ry: 5
-                    })
+                    .attr({rx: 5, ry: 5})
                     .style("stroke", "red")
                     .style("fill", "none");
 
@@ -458,7 +441,7 @@ export class App {
                     //     self.setAllLinkCoordinates();
                     //     self.zoomToExtent();
                     // })
-                    .on("tick", function () {
+                    .on("tick", () => {
                         const nodes = self.d3cola.nodes();
                         for (let node of nodes) {
                             node.setPositionFromCola(node.x, node.y);
@@ -483,18 +466,10 @@ export class App {
                             // });
 
                             participantDebugSel.attr({
-                                x: function (d) {
-                                    return d.bounds.x;// + (width / 2);
-                                },
-                                y: function (d) {
-                                    return d.bounds.y;// + (height / 2);
-                                },
-                                width: function (d) {
-                                    return d.bounds.width();
-                                },
-                                height: function (d) {
-                                    return d.bounds.height();
-                                }
+                                x: d =>  d.bounds.x, // + (width / 2);
+                                y: d => d.bounds.y, // + (height / 2);
+                                width: d => d.bounds.width(),
+                                height: d => d.bounds.height()
                             });
                         }
                     });

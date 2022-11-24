@@ -69,12 +69,11 @@ export class NaryLink extends Link {
 
     setLinkCoordinates(dontPropogate) {
         // Uses d3.geom.hull to calculate a bounding path around an array of vertices
-        const calculateHullPath = function (values) {
+        const calculateHullPath = values => {
             const hullPath = polygonHull(values);
             this.hull = hullPath;
             return `M${hullPath.join("L")}Z`;
         };
-        const self = this; // TODO: - tidy hack above?
         this.mapped = this.orbitNodes(this.getMappedCoordinates());
         const hullValues = calculateHullPath(this.mapped);
         if (hullValues) {

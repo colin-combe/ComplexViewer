@@ -74,12 +74,8 @@ export class Protein extends Polymer {
 
         this.initListeners();
 
-        const self = this;
         Object.defineProperty(this, "height", {
-            get: function height() {
-                return self.expanded ? 120 : 40;
-                //return 160;
-            }
+            get: () => this.expanded ? 120 : 40
         });
 
         this.showHighlight(false);

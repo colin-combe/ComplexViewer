@@ -73,22 +73,10 @@ export class Interactor {
     }
 
     initListeners() {
-        // events
-        const self = this;
-        //    this.upperGroup.setAttribute('pointer-events','all');
-        this.upperGroup.onmousedown = function (evt) {
-            self.mouseDown(evt);
-        };
-        this.upperGroup.onmouseenter = function (evt) {
-            self.mouseOver(evt);
-        };
-        this.upperGroup.onmouseleave = function (evt) {
-            self.mouseOut(evt);
-        };
-        this.upperGroup.ontouchstart = function (evt) {
-            //console.log("interactor touch start");
-            self.touchStart(evt);
-        };
+        this.upperGroup.onmousedown = evt => this.mouseDown(evt);
+        this.upperGroup.onmouseenter = evt => this.mouseOver(evt);
+        this.upperGroup.onmouseleave = evt => this.mouseOut(evt);
+        this.upperGroup.ontouchstart = evt => this.touchStart(evt);
     }
 
     addStoichiometryLabel(stoichiometry) {

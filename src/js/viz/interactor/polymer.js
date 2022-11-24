@@ -488,13 +488,13 @@ export class Polymer extends Interactor {
     }
 
     updatePositionalFeatures() {
-        const self = this;
+        // const self = this;
 
-        const toolTipFunc = function (evt) {
+        const toolTipFunc = evt => {
             const el = (evt.target.correspondingUseElement) ? evt.target.correspondingUseElement : evt.target;
-            self.app.preventDefaultsAndStopPropagation(evt);
-            self.app.setTooltip(el.name, el.getAttribute("fill"));
-            self.showHighlight(true);
+            this.app.preventDefaultsAndStopPropagation(evt);
+            this.app.setTooltip(el.name, el.getAttribute("fill"));
+            this.showHighlight(true);
         };
 
         let r = -1;
