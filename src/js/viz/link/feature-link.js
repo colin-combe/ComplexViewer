@@ -15,23 +15,14 @@ export class FeatureLink extends Link {
 
     get glyph() {
         if (!this._glyph) {
-            this._glyph = document.createElementNS(svgns, "path");
-            this._glyph.classList.add("link", "feature-link", "certain-link");
-            this._glyph.onmousedown = evt => this.mouseDown(evt);
-            this._glyph.onmouseover = evt => this.mouseOver(evt);
-            this._glyph.onmouseout = evt => this.mouseOut(evt);
+            this._glyph = this._createElement("path", ["link", "feature-link", "certain-link"]);
         }
         return this._glyph;
     }
 
     get uncertainGlyph() {
         if (!this._uncertainGlyph) {
-            this._uncertainGlyph = document.createElementNS(svgns, "path");
-            this._uncertainGlyph.classList.add("link", "feature-link", "uncertain-link");
-            const self = this;
-            this._uncertainGlyph.onmousedown = evt => self.mouseDown(evt);
-            this._uncertainGlyph.onmouseover = evt => self.mouseOver(evt);
-            this._uncertainGlyph.onmouseout = evt => self.mouseOut(evt);
+            this._uncertainGlyph = this._createElement("path", ["link", "feature-link", "uncertain-link"]);
         }
         return this._uncertainGlyph;
     }

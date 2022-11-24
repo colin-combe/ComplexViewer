@@ -1,3 +1,5 @@
+import {svgns} from "../../svgns";
+
 export class Link {
     constructor() {
     }
@@ -79,5 +81,14 @@ export class Link {
     hide() {
         this.highlightLine.remove();
         this.line.remove();
+    }
+
+    _createElement(tagName, classes = []) {
+        const line = document.createElementNS(svgns, tagName);
+        line.classList.add(...classes);
+        line.onmousedown = evt => this.mouseDown(evt);
+        line.onmouseover = evt => this.mouseOver(evt);
+        line.onmouseout = evt => this.mouseOut(evt);
+        return line;
     }
 }
