@@ -34,7 +34,7 @@ export function fetchAnnotations(/*App*/ app, callback) {
 }
 
 function getUniProtFeatures(prot, callback) {
-    const url = "https://www.ebi.ac.uk/proteins/api/proteins/" + prot.json.identifier.id.trim();
+    const url = `https://www.ebi.ac.uk/proteins/api/proteins/${prot.json.identifier.id.trim()}`;
     d3.json(url).then(json => {
         let annotations = prot.annotationSets.get("UniprotKB");
         if (typeof annotations === "undefined") {
@@ -53,7 +53,7 @@ function getUniProtFeatures(prot, callback) {
 
 
 function getSuperFamFeatures(prot, callback) {
-    const url = "https://supfam.mrc-lmb.cam.ac.uk/SUPERFAMILY/cgi-bin/das/up/features?segment=" + prot.json.identifier.id.trim();
+    const url = `https://supfam.mrc-lmb.cam.ac.uk/SUPERFAMILY/cgi-bin/das/up/features?segment=${prot.json.identifier.id.trim()}`;
     d3.xml(url).then(xml => {
         let annotations = prot.annotationSets.get("Superfamily");
         if (typeof annotations === "undefined") {

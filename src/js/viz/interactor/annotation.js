@@ -6,8 +6,6 @@ export class Annotation {
     }
 
     toString() {
-        return this.description + " ["
-            + (this.seqDatum ? this.seqDatum.toString() : this.seqDatum.begin + " - " + this.seqDatum.end)
-            + "]";
+        return `${this.description} [${this.seqDatum ? this.seqDatum.toString() : `${this.seqDatum.begin} - ${this.seqDatum.end}`}]`;
     }
 }

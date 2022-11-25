@@ -1,34 +1,24 @@
-import {Link} from "./link";
 import * as Intersection from "intersectionjs";
 import * as Point2D from "point2d";
+import {HideableLink} from "./hideable-link";
 
-export class BinaryLink extends Link {
+export class BinaryLink extends HideableLink {
     constructor(id, app, fromI, toI) {
         super(id, app);
         this.participants = [fromI, toI];
         this.sequenceLinks = new Map();
     }
 
-    get line (){
+    get line() {
         if (!this._line) {
-            this._line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-            this._line.classList.add("link", "link-line");//, "certain-link");
-            const self = this;
-            this._line.onmousedown = evt => self.mouseDown(evt);
-            this._line.onmouseover = evt => self.mouseOver(evt);
-            this._line.onmouseout = evt => self.mouseOut(evt);
+            this._line = this._createElement("line", ["link", "link-line"]);
         }
         return this._line;
     }
 
-    get highlightLine (){
+    get highlightLine() {
         if (!this._highlightLine) {
-            this._highlightLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
-            this._highlightLine.classList.add("link", "highlight", "link-highlight");
-            const self = this;
-            this._highlightLine.onmousedown = evt => self.mouseDown(evt);
-            this._highlightLine.onmouseover = evt => self.mouseOver(evt);
-            this._highlightLine.onmouseout = evt => self.mouseOut(evt);
+            this._highlightLine = this._createElement("line", ["link", "highlight", "link-highlight"]);
         }
         return this._highlightLine;
     }
