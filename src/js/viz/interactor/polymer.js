@@ -1,4 +1,6 @@
 import * as d3 from "d3"; // transitions and other stuff
+import {transform} from "../../transform";
+import {easeCubicInOut} from "d3-ease";
 import {rotatePointAboutPoint} from "../../geom";
 import {svgns} from "../../svgns";
 import {Interactor} from "./interactor";
@@ -45,8 +47,8 @@ export class Polymer extends Interactor {
     scale() {
         const protLength = (this.size) * this.stickZoom;
         if (this.expanded) {
-            const labelTransform = d3.transform(this.labelSVG.getAttribute("transform"));
-            const k = this.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate)
+            // const labelTransform = transform(this.labelSVG.getAttribute("transform"));
+            const k = this.app.svgElement.createSVGMatrix()
                 .translate((-(((this.size / 2) * this.stickZoom) + (this.nTermFeatures.length > 0 ? 25 : 10))), this.labelY); //.scale(z).translate(-c.x, -c.y);
             this.labelSVG.transform.baseVal.initialize(this.app.svgElement.createSVGTransformFromMatrix(k));
             this.updateAnnotationRectanglesNoTransition();
@@ -93,7 +95,7 @@ export class Polymer extends Interactor {
             }
             if (this.stickZoom >= 8) {
                 const seqLabelGroup = document.createElementNS(svgns, "g");
-                seqLabelGroup.setAttribute("transform", "translate(" + this.getResXWithStickZoom(res) + " " + 0 + ")");
+                seqLabelGroup.setAttribute("transform", `translate(${this.getResXWithStickZoom(res)} 0)`);
 
                 const seqLabel = document.createElementNS(svgns, "text");
                 seqLabel.classList.add("label", "sequence");
@@ -126,7 +128,7 @@ export class Polymer extends Interactor {
 
         function scaleLabelAt(self, text, tickX) {
             const scaleLabelGroup = document.createElementNS(svgns, "g");
-            scaleLabelGroup.setAttribute("transform", "translate(" + tickX + " " + 0 + ")");
+            scaleLabelGroup.setAttribute("transform", `translate(${tickX} 0)`);
             const scaleLabel = document.createElementNS(svgns, "text");
             scaleLabel.classList.add("label", "scale-label");
             scaleLabel.setAttribute("x", "0");
@@ -159,18 +161,17 @@ export class Polymer extends Interactor {
     }
 
     toCircle(transition = true, svgP) {
-
         if (!svgP) {
             const width = this.app.svgElement.parentNode.clientWidth;
             const ctm = this.app.container.getCTM().inverse();
             const z = this.app.container.getCTM().inverse().a;
-            if (this.ix < ctm.e){
+            if (this.ix < ctm.e) {
                 console.log("off left edge");
-                svgP = {x:ctm.e  + ((this.getSymbolRadius() + 15 + this.labelSVG.getComputedTextLength())), y:this.iy};
+                svgP = {x: ctm.e + ((this.getSymbolRadius() + 15 + this.labelSVG.getComputedTextLength())), y: this.iy};
             }
-            if (this.ix > ctm.e + (width * z)){
+            if (this.ix > ctm.e + (width * z)) {
                 console.log("off right edge");
-                svgP = {x:ctm.e + (width * z)  - ((this.getSymbolRadius() + 5)), y:this.iy};
+                svgP = {x: ctm.e + (width * z) - ((this.getSymbolRadius() + 5)), y: this.iy};
             }
         }
 
@@ -196,12 +197,12 @@ export class Polymer extends Interactor {
             .duration(transitionTime);
 
         const stickZoomInterpol = d3.interpolate(this.stickZoom, 0);
-        const labelTransform = d3.transform(this.labelSVG.getAttribute("transform"));
+        const labelTransform = transform(this.labelSVG.getAttribute("transform"));
         const labelStartPoint = labelTransform.translate[0];
         const labelTranslateInterpol = d3.interpolate(labelStartPoint, -(r + 5));
 
         let xInterpol = null;//,
-            // yInterpol = null;
+        // yInterpol = null;
         if (typeof svgP !== "undefined" && svgP !== null) {
             xInterpol = d3.interpolate(this.ix, svgP.x);
             // yInterpol = d3.interpolate(this.iy, svgP.y);
@@ -209,7 +210,7 @@ export class Polymer extends Interactor {
 
         const self = this;
         d3.select(this.ticks).transition().attr("opacity", 0).duration(transitionTime / 4)
-            .each("end",
+            .on("end",
                 function () {
                     d3.select(this).selectAll("*").remove();
                 }
@@ -217,7 +218,7 @@ export class Polymer extends Interactor {
 
         const originalStickZoom = this.stickZoom;
         const originalRotation = this.rotation;
-        const cubicInOut = d3.ease("cubic-in-out");
+        const cubicInOut = easeCubicInOut;
         if (transition) {
             for (let [annotationType, annotations] of this.annotationSets) {
                 if (this.app.annotationSetsShown.get(annotationType) === true) {
@@ -242,16 +243,15 @@ export class Polymer extends Interactor {
                     }
                 }
             }
-            d3.timer(function (elapsed) {
-                return update(elapsed / transitionTime);
+            const t = d3.timer(function (elapsed) {
+                if (update(elapsed / transitionTime)) t.stop();
             });
         } else {
             update(1);
         }
 
         function update(interp) {
-            const labelTransform = d3.transform(self.labelSVG.getAttribute("transform"));
-            const k = self.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), self.labelY); //.scale(z).translate(-c.x, -c.y);
+            const k = self.app.svgElement.createSVGMatrix().translate(labelTranslateInterpol(cubicInOut(interp)), self.labelY); //.scale(z).translate(-c.x, -c.y);
             self.labelSVG.transform.baseVal.initialize(self.app.svgElement.createSVGTransformFromMatrix(k));
 
             if (xInterpol !== null) {
@@ -339,7 +339,7 @@ export class Polymer extends Interactor {
 
 
         const self = this;
-        const cubicInOut = d3.ease("cubic-in-out");
+        const cubicInOut = easeCubicInOut;
         if (transition) {
             for (let [annotationType, annotations] of this.annotationSets) {
                 if (this.app.annotationSetsShown.get(annotationType) === true) {
@@ -374,16 +374,16 @@ export class Polymer extends Interactor {
                     }
                 }
             }
-            d3.timer(function (elapsed) {
-                return update(elapsed / transitionTime);
+            const t = d3.timer(function (elapsed) {
+                if (update(elapsed / transitionTime)) t.stop();
             });
         } else {
             update(1);
         }
 
         function update(interp) {
-            const labelTransform = d3.transform(self.labelSVG.getAttribute("transform"));
-            const k = self.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), self.labelY); //.scale(z).translate(-c.x, -c.y);
+            const labelTransform = transform(self.labelSVG.getAttribute("transform"));
+            const k = self.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), self.labelY);
             self.labelSVG.transform.baseVal.initialize(self.app.svgElement.createSVGTransformFromMatrix(k));
 
             const currentLength = lengthInterpol(cubicInOut(interp));
@@ -487,14 +487,14 @@ export class Polymer extends Interactor {
         this.cTermFeatures = [];
     }
 
-    updatePositionalFeatures () {
-        const self = this;
+    updatePositionalFeatures() {
+        // const self = this;
 
-        const toolTipFunc = function (evt) {
+        const toolTipFunc = evt => {
             const el = (evt.target.correspondingUseElement) ? evt.target.correspondingUseElement : evt.target;
-            self.app.preventDefaultsAndStopPropagation(evt);
-            self.app.setTooltip(el.name, el.getAttribute("fill"));
-            self.showHighlight(true);
+            this.app.preventDefaultsAndStopPropagation(evt);
+            this.app.setTooltip(el.name, el.getAttribute("fill"));
+            this.showHighlight(true);
         };
 
         let r = -1;
@@ -627,11 +627,16 @@ export class Polymer extends Interactor {
         if (rung === -1) {
             bottom = 0;
             top = radius;
+        } else if (startRes === "n-n") {
+            rungHeight = radius / this.nTermFeatures.length;
+        } else if (endRes === "c-c") {
+            rungHeight = radius / this.cTermFeatures.length;
         } else {
             rungHeight = radius / this.rungCount;
-            bottom = (rung * rungHeight);
-            top = bottom + rungHeight;
         }
+
+        bottom = (rung * rungHeight);
+        top = bottom + rungHeight;
 
         let startAngle, endAngle;
         if (startRes === "n-n") {
@@ -656,33 +661,33 @@ export class Polymer extends Interactor {
         const p4 = rotatePointAboutPoint([0, bottom], [0, 0], endAngle - 180);
 
         //'left' edge
-        let path = "M" + p1[0] + "," + p1[1] + " L" + p2[0] + "," + p2[1];
+        let path = `M${p1[0]},${p1[1]} L${p2[0]},${p2[1]}`;
 
         //top edge
         if (arc) {
-            path += " A" + top + "," + top + " 0 " + largeArch + " 1 " + p3[0] + "," + p3[1];
+            path += ` A${top},${top} 0 ${largeArch} 1 ${p3[0]},${p3[1]}`;
         } else {
-            //path += " L" + p3[0] + "," + p3[1];
+            // path += ` L${p3[0]},${p3[1]}`;
             for (let sia = 0; sia <= Polymer.stepsInArc; sia++) {
                 const angle = startAngle + ((endAngle - startAngle) / Polymer.stepsInArc) * sia;
                 const p = rotatePointAboutPoint([0, top], [0, 0], angle - 180);
-                path += " L" + p[0] + "," + p[1];
+                path += ` L${p[0]},${p[1]}`;
             }
         }
 
         //bottom edge
         if (arc) {
             //'right' edge
-            path += " L" + p4[0] + "," + p4[1];
+            path += ` L${p4[0]},${p4[1]}`;
             //bottom edge
-            path += " A" + bottom + "," + bottom + " 0 " + largeArch + " 0 " + p1[0] + "," + p1[1];
+            path += ` A${bottom},${bottom} 0 ${largeArch} 0 ${p1[0]},${p1[1]}`;
         } else {
-            // path += " L" + p1[0] + "," + p1[1];
+            // path += ` L${p1[0]},${p1[1]}`;
             //bottom edge
             for (let sia = Polymer.stepsInArc; sia >= 0; sia--) {
                 const angle = startAngle + ((endAngle - startAngle) / Polymer.stepsInArc) * sia;
                 const p = rotatePointAboutPoint([0, bottom], [0, 0], angle - 180);
-                path += " L" + p[0] + "," + p[1];
+                path += ` L${p[0]},${p[1]}`;
             }
         }
 
@@ -713,17 +718,17 @@ export class Polymer extends Interactor {
         const bottom = top + rungHeight;
 
         //'left' edge
-        let path = "M" + annoX + "," + bottom + " L" + annoX + "," + top;
+        let path = `M${annoX},${bottom} L${annoX},${top}`;
         //top edge
         for (let sia = 0; sia <= Polymer.stepsInArc; sia++) {
             const step = annoX + (annoLength * (sia / Polymer.stepsInArc));
-            path += " L " + step + "," + top;
+            path += ` L ${step},${top}`;
         }
         //'right' edge - no need
         // bottom edge
         for (let sia = Polymer.stepsInArc; sia >= 0; sia--) {
             const step = annoX + (annoLength * (sia / Polymer.stepsInArc));
-            path += " L " + step + "," + bottom;
+            path += ` L ${step},${bottom}`;
         }
         //close
         path += " Z";
@@ -732,8 +737,8 @@ export class Polymer extends Interactor {
     }
 }
 
-    Polymer.STICKHEIGHT = 20; //height of stick in pixels
-    Polymer.MAXSIZE = 0; // residue count of longest sequence
-    Polymer.transitionTime = 650;
-    Polymer.minXDist = 30;
-    Polymer.stepsInArc = 5;
+Polymer.STICKHEIGHT = 20; //height of stick in pixels
+Polymer.MAXSIZE = 0; // residue count of longest sequence
+Polymer.transitionTime = 650;
+Polymer.minXDist = 30;
+Polymer.stepsInArc = 5;

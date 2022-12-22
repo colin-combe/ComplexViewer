@@ -10,6 +10,7 @@
     <link href="./css/style.css" rel="stylesheet" type='text/css'>
     <link href="./css/demo.css" rel="stylesheet" type='text/css'>
     <!--libraries-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.2.2/d3.v3.min.js"></script>
     <script src="./dist/complexviewer.js" type="text/javascript"></script>
     <!-- example data info -->
     <script src="./data/index.js" type="text/javascript"></script>
@@ -169,7 +170,7 @@
     function loadData() {
         cv.clear();
         const dataSetsSelect = document.getElementById("dataSets");
-        const path = "./data/" + dataSetsSelect.options[dataSetsSelect.selectedIndex].value + ".json";
+        const path = `./data/${dataSetsSelect.options[dataSetsSelect.selectedIndex].value}.json`;
         d3.json(path, function (data) {
             cv.readMIJSON(data, false);
             makeLegend(cv.getColorKeyJson());

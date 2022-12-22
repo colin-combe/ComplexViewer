@@ -1,23 +1,29 @@
 //todo - is this even working? you never see it
 
-import {Link} from "./link";
-import {svgns} from "../../svgns";
+import {HideableLink} from "./hideable-link";
 
-// var FeatureLink = require('./FeatureLink');
-
-export class UnaryLink extends Link {
+export class UnaryLink extends HideableLink {
     constructor(id, app, participant) {
-        super();
-        this.id = id;
+        super(id, app);
         this.participants = [participant];
-        this.sequenceLinks = new Map();
-        this.app = app;
-        this.line = document.createElementNS(svgns, "path");
-        this.highlightLine = document.createElementNS(svgns, "path");
-        this.initSVG();
+        participant.selfLink = this;
     }
 
-    initSelfLinkSVG () {
+    get line() {
+        if (!this._line) {
+            this._line = this._createElement("path", ["link", "link-line"]);
+        }
+        return this._line;
+    }
+
+    get highlightLine() {
+        if (!this._highlightLine) {
+            this._highlightLine = this._createElement("path", ["link", "highlight", "link-highlight"]);
+        }
+        return this._highlightLine;
+    }
+
+    initSelfLinkSVG() {
         const path = this.participants[0].getAggregateSelfLinkPath();
         this.line.setAttribute("d", path);
         this.highlightLine.setAttribute("d", path);
@@ -34,19 +40,28 @@ export class UnaryLink extends Link {
     }
 
     show() {
-        this.line.setAttribute("transform", "translate(" + this.participants[0].ix +
-            " " + this.participants[0].iy + ")" + " scale(" + (this.app.z) + ")");
-        this.highlightLine.setAttribute("transform", "translate(" + this.participants[0].ix +
-            " " + this.participants[0].iy + ")" + " scale(" + (this.app.z) + ")");
+        this.initSelfLinkSVG();
+        this.line.setAttribute(
+            "transform",
+            `translate(${this.participants[0].ix} ${this.participants[0].iy}) scale(${this.app.z})`
+        );
+        this.highlightLine.setAttribute(
+            "transform",
+            `translate(${this.participants[0].ix} ${this.participants[0].iy}) scale(${this.app.z})`
+        );
         this.app.highlights.appendChild(this.highlightLine);
         this.app.p_pLinks.appendChild(this.line);
     }
 
     setLinkCoordinates() {
         const participant = this.participants[0];
-        this.line.setAttribute("transform", "translate(" + participant.ix +
-            " " + participant.iy + ")" + " scale(" + (this.app.z) + ")");
-        this.highlightLine.setAttribute("transform", "translate(" + participant.ix +
-            " " + participant.iy + ")" + " scale(" + (this.app.z) + ")");
+        this.line.setAttribute(
+            "transform",
+            `translate(${participant.ix} ${participant.iy}) scale(${this.app.z})`
+        );
+        this.highlightLine.setAttribute(
+            "transform",
+            `translate(${participant.ix} ${participant.iy}) scale(${this.app.z})`
+        );
     }
 }

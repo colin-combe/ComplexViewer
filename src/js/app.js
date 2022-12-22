@@ -1,6 +1,7 @@
 import "../css/xinet.css";
 import packageInfo from "../../package.json";
 import * as d3 from "d3";
+import {scaleOrdinal} from "d3-scale";
 import * as d3_chromatic from "d3-scale-chromatic";
 import * as cola from "./cola";
 import * as Rgb_color from "rgb-color";
@@ -16,49 +17,43 @@ import * as $ from "jquery";
 
 export class App {
     constructor(/*HTMLDivElement*/networkDiv, maxCountInitiallyExpanded = 4) {
-        // this.debug = true;
+        this.debug = false;
         this.el = networkDiv;
         //avoids prob with 'save - web page complete'
         this.el.textContent = ""; //https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
         this.maxCountInitiallyExpanded = maxCountInitiallyExpanded;
-        this.d3cola = cola.d3adaptor().groupCompactness(Number.MIN_VALUE).avoidOverlaps(true); //1e-5
+        this.d3cola = cola.d3adaptor(d3).groupCompactness(Number.MIN_VALUE).avoidOverlaps(true); //1e-5
 
         const customMenuSel = d3.select(this.el)
             .append("div").classed("custom-menu-margin", true)
             .append("div").classed("custom-menu", true)
             .append("ul");
 
-        const self = this;
         const collapse = customMenuSel.append("li").classed("collapse", true); //.append("button");
         collapse.text("Collapse");
-        collapse[0][0].onclick = function (evt) {
-            self.collapseProtein(evt);
-        };
+        collapse.node().onclick = evt => this.collapseProtein(evt);
         const scaleButtonsListItemSel = customMenuSel.append("li").text("Scale: ");
-
         const scaleButtons = scaleButtonsListItemSel.selectAll("ul.custom-menu")
             .data(App.barScales)
             .enter()
             .append("div")
             .attr("class", "bar-scale")
             .append("label");
+
         scaleButtons.append("span")
-            .text(function (d) {
-                if (d === 8) return "AA";
-                else return d;
-            });
+            .text(d => d === 8 ? "AA" : d);
         scaleButtons.append("input")
             // .attr ("id", function(d) { return d*100; })
-            .attr("class", function (d) {
-                return "scaleButton scaleButton_" + (d * 100);
-            })
+            .attr("class", d => `scaleButton scaleButton_${d * 100}`)
             .attr("name", "scaleButtons")
             .attr("type", "radio")
-            .on("change", function (d) {
-                self.preventDefaultsAndStopPropagation(d);
-                self.contextMenuProt.setStickScale(d, self.contextMenuPoint);
+            .on("change", (e, d) => {
+                this.preventDefaultsAndStopPropagation(d);
+                this.contextMenuProt.setStickScale(d, this.contextMenuPoint);
             });
         const contextMenu = d3.select(".custom-menu-margin").node();
+
+        const self = this;
         contextMenu.onmouseout = function (evt) {
             let e = evt.relatedTarget;
             do {
@@ -75,27 +70,13 @@ export class App {
         this.svgElement.classList.add("complexViewerSVG");
 
         //add listeners
-        this.svgElement.onmousedown = function (evt) {
-            self.mouseDown(evt);
-        };
-        this.svgElement.onmousemove = function (evt) {
-            self.move(evt);
-        };
-        this.svgElement.onmouseup = function (evt) {
-            self.mouseUp(evt);
-        };
-        this.svgElement.onmouseout = function (evt) {
-            self.mouseOut(evt);
-        };
-        this.svgElement.ontouchstart = function (evt) {
-            self.touchStart(evt);
-        };
-        this.svgElement.ontouchmove = function (evt) {
-            self.move(evt);
-        };
-        this.svgElement.ontouchend = function (evt) {
-            self.mouseUp(evt);
-        };
+        this.svgElement.onmousedown = evt => this.mouseDown(evt);
+        this.svgElement.onmousemove = evt => this.move(evt);
+        this.svgElement.onmouseup = evt => this.mouseUp(evt);
+        this.svgElement.onmouseout = evt => this.mouseOut(evt);
+        this.svgElement.ontouchstart = evt => this.touchStart(evt);
+        this.svgElement.ontouchmove = evt => this.move(evt);
+        this.svgElement.ontouchend = evt => this.mouseUp(evt);
         this.lastMouseUp = new Date().getTime();
 
         this.el.oncontextmenu = function (evt) {
@@ -109,13 +90,9 @@ export class App {
 
         const mouseWheelEvt = (/Firefox/i.test(navigator.userAgent)) ? "DOMMouseScroll" : "mousewheel"; //FF doesn't recognize mousewheel as of FF3.x
         if (document.attachEvent) { //if IE (and Opera depending on user setting)
-            this.svgElement.attachEvent("on" + mouseWheelEvt, function (evt) {
-                self.mouseWheel(evt);
-            });
+            this.svgElement.attachEvent(`on${mouseWheelEvt}`, evt => this.mouseWheel(evt));
         } else if (document.addEventListener) { //WC3 browsers
-            this.svgElement.addEventListener(mouseWheelEvt, function (evt) {
-                self.mouseWheel(evt);
-            }, false);
+            this.svgElement.addEventListener(mouseWheelEvt, evt => this.mouseWheel(evt), false);
         }
 
 
@@ -228,9 +205,9 @@ export class App {
         for (let c of d3_chromatic.schemePastel2) {//colorbrewer.Pastel2[8]) {
             const hsl = d3.hsl(c);
             hsl.l = 0.9;
-            complexColors.push(hsl + "");
+            complexColors.push(`${hsl}`);
         }
-        NaryLink.naryColors = d3.scale.ordinal().range(complexColors);
+        NaryLink.naryColors = scaleOrdinal().range(complexColors);
 
         this.z = 1;
         this.hideTooltip();
@@ -288,11 +265,7 @@ export class App {
             }
         }
         this.updateAnnotations(); //?
-        const self = this;
-        fetchAnnotations(this, function () {
-            self.updateAnnotations();
-        });
-
+        fetchAnnotations(this, () => this.updateAnnotations());
         this.checkLinks();
         this.autoLayout();
     }
@@ -328,23 +301,23 @@ export class App {
             let x = -bbox.x + (20 / scaleFactor);
             //box.y + y = 0
             let y = -bbox.y + (20 / scaleFactor);
-            this.container.setAttribute("transform", "scale(" + scaleFactor + ") translate(" + x + " " + y + ") ");
+            this.container.setAttribute("transform", `scale(${scaleFactor}) translate(${x} ${y}) `);
             this.z = this.container.getCTM().inverse().a;
         } else {
             //console.log("fit", scaleFactor);
-            // this.container.setAttribute("transform", "scale(" + 1 + ") translate(" + -(width/2) + " " + -bbox.y + ")");
+            // this.container.setAttribute("transform", `scale(1) translate(${-(width / 2)} ${-bbox.y})`);
             const deltaWidth = width - bbox.width;
             const deltaHeight = height - bbox.height;
             //bbox.x + x = deltaWidth /2;
             let x = (deltaWidth / 2) - bbox.x;
             //box.y + y = deltaHeight / 2
             let y = (deltaHeight / 2) - bbox.y;
-            this.container.setAttribute("transform", "scale(" + 1 + ") translate(" + x + " " + y + ")");
+            this.container.setAttribute("transform", `scale(1) translate(${x} ${y})`);
             this.z = 1;
         }
 
         //todo - following could be tided up by using acknowledgement bbox or positioning att's of text
-        this.acknowledgement.setAttribute("transform", "translate(" + (width - 150) + ", " + (height - 30) + ")");
+        this.acknowledgement.setAttribute("transform", `translate(${width - 150}, ${height - 30})`);
     }
 
     autoLayout() {
@@ -429,10 +402,7 @@ export class App {
 
                 participantDebugSel.enter().append("rect")
                     .classed("node", true)
-                    .attr({
-                        rx: 5,
-                        ry: 5
-                    })
+                    .attr({rx: 5, ry: 5})
                     .style("stroke", "red")
                     .style("fill", "none");
 
@@ -471,7 +441,7 @@ export class App {
                     //     self.setAllLinkCoordinates();
                     //     self.zoomToExtent();
                     // })
-                    .on("tick", function () {
+                    .on("tick", () => {
                         const nodes = self.d3cola.nodes();
                         for (let node of nodes) {
                             node.setPositionFromCola(node.x, node.y);
@@ -496,18 +466,10 @@ export class App {
                             // });
 
                             participantDebugSel.attr({
-                                x: function (d) {
-                                    return d.bounds.x;// + (width / 2);
-                                },
-                                y: function (d) {
-                                    return d.bounds.y;// + (height / 2);
-                                },
-                                width: function (d) {
-                                    return d.bounds.width();
-                                },
-                                height: function (d) {
-                                    return d.bounds.height();
-                                }
+                                x: d =>  d.bounds.x, // + (width / 2);
+                                y: d => d.bounds.y, // + (height / 2);
+                                width: d => d.bounds.width(),
+                                height: d => d.bounds.height()
                             });
                         }
                     });
@@ -558,7 +520,7 @@ export class App {
         }
     }
 
-    showTooltip(p) {
+    moveTooltip(p) {
         let ttX, ttY;
         const length = this.tooltip.getComputedTextLength() + 16;
         const width = this.svgElement.parentNode.clientWidth;
@@ -583,6 +545,8 @@ export class App {
     }
 
     setTooltip(text, color) {
+        if (this.dragStart) return;
+
         if (text) {
             this.tooltip.firstChild.data = text.toString().replace(/&(quot);/g, "\"");
             this.tooltip.setAttribute("display", "block");
@@ -605,6 +569,13 @@ export class App {
         } else {
             this.hideTooltip();
         }
+    }
+
+    showTooltip(p) {
+        this.moveTooltip(p);
+        this.tooltip.setAttribute("display", "block");
+        this.tooltip_bg.setAttribute("display", "block");
+        this.tooltip_subBg.setAttribute("display", "block");
     }
 
     hideTooltip() {
@@ -648,10 +619,31 @@ export class App {
         }
         //choose appropriate color scheme
         let colorScheme;
-        if (categories.size < 11) {
-            colorScheme = d3.scale.ordinal().range(d3_chromatic.schemeTableau10);
+        if (categories.size <= 10) {
+            colorScheme = scaleOrdinal().range(d3_chromatic.schemeTableau10);
         } else {
-            colorScheme = d3.scale.category20();
+            colorScheme = d3.scaleOrdinal().range([
+                "#38cae3",
+                "#d4582b",
+                "#7d5fd7",
+                "#7cd352",
+                "#ce4bbb",
+                "#5aa33c",
+                "#93539d",
+                "#d2c33b",
+                "#5c83d4",
+                "#e19a46",
+                "#d891d7",
+                "#65da9a",
+                "#9d772f",
+                "#d43f4c",
+                "#4db186",
+                "#cf4b7e",
+                "#477c3a",
+                "#c46d5c",
+                "#b6c671",
+                "#798126"
+            ]); // Generated from https://medialab.github.io/iwanthue/
         }
 
         const self = this;
@@ -701,11 +693,11 @@ export class App {
                                 if (!this.uncertainCategories.has(name)) {
                                     // make transparent version of color
                                     const temp = new Rgb_color(color);
-                                    const transpColor = "rgba(" + temp.r + "," + temp.g + "," + temp.b + ", 0.6)";
-                                    createHatchedFill("hatched_" + anno.description + "_" + color.toString(), transpColor);
+                                    const transpColor = `rgba(${temp.r},${temp.g},${temp.b}, 0.6)`;
+                                    createHatchedFill(`hatched_${anno.description}_${color.toString()}`, transpColor);
                                     this.uncertainCategories.add(anno.description);
                                 }
-                                const checkedFill = "url('#hatched_" + anno.description + "_" + color.toString() + "')";
+                                const checkedFill = `url('#hatched_${anno.description}_${color.toString()}')`;
                                 if (anno.fuzzyStart) {
                                     anno.fuzzyStart.setAttribute("fill", checkedFill);
                                     anno.fuzzyStart.setAttribute("stroke", color);
@@ -750,7 +742,7 @@ export class App {
                                         if (this.uncertainCategories.has(desc)) {
                                             // make transparent version of color
                                             const temp = new Rgb_color(this.featureColors(desc));
-                                            const transpColor = "rgba(" + temp.r + "," + temp.g + "," + temp.b + ", 0.6)";
+                                            const transpColor = `rgba(${temp.r},${temp.g},${temp.b}, 0.6)`;
                                             featureType.uncertain = {"color": transpColor};
                                         }
                                         featureTypes.push(featureType);
@@ -842,7 +834,7 @@ export class App {
     }
 
     setCTM(element, matrix) {
-        const s = "matrix(" + matrix.a + "," + matrix.b + "," + matrix.c + "," + matrix.d + "," + matrix.e + "," + matrix.f + ")";
+        const s = `matrix(${matrix.a},${matrix.b},${matrix.c},${matrix.d},${matrix.e},${matrix.f})`;
         element.setAttribute("transform", s);
     }
 
@@ -898,7 +890,7 @@ export class App {
                 }
             } else { // !this.dragStart
                 // console.log("TOOLTIP POSITION!");
-                this.showTooltip(p);
+                this.moveTooltip(p);
             }
         }
     }
@@ -908,6 +900,7 @@ export class App {
         this.preventDefaultsAndStopPropagation(evt);
         const time = new Date().getTime();
         //eliminate some spurious mouse up events - a simple version of debouncing but it seems to work better than for e.g. _.debounce
+        const p = this.getEventPoint(evt);
         if ((time - this.lastMouseUp) > 150) {
             if (this.dragElement && this.dragElement.type === "protein" && this.state !== App.STATES.DRAGGING && !this.dragElement.busy) {
                 if (!this.dragElement.expanded) {
@@ -915,8 +908,6 @@ export class App {
                     this.notifyExpandListeners();
                 } else {
                     this.contextMenuProt = this.dragElement;
-
-                    let p = this.getEventPoint(evt);
                     // if (isNaN(p.x)) { //?
                     //     // alert("isNaN", p);
                     //     // alert(p.x);
@@ -932,11 +923,12 @@ export class App {
                         pageX = this.dragStart.touches[0].pageX;
                         pageY = this.dragStart.touches[0].pageY;
                     }
-                    menu.style("top", (pageY - 20) + "px").style("left", (pageX - 20) + "px").style("display", "block");
-                    d3.select(".scaleButton_" + (this.dragElement.stickZoom * 100)).property("checked", true);
+                    menu.style("top", `${pageY - 20}px`).style("left", `${pageX - 20}px`).style("display", "block");
+                    d3.select(`.scaleButton_${this.dragElement.stickZoom * 100}`).property("checked", true);
                 }
             }
         }
+        this.showTooltip(p);
         this.dragElement = null;
         this.dragStart = null;//{};// should prob make that null here and use it as a check in move()
         this.state = App.STATES.MOUSE_UP;

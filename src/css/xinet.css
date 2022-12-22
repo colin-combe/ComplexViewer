@@ -12,6 +12,7 @@ svg {
 .link {
     stroke-linecap: round;
     stroke: black;
+    fill: none;
 }
 
 .certain-link {

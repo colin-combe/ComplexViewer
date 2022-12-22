@@ -1,43 +1,20 @@
+import {svgns} from "../../svgns";
+
 export class Link {
-    constructor() {
+    constructor(id, app) {
+        this.id = id;
+        this.app = app;
+        this.participants = [];
+        this.sequenceLinks = new Map();
+        // this.evidences = d3.map();
     }
+
+
 
     highlightParticipants(show) {
         for (let participant of this.participants) {
             participant.showHighlight(show);
         }
-    }
-
-    initSVG() {
-        this.line.classList.add("link", "link-line");//, "certain-link");
-        this.highlightLine.classList.add("link", "highlight", "link-highlight");
-        //set the events for it
-        const self = this;
-        this.line.onmousedown = function (evt) {
-            self.mouseDown(evt);
-        };
-        this.line.onmouseover = function (evt) {
-            self.mouseOver(evt);
-        };
-        this.line.onmouseout = function (evt) {
-            self.mouseOut(evt);
-        };
-        // this.line.ontouchstart = function (evt) {
-        //     self.touchStart(evt);
-        // };
-
-        this.highlightLine.onmousedown = function (evt) {
-            self.mouseDown(evt);
-        };
-        this.highlightLine.onmouseover = function (evt) {
-            self.mouseOver(evt);
-        };
-        this.highlightLine.onmouseout = function (evt) {
-            self.mouseOut(evt);
-        };
-        // this.highlightLine.ontouchstart = function (evt) {
-        //     self.touchStart(evt);
-        // };
     }
 
 // event handler for starting dragging or rotation (or flipping internal links)
@@ -79,5 +56,14 @@ export class Link {
     hide() {
         this.highlightLine.remove();
         this.line.remove();
+    }
+
+    _createElement(tagName, classes = []) {
+        const line = document.createElementNS(svgns, tagName);
+        line.classList.add(...classes);
+        line.onmousedown = evt => this.mouseDown(evt);
+        line.onmouseover = evt => this.mouseOver(evt);
+        line.onmouseout = evt => this.mouseOut(evt);
+        return line;
     }
 }

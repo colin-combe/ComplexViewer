@@ -1,19 +1,13 @@
-import * as d3 from "d3"; //used for d3.geom.hull
+// import * as d3 from "d3"; //used for d3.geom.hull
+import {polygonHull} from "d3-polygon";
 import {Link} from "./link";
 import {rotatePointAboutPoint} from "../../geom";
-import {svgns} from "../../svgns";
 
 export class NaryLink extends Link {
     constructor(id, app) {
-        super();
-        this.id = id;
-        this.participants = [];
-        this.sequenceLinks = new Map();
+        super(id, app);
         this.binaryLinks = new Map();
         this.unaryLinks = new Map();
-        this.app = app;
-        // this.tooltip = this.id;
-        this.initSVG();
     }
 
     /*
@@ -33,40 +27,28 @@ export class NaryLink extends Link {
     };
     */
 
-    initSVG() {
-        this.path = document.createElementNS(svgns, "path");
-        this.color = NaryLink.naryColors(this.id);
-        this.path.setAttribute("fill", this.color);
-        //set the events for it
-        const self = this;
-        this.path.onmousedown = function (evt) {
-            self.mouseDown(evt);
-        };
-        this.path.onmouseover = function (evt) {
-            self.mouseOver(evt);
-        };
-        this.path.onmouseout = function (evt) {
-            self.mouseOut(evt);
-        };
-        this.path.ontouchstart = function (evt) {
-            self.touchStart(evt);
-        };
-        // todo - prob better way todo this
-        this.path2 = document.createElementNS(svgns, "path");
-        this.path2.setAttribute("fill", "none");
-        //set the events for it
-        this.path2.onmousedown = function (evt) {
-            self.mouseDown(evt);
-        };
-        this.path2.onmouseover = function (evt) {
-            self.mouseOver(evt);
-        };
-        this.path2.onmouseout = function (evt) {
-            self.mouseOut(evt);
-        };
-        this.path2.ontouchstart = function (evt) {
-            self.touchStart(evt);
-        };
+    get path () {
+        if (!this._path) {
+            this._path = this._createElement("path");
+            if (this.app.stoichiometryExpanded) {
+                this.color = NaryLink.naryColors(this.id);
+                this._path.setAttribute("fill", this.color);
+            } else {
+                this._path.setAttribute("fill", "none");
+                this._path.setAttribute("stroke", "black");
+            }
+            this._path.ontouchstart = evt => self.touchStart(evt);
+        }
+        return this._path;
+    }
+
+    get path2 () {
+        if(!this._path2) {
+            this._path2 = this._createElement("path");
+            this._path2.setAttribute("fill", "none");
+            this._path2.ontouchstart = evt => self.touchStart(evt);
+        }
+        return this._path2;
     }
 
     showHighlight (show) {
@@ -87,12 +69,11 @@ export class NaryLink extends Link {
 
     setLinkCoordinates(dontPropogate) {
         // Uses d3.geom.hull to calculate a bounding path around an array of vertices
-        const calculateHullPath = function (values) {
-            const hullPath = d3.geom.hull(values);
-            self.hull = hullPath; //hack?
-            return "M" + hullPath.join("L") + "Z";
+        const calculateHullPath = values => {
+            const hullPath = polygonHull(values);
+            this.hull = hullPath;
+            return `M${hullPath.join("L")}Z`;
         };
-        const self = this; // TODO: - tidy hack above?
         this.mapped = this.orbitNodes(this.getMappedCoordinates());
         const hullValues = calculateHullPath(this.mapped);
         if (hullValues) {
@@ -130,7 +111,7 @@ export class NaryLink extends Link {
         return mapped;
     }
 
-//'orbit' nodes - several nodes around participant positions to give margin
+    //'orbit' nodes - several nodes around participant positions to give margin
     orbitNodes(mapped, orbitNodeCount = 20) { // add orbit node count as param? cut it down for subcomplexes?
         const orbitNodes = [];
         const mc = mapped.length;

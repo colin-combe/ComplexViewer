@@ -57,13 +57,13 @@ export class Interactor {
             this.labelText = this.id;
         }
         if (this.labelText.length > 25) {
-            this.labelText = this.labelText.substr(0, 16) + "...";
+            this.labelText = `${this.labelText.substr(0, 16)}...`;
         }
         this.labelText = this.name;
         this.labelTextNode = document.createTextNode(this.labelText);
         this.labelSVG.appendChild(this.labelTextNode);
         this.labelSVG.setAttribute("transform",
-            "translate( -" + this.getSymbolRadius() + " " + this.labelY + ")");
+            `translate( -${this.getSymbolRadius()} ${this.labelY})`);
         this.upperGroup.appendChild(this.labelSVG);
     }
 
@@ -73,28 +73,16 @@ export class Interactor {
     }
 
     initListeners() {
-        // events
-        const self = this;
-        //    this.upperGroup.setAttribute('pointer-events','all');
-        this.upperGroup.onmousedown = function (evt) {
-            self.mouseDown(evt);
-        };
-        this.upperGroup.onmouseenter = function (evt) {
-            self.mouseOver(evt);
-        };
-        this.upperGroup.onmouseleave = function (evt) {
-            self.mouseOut(evt);
-        };
-        this.upperGroup.ontouchstart = function (evt) {
-            //console.log("interactor touch start");
-            self.touchStart(evt);
-        };
+        this.upperGroup.onmousedown = evt => this.mouseDown(evt);
+        this.upperGroup.onmouseenter = evt => this.mouseOver(evt);
+        this.upperGroup.onmouseleave = evt => this.mouseOut(evt);
+        this.upperGroup.ontouchstart = evt => this.touchStart(evt);
     }
 
     addStoichiometryLabel(stoichiometry) {
         if (this.labelSVG) { //complexes don't have labels (yet?)
             // noinspection JSUndefinedPropertyAssignment
-            this.labelSVG.childNodes[0].data = this.labelSVG.childNodes[0].data + " [" + stoichiometry + "]";
+            this.labelSVG.childNodes[0].data = `${this.labelSVG.childNodes[0].data} [${stoichiometry}]`;
         }
     }
 
@@ -164,7 +152,7 @@ export class Interactor {
     setPosition(x, y) {
         this.ix = x;
         this.iy = y;
-        this.upperGroup.setAttribute("transform", "translate(" + this.ix + " " + this.iy + ")");
+        this.upperGroup.setAttribute("transform", `translate(${this.ix} ${this.iy})`);
     }
 
     changePosition(x, y) {
@@ -172,7 +160,7 @@ export class Interactor {
         // this.py = this.iy;
         this.ix -= x;
         this.iy -= y;
-        this.upperGroup.setAttribute("transform", "translate(" + this.ix + " " + this.iy + ")");
+        this.upperGroup.setAttribute("transform", `translate(${this.ix} ${this.iy})`);
         // this.setAllLinkCoordinates(); // todo - look at calls
     }
 
@@ -184,9 +172,9 @@ export class Interactor {
         const cp1 = trig(intraR, 40 + sectorSize);
         const cp2 = trig(intraR, -40 + sectorSize);
         return "M 0,0 " +
-            "Q " + cp1.x + "," + -cp1.y + " " + arcStart.x + "," + -arcStart.y +
-            " A " + intraR + " " + intraR + " 0 0 1 " + arcEnd.x + "," + -arcEnd.y +
-            " Q " + cp2.x + "," + -cp2.y + " 0,0";
+            `Q ${cp1.x},${-cp1.y} ${arcStart.x},${-arcStart.y} ` +
+            `A ${intraR} ${intraR} 0 0 1 ${arcEnd.x},${-arcEnd.y} ` +
+            `Q ${cp2.x},${-cp2.y} 0,0`;
     }
 
     checkLinks() {
