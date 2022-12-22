@@ -35,7 +35,7 @@ export function matrix(json) {
                     const clonedParticipant = JSON.parse(JSON.stringify(participant));
 
                     //~ clonedParticipant.interactorRef = clonedInteractor.id;
-                    clonedParticipant.id = clonedParticipant.id + "_" + i;
+                    clonedParticipant.id = `${clonedParticipant.id}_${i}`;
 
                     // Store a reference from where we were cloned
                     clonedParticipant.cloneParentID = participant.id;
@@ -47,7 +47,7 @@ export function matrix(json) {
                         clonedParticipant.features.forEach(function (feature) {
 
                             feature.clonedfrom = feature.id;
-                            feature.id = feature.id + "_" + i;
+                            feature.id = `${feature.id}_${i}`;
 
                             // Also, adjust our sequence data
                             feature.sequenceData.forEach(function (sequenceData) {
@@ -86,7 +86,7 @@ export function matrix(json) {
                     if (linkedFeatures) {
                         if (linkedFeatures.indexOf(feature.clonedfrom) > -1) {
                             const clonedFeature = JSON.parse(JSON.stringify(nFeature));
-                            clonedFeature.id = nFeature.id + "_" + feature.id;
+                            clonedFeature.id = `${nFeature.id}_${feature.id}`;
                             clonedFeature.linkedFeatures = [];
                             clonedFeature.linkedFeatures.push(feature.id);
 
@@ -108,7 +108,7 @@ export function matrix(json) {
     });
 
     //actually the expansion code doesn't seem to take up that much time
-    //console.log("Expand time:" + ( +new Date() - startTime));
+    // console.log(`Expand time:${+new Date() - startTime}`);
     return json;
 }
 
