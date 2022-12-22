@@ -127,7 +127,7 @@ export const svgUtils = {
         for (var i = 0; i < style.length; i++) {
             var styleName = style[i];
             var propVal = style.getPropertyValue(styleName);
-            cssText += styleName + ": " + propVal + "; ";
+            cssText += `${styleName}: ${propVal}; `;
         }
 
         return cssText;

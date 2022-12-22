@@ -37,23 +37,23 @@ export function cloneComplexInteractors(json) {
                 let i = count;
 
                 if (i > 1) {
-                    participantComplex.interactorRef = participantComplex.interactorRef + "_" + i;
+                    participantComplex.interactorRef = `${participantComplex.interactorRef}_${i}`;
 
                     // update features of complex
                     if (participantComplex.features) {
                         participantComplex.features.forEach(function (feature) {
                             feature.copiedfrom = feature.id;
-                            // feature.id = feature.id + "_" + i;
+                            // feature.id = `${feature.id}_${i}`;
                             // Also, adjust our sequence data
                             feature.sequenceData.forEach(function (sequenceData) {
-                                sequenceData.participantRef = sequenceData.participantRef  + "_" + i;
+                                sequenceData.participantRef = `${sequenceData.participantRef}_${i}`;
                                 //~ sequenceData.interactorRef = clonedInteractor.id;
                             });
                         });
                     }
 
                     const clonedInteractor = JSON.parse(JSON.stringify(foundInteractor));
-                    clonedInteractor.id = clonedInteractor.id + "_" + i;
+                    clonedInteractor.id = `${clonedInteractor.id}_${i}`;
 
                     json.data.push(clonedInteractor);
 
@@ -61,14 +61,14 @@ export function cloneComplexInteractors(json) {
                         /********** PARTICIPANTS **********/
                         const clonedParticipant = participant;//JSON.parse(JSON.stringify(participant));
 
-                        clonedParticipant.id = clonedParticipant.id + "_" + i;
+                        clonedParticipant.id = `${clonedParticipant.id}_${i}`;
 
                         // We need to relink to our binding site IDs:
                         if (clonedParticipant.features) {
                             clonedParticipant.features.forEach(function (feature) {
 
                                 // feature.copiedfrom = feature.id;
-                                feature.id = feature.id + "_" + i;
+                                feature.id = `${feature.id}_${i}`;
                                 // Also, adjust our sequence data
                                 feature.sequenceData.forEach(function (sequenceData) {
                                     sequenceData.participantRef = clonedParticipant.id;
@@ -78,7 +78,7 @@ export function cloneComplexInteractors(json) {
                                 const lnCount = feature.linkedFeatures.length;
                                 for (let ln = 0; ln < lnCount; ln++){
                                     // console.log(linkedFeature);
-                                    feature.linkedFeatures[ln] = feature.linkedFeatures[ln] + "_" + i;
+                                    feature.linkedFeatures[ln] = `${feature.linkedFeatures[ln]}_${i}`;
                                 }
 
                             });

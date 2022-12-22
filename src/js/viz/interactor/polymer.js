@@ -47,7 +47,7 @@ export class Polymer extends Interactor {
     scale() {
         const protLength = (this.size) * this.stickZoom;
         if (this.expanded) {
-            const labelTransform = transform(this.labelSVG.getAttribute("transform"));
+            // const labelTransform = transform(this.labelSVG.getAttribute("transform"));
             const k = this.app.svgElement.createSVGMatrix()
                 .translate((-(((this.size / 2) * this.stickZoom) + (this.nTermFeatures.length > 0 ? 25 : 10))), this.labelY); //.scale(z).translate(-c.x, -c.y);
             this.labelSVG.transform.baseVal.initialize(this.app.svgElement.createSVGTransformFromMatrix(k));
@@ -95,7 +95,7 @@ export class Polymer extends Interactor {
             }
             if (this.stickZoom >= 8) {
                 const seqLabelGroup = document.createElementNS(svgns, "g");
-                seqLabelGroup.setAttribute("transform", "translate(" + this.getResXWithStickZoom(res) + " " + 0 + ")");
+                seqLabelGroup.setAttribute("transform", `translate(${this.getResXWithStickZoom(res)} 0)`);
 
                 const seqLabel = document.createElementNS(svgns, "text");
                 seqLabel.classList.add("label", "sequence");
@@ -128,7 +128,7 @@ export class Polymer extends Interactor {
 
         function scaleLabelAt(self, text, tickX) {
             const scaleLabelGroup = document.createElementNS(svgns, "g");
-            scaleLabelGroup.setAttribute("transform", "translate(" + tickX + " " + 0 + ")");
+            scaleLabelGroup.setAttribute("transform", `translate(${tickX} 0)`);
             const scaleLabel = document.createElementNS(svgns, "text");
             scaleLabel.classList.add("label", "scale-label");
             scaleLabel.setAttribute("x", "0");
@@ -383,7 +383,7 @@ export class Polymer extends Interactor {
 
         function update(interp) {
             const labelTransform = transform(self.labelSVG.getAttribute("transform"));
-            const k = self.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), self.labelY)
+            const k = self.app.svgElement.createSVGMatrix().rotate(labelTransform.rotate).translate(labelTranslateInterpol(cubicInOut(interp)), self.labelY);
             self.labelSVG.transform.baseVal.initialize(self.app.svgElement.createSVGTransformFromMatrix(k));
 
             const currentLength = lengthInterpol(cubicInOut(interp));
@@ -488,13 +488,13 @@ export class Polymer extends Interactor {
     }
 
     updatePositionalFeatures() {
-        const self = this;
+        // const self = this;
 
-        const toolTipFunc = function (evt) {
+        const toolTipFunc = evt => {
             const el = (evt.target.correspondingUseElement) ? evt.target.correspondingUseElement : evt.target;
-            self.app.preventDefaultsAndStopPropagation(evt);
-            self.app.setTooltip(el.name, el.getAttribute("fill"));
-            self.showHighlight(true);
+            this.app.preventDefaultsAndStopPropagation(evt);
+            this.app.setTooltip(el.name, el.getAttribute("fill"));
+            this.showHighlight(true);
         };
 
         let r = -1;
@@ -661,33 +661,33 @@ export class Polymer extends Interactor {
         const p4 = rotatePointAboutPoint([0, bottom], [0, 0], endAngle - 180);
 
         //'left' edge
-        let path = "M" + p1[0] + "," + p1[1] + " L" + p2[0] + "," + p2[1];
+        let path = `M${p1[0]},${p1[1]} L${p2[0]},${p2[1]}`;
 
         //top edge
         if (arc) {
-            path += " A" + top + "," + top + " 0 " + largeArch + " 1 " + p3[0] + "," + p3[1];
+            path += ` A${top},${top} 0 ${largeArch} 1 ${p3[0]},${p3[1]}`;
         } else {
-            //path += " L" + p3[0] + "," + p3[1];
+            // path += ` L${p3[0]},${p3[1]}`;
             for (let sia = 0; sia <= Polymer.stepsInArc; sia++) {
                 const angle = startAngle + ((endAngle - startAngle) / Polymer.stepsInArc) * sia;
                 const p = rotatePointAboutPoint([0, top], [0, 0], angle - 180);
-                path += " L" + p[0] + "," + p[1];
+                path += ` L${p[0]},${p[1]}`;
             }
         }
 
         //bottom edge
         if (arc) {
             //'right' edge
-            path += " L" + p4[0] + "," + p4[1];
+            path += ` L${p4[0]},${p4[1]}`;
             //bottom edge
-            path += " A" + bottom + "," + bottom + " 0 " + largeArch + " 0 " + p1[0] + "," + p1[1];
+            path += ` A${bottom},${bottom} 0 ${largeArch} 0 ${p1[0]},${p1[1]}`;
         } else {
-            // path += " L" + p1[0] + "," + p1[1];
+            // path += ` L${p1[0]},${p1[1]}`;
             //bottom edge
             for (let sia = Polymer.stepsInArc; sia >= 0; sia--) {
                 const angle = startAngle + ((endAngle - startAngle) / Polymer.stepsInArc) * sia;
                 const p = rotatePointAboutPoint([0, bottom], [0, 0], angle - 180);
-                path += " L" + p[0] + "," + p[1];
+                path += ` L${p[0]},${p[1]}`;
             }
         }
 
@@ -718,17 +718,17 @@ export class Polymer extends Interactor {
         const bottom = top + rungHeight;
 
         //'left' edge
-        let path = "M" + annoX + "," + bottom + " L" + annoX + "," + top;
+        let path = `M${annoX},${bottom} L${annoX},${top}`;
         //top edge
         for (let sia = 0; sia <= Polymer.stepsInArc; sia++) {
             const step = annoX + (annoLength * (sia / Polymer.stepsInArc));
-            path += " L " + step + "," + top;
+            path += ` L ${step},${top}`;
         }
         //'right' edge - no need
         // bottom edge
         for (let sia = Polymer.stepsInArc; sia >= 0; sia--) {
             const step = annoX + (annoLength * (sia / Polymer.stepsInArc));
-            path += " L " + step + "," + bottom;
+            path += ` L ${step},${bottom}`;
         }
         //close
         path += " Z";

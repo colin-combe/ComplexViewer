@@ -1,23 +1,30 @@
-import {Link} from "./link";
 import * as Intersection from "intersectionjs";
 import * as Point2D from "point2d";
-import {svgns} from "../../svgns";
+import {HideableLink} from "./hideable-link";
 
-export class BinaryLink extends Link {
+export class BinaryLink extends HideableLink {
     constructor(id, app, fromI, toI) {
-        super();
-        this.id = id;
-        // this.evidences = d3.map();
+        super(id, app);
         this.participants = [fromI, toI];
         this.sequenceLinks = new Map();
-        this.app = app;
-        this.line = document.createElementNS(svgns, "line");
-        this.highlightLine = document.createElementNS(svgns, "line");
-        this.initSVG();
+    }
+
+    get line() {
+        if (!this._line) {
+            this._line = this._createElement("line", ["link", "link-line"]);
+        }
+        return this._line;
+    }
+
+    get highlightLine() {
+        if (!this._highlightLine) {
+            this._highlightLine = this._createElement("line", ["link", "highlight", "link-highlight"]);
+        }
+        return this._highlightLine;
     }
 
     check() {
-        if (!this.participants[0].expanded && !this.participants[1].expanded) { //checks if form not defined or is 0
+        if (!this.participants[0].expanded && !this.participants[1].expanded) {
             this.show();
             return true;
         } else { //at least one end was in stick form
@@ -27,9 +34,6 @@ export class BinaryLink extends Link {
     }
 
     show() {
-        // if (typeof this.line === "undefined") {
-        //     this.initSVG();
-        // }
         this.line.setAttribute("stroke-width", this.app.z * 1);
         this.highlightLine.setAttribute("stroke-width", this.app.z * 10);
         this.setLinkCoordinates(this.participants[0]);
@@ -39,9 +43,6 @@ export class BinaryLink extends Link {
     }
 
     setLinkCoordinates() {
-        if (typeof this.line === "undefined") {
-            this.initSVG();
-        }
         let pos1 = this.participants[0].getPosition();
         let pos2 = this.participants[1].getPosition();
 
