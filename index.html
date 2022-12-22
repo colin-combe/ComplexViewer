@@ -170,7 +170,7 @@
     function loadData() {
         cv.clear();
         const dataSetsSelect = document.getElementById("dataSets");
-        const path = "./data/" + dataSetsSelect.options[dataSetsSelect.selectedIndex].value + ".json";
+        const path = `./data/${dataSetsSelect.options[dataSetsSelect.selectedIndex].value}.json`;
         d3.json(path, function (data) {
             cv.readMIJSON(data);
             makeLegend(cv.getColorKeyJson());

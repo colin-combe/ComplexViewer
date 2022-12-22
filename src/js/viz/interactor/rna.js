@@ -17,7 +17,7 @@ export class RNA extends Interactor {
 
 /*
 RNA.prototype.showData = function(evt) {
-    const url = "http://rnacentral.org/rna/" + this.json.identifier.id;
+    const url = `http://rnacentral.org/rna/${this.json.identifier.id}`;
     window.open(url, '_blank');
 }
 */
