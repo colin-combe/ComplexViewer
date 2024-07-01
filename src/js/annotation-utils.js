@@ -53,7 +53,7 @@ function getUniProtFeatures(prot, callback) {
 
 
 function getSuperFamFeatures(prot, callback) {
-    const url = `https://supfam.mrc-lmb.cam.ac.uk/SUPERFAMILY/cgi-bin/das/up/features?segment=${prot.json.identifier.id.trim()}`;
+    const url = `https://supfam.org/SUPERFAMILY/cgi-bin/das/up/features?segment=${prot.json.identifier.id.trim()}`;
     d3.xml(url).then(xml => {
         let annotations = prot.annotationSets.get("Superfamily");
         if (typeof annotations === "undefined") {
