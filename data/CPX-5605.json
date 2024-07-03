@@ -2,8 +2,8 @@
   "data": [
     {
       "object": "interactor",
-      "id": "uniprotkb_P01024-PRO_0000005911",
-      "sequence": "SNLDEDIIAEENIVSRSEFPESWLWNVEDLKEPPKNGISTKLMNIFLKDSITTWEILAVSMSDKKGICVADPFEVTVMQDFFIDLRLPYSVVRNEQVEIRAVLYNYRQNQELKVRVELLHNPAFCSLATTKRRHQQTVTIPPKSSLSVPYVIVPLKTGLQEVEVKAAVYHHFISDGVRKSLKVVPEGIRMNKTVAVRTLDPERLGREGVQKEDIPPADLSDQVPDTESETRILLQGTPVAQMTEDAVDAERLKHLIVTPSGCGEQNMIGMTPTVIAVHYLDETEQWEKFGLEKRQGALELIKKGYTQQLAFRQPSSAFAAFVKRAPSTWLTAYVVKVFSLAVNLIAIDSQVLCGAVKWLILEKQKPDGVFQEDAPVIHQEMIGGLRNNNEKDMALTAFVLISLQEAKDICEEQVNSLPGSITKAGDFLEANYMNLQRSYTVAIAGYALAQMGRLKGPLLNKFLTTAKDKNRWEDPGKQLYNVEATSYALLALLQLKDFDFVPPVVRWLNEQRYYGGGYGSTQATFMVFQALAQYQKDAPDHQELNLDVSLQLPSRSSKITHRIHWESASLLRSEETKENEGFTVTAEGKGQGTLSVVTMYHAKAKDQLTCNKFDLKVTIKPAPETEKRPQDAKNTMILEICTRYRGDQDATMSILDISMMTGFAPDTDDLKQLANGVDRYISKYELDKAFSDRNTLIIYLDKVSHSEDDCLAFKVHQYFNVELIQPGAVKVYAYYNLEESCTRFYHPEKEDGKLNKLCRDELCRCAEENCFIQKSDDKVTLEERLDKACEPGVDYVYKTRLVKVQLSNDFDEYIMAIEQTIKSGSDEVQVGQQRTFISPIKCREALKLEEKKHYLMWGLSSDFWGEKPNLSYIIGKDTWVEHWPEEDECQDEENQKQCQDLGAFTESMVVFGCPN",
+      "id": "uniprotkb_P27918",
+      "sequence": "MITEGAQAPRLLLPPLLLLLTLPATGSDPVLCFTQYEESSGKCKGLLGGGVSVEDCCLNTAFAYQKRSGGLCQPCRSPRWSLWSTWAPCSVTCSEGSQLRYRRCVGWNGQCSGKVAPGTLEWQLQACEDQQCCPEMGGWSGWGPWEPCSVTCSKGTRTRRRACNHPAPKCGGHCPGQAQESEACDTQQVCPTHGAWATWGPWTPCSASCHGGPHEPKETRSRKCSAPEPSQKPPGKPCPGLAYEQRRCTGLPPCPVAGGWGPWGPVSPCPVTCGLGQTMEQRTCNHPVPQHGGPFCAGDATRTHICNTAVPCPVDGEWDSWGEWSPCIRRNMKSISCQEIPGQQSRGRTCRGRKFDGHRCAGQQQDIRHCYSIQHCPLKGSWSEWSTWGLCMPPCGPNPTRARQRLCTPLLPKYPPTVSMVEGQGEKNVTFWGRPLPRCEELQGQKLVVEEKRPCLHVPACKDPEEEEL",
       "type": {
         "id": "MI:0326",
         "name": "protein"
@@ -15,9 +15,28 @@
       },
       "identifier": {
         "db": "uniprotkb",
-        "id": "P01024-PRO_0000005911"
+        "id": "P27918"
       },
-      "label": "p01024-pro_0000005911"
+      "label": "CFP"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P00751-PRO_0000027547",
+      "sequence": "KIVLDPSGSMNIYLVLDGSDSIGASNFTGAKKCLVNLIEKVASYGVKPRYGLVTYATYPKIWVKVSEADSSNADWVTKQLNEINYEDHKLKSGTNTKKALQAVYSMMSWPDDVPPEGWNRTRHVIILMTDGLHNMGGDPITVIDEIRDLLYIGKDRKNPREDYLDVYVFGVGPLVNQVNINALASKKDNEQHVFKVKDMENLEDVFYQMIDESQSLSLCGMVWEHRKGTDYHKQPWQAKISVIRPSKGHESCMGAVVSEYFVLTAAHCFTVDDKEHSIKVSVGGEKRDLEIEVVLFHPNYNINGKKEAGIPEFYDYDVALIKLKNKLKYGQTIRPICLPCTEGTTRALRLPPTTTCQQQKEELLPAQDIKALFVSEEEKKLTRKEVYIKNGDKKGSCERDAQYAPGYDKVKDISEVVTPRFLCTGGVSPYADPNTCRGDSGGPLIVHKRSRFIQVGVISWGVVDVCKNQKRQKQVPAHARDFHINLFQVLPWLKEKLQDEDLGFL",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P00751-PRO_0000027547"
+      },
+      "label": "P00751-PRO_0000027547"
     },
     {
       "object": "interactor",
@@ -36,7 +55,26 @@
         "db": "uniprotkb",
         "id": "P01024-PRO_0000005908"
       },
-      "label": "p01024-pro_0000005908"
+      "label": "P01024-PRO_0000005908"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P01024-PRO_0000005911",
+      "sequence": "SNLDEDIIAEENIVSRSEFPESWLWNVEDLKEPPKNGISTKLMNIFLKDSITTWEILAVSMSDKKGICVADPFEVTVMQDFFIDLRLPYSVVRNEQVEIRAVLYNYRQNQELKVRVELLHNPAFCSLATTKRRHQQTVTIPPKSSLSVPYVIVPLKTGLQEVEVKAAVYHHFISDGVRKSLKVVPEGIRMNKTVAVRTLDPERLGREGVQKEDIPPADLSDQVPDTESETRILLQGTPVAQMTEDAVDAERLKHLIVTPSGCGEQNMIGMTPTVIAVHYLDETEQWEKFGLEKRQGALELIKKGYTQQLAFRQPSSAFAAFVKRAPSTWLTAYVVKVFSLAVNLIAIDSQVLCGAVKWLILEKQKPDGVFQEDAPVIHQEMIGGLRNNNEKDMALTAFVLISLQEAKDICEEQVNSLPGSITKAGDFLEANYMNLQRSYTVAIAGYALAQMGRLKGPLLNKFLTTAKDKNRWEDPGKQLYNVEATSYALLALLQLKDFDFVPPVVRWLNEQRYYGGGYGSTQATFMVFQALAQYQKDAPDHQELNLDVSLQLPSRSSKITHRIHWESASLLRSEETKENEGFTVTAEGKGQGTLSVVTMYHAKAKDQLTCNKFDLKVTIKPAPETEKRPQDAKNTMILEICTRYRGDQDATMSILDISMMTGFAPDTDDLKQLANGVDRYISKYELDKAFSDRNTLIIYLDKVSHSEDDCLAFKVHQYFNVELIQPGAVKVYAYYNLEESCTRFYHPEKEDGKLNKLCRDELCRCAEENCFIQKSDDKVTLEERLDKACEPGVDYVYKTRLVKVQLSNDFDEYIMAIEQTIKSGSDEVQVGQQRTFISPIKCREALKLEEKKHYLMWGLSSDFWGEKPNLSYIIGKDTWVEHWPEEDECQDEENQKQCQDLGAFTESMVVFGCPN",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P01024-PRO_0000005911"
+      },
+      "label": "P01024-PRO_0000005911"
     },
     {
       "object": "interaction",
@@ -60,10 +98,6 @@
       },
       "identifiers": [
         {
-          "db": "matrixdb",
-          "id": "MULT_84_human"
-        },
-        {
           "db": "wwpdb",
           "id": "5fo7"
         },
@@ -72,12 +106,12 @@
           "id": "3g6j"
         },
         {
-          "db": "wwpdb",
-          "id": "2i07"
-        },
-        {
           "db": "reactome",
           "id": "R-HSA-166832"
+        },
+        {
+          "db": "matrixdb",
+          "id": "MULT_84_human"
         },
         {
           "db": "complex portal",
@@ -91,7 +125,7 @@
       "participants": [
         {
           "id": "1",
-          "interactorRef": "uniprotkb_P01024-PRO_0000005911",
+          "interactorRef": "uniprotkb_P01024-PRO_0000005908",
           "stoichiometry": "1",
           "bioRole": {
             "id": "MI:0499",
@@ -100,7 +134,7 @@
           "features": [
             {
               "id": "2",
-              "name": "C3 beta chain binding region",
+              "name": "C3b alpha(prime) chain binding region",
               "category": "bindingSites",
               "type": {
                 "id": "MI:0117",
@@ -109,7 +143,7 @@
               "sequenceData": [
                 {
                   "pos": "?-?",
-                  "interactorRef": "uniprotkb_P01024-PRO_0000005911",
+                  "interactorRef": "uniprotkb_P01024-PRO_0000005908",
                   "participantRef": "1"
                 }
               ],
@@ -121,7 +155,7 @@
         },
         {
           "id": "4",
-          "interactorRef": "uniprotkb_P01024-PRO_0000005908",
+          "interactorRef": "uniprotkb_P01024-PRO_0000005911",
           "stoichiometry": "1",
           "bioRole": {
             "id": "MI:0499",
@@ -130,7 +164,7 @@
           "features": [
             {
               "id": "3",
-              "name": "C3b alpha(prime) chain binding region",
+              "name": "C3 beta chain binding region",
               "category": "bindingSites",
               "type": {
                 "id": "MI:0117",
@@ -139,7 +173,7 @@
               "sequenceData": [
                 {
                   "pos": "?-?",
-                  "interactorRef": "uniprotkb_P01024-PRO_0000005908",
+                  "interactorRef": "uniprotkb_P01024-PRO_0000005911",
                   "participantRef": "4"
                 }
               ],
@@ -150,25 +184,6 @@
           ]
         }
       ]
-    },
-    {
-      "object": "interactor",
-      "id": "uniprotkb_P00751-PRO_0000027547",
-      "sequence": "KIVLDPSGSMNIYLVLDGSDSIGASNFTGAKKCLVNLIEKVASYGVKPRYGLVTYATYPKIWVKVSEADSSNADWVTKQLNEINYEDHKLKSGTNTKKALQAVYSMMSWPDDVPPEGWNRTRHVIILMTDGLHNMGGDPITVIDEIRDLLYIGKDRKNPREDYLDVYVFGVGPLVNQVNINALASKKDNEQHVFKVKDMENLEDVFYQMIDESQSLSLCGMVWEHRKGTDYHKQPWQAKISVIRPSKGHESCMGAVVSEYFVLTAAHCFTVDDKEHSIKVSVGGEKRDLEIEVVLFHPNYNINGKKEAGIPEFYDYDVALIKLKNKLKYGQTIRPICLPCTEGTTRALRLPPTTTCQQQKEELLPAQDIKALFVSEEEKKLTRKEVYIKNGDKKGSCERDAQYAPGYDKVKDISEVVTPRFLCTGGVSPYADPNTCRGDSGGPLIVHKRSRFIQVGVISWGVVDVCKNQKRQKQVPAHARDFHINLFQVLPWLKEKLQDEDLGFL",
-      "type": {
-        "id": "MI:0326",
-        "name": "protein"
-      },
-      "organism": {
-        "taxid": "9606",
-        "common": "human",
-        "scientific": "Homo sapiens"
-      },
-      "identifier": {
-        "db": "uniprotkb",
-        "id": "P00751-PRO_0000027547"
-      },
-      "label": "p00751-pro_0000027547"
     },
     {
       "object": "interaction",
@@ -192,16 +207,16 @@
       },
       "identifiers": [
         {
+          "db": "intenz",
+          "id": "3.4.21.47"
+        },
+        {
           "db": "reactome",
           "id": "R-HSA-173749"
         },
         {
           "db": "complex portal",
           "id": "CPX-5601"
-        },
-        {
-          "db": "intenz",
-          "id": "3.4.21.47"
         },
         {
           "db": "intact",
@@ -211,42 +226,23 @@
       "participants": [
         {
           "id": "5",
-          "interactorRef": "complex portal_CPX-973",
-          "stoichiometry": "1",
-          "bioRole": {
-            "id": "MI:0499",
-            "name": "unspecified role"
-          }
-        },
-        {
-          "id": "6",
           "interactorRef": "uniprotkb_P00751-PRO_0000027547",
           "stoichiometry": "1",
           "bioRole": {
             "id": "MI:0501",
             "name": "enzyme"
           }
+        },
+        {
+          "id": "6",
+          "interactorRef": "complex portal_CPX-973",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          }
         }
       ]
-    },
-    {
-      "object": "interactor",
-      "id": "uniprotkb_P27918",
-      "sequence": "MITEGAQAPRLLLPPLLLLLTLPATGSDPVLCFTQYEESSGKCKGLLGGGVSVEDCCLNTAFAYQKRSGGLCQPCRSPRWSLWSTWAPCSVTCSEGSQLRYRRCVGWNGQCSGKVAPGTLEWQLQACEDQQCCPEMGGWSGWGPWEPCSVTCSKGTRTRRRACNHPAPKCGGHCPGQAQESEACDTQQVCPTHGAWATWGPWTPCSASCHGGPHEPKETRSRKCSAPEPSQKPPGKPCPGLAYEQRRCTGLPPCPVAGGWGPWGPVSPCPVTCGLGQTMEQRTCNHPVPQHGGPFCAGDATRTHICNTAVPCPVDGEWDSWGEWSPCIRRNMKSISCQEIPGQQSRGRTCRGRKFDGHRCAGQQQDIRHCYSIQHCPLKGSWSEWSTWGLCMPPCGPNPTRARQRLCTPLLPKYPPTVSMVEGQGEKNVTFWGRPLPRCEELQGQKLVVEEKRPCLHVPACKDPEEEEL",
-      "type": {
-        "id": "MI:0326",
-        "name": "protein"
-      },
-      "organism": {
-        "taxid": "9606",
-        "common": "human",
-        "scientific": "Homo sapiens"
-      },
-      "identifier": {
-        "db": "uniprotkb",
-        "id": "P27918"
-      },
-      "label": "prop_human"
     },
     {
       "object": "interaction",
@@ -285,9 +281,8 @@
       "participants": [
         {
           "id": "7",
-          "interactorRef": "complex portal_CPX-973",
-          "minStoichiometry": "1",
-          "maxStoichiometry": "5",
+          "interactorRef": "uniprotkb_P27918",
+          "stoichiometry": "2",
           "bioRole": {
             "id": "MI:0499",
             "name": "unspecified role"
@@ -305,8 +300,9 @@
         },
         {
           "id": "9",
-          "interactorRef": "uniprotkb_P27918",
-          "stoichiometry": "2",
+          "interactorRef": "complex portal_CPX-973",
+          "minStoichiometry": "1",
+          "maxStoichiometry": "5",
           "bioRole": {
             "id": "MI:0499",
             "name": "unspecified role"

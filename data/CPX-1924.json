@@ -1,0 +1,863 @@
+{
+  "data": [
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P06710",
+      "sequence": "MSYQVLARKWRPQTFADVVGQEHVLTALANGLSLGRIHHAYLFSGTRGVGKTSIARLLAKGLNCETGITATPCGVCDNCREIEQGRFVDLIEIDAASRTKVEDTRDLLDNVQYAPARGRFKVYLIDEVHMLSRHSFNALLKTLEEPPEHVKFLLATTDPQKLPVTILSRCLQFHLKALDVEQIRHQLEHILNEEHIAHEPRALQLLARAAEGSLRDALSLTDQAIASGDGQVSTQAVSAMLGTLDDDQALSLVEAMVEANGERVMALINEAAARGIEWEALLVEMLGLLHRIAMVQLSPAALGNDMAAIELRMRELARTIPPTDIQLYYQTLLIGRKELPYAPDRRMGVEMTLLRALAFHPRMPLPEPEVPRQSFAPVAPTAVMTPTQVPPQPQSAPQQAPTVPLPETTSQVLAARQQLQRVQGATKAKKSEPAAATRARPVNNAALERLASVTDRVQARPVPSALEKAPAKKEAYRWKATTPVMQQKEVVATPKALKKALEHEKTPELAAKLAAEAIERDPWAAQVSQLSLPKLVEQVALNAWKEESDNAVCLHLRSSQRHLNNRGAQQKLAEALSMLKGSTVELTIVEDDNPAVRTPLEWRQAIYEEKLAQARESIIADNNIQTLRRFFDAELDEESIRPI",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "83333",
+        "common": "ecoli",
+        "scientific": "Escherichia coli (strain K12)"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P06710"
+      },
+      "label": "dnaX"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P28630",
+      "sequence": "MIRLYPEQLRAQLNEGLRAAYLLLGNDPLLLQESQDAVRQVAAAQGFEEHHTFSIDPNTDWNAIFSLCQAMSLFASRQTLLLLLPENGPNAAINEQLLTLTGLLHDDLLLIVRGNKLSKAQENAAWFTALANRSVQVTCQTPEQAQLPRWVAARAKQLNLELDDAANQVLCYCYEGNLLALAQALERLSLLWPDGKLTLPRVEQAVNDAAHFTPFHWVDALLMGKSKRALHILQQLRLEGSEPVILLRTLQRELLLLVNLKRQSAHTPLRALFDKHRVWQNRRGMMGEALNRLSQTQLRQAVQLLTRTELTLKQDYGQSVWAELEGLSLLLCHKPLADVFIDG",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "83333",
+        "common": "ecoli",
+        "scientific": "Escherichia coli (strain K12)"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P28630"
+      },
+      "label": "holA"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P28632",
+      "sequence": "MTSRRDWQLQQLGITQWSLRRPGALQGEIAIAIPAHVRLVMVANDLPALTDPLVSDVLRALTVSPDQVLQLTPEKIAMLPQGSHCNSWRLGTDEPLSLEGAQVASPALTDLRANPTARAALWQQICTYEHDFFPRND",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "83333",
+        "common": "ecoli",
+        "scientific": "Escherichia coli (strain K12)"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P28632"
+      },
+      "label": "holD"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P28905",
+      "sequence": "MKNATFYLLDNDTTVDGLSAVEQLVCEIAAERWRSGKRVLIACEDEKQAYRLDEALWARPAESFVPHNLAGEGPRGGAPVEIAWPQKRSSSRRDILISLRTSFADFATAFTEVVDFVPYEDSLKQLARERYKAYRVAGFNLNTATWK",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "83333",
+        "common": "ecoli",
+        "scientific": "Escherichia coli (strain K12)"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P28905"
+      },
+      "label": "holC"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P28631",
+      "sequence": "MRWYPWLRPDFEKLVASYQAGRGHHALLIQALPGMGDDALIYALSRYLLCQQPQGHKSCGHCRGCQLMQAGTHPDYYTLAPEKGKNTLGVDAVREVTEKLNEHARLGGAKVVWVTDAALLTDAAANALLKTLEEPPAETWFFLATREPERLLATLRSRCRLHYLAPPPEQYAVTWLSREVTMSQDALLAALRLSAGSPGAALALFQGDNWQARETLCQALAYSVPSGDWYSLLAALNHEQAPARLHWLATLLMDALKRHHGAAQVTNVDVPGLVAELANHLSPSRLQAILGDVCHIREQLMSVTGINRELLITDLLLRIEHYLQPGVVLPVPHL",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "83333",
+        "common": "ecoli",
+        "scientific": "Escherichia coli (strain K12)"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P28631"
+      },
+      "label": "holB"
+    },
+    {
+      "object": "interaction",
+      "id": "complex portal_CPX-1926",
+      "interactionType": {
+        "id": "MI:0915",
+        "name": "physical association"
+      },
+      "complexType": {
+        "id": "MI:1302",
+        "name": "stable complex"
+      },
+      "evidenceType": {
+        "id": "ECO:0000353",
+        "name": "physical interaction evidence used in manual assertion"
+      },
+      "organism": {
+        "taxid": "83333",
+        "common": "ecoli",
+        "scientific": "Escherichia coli (strain K12)"
+      },
+      "identifiers": [
+        {
+          "db": "intenz",
+          "id": "2.7.7.7"
+        },
+        {
+          "db": "rhea",
+          "id": "RHEA:22508"
+        },
+        {
+          "db": "complex portal",
+          "id": "CPX-1926"
+        },
+        {
+          "db": "intact",
+          "id": "EBI-6467993"
+        }
+      ],
+      "participants": [
+        {
+          "id": "1",
+          "interactorRef": "uniprotkb_P06710",
+          "stoichiometry": "3",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "2",
+              "name": "gamma binding site",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "222-382",
+                  "interactorRef": "uniprotkb_P06710",
+                  "participantRef": "1"
+                }
+              ]
+            },
+            {
+              "id": "3",
+              "name": "tau (self-)binding site",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "222-382",
+                  "interactorRef": "uniprotkb_P06710",
+                  "participantRef": "1"
+                }
+              ]
+            },
+            {
+              "id": "4",
+              "name": "alpha binding site",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "497-643",
+                  "interactorRef": "uniprotkb_P06710",
+                  "participantRef": "1"
+                }
+              ]
+            },
+            {
+              "id": "5",
+              "name": "dnab binding site",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "430-496",
+                  "interactorRef": "uniprotkb_P06710",
+                  "participantRef": "1"
+                }
+              ]
+            },
+            {
+              "id": "6",
+              "name": "delta binding site",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "222-382",
+                  "interactorRef": "uniprotkb_P06710",
+                  "participantRef": "1"
+                }
+              ],
+              "linkedFeatures": [
+                "7"
+              ]
+            },
+            {
+              "id": "8",
+              "name": "delta' binding site",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "222-382",
+                  "interactorRef": "uniprotkb_P06710",
+                  "participantRef": "1"
+                }
+              ],
+              "linkedFeatures": [
+                "9"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "10",
+          "interactorRef": "uniprotkb_P28630",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "11",
+              "name": "gamma binding site",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "207-343",
+                  "interactorRef": "uniprotkb_P28630",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "7",
+              "name": "tau binding site",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "207-343",
+                  "interactorRef": "uniprotkb_P28630",
+                  "participantRef": "10"
+                }
+              ],
+              "linkedFeatures": [
+                "6"
+              ]
+            },
+            {
+              "id": "12",
+              "name": "delta' binding site",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "207-343",
+                  "interactorRef": "uniprotkb_P28630",
+                  "participantRef": "10"
+                }
+              ],
+              "linkedFeatures": [
+                "13"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "14",
+          "interactorRef": "uniprotkb_P28632",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "15",
+              "name": "chi binding site",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "57-57",
+                  "interactorRef": "uniprotkb_P28632",
+                  "participantRef": "14"
+                },
+                {
+                  "pos": "121-125",
+                  "interactorRef": "uniprotkb_P28632",
+                  "participantRef": "14"
+                }
+              ],
+              "linkedFeatures": [
+                "16"
+              ]
+            },
+            {
+              "id": "17",
+              "name": "gamma\/tau binding site",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "2-28",
+                  "interactorRef": "uniprotkb_P28632",
+                  "participantRef": "14"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "18",
+          "interactorRef": "uniprotkb_P28905",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "16",
+              "name": "psi binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-79",
+                  "interactorRef": "uniprotkb_P28905",
+                  "participantRef": "18"
+                }
+              ],
+              "linkedFeatures": [
+                "15"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "19",
+          "interactorRef": "uniprotkb_P28631",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "20",
+              "name": "gamma binding site",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "207-334",
+                  "interactorRef": "uniprotkb_P28631",
+                  "participantRef": "19"
+                }
+              ]
+            },
+            {
+              "id": "9",
+              "name": "tau binding site",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "207-334",
+                  "interactorRef": "uniprotkb_P28631",
+                  "participantRef": "19"
+                }
+              ],
+              "linkedFeatures": [
+                "8"
+              ]
+            },
+            {
+              "id": "13",
+              "name": "delta binding site",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "207-334",
+                  "interactorRef": "uniprotkb_P28631",
+                  "participantRef": "19"
+                }
+              ],
+              "linkedFeatures": [
+                "12"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P0A988",
+      "sequence": "MKFTVEREHLLKPLQQVSGPLGGRPTLPILGNLLLQVADGTLSLTGTDLEMEMVARVALVQPHEPGATTVPARKFFDICRGLPEGAEIAVQLEGERMLVRSGRSRFSLSTLPAADFPNLDDWQSEVEFTLPQATMKRLIEATQFSMAHQDVRYYLNGMLFETEGEELRTVATDGHRLAVCSMPIGQSLPSHSVIVPRKGVIELMRMLDGGDNPLRVQIGSNNIRAHVGDFIFTSKLVDGRFPDYRRVLPKNPDKHLEAGCDLLKQAFARAAILSNEKFRGVRLYVSENQLKITANNPEQEEAEEILDVTYSGAEMEIGFNVSYVLDVLNALKCENVRMMLTDSVSSVQIEDAASQSAAYVVMPMRL",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "83333",
+        "common": "ecoli",
+        "scientific": "Escherichia coli (strain K12)"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P0A988"
+      },
+      "label": "dnaN"
+    },
+    {
+      "object": "interaction",
+      "id": "complex portal_CPX-1927",
+      "interactionType": {
+        "id": "MI:0407",
+        "name": "direct interaction"
+      },
+      "complexType": {
+        "id": "MI:1302",
+        "name": "stable complex"
+      },
+      "evidenceType": {
+        "id": "ECO:0000353",
+        "name": "physical interaction evidence used in manual assertion"
+      },
+      "organism": {
+        "taxid": "83333",
+        "common": "ecoli",
+        "scientific": "Escherichia coli (strain K12)"
+      },
+      "identifiers": [
+        {
+          "db": "wwpdb",
+          "id": "2pol"
+        },
+        {
+          "db": "wwpdb",
+          "id": "1jql"
+        },
+        {
+          "db": "wwpdb",
+          "id": "1jqj"
+        },
+        {
+          "db": "complex portal",
+          "id": "CPX-1927"
+        },
+        {
+          "db": "intact",
+          "id": "EBI-6468862"
+        }
+      ],
+      "participants": [
+        {
+          "id": "21",
+          "interactorRef": "uniprotkb_P0A988",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "features": [
+            {
+              "id": "22",
+              "name": "dnan binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-366",
+                  "interactorRef": "uniprotkb_P0A988",
+                  "participantRef": "21"
+                }
+              ],
+              "linkedFeatures": [
+                "23"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "24",
+          "interactorRef": "uniprotkb_P0A988",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "features": [
+            {
+              "id": "23",
+              "name": "dnan binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-366",
+                  "interactorRef": "uniprotkb_P0A988",
+                  "participantRef": "24"
+                }
+              ],
+              "linkedFeatures": [
+                "22"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P0ABS8",
+      "sequence": "MLKNLAKLDQTEMDKVNVDLAAAGVAFKERYNMPVIAEAVEREQPEHLRSWFRERLIAHRLASVNLSRLPYEPKLK",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "83333",
+        "common": "ecoli",
+        "scientific": "Escherichia coli (strain K12)"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P0ABS8"
+      },
+      "label": "holE"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P10443",
+      "sequence": "MSEPRFVHLRVHSDYSMIDGLAKTAPLVKKAAALGMPALAITDFTNLCGLVKFYGAGHGAGIKPIVGADFNVQCDLLGDELTHLTVLAANNTGYQNLTLLISKAYQRGYGAAGPIIDRDWLIELNEGLILLSGGRMGDVGRSLLRGNSALVDECVAFYEEHFPDRYFLELIRTGRPDEESYLHAAVELAEARGLPVVATNDVRFIDSSDFDAHEIRVAIHDGFTLDDPKRPRNYSPQQYMRSEEEMCELFADIPEALANTVEIAKRCNVTVRLGEYFLPQFPTGDMSTEDYLVKRAKEGLEERLAFLFPDEEERLKRRPEYDERLETELQVINQMGFPGYFLIVMEFIQWSKDNGVPVGPGRGSGAGSLVAYALKITDLDPLEFDLLFERFLNPERVSMPDFDVDFCMEKRDQVIEHVADMYGRDAVSQIITFGTMAAKAVIRDVGRVLGHPYGFVDRISKLIPPDPGMTLAKAFEAEPQLPEIYEADEEVKALIDMARKLEGVTRNAGKHAGGVVIAPTKITDFAPLYCDEEGKHPVTQFDKSDVEYAGLVKFDFLGLRTLTIINWALEMINKRRAKNGEPPLDIAAIPLDDKKSFDMLQRSETTAVFQLESRGMKDLIKRLQPDCFEDMIALVALFRPGPLQSGMVDNFIDRKHGREEISYPDVQWQHESLKPVLEPTYGIILYQEQVMQIAQVLSGYTLGGADMLRRAMGKKKPEEMAKQRSVFAEGAEKNGINAELAMKIFDLVEKFAGYGFNKSHSAAYALVSYQTLWLKAHYPAEFMAAVMTADMDNTEKVVGLVDECWRMGLKILPPDINSGLYHFHVNDDGEIVYGIGAIKGVGEGPIEAIIEARNKGGYFRELFDLCARTDTKKLNRRVLEKLIMSGAFDRLGPHRAALMNSLGDALKAADQHAKAEAIGQADMFGVLAEEPEQIEQSYASCQPWPEQVVLDGERETLGLYLTGHPINQYLKEIERYVGGVRLKDMHPTERGKVITAAGLVVAARVMVTKRGNRIGICTLDDRSGRLEVMLFTDALDKYQQLLEKDRILIVSGQVSFDDFSGGLKMTAREVMDIDEAREKYARGLAISLTDRQIDDQLLNRLRQSLEPHRSGTIPVHLYYQRADARARLRFGATWRVSPSDRLLNDLRGLIGSEQVELEFD",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "83333",
+        "common": "ecoli",
+        "scientific": "Escherichia coli (strain K12)"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P10443"
+      },
+      "label": "dnaE"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P03007",
+      "sequence": "MSTAITRQIVLDTETTGMNQIGAHYEGHKIIEIGAVEVVNRRLTGNNFHVYLKPDRLVDPEAFGVHGIADEFLLDKPTFAEVADEFMDYIRGAELVIHNAAFDIGFMDYEFSLLKRDIPKTNTFCKVTDSLAVARKMFPGKRNSLDALCARYEIDNSKRTLHGALLDAQILAEVYLAMTGGQTSMAFAMEGETQQQQGEATIQRIVRQASKLRVVFATDEEIAAHEARLDLVQKKGGSCLWRA",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "83333",
+        "common": "ecoli",
+        "scientific": "Escherichia coli (strain K12)"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P03007"
+      },
+      "label": "dnaQ"
+    },
+    {
+      "object": "interaction",
+      "id": "complex portal_CPX-1925",
+      "interactionType": {
+        "id": "MI:0915",
+        "name": "physical association"
+      },
+      "complexType": {
+        "id": "MI:1302",
+        "name": "stable complex"
+      },
+      "evidenceType": {
+        "id": "ECO:0000353",
+        "name": "physical interaction evidence used in manual assertion"
+      },
+      "organism": {
+        "taxid": "83333",
+        "common": "ecoli",
+        "scientific": "Escherichia coli (strain K12)"
+      },
+      "identifiers": [
+        {
+          "db": "intenz",
+          "id": "2.7.7.7"
+        },
+        {
+          "db": "rhea",
+          "id": "RHEA:22508"
+        },
+        {
+          "db": "complex portal",
+          "id": "CPX-1925"
+        },
+        {
+          "db": "intact",
+          "id": "EBI-6467979"
+        }
+      ],
+      "participants": [
+        {
+          "id": "25",
+          "interactorRef": "uniprotkb_P0ABS8",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "26",
+              "name": "epsilon binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-76",
+                  "interactorRef": "uniprotkb_P0ABS8",
+                  "participantRef": "25"
+                }
+              ],
+              "linkedFeatures": [
+                "27"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "28",
+          "interactorRef": "uniprotkb_P10443",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "features": [
+            {
+              "id": "29",
+              "name": "epsilon binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-1160",
+                  "interactorRef": "uniprotkb_P10443",
+                  "participantRef": "28"
+                }
+              ],
+              "linkedFeatures": [
+                "30"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "31",
+          "interactorRef": "uniprotkb_P03007",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "features": [
+            {
+              "id": "27",
+              "name": "theta binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-186",
+                  "interactorRef": "uniprotkb_P03007",
+                  "participantRef": "31"
+                }
+              ],
+              "linkedFeatures": [
+                "26"
+              ]
+            },
+            {
+              "id": "30",
+              "name": "alpha binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "1-243",
+                  "interactorRef": "uniprotkb_P03007",
+                  "participantRef": "31"
+                }
+              ],
+              "linkedFeatures": [
+                "29"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "object": "interaction",
+      "id": "complex portal_CPX-1924",
+      "interactionType": {
+        "id": "MI:0915",
+        "name": "physical association"
+      },
+      "complexType": {
+        "id": "MI:1302",
+        "name": "stable complex"
+      },
+      "evidenceType": {
+        "id": "ECO:0005547",
+        "name": "biological system reconstruction evidence based on inference from background scientific knowledge used in manual assertion"
+      },
+      "organism": {
+        "taxid": "83333",
+        "common": "ecoli",
+        "scientific": "Escherichia coli (strain K12)"
+      },
+      "identifiers": [
+        {
+          "db": "intenz",
+          "id": "2.7.7.7"
+        },
+        {
+          "db": "rhea",
+          "id": "RHEA:22508"
+        },
+        {
+          "db": "complex portal",
+          "id": "CPX-1924"
+        },
+        {
+          "db": "intact",
+          "id": "EBI-6467913"
+        }
+      ],
+      "participants": [
+        {
+          "id": "32",
+          "interactorRef": "complex portal_CPX-1926",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          }
+        },
+        {
+          "id": "33",
+          "interactorRef": "complex portal_CPX-1927",
+          "stoichiometry": "2",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          }
+        },
+        {
+          "id": "34",
+          "interactorRef": "complex portal_CPX-1925",
+          "stoichiometry": "3",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          }
+        }
+      ]
+    }
+  ]
+}
