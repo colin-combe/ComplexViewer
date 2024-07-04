@@ -4,8 +4,11 @@ import {Link} from "./link";
 import {rotatePointAboutPoint} from "../../geom";
 
 export class NaryLink extends Link {
-    constructor(id, app) {
+    constructor(id, app, sourceId) {
         super(id, app);
+        if (sourceId) {
+            this.sourceId = sourceId;
+        }
         this.binaryLinks = new Map();
         this.unaryLinks = new Map();
     }
@@ -31,7 +34,7 @@ export class NaryLink extends Link {
         if (!this._path) {
             this._path = this._createElement("path");
             if (this.app.stoichiometryExpanded) {
-                this.color = NaryLink.naryColors(this.id);
+                this.color = NaryLink.naryColors(this.sourceId?this.sourceId:this.id);
                 this._path.setAttribute("fill", this.color);
             } else {
                 this._path.setAttribute("fill", "none");

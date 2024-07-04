@@ -11,38 +11,38 @@ export function cloneComplexRefs(json) {
     interactions.forEach(function (interaction) {
 
         // Get a collection of participants with 'complex' in interactorRef - not ideal way to get complexes
-        const complexesToCloneParticipantsOf = interaction.participants.filter(function (participant) {
+        const complexesToClone = interaction.participants.filter(function (participant) {
             if (participant.interactorRef.indexOf("complex") !== -1) {
                 return participant;
             }
         });
 
         // Loop through our participants that need expanding
-        complexesToCloneParticipantsOf.forEach(function (complexToCloneParticipantsOf) {
+        complexesToClone.forEach(function (complexToClone) {
 
             // Do we have an interaction
-            const foundInteraction = findFirstObjWithAttr(interactions, "id", complexToCloneParticipantsOf.interactorRef);
+            const foundInteraction = findFirstObjWithAttr(interactions, "id", complexToClone.interactorRef);
 
             // If we found an interaction then we need to clone it.
             if (foundInteraction) {
 
-                let count = instanceCount.get(complexToCloneParticipantsOf.interactorRef);
+                let count = instanceCount.get(complexToClone.interactorRef);
                 if (count) {
                     count = count + 1;
                 } else {
                     count = 1;
                 }
-                instanceCount.set(complexToCloneParticipantsOf.interactorRef, count);
+                instanceCount.set(complexToClone.interactorRef, count);
 
                 let i = count;
 
                 if (i > 1) {
                     // this looks weird, don't think it'll work if more than 2 refs to complex?
-                    complexToCloneParticipantsOf.interactorRef = `${complexToCloneParticipantsOf.interactorRef}_${i}`;
+                    complexToClone.interactorRef = `${complexToClone.interactorRef}_${i}`;
 
                     // update features of complex
-                    if (complexToCloneParticipantsOf.features) {
-                        complexToCloneParticipantsOf.features.forEach(function (feature) {
+                    if (complexToClone.features) {
+                        complexToClone.features.forEach(function (feature) {
                             feature.copiedfrom = feature.id;
                             // feature.id = `${feature.id}_${i}`;
                             // Also, adjust our sequence data
@@ -54,6 +54,7 @@ export function cloneComplexRefs(json) {
                     }
 
                     const clonedInteraction = JSON.parse(JSON.stringify(foundInteraction));
+                    clonedInteraction.sourceId = clonedInteraction.id;
                     clonedInteraction.id = `${clonedInteraction.id}_${i}`;
 
                     json.data.push(clonedInteraction);

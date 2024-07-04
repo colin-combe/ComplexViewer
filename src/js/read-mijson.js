@@ -186,7 +186,7 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
                 let nLink = app.allNaryLinks.get(nLinkId);
                 if (typeof nLink === "undefined") {
                     //doesn't already exist, make new nLink
-                    nLink = new NaryLink(nLinkId, app);
+                    nLink = new NaryLink(nLinkId, app, datum.sourceId);
                     app.allNaryLinks.set(nLinkId, nLink);
                     //alot of time is being spent on creating these IDs, stash them in the interaction object?
                     datum.naryId = nLinkId;

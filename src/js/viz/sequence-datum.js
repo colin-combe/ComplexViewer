@@ -34,50 +34,60 @@ export class SequenceDatum {
             const firstPart = sequenceDatumString.substring(0, dashPosition);
             const secondPart = sequenceDatumString.substring(dashPosition + 1);
 
-            let firstDotPosition;
-            if (firstPart.indexOf(".") === -1) {
-                this.begin = tidyPosition(firstPart);
-            } else {
-                firstDotPosition = firstPart.indexOf(".");
-                this.uncertainBegin = tidyPosition(firstPart.substring(0, firstDotPosition));
-                this.begin = tidyPosition(firstPart.substring(firstDotPosition + 2));
-            }
-
-            if (secondPart.indexOf(".") === -1) {
-                this.end = tidyPosition(secondPart);
-            } else {
-                firstDotPosition = secondPart.indexOf(".");
-                this.end = tidyPosition(secondPart.substring(0, firstDotPosition));
-                this.uncertainEnd = tidyPosition(secondPart.substring(firstDotPosition + 2));
-            }
-
-            if (this.begin === "n") {
+            if (firstPart == '?') {
                 this.uncertainBegin = 1;
-                this.begin = tidyPosition(this.end);
-                // this.uncertainEnd = this.end;
+                this.begin = tidyPosition(secondPart);
                 this.end = null;
-            }
-
-            if (this.end === "c") {
+            } else if (secondPart == '?') {
                 this.uncertainEnd = participant.size;
-                this.end = tidyPosition(this.begin);
-                // this.uncertainBegin = this.begin;
+                this.end = tidyPosition(firstPart);
                 this.begin = null;
-            }
+            } else {
+                let firstDotPosition;
+                if (firstPart.indexOf(".") === -1) {
+                    this.begin = tidyPosition(firstPart);
+                } else {
+                    firstDotPosition = firstPart.indexOf(".");
+                    this.uncertainBegin = tidyPosition(firstPart.substring(0, firstDotPosition));
+                    this.begin = tidyPosition(firstPart.substring(firstDotPosition + 2));
+                }
 
-            if (firstPart.indexOf("<") > -1) {
-                this.uncertainBegin = 0;
-                this.begin = tidyPosition(firstPart.substring(1, firstPart.length));
-            }
-            if (secondPart.indexOf(">") > -1) {
-                this.end = tidyPosition(secondPart.substring(1, firstPart.length));
-                this.uncertainEnd = participant.size;
-            }
+                if (secondPart.indexOf(".") === -1) {
+                    this.end = tidyPosition(secondPart);
+                } else {
+                    firstDotPosition = secondPart.indexOf(".");
+                    this.end = tidyPosition(secondPart.substring(0, firstDotPosition));
+                    this.uncertainEnd = tidyPosition(secondPart.substring(firstDotPosition + 2));
+                }
 
-            if (firstPart.indexOf(">") > -1 && secondPart.indexOf("<") > -1) {
-                this.uncertainBegin = tidyPosition(firstPart.substring(1, firstPart.length));
-                this.begin = tidyPosition(secondPart.substring(1, firstPart.length));
-                this.end = null;//this.begin;
+                if (this.begin === "n") {
+                    this.uncertainBegin = 1;
+                    this.begin = tidyPosition(this.end);
+                    // this.uncertainEnd = this.end;
+                    this.end = null;
+                }
+
+                if (this.end === "c") {
+                    this.uncertainEnd = participant.size;
+                    this.end = tidyPosition(this.begin);
+                    // this.uncertainBegin = this.begin;
+                    this.begin = null;
+                }
+
+                if (firstPart.indexOf("<") > -1) {
+                    this.uncertainBegin = 1;
+                    this.begin = tidyPosition(firstPart.substring(1, firstPart.length));
+                }
+                if (secondPart.indexOf(">") > -1) {
+                    this.end = tidyPosition(secondPart.substring(1, firstPart.length));
+                    this.uncertainEnd = participant.size;
+                }
+
+                if (firstPart.indexOf(">") > -1 && secondPart.indexOf("<") > -1) {
+                    this.uncertainBegin = tidyPosition(firstPart.substring(1, firstPart.length));
+                    this.begin = tidyPosition(secondPart.substring(1, firstPart.length));
+                    this.end = null;//this.begin;
+                }
             }
         }
     }

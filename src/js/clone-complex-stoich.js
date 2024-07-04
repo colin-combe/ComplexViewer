@@ -41,6 +41,7 @@ export function cloneComplexesStoich(json) {
                         }
 
                         const clonedInteraction = JSON.parse(JSON.stringify(foundInteraction));
+                        clonedInteraction.sourceId = clonedInteraction.id;
                         clonedInteraction.id = `${clonedInteraction.id}_${i}`;
                         clonedInteraction.interactorRef = `${complexToClone.interactorRef}_${i}`;
 
