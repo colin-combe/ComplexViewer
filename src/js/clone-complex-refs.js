@@ -1,4 +1,4 @@
-export function cloneComplexInteractors(json) {
+export function cloneComplexRefs(json) {
 
     // We'll need collections of our interactions and interactors for later..
     const interactions = json.data.filter(function (interaction) {
@@ -10,7 +10,7 @@ export function cloneComplexInteractors(json) {
     // Loop through our interactions
     interactions.forEach(function (interaction) {
 
-        // Get a collection of participants where the stoichiometry is greater than one.
+        // Get a collection of participants with 'complex' in interactorRef - not ideal way to get complexes
         const complexesToClone = interaction.participants.filter(function (participant) {
             if (participant.interactorRef.indexOf("complex") !== -1) {
                 return participant;
@@ -18,30 +18,31 @@ export function cloneComplexInteractors(json) {
         });
 
         // Loop through our participants that need expanding
-        complexesToClone.forEach(function (participantComplex) {
+        complexesToClone.forEach(function (complexToClone) {
 
-            // Do we have an interactor? TODO: Will this affect complexes?
-            const foundInteractor = findFirstObjWithAttr(interactions, "id", participantComplex.interactorRef);
+            // Do we have an interaction
+            const foundInteraction = findFirstObjWithAttr(interactions, "id", complexToClone.interactorRef);
 
-            // If we found an interactor then we need to clone it.
-            if (foundInteractor) {
+            // If we found an interaction then we need to clone it.
+            if (foundInteraction) {
 
-                let count = instanceCount.get(participantComplex.interactorRef);
+                let count = instanceCount.get(complexToClone.interactorRef);
                 if (count) {
                     count = count + 1;
                 } else {
                     count = 1;
                 }
-                instanceCount.set(participantComplex.interactorRef, count);
+                instanceCount.set(complexToClone.interactorRef, count);
 
                 let i = count;
 
                 if (i > 1) {
-                    participantComplex.interactorRef = `${participantComplex.interactorRef}_${i}`;
+                    // this looks weird, don't think it'll work if more than 2 refs to complex?
+                    complexToClone.interactorRef = `${complexToClone.interactorRef}_${i}`;
 
                     // update features of complex
-                    if (participantComplex.features) {
-                        participantComplex.features.forEach(function (feature) {
+                    if (complexToClone.features) {
+                        complexToClone.features.forEach(function (feature) {
                             feature.copiedfrom = feature.id;
                             // feature.id = `${feature.id}_${i}`;
                             // Also, adjust our sequence data
@@ -52,12 +53,13 @@ export function cloneComplexInteractors(json) {
                         });
                     }
 
-                    const clonedInteractor = JSON.parse(JSON.stringify(foundInteractor));
-                    clonedInteractor.id = `${clonedInteractor.id}_${i}`;
+                    const clonedInteraction = JSON.parse(JSON.stringify(foundInteraction));
+                    clonedInteraction.sourceId = clonedInteraction.id;
+                    clonedInteraction.id = `${clonedInteraction.id}_${i}`;
 
-                    json.data.push(clonedInteractor);
+                    json.data.push(clonedInteraction);
 
-                    for (let participant of clonedInteractor.participants) {
+                    for (let participant of clonedInteraction.participants) {
                         /********** PARTICIPANTS **********/
                         const clonedParticipant = participant;//JSON.parse(JSON.stringify(participant));
 

@@ -13,7 +13,8 @@ import {SequenceDatum} from "./viz/sequence-datum";
 import {BinaryLink} from "./viz/link/binary-link";
 import {UnaryLink} from "./viz/link/unary-link";
 import {matrix} from "./expand";
-import {cloneComplexInteractors} from "./clone-complex-interactors";
+import {cloneComplexRefs} from "./clone-complex-refs";
+import {cloneComplexesStoich} from "./clone-complex-stoich";
 
 // reads MI JSON format
 export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
@@ -27,7 +28,13 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
 
     const complexes = new Map();
 
-    miJson = cloneComplexInteractors(miJson);
+    // expand complexes based on stoichiometry
+    if (expand) {
+        miJson = cloneComplexesStoich(miJson);
+    }
+
+    // may be multiple references to a complex, we want different set of participants for each reference to same complex
+    miJson = cloneComplexRefs(miJson);
 
     //get interactors
     app.interactors = new Map();
@@ -179,7 +186,7 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
                 let nLink = app.allNaryLinks.get(nLinkId);
                 if (typeof nLink === "undefined") {
                     //doesn't already exist, make new nLink
-                    nLink = new NaryLink(nLinkId, app);
+                    nLink = new NaryLink(nLinkId, app, datum.sourceId);
                     app.allNaryLinks.set(nLinkId, nLink);
                     //alot of time is being spent on creating these IDs, stash them in the interaction object?
                     datum.naryId = nLinkId;

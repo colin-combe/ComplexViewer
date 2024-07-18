@@ -1,0 +1,1336 @@
+{
+  "data": [
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P0DTD1-PRO_0000449625",
+      "sequence": "SKMSDVKCTSVVLLSVLQQLRVESSSKLWAQCVQLHNDILLAKDTTEAFEKMVSLLSVLLSMQGAVDINKLCEEMLDNRATLQ",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "2697049",
+        "common": "SARS-CoV-2",
+        "scientific": "SARS-CoV-2"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P0DTD1-PRO_0000449625"
+      },
+      "label": "P0DTD1-PRO_0000449625"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P0DTD1-PRO_0000449626",
+      "sequence": "AIASEFSSLPSYAAFATAQEAYEQAVANGDSEVVLKKLKKSLNVAKSEFDRDAAMQRKLEKMADQAMTQMYKQARSEDKRAKVTSAMQTMLFTMLRKLDNDALNNIINNARDGCVPLNIIPLTTAAKLMVVIPDYNTYKNTCDGTTFTYASALWEIQQVVDADSKIVQLSEISMDNSPNLAWPLIVTALRANSAVKLQ",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "2697049",
+        "common": "SARS-CoV-2",
+        "scientific": "SARS-CoV-2"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P0DTD1-PRO_0000449626"
+      },
+      "label": "P0DTD1-PRO_0000449626"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P0DTD1-PRO_0000449629",
+      "sequence": "SADAQSFLNRVCGVSAARLTPCGTGTSTDVVYRAFDIYNDKVAGFAKFLKTNCCRFQEKDEDDNLIDSYFVVKRHTFSNYQHEETIYNLLKDCPAVAKHDFFKFRIDGDMVPHISRQRLTKYTMADLVYALRHFDEGNCDTLKEILVTYNCCDDDYFNKKDWYDFVENPDILRVYANLGERVRQALLKTVQFCDAMRNAGIVGVLTLDNQDLNGNWYDFGDFIQTTPGSGVPVVDSYYSLLMPILTLTRALTAESHVDTDLTKPYIKWDLLKYDFTEERLKLFDRYFKYWDQTYHPNCVNCLDDRCILHCANFNVLFSTVFPPTSFGPLVRKIFVDGVPFVVSTGYHFRELGVVHNQDVNLHSSRLSFKELLVYAADPAMHAASGNLLLDKRTTCFSVAALTNNVAFQTVKPGNFNKDFYDFAVSKGFFKEGSSVELKHFFFAQDGNAAISDYDYYRYNLPTMCDIRQLLFVVEVVDKYFDCYDGGCINANQVIVNNLDKSAGFPFNKWGKARLYYDSMSYEDQDALFAYTKRNVIPTITQMNLKYAISAKNRARTVAGVSICSTMTNRQFHQKLLKSIAATRGATVVIGTSKFYGGWHNMLKTVYSDVENPHLMGWDYPKCDRAMPNMLRIMASLVLARKHTTCCSLSHRFYRLANECAQVLSEMVMCGGSLYVKPGGTSSGDATTAYANSVFNICQAVTANVNALLSTDGNKIADKYVRNLQHRLYECLYRNRDVDTDFVNEFYAYLRKHFSMMILSDDAVVCFNSTYASQGLVASIKNFKSVLYYQNNVFMSEAKCWTETDLTKGPHEFCSQHTMLVKQGDDYVYLPYPDPSRILGAGCFVDDIVKTDGTLMIERFVSLAIDAYPLTKHPNQEYADVFHLYLQYIRKLHDELTGHMLDMYSVMLTNDNTSRYWEPEFYEAMYTPHTVLQ",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "2697049",
+        "common": "SARS-CoV-2",
+        "scientific": "SARS-CoV-2"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P0DTD1-PRO_0000449629"
+      },
+      "label": "P0DTD1-PRO_0000449629"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P0DTD1-PRO_0000449630",
+      "sequence": "AVGACVLCNSQTSLRCGACIRRPFLCCKCCYDHVISTSHKLVLSVNPYVCNAPGCDVTDVTQLYLGGMSYYCKSHKPPISFPLCANGQVFGLYKNTCVGSDNVTDFNAIATCDWTNAGDYILANTCTERLKLFAAETLKATEETFKLSYGIATVREVLSDRELHLSWEVGKPRPPLNRNYVFTGYRVTKNSKVQIGEYTFEKGDYGDAVVYRGTTTYKLNVGDYFVLTSHTVMPLSAPTLVPQEHYVRITGLYPTLNISDEFSSNVANYQKVGMQKYSTLQGPPGTGKSHFAIGLALYYPSARIVYTACSHAAVDALCEKALKYLPIDKCSRIIPARARVECFDKFKVNSTLEQYVFCTVNALPETTADIVVFDEISMATNYDLSVVNARLRAKHYVYIGDPAQLPAPRTLLTKGTLEPEYFNSVCRLMKTIGPDMFLGTCRRCPAEIVDTVSALVYDNKLKAHKDKSAQCFKMFYKGVITHDVSSAINRPQIGVVREFLTRNPAWRKAVFISPYNSQNAVASKILGLPTQTVDSSQGSEYDYVIFTQTTETAHSCNVNRFNVAITRAKVGILCIMSDRDLYDKLQFTSLEIPRRNVATLQ",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "2697049",
+        "common": "SARS-CoV-2",
+        "scientific": "SARS-CoV-2"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P0DTD1-PRO_0000449630"
+      },
+      "label": "P0DTD1-PRO_0000449630"
+    },
+    {
+      "object": "interaction",
+      "id": "complex portal_CPX-6442",
+      "interactionType": {
+        "id": "MI:0915",
+        "name": "physical association"
+      },
+      "complexType": {
+        "id": "MI:1302",
+        "name": "stable complex"
+      },
+      "evidenceType": {
+        "id": "ECO:0000353",
+        "name": "physical interaction evidence used in manual assertion"
+      },
+      "organism": {
+        "taxid": "2697049",
+        "common": "SARS-CoV-2",
+        "scientific": "SARS-CoV-2"
+      },
+      "identifiers": [
+        {
+          "db": "wwpdb",
+          "id": "7krn"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7kro"
+        },
+        {
+          "db": "wwpdb",
+          "id": "6xez"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7cxm"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7cxn"
+        },
+        {
+          "db": "intenz",
+          "id": "2.7.7.48"
+        },
+        {
+          "db": "intenz",
+          "id": "3.6.4.13"
+        },
+        {
+          "db": "intenz",
+          "id": "2.7.7.50"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-23007"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-23008"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-22160"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-30492"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-30493"
+        },
+        {
+          "db": "rhea",
+          "id": "RHEA:13065"
+        },
+        {
+          "db": "rhea",
+          "id": "RHEA:21248"
+        },
+        {
+          "db": "rhea",
+          "id": "RHEA:54592"
+        },
+        {
+          "db": "rhea",
+          "id": "RHEA:60836"
+        },
+        {
+          "db": "rhea",
+          "id": "RHEA:60844"
+        },
+        {
+          "db": "complex portal",
+          "id": "CPX-6442"
+        },
+        {
+          "db": "intact",
+          "id": "EBI-26617590"
+        }
+      ],
+      "participants": [
+        {
+          "id": "1",
+          "interactorRef": "uniprotkb_P0DTD1-PRO_0000449625",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "2",
+              "name": "nsp8_nsp12 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449625",
+                  "participantRef": "1"
+                }
+              ],
+              "linkedFeatures": [
+                "3",
+                "4"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "5",
+          "interactorRef": "uniprotkb_P0DTD1-PRO_0000449626",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "features": [
+            {
+              "id": "6",
+              "name": "nsp8_nsp12_nsp13 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449626",
+                  "participantRef": "5"
+                }
+              ],
+              "linkedFeatures": [
+                "3",
+                "4",
+                "7"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "8",
+          "interactorRef": "uniprotkb_P0DTD1-PRO_0000449629",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "features": [
+            {
+              "id": "3",
+              "name": "nsp7_nsp8_nsp13 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449629",
+                  "participantRef": "8"
+                }
+              ],
+              "linkedFeatures": [
+                "2",
+                "6",
+                "7"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "9",
+          "interactorRef": "uniprotkb_P0DTD1-PRO_0000449626",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "features": [
+            {
+              "id": "4",
+              "name": "nsp7_nsp8_nsp13 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449626",
+                  "participantRef": "9"
+                }
+              ],
+              "linkedFeatures": [
+                "2",
+                "10",
+                "6"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "11",
+          "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "features": [
+            {
+              "id": "10",
+              "name": "nsp8_nsp13_binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "11"
+                }
+              ],
+              "linkedFeatures": [
+                "4",
+                "7"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "12",
+          "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "features": [
+            {
+              "id": "7",
+              "name": "nsp8_nsp12_nsp13 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "12"
+                }
+              ],
+              "linkedFeatures": [
+                "6",
+                "10",
+                "3"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P0DTD1-PRO_0000449628",
+      "sequence": "AGNATEVPANSTVLSFCAFAVDAAKAYKDYLASGGQPITNCVKMLCTHTGTGQAITVTPEANMDQESFGGASCCLYCRCHIDHPNPKGFCDLKGKYVQIPTTCANDPVGFTLKNTVCTVCGMWKGYGCSCDQLREPMLQ",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "2697049",
+        "common": "SARS-CoV-2",
+        "scientific": "SARS-CoV-2"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P0DTD1-PRO_0000449628"
+      },
+      "label": "P0DTD1-PRO_0000449628"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P0DTD1-PRO_0000449631",
+      "sequence": "AENVTGLFKDCSKVITGLHPTQAPTHLSVDTKFKTEGLCVDIPGIPKDMTYRRLISMMGFKMNYQVNGYPNMFITREEAIRHVRAWIGFDVEGCHATREAVGTNLPLQLGFSTGVNLVAVPTGYVDTPNNTDFSRVSAKPPPGDQFKHLIPLMYKGLPWNVVRIKIVQMLSDTLKNLSDRVVFVLWAHGFELTSMKYFVKIGPERTCCLCDRRATCFSTASDTYACWHHSIGFDYVYNPFMIDVQQWGFTGNLQSNHDLYCQVHGNAHVASCDAIMTRCLAVHECFVKRVDWTIEYPIIGDELKINAACRKVQHMVVKAALLADKFPVLHDIGNPKAIKCVPQADVEWKFYDAQPCSDKAYKIEELFYSYATHSDKFTDGVCLFWNCNVDRYPANSIVCRFDTRVLSNLNLPGCDGGSLYVNKHAFHTPAFDKSAFVNLKQLPFFYYSDSPCESHGKQVVSDIDYVPLKSATCITRCNLGGAVCRHHANEYRLYLDAYNMMISAGFSLWVYKQFDTYNLWNTFTRLQ",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "2697049",
+        "common": "SARS-CoV-2",
+        "scientific": "SARS-CoV-2"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P0DTD1-PRO_0000449631"
+      },
+      "label": "P0DTD1-PRO_0000449631"
+    },
+    {
+      "object": "interaction",
+      "id": "complex portal_CPX-5692",
+      "interactionType": {
+        "id": "MI:0915",
+        "name": "physical association"
+      },
+      "complexType": {
+        "id": "MI:1302",
+        "name": "stable complex"
+      },
+      "evidenceType": {
+        "id": "ECO:0000353",
+        "name": "physical interaction evidence used in manual assertion"
+      },
+      "organism": {
+        "taxid": "2697049",
+        "common": "SARS-CoV-2",
+        "scientific": "SARS-CoV-2"
+      },
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-25492032"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7mc6"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7mc5"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7n0c"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7n0d"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7n0b"
+        },
+        {
+          "db": "wwpdb",
+          "id": "7diy"
+        },
+        {
+          "db": "intenz",
+          "id": "3.1.13"
+        },
+        {
+          "db": "reactome",
+          "id": "R-COV-9694688"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-24103"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-24104"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-24102"
+        },
+        {
+          "db": "complex portal",
+          "id": "CPX-5692"
+        },
+        {
+          "db": "intact",
+          "id": "EBI-25564924"
+        }
+      ],
+      "participants": [
+        {
+          "id": "13",
+          "interactorRef": "uniprotkb_P0DTD1-PRO_0000449628",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "14",
+              "name": "nsp14 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449628",
+                  "participantRef": "13"
+                }
+              ],
+              "linkedFeatures": [
+                "15"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "16",
+          "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "features": [
+            {
+              "id": "15",
+              "name": "nsp10 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                }
+              ],
+              "linkedFeatures": [
+                "14"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P0DTD1-PRO_0000449627",
+      "sequence": "NNELSPVALRQMSCAAGTTQTACTDDNALAYYNTTKGGRFVLALLSDLQDLKWARFPKSDGTGTIYTELEPPCRFVTDTPKGPKVKYLYFIKGLNNLNRGMVLGSLAATVRLQ",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "2697049",
+        "common": "SARS-CoV-2",
+        "scientific": "SARS-CoV-2"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P0DTD1-PRO_0000449627"
+      },
+      "label": "P0DTD1-PRO_0000449627"
+    },
+    {
+      "object": "interaction",
+      "id": "complex portal_CPX-7041",
+      "interactionType": {
+        "id": "MI:0915",
+        "name": "physical association"
+      },
+      "complexType": {
+        "id": "MI:1302",
+        "name": "stable complex"
+      },
+      "evidenceType": {
+        "id": "ECO:0000353",
+        "name": "physical interaction evidence used in manual assertion"
+      },
+      "organism": {
+        "taxid": "2697049",
+        "common": "SARS-CoV-2",
+        "scientific": "SARS-CoV-2"
+      },
+      "identifiers": [
+        {
+          "db": "intenz",
+          "id": "2.7.7.48"
+        },
+        {
+          "db": "intenz",
+          "id": "2.7.7.50"
+        },
+        {
+          "db": "intenz",
+          "id": "3.6.4.13"
+        },
+        {
+          "db": "intenz",
+          "id": "3.1.13"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-31146"
+        },
+        {
+          "db": "rhea",
+          "id": "RHEA:13065"
+        },
+        {
+          "db": "rhea",
+          "id": "RHEA:21248"
+        },
+        {
+          "db": "rhea",
+          "id": "RHEA:54592"
+        },
+        {
+          "db": "rhea",
+          "id": "RHEA:60836"
+        },
+        {
+          "db": "rhea",
+          "id": "RHEA:60844"
+        },
+        {
+          "db": "complex portal",
+          "id": "CPX-7041"
+        },
+        {
+          "db": "intact",
+          "id": "EBI-27089100"
+        }
+      ],
+      "participants": [
+        {
+          "id": "17",
+          "interactorRef": "complex portal_CPX-6442",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "features": [
+            {
+              "id": "18",
+              "name": "nsp9_nsp14_binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449629",
+                  "participantRef": "8"
+                }
+              ],
+              "linkedFeatures": [
+                "19",
+                "20"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "21",
+          "interactorRef": "complex portal_CPX-5692",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "features": [
+            {
+              "id": "19",
+              "name": "nsp9_nsp12 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                }
+              ],
+              "linkedFeatures": [
+                "20",
+                "18"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "22",
+          "interactorRef": "uniprotkb_P0DTD1-PRO_0000449627",
+          "stoichiometry": "1",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "features": [
+            {
+              "id": "20",
+              "name": "nsp12_nsp14 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449627",
+                  "participantRef": "22"
+                }
+              ],
+              "linkedFeatures": [
+                "19",
+                "18"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "object": "interaction",
+      "id": "complex portal_CPX-7083",
+      "interactionType": {
+        "id": "MI:0915",
+        "name": "physical association"
+      },
+      "complexType": {
+        "id": "MI:1302",
+        "name": "stable complex"
+      },
+      "evidenceType": {
+        "id": "ECO:0000353",
+        "name": "physical interaction evidence used in manual assertion"
+      },
+      "organism": {
+        "taxid": "2697049",
+        "common": "SARS-CoV-2",
+        "scientific": "SARS-CoV-2"
+      },
+      "identifiers": [
+        {
+          "db": "intenz",
+          "id": "3.6.4.13"
+        },
+        {
+          "db": "intenz",
+          "id": "2.7.7.48"
+        },
+        {
+          "db": "intenz",
+          "id": "2.7.7.50"
+        },
+        {
+          "db": "intenz",
+          "id": "3.1.13"
+        },
+        {
+          "db": "emdb",
+          "id": "EMD-31138"
+        },
+        {
+          "db": "rhea",
+          "id": "RHEA:54592"
+        },
+        {
+          "db": "rhea",
+          "id": "RHEA:13065"
+        },
+        {
+          "db": "rhea",
+          "id": "RHEA:21248"
+        },
+        {
+          "db": "rhea",
+          "id": "RHEA:60836"
+        },
+        {
+          "db": "rhea",
+          "id": "RHEA:60844"
+        },
+        {
+          "db": "complex portal",
+          "id": "CPX-7083"
+        },
+        {
+          "db": "intact",
+          "id": "EBI-27092432"
+        }
+      ],
+      "participants": [
+        {
+          "id": "23",
+          "interactorRef": "complex portal_CPX-7041",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "features": [
+            {
+              "id": "24",
+              "name": "nsp13 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "460-460",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                },
+                {
+                  "pos": "465-465",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                },
+                {
+                  "pos": "479-479",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                },
+                {
+                  "pos": "483-483",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                }
+              ],
+              "linkedFeatures": [
+                "25"
+              ]
+            },
+            {
+              "id": "26",
+              "name": "nsp14 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "904-904",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449629",
+                  "participantRef": "8"
+                }
+              ],
+              "linkedFeatures": [
+                "27"
+              ]
+            },
+            {
+              "id": "28",
+              "name": "nsp14 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "86-86",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "11"
+                }
+              ],
+              "linkedFeatures": [
+                "27"
+              ]
+            },
+            {
+              "id": "29",
+              "name": "nsp14 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "12-12",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449626",
+                  "participantRef": "9"
+                }
+              ],
+              "linkedFeatures": [
+                "27"
+              ]
+            },
+            {
+              "id": "30",
+              "name": "nsp12 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "502-502",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                },
+                {
+                  "pos": "441-441",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                },
+                {
+                  "pos": "433-433",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                },
+                {
+                  "pos": "406-406",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                },
+                {
+                  "pos": "172-172",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                }
+              ],
+              "linkedFeatures": [
+                "31"
+              ]
+            },
+            {
+              "id": "32",
+              "name": "nsp8_nsp12_nsp13 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "517-517",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                },
+                {
+                  "pos": "470-470",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                },
+                {
+                  "pos": "464-464",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                }
+              ],
+              "linkedFeatures": [
+                "33",
+                "34",
+                "35"
+              ]
+            },
+            {
+              "id": "36",
+              "name": "nsp14 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "426-426",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449629",
+                  "participantRef": "8"
+                },
+                {
+                  "pos": "919-919",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449629",
+                  "participantRef": "8"
+                },
+                {
+                  "pos": "917-917",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449629",
+                  "participantRef": "8"
+                },
+                {
+                  "pos": "889-889",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449629",
+                  "participantRef": "8"
+                },
+                {
+                  "pos": "886-886",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449629",
+                  "participantRef": "8"
+                },
+                {
+                  "pos": "431-431",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449629",
+                  "participantRef": "8"
+                }
+              ],
+              "linkedFeatures": [
+                "37"
+              ]
+            },
+            {
+              "id": "38",
+              "name": "nsp12 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "106-106",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449629",
+                  "participantRef": "8"
+                }
+              ],
+              "linkedFeatures": [
+                "39"
+              ]
+            },
+            {
+              "id": "40",
+              "name": "nsp14 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "90-90",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "11"
+                },
+                {
+                  "pos": "81-81",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "11"
+                },
+                {
+                  "pos": "79-79",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "11"
+                }
+              ],
+              "linkedFeatures": [
+                "41"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "42",
+          "interactorRef": "complex portal_CPX-7041",
+          "bioRole": {
+            "id": "MI:0501",
+            "name": "enzyme"
+          },
+          "features": [
+            {
+              "id": "41",
+              "name": "nsp13 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "460-460",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                },
+                {
+                  "pos": "465-465",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                },
+                {
+                  "pos": "479-479",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                },
+                {
+                  "pos": "483-483",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                }
+              ],
+              "linkedFeatures": [
+                "40"
+              ]
+            },
+            {
+              "id": "34",
+              "name": "nsp14 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "904-904",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449629",
+                  "participantRef": "8"
+                }
+              ],
+              "linkedFeatures": [
+                "32"
+              ]
+            },
+            {
+              "id": "35",
+              "name": "nsp14 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "86-86",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "11"
+                }
+              ],
+              "linkedFeatures": [
+                "32"
+              ]
+            },
+            {
+              "id": "33",
+              "name": "nsp14 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "12-12",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449626",
+                  "participantRef": "9"
+                }
+              ],
+              "linkedFeatures": [
+                "32"
+              ]
+            },
+            {
+              "id": "27",
+              "name": "nsp8_nsp12_nsp13 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "517-517",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                },
+                {
+                  "pos": "470-470",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                },
+                {
+                  "pos": "464-464",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                }
+              ],
+              "linkedFeatures": [
+                "26",
+                "28",
+                "29"
+              ]
+            },
+            {
+              "id": "31",
+              "name": "nsp14 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "426-426",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449629",
+                  "participantRef": "8"
+                },
+                {
+                  "pos": "919-919",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449629",
+                  "participantRef": "8"
+                },
+                {
+                  "pos": "917-917",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449629",
+                  "participantRef": "8"
+                },
+                {
+                  "pos": "889-889",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449629",
+                  "participantRef": "8"
+                },
+                {
+                  "pos": "886-886",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449629",
+                  "participantRef": "8"
+                },
+                {
+                  "pos": "431-431",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449629",
+                  "participantRef": "8"
+                }
+              ],
+              "linkedFeatures": [
+                "30"
+              ]
+            },
+            {
+              "id": "39",
+              "name": "nsp12 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "158-158",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449629",
+                  "participantRef": "8"
+                }
+              ],
+              "linkedFeatures": [
+                "38"
+              ]
+            },
+            {
+              "id": "25",
+              "name": "nsp14 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "90-90",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "11"
+                },
+                {
+                  "pos": "81-81",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "11"
+                },
+                {
+                  "pos": "79-79",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449630",
+                  "participantRef": "11"
+                }
+              ],
+              "linkedFeatures": [
+                "24"
+              ]
+            },
+            {
+              "id": "37",
+              "name": "nsp12 binding region",
+              "category": "bindingSites",
+              "type": {
+                "id": "MI:0117",
+                "name": "binding-associated region"
+              },
+              "sequenceData": [
+                {
+                  "pos": "172-172",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                },
+                {
+                  "pos": "502-502",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                },
+                {
+                  "pos": "441-441",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                },
+                {
+                  "pos": "433-433",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                },
+                {
+                  "pos": "406-406",
+                  "interactorRef": "uniprotkb_P0DTD1-PRO_0000449631",
+                  "participantRef": "16"
+                }
+              ],
+              "linkedFeatures": [
+                "36"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
