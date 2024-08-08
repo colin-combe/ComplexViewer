@@ -928,7 +928,7 @@ export class App {
                 }
             }
         }
-        this.showTooltip(p);
+        // this.showTooltip(p);
         this.dragElement = null;
         this.dragStart = null;//{};// should prob make that null here and use it as a check in move()
         this.state = App.STATES.MOUSE_UP;

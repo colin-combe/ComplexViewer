@@ -107,8 +107,6 @@ export function matrix(json) {
         });
     });
 
-    //actually the expansion code doesn't seem to take up that much time
-    // console.log(`Expand time:${+new Date() - startTime}`);
     return json;
 }
 

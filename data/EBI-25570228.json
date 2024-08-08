@@ -129,567 +129,6 @@
           "features": [
             {
               "id": "2",
-              "name": "P0C6X7-PRO_0000037322:p.Met247Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1129",
-                "name": "mutation disrupting interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "247-247",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
-                }
-              ]
-            },
-            {
-              "id": "4",
-              "name": "P0C6X7-PRO_0000037322:p.Lys46Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1129",
-                "name": "mutation disrupting interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "46-46",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
-                }
-              ]
-            },
-            {
-              "id": "5",
-              "name": "P0C6X7-PRO_0000037322:p.Leu244Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1129",
-                "name": "mutation disrupting interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "244-244",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
-                }
-              ]
-            },
-            {
-              "id": "6",
-              "name": "P0C6X7-PRO_0000037322:p.Tyr30Phe",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1129",
-                "name": "mutation disrupting interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "30-30",
-                  "resultingSequence": "F",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
-                }
-              ]
-            },
-            {
-              "id": "7",
-              "name": "P0C6X7-PRO_0000037322:p.Ile40Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1130",
-                "name": "mutation decreasing interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "40-40",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
-                }
-              ]
-            },
-            {
-              "id": "8",
-              "name": "P0C6X7-PRO_0000037317:p.Arg78Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1129",
-                "name": "mutation disrupting interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "78-78",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
-                  "participantRef": "9"
-                }
-              ]
-            },
-            {
-              "id": "10",
-              "name": "P0C6X7-PRO_0000037317:p.Lys93Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1130",
-                "name": "mutation decreasing interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "93-93",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
-                  "participantRef": "9"
-                }
-              ]
-            },
-            {
-              "id": "11",
-              "name": "P0C6X7-PRO_0000037317:p.His80Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1130",
-                "name": "mutation decreasing interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "80-80",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
-                  "participantRef": "9"
-                }
-              ]
-            },
-            {
-              "id": "12",
-              "name": "P0C6X7-PRO_0000037317:p.His80Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1130",
-                "name": "mutation decreasing interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "80-80",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
-                  "participantRef": "9"
-                }
-              ]
-            },
-            {
-              "id": "13",
-              "name": "P0C6X7-PRO_0000037317:p.Gly94Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1130",
-                "name": "mutation decreasing interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "94-94",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
-                  "participantRef": "9"
-                }
-              ]
-            },
-            {
-              "id": "14",
-              "name": "P0C6X7-PRO_0000037317:p.Lys95Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1130",
-                "name": "mutation decreasing interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "95-95",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
-                  "participantRef": "9"
-                }
-              ]
-            },
-            {
-              "id": "15",
-              "name": "P0C6X7-PRO_0000037317:p.Tyr96Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1130",
-                "name": "mutation decreasing interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "96-96",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
-                  "participantRef": "9"
-                }
-              ]
-            },
-            {
-              "id": "16",
-              "name": "P0C6X7-PRO_0000037322:p.Asp130Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1129",
-                "name": "mutation disrupting interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "130-130",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
-                }
-              ]
-            },
-            {
-              "id": "17",
-              "name": "P0C6X7-PRO_0000037322:p.Lys170Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1129",
-                "name": "mutation disrupting interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "170-170",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
-                }
-              ]
-            },
-            {
-              "id": "18",
-              "name": "P0C6X7-PRO_0000037322:p.Glu203Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1129",
-                "name": "mutation disrupting interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "203-203",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
-                }
-              ]
-            },
-            {
-              "id": "19",
-              "name": "P0C6X7-PRO_0000037322:p.Asn43Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1130",
-                "name": "mutation decreasing interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "43-43",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
-                }
-              ]
-            },
-            {
-              "id": "20",
-              "name": "P0C6X7-PRO_0000037322:p.Gly73Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1130",
-                "name": "mutation decreasing interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "73-73",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
-                }
-              ]
-            },
-            {
-              "id": "21",
-              "name": "P0C6X7-PRO_0000037322:p.Asp99Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1129",
-                "name": "mutation disrupting interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "99-99",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
-                }
-              ]
-            },
-            {
-              "id": "22",
-              "name": "P0C6X7-PRO_0000037322:p.Thr58Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1130",
-                "name": "mutation decreasing interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "58-58",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
-                }
-              ]
-            },
-            {
-              "id": "23",
-              "name": "P0C6X7-PRO_0000037322:p.Thr58Asn",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1130",
-                "name": "mutation decreasing interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "58-58",
-                  "resultingSequence": "N",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
-                }
-              ]
-            },
-            {
-              "id": "24",
-              "name": "P0C6X7-PRO_0000037322:p.Thr58Glu",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1129",
-                "name": "mutation disrupting interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "58-58",
-                  "resultingSequence": "E",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
-                }
-              ]
-            },
-            {
-              "id": "25",
-              "name": "P0C6X7-PRO_0000037322:p.Ser188Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1130",
-                "name": "mutation decreasing interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "188-188",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
-                }
-              ]
-            },
-            {
-              "id": "26",
-              "name": "P0C6X7-PRO_0000037322:p.Tyr132Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1129",
-                "name": "mutation disrupting interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "132-132",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
-                }
-              ]
-            },
-            {
-              "id": "27",
-              "name": "P0C6X7-PRO_0000037322:p.Tyr132Thr",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1129",
-                "name": "mutation disrupting interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "132-132",
-                  "resultingSequence": "T",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
-                }
-              ]
-            },
-            {
-              "id": "28",
-              "name": "P0C6X7-PRO_0000037322:p.Tyr132Phe",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1130",
-                "name": "mutation decreasing interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "132-132",
-                  "resultingSequence": "F",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
-                }
-              ]
-            },
-            {
-              "id": "29",
-              "name": "P0C6X7-PRO_0000037322:p.Tyr132His",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1129",
-                "name": "mutation disrupting interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "132-132",
-                  "resultingSequence": "H",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
-                }
-              ]
-            },
-            {
-              "id": "30",
-              "name": "P0C6X7-PRO_0000037322:p.Tyr30Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1129",
-                "name": "mutation disrupting interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "30-30",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
-                }
-              ]
-            },
-            {
-              "id": "31",
-              "name": "P0C6X7-PRO_0000037322:p.Met41Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1129",
-                "name": "mutation disrupting interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "41-41",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
-                }
-              ]
-            },
-            {
-              "id": "32",
-              "name": "P0C6X7-PRO_0000037322:p.Val44Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1129",
-                "name": "mutation disrupting interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "44-44",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
-                }
-              ]
-            },
-            {
-              "id": "33",
-              "name": "P0C6X7-PRO_0000037322:p.Thr48Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1130",
-                "name": "mutation decreasing interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "48-48",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
-                }
-              ]
-            },
-            {
-              "id": "34",
-              "name": "P0C6X7-PRO_0000037317:p.Asn40Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1130",
-                "name": "mutation decreasing interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "40-40",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
-                  "participantRef": "9"
-                }
-              ]
-            },
-            {
-              "id": "35",
-              "name": "P0C6X7-PRO_0000037317:p.Val42Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1129",
-                "name": "mutation disrupting interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "42-42",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
-                  "participantRef": "9"
-                }
-              ]
-            },
-            {
-              "id": "36",
-              "name": "P0C6X7-PRO_0000037317:p.Met44Ala",
-              "category": "pointMutations",
-              "type": {
-                "id": "MI:1129",
-                "name": "mutation disrupting interaction rate"
-              },
-              "sequenceData": [
-                {
-                  "pos": "44-44",
-                  "resultingSequence": "A",
-                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
-                  "participantRef": "9"
-                }
-              ]
-            },
-            {
-              "id": "37",
               "name": "P0C6X7-PRO_0000037317:p.Leu45Ala",
               "category": "pointMutations",
               "type": {
@@ -701,12 +140,12 @@
                   "pos": "45-45",
                   "resultingSequence": "A",
                   "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
-                  "participantRef": "9"
+                  "participantRef": "3"
                 }
               ]
             },
             {
-              "id": "38",
+              "id": "4",
               "name": "P0C6X7-PRO_0000037317:p.Thr47Ala",
               "category": "pointMutations",
               "type": {
@@ -718,12 +157,12 @@
                   "pos": "47-47",
                   "resultingSequence": "A",
                   "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
-                  "participantRef": "9"
+                  "participantRef": "3"
                 }
               ]
             },
             {
-              "id": "39",
+              "id": "5",
               "name": "P0C6X7-PRO_0000037317:p.Val57Ala",
               "category": "pointMutations",
               "type": {
@@ -735,12 +174,12 @@
                   "pos": "57-57",
                   "resultingSequence": "A",
                   "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
-                  "participantRef": "9"
+                  "participantRef": "3"
                 }
               ]
             },
             {
-              "id": "40",
+              "id": "6",
               "name": "P0C6X7-PRO_0000037317:p.Thr58Ala",
               "category": "pointMutations",
               "type": {
@@ -752,12 +191,12 @@
                   "pos": "58-58",
                   "resultingSequence": "A",
                   "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
-                  "participantRef": "9"
+                  "participantRef": "3"
                 }
               ]
             },
             {
-              "id": "41",
+              "id": "7",
               "name": "P0C6X7-PRO_0000037317:p.Gly70Ala",
               "category": "pointMutations",
               "type": {
@@ -769,12 +208,12 @@
                   "pos": "70-70",
                   "resultingSequence": "A",
                   "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
-                  "participantRef": "9"
+                  "participantRef": "3"
                 }
               ]
             },
             {
-              "id": "42",
+              "id": "8",
               "name": "P0C6X7-PRO_0000037317:p.Ser72Ala",
               "category": "pointMutations",
               "type": {
@@ -786,12 +225,12 @@
                   "pos": "72-72",
                   "resultingSequence": "A",
                   "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
-                  "participantRef": "9"
+                  "participantRef": "3"
                 }
               ]
             },
             {
-              "id": "43",
+              "id": "9",
               "name": "P0C6X7-PRO_0000037322:p.Arg86Ala",
               "category": "pointMutations",
               "type": {
@@ -803,12 +242,12 @@
                   "pos": "86-86",
                   "resultingSequence": "A",
                   "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
+                  "participantRef": "10"
                 }
               ]
             },
             {
-              "id": "44",
+              "id": "11",
               "name": "P0C6X7-PRO_0000037322:p.Val78Ala",
               "category": "pointMutations",
               "type": {
@@ -820,12 +259,12 @@
                   "pos": "78-78",
                   "resultingSequence": "A",
                   "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
+                  "participantRef": "10"
                 }
               ]
             },
             {
-              "id": "45",
+              "id": "12",
               "name": "P0C6X7-PRO_0000037322:p.Gln87Ala",
               "category": "pointMutations",
               "type": {
@@ -837,12 +276,12 @@
                   "pos": "87-87",
                   "resultingSequence": "A",
                   "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
+                  "participantRef": "10"
                 }
               ]
             },
             {
-              "id": "46",
+              "id": "13",
               "name": "P0C6X7-PRO_0000037322:p.Val104Gly",
               "category": "pointMutations",
               "type": {
@@ -854,12 +293,12 @@
                   "pos": "104-104",
                   "resultingSequence": "G",
                   "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
-                  "participantRef": "3"
+                  "participantRef": "10"
                 }
               ]
             },
             {
-              "id": "47",
+              "id": "14",
               "name": "P0C6X7-PRO_0000037322:p.Asp106Ala",
               "category": "pointMutations",
               "type": {
@@ -871,6 +310,567 @@
                   "pos": "106-106",
                   "resultingSequence": "A",
                   "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "15",
+              "name": "P0C6X7-PRO_0000037322:p.Met247Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1129",
+                "name": "mutation disrupting interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "247-247",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "16",
+              "name": "P0C6X7-PRO_0000037322:p.Lys46Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1129",
+                "name": "mutation disrupting interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "46-46",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "17",
+              "name": "P0C6X7-PRO_0000037322:p.Leu244Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1129",
+                "name": "mutation disrupting interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "244-244",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "18",
+              "name": "P0C6X7-PRO_0000037322:p.Tyr30Phe",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1129",
+                "name": "mutation disrupting interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "30-30",
+                  "resultingSequence": "F",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "19",
+              "name": "P0C6X7-PRO_0000037322:p.Ile40Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1130",
+                "name": "mutation decreasing interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "40-40",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "20",
+              "name": "P0C6X7-PRO_0000037317:p.Arg78Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1129",
+                "name": "mutation disrupting interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "78-78",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
+                  "participantRef": "3"
+                }
+              ]
+            },
+            {
+              "id": "21",
+              "name": "P0C6X7-PRO_0000037317:p.Lys93Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1130",
+                "name": "mutation decreasing interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "93-93",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
+                  "participantRef": "3"
+                }
+              ]
+            },
+            {
+              "id": "22",
+              "name": "P0C6X7-PRO_0000037317:p.His80Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1130",
+                "name": "mutation decreasing interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "80-80",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
+                  "participantRef": "3"
+                }
+              ]
+            },
+            {
+              "id": "23",
+              "name": "P0C6X7-PRO_0000037317:p.His80Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1130",
+                "name": "mutation decreasing interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "80-80",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
+                  "participantRef": "3"
+                }
+              ]
+            },
+            {
+              "id": "24",
+              "name": "P0C6X7-PRO_0000037317:p.Gly94Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1130",
+                "name": "mutation decreasing interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "94-94",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
+                  "participantRef": "3"
+                }
+              ]
+            },
+            {
+              "id": "25",
+              "name": "P0C6X7-PRO_0000037317:p.Lys95Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1130",
+                "name": "mutation decreasing interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "95-95",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
+                  "participantRef": "3"
+                }
+              ]
+            },
+            {
+              "id": "26",
+              "name": "P0C6X7-PRO_0000037317:p.Tyr96Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1130",
+                "name": "mutation decreasing interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "96-96",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
+                  "participantRef": "3"
+                }
+              ]
+            },
+            {
+              "id": "27",
+              "name": "P0C6X7-PRO_0000037322:p.Asp130Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1129",
+                "name": "mutation disrupting interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "130-130",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "28",
+              "name": "P0C6X7-PRO_0000037322:p.Lys170Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1129",
+                "name": "mutation disrupting interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "170-170",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "29",
+              "name": "P0C6X7-PRO_0000037322:p.Glu203Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1129",
+                "name": "mutation disrupting interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "203-203",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "30",
+              "name": "P0C6X7-PRO_0000037322:p.Asn43Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1130",
+                "name": "mutation decreasing interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "43-43",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "31",
+              "name": "P0C6X7-PRO_0000037322:p.Gly73Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1130",
+                "name": "mutation decreasing interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "73-73",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "32",
+              "name": "P0C6X7-PRO_0000037322:p.Asp99Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1129",
+                "name": "mutation disrupting interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "99-99",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "33",
+              "name": "P0C6X7-PRO_0000037322:p.Thr58Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1130",
+                "name": "mutation decreasing interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "58-58",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "34",
+              "name": "P0C6X7-PRO_0000037322:p.Thr58Asn",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1130",
+                "name": "mutation decreasing interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "58-58",
+                  "resultingSequence": "N",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "35",
+              "name": "P0C6X7-PRO_0000037322:p.Thr58Glu",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1129",
+                "name": "mutation disrupting interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "58-58",
+                  "resultingSequence": "E",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "36",
+              "name": "P0C6X7-PRO_0000037322:p.Ser188Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1130",
+                "name": "mutation decreasing interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "188-188",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "37",
+              "name": "P0C6X7-PRO_0000037322:p.Tyr132Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1129",
+                "name": "mutation disrupting interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "132-132",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "38",
+              "name": "P0C6X7-PRO_0000037322:p.Tyr132Thr",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1129",
+                "name": "mutation disrupting interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "132-132",
+                  "resultingSequence": "T",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "39",
+              "name": "P0C6X7-PRO_0000037322:p.Tyr132Phe",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1130",
+                "name": "mutation decreasing interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "132-132",
+                  "resultingSequence": "F",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "40",
+              "name": "P0C6X7-PRO_0000037322:p.Tyr132His",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1129",
+                "name": "mutation disrupting interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "132-132",
+                  "resultingSequence": "H",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "41",
+              "name": "P0C6X7-PRO_0000037322:p.Tyr30Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1129",
+                "name": "mutation disrupting interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "30-30",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "42",
+              "name": "P0C6X7-PRO_0000037322:p.Met41Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1129",
+                "name": "mutation disrupting interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "41-41",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "43",
+              "name": "P0C6X7-PRO_0000037322:p.Val44Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1129",
+                "name": "mutation disrupting interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "44-44",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "44",
+              "name": "P0C6X7-PRO_0000037322:p.Thr48Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1130",
+                "name": "mutation decreasing interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "48-48",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037322",
+                  "participantRef": "10"
+                }
+              ]
+            },
+            {
+              "id": "45",
+              "name": "P0C6X7-PRO_0000037317:p.Asn40Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1130",
+                "name": "mutation decreasing interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "40-40",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
+                  "participantRef": "3"
+                }
+              ]
+            },
+            {
+              "id": "46",
+              "name": "P0C6X7-PRO_0000037317:p.Val42Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1129",
+                "name": "mutation disrupting interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "42-42",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
+                  "participantRef": "3"
+                }
+              ]
+            },
+            {
+              "id": "47",
+              "name": "P0C6X7-PRO_0000037317:p.Met44Ala",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1129",
+                "name": "mutation disrupting interaction rate"
+              },
+              "sequenceData": [
+                {
+                  "pos": "44-44",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P0C6X7-PRO_0000037317",
                   "participantRef": "3"
                 }
               ]
