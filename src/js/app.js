@@ -2,9 +2,9 @@ import "../css/xinet.css";
 import packageInfo from "../../package.json";
 import * as d3 from "d3";
 import {scaleOrdinal} from "d3-scale";
-import * as d3_chromatic from "d3-scale-chromatic";
+import {schemePastel2, schemeTableau10} from "d3-scale-chromatic";
 import * as cola from "./cola";
-import * as Rgb_color from "rgb-color";
+import Rgb_color from "rgb-color";
 
 import {svgUtils} from "./svgexp";
 import {readMijson} from "./read-mijson";
@@ -13,7 +13,7 @@ import {fetchAnnotations} from "./annotation-utils";
 import {NaryLink} from "./viz/link/nary-link";
 import {svgns} from "./svgns";
 
-import * as $ from "jquery";
+import $ from "jquery";
 
 export class App {
     constructor(/*HTMLDivElement*/networkDiv, maxCountInitiallyExpanded = 4) {
@@ -202,7 +202,7 @@ export class App {
 
         //lighten complex colors
         let complexColors = [];
-        for (let c of d3_chromatic.schemePastel2) {//colorbrewer.Pastel2[8]) {
+        for (let c of schemePastel2) {//colorbrewer.Pastel2[8]) {
             const hsl = d3.hsl(c);
             hsl.l = 0.9;
             complexColors.push(`${hsl}`);
@@ -620,7 +620,7 @@ export class App {
         //choose appropriate color scheme
         let colorScheme;
         if (categories.size <= 10) {
-            colorScheme = scaleOrdinal().range(d3_chromatic.schemeTableau10);
+            colorScheme = scaleOrdinal().range(schemeTableau10);
         } else {
             colorScheme = d3.scaleOrdinal().range([
                 "#38cae3",
