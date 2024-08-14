@@ -1,5 +1,5 @@
-import * as Intersection from "intersectionjs";
-import * as Point2D from "point2d";
+import Intersection from "intersectionjs";
+import Point2D from "point2d";
 import {HideableLink} from "./hideable-link";
 
 export class BinaryLink extends HideableLink {

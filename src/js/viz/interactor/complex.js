@@ -1,6 +1,6 @@
 import {Interactor} from "./interactor";
-import * as Point2D from "point2d";
-import * as Intersection from "intersectionjs";
+import Point2D from "point2d";
+import Intersection from "intersectionjs";
 
 export class Complex extends Interactor {
     constructor(id, app) {

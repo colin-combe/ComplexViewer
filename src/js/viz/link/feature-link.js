@@ -1,7 +1,4 @@
 import {Link} from "./link";
-import {svgns} from "../../svgns";
-// import * as Point2D from "point2d";
-// import * as Intersection from "intersectionjs";
 
 export class FeatureLink extends Link {
     constructor(id, fromFeatPos, toFeatPos, app) {
