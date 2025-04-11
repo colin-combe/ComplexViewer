@@ -1,14 +1,24 @@
 export function cloneComplexRefs(json) {
 
+    const instanceCount = new Map();
+
     // We'll need collections of our interactions and interactors for later..
     const interactions = json.data.filter(function (interaction) {
         return interaction.object === "interaction";
     });
 
-    const instanceCount = new Map();
+    cloneComplexRefsRecursively(json, interactions, interactions, instanceCount);
 
-    // Loop through our interactions
-    interactions.forEach(function (interaction) {
+    // After all the complexes and participants have been cloned due to stoichiometry,
+    // we need to check if any subcomplex needs to recursively also clone their participants.
+    return json;
+}
+
+function cloneComplexRefsRecursively(json, originalInteractions, interactionsToClone, instanceCount) {
+    const newInteractionsToClone = [];
+
+    // Loop through our interactions to clone
+    interactionsToClone.forEach(function (interaction) {
 
         // Get a collection of participants with 'complex' in interactorRef - not ideal way to get complexes
         const complexesToClone = interaction.participants.filter(function (participant) {
@@ -18,84 +28,43 @@ export function cloneComplexRefs(json) {
         });
 
         // Loop through our participants that need expanding
-        complexesToClone.forEach(function (complexToClone) {
-
-            // Do we have an interaction
-            const foundInteraction = findFirstObjWithAttr(interactions, "id", complexToClone.interactorRef);
+        complexesToClone.forEach(complexToClone => {
+            // Do we have an interaction with the same base identifier
+            const match = complexToClone.interactorRef.match(/^([0-9])_[0-9]+$/);
+            const baseInteractorRef = match ? match[1] : complexToClone.interactorRef;
+            const foundInteraction = findFirstObjWithAttr(originalInteractions, "id", baseInteractorRef);
 
             // If we found an interaction then we need to clone it.
             if (foundInteraction) {
-                let count = instanceCount.get(complexToClone.interactorRef);
+                let count = instanceCount.get(baseInteractorRef);
                 if (count) {
                     count = count + 1;
                 } else {
                     count = 1;
                 }
-                instanceCount.set(complexToClone.interactorRef, count);
-
+                instanceCount.set(baseInteractorRef, count);
                 let i = count;
 
                 if (i > 1) {
-                    cloneComplexParticipant(complexToClone, i);
-                    json.data.push(cloneComplexInteraction(foundInteraction, i));
+                    // If we haven't found a complex with the same reference, then we clone it
+                    if (!match || i > match[2]) {
+                        cloneComplexParticipant(complexToClone, i);
+                        const clonedComplex = cloneComplexInteraction(foundInteraction, i);
+                        json.data.push(clonedComplex);
+                        // We add the new cloned complex to this list to check
+                        // if any of its participants also needs cloning
+                        newInteractionsToClone.push(clonedComplex);
+                    }
                 }
             }
         });
-
     });
 
-    // After all the complexes and participants have been cloned due to stoichiometry,
-    // we need to check if any subcomplex needs to recursively also clone their participants.
-    return cloneComplexClonesRecursively(json);
-}
-
-function cloneComplexClonesRecursively(json) {
-
-    // We'll need collections of our interactions and interactors for later..
-    const interactions = json.data.filter(function (interaction) {
-        return interaction.object === "interaction";
-    });
-
-    // Loop through our interactions
-    interactions.forEach(function (interaction) {
-        json.data.push(...cloneClonedComplexParticipants(interactions, interaction));
-    });
-
-    return json;
-}
-
-function cloneClonedComplexParticipants(interactions, interaction) {
-    const clonesInteractions = [];
-
-    // We only try to clone participants from already cloned complexes
-    const match = interaction.id.match(/.*_([0-9])+$/);
-    if (match) {
-        const i = match[1];
-
-        // Get a collection of participants with 'complex' in interactorRef - not ideal way to get complexes
-        const complexesToClone = interaction.participants.filter(function (participant) {
-            if (participant.interactorRef.indexOf("complex") !== -1) {
-                return participant;
-            }
-        });
-
-        // Loop through our participants that need expanding
-        complexesToClone.forEach(function (complexToClone) {
-
-            // Do we have an interaction
-            const foundInteraction = findFirstObjWithAttr(interactions, "id", complexToClone.interactorRef);
-
-            // If we found an interaction then we need to clone it.
-            if (foundInteraction) {
-                cloneComplexParticipant(complexToClone, i);
-                const clonedInteraction = cloneComplexInteraction(foundInteraction, i);
-                clonesInteractions.push(clonedInteraction);
-                clonesInteractions.push(...cloneClonedComplexParticipants(interactions, clonedInteraction));
-            }
-        });
+    // If we have cloned any complex, we need to recursively check the participants of these new cloned complexes,
+    // as they may require cloning too
+    if (newInteractionsToClone.length > 0) {
+        cloneComplexRefsRecursively(json, originalInteractions, newInteractionsToClone, instanceCount);
     }
-
-    return clonesInteractions;
 }
 
 function cloneComplexParticipant(complexToClone, i) {
