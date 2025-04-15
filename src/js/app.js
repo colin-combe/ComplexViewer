@@ -411,7 +411,8 @@ export class App {
             }
 
             if (preRun) {
-                self.d3cola.groups([]).start(23, 10, 0, 0, false);
+                const initialUnconstrainedIterations = nodes.length < 10 ? 10 : 23;
+                self.d3cola.groups([]).start(initialUnconstrainedIterations, 10, 1, 0, false);
             } else {
                 const groups = [];
                 if (self.complexes) {
