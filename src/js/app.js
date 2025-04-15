@@ -4,6 +4,7 @@ import * as d3 from "d3";
 import {scaleOrdinal} from "d3-scale";
 import {schemePastel2, schemeTableau10} from "d3-scale-chromatic";
 import * as cola from "./cola";
+// import * as cola from "webcola";
 import Rgb_color from "rgb-color";
 
 import {svgUtils} from "./svgexp";
@@ -411,7 +412,8 @@ export class App {
             }
 
             if (preRun) {
-                self.d3cola.groups([]).start(23, 10, 0, 0, false);
+                const initialUnconstrainedIterations = nodes.length < 10 ? 10 : 23;
+                self.d3cola.groups([]).start(initialUnconstrainedIterations, 10, 1, 0, false);
             } else {
                 const groups = [];
                 if (self.complexes) {
