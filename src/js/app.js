@@ -4,7 +4,6 @@ import * as d3 from "d3";
 import {scaleOrdinal} from "d3-scale";
 import {schemePastel2, schemeTableau10} from "d3-scale-chromatic";
 import * as cola from "./cola";
-// import * as cola from "webcola";
 import Rgb_color from "rgb-color";
 
 import {svgUtils} from "./svgexp";
