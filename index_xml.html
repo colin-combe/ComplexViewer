@@ -194,17 +194,6 @@
         reader.onload = function (e) {
             cv.clear();
             const xmlText = e.target.result;
-
-            // // Create parser and parse XML text to JS object
-            // const options = {
-            //     ignoreAttributes: false,        // Include XML attributes
-            //     attributeNamePrefix: "@_",      // Optional prefix for attributes
-            // };
-            //
-            // const parser = new XMLParser(options);
-            // const jsObj = parser.parse(xmlText);
-
-            // Now pass the plain JS object to your function
             cv.readXML(xmlText);
             makeLegend(cv.getColorKeyJson());
         };

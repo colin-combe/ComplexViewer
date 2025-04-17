@@ -19537,12 +19537,12 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
         // add features to interactors/participants/nodes
         // console.log(`FEATURE:${feature.name}`, feature.sequenceData);
         let annotName = "";
-        if (typeof feature.name !== "undefined") {
-            annotName += feature.name + " ";
+        if (feature.names) {
+            annotName += feature.names.shortLabel + " "; // toodo - whats this space
         }
-        if (typeof feature.detmethod !== "undefined") {
-            annotName += ", " + feature.detmethod.name;
-        }
+        // if (typeof feature.detmethod !== "undefined") {
+        //     annotName += ", " + feature.detmethod.name;
+        // }
         // the id info we need is inside sequenceData att
         if (feature.featureRangeList) { // todo - still needed?
             for (let seqDatum of feature.featureRangeList.featureRange) {
@@ -60025,7 +60025,7 @@ class App {
                     const featureTypes = [];
                     const dupCheck = new Set();
                     for (let p of this.participants.values()) {
-                        if (p.type === "protein") {
+                        // if (p.type === "protein") {
                             const annos = p.annotationSets.get(annotationSet);
                             if (annos) {
                                 for (let anno of annos) {
@@ -60048,7 +60048,7 @@ class App {
                                     }
                                 }
                             }
-                        }
+                        // }
                     }
                     json[annotationSet] = featureTypes;
                 }

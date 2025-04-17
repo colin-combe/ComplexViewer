@@ -758,7 +758,7 @@ export class App {
                     const featureTypes = [];
                     const dupCheck = new Set();
                     for (let p of this.participants.values()) {
-                        if (p.type === "protein") {
+                        // if (p.type === "protein") {
                             const annos = p.annotationSets.get(annotationSet);
                             if (annos) {
                                 for (let anno of annos) {
@@ -781,7 +781,7 @@ export class App {
                                     }
                                 }
                             }
-                        }
+                        // }
                     }
                     json[annotationSet] = featureTypes;
                 }
