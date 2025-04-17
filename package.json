@@ -26,6 +26,10 @@
     {
       "name": "Eliot Ragueneau",
       "email": "eragueneau@ebi.ac.uk"
+    },
+    {
+      "name": "Juanjo Medina",
+      "email": "jmedina@ebi.ac.uk"
     }
   ],
   "license": "Apache-2.0",
