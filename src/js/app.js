@@ -15,6 +15,8 @@ import {NaryLink} from "./viz/link/nary-link";
 import {svgns} from "./svgns";
 
 import $ from "jquery";
+import {readXml} from "./read-xml";
+import {XMLParser} from "fast-xml-parser";
 
 export class App {
     constructor(/*HTMLDivElement*/networkDiv, maxCountInitiallyExpanded = 4) {
@@ -489,6 +491,28 @@ export class App {
     // reads MI JSON format
     readMIJSON(miJson, expand = true) {
         readMijson(miJson, this, expand);
+        this.init();
+    }
+
+    readXML(xmlText, expand = false) {
+        // Convert xmlText to JavaScript object
+        const options = {
+            isArray: (name, jpath, isLeafNode, isAttribute) => {
+                return ['entrySet.entry',
+                    'entrySet.entry.interactorList.interactor',
+                    'entrySet.entry.interactionList.abstractInteraction',
+                    'entrySet.entry.interactionList.interaction',
+                    'entrySet.entry.interactionList.abstractInteraction.participantList.participant',
+                    'entrySet.entry.interactionList.interaction.participantList.participant']
+                    .includes(jpath); // replace with your element names
+            },
+            ignoreAttributes: false,
+            attributeNamePrefix: "_"
+        };
+        const parser = new XMLParser(options);
+        const jsObj = parser.parse(xmlText, options);
+        console.log("jsObj", jsObj); //debug
+        readXml(jsObj, this, expand);
         this.init();
     }
 

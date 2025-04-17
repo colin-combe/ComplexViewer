@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ComplexViewer Demo</title>
+    <meta content="ComplexViewer Demo" name="ComplexViewer Demo">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <!-- css -->
+    <link href="./css/reset.css" rel="stylesheet" type='text/css'>
+    <link href="./css/style.css" rel="stylesheet" type='text/css'>
+    <link href="./css/demo.css" rel="stylesheet" type='text/css'>
+    <!--libraries-->
+    <script src="https://cdn.jsdelivr.net/npm/fast-xml-parser@4.2.4/dist/fast-xml-parser.min.js"></script>
+    <script src="./dist/complexviewer.js" type="text/javascript"></script>
+    <!-- example data info -->
+    <script src="./data/index.js" type="text/javascript"></script>
+</head>
+<body>
+<!-- Main -->
+<div class="main">
+
+    <div class="controls space-between">
+        <div class="top-bar">
+            <!--            <h1>-->
+            <i class="fa fa-github" onclick="window.location = 'https://github.com/MICommunity/ComplexViewer';"
+               title="GitHub project"></i>
+            <a href="https://doi.org/10.1093/bioinformatics/btx497" target="_blank"
+               title="Publication">ComplexViewer</a>
+            <!--            </h1>-->
+        </div>
+        <input type="file" id="xmlFileInput" accept=".xml" />
+    </div>
+
+    <div class="centre">
+        <div class="middleDiv">
+            <div class="innerMiddleDiv">
+                <div id="networkDiv"></div>
+                <div class="legend">
+                    <table class="symbols">
+                        <tr>
+                            <td>
+                                <img src="./src/imgs/key-svg/molecule-set.svg">
+                            </td>
+                            <td>Molecule Set</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="./src/imgs/key-svg/small-molecule.svg">
+                            </td>
+                            <td>Bioactive Entity</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="./src/imgs/key-svg/gene.svg">
+                            </td>
+                            <td>Gene</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="./src/imgs/key-svg/dna.svg">
+                            </td>
+                            <td>DNA</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="./src/imgs/key-svg/rna.svg">
+                            </td>
+                            <td>RNA</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="./src/imgs/key-svg/protein-circle.svg">
+                                <img src="./src/imgs/key-svg/protein-bar.svg">
+                            </td>
+                            <td>Protein <br> (click to toggle)</td>
+                        </tr>
+                    </table>
+                    <div class="controls protein-buttons"><p class="protein-expand-label">Proteins:&nbsp;</p>
+                        <button class="btn btn-1 btn-1a" onclick="cv.expandAll();">Expand All</button>
+                        <button class="btn btn-1 btn-1a" onclick="cv.collapseAll();">Collapse All</button>
+                    </div>
+                    <div id="colors"></div>
+                </div><!-- legend -->
+            </div> <!-- innerMiddleDiv -->
+
+            <div>
+                <div class="controls space-between">
+                    <div class="">
+                        <input type="checkbox" id="mifeatures" name="mifeatures" value="MI Features" checked
+                               autocomplete="off"
+                               onchange="setAnnotations(this);">
+                        <label for="mifeatures"> MI Features</label>
+                        <input type="checkbox" id="uniprotkb" name="uniprotkb" value="UniprotKB"
+                               autocomplete="off"
+                               onchange="setAnnotations(this);">
+                        <label for="uniprotkb"> UniprotKB Domains</label>
+                        <input type="checkbox" id="superfamily" name="superfamily" value="Superfamily"
+                               autocomplete="off"
+                               onchange="setAnnotations(this);">
+                        <label for="superfamily"> Superfamily</label>
+                        <input type="checkbox" id="interactor" name="interactor" value="Interactor"
+                               autocomplete="off"
+                               onchange="setAnnotations(this);">
+                        <label for="interactor"> Interactor</label>
+                    </div>
+                    <div class="">
+                        <button class="btn btn-1 btn-1a" onclick="cv.autoLayout();" style="display:inline">Layout
+                        </button>
+                        <button class="btn btn-1 btn-1a" onclick="exportSVG();" style="display:inline">Export Graphic
+                        </button>
+                    </div>
+
+                </div>
+            </div> <!-- bottom bar -->
+        </div> <!-- middleDiv -->
+    </div> <!-- centreDiv -->
+
+    <div class="logo-bar space-between">
+        <a class="logo" href="https://rappsilberlab.org/" target="_blank"><img src="images/logos/rappsilber-logo.png"
+                                                                              alt="Rappsilber Laboratory"></a>
+        <a class="logo"><img src="images/logos/tu-berlin-logo-long-red.svg"></a> 
+        <a class="logo" href="https://www.ebi.ac.uk/" target="_blank"><img src="images/logos/ebi-logo.jpeg"
+                                                                           alt="European Bioinformatics Institute"></a>
+    </div>
+
+</div><!-- main-->
+
+<script type="text/javascript">
+    //<![CDATA[
+
+    const networkTargetDiv = document.getElementById("networkDiv");
+    cv = new complexviewer.App(networkTargetDiv);
+
+
+
+    function setAnnotations(checkbox) {
+        var json = cv.showAnnotations(checkbox.value, checkbox.checked);
+        console.log(json);
+        makeLegend(json);
+    }
+
+    // you can use code below as template to make legend from json
+    function makeLegend(json) {
+        const div = document.getElementById("colors");
+        div.textContent = "";
+        const colorTable = document.createElement("table");
+        for (let majorClass in json) {
+            const tr = colorTable.insertRow();
+            const headerCell = tr.insertCell();
+            headerCell.textContent = majorClass;
+            headerCell.colSpan = 3;
+            for (let legendEntry of json[majorClass]) {
+                const tr = colorTable.insertRow();
+                if (legendEntry.certain && legendEntry.uncertain) {
+                    const tc1 = tr.insertCell();
+                    tc1.style.backgroundColor = legendEntry.certain.color;
+                    tc1.style.width = "45px";
+                    const tc2 = tr.insertCell();
+                    const color = legendEntry.uncertain.color
+                    tc2.style.background = "repeating-linear-gradient(45deg, #ffffff, #ffffff 6px, "+color+" 6px, "+color+" 12px)";
+                    tc2.style.width = "45px";
+                }
+                else if (legendEntry.certain) {
+                    const tc1 = tr.insertCell();
+                    tc1.style.backgroundColor = legendEntry.certain.color;
+                    tc1.style.width = "90px";
+                    tc1.colSpan = 2;
+                }
+                else if (legendEntry.uncertain) {
+                    const tc1 = tr.insertCell();
+                    const color = legendEntry.uncertain.color
+                    tc1.style.background = "repeating-linear-gradient(45deg, #ffffff, #ffffff 6px, "+color+" 6px, "+color+" 12px)";
+                    tc1.style.width = "90px";
+                    tc1.colSpan = 2;
+                }
+                const tc3 = tr.insertCell();
+                tc3.style.paddingLeft = "10px";
+                tc3.textContent = legendEntry.name;
+            }
+        }
+        div.appendChild(colorTable);
+    }
+
+    function exportSVG() {
+        const dataSetsSelect = document.getElementById("dataSets");
+        const fileName = dataSetsSelect.options[dataSetsSelect.selectedIndex].value + ".svg"
+        cv.downloadSVG(fileName);
+    }
+
+    document.getElementById('xmlFileInput').addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            cv.clear();
+            const xmlText = e.target.result;
+
+            // // Create parser and parse XML text to JS object
+            // const options = {
+            //     ignoreAttributes: false,        // Include XML attributes
+            //     attributeNamePrefix: "@_",      // Optional prefix for attributes
+            // };
+            //
+            // const parser = new XMLParser(options);
+            // const jsObj = parser.parse(xmlText);
+
+            // Now pass the plain JS object to your function
+            cv.readXML(xmlText);
+            makeLegend(cv.getColorKeyJson());
+        };
+        reader.readAsText(file);
+    });
+
+    //]]>
+</script>
+
+</body>
+</html>

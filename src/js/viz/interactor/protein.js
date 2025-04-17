@@ -90,7 +90,7 @@ export class Protein extends Polymer {
         //annotations indexed by annotation set name ("MI Features", "Superfamily", etc)
         //this.annotationSets // = new Map(); is declared in Interactor, other types of interactor can have features from MIJSON
 
-        this.annotationSets.set("Interactor", [new Annotation(this.json.label, new SequenceDatum(null, `1-${this.size}`))]);
+        this.annotationSets.set("Interactor", [new Annotation(this.name, new SequenceDatum(null, `1-${this.size}`))]);
 
     }
 }

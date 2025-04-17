@@ -1,0 +1,2117 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<entrySet xmlns="http://psi.hupo.org/mi/mif300" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://psi.hupo.org/mi/mif300 https://raw.githubusercontent.com/HUPO-PSI/miXML/master/3.0/src/MIF300.xsd" level="3" version="0" minorVersion="0">
+  <entry>
+    <source releaseDate="2025-04-16">
+      <names>
+        <shortLabel>IntAct</shortLabel>
+        <fullName>European Bioinformatics Institute</fullName>
+        <alias type="synonym" typeAc="MI:1041">IntAct</alias>
+        <alias type="synonym" typeAc="MI:1041">intact</alias>
+      </names>
+      <bibref>
+        <xref>
+          <primaryRef db="pubmed" dbAc="MI:0446" id="14681455" refType="primary-reference" refTypeAc="MI:0358"/>
+          <secondaryRef db="pubmed" dbAc="MI:0446" id="31449321" refType="primary-reference" refTypeAc="MI:0358"/>
+        </xref>
+      </bibref>
+      <xref>
+        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0469" refType="identity" refTypeAc="MI:0356"/>
+        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-10" refType="identity" refTypeAc="MI:0356"/>
+        <secondaryRef db="pubmed" dbAc="MI:0446" id="14681455" refType="primary-reference" refTypeAc="MI:0358"/>
+        <secondaryRef db="pubmed" dbAc="MI:0446" id="22121220" refType="method reference" refTypeAc="MI:0357"/>
+        <secondaryRef db="pubmed" dbAc="MI:0446" id="19850723" refType="method reference" refTypeAc="MI:0357"/>
+        <secondaryRef db="pubmed" dbAc="MI:0446" id="31449321" refType="primary-reference" refTypeAc="MI:0358"/>
+      </xref>
+      <attributeList>
+        <attribute name="search-url" nameAc="MI:0615">http://www.ebi.ac.uk/intact/query/${ac}</attribute>
+        <attribute name="id-validation-regexp" nameAc="MI:0628">EBI-[0-9]+|IA:[0-9]+</attribute>
+        <attribute name="definition">INTerAction database (IntAct) provides an open source database and toolkit for the storage, presentation and analysis of molecular interactions.</attribute>
+        <attribute name="url" nameAc="MI:0614">http://www.ebi.ac.uk/intact</attribute>
+        <attribute name="postaladdress">European Bioinformatics Institute; Wellcome Trust Genome Campus; Hinxton, Cambridge; CB10 1SD; United Kingdom</attribute>
+        <attribute name="url" nameAc="MI:0614">https://www.ebi.ac.uk</attribute>
+        <attribute name="postaladdress">European Bioinformatics Institute (EMBL-EBI), Wellcome Genome Campus, Hinxton, Cambridge, CB10 1SD, United Kingdom.</attribute>
+      </attributeList>
+    </source>
+    <experimentList>
+      <experimentDescription id="1">
+        <names>
+          <fullName>Mock publication and experiment for abstract interactions that are not interaction evidences.</fullName>
+        </names>
+        <bibref>
+          <attributeList>
+            <attribute name="publication title" nameAc="MI:1091">Mock publication and experiment for abstract interactions that are not interaction evidences.</attribute>
+          </attributeList>
+        </bibref>
+        <interactionDetectionMethod>
+          <names>
+            <shortLabel>unspecified method</shortLabel>
+          </names>
+          <xref>
+            <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0686" refType="identity" refTypeAc="MI:0356"/>
+          </xref>
+        </interactionDetectionMethod>
+      </experimentDescription>
+    </experimentList>
+    <interactorList>
+      <interactor id="2">
+        <names>
+          <shortLabel>hbb_human</shortLabel>
+          <fullName>Hemoglobin subunit beta</fullName>
+          <alias type="gene name synonym" typeAc="MI:0302">Hemoglobin beta chain</alias>
+          <alias type="gene name synonym" typeAc="MI:0302">Beta-globin</alias>
+          <alias type="gene name" typeAc="MI:0301">HBB</alias>
+        </names>
+        <xref>
+          <primaryRef db="uniprotkb" dbAc="MI:0486" id="P68871" version="SP_51" refType="identity" refTypeAc="MI:0356"/>
+          <secondaryRef db="uniprotkb" dbAc="MI:0486" id="P02023" version="SP_51" refType="secondary-ac" refTypeAc="MI:0360"/>
+          <secondaryRef db="uniprotkb" dbAc="MI:0486" id="Q13852" version="SP_51" refType="secondary-ac" refTypeAc="MI:0360"/>
+          <secondaryRef db="uniprotkb" dbAc="MI:0486" id="Q14481" version="SP_51" refType="secondary-ac" refTypeAc="MI:0360"/>
+          <secondaryRef db="uniprotkb" dbAc="MI:0486" id="Q14510" version="SP_51" refType="secondary-ac" refTypeAc="MI:0360"/>
+          <secondaryRef db="uniprotkb" dbAc="MI:0486" id="Q45KT0" version="SP_51" refType="secondary-ac" refTypeAc="MI:0360"/>
+          <secondaryRef db="uniprotkb" dbAc="MI:0486" id="Q6FI08" version="SP_51" refType="secondary-ac" refTypeAc="MI:0360"/>
+          <secondaryRef db="uniprotkb" dbAc="MI:0486" id="Q8IZI1" version="SP_51" refType="secondary-ac" refTypeAc="MI:0360"/>
+          <secondaryRef db="uniprotkb" dbAc="MI:0486" id="Q9BX96" version="SP_51" refType="secondary-ac" refTypeAc="MI:0360"/>
+          <secondaryRef db="uniprotkb" dbAc="MI:0486" id="Q9UCP8" version="SP_51" refType="secondary-ac" refTypeAc="MI:0360"/>
+          <secondaryRef db="uniprotkb" dbAc="MI:0486" id="Q9UCP9" version="SP_51" refType="secondary-ac" refTypeAc="MI:0360"/>
+          <secondaryRef db="uniprotkb" dbAc="MI:0486" id="A4GX73" version="SP_71" refType="secondary-ac" refTypeAc="MI:0360"/>
+          <secondaryRef db="uniprotkb" dbAc="MI:0486" id="B2ZUE0" version="SP_71" refType="secondary-ac" refTypeAc="MI:0360"/>
+          <secondaryRef db="uniprotkb" dbAc="MI:0486" id="Q549N7" version="SP_71" refType="secondary-ac" refTypeAc="MI:0360"/>
+          <secondaryRef db="uniprotkb" dbAc="MI:0486" id="Q6R7N2" version="SP_71" refType="secondary-ac" refTypeAc="MI:0360"/>
+          <secondaryRef db="uniprotkb" dbAc="MI:0486" id="Q9UCD6" version="SP_71" refType="secondary-ac" refTypeAc="MI:0360"/>
+          <secondaryRef db="ensembl" dbAc="MI:0476" id="ENSP00000333994.3" version="SP_214" refType="identity" refTypeAc="MI:0356"/>
+          <secondaryRef db="ensembl" dbAc="MI:0476" id="ENSP00000494175.1" version="SP_214" refType="identity" refTypeAc="MI:0356"/>
+          <secondaryRef db="intact" dbAc="MI:0469" id="EBI-715554" refType="identity" refTypeAc="MI:0356"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="Orphanet:2132" version="SP_207"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="Orphanet:2133" version="SP_207"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="Orphanet:231214" version="SP_207"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="Orphanet:231222" version="SP_207"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="Orphanet:231226" version="SP_207"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="Orphanet:231237" version="SP_207"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="Orphanet:231242" version="SP_207"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="Orphanet:231249" version="SP_207"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="Orphanet:232" version="SP_207"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="Orphanet:247511" version="SP_207"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="Orphanet:251359" version="SP_207"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="Orphanet:251365" version="SP_207"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="Orphanet:251370" version="SP_207"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="Orphanet:251375" version="SP_207"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="Orphanet:251380" version="SP_207"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="Orphanet:330032" version="SP_207"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="Orphanet:330041" version="SP_207"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="Orphanet:46532" version="SP_207"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="Orphanet:90039" version="SP_207"/>
+          <secondaryRef db="dip" dbAc="MI:0465" id="DIP-35526N"/>
+          <secondaryRef db="ensembl" dbAc="MI:0476" id="ENSG00000244734.4" version="SP_214" refType="gene"/>
+          <secondaryRef db="ensembl" dbAc="MI:0476" id="ENST00000335295.4" version="SP_214" refType="transcript"/>
+          <secondaryRef db="ensembl" dbAc="MI:0476" id="ENST00000647020.1" version="SP_214" refType="transcript"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0005344" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0005576" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0005615" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0005829" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0005833" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0008217" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0015670" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0015671" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0019825" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0020037" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0030185" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0030492" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0031721" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0031838" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0042542" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0042744" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0043177" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0045429" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0046872" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0070062" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0070293" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0070527" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0071682" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0072562" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0097746" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0098869" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:1904724" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:1904813" version="SP_214"/>
+          <secondaryRef db="interpro" dbAc="MI:0449" id="IPR000971" version="SP_214"/>
+          <secondaryRef db="interpro" dbAc="MI:0449" id="IPR002337" version="SP_214"/>
+          <secondaryRef db="interpro" dbAc="MI:0449" id="IPR009050" version="SP_214"/>
+          <secondaryRef db="interpro" dbAc="MI:0449" id="IPR012292" version="SP_214"/>
+          <secondaryRef db="interpro" dbAc="MI:0449" id="IPR050056" version="SP_214"/>
+          <secondaryRef db="mint" dbAc="MI:0471" id="P68871" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1A00" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1A01" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1A0U" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1A0Z" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1A3N" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1A3O" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1ABW" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1ABY" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1AJ9" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1B86" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1BAB" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1BBB" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1BIJ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1BUW" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1BZ0" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1BZ1" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1BZZ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1C7B" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1C7C" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1C7D" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1CBL" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1CBM" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1CH4" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1CLS" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1CMY" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1COH" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1DKE" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1DXT" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1DXU" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1DXV" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1FN3" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1G9V" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1GBU" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1GBV" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1GLI" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1GZX" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1HAB" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1HAC" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1HBA" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1HBB" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1HBS" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1HCO" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1HDB" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1HGA" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1HGB" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1HGC" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1HHO" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1IRD" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1J3Y" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1J3Z" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1J40" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1J41" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1J7S" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1J7W" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1J7Y" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1JY7" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1K0Y" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1K1K" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1KD2" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1LFL" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1LFQ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1LFT" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1LFV" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1LFY" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1LFZ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1LJW" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1M9P" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1MKO" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1NEJ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1NIH" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1NQP" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1O1I" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1O1J" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1O1K" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1O1L" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1O1M" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1O1N" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1O1O" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1O1P" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1QI8" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1QSH" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1QSI" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1QXD" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1QXE" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1R1X" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1R1Y" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1RPS" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1RQ3" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1RQ4" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1RQA" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1RVW" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1SDK" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1SDL" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1THB" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1UIW" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1VWT" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1XXT" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1XY0" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1XYE" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1XZ2" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1XZ4" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1XZ5" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1XZ7" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1XZU" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1XZV" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y09" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y0A" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y0C" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y0D" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y0T" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y0W" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y22" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y2Z" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y31" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y35" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y45" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y46" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y4B" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y4F" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y4G" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y4P" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y4Q" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y4R" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y4V" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y5F" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y5J" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y5K" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y7C" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y7D" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y7G" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y7Z" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y83" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y85" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y8W" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YDZ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YE0" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YE1" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YE2" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YEN" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YEO" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YEQ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YEU" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YEV" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YFF" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YG5" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YGD" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YGF" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YH9" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YHE" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YHR" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YIE" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YIH" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YVQ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YVT" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YZI" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2D5Z" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2D60" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2DN1" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2DN2" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2DN3" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2DXM" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2H35" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2HBC" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2HBD" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2HBE" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2HBF" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2HBS" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2HCO" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2HHB" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2HHD" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2HHE" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2M6Z" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2W6V" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2W72" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2YRS" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3B75" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3D17" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3D7O" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3DUT" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3HHB" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3HXN" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3IC0" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3IC2" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3KMF" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3NL7" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3NMM" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3ODQ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3ONZ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3OO4" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3OO5" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3P5Q" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3QJB" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3QJC" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3QJD" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3QJE" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3R5I" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3S65" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3S66" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3SZK" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3W4U" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3WCP" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3WHM" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4FC3" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4HHB" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4IJ2" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4L7Y" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4M4A" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4M4B" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4MQC" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4MQG" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4MQH" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4MQI" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4N7N" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4N7O" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4N7P" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4N8T" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4NI0" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4NI1" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4ROL" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4ROM" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4WJG" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4X0L" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4XS0" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5E29" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5E6E" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5E83" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5EE4" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5HU6" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5HY8" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5JDO" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5KDQ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5KSI" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5KSJ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5NI1" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5SW7" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5U3I" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5UCU" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5UFJ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5URC" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5VMM" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5WOG" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5WOH" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5X2R" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5X2S" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5X2T" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5X2U" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6BB5" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6BNR" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6BWP" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6BWU" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6DI4" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6FQF" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6HAL" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6HBW" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6HK2" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KA9" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KAE" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KAH" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KAI" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KAO" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KAP" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KAQ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KAR" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KAS" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KAT" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KAU" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KAV" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KYE" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6L5V" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6L5W" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6L5X" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6L5Y" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6LCW" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6LCX" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6NBC" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6NBD" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6NQ5" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6TB2" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6XD9" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6XDT" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6XE7" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7AET" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7AEU" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7AEV" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7CUE" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7DY3" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7DY4" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7JJQ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7JXZ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7JY0" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7JY1" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7JY3" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7K4M" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7PCF" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7PCH" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7PCQ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7UD7" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7UD8" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7UF6" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7UF7" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7UVB" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7VDE" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7XGY" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="8DOV" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="8EGI" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="8FDK" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="8FDL" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="8FDM" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="8FDN" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="8VYL" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="8WJ0" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="8WJ1" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="8WJ2" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="8WXZ" version="SP_214"/>
+          <secondaryRef db="reactome" dbAc="MI:0467" id="R-HSA-1237044" version="SP_214"/>
+          <secondaryRef db="reactome" dbAc="MI:0467" id="R-HSA-1247673" version="SP_214"/>
+          <secondaryRef db="reactome" dbAc="MI:0467" id="R-HSA-2168880" version="SP_214"/>
+          <secondaryRef db="reactome" dbAc="MI:0467" id="R-HSA-6798695" version="SP_214"/>
+          <secondaryRef db="reactome" dbAc="MI:0467" id="R-HSA-9613829" version="SP_214"/>
+          <secondaryRef db="reactome" dbAc="MI:0467" id="R-HSA-9615710" version="SP_214"/>
+          <secondaryRef db="reactome" dbAc="MI:0467" id="R-HSA-9707564" version="SP_214"/>
+          <secondaryRef db="reactome" dbAc="MI:0467" id="R-HSA-9707616" version="SP_214"/>
+          <secondaryRef db="reactome" dbAc="MI:0467" id="R-HSA-983231" version="SP_214"/>
+          <secondaryRef db="refseq" dbAc="MI:0481" id="NP_000509.1" version="SP_214"/>
+          <secondaryRef db="panther" dbAc="MI:0702" id="PTHR11442" refType="orthology-group" refTypeAc="MI:2426"/>
+        </xref>
+        <interactorType>
+          <names>
+            <shortLabel>protein</shortLabel>
+            <fullName>protein</fullName>
+          </names>
+          <xref>
+            <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0326" refType="identity" refTypeAc="MI:0356"/>
+            <secondaryRef db="intact" dbAc="MI:0469" id="EBI-619654" refType="identity" refTypeAc="MI:0356"/>
+            <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+            <secondaryRef db="so" dbAc="MI:0601" id="SO:0000358" refType="see-also" refTypeAc="MI:0361"/>
+          </xref>
+        </interactorType>
+        <organism ncbiTaxId="9606">
+          <names>
+            <shortLabel>human</shortLabel>
+            <fullName>Homo sapiens</fullName>
+            <alias type="synonym" typeAc="MI:1041">Human</alias>
+          </names>
+        </organism>
+        <sequence>MVHLTPEEKSAVTALWGKVNVDEVGGEALGRLLVVYPWTQRFFESFGDLSTPDAVMGNPKVKAHGKKVLGAFSDGLAHLDNLKGTFATLSELHCDKLHVDPENFRLLGNVLVCVLAHHFGKEFTPPVQAAYQKVVAGVANALAHKYH</sequence>
+        <attributeList>
+          <attribute name="remark-internal">DIP protein P68871 original sequence version: 133</attribute>
+          <attribute name="crc64">A31F6D621C6556A1</attribute>
+        </attributeList>
+      </interactor>
+      <interactor id="3">
+        <names>
+          <shortLabel>heme</shortLabel>
+          <fullName>heme</fullName>
+        </names>
+        <xref>
+          <primaryRef db="chebi" dbAc="MI:0474" id="CHEBI:30413" refType="identity" refTypeAc="MI:0356"/>
+          <secondaryRef db="intact" dbAc="MI:0469" id="EBI-6880399" refType="identity" refTypeAc="MI:0356"/>
+        </xref>
+        <interactorType>
+          <names>
+            <shortLabel>small molecule</shortLabel>
+            <fullName>small molecule</fullName>
+          </names>
+          <xref>
+            <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0328" refType="identity" refTypeAc="MI:0356"/>
+            <secondaryRef db="intact" dbAc="MI:0469" id="EBI-619656" refType="identity" refTypeAc="MI:0356"/>
+            <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+          </xref>
+        </interactorType>
+        <organism ncbiTaxId="-2">
+          <names>
+            <shortLabel>chemical synthesis</shortLabel>
+            <fullName>Chemical synthesis (Chemical synthesis)</fullName>
+          </names>
+        </organism>
+      </interactor>
+      <interactor id="4">
+        <names>
+          <shortLabel>hba_human</shortLabel>
+          <fullName>Hemoglobin subunit alpha</fullName>
+          <alias type="gene name synonym" typeAc="MI:0302">Hemoglobin alpha chain</alias>
+          <alias type="gene name synonym" typeAc="MI:0302">Alpha-globin</alias>
+          <alias type="gene name" typeAc="MI:0301">HBA1</alias>
+          <alias type="gene name" typeAc="MI:0301">HBA2</alias>
+        </names>
+        <xref>
+          <primaryRef db="uniprotkb" dbAc="MI:0486" id="P69905" version="SP_50" refType="identity" refTypeAc="MI:0356"/>
+          <secondaryRef db="uniprotkb" dbAc="MI:0486" id="P01922" version="SP_50" refType="secondary-ac" refTypeAc="MI:0360"/>
+          <secondaryRef db="uniprotkb" dbAc="MI:0486" id="Q3MIF5" version="SP_50" refType="secondary-ac" refTypeAc="MI:0360"/>
+          <secondaryRef db="uniprotkb" dbAc="MI:0486" id="Q96KF1" version="SP_50" refType="secondary-ac" refTypeAc="MI:0360"/>
+          <secondaryRef db="uniprotkb" dbAc="MI:0486" id="Q9NYR7" version="SP_50" refType="secondary-ac" refTypeAc="MI:0360"/>
+          <secondaryRef db="uniprotkb" dbAc="MI:0486" id="Q1HDT5" version="SP_71" refType="secondary-ac" refTypeAc="MI:0360"/>
+          <secondaryRef db="uniprotkb" dbAc="MI:0486" id="Q53F97" version="SP_71" refType="secondary-ac" refTypeAc="MI:0360"/>
+          <secondaryRef db="uniprotkb" dbAc="MI:0486" id="Q9UCM0" version="SP_71" refType="secondary-ac" refTypeAc="MI:0360"/>
+          <secondaryRef db="ensembl" dbAc="MI:0476" id="ENSP00000251595.6" version="SP_214" refType="identity" refTypeAc="MI:0356"/>
+          <secondaryRef db="ensembl" dbAc="MI:0476" id="ENSP00000322421.5" version="SP_214" refType="identity" refTypeAc="MI:0356"/>
+          <secondaryRef db="intact" dbAc="MI:0469" id="EBI-714680" refType="identity" refTypeAc="MI:0356"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1HAB" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1HAC" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1HBA" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1HBB" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1HBS" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1HCO" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1HDB" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1HGA" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1HGB" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1HGC" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1HHO" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1IRD" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1J3Y" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1J3Z" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1J40" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1J41" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1J7S" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1J7W" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1J7Y" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1JY7" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1K0Y" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1K1K" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1KD2" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1LFL" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1LFQ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1LFT" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1LFV" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1LFY" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1LFZ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1LJW" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1M9P" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1MKO" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1NEJ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1NIH" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1NQP" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1O1I" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1O1J" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1O1K" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1O1L" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1O1M" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1O1N" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1O1O" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1O1P" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1QI8" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1QSH" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1QSI" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1QXD" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1QXE" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1R1X" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1R1Y" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1RPS" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1RQ3" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1RQ4" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1RQA" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1RVW" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1SDK" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1SDL" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1SHR" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1SI4" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1THB" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1UIW" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1VWT" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1XXT" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1XY0" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1XYE" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1XZ2" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1XZ4" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1XZ5" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1XZ7" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1XZU" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1XZV" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y01" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y09" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y0A" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y0C" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y0D" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y0T" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y0W" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y22" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y2Z" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y31" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y35" version="SP_214"/>
+          <secondaryRef db="ensembl" dbAc="MI:0476" id="ENSG00000188536.13" version="SP_214" refType="gene"/>
+          <secondaryRef db="ensembl" dbAc="MI:0476" id="ENSG00000206172.8" version="SP_214" refType="gene"/>
+          <secondaryRef db="ensembl" dbAc="MI:0476" id="ENST00000251595.11" version="SP_214" refType="transcript"/>
+          <secondaryRef db="ensembl" dbAc="MI:0476" id="ENST00000320868.9" version="SP_214" refType="transcript"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0005344" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0005506" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0005576" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0005615" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0005829" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0005833" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0015670" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0015671" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0016020" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0019825" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0020037" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0030185" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0031838" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0042542" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y45" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0042744" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0043177" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0070062" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0071682" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0072562" version="SP_214"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0098869" version="SP_214"/>
+          <secondaryRef db="interpro" dbAc="MI:0449" id="IPR000971" version="SP_214"/>
+          <secondaryRef db="interpro" dbAc="MI:0449" id="IPR002338" version="SP_214"/>
+          <secondaryRef db="interpro" dbAc="MI:0449" id="IPR002339" version="SP_214"/>
+          <secondaryRef db="interpro" dbAc="MI:0449" id="IPR009050" version="SP_214"/>
+          <secondaryRef db="interpro" dbAc="MI:0449" id="IPR012292" version="SP_214"/>
+          <secondaryRef db="interpro" dbAc="MI:0449" id="IPR050056" version="SP_214"/>
+          <secondaryRef db="mint" dbAc="MI:0471" id="P69905" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1A00" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1A01" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1A0U" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1A0Z" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1A3N" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1A3O" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1A9W" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1ABW" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1ABY" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1AJ9" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1B86" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1BAB" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1BBB" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1BIJ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1BUW" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1BZ0" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1BZ1" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1BZZ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1C7B" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1C7C" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1C7D" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1CLS" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1CMY" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1COH" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1DKE" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1DXT" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1DXU" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1DXV" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1FDH" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1FN3" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1G9V" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1GBU" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1GBV" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1GLI" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1GZX" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y46" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y4B" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y4F" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y4G" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y4P" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y4Q" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y4R" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y4V" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y5F" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y5J" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y5K" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y7C" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y7D" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y7G" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y7Z" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y83" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y85" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Y8W" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YDZ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YE0" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YE1" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YE2" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YEN" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YEO" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YEQ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YEU" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YEV" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YFF" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YG5" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YGD" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YGF" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YH9" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YHE" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YHR" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YIE" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YIH" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YVQ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YVT" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1YZI" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="1Z8U" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2D5Z" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2D60" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2DN1" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2DN2" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2DN3" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2DXM" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2H35" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2HBC" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2HBD" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2HBE" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2HBF" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2HBS" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2HCO" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2HHB" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2HHD" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2HHE" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2M6Z" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2W6V" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2W72" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="2YRS" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3B75" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3D17" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3D7O" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3DUT" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3HHB" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3HXN" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3IA3" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3IC0" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3IC2" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3KMF" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3NL7" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3NMM" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3ODQ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3ONZ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3OO4" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3OO5" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3OVU" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4MQG" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3P5Q" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3QJB" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3QJC" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3QJD" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3QJE" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3R5I" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3S48" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3S65" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3S66" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3SZK" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3WCP" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="3WHM" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4FC3" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4HHB" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4IJ2" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4L7Y" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4M4A" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4M4B" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4MQC" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4MQH" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4MQI" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4MQJ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4MQK" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4N7N" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4N7O" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4N7P" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4N8T" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4NI0" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4NI1" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4ROL" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4ROM" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4WJG" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4X0L" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="4XS0" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5E29" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5E6E" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5E83" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5EE4" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5HU6" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5HY8" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5JDO" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5KDQ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5KSI" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5KSJ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5NI1" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5SW7" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5U3I" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5UCU" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5UFJ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5URC" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5VMM" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5WOG" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5WOH" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5X2R" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5X2S" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5X2T" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="5X2U" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6BB5" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6BNR" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6BWP" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6BWU" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6DI4" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6HAL" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6HBW" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6HK2" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KA9" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KAE" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KAH" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KAI" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KAO" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KAP" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KAQ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KAR" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KAS" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KAT" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KAU" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KAV" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6KYE" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6L5V" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6L5W" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6L5X" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6L5Y" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6LCW" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6LCX" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6NBC" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6NBD" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6NQ5" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6TB2" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6XD9" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6XDT" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="6XE7" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7AET" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7AEU" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7AEV" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7CUE" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7DY3" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7DY4" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7JJQ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7JXZ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7JY0" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7JY1" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7JY3" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7K4M" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="8EGI" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7PCF" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7PCH" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7PCQ" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7QU4" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7UD7" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7UD8" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7UF6" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7UF7" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7UVB" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7VDE" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="7XGY" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="8DOV" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="8FDK" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="8FDL" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="8FDM" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="8FDN" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="8VYL" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="8WJ0" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="8WJ1" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="8WJ2" version="SP_214"/>
+          <secondaryRef db="rcsb pdb" dbAc="MI:0460" id="8WXW" version="SP_214"/>
+          <secondaryRef db="reactome" dbAc="MI:0467" id="R-HSA-1237044" version="SP_214"/>
+          <secondaryRef db="reactome" dbAc="MI:0467" id="R-HSA-1247673" version="SP_214"/>
+          <secondaryRef db="reactome" dbAc="MI:0467" id="R-HSA-2168880" version="SP_214"/>
+          <secondaryRef db="reactome" dbAc="MI:0467" id="R-HSA-9707564" version="SP_214"/>
+          <secondaryRef db="reactome" dbAc="MI:0467" id="R-HSA-9707616" version="SP_214"/>
+          <secondaryRef db="refseq" dbAc="MI:0481" id="NP_000508.1" version="SP_214"/>
+          <secondaryRef db="refseq" dbAc="MI:0481" id="NP_000549.1" version="SP_214"/>
+          <secondaryRef db="dip" dbAc="MI:0465" id="DIP-35199N"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="Orphanet:163596" version="SP_207"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="Orphanet:247511" version="SP_207"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="Orphanet:330041" version="SP_207"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="Orphanet:93616" version="SP_207"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="Orphanet:98791" version="SP_207"/>
+          <secondaryRef db="panther" dbAc="MI:0702" id="PTHR11442" refType="orthology-group" refTypeAc="MI:2426"/>
+        </xref>
+        <interactorType>
+          <names>
+            <shortLabel>protein</shortLabel>
+            <fullName>protein</fullName>
+          </names>
+          <xref>
+            <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0326" refType="identity" refTypeAc="MI:0356"/>
+            <secondaryRef db="intact" dbAc="MI:0469" id="EBI-619654" refType="identity" refTypeAc="MI:0356"/>
+            <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+            <secondaryRef db="so" dbAc="MI:0601" id="SO:0000358" refType="see-also" refTypeAc="MI:0361"/>
+          </xref>
+        </interactorType>
+        <organism ncbiTaxId="9606">
+          <names>
+            <shortLabel>human</shortLabel>
+            <fullName>Homo sapiens</fullName>
+            <alias type="synonym" typeAc="MI:1041">Human</alias>
+          </names>
+        </organism>
+        <sequence>MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSHGSAQVKGHGKKVADALTNAVAHVDDMPNALSALSDLHAHKLRVDPVNFKLLSHCLLVTLAAHLPAEFTPAVHASLDKFLASVSTVLTSKYR</sequence>
+        <attributeList>
+          <attribute name="remark-internal">DIP protein P69905 original sequence version: 112</attribute>
+          <attribute name="remark-internal">DIP protein P69905 original sequence version: 132</attribute>
+          <attribute name="crc64">15E13666573BBBAE</attribute>
+        </attributeList>
+      </interactor>
+    </interactorList>
+    <interactionList>
+      <abstractInteraction id="5">
+        <names>
+          <shortLabel>hba_human-1</shortLabel>
+          <alias type="complex recommended name" typeAc="MI:1315">Hemoglobin HbA complex</alias>
+          <alias type="complex systematic name" typeAc="MI:1316">2xHBA1:2xHBB</alias>
+          <alias type="complex synonym" typeAc="MI:0673">2xHBA2:2xHBB</alias>
+          <alias type="complex synonym" typeAc="MI:0673">HBA-HBB complex</alias>
+          <alias type="complex synonym" typeAc="MI:0673">HBA1-HBB complex</alias>
+          <alias type="complex synonym" typeAc="MI:0673">HBA2-HBB complex</alias>
+          <alias type="complex synonym" typeAc="MI:0673">HBA1-HBB heterotetramer</alias>
+          <alias type="complex synonym" typeAc="MI:0673">HBA2-HBB heterotetramer</alias>
+          <alias type="complex synonym" typeAc="MI:0673">adult hemoglobin HbA complex</alias>
+          <alias type="complex synonym" typeAc="MI:0673">HBA-HBB heterotetramer</alias>
+          <alias type="complex synonym" typeAc="MI:0673">Haemoglobin HbA complex</alias>
+        </names>
+        <xref>
+          <primaryRef db="reactome" dbAc="MI:0467" id="R-HSA-2168856" refType="identity" refTypeAc="MI:0356"/>
+          <secondaryRef db="reactome" dbAc="MI:0467" id="R-HSA-2168866" refType="identity" refTypeAc="MI:0356"/>
+          <secondaryRef db="chembl target" dbAc="MI:1348" id="CHEMBL2095168" refType="identity" refTypeAc="MI:0356"/>
+          <secondaryRef db="wwpdb" dbAc="MI:0805" id="2dn1" refType="identity" refTypeAc="MI:0356"/>
+          <secondaryRef db="wwpdb" dbAc="MI:0805" id="2dn2" refType="identity" refTypeAc="MI:0356"/>
+          <secondaryRef db="wwpdb" dbAc="MI:0805" id="2dn3" refType="identity" refTypeAc="MI:0356"/>
+          <secondaryRef db="reactome" dbAc="MI:0467" id="R-HSA-1237312" refType="identity" refTypeAc="MI:0356"/>
+          <secondaryRef db="reactome" dbAc="MI:0467" id="R-HSA-1237320" refType="identity" refTypeAc="MI:0356"/>
+          <secondaryRef db="complex portal" dbAc="MI:2279" id="CPX-2158" version="1" refType="complex-primary" refTypeAc="MI:2282"/>
+          <secondaryRef db="signor" dbAc="MI:2214" id="SIGNOR-C209" refType="identity" refTypeAc="MI:0356"/>
+          <secondaryRef db="intact" dbAc="MI:0469" id="EBI-9008420" refType="identity" refTypeAc="MI:0356"/>
+          <secondaryRef db="intact" dbAc="MI:0469" id="EBI-1029796" refType="exp-evidence"/>
+          <secondaryRef db="evidence ontology" dbAc="MI:1331" id="ECO:0000353"/>
+          <secondaryRef db="pubmed" dbAc="MI:0446" id="16765986" refType="see-also" refTypeAc="MI:0361"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="MONDO:0018749" refType="see-also" refTypeAc="MI:0361"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="MONDO:0007705" refType="see-also" refTypeAc="MI:0361"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="MONDO:0011382" refType="see-also" refTypeAc="MI:0361"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="MONDO:0019402" refType="see-also" refTypeAc="MI:0361"/>
+          <secondaryRef db="efo" dbAc="MI:1337" id="MONDO:0011399" refType="see-also" refTypeAc="MI:0361"/>
+          <secondaryRef db="pubmed" dbAc="MI:0446" id="7518430" refType="see-also" refTypeAc="MI:0361"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0005344" refType="function" refTypeAc="MI:0355"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0015670" refType="process" refTypeAc="MI:0359"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0015671" refType="process" refTypeAc="MI:0359"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0030185" refType="process" refTypeAc="MI:0359"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0005833" refType="component" refTypeAc="MI:0354"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0070026" refType="function" refTypeAc="MI:0355"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:0019825" refType="function" refTypeAc="MI:0355"/>
+          <secondaryRef db="go" dbAc="MI:0448" id="GO:1902670" refType="function" refTypeAc="MI:0355"/>
+          <secondaryRef db="pubmed" dbAc="MI:0446" id="8292032" refType="see-also" refTypeAc="MI:0361"/>
+        </xref>
+        <participantList>
+          <participant id="6">
+            <interactorRef>3</interactorRef>
+            <biologicalRole>
+              <names>
+                <shortLabel>cofactor</shortLabel>
+                <fullName>cofactor</fullName>
+                <alias type="go synonym" typeAc="MI:0303">coenzyme</alias>
+              </names>
+              <xref>
+                <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0682" refType="identity" refTypeAc="MI:0356"/>
+                <secondaryRef db="intact" dbAc="MI:0469" id="EBI-967823" refType="identity" refTypeAc="MI:0356"/>
+                <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+              </xref>
+            </biologicalRole>
+            <featureList>
+              <feature id="7">
+                <names>
+                  <shortLabel>hba binding region</shortLabel>
+                </names>
+                <xref>
+                  <primaryRef db="intact" dbAc="MI:0469" id="EBI-9105048" refType="identity" refTypeAc="MI:0356"/>
+                </xref>
+                <featureType>
+                  <names>
+                    <shortLabel>binding region</shortLabel>
+                    <fullName>binding-associated region</fullName>
+                    <alias type="synonym" typeAc="MI:1041">binding region</alias>
+                  </names>
+                  <xref>
+                    <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0117" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="intact" dbAc="MI:0469" id="EBI-456493" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                  </xref>
+                </featureType>
+                <featureRangeList>
+                  <featureRange>
+                    <startStatus>
+                      <names>
+                        <shortLabel>undetermined</shortLabel>
+                        <fullName>undetermined sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">undetermined</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0339" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-448295" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </startStatus>
+                    <begin position="0"/>
+                    <endStatus>
+                      <names>
+                        <shortLabel>undetermined</shortLabel>
+                        <fullName>undetermined sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">undetermined</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0339" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-448295" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </endStatus>
+                    <end position="0"/>
+                  </featureRange>
+                </featureRangeList>
+              </feature>
+            </featureList>
+            <stoichiometry value="1"/>
+          </participant>
+          <participant id="8">
+            <interactorRef>2</interactorRef>
+            <biologicalRole>
+              <names>
+                <shortLabel>unspecified role</shortLabel>
+                <fullName>unspecified role</fullName>
+              </names>
+              <xref>
+                <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0499" refType="identity" refTypeAc="MI:0356"/>
+                <secondaryRef db="intact" dbAc="MI:0469" id="EBI-77781" refType="identity" refTypeAc="MI:0356"/>
+                <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+              </xref>
+            </biologicalRole>
+            <featureList>
+              <feature id="9">
+                <names>
+                  <shortLabel>heme binding region</shortLabel>
+                </names>
+                <xref>
+                  <primaryRef db="intact" dbAc="MI:0469" id="EBI-9105046" refType="identity" refTypeAc="MI:0356"/>
+                </xref>
+                <featureType>
+                  <names>
+                    <shortLabel>binding region</shortLabel>
+                    <fullName>binding-associated region</fullName>
+                    <alias type="synonym" typeAc="MI:1041">binding region</alias>
+                  </names>
+                  <xref>
+                    <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0117" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="intact" dbAc="MI:0469" id="EBI-456493" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                  </xref>
+                </featureType>
+                <featureRangeList>
+                  <featureRange>
+                    <startStatus>
+                      <names>
+                        <shortLabel>certain</shortLabel>
+                        <fullName>certain sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">certain</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0335" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-540564" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </startStatus>
+                    <begin position="64"/>
+                    <endStatus>
+                      <names>
+                        <shortLabel>certain</shortLabel>
+                        <fullName>certain sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">certain</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0335" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-540564" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </endStatus>
+                    <end position="64"/>
+                  </featureRange>
+                  <featureRange>
+                    <startStatus>
+                      <names>
+                        <shortLabel>certain</shortLabel>
+                        <fullName>certain sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">certain</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0335" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-540564" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </startStatus>
+                    <begin position="93"/>
+                    <endStatus>
+                      <names>
+                        <shortLabel>certain</shortLabel>
+                        <fullName>certain sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">certain</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0335" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-540564" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </endStatus>
+                    <end position="93"/>
+                  </featureRange>
+                </featureRangeList>
+              </feature>
+              <feature id="10">
+                <names>
+                  <shortLabel>hba binding region</shortLabel>
+                </names>
+                <xref>
+                  <primaryRef db="intact" dbAc="MI:0469" id="EBI-9103707" refType="identity" refTypeAc="MI:0356"/>
+                </xref>
+                <featureType>
+                  <names>
+                    <shortLabel>binding region</shortLabel>
+                    <fullName>binding-associated region</fullName>
+                    <alias type="synonym" typeAc="MI:1041">binding region</alias>
+                  </names>
+                  <xref>
+                    <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0117" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="intact" dbAc="MI:0469" id="EBI-456493" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                  </xref>
+                </featureType>
+                <featureRangeList>
+                  <featureRange>
+                    <startStatus>
+                      <names>
+                        <shortLabel>undetermined</shortLabel>
+                        <fullName>undetermined sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">undetermined</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0339" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-448295" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </startStatus>
+                    <endStatus>
+                      <names>
+                        <shortLabel>undetermined</shortLabel>
+                        <fullName>undetermined sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">undetermined</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0339" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-448295" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </endStatus>
+                  </featureRange>
+                </featureRangeList>
+              </feature>
+              <feature id="11">
+                <names>
+                  <shortLabel>hba binding region</shortLabel>
+                </names>
+                <xref>
+                  <primaryRef db="intact" dbAc="MI:0469" id="EBI-9103707" refType="identity" refTypeAc="MI:0356"/>
+                  <secondaryRef db="intact" dbAc="MI:0469" id="EBI-9979820" refType="identity" refTypeAc="MI:0356"/>
+                </xref>
+                <featureType>
+                  <names>
+                    <shortLabel>binding region</shortLabel>
+                    <fullName>binding-associated region</fullName>
+                    <alias type="synonym" typeAc="MI:1041">binding region</alias>
+                  </names>
+                  <xref>
+                    <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0117" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="intact" dbAc="MI:0469" id="EBI-456493" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                  </xref>
+                </featureType>
+                <featureRangeList>
+                  <featureRange>
+                    <startStatus>
+                      <names>
+                        <shortLabel>undetermined</shortLabel>
+                        <fullName>undetermined sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">undetermined</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0339" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-448295" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </startStatus>
+                    <endStatus>
+                      <names>
+                        <shortLabel>undetermined</shortLabel>
+                        <fullName>undetermined sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">undetermined</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0339" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-448295" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </endStatus>
+                  </featureRange>
+                </featureRangeList>
+              </feature>
+            </featureList>
+            <stoichiometry value="1"/>
+          </participant>
+          <participant id="12">
+            <interactorRef>4</interactorRef>
+            <biologicalRole>
+              <names>
+                <shortLabel>unspecified role</shortLabel>
+                <fullName>unspecified role</fullName>
+              </names>
+              <xref>
+                <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0499" refType="identity" refTypeAc="MI:0356"/>
+                <secondaryRef db="intact" dbAc="MI:0469" id="EBI-77781" refType="identity" refTypeAc="MI:0356"/>
+                <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+              </xref>
+            </biologicalRole>
+            <featureList>
+              <feature id="13">
+                <names>
+                  <shortLabel>heme binding region</shortLabel>
+                </names>
+                <xref>
+                  <primaryRef db="intact" dbAc="MI:0469" id="EBI-9105036" refType="identity" refTypeAc="MI:0356"/>
+                </xref>
+                <featureType>
+                  <names>
+                    <shortLabel>binding region</shortLabel>
+                    <fullName>binding-associated region</fullName>
+                    <alias type="synonym" typeAc="MI:1041">binding region</alias>
+                  </names>
+                  <xref>
+                    <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0117" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="intact" dbAc="MI:0469" id="EBI-456493" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                  </xref>
+                </featureType>
+                <featureRangeList>
+                  <featureRange>
+                    <startStatus>
+                      <names>
+                        <shortLabel>certain</shortLabel>
+                        <fullName>certain sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">certain</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0335" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-540564" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </startStatus>
+                    <begin position="59"/>
+                    <endStatus>
+                      <names>
+                        <shortLabel>certain</shortLabel>
+                        <fullName>certain sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">certain</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0335" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-540564" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </endStatus>
+                    <end position="59"/>
+                  </featureRange>
+                  <featureRange>
+                    <startStatus>
+                      <names>
+                        <shortLabel>certain</shortLabel>
+                        <fullName>certain sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">certain</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0335" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-540564" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </startStatus>
+                    <begin position="88"/>
+                    <endStatus>
+                      <names>
+                        <shortLabel>certain</shortLabel>
+                        <fullName>certain sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">certain</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0335" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-540564" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </endStatus>
+                    <end position="88"/>
+                  </featureRange>
+                </featureRangeList>
+              </feature>
+              <feature id="14">
+                <names>
+                  <shortLabel>hbb binding region</shortLabel>
+                </names>
+                <xref>
+                  <primaryRef db="intact" dbAc="MI:0469" id="EBI-9103709" refType="identity" refTypeAc="MI:0356"/>
+                </xref>
+                <featureType>
+                  <names>
+                    <shortLabel>binding region</shortLabel>
+                    <fullName>binding-associated region</fullName>
+                    <alias type="synonym" typeAc="MI:1041">binding region</alias>
+                  </names>
+                  <xref>
+                    <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0117" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="intact" dbAc="MI:0469" id="EBI-456493" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                  </xref>
+                </featureType>
+                <featureRangeList>
+                  <featureRange>
+                    <startStatus>
+                      <names>
+                        <shortLabel>undetermined</shortLabel>
+                        <fullName>undetermined sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">undetermined</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0339" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-448295" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </startStatus>
+                    <endStatus>
+                      <names>
+                        <shortLabel>undetermined</shortLabel>
+                        <fullName>undetermined sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">undetermined</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0339" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-448295" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </endStatus>
+                  </featureRange>
+                </featureRangeList>
+              </feature>
+              <feature id="15">
+                <names>
+                  <shortLabel>hbb binding region</shortLabel>
+                </names>
+                <xref>
+                  <primaryRef db="intact" dbAc="MI:0469" id="EBI-9103709" refType="identity" refTypeAc="MI:0356"/>
+                  <secondaryRef db="intact" dbAc="MI:0469" id="EBI-9979823" refType="identity" refTypeAc="MI:0356"/>
+                </xref>
+                <featureType>
+                  <names>
+                    <shortLabel>binding region</shortLabel>
+                    <fullName>binding-associated region</fullName>
+                    <alias type="synonym" typeAc="MI:1041">binding region</alias>
+                  </names>
+                  <xref>
+                    <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0117" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="intact" dbAc="MI:0469" id="EBI-456493" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                  </xref>
+                </featureType>
+                <featureRangeList>
+                  <featureRange>
+                    <startStatus>
+                      <names>
+                        <shortLabel>undetermined</shortLabel>
+                        <fullName>undetermined sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">undetermined</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0339" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-448295" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </startStatus>
+                    <endStatus>
+                      <names>
+                        <shortLabel>undetermined</shortLabel>
+                        <fullName>undetermined sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">undetermined</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0339" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-448295" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </endStatus>
+                  </featureRange>
+                </featureRangeList>
+              </feature>
+            </featureList>
+            <stoichiometry value="1"/>
+          </participant>
+          <participant id="16">
+            <interactorRef>3</interactorRef>
+            <biologicalRole>
+              <names>
+                <shortLabel>cofactor</shortLabel>
+                <fullName>cofactor</fullName>
+                <alias type="go synonym" typeAc="MI:0303">coenzyme</alias>
+              </names>
+              <xref>
+                <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0682" refType="identity" refTypeAc="MI:0356"/>
+                <secondaryRef db="intact" dbAc="MI:0469" id="EBI-967823" refType="identity" refTypeAc="MI:0356"/>
+                <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+              </xref>
+            </biologicalRole>
+            <featureList>
+              <feature id="17">
+                <names>
+                  <shortLabel>hba binding region</shortLabel>
+                </names>
+                <xref>
+                  <primaryRef db="intact" dbAc="MI:0469" id="EBI-9105048" refType="identity" refTypeAc="MI:0356"/>
+                  <secondaryRef db="intact" dbAc="MI:0469" id="EBI-9979800" refType="identity" refTypeAc="MI:0356"/>
+                </xref>
+                <featureType>
+                  <names>
+                    <shortLabel>binding region</shortLabel>
+                    <fullName>binding-associated region</fullName>
+                    <alias type="synonym" typeAc="MI:1041">binding region</alias>
+                  </names>
+                  <xref>
+                    <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0117" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="intact" dbAc="MI:0469" id="EBI-456493" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                  </xref>
+                </featureType>
+                <featureRangeList>
+                  <featureRange>
+                    <startStatus>
+                      <names>
+                        <shortLabel>undetermined</shortLabel>
+                        <fullName>undetermined sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">undetermined</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0339" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-448295" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </startStatus>
+                    <endStatus>
+                      <names>
+                        <shortLabel>undetermined</shortLabel>
+                        <fullName>undetermined sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">undetermined</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0339" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-448295" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </endStatus>
+                  </featureRange>
+                </featureRangeList>
+              </feature>
+            </featureList>
+            <stoichiometry value="1"/>
+          </participant>
+          <participant id="18">
+            <interactorRef>3</interactorRef>
+            <biologicalRole>
+              <names>
+                <shortLabel>cofactor</shortLabel>
+                <fullName>cofactor</fullName>
+                <alias type="go synonym" typeAc="MI:0303">coenzyme</alias>
+              </names>
+              <xref>
+                <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0682" refType="identity" refTypeAc="MI:0356"/>
+                <secondaryRef db="intact" dbAc="MI:0469" id="EBI-967823" refType="identity" refTypeAc="MI:0356"/>
+                <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+              </xref>
+            </biologicalRole>
+            <featureList>
+              <feature id="19">
+                <names>
+                  <shortLabel>hbb binding region</shortLabel>
+                </names>
+                <xref>
+                  <primaryRef db="intact" dbAc="MI:0469" id="EBI-9105050" refType="identity" refTypeAc="MI:0356"/>
+                  <secondaryRef db="intact" dbAc="MI:0469" id="EBI-9979810" refType="identity" refTypeAc="MI:0356"/>
+                </xref>
+                <featureType>
+                  <names>
+                    <shortLabel>binding region</shortLabel>
+                    <fullName>binding-associated region</fullName>
+                    <alias type="synonym" typeAc="MI:1041">binding region</alias>
+                  </names>
+                  <xref>
+                    <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0117" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="intact" dbAc="MI:0469" id="EBI-456493" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                  </xref>
+                </featureType>
+                <featureRangeList>
+                  <featureRange>
+                    <startStatus>
+                      <names>
+                        <shortLabel>undetermined</shortLabel>
+                        <fullName>undetermined sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">undetermined</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0339" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-448295" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </startStatus>
+                    <endStatus>
+                      <names>
+                        <shortLabel>undetermined</shortLabel>
+                        <fullName>undetermined sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">undetermined</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0339" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-448295" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </endStatus>
+                  </featureRange>
+                </featureRangeList>
+              </feature>
+            </featureList>
+            <stoichiometry value="1"/>
+          </participant>
+          <participant id="20">
+            <interactorRef>3</interactorRef>
+            <biologicalRole>
+              <names>
+                <shortLabel>cofactor</shortLabel>
+                <fullName>cofactor</fullName>
+                <alias type="go synonym" typeAc="MI:0303">coenzyme</alias>
+              </names>
+              <xref>
+                <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0682" refType="identity" refTypeAc="MI:0356"/>
+                <secondaryRef db="intact" dbAc="MI:0469" id="EBI-967823" refType="identity" refTypeAc="MI:0356"/>
+                <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+              </xref>
+            </biologicalRole>
+            <featureList>
+              <feature id="21">
+                <names>
+                  <shortLabel>hbb binding region</shortLabel>
+                </names>
+                <xref>
+                  <primaryRef db="intact" dbAc="MI:0469" id="EBI-9105050" refType="identity" refTypeAc="MI:0356"/>
+                  <secondaryRef db="intact" dbAc="MI:0469" id="EBI-9979817" refType="identity" refTypeAc="MI:0356"/>
+                </xref>
+                <featureType>
+                  <names>
+                    <shortLabel>binding region</shortLabel>
+                    <fullName>binding-associated region</fullName>
+                    <alias type="synonym" typeAc="MI:1041">binding region</alias>
+                  </names>
+                  <xref>
+                    <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0117" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="intact" dbAc="MI:0469" id="EBI-456493" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                  </xref>
+                </featureType>
+                <featureRangeList>
+                  <featureRange>
+                    <startStatus>
+                      <names>
+                        <shortLabel>undetermined</shortLabel>
+                        <fullName>undetermined sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">undetermined</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0339" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-448295" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </startStatus>
+                    <endStatus>
+                      <names>
+                        <shortLabel>undetermined</shortLabel>
+                        <fullName>undetermined sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">undetermined</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0339" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-448295" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </endStatus>
+                  </featureRange>
+                </featureRangeList>
+              </feature>
+            </featureList>
+            <stoichiometry value="1"/>
+          </participant>
+          <participant id="22">
+            <interactorRef>4</interactorRef>
+            <biologicalRole>
+              <names>
+                <shortLabel>unspecified role</shortLabel>
+                <fullName>unspecified role</fullName>
+              </names>
+              <xref>
+                <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0499" refType="identity" refTypeAc="MI:0356"/>
+                <secondaryRef db="intact" dbAc="MI:0469" id="EBI-77781" refType="identity" refTypeAc="MI:0356"/>
+                <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+              </xref>
+            </biologicalRole>
+            <featureList>
+              <feature id="23">
+                <names>
+                  <shortLabel>hbb binding region</shortLabel>
+                </names>
+                <xref>
+                  <primaryRef db="intact" dbAc="MI:0469" id="EBI-9979789" refType="identity" refTypeAc="MI:0356"/>
+                  <secondaryRef db="intact" dbAc="MI:0469" id="EBI-9103709" refType="identity" refTypeAc="MI:0356"/>
+                  <secondaryRef db="intact" dbAc="MI:0469" id="EBI-9979826" refType="identity" refTypeAc="MI:0356"/>
+                </xref>
+                <featureType>
+                  <names>
+                    <shortLabel>binding region</shortLabel>
+                    <fullName>binding-associated region</fullName>
+                    <alias type="synonym" typeAc="MI:1041">binding region</alias>
+                  </names>
+                  <xref>
+                    <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0117" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="intact" dbAc="MI:0469" id="EBI-456493" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                  </xref>
+                </featureType>
+                <featureRangeList>
+                  <featureRange>
+                    <startStatus>
+                      <names>
+                        <shortLabel>undetermined</shortLabel>
+                        <fullName>undetermined sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">undetermined</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0339" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-448295" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </startStatus>
+                    <endStatus>
+                      <names>
+                        <shortLabel>undetermined</shortLabel>
+                        <fullName>undetermined sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">undetermined</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0339" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-448295" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </endStatus>
+                  </featureRange>
+                </featureRangeList>
+              </feature>
+              <feature id="24">
+                <names>
+                  <shortLabel>heme binding region</shortLabel>
+                </names>
+                <xref>
+                  <primaryRef db="intact" dbAc="MI:0469" id="EBI-9105036" refType="identity" refTypeAc="MI:0356"/>
+                  <secondaryRef db="intact" dbAc="MI:0469" id="EBI-9979786" refType="identity" refTypeAc="MI:0356"/>
+                </xref>
+                <featureType>
+                  <names>
+                    <shortLabel>binding region</shortLabel>
+                    <fullName>binding-associated region</fullName>
+                    <alias type="synonym" typeAc="MI:1041">binding region</alias>
+                  </names>
+                  <xref>
+                    <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0117" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="intact" dbAc="MI:0469" id="EBI-456493" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                  </xref>
+                </featureType>
+                <featureRangeList>
+                  <featureRange>
+                    <startStatus>
+                      <names>
+                        <shortLabel>certain</shortLabel>
+                        <fullName>certain sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">certain</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0335" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-540564" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </startStatus>
+                    <begin position="59"/>
+                    <endStatus>
+                      <names>
+                        <shortLabel>certain</shortLabel>
+                        <fullName>certain sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">certain</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0335" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-540564" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </endStatus>
+                    <end position="59"/>
+                  </featureRange>
+                  <featureRange>
+                    <startStatus>
+                      <names>
+                        <shortLabel>certain</shortLabel>
+                        <fullName>certain sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">certain</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0335" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-540564" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </startStatus>
+                    <begin position="88"/>
+                    <endStatus>
+                      <names>
+                        <shortLabel>certain</shortLabel>
+                        <fullName>certain sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">certain</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0335" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-540564" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </endStatus>
+                    <end position="88"/>
+                  </featureRange>
+                </featureRangeList>
+              </feature>
+              <feature id="25">
+                <names>
+                  <shortLabel>hbb binding region</shortLabel>
+                </names>
+                <xref>
+                  <primaryRef db="intact" dbAc="MI:0469" id="EBI-9103709" refType="identity" refTypeAc="MI:0356"/>
+                  <secondaryRef db="intact" dbAc="MI:0469" id="EBI-9979789" refType="identity" refTypeAc="MI:0356"/>
+                </xref>
+                <featureType>
+                  <names>
+                    <shortLabel>binding region</shortLabel>
+                    <fullName>binding-associated region</fullName>
+                    <alias type="synonym" typeAc="MI:1041">binding region</alias>
+                  </names>
+                  <xref>
+                    <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0117" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="intact" dbAc="MI:0469" id="EBI-456493" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                  </xref>
+                </featureType>
+                <featureRangeList>
+                  <featureRange>
+                    <startStatus>
+                      <names>
+                        <shortLabel>undetermined</shortLabel>
+                        <fullName>undetermined sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">undetermined</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0339" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-448295" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </startStatus>
+                    <endStatus>
+                      <names>
+                        <shortLabel>undetermined</shortLabel>
+                        <fullName>undetermined sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">undetermined</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0339" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-448295" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </endStatus>
+                  </featureRange>
+                </featureRangeList>
+              </feature>
+            </featureList>
+            <stoichiometry value="1"/>
+          </participant>
+          <participant id="26">
+            <interactorRef>2</interactorRef>
+            <biologicalRole>
+              <names>
+                <shortLabel>unspecified role</shortLabel>
+                <fullName>unspecified role</fullName>
+              </names>
+              <xref>
+                <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0499" refType="identity" refTypeAc="MI:0356"/>
+                <secondaryRef db="intact" dbAc="MI:0469" id="EBI-77781" refType="identity" refTypeAc="MI:0356"/>
+                <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+              </xref>
+            </biologicalRole>
+            <featureList>
+              <feature id="27">
+                <names>
+                  <shortLabel>heme binding region</shortLabel>
+                </names>
+                <xref>
+                  <primaryRef db="intact" dbAc="MI:0469" id="EBI-9105046" refType="identity" refTypeAc="MI:0356"/>
+                  <secondaryRef db="intact" dbAc="MI:0469" id="EBI-9979793" refType="identity" refTypeAc="MI:0356"/>
+                </xref>
+                <featureType>
+                  <names>
+                    <shortLabel>binding region</shortLabel>
+                    <fullName>binding-associated region</fullName>
+                    <alias type="synonym" typeAc="MI:1041">binding region</alias>
+                  </names>
+                  <xref>
+                    <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0117" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="intact" dbAc="MI:0469" id="EBI-456493" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                  </xref>
+                </featureType>
+                <featureRangeList>
+                  <featureRange>
+                    <startStatus>
+                      <names>
+                        <shortLabel>certain</shortLabel>
+                        <fullName>certain sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">certain</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0335" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-540564" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </startStatus>
+                    <begin position="64"/>
+                    <endStatus>
+                      <names>
+                        <shortLabel>certain</shortLabel>
+                        <fullName>certain sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">certain</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0335" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-540564" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </endStatus>
+                    <end position="64"/>
+                  </featureRange>
+                  <featureRange>
+                    <startStatus>
+                      <names>
+                        <shortLabel>certain</shortLabel>
+                        <fullName>certain sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">certain</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0335" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-540564" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </startStatus>
+                    <begin position="93"/>
+                    <endStatus>
+                      <names>
+                        <shortLabel>certain</shortLabel>
+                        <fullName>certain sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">certain</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0335" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-540564" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </endStatus>
+                    <end position="93"/>
+                  </featureRange>
+                </featureRangeList>
+              </feature>
+              <feature id="28">
+                <names>
+                  <shortLabel>hba binding region</shortLabel>
+                </names>
+                <xref>
+                  <primaryRef db="intact" dbAc="MI:0469" id="EBI-9103707" refType="identity" refTypeAc="MI:0356"/>
+                  <secondaryRef db="intact" dbAc="MI:0469" id="EBI-9979796" refType="identity" refTypeAc="MI:0356"/>
+                </xref>
+                <featureType>
+                  <names>
+                    <shortLabel>binding region</shortLabel>
+                    <fullName>binding-associated region</fullName>
+                    <alias type="synonym" typeAc="MI:1041">binding region</alias>
+                  </names>
+                  <xref>
+                    <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0117" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="intact" dbAc="MI:0469" id="EBI-456493" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                  </xref>
+                </featureType>
+                <featureRangeList>
+                  <featureRange>
+                    <startStatus>
+                      <names>
+                        <shortLabel>undetermined</shortLabel>
+                        <fullName>undetermined sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">undetermined</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0339" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-448295" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </startStatus>
+                    <endStatus>
+                      <names>
+                        <shortLabel>undetermined</shortLabel>
+                        <fullName>undetermined sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">undetermined</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0339" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-448295" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </endStatus>
+                  </featureRange>
+                </featureRangeList>
+              </feature>
+              <feature id="29">
+                <names>
+                  <shortLabel>hba binding region</shortLabel>
+                </names>
+                <xref>
+                  <primaryRef db="intact" dbAc="MI:0469" id="EBI-9103707" refType="identity" refTypeAc="MI:0356"/>
+                  <secondaryRef db="intact" dbAc="MI:0469" id="EBI-9979796" refType="identity" refTypeAc="MI:0356"/>
+                  <secondaryRef db="intact" dbAc="MI:0469" id="EBI-9979830" refType="identity" refTypeAc="MI:0356"/>
+                </xref>
+                <featureType>
+                  <names>
+                    <shortLabel>binding region</shortLabel>
+                    <fullName>binding-associated region</fullName>
+                    <alias type="synonym" typeAc="MI:1041">binding region</alias>
+                  </names>
+                  <xref>
+                    <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0117" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="intact" dbAc="MI:0469" id="EBI-456493" refType="identity" refTypeAc="MI:0356"/>
+                    <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                  </xref>
+                </featureType>
+                <featureRangeList>
+                  <featureRange>
+                    <startStatus>
+                      <names>
+                        <shortLabel>undetermined</shortLabel>
+                        <fullName>undetermined sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">undetermined</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0339" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-448295" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </startStatus>
+                    <endStatus>
+                      <names>
+                        <shortLabel>undetermined</shortLabel>
+                        <fullName>undetermined sequence position</fullName>
+                        <alias type="synonym" typeAc="MI:1041">undetermined</alias>
+                      </names>
+                      <xref>
+                        <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0339" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="intact" dbAc="MI:0469" id="EBI-448295" refType="identity" refTypeAc="MI:0356"/>
+                        <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+                      </xref>
+                    </endStatus>
+                  </featureRange>
+                </featureRangeList>
+              </feature>
+            </featureList>
+            <stoichiometry value="1"/>
+          </participant>
+        </participantList>
+        <bindingFeatureList>
+          <bindingFeatures>
+            <participantFeatureRef>13</participantFeatureRef>
+            <participantFeatureRef>7</participantFeatureRef>
+          </bindingFeatures>
+          <bindingFeatures>
+            <participantFeatureRef>9</participantFeatureRef>
+            <participantFeatureRef>19</participantFeatureRef>
+          </bindingFeatures>
+          <bindingFeatures>
+            <participantFeatureRef>14</participantFeatureRef>
+            <participantFeatureRef>10</participantFeatureRef>
+          </bindingFeatures>
+          <bindingFeatures>
+            <participantFeatureRef>11</participantFeatureRef>
+            <participantFeatureRef>23</participantFeatureRef>
+          </bindingFeatures>
+          <bindingFeatures>
+            <participantFeatureRef>15</participantFeatureRef>
+            <participantFeatureRef>29</participantFeatureRef>
+          </bindingFeatures>
+          <bindingFeatures>
+            <participantFeatureRef>24</participantFeatureRef>
+            <participantFeatureRef>17</participantFeatureRef>
+          </bindingFeatures>
+          <bindingFeatures>
+            <participantFeatureRef>21</participantFeatureRef>
+            <participantFeatureRef>27</participantFeatureRef>
+          </bindingFeatures>
+          <bindingFeatures>
+            <participantFeatureRef>28</participantFeatureRef>
+            <participantFeatureRef>25</participantFeatureRef>
+          </bindingFeatures>
+        </bindingFeatureList>
+        <interactionType>
+          <names>
+            <shortLabel>physical association</shortLabel>
+            <fullName>physical association</fullName>
+          </names>
+          <xref>
+            <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:0915" refType="identity" refTypeAc="MI:0356"/>
+            <secondaryRef db="intact" dbAc="MI:0469" id="EBI-1813147" refType="identity" refTypeAc="MI:0356"/>
+            <secondaryRef db="pubmed" dbAc="MI:0446" id="14755292" refType="primary-reference" refTypeAc="MI:0358"/>
+          </xref>
+        </interactionType>
+        <organism ncbiTaxId="9606">
+          <names>
+            <shortLabel>human</shortLabel>
+            <fullName>Homo sapiens</fullName>
+            <alias type="synonym" typeAc="MI:1041">Human</alias>
+          </names>
+        </organism>
+        <interactorType>
+          <names>
+            <shortLabel>stable complex</shortLabel>
+            <fullName>stable complex</fullName>
+          </names>
+          <xref>
+            <primaryRef db="psi-mi" dbAc="MI:0488" id="MI:1302" refType="identity" refTypeAc="MI:0356"/>
+            <secondaryRef db="intact" dbAc="MI:0469" id="EBI-6862248" refType="identity" refTypeAc="MI:0356"/>
+            <secondaryRef db="pubmed" dbAc="MI:0446" id="12853464" refType="primary-reference" refTypeAc="MI:0358"/>
+          </xref>
+        </interactorType>
+        <evidenceType>
+          <names>
+            <shortLabel>physical interaction evidence used in manual assertion</shortLabel>
+            <fullName>physical interaction evidence used in manual assertion</fullName>
+            <alias type="synonym" typeAc="MI:1041">IPI</alias>
+            <alias type="synonym" typeAc="MI:1041">inferred from physical interaction</alias>
+          </names>
+          <xref>
+            <primaryRef db="evidence ontology" dbAc="MI:1331" id="ECO:0000353" refType="identity" refTypeAc="MI:0356"/>
+            <secondaryRef db="intact" dbAc="MI:0469" id="EBI-9828818" refType="identity" refTypeAc="MI:0356"/>
+          </xref>
+        </evidenceType>
+        <attributeList>
+          <attribute name="disease" nameAc="MI:0617">Heinz body anemia [MONDO:0007705]: a form of nonspherocytic hemolytic anemia of Dacie type I.</attribute>
+          <attribute name="disease" nameAc="MI:0617">Hereditary persistence of fetal hemoglobin - beta-thalassemia (HPFH) [MONDO:0018749]: Characterized by high hemoglobin (Hb) F levels and an increased number of fetal-Hb-containing-cells.</attribute>
+          <attribute name="disease" nameAc="MI:0617">Beta-thalassemia [MONDO:0019402]: Beta-thalassemia (BT) is characterized by deficiency (Beta+) or absence (Beta0) of synthesis of the beta globin chains of hemoglobin (Hb). Three main types of BT have been described (minor, intermedia [MONDO:0016487] and major [MONDO:0016486]). 1) Thalassemia minor (BT-minor, BT trait) is the heterozygous form and is usually asymptomatic. 2) Thalassemia major (Cooley anemia; BT-major) is the homozygous form and associates splenomegaly and microcytic and hypochromic anemia resulting from dyserythropoiesis and hemolysis. Onset generally occurs from 6-24 months of age. Patients require regular transfusions. 3) Thalassemia intermedia (BTI) in which the anemia is less severe and diagnosed later in life compared to BT-major. Patients with BTI may or may not require occasional transfusions. Rare autosomal dominant forms have also been described (dominant beta-thalassemia [Orphanet:231226]) resulting in moderate to severe anemia. Transmission is autosomal recessive and around 200 mutations (B0 or B+) have been identified.</attribute>
+          <attribute name="disease" nameAc="MI:0617">Sickle cell anemia [MONDO:0011382]: a chronic hemolytic diseases that may induce three types of acute accidents: severe anemia, severe bacterial infections, and ischemic vasoocclusive accidents (VOA) caused by sickle-shaped red blood cells obstructing small blood vessels and capillaries. The presence of fetal hemoglobin means that the disease doesn't manifest until after 3 months. In addition to anemia and bacterial infections, VOAs cause hyperalgic focal ischemia (and sometimes infarction) when they occur in the muscles or skeleton. Over the course of time, VOAs may compromise the integrity of tissues or organs. Transmission is autosomal recessive. Sickle cell anemia is determined by combinations of two abnormal alleles of the beta globin gene among which at least one carries the beta 6 glu-val mutation (Hb S). Sickle cell anemia reduces the susceptibility to malaria infection.</attribute>
+          <attribute name="disease" nameAc="MI:0617">Alpha-thalassemia [MONDO:0011399]: Alpha-thalassemia is an inherited hemoglobinopathy characterized by impaired synthesis of alpha-globin chains leading to a variable clinical picture depending on the number of affected alleles. The disease can be classified into clinical subtypes of increasing severity: silent alpha thalassemia, alpha thalassemia trait (or alpha thalassemia minor), hemoglobin H disease (HbH, [MONDO:0013512]), and Hb Bart's hydrops fetalis [MONDO:0015579]. A rare form called alpha-thalassemia-intellectual deficit syndrome linked to chromosome 16 (16p13.3) has also been identified. Alpha thalassemia trait causes microcytosis and hypochromia with absent or mild anemia (often detected on routine blood tests), generally with no other symptoms. HbH patients develop moderate hemolytic anemia with variable amounts of HbH along with occasionally severe splenomegaly, sometimes complicated by hypersplenism. Hb Bart's hydrops fetalis involves a severe deficiency in alpha-globin with serious developmental implications. Alpha-thalassemia-intellectual deficit syndrome is characterized by very mild to severe anemia associated with developmental abnormalities.</attribute>
+          <attribute name="curated-complex">Adult hemoglobin A (HbA) is expressed in erythrocytes in the bone marrow. Binds oxygen in the lungs and transports it to the various peripheral tissues. Transports CO2 from cells back to the lungs. It appears in late pregnancy and becomes the dominant hemoglobin type in adults, replacing fetal hemoglobin (CPX-2932 &amp; CPX-2933).</attribute>
+          <attribute name="complex-properties" nameAc="MI:0629">Two alpha chains and two beta chains. Each chain has a heme b group attached to it containing either an Fe2+ or Fe3+ ion. Oxygen only binds to Fe2+ ions, not Fe3+ ions. While CO2 and protons bind directly to the protein chains and therefore do not directly compete with oxygen binding to the heme b groups both molecules have major allosteric effects on oxygen binding. &#xd;
+&#xd;
+MW = 64 kD</attribute>
+          <attribute name="complex-assembly">Heterotetramer.</attribute>
+          <attribute name="accepted">created with intact-jami-dbscripts</attribute>
+        </attributeList>
+      </abstractInteraction>
+    </interactionList>
+  </entry>
+</entrySet>
