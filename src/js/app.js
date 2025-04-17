@@ -267,8 +267,8 @@ export class App {
                 }
             }
         }
-        this.updateAnnotations(); //?
-        fetchAnnotations(this, () => this.updateAnnotations());
+        this.updateAnnotations(); //presumably for mi-features
+        // fetchAnnotations(this, () => this.updateAnnotations());
         this.checkLinks();
         this.autoLayout();
     }
@@ -494,7 +494,7 @@ export class App {
         this.init();
     }
 
-    readXML(xmlText, expand = false) {
+    readXML(xmlText, expand = true) {
         // Convert xmlText to JavaScript object
         const options = {
             isArray: (name, jpath, isLeafNode, isAttribute) => {
@@ -503,11 +503,17 @@ export class App {
                     'entrySet.entry.interactionList.abstractInteraction',
                     'entrySet.entry.interactionList.interaction',
                     'entrySet.entry.interactionList.abstractInteraction.participantList.participant',
-                    'entrySet.entry.interactionList.interaction.participantList.participant']
+                    'entrySet.entry.interactionList.interaction.participantList.participant',
+                    'entrySet.entry.interactionList.abstractInteraction.participantList.participant.featureList.feature',
+                    'entrySet.entry.interactionList.interaction.participantList.participant.featureList.feature',
+                    'entrySet.entry.interactionList.abstractInteraction.participantList.participant.featureList.feature.featureRangeList.featureRange',
+                    'entrySet.entry.interactionList.interaction.participantList.participant.featureList.feature.featureRangeList.featureRange']
                     .includes(jpath); // replace with your element names
             },
             ignoreAttributes: false,
-            attributeNamePrefix: "_"
+            attributeNamePrefix: "_",
+            parseTagValue: false,
+            parseAttributeValue: false
         };
         const parser = new XMLParser(options);
         const jsObj = parser.parse(xmlText, options);

@@ -19359,6 +19359,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _expand__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./expand */ "./src/js/expand.js");
 /* harmony import */ var _clone_complex_refs__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./clone-complex-refs */ "./src/js/clone-complex-refs.js");
 /* harmony import */ var _clone_complex_stoich__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./clone-complex-stoich */ "./src/js/clone-complex-stoich.js");
+/* harmony import */ var _viz_xml_feature_range__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./viz/xml-feature-range */ "./src/js/viz/xml-feature-range.js");
+
 
 
 
@@ -19398,14 +19400,14 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
 
     function visitInteractions(interactionCallback) {
         for (let entry of jsObj.entrySet.entry) {
-            console.log("*entry*", entry);
+            // console.log("*entry*", entry);
             const interactions = [
                 ...(entry.interactionList?.abstractInteraction || []),
                 ...(entry.interactionList?.interaction || [])
             ];
 
             for (let interaction of interactions) {
-                console.log("*interaction*", interaction);
+                // console.log("*interaction*", interaction);
                 interactionCallback(interaction);
             }
         }
@@ -19413,12 +19415,12 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
 
     function visitInteractors(interactorCallback) {
         for (let entry of jsObj.entrySet.entry) {
-            console.log("*entry*", entry);
+            // console.log("*entry*", entry);
 
             // Visit top-level interactors
             if (entry.interactorList?.interactor) {
                 for (let interactor of entry.interactorList.interactor) {
-                    console.log("*interactor*", interactor);
+                    // console.log("*interactor*", interactor);
                     interactorCallback(interactor);
                 }
             }
@@ -19427,7 +19429,7 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
             visitInteractions((interaction) => {
                 const participants = interaction.participantList?.participant || [];
                 for (let participant of participants) {
-                    console.log("*participant*", participant);
+                    // console.log("*participant*", participant);
                     if (participant.interactor) {
                         interactorCallback(participant.interactor);
                     }
@@ -19449,54 +19451,15 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
     }
     visitInteractors(addInteractor);
 
-    // for (let entry of jsObj.entrySet.entry) {
-    //     console.log("*entry*", entry);
-    //     if (entry.interactorList) {
-    //         for (let interactor of entry.interactorList.interactor) {
-    //             console.log("*interactor*", interactor);
-    //             addInteractor(interactor);
-    //         }
-    //     }
-    //     if (entry.interactionList && entry.interactionList.abstractInteraction) {
-    //         for (let interaction of entry.interactionList.abstractInteraction) {
-    //             console.log("*interaction*", interaction);
-    //             for (let participant of interaction.participantList.participant) {
-    //                 console.log("*participant*", participant);
-    //                 if (participant.interactor) {
-    //                     console.log("THIS NEVER HAPPENS?");
-    //                     addInteractor(participant.interactor);
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     if (entry.interactionList && entry.interactionList.interaction) {
-    //         for (let interaction of entry.interactionList.interaction) {
-    //             console.log("*interaction*", interaction);
-    //             for (let participant of interaction.participantList.participant) {
-    //                 console.log("*participant*", participant);
-    //                 if (participant.interactor) {
-    //                     addInteractor(participant.interactor);
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
-    // for (let datum of miJson.data) {
-    //     if (datum.object === "interactor") {
-    //         app.interactors.set(datum.id, datum);
-    //     }
-    // }
-
     expand ? readStoichExpanded() : readStoichUnexpanded();
 
     // loop through participants and features
     // init binary, unary and sequence links,
     // and make needed associations between these and containing naryLink
-    // for (let datum of miJson.data) {
-    //     if (datum.object === "interaction") {
-    //         for (let jsonParticipant of datum.participants) {
+    // visitInteractions((interaction) => {
+    //         for (let participant of interaction.participantList.participant) {
     //             let features = new Array(0);
-    //             if (jsonParticipant.features) features = jsonParticipant.features;
+    //             if (participant.features) features = participant.featureList.feature;
     //
     //             for (let feature of features) { // for each feature
     //                 const fromSequenceData = feature.sequenceData;
@@ -19529,11 +19492,11 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
     //                             const toInteractor = getNode(toSequenceData[0]);
     //                             let link;
     //                             if (fromInteractor === toInteractor) {
-    //                                 link = getUnaryLink(fromInteractor, datum);
+    //                                 link = getUnaryLink(fromInteractor, interaction);
     //                             } else {
-    //                                 link = getBinaryLink(fromInteractor, toInteractor, datum);
+    //                                 link = getBinaryLink(fromInteractor, toInteractor, interaction);
     //                             }
-    //                             const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, datum);
+    //                             const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, interaction);
     //                             fromInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
     //                             toInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
     //                             link.sequenceLinks.set(sequenceLink.id, sequenceLink);
@@ -19544,8 +19507,7 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
     //                 } // end if linked features
     //             } // end for each feature
     //         }
-    //     }
-    // }
+    //     });
 
     //init complexes
     app.complexes = Array.from(complexes.values()); // todo - why not just keep it in map
@@ -19557,14 +19519,17 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
         } else {
             interactionId = complex.id;
         }
-        for (let datum of miJson.data) {
-            if (datum.object === "interaction" && datum.id === interactionId) {
-                const nLinkId = getNaryLinkIdFromInteraction(datum);
+        console.log("complex id", complex.id);
+        visitInteractions((interaction) => {
+            console.log("interaction id", interaction._id, "interactionId", interactionId, interaction._id == interactionId);
+            if (interaction._id == interactionId) {
+                alert("its happening");
+                const nLinkId = getNaryLinkIdFromInteraction(interaction);
                 const naryLink = app.allNaryLinks.get(nLinkId);
                 complex.initLink(naryLink);
                 naryLink.complex = complex;
             }
-        }
+        });
     }
 
     //make mi features into annotations
@@ -19579,8 +19544,8 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
             annotName += ", " + feature.detmethod.name;
         }
         // the id info we need is inside sequenceData att
-        if (feature.sequenceData) { // todo - still needed?
-            for (let seqDatum of feature.sequenceData) {
+        if (feature.featureRangeList) { // todo - still needed?
+            for (let seqDatum of feature.featureRangeList.featureRange) {
                 let mID = seqDatum.interactorRef;
                 if (expand) {
                     mID = `${mID}(${seqDatum.participantRef})`;
@@ -19588,7 +19553,7 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
                 // console.log("*", mID, seqDatum);
                 const molecule = app.participants.get(mID);
                 if (molecule) {
-                    const seqFeature = new _viz_sequence_datum__WEBPACK_IMPORTED_MODULE_11__.SequenceDatum(molecule, seqDatum.pos);
+                    const seqFeature = new _viz_xml_feature_range__WEBPACK_IMPORTED_MODULE_17__.XmlFeatureRange(molecule, seqDatum);
                     const annotation = new _viz_interactor_annotation__WEBPACK_IMPORTED_MODULE_0__.Annotation(annotName, seqFeature);
                     let miFeatures = molecule.annotationSets.get("MI Features");
                     if (!miFeatures) {
@@ -19605,62 +19570,64 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
 
     function readStoichExpanded() {
         //get maximum stoichiometry
-        let maxStoich = 0;
-        for (let datum of miJson.data) {
-            if (datum.object === "interaction") {
-                for (let jsonParticipant of datum.participants) {
-                    if (jsonParticipant.stoichiometry && (jsonParticipant.stoichiometry - 0) > maxStoich) {
-                        maxStoich = (jsonParticipant.stoichiometry - 0);
-                    }
-                }
-            }
-        }
-        if (maxStoich < 20) {
-            miJson = (0,_expand__WEBPACK_IMPORTED_MODULE_14__.matrix)(miJson);
-        }
+        // let maxStoich = 0;
+        // for (let datum of miJson.data) {
+        //     if (datum.object === "interaction") {
+        //         for (let jsonParticipant of datum.participants) {
+        //             if (jsonParticipant.stoichiometry && (jsonParticipant.stoichiometry - 0) > maxStoich) {
+        //                 maxStoich = (jsonParticipant.stoichiometry - 0);
+        //             }
+        //         }
+        //     }
+        // }
+        // if (maxStoich < 20) {
+        //     miJson = matrix(miJson);
+        // }
 
         indexFeatures();
 
         //add naryLinks and participants
-        for (let datum of miJson.data) {
-            if (datum.object === "interaction") {
-                //init n-ary link
-                const nLinkId = datum.id || getNaryLinkIdFromInteraction(datum);
-                let nLink = app.allNaryLinks.get(nLinkId);
-                if (typeof nLink === "undefined") {
-                    //doesn't already exist, make new nLink
-                    nLink = new _viz_link_nary_link__WEBPACK_IMPORTED_MODULE_9__.NaryLink(nLinkId, app, datum.sourceId);
-                    app.allNaryLinks.set(nLinkId, nLink);
-                    //alot of time is being spent on creating these IDs, stash them in the interaction object?
-                    datum.naryId = nLinkId;
+        visitInteractions(function (datum) {
+            //init n-ary link
+            const nLinkId = datum.id || getNaryLinkIdFromInteraction(datum);
+            let nLink = app.allNaryLinks.get(nLinkId);
+            if (typeof nLink === "undefined") {
+                //doesn't already exist, make new nLink
+                nLink = new _viz_link_nary_link__WEBPACK_IMPORTED_MODULE_9__.NaryLink(nLinkId, app, datum.sourceId);
+                app.allNaryLinks.set(nLinkId, nLink);
+                //alot of time is being spent on creating these IDs, stash them in the interaction object?
+                datum.naryId = nLinkId;
 
+            }
+            //nLink.addEvidence(datum);
+
+            //init participants
+            for (let jsonParticipant of datum.participantList.participant) {
+                let intRef = jsonParticipant.interactorRef;
+                if (!intRef){
+                    intRef = jsonParticipant.interactor._id;
                 }
-                //nLink.addEvidence(datum);
+                console.log("intRef", intRef);
+                const partRef = jsonParticipant._id;
+                const participantId = `${intRef}(${partRef})`;
+                let participant = app.participants.get(participantId);
+                if (typeof participant === "undefined") {
+                    const interactor = app.interactors.get(intRef);
+                    participant = newParticipant(interactor, participantId, intRef);
+                    app.participants.set(participantId, participant);
+                }
 
-                //init participants
-                for (let jsonParticipant of datum.participants) {
-                    const intRef = jsonParticipant.interactorRef;
-                    const partRef = jsonParticipant.id;
-                    const participantId = `${intRef}(${partRef})`;
-                    let participant = app.participants.get(participantId);
-                    if (typeof participant === "undefined") {
-                        const interactor = app.interactors.get(intRef);
-                        participant = newParticipant(interactor, participantId, intRef);
-                        app.participants.set(participantId, participant);
-                    }
+                participant.naryLinks.set(nLinkId, nLink);
+                if (nLink.participants.indexOf(participant) === -1) {
+                    nLink.participants.push(participant);
+                }
 
-                    participant.naryLinks.set(nLinkId, nLink);
-                    if (nLink.participants.indexOf(participant) === -1) {
-                        nLink.participants.push(participant);
-                    }
-
-                    if (jsonParticipant.stoichiometry) {
-                        const interactor = app.participants.get(participantId);
-                        interactor.addStoichiometryLabel(jsonParticipant.stoichiometry);
-                    }
+                if (jsonParticipant.stoichiometry) {
+                    const interactor = app.participants.get(participantId);
+                    interactor.addStoichiometryLabel(jsonParticipant.stoichiometry);
                 }
             }
-        }
+        });
     }
 
     function newParticipant(interactor, participantId, interactorRef) {
@@ -19670,12 +19637,18 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
             // MI:0314 - interaction?, MI:0317 - complex? and its many subclasses
 
             let interactionExists = false;
-            for (let datum of miJson.data) {
-                if (datum.object === "interaction" && datum.id === interactorRef) {
+            // for (let datum of miJson.data) {
+            //     if (datum.object === "interaction" && datum.id === interactorRef) {
+            //         interactionExists = true;
+            //         break;
+            //     }
+            // }
+            visitInteractions(function (interaction) {
+                if (interaction._id === interactorRef) {
                     interactionExists = true;
-                    break;
+                    // break;
                 }
-            }
+            });
 
             if (interactionExists) {
                 participant = new _viz_interactor_complex__WEBPACK_IMPORTED_MODULE_6__.Complex(participantId, app, interactorRef);
@@ -19760,51 +19733,26 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
     function indexFeatures() {
         //create indexed collection of all features from interactions
         // - still seems like a good starting point?
-        // for (let datum of miJson.data) {
-        //     if (datum.object === "interaction") {
-        //         for (let jsonParticipant of datum.participants) {
-        //             let features = new Array(0);
-        //             if (jsonParticipant.features) features = jsonParticipant.features;
-        //
-        //             const fCount = features.length;
-        //             for (let f = 0; f < fCount; f++) {
-        //                 const feature = features[f];
-        //
-        //                 // jami workaround, not entirely inline with mi-json schema, but looks like mi-json has redundant info here
-        //                 for (let seqDatum of feature.sequenceData) {
-        //                     if (!seqDatum.interactorRef) {
-        //                         seqDatum.interactorRef = jsonParticipant.interactorRef;
-        //                     }
-        //                     if (!seqDatum.participantRef) {
-        //                         seqDatum.participantRef = feature.parentParticipant;
-        //                     }
-        //                 }
-        //
-        //                 app.features.set(feature.id, feature);
-        //             }
-        //         }
-        //     }
-        // }
         visitInteractions((interaction) => {
             for (let participant of interaction.participantList.participant) {
                 let features = new Array(0);
-                if (participant.features) features = participant.features;
+                if (participant.featureList?.feature) features = participant.featureList.feature;
 
                 const fCount = features.length;
                 for (let f = 0; f < fCount; f++) {
                     const feature = features[f];
 
                     // jami workaround, not entirely inline with mi-json schema, but looks like mi-json has redundant info here
-                    // for (let seqDatum of feature.sequenceData) {
-                    //     if (!seqDatum.interactorRef) {
-                    //         seqDatum.interactorRef = participant.interactorRef;
-                    //     }
-                    //     if (!seqDatum.participantRef) {
-                    //         seqDatum.participantRef = feature.parentParticipant;
-                    //     }
-                    // }
+                    for (let seqDatum of feature.featureRangeList.featureRange) {
+                        if (!seqDatum.interactorRef) {
+                            seqDatum.interactorRef = participant.interactorRef || participant.interactor._id;
+                        }
+                        if (!seqDatum.participantRef) {
+                            seqDatum.participantRef = participant._id;//feature.parentParticipant;
+                        }
+                    }
 
-                    app.features.set(feature.id, feature);
+                    app.features.set(feature._id, feature);
                 }
             }
         });
@@ -19934,9 +19882,9 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
         const pIDs = new Set(); //used to eliminate duplicates
         //make id
         for (let pi = 0; pi < participantCount; pi++) {
-            let pID = participants[pi].interactorRef;
+            let pID = participants[pi].interactorRef || participants[pi].interactor._id;
             if (expand) {
-                pID = `${pID}(${participants[pi].id})`;
+                pID = `${pID}(${participants[pi]._id})`;
             }
             pIDs.add(pID);
         }
@@ -22767,6 +22715,198 @@ class SequenceDatum {
                 }
             }
         }
+    }
+
+    toString() {
+        return this.sequenceDatumString;
+    }
+
+    overlaps(seqDatum) {
+        if (this.participant === seqDatum.participant) {
+            const first = this.uncertainBegin || this.begin || this.end || this.uncertainEnd;
+            const last = this.uncertainEnd || this.end || this.begin || this.uncertainBegin;
+
+            const otherFirst = seqDatum.uncertainBegin || seqDatum.begin || seqDatum.end;
+            const otherLast = seqDatum.uncertainEnd || seqDatum.end || seqDatum.begin;
+
+            if (first <= otherLast && otherFirst <= last) { // i wouldn't have got that tbh
+                return true;
+            }
+
+        }
+        return false;
+    }
+}
+
+//On 06/06/13 09:22, marine@ebi.ac.uk wrote:
+//> Concerning the ranges, I think there was a confusion :
+//>
+//> "n" = residue 1
+//> "c" = residue at interactor.sequence.length
+//>
+//> In fact n is always used to describe a position that is unknown but we
+//> know it is in the N-terminal portion (somewhere at the beginning of the
+//> sequence) and c is always used to describe a position that is unknown but
+//> we know it is in the C-terminal portion of the sequence (somewhere at the
+//> end of the sequence). If we have an exact N-terminal position (residue 1),
+//> it will be represented as a certain position of 1. Same for C-terminal
+//> position (residue at interactor.sequence.length). We always use '-' to
+//> separate the start position from the end position so c-c means that the
+//> start and end positions of a feature are unknown but are bot in the
+//> C-terminal portion of the sequence.
+//>
+//> You will never have "123" = specific residue but rather "123-123" =
+//> specific residue which means the start and the end of the feature are
+//> known and are the same so it represents a single residue. If you want,
+//> JAMI could merge the start and end and give you 123 instead of 123-123 if
+//> it is what you want.
+//> "123-456" does not mean residue range, it means that the feature sequence
+//> is a sequence of 133 amino acids where the start position and the end
+//> positions are certain. For me, residue range is what you call 'residue
+//> range with fuzzy boundaries'. If the start is 22..25, it means that the
+//> starting amino acid position for the feature sequence is fuzzy and is
+//> between the 22nd and the 25th amino acid but we don't know which one it
+//> is. 22..22 will mean that the starting amino acid position for the feature
+//> sequence is fuzzy and is around amino acid 22 in the interactor sequence.
+//>
+//> "<8" = range between 1 and 8 : I have the same comment as for "123"
+//> instead of "123-123". JAMI could give you "<8" if both start and end
+//> positions of the feature are <8 but it could happen that you have a
+//> feature such as "<8->22" or "<8-22", etc.
+
+
+
+/***/ }),
+
+/***/ "./src/js/viz/xml-feature-range.js":
+/*!*****************************************!*\
+  !*** ./src/js/viz/xml-feature-range.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   XmlFeatureRange: () => (/* binding */ XmlFeatureRange)
+/* harmony export */ });
+/* constructor parameter sequenceDatumString is string with following format:
+ *
+ *              "?-?" = unknown
+ *              "n-n" = n-terminal range (to be represented as link to box beside n terminal)
+ *              "c-c" = c-terminal range (to be represented as link to box beside c terminal)
+ *              "123-123" = specific residue
+ *              "123-456" = feature sequence
+ *              "86..123-456..464" = feature sequence with uncertain boundaries
+ *              "86..123-456" = feature sequence with one uncertain boundary
+ *              "<8-123" = feature sequence w uncertain start between 1 and 8 to 123
+ *              "123->256" = feature sequence w uncertain end between 256 and interactor.sequence.length
+ */
+
+class XmlFeatureRange {
+    constructor(participant, featureRange) {
+        this.participant = participant;
+        this.sequenceDatumString = JSON.stringify(featureRange);//sequenceDatumString.trim();
+        console.log("XmlSequenceDatum", this.sequenceDatumString);
+
+        // <mif:featureRange xmlns:mif="http://psi.hupo.org/mi/mif300">
+        //     <mif:startStatus>{1,1}</mif:startStatus>
+        //     <mif:begin position="">{1,1}</mif:begin>
+        //     <mif:beginInterval begin="" end="">{1,1}</mif:beginInterval>
+        //     <mif:endStatus>{1,1}</mif:endStatus>
+        //     <mif:end position="">{1,1}</mif:end>
+        //     <mif:endInterval begin="" end="">{1,1}</mif:endInterval>
+        //     <mif:isLink>{0,1}</mif:isLink>
+        //     <mif:resultingSequence>{0,1}</mif:resultingSequence>
+        //     <mif:participantRef>{0,1}</mif:participantRef>
+        // </mif:featureRange>
+
+        // {"startStatus":{"names":{"shortLabel":"certain","fullName":"certain sequence position","alias":{"#text":"certain","_type":"synonym","_typeAc":"MI:1041"}},"xref":{"primaryRef":{"_db":"psi-mi","_dbAc":"MI:0488","_id":"MI:0335","_refType":"identity","_refTypeAc":"MI:0356"},"secondaryRef":[{"_db":"intact","_dbAc":"MI:0469","_id":"EBI-540564","_refType":"identity","_refTypeAc":"MI:0356"},{"_db":"pubmed","_dbAc":"MI:0446","_id":"14755292","_refType":"primary-reference","_refTypeAc":"MI:0358"}]}},"begin":{"_position":"64"},"endStatus":{"names":{"shortLabel":"certain","fullName":"certain sequence position","alias":{"#text":"certain","_type":"synonym","_typeAc":"MI:1041"}},"xref":{"primaryRef":{"_db":"psi-mi","_dbAc":"MI:0488","_id":"MI:0335","_refType":"identity","_refTypeAc":"MI:0356"},"secondaryRef":[{"_db":"intact","_dbAc":"MI:0469","_id":"EBI-540564","_refType":"identity","_refTypeAc":"MI:0356"},{"_db":"pubmed","_dbAc":"MI:0446","_id":"14755292","_refType":"primary-reference","_refTypeAc":"MI:0358"}]}},"end":{"_position":"64"},"interactorRef":"2","participantRef":"26"}
+
+        const startStatus = featureRange.startStatus.xref.primaryRef._id;
+        const endStatus = featureRange.endStatus.xref.primaryRef._id;
+        const begin = featureRange.begin?._position;
+        const end = featureRange.end?._position;
+        const beginIntervalStart = featureRange.beginInterval?._begin;
+        const beginIntervalEnd = featureRange.beginInterval?._end;
+        const endIntervalStart = featureRange.endInterval?._begin;
+        const endIntervalEnd = featureRange.endInterval?._end;
+
+        console.log("XmlFeatureRange", startStatus, endStatus, begin, end, beginIntervalStart, beginIntervalEnd, endIntervalStart, endIntervalEnd);
+
+        // function tidyPosition(pos) {
+        //     if (parseInt(pos)) return parseInt(pos);
+        //     else return pos;
+        // }
+        //
+        // if (this.sequenceDatumString === "?-?") {
+            //this.begin = 1;
+            this.end = 1; //todo - having it at begining is affecting shape of line, look at why
+            this.uncertainEnd = participant.size ? participant.size : 1;
+        // } else if (this.sequenceDatumString === "n-n") {
+        //     this.uncertainBegin = "n-n";
+        // } else if (this.sequenceDatumString === "c-c") {
+        //     this.uncertainEnd = "c-c";
+        // } else {
+        //     const dashPosition = sequenceDatumString.indexOf("-");
+        //     const firstPart = sequenceDatumString.substring(0, dashPosition);
+        //     const secondPart = sequenceDatumString.substring(dashPosition + 1);
+        //
+        //     if (firstPart == '?') {
+        //         this.uncertainBegin = 1;
+        //         this.begin = tidyPosition(secondPart);
+        //         this.end = null;
+        //     } else if (secondPart == '?') {
+        //         this.uncertainEnd = participant.size;
+        //         this.end = tidyPosition(firstPart);
+        //         this.begin = null;
+        //     } else {
+        //         let firstDotPosition;
+        //         if (firstPart.indexOf(".") === -1) {
+        //             this.begin = tidyPosition(firstPart);
+        //         } else {
+        //             firstDotPosition = firstPart.indexOf(".");
+        //             this.uncertainBegin = tidyPosition(firstPart.substring(0, firstDotPosition));
+        //             this.begin = tidyPosition(firstPart.substring(firstDotPosition + 2));
+        //         }
+        //
+        //         if (secondPart.indexOf(".") === -1) {
+        //             this.end = tidyPosition(secondPart);
+        //         } else {
+        //             firstDotPosition = secondPart.indexOf(".");
+        //             this.end = tidyPosition(secondPart.substring(0, firstDotPosition));
+        //             this.uncertainEnd = tidyPosition(secondPart.substring(firstDotPosition + 2));
+        //         }
+        //
+        //         if (this.begin === "n") {
+        //             this.uncertainBegin = 1;
+        //             this.begin = tidyPosition(this.end);
+        //             // this.uncertainEnd = this.end;
+        //             this.end = null;
+        //         }
+        //
+        //         if (this.end === "c") {
+        //             this.uncertainEnd = participant.size;
+        //             this.end = tidyPosition(this.begin);
+        //             // this.uncertainBegin = this.begin;
+        //             this.begin = null;
+        //         }
+        //
+        //         if (firstPart.indexOf("<") > -1) {
+        //             this.uncertainBegin = 1;
+        //             this.begin = tidyPosition(firstPart.substring(1, firstPart.length));
+        //         }
+        //         if (secondPart.indexOf(">") > -1) {
+        //             this.end = tidyPosition(secondPart.substring(1, firstPart.length));
+        //             this.uncertainEnd = participant.size;
+        //         }
+        //
+        //         if (firstPart.indexOf(">") > -1 && secondPart.indexOf("<") > -1) {
+        //             this.uncertainBegin = tidyPosition(firstPart.substring(1, firstPart.length));
+        //             this.begin = tidyPosition(secondPart.substring(1, firstPart.length));
+        //             this.end = null;//this.begin;
+        //         }
+        //     }
+        // }
     }
 
     toString() {
@@ -59394,8 +59534,8 @@ class App {
                 }
             }
         }
-        this.updateAnnotations(); //?
-        (0,_annotation_utils__WEBPACK_IMPORTED_MODULE_7__.fetchAnnotations)(this, () => this.updateAnnotations());
+        this.updateAnnotations(); //presumably for mi-features
+        // fetchAnnotations(this, () => this.updateAnnotations());
         this.checkLinks();
         this.autoLayout();
     }
@@ -59621,7 +59761,7 @@ class App {
         this.init();
     }
 
-    readXML(xmlText, expand = false) {
+    readXML(xmlText, expand = true) {
         // Convert xmlText to JavaScript object
         const options = {
             isArray: (name, jpath, isLeafNode, isAttribute) => {
@@ -59630,11 +59770,17 @@ class App {
                     'entrySet.entry.interactionList.abstractInteraction',
                     'entrySet.entry.interactionList.interaction',
                     'entrySet.entry.interactionList.abstractInteraction.participantList.participant',
-                    'entrySet.entry.interactionList.interaction.participantList.participant']
+                    'entrySet.entry.interactionList.interaction.participantList.participant',
+                    'entrySet.entry.interactionList.abstractInteraction.participantList.participant.featureList.feature',
+                    'entrySet.entry.interactionList.interaction.participantList.participant.featureList.feature',
+                    'entrySet.entry.interactionList.abstractInteraction.participantList.participant.featureList.feature.featureRangeList.featureRange',
+                    'entrySet.entry.interactionList.interaction.participantList.participant.featureList.feature.featureRangeList.featureRange']
                     .includes(jpath); // replace with your element names
             },
             ignoreAttributes: false,
-            attributeNamePrefix: "_"
+            attributeNamePrefix: "_",
+            parseTagValue: false,
+            parseAttributeValue: false
         };
         const parser = new fast_xml_parser__WEBPACK_IMPORTED_MODULE_14__["default"](options);
         const jsObj = parser.parse(xmlText, options);

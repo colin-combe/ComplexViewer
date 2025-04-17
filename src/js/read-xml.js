@@ -15,6 +15,7 @@ import {UnaryLink} from "./viz/link/unary-link";
 import {matrix} from "./expand";
 import {cloneComplexRefs} from "./clone-complex-refs";
 import {cloneComplexesStoich} from "./clone-complex-stoich";
+import {XmlFeatureRange} from "./viz/xml-feature-range";
 
 // reads MI JSON format
 export function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
@@ -37,14 +38,14 @@ export function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
 
     function visitInteractions(interactionCallback) {
         for (let entry of jsObj.entrySet.entry) {
-            console.log("*entry*", entry);
+            // console.log("*entry*", entry);
             const interactions = [
                 ...(entry.interactionList?.abstractInteraction || []),
                 ...(entry.interactionList?.interaction || [])
             ];
 
             for (let interaction of interactions) {
-                console.log("*interaction*", interaction);
+                // console.log("*interaction*", interaction);
                 interactionCallback(interaction);
             }
         }
@@ -52,12 +53,12 @@ export function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
 
     function visitInteractors(interactorCallback) {
         for (let entry of jsObj.entrySet.entry) {
-            console.log("*entry*", entry);
+            // console.log("*entry*", entry);
 
             // Visit top-level interactors
             if (entry.interactorList?.interactor) {
                 for (let interactor of entry.interactorList.interactor) {
-                    console.log("*interactor*", interactor);
+                    // console.log("*interactor*", interactor);
                     interactorCallback(interactor);
                 }
             }
@@ -66,7 +67,7 @@ export function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
             visitInteractions((interaction) => {
                 const participants = interaction.participantList?.participant || [];
                 for (let participant of participants) {
-                    console.log("*participant*", participant);
+                    // console.log("*participant*", participant);
                     if (participant.interactor) {
                         interactorCallback(participant.interactor);
                     }
@@ -88,54 +89,15 @@ export function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
     }
     visitInteractors(addInteractor);
 
-    // for (let entry of jsObj.entrySet.entry) {
-    //     console.log("*entry*", entry);
-    //     if (entry.interactorList) {
-    //         for (let interactor of entry.interactorList.interactor) {
-    //             console.log("*interactor*", interactor);
-    //             addInteractor(interactor);
-    //         }
-    //     }
-    //     if (entry.interactionList && entry.interactionList.abstractInteraction) {
-    //         for (let interaction of entry.interactionList.abstractInteraction) {
-    //             console.log("*interaction*", interaction);
-    //             for (let participant of interaction.participantList.participant) {
-    //                 console.log("*participant*", participant);
-    //                 if (participant.interactor) {
-    //                     console.log("THIS NEVER HAPPENS?");
-    //                     addInteractor(participant.interactor);
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     if (entry.interactionList && entry.interactionList.interaction) {
-    //         for (let interaction of entry.interactionList.interaction) {
-    //             console.log("*interaction*", interaction);
-    //             for (let participant of interaction.participantList.participant) {
-    //                 console.log("*participant*", participant);
-    //                 if (participant.interactor) {
-    //                     addInteractor(participant.interactor);
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
-    // for (let datum of miJson.data) {
-    //     if (datum.object === "interactor") {
-    //         app.interactors.set(datum.id, datum);
-    //     }
-    // }
-
     expand ? readStoichExpanded() : readStoichUnexpanded();
 
     // loop through participants and features
     // init binary, unary and sequence links,
     // and make needed associations between these and containing naryLink
-    // for (let datum of miJson.data) {
-    //     if (datum.object === "interaction") {
-    //         for (let jsonParticipant of datum.participants) {
+    // visitInteractions((interaction) => {
+    //         for (let participant of interaction.participantList.participant) {
     //             let features = new Array(0);
-    //             if (jsonParticipant.features) features = jsonParticipant.features;
+    //             if (participant.features) features = participant.featureList.feature;
     //
     //             for (let feature of features) { // for each feature
     //                 const fromSequenceData = feature.sequenceData;
@@ -168,11 +130,11 @@ export function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
     //                             const toInteractor = getNode(toSequenceData[0]);
     //                             let link;
     //                             if (fromInteractor === toInteractor) {
-    //                                 link = getUnaryLink(fromInteractor, datum);
+    //                                 link = getUnaryLink(fromInteractor, interaction);
     //                             } else {
-    //                                 link = getBinaryLink(fromInteractor, toInteractor, datum);
+    //                                 link = getBinaryLink(fromInteractor, toInteractor, interaction);
     //                             }
-    //                             const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, datum);
+    //                             const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, interaction);
     //                             fromInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
     //                             toInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
     //                             link.sequenceLinks.set(sequenceLink.id, sequenceLink);
@@ -183,8 +145,7 @@ export function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
     //                 } // end if linked features
     //             } // end for each feature
     //         }
-    //     }
-    // }
+    //     });
 
     //init complexes
     app.complexes = Array.from(complexes.values()); // todo - why not just keep it in map
@@ -196,14 +157,17 @@ export function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
         } else {
             interactionId = complex.id;
         }
-        for (let datum of miJson.data) {
-            if (datum.object === "interaction" && datum.id === interactionId) {
-                const nLinkId = getNaryLinkIdFromInteraction(datum);
+        console.log("complex id", complex.id);
+        visitInteractions((interaction) => {
+            console.log("interaction id", interaction._id, "interactionId", interactionId, interaction._id == interactionId);
+            if (interaction._id == interactionId) {
+                alert("its happening");
+                const nLinkId = getNaryLinkIdFromInteraction(interaction);
                 const naryLink = app.allNaryLinks.get(nLinkId);
                 complex.initLink(naryLink);
                 naryLink.complex = complex;
             }
-        }
+        });
     }
 
     //make mi features into annotations
@@ -218,8 +182,8 @@ export function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
             annotName += ", " + feature.detmethod.name;
         }
         // the id info we need is inside sequenceData att
-        if (feature.sequenceData) { // todo - still needed?
-            for (let seqDatum of feature.sequenceData) {
+        if (feature.featureRangeList) { // todo - still needed?
+            for (let seqDatum of feature.featureRangeList.featureRange) {
                 let mID = seqDatum.interactorRef;
                 if (expand) {
                     mID = `${mID}(${seqDatum.participantRef})`;
@@ -227,7 +191,7 @@ export function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
                 // console.log("*", mID, seqDatum);
                 const molecule = app.participants.get(mID);
                 if (molecule) {
-                    const seqFeature = new SequenceDatum(molecule, seqDatum.pos);
+                    const seqFeature = new XmlFeatureRange(molecule, seqDatum);
                     const annotation = new Annotation(annotName, seqFeature);
                     let miFeatures = molecule.annotationSets.get("MI Features");
                     if (!miFeatures) {
@@ -244,62 +208,64 @@ export function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
 
     function readStoichExpanded() {
         //get maximum stoichiometry
-        let maxStoich = 0;
-        for (let datum of miJson.data) {
-            if (datum.object === "interaction") {
-                for (let jsonParticipant of datum.participants) {
-                    if (jsonParticipant.stoichiometry && (jsonParticipant.stoichiometry - 0) > maxStoich) {
-                        maxStoich = (jsonParticipant.stoichiometry - 0);
-                    }
-                }
-            }
-        }
-        if (maxStoich < 20) {
-            miJson = matrix(miJson);
-        }
+        // let maxStoich = 0;
+        // for (let datum of miJson.data) {
+        //     if (datum.object === "interaction") {
+        //         for (let jsonParticipant of datum.participants) {
+        //             if (jsonParticipant.stoichiometry && (jsonParticipant.stoichiometry - 0) > maxStoich) {
+        //                 maxStoich = (jsonParticipant.stoichiometry - 0);
+        //             }
+        //         }
+        //     }
+        // }
+        // if (maxStoich < 20) {
+        //     miJson = matrix(miJson);
+        // }
 
         indexFeatures();
 
         //add naryLinks and participants
-        for (let datum of miJson.data) {
-            if (datum.object === "interaction") {
-                //init n-ary link
-                const nLinkId = datum.id || getNaryLinkIdFromInteraction(datum);
-                let nLink = app.allNaryLinks.get(nLinkId);
-                if (typeof nLink === "undefined") {
-                    //doesn't already exist, make new nLink
-                    nLink = new NaryLink(nLinkId, app, datum.sourceId);
-                    app.allNaryLinks.set(nLinkId, nLink);
-                    //alot of time is being spent on creating these IDs, stash them in the interaction object?
-                    datum.naryId = nLinkId;
+        visitInteractions(function (datum) {
+            //init n-ary link
+            const nLinkId = datum.id || getNaryLinkIdFromInteraction(datum);
+            let nLink = app.allNaryLinks.get(nLinkId);
+            if (typeof nLink === "undefined") {
+                //doesn't already exist, make new nLink
+                nLink = new NaryLink(nLinkId, app, datum.sourceId);
+                app.allNaryLinks.set(nLinkId, nLink);
+                //alot of time is being spent on creating these IDs, stash them in the interaction object?
+                datum.naryId = nLinkId;
 
+            }
+            //nLink.addEvidence(datum);
+
+            //init participants
+            for (let jsonParticipant of datum.participantList.participant) {
+                let intRef = jsonParticipant.interactorRef;
+                if (!intRef){
+                    intRef = jsonParticipant.interactor._id;
                 }
-                //nLink.addEvidence(datum);
+                console.log("intRef", intRef);
+                const partRef = jsonParticipant._id;
+                const participantId = `${intRef}(${partRef})`;
+                let participant = app.participants.get(participantId);
+                if (typeof participant === "undefined") {
+                    const interactor = app.interactors.get(intRef);
+                    participant = newParticipant(interactor, participantId, intRef);
+                    app.participants.set(participantId, participant);
+                }
 
-                //init participants
-                for (let jsonParticipant of datum.participants) {
-                    const intRef = jsonParticipant.interactorRef;
-                    const partRef = jsonParticipant.id;
-                    const participantId = `${intRef}(${partRef})`;
-                    let participant = app.participants.get(participantId);
-                    if (typeof participant === "undefined") {
-                        const interactor = app.interactors.get(intRef);
-                        participant = newParticipant(interactor, participantId, intRef);
-                        app.participants.set(participantId, participant);
-                    }
+                participant.naryLinks.set(nLinkId, nLink);
+                if (nLink.participants.indexOf(participant) === -1) {
+                    nLink.participants.push(participant);
+                }
 
-                    participant.naryLinks.set(nLinkId, nLink);
-                    if (nLink.participants.indexOf(participant) === -1) {
-                        nLink.participants.push(participant);
-                    }
-
-                    if (jsonParticipant.stoichiometry) {
-                        const interactor = app.participants.get(participantId);
-                        interactor.addStoichiometryLabel(jsonParticipant.stoichiometry);
-                    }
+                if (jsonParticipant.stoichiometry) {
+                    const interactor = app.participants.get(participantId);
+                    interactor.addStoichiometryLabel(jsonParticipant.stoichiometry);
                 }
             }
-        }
+        });
     }
 
     function newParticipant(interactor, participantId, interactorRef) {
@@ -309,12 +275,18 @@ export function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
             // MI:0314 - interaction?, MI:0317 - complex? and its many subclasses
 
             let interactionExists = false;
-            for (let datum of miJson.data) {
-                if (datum.object === "interaction" && datum.id === interactorRef) {
+            // for (let datum of miJson.data) {
+            //     if (datum.object === "interaction" && datum.id === interactorRef) {
+            //         interactionExists = true;
+            //         break;
+            //     }
+            // }
+            visitInteractions(function (interaction) {
+                if (interaction._id === interactorRef) {
                     interactionExists = true;
-                    break;
+                    // break;
                 }
-            }
+            });
 
             if (interactionExists) {
                 participant = new Complex(participantId, app, interactorRef);
@@ -399,51 +371,26 @@ export function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
     function indexFeatures() {
         //create indexed collection of all features from interactions
         // - still seems like a good starting point?
-        // for (let datum of miJson.data) {
-        //     if (datum.object === "interaction") {
-        //         for (let jsonParticipant of datum.participants) {
-        //             let features = new Array(0);
-        //             if (jsonParticipant.features) features = jsonParticipant.features;
-        //
-        //             const fCount = features.length;
-        //             for (let f = 0; f < fCount; f++) {
-        //                 const feature = features[f];
-        //
-        //                 // jami workaround, not entirely inline with mi-json schema, but looks like mi-json has redundant info here
-        //                 for (let seqDatum of feature.sequenceData) {
-        //                     if (!seqDatum.interactorRef) {
-        //                         seqDatum.interactorRef = jsonParticipant.interactorRef;
-        //                     }
-        //                     if (!seqDatum.participantRef) {
-        //                         seqDatum.participantRef = feature.parentParticipant;
-        //                     }
-        //                 }
-        //
-        //                 app.features.set(feature.id, feature);
-        //             }
-        //         }
-        //     }
-        // }
         visitInteractions((interaction) => {
             for (let participant of interaction.participantList.participant) {
                 let features = new Array(0);
-                if (participant.features) features = participant.features;
+                if (participant.featureList?.feature) features = participant.featureList.feature;
 
                 const fCount = features.length;
                 for (let f = 0; f < fCount; f++) {
                     const feature = features[f];
 
                     // jami workaround, not entirely inline with mi-json schema, but looks like mi-json has redundant info here
-                    // for (let seqDatum of feature.sequenceData) {
-                    //     if (!seqDatum.interactorRef) {
-                    //         seqDatum.interactorRef = participant.interactorRef;
-                    //     }
-                    //     if (!seqDatum.participantRef) {
-                    //         seqDatum.participantRef = feature.parentParticipant;
-                    //     }
-                    // }
+                    for (let seqDatum of feature.featureRangeList.featureRange) {
+                        if (!seqDatum.interactorRef) {
+                            seqDatum.interactorRef = participant.interactorRef || participant.interactor._id;
+                        }
+                        if (!seqDatum.participantRef) {
+                            seqDatum.participantRef = participant._id;//feature.parentParticipant;
+                        }
+                    }
 
-                    app.features.set(feature.id, feature);
+                    app.features.set(feature._id, feature);
                 }
             }
         });
@@ -573,9 +520,9 @@ export function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
         const pIDs = new Set(); //used to eliminate duplicates
         //make id
         for (let pi = 0; pi < participantCount; pi++) {
-            let pID = participants[pi].interactorRef;
+            let pID = participants[pi].interactorRef || participants[pi].interactor._id;
             if (expand) {
-                pID = `${pID}(${participants[pi].id})`;
+                pID = `${pID}(${participants[pi]._id})`;
             }
             pIDs.add(pID);
         }
