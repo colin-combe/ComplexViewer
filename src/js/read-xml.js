@@ -181,6 +181,7 @@ export function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
         // if (typeof feature.detmethod !== "undefined") {
         //     annotName += ", " + feature.detmethod.name;
         // }
+        console.log("feature name", annotName);
         // the id info we need is inside sequenceData att
         if (feature.featureRangeList) { // todo - still needed?
             for (let seqDatum of feature.featureRangeList.featureRange) {
@@ -227,7 +228,7 @@ export function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
         //add naryLinks and participants
         visitInteractions(function (datum) {
             //init n-ary link
-            const nLinkId = datum.id || getNaryLinkIdFromInteraction(datum);
+            const nLinkId = datum.xref.primaryRef._id || getNaryLinkIdFromInteraction(datum);
             let nLink = app.allNaryLinks.get(nLinkId);
             if (typeof nLink === "undefined") {
                 //doesn't already exist, make new nLink

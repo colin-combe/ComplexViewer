@@ -19543,6 +19543,7 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
         // if (typeof feature.detmethod !== "undefined") {
         //     annotName += ", " + feature.detmethod.name;
         // }
+        console.log("feature name", annotName);
         // the id info we need is inside sequenceData att
         if (feature.featureRangeList) { // todo - still needed?
             for (let seqDatum of feature.featureRangeList.featureRange) {
@@ -19589,7 +19590,7 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
         //add naryLinks and participants
         visitInteractions(function (datum) {
             //init n-ary link
-            const nLinkId = datum.id || getNaryLinkIdFromInteraction(datum);
+            const nLinkId = datum.xref.primaryRef._id || getNaryLinkIdFromInteraction(datum);
             let nLink = app.allNaryLinks.get(nLinkId);
             if (typeof nLink === "undefined") {
                 //doesn't already exist, make new nLink
@@ -22806,7 +22807,7 @@ class XmlFeatureRange {
     constructor(participant, featureRange) {
         this.participant = participant;
         this.sequenceDatumString = JSON.stringify(featureRange);//sequenceDatumString.trim();
-        console.log("XmlSequenceDatum", this.sequenceDatumString);
+        // console.log("XmlSequenceDatum", this.sequenceDatumString);
 
         // <mif:featureRange xmlns:mif="http://psi.hupo.org/mi/mif300">
         //     <mif:startStatus>{1,1}</mif:startStatus>
@@ -22820,30 +22821,86 @@ class XmlFeatureRange {
         //     <mif:participantRef>{0,1}</mif:participantRef>
         // </mif:featureRange>
 
-        // {"startStatus":{"names":{"shortLabel":"certain","fullName":"certain sequence position","alias":{"#text":"certain","_type":"synonym","_typeAc":"MI:1041"}},"xref":{"primaryRef":{"_db":"psi-mi","_dbAc":"MI:0488","_id":"MI:0335","_refType":"identity","_refTypeAc":"MI:0356"},"secondaryRef":[{"_db":"intact","_dbAc":"MI:0469","_id":"EBI-540564","_refType":"identity","_refTypeAc":"MI:0356"},{"_db":"pubmed","_dbAc":"MI:0446","_id":"14755292","_refType":"primary-reference","_refTypeAc":"MI:0358"}]}},"begin":{"_position":"64"},"endStatus":{"names":{"shortLabel":"certain","fullName":"certain sequence position","alias":{"#text":"certain","_type":"synonym","_typeAc":"MI:1041"}},"xref":{"primaryRef":{"_db":"psi-mi","_dbAc":"MI:0488","_id":"MI:0335","_refType":"identity","_refTypeAc":"MI:0356"},"secondaryRef":[{"_db":"intact","_dbAc":"MI:0469","_id":"EBI-540564","_refType":"identity","_refTypeAc":"MI:0356"},{"_db":"pubmed","_dbAc":"MI:0446","_id":"14755292","_refType":"primary-reference","_refTypeAc":"MI:0358"}]}},"end":{"_position":"64"},"interactorRef":"2","participantRef":"26"}
-
         const startStatus = featureRange.startStatus.xref.primaryRef._id;
+        const startSTatusName = featureRange.startStatus.names.shortLabel;
         const endStatus = featureRange.endStatus.xref.primaryRef._id;
+        const endStatusName = featureRange.endStatus.names.shortLabel;
         const begin = featureRange.begin?._position;
         const end = featureRange.end?._position;
-        const beginIntervalStart = featureRange.beginInterval?._begin;
+        const beginIntervalBegin = featureRange.beginInterval?._begin;
         const beginIntervalEnd = featureRange.beginInterval?._end;
-        const endIntervalStart = featureRange.endInterval?._begin;
+        const endIntervalBegin = featureRange.endInterval?._begin;
         const endIntervalEnd = featureRange.endInterval?._end;
 
-        console.log("XmlFeatureRange", startStatus, endStatus, begin, end, beginIntervalStart, beginIntervalEnd, endIntervalStart, endIntervalEnd);
+        console.log("startStatus", startStatus, startSTatusName,
+            "endStatus", endStatus, endStatusName,
+            "begin", begin,
+            "end", end,
+            "beginIntervalBegin", beginIntervalBegin, "beginIntervalEnd", beginIntervalEnd,
+            "endIntervalBegin", endIntervalBegin, "endIntervalEnd", endIntervalEnd);
+
+
+        // this.begin = begin ? parseInt(begin) : null;
+        // this.end = end ? parseInt(end) : null;
+        // if (beginIntervalBegin && beginIntervalEnd) {
+        //     this.uncertainBegin = parseInt(beginIntervalBegin);
+        //     this.begin = parseInt(beginIntervalEnd);
+        // }
+        // if (endIntervalBegin && endIntervalEnd) {
+        //     this.end = parseInt(endIntervalBegin);
+        //     this.uncertainEnd = parseInt(endIntervalEnd);
+        // }
+
 
         // function tidyPosition(pos) {
         //     if (parseInt(pos)) return parseInt(pos);
         //     else return pos;
         // }
         //
-        // if (this.sequenceDatumString === "?-?") {
-            //this.begin = 1;
-            this.end = 1; //todo - having it at begining is affecting shape of line, look at why
-            this.uncertainEnd = participant.size ? participant.size : 1;
-        // } else if (this.sequenceDatumString === "n-n") {
+        if (!begin && !end && !beginIntervalBegin && !beginIntervalEnd && !endIntervalBegin && !endIntervalEnd ) {//(this.sequenceDatumString === "?-?") {
+            if (startStatus === "MI:1040") { //n-term range
+                this.uncertainBegin = "n-n";
+                this.sequenceDatumString = "n-n";
+            }
+            else if (startStatus === "MI:1039") { //c-term range
+                this.uncertainEnd = "c-c";
+                this.sequenceDatumString = "c-c";
+            }
+            else {
+                this.end = 1;
+                this.uncertainEnd = participant.size ? participant.size : 1;
+            }
+        } else {
+            this.begin = begin ? parseInt(begin) : null;
+            this.end = end ? parseInt(end) : null;
+            if (beginIntervalBegin && beginIntervalEnd) {
+                this.uncertainBegin = parseInt(beginIntervalBegin);
+                this.begin = parseInt(beginIntervalEnd);
+            }
+            if (endIntervalBegin && endIntervalEnd) {
+                this.end = parseInt(endIntervalBegin);
+                this.uncertainEnd = parseInt(endIntervalEnd);
+            }
+            if (startStatus === "MI:1040" && endStatus === "MI:0335") { //n-term range
+                this.uncertainBegin = 1;
+                this.begin = this.end;
+                this.end = null;
+            }
+            if (startStatus === "MI:0335" && endStatus === "MI:1039") { //c-term range
+                this.end = this.begin;
+                this.begin = null;
+                this.uncertainEnd = participant.size ? participant.size : 1;
+            }
+        }
+            //     //this.begin = 1;
+        //     this.end = 1; //todo - having it at beginning is affecting shape of line, look at why
+        //     this.uncertainEnd = participant.size ? participant.size : 1;
+        // // } else
+        // if (startStatus === "MI:1040") { //n-term range
+        //     alert();
         //     this.uncertainBegin = "n-n";
+        //     this.sequenceDatumString = "n-n";
+        // }
         // } else if (this.sequenceDatumString === "c-c") {
         //     this.uncertainEnd = "c-c";
         // } else {
@@ -59780,7 +59837,8 @@ class App {
             ignoreAttributes: false,
             attributeNamePrefix: "_",
             parseTagValue: false,
-            parseAttributeValue: false
+            parseAttributeValue: false,
+            trimValues: true,
         };
         const parser = new fast_xml_parser__WEBPACK_IMPORTED_MODULE_14__["default"](options);
         const jsObj = parser.parse(xmlText, options);

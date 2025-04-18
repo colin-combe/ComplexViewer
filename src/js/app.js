@@ -513,7 +513,8 @@ export class App {
             ignoreAttributes: false,
             attributeNamePrefix: "_",
             parseTagValue: false,
-            parseAttributeValue: false
+            parseAttributeValue: false,
+            trimValues: true,
         };
         const parser = new XMLParser(options);
         const jsObj = parser.parse(xmlText, options);
