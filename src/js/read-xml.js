@@ -94,7 +94,7 @@ export function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
     // loop through participants and features
     // init binary, unary and sequence links,
     // and make needed associations between these and containing naryLink
-    // visitInteractions((interaction) => {
+    visitInteractions((interaction) => {
     //         for (let participant of interaction.participantList.participant) {
     //             let features = new Array(0);
     //             if (participant.features) features = participant.featureList.feature;
@@ -145,7 +145,7 @@ export function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
     //                 } // end if linked features
     //             } // end for each feature
     //         }
-    //     });
+        });
 
     //init complexes
     app.complexes = Array.from(complexes.values()); // todo - why not just keep it in map
@@ -407,59 +407,6 @@ export function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
 
         indexFeatures();
 
-        //add naryLinks
-        // for (let datum of miJson.data) {
-        //     if (datum.object === "interaction") {
-        //         const jsonParticipants = datum.participants;
-        //         const participantCount = jsonParticipants.length;
-        //
-        //         //init n-ary link
-        //         const nLinkId = getNaryLinkIdFromInteraction(datum);
-        //         let nLink = app.allNaryLinks.get(nLinkId);
-        //         if (typeof nLink === "undefined") {
-        //             //doesn't already exist, make new nLink
-        //             nLink = new NaryLink(nLinkId, app);
-        //             app.allNaryLinks.set(nLinkId, nLink);
-        //         }
-        //         //nLink.addEvidence(datum);
-        //
-        //         //~ //init participants
-        //         for (let pi = 0; pi < participantCount; pi++) {
-        //             const jsonParticipant = jsonParticipants[pi];
-        //             const intRef = jsonParticipant.interactorRef;
-        //             let participant = app.participants.get(intRef);
-        //
-        //             if (typeof participant === "undefined") {
-        //                 //must be a previously unencountered complex
-        //                 participant = new Complex(intRef, app);
-        //                 complexes.set(intRef, participant);
-        //                 app.participants.set(intRef, participant);
-        //             }
-        //
-        //
-        //             participant.naryLinks.set(nLinkId, nLink);
-        //             if (nLink.participants.indexOf(participant) === -1) {
-        //                 nLink.participants.push(participant);
-        //             }
-        //             //temp - to give sensible info when stoich collapsed
-        //             const interactor = app.participants.get(intRef);
-        //             interactor.stoich = interactor.stoich ? interactor.stoich : 0;
-        //             if (jsonParticipant.stoichiometry) {
-        //                 interactor.stoich += +jsonParticipant.stoichiometry;
-        //             } else {
-        //                 interactor.stoich += 1;
-        //             }
-        //         }
-        //
-        //         const interactorArr = app.participants.values();
-        //         const iCount = interactorArr.length;
-        //         for (let ii = 0; ii < iCount; ii++) {
-        //             const int = interactorArr[ii];
-        //             int.addStoichiometryLabel(int.stoich);
-        //         }
-        //
-        //     }
-        // }
         visitInteractions((interaction) => {
             const participants = interaction.participantList.participant;
             const participantCount = participants.length;
