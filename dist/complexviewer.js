@@ -19005,9 +19005,19 @@ function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
                         nLink.participants.push(participant);
                     }
 
-                    if (jsonParticipant.stoichiometry) {
-                        const interactor = app.participants.get(participantId);
-                        interactor.addStoichiometryLabel(jsonParticipant.stoichiometry);
+                    if (jsonParticipant.stoichiometry || jsonParticipant.minStoichiometry || jsonParticipant.maxStoichiometry) {
+                        let stoichString = "";
+                        if (jsonParticipant.stoichiometry) {
+                            stoichString += jsonParticipant.stoichiometry;
+
+                        }
+                        if (jsonParticipant.minStoichiometry || jsonParticipant.maxStoichiometry) {
+                            if (jsonParticipant.stoichiometry) {
+                                stoichString += ";";
+                            }
+                            stoichString += jsonParticipant.minStoichiometry + "-" + jsonParticipant.maxStoichiometry;
+                        }
+                        participant.addStoichiometryLabel(stoichString);
                     }
                 }
             }
@@ -19456,7 +19466,7 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
     // loop through participants and features
     // init binary, unary and sequence links,
     // and make needed associations between these and containing naryLink
-    // visitInteractions((interaction) => {
+    visitInteractions((interaction) => {
     //         for (let participant of interaction.participantList.participant) {
     //             let features = new Array(0);
     //             if (participant.features) features = participant.featureList.feature;
@@ -19507,7 +19517,7 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
     //                 } // end if linked features
     //             } // end for each feature
     //         }
-    //     });
+        });
 
     //init complexes
     app.complexes = Array.from(complexes.values()); // todo - why not just keep it in map
@@ -19769,59 +19779,6 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
 
         indexFeatures();
 
-        //add naryLinks
-        // for (let datum of miJson.data) {
-        //     if (datum.object === "interaction") {
-        //         const jsonParticipants = datum.participants;
-        //         const participantCount = jsonParticipants.length;
-        //
-        //         //init n-ary link
-        //         const nLinkId = getNaryLinkIdFromInteraction(datum);
-        //         let nLink = app.allNaryLinks.get(nLinkId);
-        //         if (typeof nLink === "undefined") {
-        //             //doesn't already exist, make new nLink
-        //             nLink = new NaryLink(nLinkId, app);
-        //             app.allNaryLinks.set(nLinkId, nLink);
-        //         }
-        //         //nLink.addEvidence(datum);
-        //
-        //         //~ //init participants
-        //         for (let pi = 0; pi < participantCount; pi++) {
-        //             const jsonParticipant = jsonParticipants[pi];
-        //             const intRef = jsonParticipant.interactorRef;
-        //             let participant = app.participants.get(intRef);
-        //
-        //             if (typeof participant === "undefined") {
-        //                 //must be a previously unencountered complex
-        //                 participant = new Complex(intRef, app);
-        //                 complexes.set(intRef, participant);
-        //                 app.participants.set(intRef, participant);
-        //             }
-        //
-        //
-        //             participant.naryLinks.set(nLinkId, nLink);
-        //             if (nLink.participants.indexOf(participant) === -1) {
-        //                 nLink.participants.push(participant);
-        //             }
-        //             //temp - to give sensible info when stoich collapsed
-        //             const interactor = app.participants.get(intRef);
-        //             interactor.stoich = interactor.stoich ? interactor.stoich : 0;
-        //             if (jsonParticipant.stoichiometry) {
-        //                 interactor.stoich += +jsonParticipant.stoichiometry;
-        //             } else {
-        //                 interactor.stoich += 1;
-        //             }
-        //         }
-        //
-        //         const interactorArr = app.participants.values();
-        //         const iCount = interactorArr.length;
-        //         for (let ii = 0; ii < iCount; ii++) {
-        //             const int = interactorArr[ii];
-        //             int.addStoichiometryLabel(int.stoich);
-        //         }
-        //
-        //     }
-        // }
         visitInteractions((interaction) => {
             const participants = interaction.participantList.participant;
             const participantCount = participants.length;
@@ -59214,7 +59171,7 @@ function parse_int(numStr, base){
 /***/ ((module) => {
 
 "use strict";
-module.exports = /*#__PURE__*/JSON.parse('{"name":"complexviewer","version":"2.3.0-beta","description":"A network visualisation that displays molecular interaction data, including detailed residue-level information such as binding sites. Used in EBI\'s Complex Portal and elsewhere.","author":{"name":"Colin Combe","email":"colin.combe@ed.ac.uk"},"contributors":[{"name":"Colin Combe","email":"colin.combe@ed.ac.uk"},{"name":"Josh Heimbach","email":"joshkh@gmail.com"},{"name":"Yo Yehudi","email":"yochannah@gmail.com"},{"name":"Marine Dumousseau","email":""},{"name":"Eliot Ragueneau","email":"eragueneau@ebi.ac.uk"}],"license":"Apache-2.0","repository":{"type":"git","url":"git@github.com:MICommunity/ComplexViewer.git"},"bugs":{"url":"https://github.com/MICommunity/ComplexViewer/issues"},"devDependencies":{"@babel/core":"^7.14.6","@babel/preset-env":"^7.14.7","babel-loader":"^8.2.2","css-loader":"^5.2.6","eslint":"^7.30.0","file-loader":"^6.2.0","style-loader":"^1.2.1","url-loader":"^4.1.1","webpack":"^5.93.0","webpack-cli":"^5.1.4","webpack-merge":"^4.2.2"},"scripts":{"clean":"rm dist/*","build-dev":"rm dist/*; webpack --mode development --config webpack.dev.js","build-prod":"rm dist/*; webpack --mode production --config webpack.prod.js"},"engines":{"node":">=14.0.0"},"dependencies":{"colorbrewer":"1.3.0","core-js":"^3.15.2","d3":"~7.1.1","d3-ease":"~3.0.1","d3-fetch":"~3.0.1","d3-interpolate":"^3.0.1","d3-polygon":"~3.0.1","d3-scale":"~4.0.2","d3-scale-chromatic":"^3.1.0","d3-selection":"^3.0.0","fast-xml-parser":"^5.2.0","intersectionjs":"1.0.1","jquery":"^3.6.0","point2d":"0.0.1","rgb-color":"2.1.2"},"keywords":["biojs","protein","interactions","complexes"],"main":"src/js/app.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"name":"complexviewer","version":"2.3.0-beta","description":"A network visualisation that displays molecular interaction data, including detailed residue-level information such as binding sites. Used in EBI\'s Complex Portal and elsewhere.","author":{"name":"Colin Combe","email":"colin.combe@ed.ac.uk"},"contributors":[{"name":"Colin Combe","email":"colin.combe@ed.ac.uk"},{"name":"Josh Heimbach","email":"joshkh@gmail.com"},{"name":"Yo Yehudi","email":"yochannah@gmail.com"},{"name":"Marine Dumousseau","email":""},{"name":"Eliot Ragueneau","email":"eragueneau@ebi.ac.uk"},{"name":"Juanjo Medina","email":"jmedina@ebi.ac.uk"}],"license":"Apache-2.0","repository":{"type":"git","url":"git@github.com:MICommunity/ComplexViewer.git"},"bugs":{"url":"https://github.com/MICommunity/ComplexViewer/issues"},"devDependencies":{"@babel/core":"^7.14.6","@babel/preset-env":"^7.14.7","babel-loader":"^8.2.2","css-loader":"^5.2.6","eslint":"^7.30.0","file-loader":"^6.2.0","style-loader":"^1.2.1","url-loader":"^4.1.1","webpack":"^5.93.0","webpack-cli":"^5.1.4","webpack-merge":"^4.2.2"},"scripts":{"clean":"rm dist/*","build-dev":"rm dist/*; webpack --mode development --config webpack.dev.js","build-prod":"rm dist/*; webpack --mode production --config webpack.prod.js"},"engines":{"node":">=14.0.0"},"dependencies":{"colorbrewer":"1.3.0","core-js":"^3.15.2","d3":"~7.1.1","d3-ease":"~3.0.1","d3-fetch":"~3.0.1","d3-interpolate":"^3.0.1","d3-polygon":"~3.0.1","d3-scale":"~4.0.2","d3-scale-chromatic":"^3.1.0","d3-selection":"^3.0.0","fast-xml-parser":"^5.2.0","intersectionjs":"1.0.1","jquery":"^3.6.0","point2d":"0.0.1","rgb-color":"2.1.2"},"keywords":["biojs","protein","interactions","complexes"],"main":"src/js/app.js"}');
 
 /***/ })
 
@@ -59328,7 +59285,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// import * as cola from "webcola";
 
 
 
