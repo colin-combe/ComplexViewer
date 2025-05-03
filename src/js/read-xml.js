@@ -36,46 +36,6 @@ export function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
     // miJson = cloneComplexRefs(miJson);
 
 
-    function visitInteractions(interactionCallback) {
-        for (let entry of jsObj.entrySet.entry) {
-            // console.log("*entry*", entry);
-            const interactions = [
-                ...(entry.interactionList?.abstractInteraction || []),
-                ...(entry.interactionList?.interaction || [])
-            ];
-
-            for (let interaction of interactions) {
-                // console.log("*interaction*", interaction);
-                interactionCallback(interaction);
-            }
-        }
-    }
-
-    function visitInteractors(interactorCallback) {
-        for (let entry of jsObj.entrySet.entry) {
-            // console.log("*entry*", entry);
-
-            // Visit top-level interactors
-            if (entry.interactorList?.interactor) {
-                for (let interactor of entry.interactorList.interactor) {
-                    // console.log("*interactor*", interactor);
-                    interactorCallback(interactor);
-                }
-            }
-
-            // Visit interactors inside participantList
-            visitInteractions((interaction) => {
-                const participants = interaction.participantList?.participant || [];
-                for (let participant of participants) {
-                    // console.log("*participant*", participant);
-                    if (participant.interactor) {
-                        interactorCallback(participant.interactor);
-                    }
-                }
-            });
-        }
-    }
-
     //get interactors
     app.interactors = new Map();
     function addInteractor(interactor) {
@@ -95,6 +55,11 @@ export function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
     // init binary, unary and sequence links,
     // and make needed associations between these and containing naryLink
     visitInteractions((interaction) => {
+        console.log(interaction.bindingFeatureList)
+        for (let bindingFeatures of interaction.bindingFeatureList.bindingFeatures) {
+            // const participantFeatureRefs = bindingFeatures.participantFeatureRef;
+            console.log(bindingFeatures.participantFeatureRef);
+
     //         for (let participant of interaction.participantList.participant) {
     //             let features = new Array(0);
     //             if (participant.features) features = participant.featureList.feature;
@@ -102,28 +67,28 @@ export function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
     //             for (let feature of features) { // for each feature
     //                 const fromSequenceData = feature.sequenceData;
     //                 if (feature.linkedFeatures) { // if linked features
-    //                     const linkedFeatureIDs = feature.linkedFeatures;
-    //                     const linkedFeatureCount = linkedFeatureIDs.length;
-    //                     for (let lfi = 0; lfi < linkedFeatureCount; lfi++) { //for each linked feature
-    //
-    //                         // !! following is a hack, code can't deal with
-    //                         // !! composite binding region across two different interactors
-    //                         // break feature links to different nodes into separate binary links
-    //                         const toSequenceData_indexedByNodeId = new Map();
-    //
-    //                         const linkedFeature = app.features.get(linkedFeatureIDs[lfi]);
-    //                         for (let seqData of linkedFeature.sequenceData) {
-    //                             let nodeId = seqData.interactorRef;
-    //                             if (expand) {
-    //                                 nodeId = `${nodeId}(${seqData.participantRef})`;
-    //                             }
-    //                             let toSequenceData = toSequenceData_indexedByNodeId.get(nodeId);
-    //                             if (typeof toSequenceData === "undefined") {
-    //                                 toSequenceData = [];
-    //                                 toSequenceData_indexedByNodeId.set(nodeId, toSequenceData);
-    //                             }
-    //                             toSequenceData = toSequenceData.push(seqData);
-    //                         }
+                        const linkedFeatureIDs = bindingFeatures.participantFeatureRef;
+                        const linkedFeatureCount = linkedFeatureIDs.length;
+                        for (let lfi = 0; lfi < linkedFeatureCount; lfi++) { //for each linked feature
+
+                            // !! following is a hack, code can't deal with
+                            // !! composite binding region across two different interactors
+                            // break feature links to different nodes into separate binary links
+                            const toSequenceData_indexedByNodeId = new Map();
+
+                            const linkedFeature = app.features.get(linkedFeatureIDs[lfi]);
+                            for (let seqData of linkedFeature.sequenceData) {
+                                let nodeId = seqData.interactorRef;
+                                if (expand) {
+                                    nodeId = `${nodeId}(${seqData.participantRef})`;
+                                }
+                                let toSequenceData = toSequenceData_indexedByNodeId.get(nodeId);
+                                if (typeof toSequenceData === "undefined") {
+                                    toSequenceData = [];
+                                    toSequenceData_indexedByNodeId.set(nodeId, toSequenceData);
+                                }
+                                toSequenceData = toSequenceData.push(seqData);
+                            }
     //
     //                         for (let toSequenceData of toSequenceData_indexedByNodeId.values()) {
     //                             const fromInteractor = getNode(fromSequenceData[0]);
@@ -140,9 +105,9 @@ export function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
     //                             link.sequenceLinks.set(sequenceLink.id, sequenceLink);
     //                         }
     //
-    //                     } // end for each linked feature
-    //
-    //                 } // end if linked features
+                        } // end for each linked feature
+
+                    } // end if linked features
     //             } // end for each feature
     //         }
         });
@@ -579,5 +544,46 @@ export function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
         nLink.binaryLinks.set(linkID, link);
         //link.addEvidence(interaction);
         return link;
+    }
+
+
+    function visitInteractions(interactionCallback) {
+        for (let entry of jsObj.entrySet.entry) {
+            // console.log("*entry*", entry);
+            const interactions = [
+                ...(entry.interactionList?.abstractInteraction || []),
+                ...(entry.interactionList?.interaction || [])
+            ];
+
+            for (let interaction of interactions) {
+                // console.log("*interaction*", interaction);
+                interactionCallback(interaction);
+            }
+        }
+    }
+
+    function visitInteractors(interactorCallback) {
+        for (let entry of jsObj.entrySet.entry) {
+            // console.log("*entry*", entry);
+
+            // Visit top-level interactors
+            if (entry.interactorList?.interactor) {
+                for (let interactor of entry.interactorList.interactor) {
+                    // console.log("*interactor*", interactor);
+                    interactorCallback(interactor);
+                }
+            }
+
+            // Visit interactors inside participantList
+            visitInteractions((interaction) => {
+                const participants = interaction.participantList?.participant || [];
+                for (let participant of participants) {
+                    // console.log("*participant*", participant);
+                    if (participant.interactor) {
+                        interactorCallback(participant.interactor);
+                    }
+                }
+            });
+        }
     }
 }
