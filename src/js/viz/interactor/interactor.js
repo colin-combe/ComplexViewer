@@ -162,6 +162,7 @@ export class Interactor {
         this.iy -= y;
         this.upperGroup.setAttribute("transform", `translate(${this.ix} ${this.iy})`);
         // this.setAllLinkCoordinates(); // todo - look at calls
+
     }
 
     getAggregateSelfLinkPath() {
@@ -194,8 +195,15 @@ export class Interactor {
 
 // update all lines (e.g after a move)
     setAllLinkCoordinates() {
+        if (typeof this.setLabelPosition === "function") {
+            this.setLabelPosition();
+        }
         for (let link of this.naryLinks.values()) {
             link.setLinkCoordinates();
+            if (link.complex){
+                console.log("complex link", link);
+                link.complex.setLabelPosition();
+            }
         }
         for (let link of this.binaryLinks.values()) {
             link.setLinkCoordinates();

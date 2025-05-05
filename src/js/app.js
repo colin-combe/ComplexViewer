@@ -252,8 +252,8 @@ export class App {
         for (let participant of this.participants.values()) {
             if (participant.type !== "complex") {
                 participant.setPosition(-500, -500);
-                this.proteinUpper.appendChild(participant.upperGroup);
             }
+            this.proteinUpper.appendChild(participant.upperGroup);
         }
         for (let participant of this.participants.values()) {
             if (participant.type === "protein") {

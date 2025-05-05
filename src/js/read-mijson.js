@@ -120,6 +120,21 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
                 const naryLink = app.allNaryLinks.get(nLinkId);
                 complex.initLink(naryLink);
                 naryLink.complex = complex;
+
+                if (complex.stoichiometry || complex.minStoichiometry || complex.maxStoichiometry) {
+                    let stoichString = "";
+                    if (complex.stoichiometry) {
+                        stoichString += complex.stoichiometry;
+
+                    }
+                    if (complex.minStoichiometry || complex.maxStoichiometry) {
+                        if (complex.stoichiometry) {
+                            stoichString += ";";
+                        }
+                        stoichString += complex.minStoichiometry + "-" + complex.maxStoichiometry;
+                    }
+                    complex.addStoichiometryLabel(stoichString);
+                }
             }
         }
     }
@@ -245,7 +260,7 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
             }
 
             if (interactionExists) {
-                participant = new Complex(participantId, app, interactorRef);
+                participant = new Complex(participantId, app, interactor, interactorRef);
                 complexes.set(participantId, participant);
             } else {
                 participant = new ComplexSymbol(participantId, app, interactorRef, interactor);

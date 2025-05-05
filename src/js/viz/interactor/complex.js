@@ -1,13 +1,16 @@
 import {Interactor} from "./interactor";
 import Point2D from "point2d";
 import Intersection from "intersectionjs";
+import {svgns} from "../../svgns";
 
 export class Complex extends Interactor {
-    constructor(id, app) {
+    constructor(id, app, interactor, interactorRef) {
         super();
 
-        this.init(id, app);
+        this.init(id, app, interactor, interactorRef);
         this.type = "complex";
+        this.upperGroup = document.createElementNS(svgns, "g");
+        this.initLabel();
         this.padding = 28;
 
         // const self = this;
@@ -77,6 +80,42 @@ export class Complex extends Interactor {
         for (let participant of this.naryLink.participants) {
             participant.changePosition(dx, dy);
         }
+    }
+
+    setLabelPosition () {
+        // const pos = this.getPosition();
+
+        const participants = this.naryLink.participants;
+        let mapped = [];
+        const ic = participants.length;
+        for (let i = 0; i < ic; i++) {
+            const participant = participants[i];
+        //     if (participant.type === "complex") {
+        //         //use some kind of caching?
+        //         mapped = mapped.concat(this.orbitNodes(participant.naryLink.getMappedCoordinates(), 20));
+        //     } else if (participant.expanded) {
+        //         const start = participant.getResidueCoordinates(0);
+        //         const end = participant.getResidueCoordinates(participant.size);
+        //         if (!isNaN(start[0]) && !isNaN(start[1]) &&
+        //             !isNaN(end[0]) && !isNaN(end[1])) {
+        //             mapped.push(start);
+        //             mapped.push(end);
+        //         } else {
+        //             mapped.push(participant.getPosition());
+        //         }
+        //     } else {
+                mapped.push(participant.getPosition());
+        //     }
+        }
+        const mc = mapped.length;
+        let xSum = 0,
+            ySum = 0;
+        for (let m = 0; m < mc; m++) {
+            xSum += mapped[m][0];
+            ySum += mapped[m][1];
+        }
+        let pos = [xSum / mc, ySum / mc];
+        this.upperGroup.setAttribute("transform", `translate(${pos[0]} ${pos[1]})`);
     }
 
     getResidueCoordinates () {
