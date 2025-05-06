@@ -201,7 +201,6 @@ export class Interactor {
         for (let link of this.naryLinks.values()) {
             link.setLinkCoordinates();
             if (link.complex){
-                console.log("complex link", link);
                 link.complex.setLabelPosition();
             }
         }

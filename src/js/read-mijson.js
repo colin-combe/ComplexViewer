@@ -120,21 +120,6 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
                 const naryLink = app.allNaryLinks.get(nLinkId);
                 complex.initLink(naryLink);
                 naryLink.complex = complex;
-
-                if (complex.stoichiometry || complex.minStoichiometry || complex.maxStoichiometry) {
-                    let stoichString = "";
-                    if (complex.stoichiometry) {
-                        stoichString += complex.stoichiometry;
-
-                    }
-                    if (complex.minStoichiometry || complex.maxStoichiometry) {
-                        if (complex.stoichiometry) {
-                            stoichString += ";";
-                        }
-                        stoichString += complex.minStoichiometry + "-" + complex.maxStoichiometry;
-                    }
-                    complex.addStoichiometryLabel(stoichString);
-                }
             }
         }
     }
