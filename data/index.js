@@ -16,6 +16,10 @@ const exampleIndex = [
         "name": "CPX-8545",
         "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-8545"
     },
+    {   "ac": "CPX-5684",
+        "name": "CPX-5684",
+        "url": "https://www.ebi.ac.uk/complexportal/complex/CPX-5684",
+    },
     {
         "ac": "CPX-2158",
         "name": "CPX-2158",
