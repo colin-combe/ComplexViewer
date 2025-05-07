@@ -162,7 +162,6 @@ export class Interactor {
         this.iy -= y;
         this.upperGroup.setAttribute("transform", `translate(${this.ix} ${this.iy})`);
         // this.setAllLinkCoordinates(); // todo - look at calls
-
     }
 
     getAggregateSelfLinkPath() {
