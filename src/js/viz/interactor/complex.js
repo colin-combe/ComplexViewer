@@ -7,7 +7,7 @@ export class Complex extends Interactor {
     constructor(id, app, interactor, interactorRef) {
         super();
 
-        this.init(id, app, interactor, interactorRef);
+        this.init(id, app, interactor, "");//interactorRef);
         this.type = "complex";
         this.upperGroup = document.createElementNS(svgns, "g");
         this.initLabel();
@@ -73,7 +73,7 @@ export class Complex extends Interactor {
     }
 
     setPosition () {
-        console.error("error - called setPosition on ", this);
+        //do nothing
     }
 
     changePosition (dx, dy) {
@@ -83,39 +83,71 @@ export class Complex extends Interactor {
     }
 
     setLabelPosition () {
-        // const pos = this.getPosition();
+        function getHighestPointFromPath(pathString) {
+            const commands = pathString.match(/[a-df-z][^a-df-z]*/ig);
+            let currentPoint = [0, 0];
+            let highestPoint = null;
 
-        const participants = this.naryLink.participants;
-        let mapped = [];
-        const ic = participants.length;
-        for (let i = 0; i < ic; i++) {
-            const participant = participants[i];
-        //     if (participant.type === "complex") {
-        //         //use some kind of caching?
-        //         mapped = mapped.concat(this.orbitNodes(participant.naryLink.getMappedCoordinates(), 20));
-        //     } else if (participant.expanded) {
-        //         const start = participant.getResidueCoordinates(0);
-        //         const end = participant.getResidueCoordinates(participant.size);
-        //         if (!isNaN(start[0]) && !isNaN(start[1]) &&
-        //             !isNaN(end[0]) && !isNaN(end[1])) {
-        //             mapped.push(start);
-        //             mapped.push(end);
-        //         } else {
-        //             mapped.push(participant.getPosition());
-        //         }
-        //     } else {
-                mapped.push(participant.getPosition());
-        //     }
+            const updateHighest = (x, y) => {
+                if (!highestPoint || y < highestPoint[1]) {
+                    highestPoint = [x, y];
+                }
+            };
+
+            commands.forEach(cmd => {
+                const type = cmd[0];
+                const args = cmd.slice(1).trim().split(/[\s,]+/).map(Number);
+
+                switch (type) {
+                    case 'M':
+                    case 'L':
+                        for (let i = 0; i < args.length; i += 2) {
+                            const [x, y] = [args[i], args[i + 1]];
+                            updateHighest(x, y);
+                            currentPoint = [x, y];
+                        }
+                        break;
+                    case 'C':
+                        for (let i = 0; i < args.length; i += 6) {
+                            const [x1, y1, x2, y2, x, y] = args.slice(i, i + 6);
+                            updateHighest(x1, y1);
+                            updateHighest(x2, y2);
+                            updateHighest(x, y);
+                            currentPoint = [x, y];
+                        }
+                        break;
+                    case 'Q':
+                        for (let i = 0; i < args.length; i += 4) {
+                            const [x1, y1, x, y] = args.slice(i, i + 4);
+                            updateHighest(x1, y1);
+                            updateHighest(x, y);
+                            currentPoint = [x, y];
+                        }
+                        break;
+                    case 'H':
+                        for (const x of args) {
+                            updateHighest(x, currentPoint[1]);
+                            currentPoint[0] = x;
+                        }
+                        break;
+                    case 'V':
+                        for (const y of args) {
+                            updateHighest(currentPoint[0], y);
+                            currentPoint[1] = y;
+                        }
+                        break;
+                    // Add more cases as needed for other commands
+                }
+            });
+
+            return highestPoint;
         }
-        const mc = mapped.length;
-        let xSum = 0,
-            ySum = 0;
-        for (let m = 0; m < mc; m++) {
-            xSum += mapped[m][0];
-            ySum += mapped[m][1];
+
+        const pathString = this.naryLink.path.getAttribute("d");
+        const highestPoint = getHighestPointFromPath(pathString);
+        if (highestPoint) {
+            this.upperGroup.setAttribute("transform", `translate(${highestPoint[0]} ${highestPoint[1]})`);
         }
-        let pos = [xSum / mc, ySum / mc];
-        this.upperGroup.setAttribute("transform", `translate(${pos[0]} ${pos[1]})`);
     }
 
     getResidueCoordinates () {
