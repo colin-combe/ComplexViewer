@@ -194,8 +194,14 @@ export class Interactor {
 
 // update all lines (e.g after a move)
     setAllLinkCoordinates() {
+        if (typeof this.setLabelPosition === "function") {
+            this.setLabelPosition();
+        }
         for (let link of this.naryLinks.values()) {
             link.setLinkCoordinates();
+            if (link.complex){
+                link.complex.setLabelPosition();
+            }
         }
         for (let link of this.binaryLinks.values()) {
             link.setLinkCoordinates();

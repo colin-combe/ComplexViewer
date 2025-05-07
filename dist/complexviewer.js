@@ -19039,7 +19039,7 @@ function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
             }
 
             if (interactionExists) {
-                participant = new _viz_interactor_complex__WEBPACK_IMPORTED_MODULE_6__.Complex(participantId, app, interactorRef);
+                participant = new _viz_interactor_complex__WEBPACK_IMPORTED_MODULE_6__.Complex(participantId, app, interactor, interactorRef);
                 complexes.set(participantId, participant);
             } else {
                 participant = new _viz_interactor_complex_symbol__WEBPACK_IMPORTED_MODULE_7__.ComplexSymbol(participantId, app, interactorRef, interactor);
@@ -19408,46 +19408,6 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
     // miJson = cloneComplexRefs(miJson);
 
 
-    function visitInteractions(interactionCallback) {
-        for (let entry of jsObj.entrySet.entry) {
-            // console.log("*entry*", entry);
-            const interactions = [
-                ...(entry.interactionList?.abstractInteraction || []),
-                ...(entry.interactionList?.interaction || [])
-            ];
-
-            for (let interaction of interactions) {
-                // console.log("*interaction*", interaction);
-                interactionCallback(interaction);
-            }
-        }
-    }
-
-    function visitInteractors(interactorCallback) {
-        for (let entry of jsObj.entrySet.entry) {
-            // console.log("*entry*", entry);
-
-            // Visit top-level interactors
-            if (entry.interactorList?.interactor) {
-                for (let interactor of entry.interactorList.interactor) {
-                    // console.log("*interactor*", interactor);
-                    interactorCallback(interactor);
-                }
-            }
-
-            // Visit interactors inside participantList
-            visitInteractions((interaction) => {
-                const participants = interaction.participantList?.participant || [];
-                for (let participant of participants) {
-                    // console.log("*participant*", participant);
-                    if (participant.interactor) {
-                        interactorCallback(participant.interactor);
-                    }
-                }
-            });
-        }
-    }
-
     //get interactors
     app.interactors = new Map();
     function addInteractor(interactor) {
@@ -19467,6 +19427,11 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
     // init binary, unary and sequence links,
     // and make needed associations between these and containing naryLink
     visitInteractions((interaction) => {
+        console.log(interaction.bindingFeatureList)
+        for (let bindingFeatures of interaction.bindingFeatureList.bindingFeatures) {
+            // const participantFeatureRefs = bindingFeatures.participantFeatureRef;
+            console.log(bindingFeatures.participantFeatureRef);
+
     //         for (let participant of interaction.participantList.participant) {
     //             let features = new Array(0);
     //             if (participant.features) features = participant.featureList.feature;
@@ -19474,28 +19439,28 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
     //             for (let feature of features) { // for each feature
     //                 const fromSequenceData = feature.sequenceData;
     //                 if (feature.linkedFeatures) { // if linked features
-    //                     const linkedFeatureIDs = feature.linkedFeatures;
-    //                     const linkedFeatureCount = linkedFeatureIDs.length;
-    //                     for (let lfi = 0; lfi < linkedFeatureCount; lfi++) { //for each linked feature
-    //
-    //                         // !! following is a hack, code can't deal with
-    //                         // !! composite binding region across two different interactors
-    //                         // break feature links to different nodes into separate binary links
-    //                         const toSequenceData_indexedByNodeId = new Map();
-    //
-    //                         const linkedFeature = app.features.get(linkedFeatureIDs[lfi]);
-    //                         for (let seqData of linkedFeature.sequenceData) {
-    //                             let nodeId = seqData.interactorRef;
-    //                             if (expand) {
-    //                                 nodeId = `${nodeId}(${seqData.participantRef})`;
-    //                             }
-    //                             let toSequenceData = toSequenceData_indexedByNodeId.get(nodeId);
-    //                             if (typeof toSequenceData === "undefined") {
-    //                                 toSequenceData = [];
-    //                                 toSequenceData_indexedByNodeId.set(nodeId, toSequenceData);
-    //                             }
-    //                             toSequenceData = toSequenceData.push(seqData);
-    //                         }
+                        const linkedFeatureIDs = bindingFeatures.participantFeatureRef;
+                        const linkedFeatureCount = linkedFeatureIDs.length;
+                        for (let lfi = 0; lfi < linkedFeatureCount; lfi++) { //for each linked feature
+
+                            // !! following is a hack, code can't deal with
+                            // !! composite binding region across two different interactors
+                            // break feature links to different nodes into separate binary links
+                            const toSequenceData_indexedByNodeId = new Map();
+
+                            const linkedFeature = app.features.get(linkedFeatureIDs[lfi]);
+                            for (let seqData of linkedFeature.sequenceData) {
+                                let nodeId = seqData.interactorRef;
+                                if (expand) {
+                                    nodeId = `${nodeId}(${seqData.participantRef})`;
+                                }
+                                let toSequenceData = toSequenceData_indexedByNodeId.get(nodeId);
+                                if (typeof toSequenceData === "undefined") {
+                                    toSequenceData = [];
+                                    toSequenceData_indexedByNodeId.set(nodeId, toSequenceData);
+                                }
+                                toSequenceData = toSequenceData.push(seqData);
+                            }
     //
     //                         for (let toSequenceData of toSequenceData_indexedByNodeId.values()) {
     //                             const fromInteractor = getNode(fromSequenceData[0]);
@@ -19512,9 +19477,9 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
     //                             link.sequenceLinks.set(sequenceLink.id, sequenceLink);
     //                         }
     //
-    //                     } // end for each linked feature
-    //
-    //                 } // end if linked features
+                        } // end for each linked feature
+
+                    } // end if linked features
     //             } // end for each feature
     //         }
         });
@@ -19951,6 +19916,47 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
         nLink.binaryLinks.set(linkID, link);
         //link.addEvidence(interaction);
         return link;
+    }
+
+
+    function visitInteractions(interactionCallback) {
+        for (let entry of jsObj.entrySet.entry) {
+            // console.log("*entry*", entry);
+            const interactions = [
+                ...(entry.interactionList?.abstractInteraction || []),
+                ...(entry.interactionList?.interaction || [])
+            ];
+
+            for (let interaction of interactions) {
+                // console.log("*interaction*", interaction);
+                interactionCallback(interaction);
+            }
+        }
+    }
+
+    function visitInteractors(interactorCallback) {
+        for (let entry of jsObj.entrySet.entry) {
+            // console.log("*entry*", entry);
+
+            // Visit top-level interactors
+            if (entry.interactorList?.interactor) {
+                for (let interactor of entry.interactorList.interactor) {
+                    // console.log("*interactor*", interactor);
+                    interactorCallback(interactor);
+                }
+            }
+
+            // Visit interactors inside participantList
+            visitInteractions((interaction) => {
+                const participants = interaction.participantList?.participant || [];
+                for (let participant of participants) {
+                    // console.log("*participant*", participant);
+                    if (participant.interactor) {
+                        interactorCallback(participant.interactor);
+                    }
+                }
+            });
+        }
     }
 }
 
@@ -20449,16 +20455,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var point2d__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(point2d__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var intersectionjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! intersectionjs */ "./node_modules/intersectionjs/intersection.js");
 /* harmony import */ var intersectionjs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(intersectionjs__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _svgns__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../svgns */ "./src/js/svgns.js");
+
 
 
 
 
 class Complex extends _interactor__WEBPACK_IMPORTED_MODULE_0__.Interactor {
-    constructor(id, app) {
+    constructor(id, app, interactor, interactorRef) {
         super();
 
-        this.init(id, app);
+        this.init(id, app, interactor, "");//interactorRef);
         this.type = "complex";
+        this.upperGroup = document.createElementNS(_svgns__WEBPACK_IMPORTED_MODULE_3__.svgns, "g");
+        this.initLabel();
         this.padding = 28;
 
         // const self = this;
@@ -20521,12 +20531,80 @@ class Complex extends _interactor__WEBPACK_IMPORTED_MODULE_0__.Interactor {
     }
 
     setPosition () {
-        console.error("error - called setPosition on ", this);
+        //do nothing
     }
 
     changePosition (dx, dy) {
         for (let participant of this.naryLink.participants) {
             participant.changePosition(dx, dy);
+        }
+    }
+
+    setLabelPosition () {
+        function getHighestPointFromPath(pathString) {
+            const commands = pathString.match(/[a-df-z][^a-df-z]*/ig);
+            let currentPoint = [0, 0];
+            let highestPoint = null;
+
+            const updateHighest = (x, y) => {
+                if (!highestPoint || y < highestPoint[1]) {
+                    highestPoint = [x, y];
+                }
+            };
+
+            commands.forEach(cmd => {
+                const type = cmd[0];
+                const args = cmd.slice(1).trim().split(/[\s,]+/).map(Number);
+
+                switch (type) {
+                    case 'M':
+                    case 'L':
+                        for (let i = 0; i < args.length; i += 2) {
+                            const [x, y] = [args[i], args[i + 1]];
+                            updateHighest(x, y);
+                            currentPoint = [x, y];
+                        }
+                        break;
+                    case 'C':
+                        for (let i = 0; i < args.length; i += 6) {
+                            const [x1, y1, x2, y2, x, y] = args.slice(i, i + 6);
+                            updateHighest(x1, y1);
+                            updateHighest(x2, y2);
+                            updateHighest(x, y);
+                            currentPoint = [x, y];
+                        }
+                        break;
+                    case 'Q':
+                        for (let i = 0; i < args.length; i += 4) {
+                            const [x1, y1, x, y] = args.slice(i, i + 4);
+                            updateHighest(x1, y1);
+                            updateHighest(x, y);
+                            currentPoint = [x, y];
+                        }
+                        break;
+                    case 'H':
+                        for (const x of args) {
+                            updateHighest(x, currentPoint[1]);
+                            currentPoint[0] = x;
+                        }
+                        break;
+                    case 'V':
+                        for (const y of args) {
+                            updateHighest(currentPoint[0], y);
+                            currentPoint[1] = y;
+                        }
+                        break;
+                    // Add more cases as needed for other commands
+                }
+            });
+
+            return highestPoint;
+        }
+
+        const pathString = this.naryLink.path.getAttribute("d");
+        const highestPoint = getHighestPointFromPath(pathString);
+        if (highestPoint) {
+            this.upperGroup.setAttribute("transform", `translate(${highestPoint[0]} ${highestPoint[1]})`);
         }
     }
 
@@ -20819,8 +20897,14 @@ class Interactor {
 
 // update all lines (e.g after a move)
     setAllLinkCoordinates() {
+        if (typeof this.setLabelPosition === "function") {
+            this.setLabelPosition();
+        }
         for (let link of this.naryLinks.values()) {
             link.setLinkCoordinates();
+            if (link.complex){
+                link.complex.setLabelPosition();
+            }
         }
         for (let link of this.binaryLinks.values()) {
             link.setLinkCoordinates();
@@ -59533,10 +59617,8 @@ class App {
         this.defaultBarScale = takeClosest(App.barScales, defaultPixPerRes);
 
         for (let participant of this.participants.values()) {
-            if (participant.type !== "complex") {
-                participant.setPosition(-500, -500);
-                this.proteinUpper.appendChild(participant.upperGroup);
-            }
+            participant.setPosition(-500, -500);
+            this.proteinUpper.appendChild(participant.upperGroup);
         }
         for (let participant of this.participants.values()) {
             if (participant.type === "protein") {

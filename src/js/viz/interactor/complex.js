@@ -1,13 +1,16 @@
 import {Interactor} from "./interactor";
 import Point2D from "point2d";
 import Intersection from "intersectionjs";
+import {svgns} from "../../svgns";
 
 export class Complex extends Interactor {
-    constructor(id, app) {
+    constructor(id, app, interactor, interactorRef) {
         super();
 
-        this.init(id, app);
+        this.init(id, app, interactor, "");//interactorRef);
         this.type = "complex";
+        this.upperGroup = document.createElementNS(svgns, "g");
+        this.initLabel();
         this.padding = 28;
 
         // const self = this;
@@ -70,12 +73,80 @@ export class Complex extends Interactor {
     }
 
     setPosition () {
-        console.error("error - called setPosition on ", this);
+        //do nothing
     }
 
     changePosition (dx, dy) {
         for (let participant of this.naryLink.participants) {
             participant.changePosition(dx, dy);
+        }
+    }
+
+    setLabelPosition () {
+        function getHighestPointFromPath(pathString) {
+            const commands = pathString.match(/[a-df-z][^a-df-z]*/ig);
+            let currentPoint = [0, 0];
+            let highestPoint = null;
+
+            const updateHighest = (x, y) => {
+                if (!highestPoint || y < highestPoint[1]) {
+                    highestPoint = [x, y];
+                }
+            };
+
+            commands.forEach(cmd => {
+                const type = cmd[0];
+                const args = cmd.slice(1).trim().split(/[\s,]+/).map(Number);
+
+                switch (type) {
+                    case 'M':
+                    case 'L':
+                        for (let i = 0; i < args.length; i += 2) {
+                            const [x, y] = [args[i], args[i + 1]];
+                            updateHighest(x, y);
+                            currentPoint = [x, y];
+                        }
+                        break;
+                    case 'C':
+                        for (let i = 0; i < args.length; i += 6) {
+                            const [x1, y1, x2, y2, x, y] = args.slice(i, i + 6);
+                            updateHighest(x1, y1);
+                            updateHighest(x2, y2);
+                            updateHighest(x, y);
+                            currentPoint = [x, y];
+                        }
+                        break;
+                    case 'Q':
+                        for (let i = 0; i < args.length; i += 4) {
+                            const [x1, y1, x, y] = args.slice(i, i + 4);
+                            updateHighest(x1, y1);
+                            updateHighest(x, y);
+                            currentPoint = [x, y];
+                        }
+                        break;
+                    case 'H':
+                        for (const x of args) {
+                            updateHighest(x, currentPoint[1]);
+                            currentPoint[0] = x;
+                        }
+                        break;
+                    case 'V':
+                        for (const y of args) {
+                            updateHighest(currentPoint[0], y);
+                            currentPoint[1] = y;
+                        }
+                        break;
+                    // Add more cases as needed for other commands
+                }
+            });
+
+            return highestPoint;
+        }
+
+        const pathString = this.naryLink.path.getAttribute("d");
+        const highestPoint = getHighestPointFromPath(pathString);
+        if (highestPoint) {
+            this.upperGroup.setAttribute("transform", `translate(${highestPoint[0]} ${highestPoint[1]})`);
         }
     }
 
