@@ -62,13 +62,13 @@ export function readXml(jsObj, /*App*/ app, expand = true) {
                         const fromFeature = app.features.get(linkedFeatureIDs[i]);
                         const toFeature = app.features.get(linkedFeatureIDs[j]);
                         console.log("fromFeature", fromFeature, "toFeature", toFeature);
-                        for (let fromFeatureRange of fromFeature.fromFeatureRangeList.featureRange) {
+                        for (let fromFeatureRange of fromFeature.featureRangeList.featureRange) {
                             const fromSequenceData = fromFeatureRange;
                             // !! code can't deal with
                             // !! composite binding region across two different interactors
                             // break feature links to different nodes into separate binary links
                             const toSequenceData_indexedByNodeId = new Map();
-                            for (let toFeatureRange of toFeature.toFeatureRangeList.featureRange) {
+                            for (let toFeatureRange of toFeature.featureRangeList.featureRange) {
                                 const seqData = toFeatureRange;
                                 let nodeId = seqData.interactorRef;
                                 if (expand) {
@@ -83,7 +83,7 @@ export function readXml(jsObj, /*App*/ app, expand = true) {
                             }
 
                             for (let toSequenceData of toSequenceData_indexedByNodeId.values()) {
-                                const fromInteractor = getNode(fromSequenceData[0]);
+                                const fromInteractor = getNode(fromSequenceData);
                                 const toInteractor = getNode(toSequenceData[0]);
                                 let link;
                                 if (fromInteractor === toInteractor) {
