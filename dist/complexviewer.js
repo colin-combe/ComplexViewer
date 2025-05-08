@@ -19390,13 +19390,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 // reads MI JSON format
-function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
+function readXml(jsObj, /*App*/ app, expand = true) {
     app.stoichiometryExpanded = expand;
-
     // miJson.data = miJson.data.reverse();
-
     app.features = new Map();
-
     const complexes = new Map();
 
     // expand complexes based on stoichiometry
@@ -19407,9 +19404,9 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
     // may be multiple references to a complex, we want different set of participants for each reference to same complex
     // miJson = cloneComplexRefs(miJson);
 
-
     //get interactors
     app.interactors = new Map();
+
     function addInteractor(interactor) {
         const id = interactor._id;
         console.log("Interactor ID:", id);
@@ -19419,6 +19416,7 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
             console.warn("DUPLICATE INTERACTOR ID FOUND:", id);
         }
     }
+
     visitInteractors(addInteractor);
 
     expand ? readStoichExpanded() : readStoichUnexpanded();
@@ -19427,29 +19425,23 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
     // init binary, unary and sequence links,
     // and make needed associations between these and containing naryLink
     visitInteractions((interaction) => {
-        console.log(interaction.bindingFeatureList)
-        for (let bindingFeatures of interaction.bindingFeatureList.bindingFeatures) {
-            // const participantFeatureRefs = bindingFeatures.participantFeatureRef;
-            console.log(bindingFeatures.participantFeatureRef);
-
-    //         for (let participant of interaction.participantList.participant) {
-    //             let features = new Array(0);
-    //             if (participant.features) features = participant.featureList.feature;
-    //
-    //             for (let feature of features) { // for each feature
-    //                 const fromSequenceData = feature.sequenceData;
-    //                 if (feature.linkedFeatures) { // if linked features
-                        const linkedFeatureIDs = bindingFeatures.participantFeatureRef;
-                        const linkedFeatureCount = linkedFeatureIDs.length;
-                        for (let lfi = 0; lfi < linkedFeatureCount; lfi++) { //for each linked feature
-
-                            // !! following is a hack, code can't deal with
+        if (interaction.bindingFeatureList?.bindingFeatures) {
+            for (let bindingFeatures of interaction.bindingFeatureList.bindingFeatures) {
+                const linkedFeatureIDs = bindingFeatures.participantFeatureRef;
+                const linkedFeatureCount = linkedFeatureIDs.length;
+                for (let i = 0; i < linkedFeatureCount; i++) { //for each linked feature
+                    for (let j = i + 1; j < linkedFeatureCount; j++) { //for each linked feature
+                        const fromFeature = app.features.get(linkedFeatureIDs[i]);
+                        const toFeature = app.features.get(linkedFeatureIDs[j]);
+                        console.log("fromFeature", fromFeature, "toFeature", toFeature);
+                        for (let fromFeatureRange of fromFeature.fromFeatureRangeList.featureRange) {
+                            const fromSequenceData = fromFeatureRange;
+                            // !! code can't deal with
                             // !! composite binding region across two different interactors
                             // break feature links to different nodes into separate binary links
                             const toSequenceData_indexedByNodeId = new Map();
-
-                            const linkedFeature = app.features.get(linkedFeatureIDs[lfi]);
-                            for (let seqData of linkedFeature.sequenceData) {
+                            for (let toFeatureRange of toFeature.toFeatureRangeList.featureRange) {
+                                const seqData = toFeatureRange;
                                 let nodeId = seqData.interactorRef;
                                 if (expand) {
                                     nodeId = `${nodeId}(${seqData.participantRef})`;
@@ -19461,28 +19453,27 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
                                 }
                                 toSequenceData = toSequenceData.push(seqData);
                             }
-    //
-    //                         for (let toSequenceData of toSequenceData_indexedByNodeId.values()) {
-    //                             const fromInteractor = getNode(fromSequenceData[0]);
-    //                             const toInteractor = getNode(toSequenceData[0]);
-    //                             let link;
-    //                             if (fromInteractor === toInteractor) {
-    //                                 link = getUnaryLink(fromInteractor, interaction);
-    //                             } else {
-    //                                 link = getBinaryLink(fromInteractor, toInteractor, interaction);
-    //                             }
-    //                             const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, interaction);
-    //                             fromInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
-    //                             toInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
-    //                             link.sequenceLinks.set(sequenceLink.id, sequenceLink);
-    //                         }
-    //
-                        } // end for each linked feature
 
-                    } // end if linked features
-    //             } // end for each feature
-    //         }
-        });
+                            for (let toSequenceData of toSequenceData_indexedByNodeId.values()) {
+                                const fromInteractor = getNode(fromSequenceData[0]);
+                                const toInteractor = getNode(toSequenceData[0]);
+                                let link;
+                                if (fromInteractor === toInteractor) {
+                                    link = getUnaryLink(fromInteractor, interaction);
+                                } else {
+                                    link = getBinaryLink(fromInteractor, toInteractor, interaction);
+                                }
+                                const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, interaction);
+                                fromInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
+                                toInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
+                                link.sequenceLinks.set(sequenceLink.id, sequenceLink);
+                            }
+                        }
+                    }
+                }
+            }
+        } // end if linked features
+    });
 
     //init complexes
     app.complexes = Array.from(complexes.values()); // todo - why not just keep it in map
@@ -19515,10 +19506,6 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
         if (feature.names) {
             annotName += feature.names.shortLabel + " "; // toodo - whats this space
         }
-        // if (typeof feature.detmethod !== "undefined") {
-        //     annotName += ", " + feature.detmethod.name;
-        // }
-        console.log("feature name", annotName);
         // the id info we need is inside sequenceData att
         if (feature.featureRangeList) { // todo - still needed?
             for (let seqDatum of feature.featureRangeList.featureRange) {
@@ -19580,10 +19567,9 @@ function readXml(/*miJson*/jsObj, /*App*/ app, expand = true) {
             //init participants
             for (let jsonParticipant of datum.participantList.participant) {
                 let intRef = jsonParticipant.interactorRef;
-                if (!intRef){
+                if (!intRef) {
                     intRef = jsonParticipant.interactor._id;
                 }
-                console.log("intRef", intRef);
                 const partRef = jsonParticipant._id;
                 const participantId = `${intRef}(${partRef})`;
                 let participant = app.participants.get(participantId);
@@ -22873,12 +22859,12 @@ class XmlFeatureRange {
         const endIntervalBegin = featureRange.endInterval?._begin;
         const endIntervalEnd = featureRange.endInterval?._end;
 
-        console.log("startStatus", startStatus, startSTatusName,
-            "endStatus", endStatus, endStatusName,
-            "begin", begin,
-            "end", end,
-            "beginIntervalBegin", beginIntervalBegin, "beginIntervalEnd", beginIntervalEnd,
-            "endIntervalBegin", endIntervalBegin, "endIntervalEnd", endIntervalEnd);
+        // console.log("startStatus", startStatus, startSTatusName,
+        //     "endStatus", endStatus, endStatusName,
+        //     "begin", begin,
+        //     "end", end,
+        //     "beginIntervalBegin", beginIntervalBegin, "beginIntervalEnd", beginIntervalEnd,
+        //     "endIntervalBegin", endIntervalBegin, "endIntervalEnd", endIntervalEnd);
 
 
         // this.begin = begin ? parseInt(begin) : null;

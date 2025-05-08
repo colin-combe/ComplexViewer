@@ -40,12 +40,12 @@ export class XmlFeatureRange {
         const endIntervalBegin = featureRange.endInterval?._begin;
         const endIntervalEnd = featureRange.endInterval?._end;
 
-        console.log("startStatus", startStatus, startSTatusName,
-            "endStatus", endStatus, endStatusName,
-            "begin", begin,
-            "end", end,
-            "beginIntervalBegin", beginIntervalBegin, "beginIntervalEnd", beginIntervalEnd,
-            "endIntervalBegin", endIntervalBegin, "endIntervalEnd", endIntervalEnd);
+        // console.log("startStatus", startStatus, startSTatusName,
+        //     "endStatus", endStatus, endStatusName,
+        //     "begin", begin,
+        //     "end", end,
+        //     "beginIntervalBegin", beginIntervalBegin, "beginIntervalEnd", beginIntervalEnd,
+        //     "endIntervalBegin", endIntervalBegin, "endIntervalEnd", endIntervalEnd);
 
 
         // this.begin = begin ? parseInt(begin) : null;
