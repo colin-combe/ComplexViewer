@@ -6,8 +6,9 @@ import {svgns} from "../../svgns";
 export class Complex extends Interactor {
     constructor(id, app, interactor, interactorRef) {
         super();
-
-        this.init(id, app, interactor, "");//interactorRef);
+        const complexIdMatch = interactorRef.match(/^.*(CPX-[0-9]+).*$/);
+        const complexId = complexIdMatch ? complexIdMatch[1] : "";
+        this.init(id, app, interactor, complexId);
         this.type = "complex";
         this.upperGroup = document.createElementNS(svgns, "g");
         this.initLabel();
