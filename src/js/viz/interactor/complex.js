@@ -100,15 +100,15 @@ export class Complex extends Interactor {
                 const args = cmd.slice(1).trim().split(/[\s,]+/).map(Number);
 
                 switch (type) {
-                    case 'M':
-                    case 'L':
+                    case "M":
+                    case "L":
                         for (let i = 0; i < args.length; i += 2) {
                             const [x, y] = [args[i], args[i + 1]];
                             updateHighest(x, y);
                             currentPoint = [x, y];
                         }
                         break;
-                    case 'C':
+                    case "C":
                         for (let i = 0; i < args.length; i += 6) {
                             const [x1, y1, x2, y2, x, y] = args.slice(i, i + 6);
                             updateHighest(x1, y1);
@@ -117,7 +117,7 @@ export class Complex extends Interactor {
                             currentPoint = [x, y];
                         }
                         break;
-                    case 'Q':
+                    case "Q":
                         for (let i = 0; i < args.length; i += 4) {
                             const [x1, y1, x, y] = args.slice(i, i + 4);
                             updateHighest(x1, y1);
@@ -125,13 +125,13 @@ export class Complex extends Interactor {
                             currentPoint = [x, y];
                         }
                         break;
-                    case 'H':
+                    case "H":
                         for (const x of args) {
                             updateHighest(x, currentPoint[1]);
                             currentPoint[0] = x;
                         }
                         break;
-                    case 'V':
+                    case "V":
                         for (const y of args) {
                             updateHighest(currentPoint[0], y);
                             currentPoint[1] = y;
@@ -153,5 +153,10 @@ export class Complex extends Interactor {
 
     getResidueCoordinates () {
         return this.getPosition();
+    }
+
+    setAllLinkCoordinates() {
+        this.setLabelPosition();
+        super.setAllLinkCoordinates();
     }
 }

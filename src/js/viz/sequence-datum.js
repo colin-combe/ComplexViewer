@@ -34,11 +34,11 @@ export class SequenceDatum {
             const firstPart = sequenceDatumString.substring(0, dashPosition);
             const secondPart = sequenceDatumString.substring(dashPosition + 1);
 
-            if (firstPart == '?') {
+            if (firstPart === "?") {
                 this.uncertainBegin = 1;
                 this.begin = tidyPosition(secondPart);
                 this.end = null;
-            } else if (secondPart == '?') {
+            } else if (secondPart === "?") {
                 this.uncertainEnd = participant.size;
                 this.end = tidyPosition(firstPart);
                 this.begin = null;
