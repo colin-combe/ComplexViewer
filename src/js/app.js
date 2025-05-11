@@ -515,7 +515,7 @@ export class App {
         };
         const parser = new XMLParser(options);
         const jsObj = parser.parse(xmlText, options);
-        console.log("jsObj", jsObj); //debug
+        // console.log("jsObj", jsObj); //debug
         readXml(jsObj, this, expand);
         this.init();
     }
@@ -1080,6 +1080,18 @@ export class App {
         blob = null;
     }
 
+    //function to get summary stats, i.e. counts of interactors, participants, and links
+    getSummaryStats() {
+        const stats = {};
+        stats.interactors = this.interactors.size;
+        stats.participants = this.participants.size;
+        stats.features = this.features.size;
+        stats.naryLinks = this.allNaryLinks.size;
+        stats.binaryLinks = this.allBinaryLinks.size;
+        stats.unaryLinks = this.allUnaryLinks.size;
+        stats.sequenceLinks = this.allSequenceLinks.size;
+        return stats;
+    }
 }
 
 //static values signifying Controller's status

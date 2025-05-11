@@ -19409,7 +19409,7 @@ function readXml(jsObj, /*App*/ app, expand = true) {
 
     function addInteractor(interactor) {
         const id = interactor._id;
-        console.log("Interactor ID:", id);
+        // console.log("Interactor ID:", id);
         if (!app.interactors.has(id)) {
             app.interactors.set(id, interactor);
         } else {
@@ -19429,49 +19429,73 @@ function readXml(jsObj, /*App*/ app, expand = true) {
             for (let bindingFeatures of interaction.bindingFeatureList.bindingFeatures) {
                 const linkedFeatureIDs = bindingFeatures.participantFeatureRef;
                 const linkedFeatureCount = linkedFeatureIDs.length;
-                for (let i = 0; i < linkedFeatureCount; i++) { //for each linked feature
-                    for (let j = i + 1; j < linkedFeatureCount; j++) { //for each linked feature
-                        const fromFeature = app.features.get(linkedFeatureIDs[i]);
-                        const toFeature = app.features.get(linkedFeatureIDs[j]);
-                        console.log("fromFeature", fromFeature, "toFeature", toFeature);
-                        for (let fromFeatureRange of fromFeature.featureRangeList.featureRange) {
-                            const fromSequenceData = fromFeatureRange;
-                            // !! code can't deal with
-                            // !! composite binding region across two different interactors
-                            // break feature links to different nodes into separate binary links
-                            const toSequenceData_indexedByNodeId = new Map();
-                            for (let toFeatureRange of toFeature.featureRangeList.featureRange) {
-                                const seqData = toFeatureRange;
-                                let nodeId = seqData.interactorRef;
-                                if (expand) {
-                                    nodeId = `${nodeId}(${seqData.participantRef})`;
-                                }
-                                let toSequenceData = toSequenceData_indexedByNodeId.get(nodeId);
-                                if (typeof toSequenceData === "undefined") {
-                                    toSequenceData = [];
-                                    toSequenceData_indexedByNodeId.set(nodeId, toSequenceData);
-                                }
-                                toSequenceData = toSequenceData.push(seqData);
-                            }
 
-                            for (let toSequenceData of toSequenceData_indexedByNodeId.values()) {
-                                const fromInteractor = getNode(fromSequenceData);
-                                const toInteractor = getNode(toSequenceData[0]);
-                                let link;
-                                if (fromInteractor === toInteractor) {
-                                    link = getUnaryLink(fromInteractor, interaction);
-                                } else {
-                                    link = getBinaryLink(fromInteractor, toInteractor, interaction);
-                                }
-                                const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, interaction);
-                                fromInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
-                                toInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
-                                link.sequenceLinks.set(sequenceLink.id, sequenceLink);
-                            }
-                        }
-                    }
+                if (linkedFeatureCount !== 2) {
+                    alert("Linked feature count not 2");
                 }
-            }
+                else {
+                    const fromFeature = app.features.get(linkedFeatureIDs[0]);
+                    const toFeature = app.features.get(linkedFeatureIDs[1]);
+                    // console.log("fromFeature", fromFeature, "toFeature", toFeature);
+                    const fromSequenceData = fromFeature.featureRangeList.featureRange;
+                    const toSequenceData = toFeature.featureRangeList.featureRange;
+                    const fromInteractor = getNode(fromSequenceData[0]);
+                    const toInteractor = getNode(toSequenceData[0]);
+                    let link;
+                    if (fromInteractor === toInteractor) {
+                        link = getUnaryLink(fromInteractor, interaction);
+                    } else {
+                        link = getBinaryLink(fromInteractor, toInteractor, interaction);
+                    }
+                    const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, interaction);
+                    fromInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
+                    toInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
+                    link.sequenceLinks.set(sequenceLink.id, sequenceLink);
+                }
+                // }
+                // for (let i = 0; i < linkedFeatureCount; i++) { //for each linked feature
+                //     for (let j = i + 1; j < linkedFeatureCount; j++) { //for each linked feature
+                //         const fromFeature = app.features.get(linkedFeatureIDs[i]);
+                //         const toFeature = app.features.get(linkedFeatureIDs[j]);
+                //         console.log("fromFeature", fromFeature, "toFeature", toFeature);
+                //         for (let fromFeatureRange of fromFeature.featureRangeList.featureRange) {
+                //             const fromSequenceData = fromFeatureRange;
+                //             // !! code can't deal with
+                //             // !! composite binding region across two different interactors
+                //             // break feature links to different nodes into separate binary links
+                //             const toSequenceData_indexedByNodeId = new Map();
+                //             for (let toFeatureRange of toFeature.featureRangeList.featureRange) {
+                //                 const seqData = toFeatureRange;
+                //                 let nodeId = seqData.interactorRef;
+                //                 if (expand) {
+                //                     nodeId = `${nodeId}(${seqData.participantRef})`;
+                //                 }
+                //                 let toSequenceData = toSequenceData_indexedByNodeId.get(nodeId);
+                //                 if (typeof toSequenceData === "undefined") {
+                //                     toSequenceData = [];
+                //                     toSequenceData_indexedByNodeId.set(nodeId, toSequenceData);
+                //                 }
+                //                 toSequenceData = toSequenceData.push(seqData);
+                //             }
+                //
+                //             for (let toSequenceData of toSequenceData_indexedByNodeId.values()) {
+                //                 const fromInteractor = getNode(fromSequenceData);
+                //                 const toInteractor = getNode(toSequenceData[0]);
+                //                 let link;
+                //                 if (fromInteractor === toInteractor) {
+                //                     link = getUnaryLink(fromInteractor, interaction);
+                //                 } else {
+                //                     link = getBinaryLink(fromInteractor, toInteractor, interaction);
+                //                 }
+                //                 const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, interaction);
+                //                 fromInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
+                //                 toInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
+                //                 link.sequenceLinks.set(sequenceLink.id, sequenceLink);
+                //             }
+                //         }
+                //     }
+                // }
+            } // end for bindingFeatures
         } // end if linked features
     });
 
@@ -19841,11 +19865,11 @@ function readXml(jsObj, /*App*/ app, expand = true) {
         if (typeof sequenceLink === "undefined") {
             const fromFeaturePositions = [];
             for (let fromSeqDatum of fromSeqData) {
-                fromFeaturePositions.push(new _viz_sequence_datum__WEBPACK_IMPORTED_MODULE_11__.SequenceDatum(getNode(fromSeqDatum), fromSeqDatum.pos));
+                fromFeaturePositions.push(new _viz_xml_feature_range__WEBPACK_IMPORTED_MODULE_17__.XmlFeatureRange(getNode(fromSeqDatum), fromSeqDatum));
             }
             const toFeaturePositions = [];
             for (let toSeqDatum of toSeqData) {
-                toFeaturePositions.push(new _viz_sequence_datum__WEBPACK_IMPORTED_MODULE_11__.SequenceDatum(getNode(toSeqDatum), toSeqDatum.pos));
+                toFeaturePositions.push(new _viz_xml_feature_range__WEBPACK_IMPORTED_MODULE_17__.XmlFeatureRange(getNode(toSeqDatum), toSeqDatum));
             }
             //~ if (endsSwapped === false) {
             sequenceLink = new _viz_link_feature_link__WEBPACK_IMPORTED_MODULE_10__.FeatureLink(seqLinkId, fromFeaturePositions, toFeaturePositions, app, interaction);
@@ -59866,7 +59890,7 @@ class App {
         };
         const parser = new fast_xml_parser__WEBPACK_IMPORTED_MODULE_14__["default"](options);
         const jsObj = parser.parse(xmlText, options);
-        console.log("jsObj", jsObj); //debug
+        // console.log("jsObj", jsObj); //debug
         (0,_read_xml__WEBPACK_IMPORTED_MODULE_11__.readXml)(jsObj, this, expand);
         this.init();
     }
@@ -60431,6 +60455,18 @@ class App {
         blob = null;
     }
 
+    //function to get summary stats, i.e. counts of interactors, participants, and links
+    getSummaryStats() {
+        const stats = {};
+        stats.interactors = this.interactors.size;
+        stats.participants = this.participants.size;
+        stats.features = this.features.size;
+        stats.naryLinks = this.allNaryLinks.size;
+        stats.binaryLinks = this.allBinaryLinks.size;
+        stats.unaryLinks = this.allUnaryLinks.size;
+        stats.sequenceLinks = this.allSequenceLinks.size;
+        return stats;
+    }
 }
 
 //static values signifying Controller's status
