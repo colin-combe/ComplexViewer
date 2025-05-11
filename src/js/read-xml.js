@@ -236,9 +236,19 @@ export function readXml(jsObj, /*App*/ app, expand = true) {
                     nLink.participants.push(participant);
                 }
 
-                if (jsonParticipant.stoichiometry) {
-                    const interactor = app.participants.get(participantId);
-                    interactor.addStoichiometryLabel(jsonParticipant.stoichiometry);
+                if (jsonParticipant.stoichiometry || jsonParticipant.minStoichiometry || jsonParticipant.maxStoichiometry) {
+                    let stoichString = "";
+                    if (jsonParticipant.stoichiometry) {
+                        stoichString += jsonParticipant.stoichiometry;
+
+                    }
+                    if (jsonParticipant.minStoichiometry || jsonParticipant.maxStoichiometry) {
+                        if (jsonParticipant.stoichiometry) {
+                            stoichString += ";";
+                        }
+                        stoichString += jsonParticipant.minStoichiometry + "-" + jsonParticipant.maxStoichiometry;
+                    }
+                    participant.addStoichiometryLabel(stoichString);
                 }
             }
         });

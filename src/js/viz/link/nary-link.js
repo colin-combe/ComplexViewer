@@ -16,7 +16,7 @@ export class NaryLink extends Link {
         if (!this._path) {
             this._path = this._createElement("path");
             if (this.app.stoichiometryExpanded) {
-                this.color = NaryLink.naryColors(this.sourceId?this.sourceId:this.id);
+                this.color = this.app.naryColors(this.sourceId?this.sourceId:this.id);
                 this._path.setAttribute("fill", this.color);
             } else {
                 this._path.setAttribute("fill", "none");

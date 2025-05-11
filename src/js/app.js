@@ -209,7 +209,7 @@ export class App {
             hsl.l = 0.9;
             complexColors.push(`${hsl}`);
         }
-        NaryLink.naryColors = scaleOrdinal().range(complexColors);
+        this.naryColors = scaleOrdinal().range(complexColors);
 
         this.z = 1;
         this.hideTooltip();
@@ -515,7 +515,7 @@ export class App {
         };
         const parser = new XMLParser(options);
         const jsObj = parser.parse(xmlText, options);
-        // console.log("jsObj", jsObj); //debug
+        console.log("jsObj", jsObj); //debug
         readXml(jsObj, this, expand);
         this.init();
     }
@@ -747,8 +747,8 @@ export class App {
 
     getColorKeyJson() {
         const json = {"Complex": []};
-        for (let name of NaryLink.naryColors.domain()) {
-            json.Complex.push({"name": name, "certain": {"color": NaryLink.naryColors(name)}});
+        for (let name of this.naryColors.domain()) {
+            json.Complex.push({"name": name, "certain": {"color": this.naryColors(name)}});
         }
         if (this.featureColors) {
             for (let [annotationSet, shown] of this.annotationSetsShown) {

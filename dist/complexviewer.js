@@ -19608,9 +19608,19 @@ function readXml(jsObj, /*App*/ app, expand = true) {
                     nLink.participants.push(participant);
                 }
 
-                if (jsonParticipant.stoichiometry) {
-                    const interactor = app.participants.get(participantId);
-                    interactor.addStoichiometryLabel(jsonParticipant.stoichiometry);
+                if (jsonParticipant.stoichiometry || jsonParticipant.minStoichiometry || jsonParticipant.maxStoichiometry) {
+                    let stoichString = "";
+                    if (jsonParticipant.stoichiometry) {
+                        stoichString += jsonParticipant.stoichiometry;
+
+                    }
+                    if (jsonParticipant.minStoichiometry || jsonParticipant.maxStoichiometry) {
+                        if (jsonParticipant.stoichiometry) {
+                            stoichString += ";";
+                        }
+                        stoichString += jsonParticipant.minStoichiometry + "-" + jsonParticipant.maxStoichiometry;
+                    }
+                    participant.addStoichiometryLabel(stoichString);
                 }
             }
         });
@@ -22441,7 +22451,7 @@ class NaryLink extends _link__WEBPACK_IMPORTED_MODULE_0__.Link {
         if (!this._path) {
             this._path = this._createElement("path");
             if (this.app.stoichiometryExpanded) {
-                this.color = NaryLink.naryColors(this.sourceId?this.sourceId:this.id);
+                this.color = this.app.naryColors(this.sourceId?this.sourceId:this.id);
                 this._path.setAttribute("fill", this.color);
             } else {
                 this._path.setAttribute("fill", "none");
@@ -59540,7 +59550,7 @@ class App {
             hsl.l = 0.9;
             complexColors.push(`${hsl}`);
         }
-        _viz_link_nary_link__WEBPACK_IMPORTED_MODULE_8__.NaryLink.naryColors = (0,d3_scale__WEBPACK_IMPORTED_MODULE_13__["default"])().range(complexColors);
+        this.naryColors = (0,d3_scale__WEBPACK_IMPORTED_MODULE_13__["default"])().range(complexColors);
 
         this.z = 1;
         this.hideTooltip();
@@ -59846,7 +59856,7 @@ class App {
         };
         const parser = new fast_xml_parser__WEBPACK_IMPORTED_MODULE_14__["default"](options);
         const jsObj = parser.parse(xmlText, options);
-        // console.log("jsObj", jsObj); //debug
+        console.log("jsObj", jsObj); //debug
         (0,_read_xml__WEBPACK_IMPORTED_MODULE_11__.readXml)(jsObj, this, expand);
         this.init();
     }
@@ -60078,8 +60088,8 @@ class App {
 
     getColorKeyJson() {
         const json = {"Complex": []};
-        for (let name of _viz_link_nary_link__WEBPACK_IMPORTED_MODULE_8__.NaryLink.naryColors.domain()) {
-            json.Complex.push({"name": name, "certain": {"color": _viz_link_nary_link__WEBPACK_IMPORTED_MODULE_8__.NaryLink.naryColors(name)}});
+        for (let name of this.naryColors.domain()) {
+            json.Complex.push({"name": name, "certain": {"color": this.naryColors(name)}});
         }
         if (this.featureColors) {
             for (let [annotationSet, shown] of this.annotationSetsShown) {

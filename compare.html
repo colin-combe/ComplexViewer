@@ -211,7 +211,6 @@
                 jsonCv.readMIJSON(data, stoichiometry);
                 makeLegend(jsonCv.getColorKeyJson(), "jsonLegendDiv");
                 printSummaryStats(jsonCv, "jsonSummaryDiv");
-                document.getElementById("jsonCountsDiv").textContent = jsonCv.getCounts();
             })
             .catch(error => console.error('Error fetching JSON:', error));
 
@@ -222,7 +221,6 @@
                 xmlCv.readXML(data, stoichiometry);
                 makeLegend(xmlCv.getColorKeyJson(), "xmlLegendDiv");
                 printSummaryStats(xmlCv, "xmlSummaryDiv");
-                document.getElementById("xmlCountsDiv").textContent = xmlCv.getCounts();
             })
             .catch(error => console.error('Error fetching XML:', error));
 
