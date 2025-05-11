@@ -20350,7 +20350,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 class Annotation {
     constructor(annotationName, seqDatum) {
-        // console.log("**", annotationName, seqDatum);
         this.description = annotationName.trim();
         this.seqDatum = seqDatum;
     }
@@ -20474,27 +20473,13 @@ __webpack_require__.r(__webpack_exports__);
 class Complex extends _interactor__WEBPACK_IMPORTED_MODULE_0__.Interactor {
     constructor(id, app, interactor, interactorRef) {
         super();
-
-        this.init(id, app, interactor, "");//interactorRef);
+        const complexIdMatch = interactorRef.match(/^.*(CPX-[0-9]+).*$/);
+        const complexId = complexIdMatch ? complexIdMatch[1] : "";
+        this.init(id, app, interactor, complexId);
         this.type = "complex";
         this.upperGroup = document.createElementNS(_svgns__WEBPACK_IMPORTED_MODULE_3__.svgns, "g");
         this.initLabel();
         this.padding = 28;
-
-        // const self = this;
-        // // its bad if you end up with these getting called
-        // Object.defineProperty(this, "width", {
-        //     get: function height() {
-        //         return self.naryLink.path.getBBox().width;
-        //         //return 160;
-        //     }
-        // });
-        // Object.defineProperty(this, "height", {
-        //     get: function height() {
-        //         return self.naryLink.path.getBBox().height;
-        //         //return 160;
-        //     }
-        // });
     }
 
     initLink(naryLink) {
@@ -20503,15 +20488,14 @@ class Complex extends _interactor__WEBPACK_IMPORTED_MODULE_0__.Interactor {
     }
 
     setLinked() {
-
         this.naryLink.path2.classList.add("linked-complex");
     }
 
     getPosition(originPoint) {
-        let mapped = this.naryLink.mapped;//getMappedCoordinates();
+        let mapped = this.naryLink.mapped;
         if (!mapped) {
             this.naryLink.setLinkCoordinates();
-            mapped = this.naryLink.mapped;//this.naryLink.orbitNodeCount(this.naryLink.getMappedCoordinates());
+            mapped = this.naryLink.mapped;
         }
         const mc = mapped.length;
         let xSum = 0,
@@ -20522,8 +20506,6 @@ class Complex extends _interactor__WEBPACK_IMPORTED_MODULE_0__.Interactor {
         }
         let center = [xSum / mc, ySum / mc];
         if (originPoint) {
-            // if (participant.type === "complex"){
-            //     startPoint = participant.getPosition();
             let naryPath = this.naryLink.hull;
             let iPath = [];
             for (let p of naryPath) {
@@ -20567,15 +20549,15 @@ class Complex extends _interactor__WEBPACK_IMPORTED_MODULE_0__.Interactor {
                 const args = cmd.slice(1).trim().split(/[\s,]+/).map(Number);
 
                 switch (type) {
-                    case 'M':
-                    case 'L':
+                    case "M":
+                    case "L":
                         for (let i = 0; i < args.length; i += 2) {
                             const [x, y] = [args[i], args[i + 1]];
                             updateHighest(x, y);
                             currentPoint = [x, y];
                         }
                         break;
-                    case 'C':
+                    case "C":
                         for (let i = 0; i < args.length; i += 6) {
                             const [x1, y1, x2, y2, x, y] = args.slice(i, i + 6);
                             updateHighest(x1, y1);
@@ -20584,7 +20566,7 @@ class Complex extends _interactor__WEBPACK_IMPORTED_MODULE_0__.Interactor {
                             currentPoint = [x, y];
                         }
                         break;
-                    case 'Q':
+                    case "Q":
                         for (let i = 0; i < args.length; i += 4) {
                             const [x1, y1, x, y] = args.slice(i, i + 4);
                             updateHighest(x1, y1);
@@ -20592,13 +20574,13 @@ class Complex extends _interactor__WEBPACK_IMPORTED_MODULE_0__.Interactor {
                             currentPoint = [x, y];
                         }
                         break;
-                    case 'H':
+                    case "H":
                         for (const x of args) {
                             updateHighest(x, currentPoint[1]);
                             currentPoint[0] = x;
                         }
                         break;
-                    case 'V':
+                    case "V":
                         for (const y of args) {
                             updateHighest(currentPoint[0], y);
                             currentPoint[1] = y;
@@ -20620,6 +20602,11 @@ class Complex extends _interactor__WEBPACK_IMPORTED_MODULE_0__.Interactor {
 
     getResidueCoordinates () {
         return this.getPosition();
+    }
+
+    setAllLinkCoordinates() {
+        this.setLabelPosition();
+        super.setAllLinkCoordinates();
     }
 }
 
@@ -20770,7 +20757,7 @@ class Interactor {
             this.labelText = this.id;
         }
         if (this.labelText.length > 25) {
-            this.labelText = `${this.labelText.substr(0, 16)}...`;
+            this.labelText = `${this.labelText.substring(0, 16)}...`;
         }
         this.labelText = this.name;
         this.labelTextNode = document.createTextNode(this.labelText);
@@ -20907,9 +20894,6 @@ class Interactor {
 
 // update all lines (e.g after a move)
     setAllLinkCoordinates() {
-        if (typeof this.setLabelPosition === "function") {
-            this.setLabelPosition();
-        }
         for (let link of this.naryLinks.values()) {
             link.setLinkCoordinates();
             if (link.complex){
@@ -21023,8 +21007,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// import {Annotation} from "./annotation";
-// import {SequenceDatum} from "../sequence-datum";
 
 class Polymer extends _interactor__WEBPACK_IMPORTED_MODULE_4__.Interactor {
     constructor() {
@@ -21221,10 +21203,8 @@ class Polymer extends _interactor__WEBPACK_IMPORTED_MODULE_4__.Interactor {
         const labelTranslateInterpol = d3__WEBPACK_IMPORTED_MODULE_0__.interpolate(labelStartPoint, -(r + 5));
 
         let xInterpol = null;//,
-        // yInterpol = null;
         if (typeof svgP !== "undefined" && svgP !== null) {
             xInterpol = d3__WEBPACK_IMPORTED_MODULE_0__.interpolate(this.ix, svgP.x);
-            // yInterpol = d3.interpolate(this.iy, svgP.y);
         }
 
         const self = this;
@@ -21274,7 +21254,7 @@ class Polymer extends _interactor__WEBPACK_IMPORTED_MODULE_4__.Interactor {
             self.labelSVG.transform.baseVal.initialize(self.app.svgElement.createSVGTransformFromMatrix(k));
 
             if (xInterpol !== null) {
-                self.setPosition(xInterpol(cubicInOut(interp)), self.iy);//yInterpol(cubicInOut(interp)));
+                self.setPosition(xInterpol(cubicInOut(interp)), self.iy);
             }
 
             self.stickZoom = stickZoomInterpol(cubicInOut(interp));
@@ -21644,8 +21624,7 @@ class Polymer extends _interactor__WEBPACK_IMPORTED_MODULE_4__.Interactor {
         let top, bottom, rungHeight;
         const rung = annotation.rung;
         if (rung === -1) {
-            bottom = 0;
-            top = radius;
+            console.error("Error: rung is -1 for annotation: " + annotation);
         } else if (startRes === "n-n") {
             rungHeight = radius / this.nTermFeatures.length;
         } else if (endRes === "c-c") {
@@ -22444,7 +22423,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var d3_polygon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! d3-polygon */ "./node_modules/d3-polygon/src/hull.js");
 /* harmony import */ var _link__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./link */ "./src/js/viz/link/link.js");
 /* harmony import */ var _geom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../geom */ "./src/js/geom.js");
-// import * as d3 from "d3"; //used for d3.geom.hull
 
 
 
@@ -22458,23 +22436,6 @@ class NaryLink extends _link__WEBPACK_IMPORTED_MODULE_0__.Link {
         this.binaryLinks = new Map();
         this.unaryLinks = new Map();
     }
-
-    /*
-    NaryLink.prototype.getTotalParticipantCount = function () {
-        let result = 0;
-        const c = this.participants.length;
-        for (let p = 0; p < c; p++) {
-            const participant = this.participants[p];
-            //console.log("! " + typeof participant);
-            if (participant.type !== "complex") {
-                result++;
-            } else {
-                result += participant.naryLink.getTotalParticipantCount();
-            }
-        }
-        return result;
-    };
-    */
 
     get path () {
         if (!this._path) {
@@ -22511,7 +22472,7 @@ class NaryLink extends _link__WEBPACK_IMPORTED_MODULE_0__.Link {
 
     show() {
         // this.path.setAttribute("stroke-width", this.app.z);
-        // this.setLinkCoordinates(); // todo - having this here slows down start up. instead see lines 41-44 complex.js
+        // this.setLinkCoordinates(); // having this here slows down start up. instead see getPosition in complex.js
         this.app.naryLinks.appendChild(this.path);
         this.app.naryLinks.appendChild(this.path2);
     }
@@ -22593,8 +22554,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   UnaryLink: () => (/* binding */ UnaryLink)
 /* harmony export */ });
 /* harmony import */ var _hideable_link__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./hideable-link */ "./src/js/viz/link/hideable-link.js");
-//todo - is this even working? you never see it
-
 
 
 class UnaryLink extends _hideable_link__WEBPACK_IMPORTED_MODULE_0__.HideableLink {
@@ -22699,7 +22658,6 @@ class SequenceDatum {
         }
 
         if (this.sequenceDatumString === "?-?") {
-            //this.begin = 1;
             this.end = 1; //todo - having it at begining is affecting shape of line, look at why
             this.uncertainEnd = participant.size ? participant.size : 1;
         } else if (this.sequenceDatumString === "n-n") {
@@ -22711,11 +22669,11 @@ class SequenceDatum {
             const firstPart = sequenceDatumString.substring(0, dashPosition);
             const secondPart = sequenceDatumString.substring(dashPosition + 1);
 
-            if (firstPart == '?') {
+            if (firstPart === "?") {
                 this.uncertainBegin = 1;
                 this.begin = tidyPosition(secondPart);
                 this.end = null;
-            } else if (secondPart == '?') {
+            } else if (secondPart === "?") {
                 this.uncertainEnd = participant.size;
                 this.end = tidyPosition(firstPart);
                 this.begin = null;
@@ -22740,14 +22698,12 @@ class SequenceDatum {
                 if (this.begin === "n") {
                     this.uncertainBegin = 1;
                     this.begin = tidyPosition(this.end);
-                    // this.uncertainEnd = this.end;
                     this.end = null;
                 }
 
                 if (this.end === "c") {
                     this.uncertainEnd = participant.size;
                     this.end = tidyPosition(this.begin);
-                    // this.uncertainBegin = this.begin;
                     this.begin = null;
                 }
 
