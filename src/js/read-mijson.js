@@ -30,7 +30,7 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
 
     // expand complexes based on stoichiometry
     if (expand) {
-        miJson = cloneComplexesStoich(miJson);
+        // miJson = cloneComplexesStoich(miJson); //temp disabled to help compare to xml
     }
 
     // may be multiple references to a complex, we want different set of participants for each reference to same complex
@@ -173,7 +173,7 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
             }
         }
         if (maxStoich < 20) {
-            miJson = matrix(miJson);
+            //miJson = matrix(miJson); //temp disabled to help compare to xml
         }
 
         indexFeatures();

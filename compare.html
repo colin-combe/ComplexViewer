@@ -21,10 +21,10 @@
             display: flex;
             flex-direction: column;
             flex: 1;
-            min-height: 0; /* NEW these are needed, i'm not sure exactly when or why */
-            min-width: 0; /* NEW */
-            max-height: 100%;
-            max-width: 100%;
+            /*min-height: 0; !* NEW these are needed, i'm not sure exactly when or why *!*/
+            /*min-width: 0; !* NEW *!*/
+            /*max-height: 100%;*/
+            /*max-width: 100%;*/
             height: 100%;
             width: 100%;
         }
@@ -63,7 +63,7 @@
 
     <div class="controls space-between">
         <div class="top-bar">
-            <div id="accession">
+            <div>
                 Accession (CPX-* or EBI-*):
                 <input type="text" id="accession" namne="accession">
             </div>
@@ -175,6 +175,17 @@
     document.getElementById('accession').addEventListener('change', function (event) {
         jsonCv.clear();
         xmlCv.clear();
+
+        //clear counts and legend div
+        const jsonSummaryDiv = document.getElementById("jsonSummaryDiv");
+        jsonSummaryDiv.textContent = "";
+        const xmlSummaryDiv = document.getElementById("xmlSummaryDiv");
+        xmlSummaryDiv.textContent = "";
+        const jsonLegendDiv = document.getElementById("jsonLegendDiv");
+        jsonLegendDiv.textContent = "";
+        const xmlLegendDiv = document.getElementById("xmlLegendDiv");
+        xmlLegendDiv.textContent = "";
+
         let jsonUrl, xmlUrl;
         const accession = event.target.value.toUpperCase();
         if (accession.startsWith("CPX-")) {

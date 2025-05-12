@@ -15,7 +15,7 @@ export class XmlFeatureRange {
     constructor(participant, featureRange) {
         this.participant = participant;
         this.sequenceDatumString = JSON.stringify(featureRange);//sequenceDatumString.trim();
-        // console.log("XmlSequenceDatum", this.sequenceDatumString);
+        console.log("XmlSequenceDatum", featureRange);
 
         // <mif:featureRange xmlns:mif="http://psi.hupo.org/mi/mif300">
         //     <mif:startStatus>{1,1}</mif:startStatus>
@@ -30,7 +30,7 @@ export class XmlFeatureRange {
         // </mif:featureRange>
 
         const startStatus = featureRange.startStatus.xref.primaryRef._id;
-        const startSTatusName = featureRange.startStatus.names.shortLabel;
+        const startStatusName = featureRange.startStatus.names.shortLabel;
         const endStatus = featureRange.endStatus.xref.primaryRef._id;
         const endStatusName = featureRange.endStatus.names.shortLabel;
         const begin = featureRange.begin?._position;
@@ -40,12 +40,12 @@ export class XmlFeatureRange {
         const endIntervalBegin = featureRange.endInterval?._begin;
         const endIntervalEnd = featureRange.endInterval?._end;
 
-        // console.log("startStatus", startStatus, startSTatusName,
-        //     "endStatus", endStatus, endStatusName,
-        //     "begin", begin,
-        //     "end", end,
-        //     "beginIntervalBegin", beginIntervalBegin, "beginIntervalEnd", beginIntervalEnd,
-        //     "endIntervalBegin", endIntervalBegin, "endIntervalEnd", endIntervalEnd);
+        console.log("startStatus", startStatus, startStatusName,
+            "endStatus", endStatus, endStatusName,
+            "begin", begin,
+            "end", end,
+            "beginIntervalBegin", beginIntervalBegin, "beginIntervalEnd", beginIntervalEnd,
+            "endIntervalBegin", endIntervalBegin, "endIntervalEnd", endIntervalEnd);
 
 
         // this.begin = begin ? parseInt(begin) : null;
@@ -64,8 +64,20 @@ export class XmlFeatureRange {
         //     if (parseInt(pos)) return parseInt(pos);
         //     else return pos;
         // }
-        //
-        if (!begin && !end && !beginIntervalBegin && !beginIntervalEnd && !endIntervalBegin && !endIntervalEnd ) {//(this.sequenceDatumString === "?-?") {
+
+        // when everything is uncertain, we set end to 1 and uncertainEnd to size
+        // putting it at the begining is affecting shape of line for reasons unknown
+        if (startStatus == "MI:0339" && endStatus == "MI:0339") {
+            if (typeof begin !== "undefined") {
+                console.warn("Feature Start status is undetermined but begin is set to " + begin);
+            }
+            if (typeof end !== "undefined") {
+                console.warn("Feature End status is undetermined but end is set to " + end);
+            }
+            this.end = 1;
+            this.uncertainEnd = participant.size ? participant.size : 1;
+        }
+        else if (!begin && !end && !beginIntervalBegin && !beginIntervalEnd && !endIntervalBegin && !endIntervalEnd ) {//(this.sequenceDatumString === "?-?") {
             if (startStatus === "MI:1040") { //n-term range
                 this.uncertainBegin = "n-n";
                 this.sequenceDatumString = "n-n";

@@ -204,7 +204,17 @@ export function readXml(jsObj, /*App*/ app, expand = true) {
         //add naryLinks and participants
         visitInteractions(function (datum) {
             //init n-ary link
-            const nLinkId = datum.xref.primaryRef._id || getNaryLinkIdFromInteraction(datum);
+            let xmlId;
+            for (let ref of datum.xref.secondaryRef) {
+                if (ref._db === "complex portal") {
+                    xmlId = ref._id;
+                    break;
+                }
+            }
+            if (!xmlId) {
+                xmlId = datum.xref.primaryRef._id;
+            }
+            const nLinkId = xmlId || getNaryLinkIdFromInteraction(datum);
             let nLink = app.allNaryLinks.get(nLinkId);
             if (typeof nLink === "undefined") {
                 //doesn't already exist, make new nLink
@@ -236,17 +246,16 @@ export function readXml(jsObj, /*App*/ app, expand = true) {
                     nLink.participants.push(participant);
                 }
 
-                if (jsonParticipant.stoichiometry || jsonParticipant.minStoichiometry || jsonParticipant.maxStoichiometry) {
+                if (jsonParticipant.stoichiometry?._value  || jsonParticipant.stoichiometryRange) {
                     let stoichString = "";
-                    if (jsonParticipant.stoichiometry) {
-                        stoichString += jsonParticipant.stoichiometry;
-
+                    if (jsonParticipant.stoichiometry?._value) {
+                        stoichString += jsonParticipant.stoichiometry._value;
                     }
-                    if (jsonParticipant.minStoichiometry || jsonParticipant.maxStoichiometry) {
-                        if (jsonParticipant.stoichiometry) {
+                    if (jsonParticipant.stoichiometryRange) {
+                        if (stoichString !== "") {
                             stoichString += ";";
                         }
-                        stoichString += jsonParticipant.minStoichiometry + "-" + jsonParticipant.maxStoichiometry;
+                        stoichString += jsonParticipant.stoichiometryRange._minValue + "-" + jsonParticipant.stoichiometryRange._maxValue;
                     }
                     participant.addStoichiometryLabel(stoichString);
                 }

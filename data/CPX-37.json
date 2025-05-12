@@ -131,15 +131,7 @@
         },
         {
           "db": "wwpdb",
-          "id": "8sjc"
-        },
-        {
-          "db": "wwpdb",
-          "id": "5w1f"
-        },
-        {
-          "db": "wwpdb",
-          "id": "4xjk"
+          "id": "6ds2"
         },
         {
           "db": "wwpdb",
@@ -147,7 +139,15 @@
         },
         {
           "db": "wwpdb",
-          "id": "6ds2"
+          "id": "4xjk"
+        },
+        {
+          "db": "wwpdb",
+          "id": "5w1f"
+        },
+        {
+          "db": "wwpdb",
+          "id": "8sjc"
         },
         {
           "db": "intact",
@@ -187,6 +187,8 @@
         {
           "id": "4",
           "interactorRef": "chebi_CHEBI:29035",
+          "minStoichiometry": "0",
+          "maxStoichiometry": "1",
           "bioRole": {
             "id": "MI:0499",
             "name": "unspecified role"

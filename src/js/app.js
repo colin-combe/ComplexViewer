@@ -495,16 +495,18 @@ export class App {
         // Convert xmlText to JavaScript object
         const options = {
             isArray: (name, jpath, isLeafNode, isAttribute) => {
-                return ['entrySet.entry',
-                    'entrySet.entry.interactorList.interactor',
-                    'entrySet.entry.interactionList.abstractInteraction',
-                    'entrySet.entry.interactionList.interaction',
-                    'entrySet.entry.interactionList.abstractInteraction.participantList.participant',
-                    'entrySet.entry.interactionList.interaction.participantList.participant',
-                    'entrySet.entry.interactionList.abstractInteraction.participantList.participant.featureList.feature',
-                    'entrySet.entry.interactionList.interaction.participantList.participant.featureList.feature',
-                    'entrySet.entry.interactionList.abstractInteraction.participantList.participant.featureList.feature.featureRangeList.featureRange',
-                    'entrySet.entry.interactionList.interaction.participantList.participant.featureList.feature.featureRangeList.featureRange']
+                return ["entrySet.entry",
+                    "entrySet.entry.interactorList.interactor",
+                    "entrySet.entry.interactionList.abstractInteraction",
+                    "entrySet.entry.interactionList.interaction",
+                    "entrySet.entry.interactionList.abstractInteraction.participantList.participant",
+                    "entrySet.entry.interactionList.interaction.participantList.participant",
+                    "entrySet.entry.interactionList.abstractInteraction.participantList.participant.featureList.feature",
+                    "entrySet.entry.interactionList.interaction.participantList.participant.featureList.feature",
+                    "entrySet.entry.interactionList.abstractInteraction.participantList.participant.featureList.feature.featureRangeList.featureRange",
+                    "entrySet.entry.interactionList.interaction.participantList.participant.featureList.feature.featureRangeList.featureRange",
+                    "entrySet.entry.interactionList.abstractInteraction.bindingFeatureList.bindingFeatures",
+                    "entrySet.entry.interactionList.interaction.xref.secondaryRef"]
                     .includes(jpath); // replace with your element names
             },
             ignoreAttributes: false,
