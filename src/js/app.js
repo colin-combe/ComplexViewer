@@ -508,6 +508,10 @@ export class App {
                     "entrySet.entry.interactionList.abstractInteraction.participantList.participant.featureList.feature.featureRangeList.featureRange",
                     "entrySet.entry.interactionList.interaction.participantList.participant.featureList.feature.featureRangeList.featureRange",
                     "entrySet.entry.interactionList.abstractInteraction.bindingFeatureList.bindingFeatures",
+                    "entrySet.entry.interactionList.abstractInteraction.bindingFeatureList.bindingFeatures",
+                    "entrySet.entry.interactionList.interaction.bindingFeatureList.bindingFeatures",
+                    "entrySet.entry.interactionList.abstractInteraction.inferredInteractionList.inferredInteraction",
+                    "entrySet.entry.interactionList.interaction.inferredInteractionList.inferredInteraction",
                     "entrySet.entry.interactionList.interaction.xref.secondaryRef"]
                     .includes(jpath); // replace with your element names
             },

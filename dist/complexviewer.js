@@ -19424,79 +19424,73 @@ function readXml(jsObj, /*App*/ app, expand = true) {
     // loop through participants and features
     // init binary, unary and sequence links,
     // and make needed associations between these and containing naryLink
-    visitInteractions((interaction) => {
-        if (interaction.bindingFeatureList?.bindingFeatures) {
-            for (let bindingFeatures of interaction.bindingFeatureList.bindingFeatures) {
-                const linkedFeatureIDs = bindingFeatures.participantFeatureRef;
-                const linkedFeatureCount = linkedFeatureIDs.length;
+    visitBindingFeatures(function (linkedFeatureIDs, interaction) {
+        const linkedFeatureCount = linkedFeatureIDs.length;
 
-                if (linkedFeatureCount !== 2) {
-                    alert("Linked feature count not 2");
-                }
-                else {
-                    const fromFeature = app.features.get(linkedFeatureIDs[0]);
-                    const toFeature = app.features.get(linkedFeatureIDs[1]);
-                    // console.log("fromFeature", fromFeature, "toFeature", toFeature);
-                    const fromSequenceData = fromFeature.featureRangeList.featureRange;
-                    const toSequenceData = toFeature.featureRangeList.featureRange;
-                    const fromInteractor = getNode(fromSequenceData[0]);
-                    const toInteractor = getNode(toSequenceData[0]);
-                    let link;
-                    if (fromInteractor === toInteractor) {
-                        link = getUnaryLink(fromInteractor, interaction);
-                    } else {
-                        link = getBinaryLink(fromInteractor, toInteractor, interaction);
-                    }
-                    const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, interaction);
-                    fromInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
-                    toInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
-                    link.sequenceLinks.set(sequenceLink.id, sequenceLink);
-                }
-                // }
-                // for (let i = 0; i < linkedFeatureCount; i++) { //for each linked feature
-                //     for (let j = i + 1; j < linkedFeatureCount; j++) { //for each linked feature
-                //         const fromFeature = app.features.get(linkedFeatureIDs[i]);
-                //         const toFeature = app.features.get(linkedFeatureIDs[j]);
-                //         console.log("fromFeature", fromFeature, "toFeature", toFeature);
-                //         for (let fromFeatureRange of fromFeature.featureRangeList.featureRange) {
-                //             const fromSequenceData = fromFeatureRange;
-                //             // !! code can't deal with
-                //             // !! composite binding region across two different interactors
-                //             // break feature links to different nodes into separate binary links
-                //             const toSequenceData_indexedByNodeId = new Map();
-                //             for (let toFeatureRange of toFeature.featureRangeList.featureRange) {
-                //                 const seqData = toFeatureRange;
-                //                 let nodeId = seqData.interactorRef;
-                //                 if (expand) {
-                //                     nodeId = `${nodeId}(${seqData.participantRef})`;
-                //                 }
-                //                 let toSequenceData = toSequenceData_indexedByNodeId.get(nodeId);
-                //                 if (typeof toSequenceData === "undefined") {
-                //                     toSequenceData = [];
-                //                     toSequenceData_indexedByNodeId.set(nodeId, toSequenceData);
-                //                 }
-                //                 toSequenceData = toSequenceData.push(seqData);
-                //             }
-                //
-                //             for (let toSequenceData of toSequenceData_indexedByNodeId.values()) {
-                //                 const fromInteractor = getNode(fromSequenceData);
-                //                 const toInteractor = getNode(toSequenceData[0]);
-                //                 let link;
-                //                 if (fromInteractor === toInteractor) {
-                //                     link = getUnaryLink(fromInteractor, interaction);
-                //                 } else {
-                //                     link = getBinaryLink(fromInteractor, toInteractor, interaction);
-                //                 }
-                //                 const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, interaction);
-                //                 fromInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
-                //                 toInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
-                //                 link.sequenceLinks.set(sequenceLink.id, sequenceLink);
-                //             }
-                //         }
-                //     }
-                // }
-            } // end for bindingFeatures
-        } // end if linked features
+        if (linkedFeatureCount !== 2) {
+            alert("Linked feature count not 2");
+        } else {
+            const fromFeature = app.features.get(linkedFeatureIDs[0]);
+            const toFeature = app.features.get(linkedFeatureIDs[1]);
+            // console.log("fromFeature", fromFeature, "toFeature", toFeature);
+            const fromSequenceData = fromFeature.featureRangeList.featureRange;
+            const toSequenceData = toFeature.featureRangeList.featureRange;
+            const fromInteractor = getNode(fromSequenceData[0]);
+            const toInteractor = getNode(toSequenceData[0]);
+            let link;
+            if (fromInteractor === toInteractor) {
+                link = getUnaryLink(fromInteractor, interaction);
+            } else {
+                link = getBinaryLink(fromInteractor, toInteractor, interaction);
+            }
+            const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, interaction);
+            fromInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
+            toInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
+            link.sequenceLinks.set(sequenceLink.id, sequenceLink);
+        }
+        // }
+        // for (let i = 0; i < linkedFeatureCount; i++) { //for each linked feature
+        //     for (let j = i + 1; j < linkedFeatureCount; j++) { //for each linked feature
+        //         const fromFeature = app.features.get(linkedFeatureIDs[i]);
+        //         const toFeature = app.features.get(linkedFeatureIDs[j]);
+        //         console.log("fromFeature", fromFeature, "toFeature", toFeature);
+        //         for (let fromFeatureRange of fromFeature.featureRangeList.featureRange) {
+        //             const fromSequenceData = fromFeatureRange;
+        //             // !! code can't deal with
+        //             // !! composite binding region across two different interactors
+        //             // break feature links to different nodes into separate binary links
+        //             const toSequenceData_indexedByNodeId = new Map();
+        //             for (let toFeatureRange of toFeature.featureRangeList.featureRange) {
+        //                 const seqData = toFeatureRange;
+        //                 let nodeId = seqData.interactorRef;
+        //                 if (expand) {
+        //                     nodeId = `${nodeId}(${seqData.participantRef})`;
+        //                 }
+        //                 let toSequenceData = toSequenceData_indexedByNodeId.get(nodeId);
+        //                 if (typeof toSequenceData === "undefined") {
+        //                     toSequenceData = [];
+        //                     toSequenceData_indexedByNodeId.set(nodeId, toSequenceData);
+        //                 }
+        //                 toSequenceData = toSequenceData.push(seqData);
+        //             }
+        //
+        //             for (let toSequenceData of toSequenceData_indexedByNodeId.values()) {
+        //                 const fromInteractor = getNode(fromSequenceData);
+        //                 const toInteractor = getNode(toSequenceData[0]);
+        //                 let link;
+        //                 if (fromInteractor === toInteractor) {
+        //                     link = getUnaryLink(fromInteractor, interaction);
+        //                 } else {
+        //                     link = getBinaryLink(fromInteractor, toInteractor, interaction);
+        //                 }
+        //                 const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, interaction);
+        //                 fromInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
+        //                 toInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
+        //                 link.sequenceLinks.set(sequenceLink.id, sequenceLink);
+        //             }
+        //         }
+        //     }
+        // }
     });
 
     //init complexes
@@ -19555,6 +19549,20 @@ function readXml(jsObj, /*App*/ app, expand = true) {
         }
     }
 
+    function complexPortalAccFromXref(xref) {
+        let xmlId;
+        for (let ref of xref.secondaryRef) {
+            if (ref._db === "complex portal") {
+                xmlId = ref._id;
+                break;
+            }
+        }
+        if (!xmlId) {
+            xmlId = xref.primaryRef._id;
+        }
+        return xmlId;
+    }
+
     function readStoichExpanded() {
         //get maximum stoichiometry
         // let maxStoich = 0;
@@ -19576,16 +19584,7 @@ function readXml(jsObj, /*App*/ app, expand = true) {
         //add naryLinks and participants
         visitInteractions(function (datum) {
             //init n-ary link
-            let xmlId;
-            for (let ref of datum.xref.secondaryRef) {
-                if (ref._db === "complex portal") {
-                    xmlId = ref._id;
-                    break;
-                }
-            }
-            if (!xmlId) {
-                xmlId = datum.xref.primaryRef._id;
-            }
+            let xmlId = complexPortalAccFromXref(datum.xref);
             const nLinkId = xmlId || getNaryLinkIdFromInteraction(datum);
             let nLink = app.allNaryLinks.get(nLinkId);
             if (typeof nLink === "undefined") {
@@ -19659,7 +19658,7 @@ function readXml(jsObj, /*App*/ app, expand = true) {
                 participant = new _viz_interactor_complex__WEBPACK_IMPORTED_MODULE_6__.Complex(participantId, app, interactorRef);
                 complexes.set(participantId, participant);
             } else {
-                participant = new _viz_interactor_complex_symbol__WEBPACK_IMPORTED_MODULE_7__.ComplexSymbol(participantId, app, interactorRef, interactor);
+                participant = new _viz_interactor_complex_symbol__WEBPACK_IMPORTED_MODULE_7__.ComplexSymbol(participantId, app, complexPortalAccFromXref(interactor.xref), interactor);
             }
         } else if (interactor.interactorType.xref.primaryRef._id === "MI:1304" //molecule set
             ||
@@ -19947,7 +19946,6 @@ function readXml(jsObj, /*App*/ app, expand = true) {
         return link;
     }
 
-
     function visitInteractions(interactionCallback) {
         for (let entry of jsObj.entrySet.entry) {
             // console.log("*entry*", entry);
@@ -19986,6 +19984,27 @@ function readXml(jsObj, /*App*/ app, expand = true) {
                 }
             });
         }
+    }
+
+    //visits both binding features and inferred links
+    function visitBindingFeatures(bindingFeaturesCallback){
+        visitInteractions((interaction) => {
+            if (interaction.bindingFeatureList?.bindingFeatures) {
+                for (let bindingFeatures of interaction.bindingFeatureList.bindingFeatures) {
+                    const linkedFeatureIDs = bindingFeatures.participantFeatureRef;
+                    bindingFeaturesCallback(linkedFeatureIDs, interaction);
+                }
+            }
+        });
+
+        visitInteractions((interaction => {
+            if (interaction.inferredInteractionList?.inferredInteraction) {
+                for (let bindingFeatures of interaction.inferredInteractionList.inferredInteraction) {
+                    const linkedFeatureIDs = bindingFeatures.participant.map(p => p.participantFeatureRef);
+                    bindingFeaturesCallback(linkedFeatureIDs, interaction);
+                }
+            }
+        }));
     }
 }
 
@@ -59870,6 +59889,10 @@ class App {
                     "entrySet.entry.interactionList.abstractInteraction.participantList.participant.featureList.feature.featureRangeList.featureRange",
                     "entrySet.entry.interactionList.interaction.participantList.participant.featureList.feature.featureRangeList.featureRange",
                     "entrySet.entry.interactionList.abstractInteraction.bindingFeatureList.bindingFeatures",
+                    "entrySet.entry.interactionList.abstractInteraction.bindingFeatureList.bindingFeatures",
+                    "entrySet.entry.interactionList.interaction.bindingFeatureList.bindingFeatures",
+                    "entrySet.entry.interactionList.abstractInteraction.inferredInteractionList.inferredInteraction",
+                    "entrySet.entry.interactionList.interaction.inferredInteractionList.inferredInteraction",
                     "entrySet.entry.interactionList.interaction.xref.secondaryRef"]
                     .includes(jpath); // replace with your element names
             },
