@@ -15,7 +15,7 @@ export class XmlFeatureRange {
     constructor(participant, featureRange) {
         this.participant = participant;
         this.sequenceDatumString = JSON.stringify(featureRange);//sequenceDatumString.trim();
-        console.log("XmlSequenceDatum", featureRange);
+        // console.log("XmlSequenceDatum", featureRange);
 
         // <mif:featureRange xmlns:mif="http://psi.hupo.org/mi/mif300">
         //     <mif:startStatus>{1,1}</mif:startStatus>
@@ -40,12 +40,12 @@ export class XmlFeatureRange {
         const endIntervalBegin = featureRange.endInterval?._begin;
         const endIntervalEnd = featureRange.endInterval?._end;
 
-        console.log("startStatus", startStatus, startStatusName,
-            "endStatus", endStatus, endStatusName,
-            "begin", begin,
-            "end", end,
-            "beginIntervalBegin", beginIntervalBegin, "beginIntervalEnd", beginIntervalEnd,
-            "endIntervalBegin", endIntervalBegin, "endIntervalEnd", endIntervalEnd);
+        // console.log("startStatus", startStatus, startStatusName,
+        //     "endStatus", endStatus, endStatusName,
+        //     "begin", begin,
+        //     "end", end,
+        //     "beginIntervalBegin", beginIntervalBegin, "beginIntervalEnd", beginIntervalEnd,
+        //     "endIntervalBegin", endIntervalBegin, "endIntervalEnd", endIntervalEnd);
 
 
         // this.begin = begin ? parseInt(begin) : null;

@@ -20,6 +20,8 @@ import {XMLParser} from "fast-xml-parser";
 export class App {
     constructor(/*HTMLDivElement*/networkDiv, maxCountInitiallyExpanded = 4) {
         this.debug = false;
+        // This ensures each App instance has a unique ID for DOM scoping.
+        this.instanceId = `app-${Math.random().toString(36).substr(2, 9)}`;
         this.el = networkDiv;
         //avoids prob with 'save - web page complete'
         this.el.textContent = ""; //https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
@@ -27,7 +29,7 @@ export class App {
         this.d3cola = cola.d3adaptor(d3).groupCompactness(Number.MIN_VALUE).avoidOverlaps(true); //1e-5
 
         const customMenuSel = d3.select(this.el)
-            .append("div").classed("custom-menu-margin", true)
+            .append("div").classed(`custom-menu-margin ${this.instanceId}`, true)
             .append("div").classed("custom-menu", true)
             .append("ul");
 
@@ -53,7 +55,7 @@ export class App {
                 this.preventDefaultsAndStopPropagation(d);
                 this.contextMenuProt.setStickScale(d, this.contextMenuPoint);
             });
-        const contextMenu = d3.select(".custom-menu-margin").node();
+        const contextMenu = d3.select(`.custom-menu-margin.${this.instanceId}`).node();
 
         const self = this;
         contextMenu.onmouseout = function (evt) {
@@ -217,7 +219,7 @@ export class App {
     }
 
     collapseProtein() {
-        d3.select(".custom-menu-margin").style("display", "none");
+        d3.select(`.custom-menu-margin.${this.instanceId}`).style("display", "none");
         this.contextMenuProt.setExpanded(false, this.contextMenuPoint);
         this.contextMenuProt = null;
         this.notifyExpandListeners();
@@ -877,7 +879,7 @@ export class App {
         this.d3cola.stop();
         this.dragStart = evt;
         this.state = App.STATES.SELECT_PAN;
-        d3.select(".custom-menu-margin").style("display", "none");
+        d3.select(`.custom-menu-margin.${this.instanceId}`).style("display", "none");
     }
 
     touchStart(evt) {
@@ -885,7 +887,7 @@ export class App {
         this.d3cola.stop();
         this.dragStart = evt;
         this.state = App.STATES.SELECT_PAN;
-        d3.select(".custom-menu-margin").style("display", "none");
+        d3.select(`.custom-menu-margin.${this.instanceId}`).style("display", "none");
     }
 
     move(evt) {
@@ -946,7 +948,7 @@ export class App {
                     //     p = this.getEventPoint(this.dragStart);
                     // }
                     this.contextMenuPoint = p.matrixTransform(this.container.getCTM().inverse());
-                    const menu = d3.select(".custom-menu-margin");
+                    const menu = d3.select(`.custom-menu-margin.${this.instanceId}`);
                     let pageX, pageY;
                     if (evt.pageX) {
                         pageX = evt.pageX;
