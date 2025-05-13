@@ -19544,10 +19544,12 @@ function readXml(jsObj, /*App*/ app, expand = true) {
 
     function complexPortalAccFromXref(xref) {
         let xmlId;
-        for (let ref of xref.secondaryRef) {
-            if (ref._db === "complex portal") {
-                xmlId = ref._id;
-                break;
+        if (xref.secondaryRef) {
+            for (let ref of xref.secondaryRef) {
+                if (ref._db === "complex portal") {
+                    xmlId = ref._id;
+                    break;
+                }
             }
         }
         if (!xmlId) {
@@ -19592,7 +19594,7 @@ function readXml(jsObj, /*App*/ app, expand = true) {
 
             //init participants
             for (let jsonParticipant of datum.participantList.participant) {
-                let intRef = jsonParticipant.interactorRef || jsonParticipant.interactionRef;
+                let intRef = jsonParticipant.interactorRef;
                 if (!intRef) {
                     intRef = jsonParticipant.interactor._id;
                 }

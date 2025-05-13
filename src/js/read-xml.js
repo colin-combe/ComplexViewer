@@ -172,10 +172,12 @@ export function readXml(jsObj, /*App*/ app, expand = true) {
 
     function complexPortalAccFromXref(xref) {
         let xmlId;
-        for (let ref of xref.secondaryRef) {
-            if (ref._db === "complex portal") {
-                xmlId = ref._id;
-                break;
+        if (xref.secondaryRef) {
+            for (let ref of xref.secondaryRef) {
+                if (ref._db === "complex portal") {
+                    xmlId = ref._id;
+                    break;
+                }
             }
         }
         if (!xmlId) {
