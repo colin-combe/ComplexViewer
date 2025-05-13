@@ -54,34 +54,27 @@ export function readXml(jsObj, /*App*/ app, expand = true) {
     // and make needed associations between these and containing naryLink
     visitBindingFeatures(function (linkedFeatureIDs, interaction) {
         const linkedFeatureCount = linkedFeatureIDs.length;
-
-        if (linkedFeatureCount !== 2) {
-            alert("Linked feature count not 2");
-        } else {
-            const fromFeature = app.features.get(linkedFeatureIDs[0]);
-            const toFeature = app.features.get(linkedFeatureIDs[1]);
-            // console.log("fromFeature", fromFeature, "toFeature", toFeature);
-            const fromSequenceData = fromFeature.featureRangeList.featureRange;
-            const toSequenceData = toFeature.featureRangeList.featureRange;
-            const fromInteractor = getNode(fromSequenceData[0]);
-            const toInteractor = getNode(toSequenceData[0]);
-            let link;
-            if (fromInteractor === toInteractor) {
-                link = getUnaryLink(fromInteractor, interaction);
-            } else {
-                link = getBinaryLink(fromInteractor, toInteractor, interaction);
-            }
-            const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, interaction);
-            fromInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
-            toInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
-            link.sequenceLinks.set(sequenceLink.id, sequenceLink);
-        }
-        // }
-        // for (let i = 0; i < linkedFeatureCount; i++) { //for each linked feature
-        //     for (let j = i + 1; j < linkedFeatureCount; j++) { //for each linked feature
-        //         const fromFeature = app.features.get(linkedFeatureIDs[i]);
-        //         const toFeature = app.features.get(linkedFeatureIDs[j]);
+        for (let i = 0; i < linkedFeatureCount; i++) { //for each linked feature
+            for (let j = i + 1; j < linkedFeatureCount; j++) { //for each linked feature
+                const fromFeature = app.features.get(linkedFeatureIDs[i]);
+                const toFeature = app.features.get(linkedFeatureIDs[j]);
         //         console.log("fromFeature", fromFeature, "toFeature", toFeature);
+                    const fromSequenceData = fromFeature.featureRangeList.featureRange;
+                    const toSequenceData = toFeature.featureRangeList.featureRange;
+                    const fromInteractor = getNode(fromSequenceData[0]);
+                    const toInteractor = getNode(toSequenceData[0]);
+                    let link;
+                    if (fromInteractor === toInteractor) {
+                        link = getUnaryLink(fromInteractor, interaction);
+                    } else {
+                        link = getBinaryLink(fromInteractor, toInteractor, interaction);
+                    }
+                    const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, interaction);
+                    fromInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
+                    toInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
+                    link.sequenceLinks.set(sequenceLink.id, sequenceLink);
+
+
         //         for (let fromFeatureRange of fromFeature.featureRangeList.featureRange) {
         //             const fromSequenceData = fromFeatureRange;
         //             // !! code can't deal with
@@ -117,8 +110,8 @@ export function readXml(jsObj, /*App*/ app, expand = true) {
         //                 link.sequenceLinks.set(sequenceLink.id, sequenceLink);
         //             }
         //         }
-        //     }
-        // }
+            }
+        }
     });
 
     //init complexes
