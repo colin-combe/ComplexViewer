@@ -17,7 +17,9 @@ export class Complex extends Interactor {
 
     initLink(naryLink) {
         this.naryLink = naryLink;
-        this.naryLink.path.classList.add("complex-outline");
+        if (this.app.stoichiometryExpanded) {
+            this.naryLink.path.classList.add("complex-outline");
+        }
     }
 
     setLinked() {

@@ -17,153 +17,162 @@ import {cloneComplexRefs} from "./clone-complex-refs";
 import {cloneComplexesStoich} from "./clone-complex-stoich";
 
 // reads MI JSON format
-export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
-    app.stoichiometryExpanded = expand;
-    //check that we've got a parsed javascript object here, not a String
-    miJson = (typeof miJson === "object") ? miJson : JSON.parse(miJson);
-
-    miJson.data = miJson.data.reverse();
-
-    app.features = new Map();
-
+export function readMijson(inputObj, /*App*/ app, expand = "expand") {
+    preprocessInput();
     const complexes = new Map();
-
     // expand complexes based on stoichiometry
-    if (expand) {
-        // miJson = cloneComplexesStoich(miJson); //temp disabled to help compare to xml
+    if (expand === "expand") {
+        inputObj = cloneComplexesStoich(inputObj);
     }
-
     // may be multiple references to a complex, we want different set of participants for each reference to same complex
-    miJson = cloneComplexRefs(miJson);
-
-    //get interactors
+    inputObj = cloneComplexRefs(inputObj);
+    //get interactors - this could prob be before cloning of complexes?
     app.interactors = new Map();
-    for (let datum of miJson.data) {
+    for (let datum of inputObj.data) {
         if (datum.object === "interactor") {
             app.interactors.set(datum.id, datum);
         }
     }
+    expand != "collapse" ? participantBasedRead() : interactorBasedRead();
+    initLinks();
+    initComplexes();
+    makeMiFeaturesIntoAnnotations();
 
-    expand ? readStoichExpanded() : readStoichUnexpanded();
-
-    // loop through participants and features
-    // init binary, unary and sequence links,
-    // and make needed associations between these and containing naryLink
-    for (let datum of miJson.data) {
-        if (datum.object === "interaction") {
-            for (let jsonParticipant of datum.participants) {
-                let features = new Array(0);
-                if (jsonParticipant.features) features = jsonParticipant.features;
-
-                for (let feature of features) { // for each feature
-                    const fromSequenceData = feature.sequenceData;
-                    if (feature.linkedFeatures) { // if linked features
-                        const linkedFeatureIDs = feature.linkedFeatures;
-                        const linkedFeatureCount = linkedFeatureIDs.length;
-                        for (let lfi = 0; lfi < linkedFeatureCount; lfi++) { //for each linked feature
-
-                            // !! following is a hack, code can't deal with
-                            // !! composite binding region across two different interactors
-                            // break feature links to different nodes into separate binary links
-                            const toSequenceData_indexedByNodeId = new Map();
-
-                            const linkedFeature = app.features.get(linkedFeatureIDs[lfi]);
-                            for (let seqData of linkedFeature.sequenceData) {
-                                let nodeId = seqData.interactorRef;
-                                if (expand) {
-                                    nodeId = `${nodeId}(${seqData.participantRef})`;
-                                }
-                                let toSequenceData = toSequenceData_indexedByNodeId.get(nodeId);
-                                if (typeof toSequenceData === "undefined") {
-                                    toSequenceData = [];
-                                    toSequenceData_indexedByNodeId.set(nodeId, toSequenceData);
-                                }
-                                toSequenceData = toSequenceData.push(seqData);
-                            }
-
-                            for (let toSequenceData of toSequenceData_indexedByNodeId.values()) {
-                                const fromInteractor = getNode(fromSequenceData[0]);
-                                const toInteractor = getNode(toSequenceData[0]);
-                                let link;
-                                if (fromInteractor === toInteractor) {
-                                    link = getUnaryLink(fromInteractor, datum);
-                                } else {
-                                    link = getBinaryLink(fromInteractor, toInteractor, datum);
-                                }
-                                const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, datum);
-                                fromInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
-                                toInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
-                                link.sequenceLinks.set(sequenceLink.id, sequenceLink);
-                            }
-
-                        } // end for each linked feature
-
-                    } // end if linked features
-                } // end for each feature
-            }
+    function preprocessInput() {
+        //still work if you pass in boolean for expand parameter (old way)
+        if (typeof expand === "boolean") {
+            expand = expand ? "expand" : "collapse";
         }
+        app.stoichiometryExpanded = (expand == "expand");
+        //check that we've got a parsed javascript object here, not a String
+        inputObj = (typeof inputObj === "object") ? inputObj : JSON.parse(inputObj);
+        inputObj.data = inputObj.data.reverse();
     }
 
-    //init complexes
-    app.complexes = Array.from(complexes.values()); // todo - why not just keep it in map
-    for (let c = 0; c < app.complexes.length; c++) {
-        const complex = app.complexes[c];
-        let interactionId;
-        if (expand) {
-            interactionId = complex.id.substring(0, complex.id.indexOf("("));
-        } else {
-            interactionId = complex.id;
-        }
-        for (let datum of miJson.data) {
-            if (datum.object === "interaction" && datum.id === interactionId) {
-                const nLinkId = getNaryLinkIdFromInteraction(datum);
-                const naryLink = app.allNaryLinks.get(nLinkId);
-                complex.initLink(naryLink);
-                naryLink.complex = complex;
-            }
-        }
-    }
+    function initLinks() {
+        // loop through participants and features
+        // init binary, unary and sequence links,
+        // and make needed associations between these and containing naryLink
+        for (let datum of inputObj.data) {
+            if (datum.object === "interaction") {
+                for (let jsonParticipant of datum.participants) {
+                    let features = new Array(0);
+                    if (jsonParticipant.features) features = jsonParticipant.features;
 
-    //make mi features into annotations
-    for (let feature of app.features.values()) {
-        // add features to interactors/participants/nodes
-        // console.log(`FEATURE:${feature.name}`, feature.sequenceData);
-        let annotName = "";
-        if (typeof feature.name !== "undefined") {
-            annotName += feature.name + " ";
-        }
-        if (typeof feature.detmethod !== "undefined") {
-            annotName += ", " + feature.detmethod.name;
-        }
-        // the id info we need is inside sequenceData att
-        if (feature.sequenceData) { // todo - still needed?
-            for (let seqDatum of feature.sequenceData) {
-                let mID = seqDatum.interactorRef;
-                if (expand) {
-                    mID = `${mID}(${seqDatum.participantRef})`;
+                    for (let feature of features) { // for each feature
+                        const fromSequenceData = feature.sequenceData;
+                        if (feature.linkedFeatures) { // if linked features
+                            const linkedFeatureIDs = feature.linkedFeatures;
+                            const linkedFeatureCount = linkedFeatureIDs.length;
+                            for (let lfi = 0; lfi < linkedFeatureCount; lfi++) { //for each linked feature
+
+                                // !! following is a hack, code can't deal with
+                                // !! composite binding region across two different interactors
+                                // break feature links to different nodes into separate binary links
+                                const toSequenceData_indexedByNodeId = new Map();
+
+                                const linkedFeature = app.features.get(linkedFeatureIDs[lfi]);
+                                for (let seqData of linkedFeature.sequenceData) {
+                                    let nodeId = seqData.interactorRef;
+                                    if (expand != "collapse") {
+                                        nodeId = `${nodeId}(${seqData.participantRef})`;
+                                    }
+                                    let toSequenceData = toSequenceData_indexedByNodeId.get(nodeId);
+                                    if (typeof toSequenceData === "undefined") {
+                                        toSequenceData = [];
+                                        toSequenceData_indexedByNodeId.set(nodeId, toSequenceData);
+                                    }
+                                    toSequenceData = toSequenceData.push(seqData);
+                                }
+
+                                for (let toSequenceData of toSequenceData_indexedByNodeId.values()) {
+                                    const fromInteractor = getNode(fromSequenceData[0]);
+                                    const toInteractor = getNode(toSequenceData[0]);
+                                    let link;
+                                    if (fromInteractor === toInteractor) {
+                                        link = getUnaryLink(fromInteractor, datum);
+                                    } else {
+                                        link = getBinaryLink(fromInteractor, toInteractor, datum);
+                                    }
+                                    const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, datum);
+                                    fromInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
+                                    toInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
+                                    link.sequenceLinks.set(sequenceLink.id, sequenceLink);
+                                }
+
+                            } // end for each linked feature
+
+                        } // end if linked features
+                    } // end for each feature
                 }
-                // console.log("*", mID, seqDatum);
-                const molecule = app.participants.get(mID);
-                if (molecule) {
-                    const seqFeature = new SequenceDatum(molecule, seqDatum.pos);
-                    const annotation = new Annotation(annotName, seqFeature);
-                    let miFeatures = molecule.annotationSets.get("MI Features");
-                    if (!miFeatures) {
-                        miFeatures = [];
-                        molecule.annotationSets.set("MI Features", miFeatures);
+            }
+        }
+    }
+
+    function initComplexes() {
+        //init complexes
+        app.complexes = Array.from(complexes.values()); // todo - why not just keep it in map
+        for (let c = 0; c < app.complexes.length; c++) {
+            const complex = app.complexes[c];
+            let interactionId;
+            if (expand !== "collapse") {
+                interactionId = complex.id.substring(0, complex.id.indexOf("("));
+            } else {
+                interactionId = complex.id;
+            }
+            for (let datum of inputObj.data) {
+                if (datum.object === "interaction" && datum.id === interactionId) {
+                    const nLinkId = getNaryLinkIdFromInteraction(datum);
+                    const naryLink = app.allNaryLinks.get(nLinkId);
+                    complex.initLink(naryLink);
+                    naryLink.complex = complex;
+                }
+            }
+        }
+    }
+
+    function makeMiFeaturesIntoAnnotations() {
+        //make mi features into annotations
+        for (let feature of app.features.values()) {
+            // add features to interactors/participants/nodes
+            // console.log(`FEATURE:${feature.name}`, feature.sequenceData);
+            let annotName = "";
+            if (typeof feature.name !== "undefined") {
+                annotName += feature.name + " ";
+            }
+            if (typeof feature.detmethod !== "undefined") {
+                annotName += ", " + feature.detmethod.name;
+            }
+            // the id info we need is inside sequenceData att
+            if (feature.sequenceData) { // todo - still needed?
+                for (let seqDatum of feature.sequenceData) {
+                    let mID = seqDatum.interactorRef;
+                    if (expand !== "collapse") {
+                        mID = `${mID}(${seqDatum.participantRef})`;
                     }
-                    miFeatures.push(annotation);
-                } else {
-                    console.log(`participant ${mID} not found!`);
+                    // console.log("*", mID, seqDatum);
+                    const molecule = app.participants.get(mID);
+                    if (molecule) {
+                        const seqFeature = new SequenceDatum(molecule, seqDatum.pos);
+                        const annotation = new Annotation(annotName, seqFeature);
+                        let miFeatures = molecule.annotationSets.get("MI Features");
+                        if (!miFeatures) {
+                            miFeatures = [];
+                            molecule.annotationSets.set("MI Features", miFeatures);
+                        }
+                        miFeatures.push(annotation);
+                    } else {
+                        console.log(`participant ${mID} not found!`);
+                    }
                 }
             }
         }
     }
 
-    function readStoichExpanded() {
+    function participantBasedRead() {
         //get maximum stoichiometry
         let maxStoich = 0;
-        for (let datum of miJson.data) {
+        for (let datum of inputObj.data) {
             if (datum.object === "interaction") {
                 for (let jsonParticipant of datum.participants) {
                     if (jsonParticipant.stoichiometry && (jsonParticipant.stoichiometry - 0) > maxStoich) {
@@ -173,13 +182,13 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
             }
         }
         if (maxStoich < 20) {
-            //miJson = matrix(miJson); //temp disabled to help compare to xml
+            inputObj = matrix(inputObj);
         }
 
         indexFeatures();
 
         //add naryLinks and participants
-        for (let datum of miJson.data) {
+        for (let datum of inputObj.data) {
             if (datum.object === "interaction") {
                 //init n-ary link
                 const nLinkId = datum.id || getNaryLinkIdFromInteraction(datum);
@@ -230,6 +239,7 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
         }
     }
 
+    //todo -refactor to use switch / case
     function newParticipant(interactor, participantId, interactorRef) {
         let participant;
         if (typeof interactor == "undefined" || interactor.type.id === "MI:1302") {
@@ -237,7 +247,7 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
             // MI:0314 - interaction?, MI:0317 - complex? and its many subclasses
 
             let interactionExists = false;
-            for (let datum of miJson.data) {
+            for (let datum of inputObj.data) {
                 if (datum.object === "interaction" && datum.id === interactorRef) {
                     interactionExists = true;
                     break;
@@ -248,7 +258,7 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
                 participant = new Complex(participantId, app, interactor, interactorRef);
                 complexes.set(participantId, participant);
             } else {
-                participant = new ComplexSymbol(participantId, app, interactorRef, interactor);
+                participant = new ComplexSymbol(participantId, app, interactorRef, interactor); //todo - param order
             }
         } else if (interactor.type.id === "MI:1304" //molecule set
             ||
@@ -327,7 +337,7 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
     function indexFeatures() {
         //create indexed collection of all features from interactions
         // - still seems like a good starting point?
-        for (let datum of miJson.data) {
+        for (let datum of inputObj.data) {
             if (datum.object === "interaction") {
                 for (let jsonParticipant of datum.participants) {
                     let features = new Array(0);
@@ -354,18 +364,18 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
         }
     }
 
-    function readStoichUnexpanded() {
+    function interactorBasedRead() {
         //get interactors
         for (let interactor of app.interactors.values()) {
             const participantId = interactor.id;
-            const participant = newParticipant(interactor, participantId);
+            const participant = newParticipant(interactor, participantId, participantId);
             app.participants.set(participantId, participant);
         }
 
         indexFeatures();
 
         //add naryLinks
-        for (let datum of miJson.data) {
+        for (let datum of inputObj.data) {
             if (datum.object === "interaction") {
                 const jsonParticipants = datum.participants;
                 const participantCount = jsonParticipants.length;
@@ -388,11 +398,10 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
 
                     if (typeof participant === "undefined") {
                         //must be a previously unencountered complex
-                        participant = new Complex(intRef, app);
+                        participant = new Complex(intRef, app, participant, intRef);
                         complexes.set(intRef, participant);
                         app.participants.set(intRef, participant);
                     }
-
 
                     participant.naryLinks.set(nLinkId, nLink);
                     if (nLink.participants.indexOf(participant) === -1) {
@@ -431,7 +440,7 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
         //make id
         for (let pi = 0; pi < participantCount; pi++) {
             let pID = jsonParticipants[pi].interactorRef;
-            if (expand) {
+            if (expand != "collapse") {
                 pID = `${pID}(${jsonParticipants[pi].id})`;
             }
             pIDs.add(pID);
@@ -442,7 +451,7 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
 
     function getNode(seqDatum) {
         let id = seqDatum.interactorRef;
-        if (expand) {
+        if (expand != "collapse") {
             id = `${id}(${seqDatum.participantRef})`;
         }
         return app.participants.get(id);
@@ -455,7 +464,7 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
             for (let s = 0; s < seqData.length; s++) {
                 const seq = seqData[s];
                 let id = seq.interactorRef;
-                if (expand) {
+                if (expand != "collapse") {
                     id = `${id}(${seq.participantRef})`;
                 }
                 id = `${id}:${seq.pos}`;

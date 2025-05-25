@@ -4,6 +4,7 @@ import {svgns} from "../../svgns";
 export class ComplexSymbol extends Interactor {
     constructor(id, app, name, json) { //, name) {
         super();
+        console.log("ComplexSymbol constructor: ", id, app, name, json);
         this.init(id, app, json, name);
         this.upperGroup = document.createElementNS(svgns, "g");
         this.initLabel();

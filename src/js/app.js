@@ -203,6 +203,7 @@ export class App {
         this.allUnaryLinks = new Map();
         this.allSequenceLinks = new Map();
         this.complexes = [];
+        this.features = new Map();
 
         //lighten complex colors
         let complexColors = [];

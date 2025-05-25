@@ -18811,153 +18811,162 @@ __webpack_require__.r(__webpack_exports__);
 
 
 // reads MI JSON format
-function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
-    app.stoichiometryExpanded = expand;
-    //check that we've got a parsed javascript object here, not a String
-    miJson = (typeof miJson === "object") ? miJson : JSON.parse(miJson);
-
-    miJson.data = miJson.data.reverse();
-
-    app.features = new Map();
-
+function readMijson(inputObj, /*App*/ app, expand = "expand") {
+    preprocessInput();
     const complexes = new Map();
-
     // expand complexes based on stoichiometry
-    if (expand) {
-        // miJson = cloneComplexesStoich(miJson); //temp disabled to help compare to xml
+    if (expand === "expand") {
+        inputObj = (0,_clone_complex_stoich__WEBPACK_IMPORTED_MODULE_16__.cloneComplexesStoich)(inputObj);
     }
-
     // may be multiple references to a complex, we want different set of participants for each reference to same complex
-    miJson = (0,_clone_complex_refs__WEBPACK_IMPORTED_MODULE_15__.cloneComplexRefs)(miJson);
-
-    //get interactors
+    inputObj = (0,_clone_complex_refs__WEBPACK_IMPORTED_MODULE_15__.cloneComplexRefs)(inputObj);
+    //get interactors - this could prob be before cloning of complexes?
     app.interactors = new Map();
-    for (let datum of miJson.data) {
+    for (let datum of inputObj.data) {
         if (datum.object === "interactor") {
             app.interactors.set(datum.id, datum);
         }
     }
+    expand != "collapse" ? participantBasedRead() : interactorBasedRead();
+    initLinks();
+    initComplexes();
+    makeMiFeaturesIntoAnnotations();
 
-    expand ? readStoichExpanded() : readStoichUnexpanded();
-
-    // loop through participants and features
-    // init binary, unary and sequence links,
-    // and make needed associations between these and containing naryLink
-    for (let datum of miJson.data) {
-        if (datum.object === "interaction") {
-            for (let jsonParticipant of datum.participants) {
-                let features = new Array(0);
-                if (jsonParticipant.features) features = jsonParticipant.features;
-
-                for (let feature of features) { // for each feature
-                    const fromSequenceData = feature.sequenceData;
-                    if (feature.linkedFeatures) { // if linked features
-                        const linkedFeatureIDs = feature.linkedFeatures;
-                        const linkedFeatureCount = linkedFeatureIDs.length;
-                        for (let lfi = 0; lfi < linkedFeatureCount; lfi++) { //for each linked feature
-
-                            // !! following is a hack, code can't deal with
-                            // !! composite binding region across two different interactors
-                            // break feature links to different nodes into separate binary links
-                            const toSequenceData_indexedByNodeId = new Map();
-
-                            const linkedFeature = app.features.get(linkedFeatureIDs[lfi]);
-                            for (let seqData of linkedFeature.sequenceData) {
-                                let nodeId = seqData.interactorRef;
-                                if (expand) {
-                                    nodeId = `${nodeId}(${seqData.participantRef})`;
-                                }
-                                let toSequenceData = toSequenceData_indexedByNodeId.get(nodeId);
-                                if (typeof toSequenceData === "undefined") {
-                                    toSequenceData = [];
-                                    toSequenceData_indexedByNodeId.set(nodeId, toSequenceData);
-                                }
-                                toSequenceData = toSequenceData.push(seqData);
-                            }
-
-                            for (let toSequenceData of toSequenceData_indexedByNodeId.values()) {
-                                const fromInteractor = getNode(fromSequenceData[0]);
-                                const toInteractor = getNode(toSequenceData[0]);
-                                let link;
-                                if (fromInteractor === toInteractor) {
-                                    link = getUnaryLink(fromInteractor, datum);
-                                } else {
-                                    link = getBinaryLink(fromInteractor, toInteractor, datum);
-                                }
-                                const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, datum);
-                                fromInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
-                                toInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
-                                link.sequenceLinks.set(sequenceLink.id, sequenceLink);
-                            }
-
-                        } // end for each linked feature
-
-                    } // end if linked features
-                } // end for each feature
-            }
+    function preprocessInput() {
+        //still work if you pass in boolean for expand parameter (old way)
+        if (typeof expand === "boolean") {
+            expand = expand ? "expand" : "collapse";
         }
+        app.stoichiometryExpanded = (expand == "expand");
+        //check that we've got a parsed javascript object here, not a String
+        inputObj = (typeof inputObj === "object") ? inputObj : JSON.parse(inputObj);
+        inputObj.data = inputObj.data.reverse();
     }
 
-    //init complexes
-    app.complexes = Array.from(complexes.values()); // todo - why not just keep it in map
-    for (let c = 0; c < app.complexes.length; c++) {
-        const complex = app.complexes[c];
-        let interactionId;
-        if (expand) {
-            interactionId = complex.id.substring(0, complex.id.indexOf("("));
-        } else {
-            interactionId = complex.id;
-        }
-        for (let datum of miJson.data) {
-            if (datum.object === "interaction" && datum.id === interactionId) {
-                const nLinkId = getNaryLinkIdFromInteraction(datum);
-                const naryLink = app.allNaryLinks.get(nLinkId);
-                complex.initLink(naryLink);
-                naryLink.complex = complex;
-            }
-        }
-    }
+    function initLinks() {
+        // loop through participants and features
+        // init binary, unary and sequence links,
+        // and make needed associations between these and containing naryLink
+        for (let datum of inputObj.data) {
+            if (datum.object === "interaction") {
+                for (let jsonParticipant of datum.participants) {
+                    let features = new Array(0);
+                    if (jsonParticipant.features) features = jsonParticipant.features;
 
-    //make mi features into annotations
-    for (let feature of app.features.values()) {
-        // add features to interactors/participants/nodes
-        // console.log(`FEATURE:${feature.name}`, feature.sequenceData);
-        let annotName = "";
-        if (typeof feature.name !== "undefined") {
-            annotName += feature.name + " ";
-        }
-        if (typeof feature.detmethod !== "undefined") {
-            annotName += ", " + feature.detmethod.name;
-        }
-        // the id info we need is inside sequenceData att
-        if (feature.sequenceData) { // todo - still needed?
-            for (let seqDatum of feature.sequenceData) {
-                let mID = seqDatum.interactorRef;
-                if (expand) {
-                    mID = `${mID}(${seqDatum.participantRef})`;
+                    for (let feature of features) { // for each feature
+                        const fromSequenceData = feature.sequenceData;
+                        if (feature.linkedFeatures) { // if linked features
+                            const linkedFeatureIDs = feature.linkedFeatures;
+                            const linkedFeatureCount = linkedFeatureIDs.length;
+                            for (let lfi = 0; lfi < linkedFeatureCount; lfi++) { //for each linked feature
+
+                                // !! following is a hack, code can't deal with
+                                // !! composite binding region across two different interactors
+                                // break feature links to different nodes into separate binary links
+                                const toSequenceData_indexedByNodeId = new Map();
+
+                                const linkedFeature = app.features.get(linkedFeatureIDs[lfi]);
+                                for (let seqData of linkedFeature.sequenceData) {
+                                    let nodeId = seqData.interactorRef;
+                                    if (expand != "collapse") {
+                                        nodeId = `${nodeId}(${seqData.participantRef})`;
+                                    }
+                                    let toSequenceData = toSequenceData_indexedByNodeId.get(nodeId);
+                                    if (typeof toSequenceData === "undefined") {
+                                        toSequenceData = [];
+                                        toSequenceData_indexedByNodeId.set(nodeId, toSequenceData);
+                                    }
+                                    toSequenceData = toSequenceData.push(seqData);
+                                }
+
+                                for (let toSequenceData of toSequenceData_indexedByNodeId.values()) {
+                                    const fromInteractor = getNode(fromSequenceData[0]);
+                                    const toInteractor = getNode(toSequenceData[0]);
+                                    let link;
+                                    if (fromInteractor === toInteractor) {
+                                        link = getUnaryLink(fromInteractor, datum);
+                                    } else {
+                                        link = getBinaryLink(fromInteractor, toInteractor, datum);
+                                    }
+                                    const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, datum);
+                                    fromInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
+                                    toInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
+                                    link.sequenceLinks.set(sequenceLink.id, sequenceLink);
+                                }
+
+                            } // end for each linked feature
+
+                        } // end if linked features
+                    } // end for each feature
                 }
-                // console.log("*", mID, seqDatum);
-                const molecule = app.participants.get(mID);
-                if (molecule) {
-                    const seqFeature = new _viz_sequence_datum__WEBPACK_IMPORTED_MODULE_11__.SequenceDatum(molecule, seqDatum.pos);
-                    const annotation = new _viz_interactor_annotation__WEBPACK_IMPORTED_MODULE_0__.Annotation(annotName, seqFeature);
-                    let miFeatures = molecule.annotationSets.get("MI Features");
-                    if (!miFeatures) {
-                        miFeatures = [];
-                        molecule.annotationSets.set("MI Features", miFeatures);
+            }
+        }
+    }
+
+    function initComplexes() {
+        //init complexes
+        app.complexes = Array.from(complexes.values()); // todo - why not just keep it in map
+        for (let c = 0; c < app.complexes.length; c++) {
+            const complex = app.complexes[c];
+            let interactionId;
+            if (expand !== "collapse") {
+                interactionId = complex.id.substring(0, complex.id.indexOf("("));
+            } else {
+                interactionId = complex.id;
+            }
+            for (let datum of inputObj.data) {
+                if (datum.object === "interaction" && datum.id === interactionId) {
+                    const nLinkId = getNaryLinkIdFromInteraction(datum);
+                    const naryLink = app.allNaryLinks.get(nLinkId);
+                    complex.initLink(naryLink);
+                    naryLink.complex = complex;
+                }
+            }
+        }
+    }
+
+    function makeMiFeaturesIntoAnnotations() {
+        //make mi features into annotations
+        for (let feature of app.features.values()) {
+            // add features to interactors/participants/nodes
+            // console.log(`FEATURE:${feature.name}`, feature.sequenceData);
+            let annotName = "";
+            if (typeof feature.name !== "undefined") {
+                annotName += feature.name + " ";
+            }
+            if (typeof feature.detmethod !== "undefined") {
+                annotName += ", " + feature.detmethod.name;
+            }
+            // the id info we need is inside sequenceData att
+            if (feature.sequenceData) { // todo - still needed?
+                for (let seqDatum of feature.sequenceData) {
+                    let mID = seqDatum.interactorRef;
+                    if (expand !== "collapse") {
+                        mID = `${mID}(${seqDatum.participantRef})`;
                     }
-                    miFeatures.push(annotation);
-                } else {
-                    console.log(`participant ${mID} not found!`);
+                    // console.log("*", mID, seqDatum);
+                    const molecule = app.participants.get(mID);
+                    if (molecule) {
+                        const seqFeature = new _viz_sequence_datum__WEBPACK_IMPORTED_MODULE_11__.SequenceDatum(molecule, seqDatum.pos);
+                        const annotation = new _viz_interactor_annotation__WEBPACK_IMPORTED_MODULE_0__.Annotation(annotName, seqFeature);
+                        let miFeatures = molecule.annotationSets.get("MI Features");
+                        if (!miFeatures) {
+                            miFeatures = [];
+                            molecule.annotationSets.set("MI Features", miFeatures);
+                        }
+                        miFeatures.push(annotation);
+                    } else {
+                        console.log(`participant ${mID} not found!`);
+                    }
                 }
             }
         }
     }
 
-    function readStoichExpanded() {
+    function participantBasedRead() {
         //get maximum stoichiometry
         let maxStoich = 0;
-        for (let datum of miJson.data) {
+        for (let datum of inputObj.data) {
             if (datum.object === "interaction") {
                 for (let jsonParticipant of datum.participants) {
                     if (jsonParticipant.stoichiometry && (jsonParticipant.stoichiometry - 0) > maxStoich) {
@@ -18967,13 +18976,13 @@ function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
             }
         }
         if (maxStoich < 20) {
-            //miJson = matrix(miJson); //temp disabled to help compare to xml
+            inputObj = (0,_expand__WEBPACK_IMPORTED_MODULE_14__.matrix)(inputObj);
         }
 
         indexFeatures();
 
         //add naryLinks and participants
-        for (let datum of miJson.data) {
+        for (let datum of inputObj.data) {
             if (datum.object === "interaction") {
                 //init n-ary link
                 const nLinkId = datum.id || getNaryLinkIdFromInteraction(datum);
@@ -19024,6 +19033,7 @@ function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
         }
     }
 
+    //todo -refactor to use switch / case
     function newParticipant(interactor, participantId, interactorRef) {
         let participant;
         if (typeof interactor == "undefined" || interactor.type.id === "MI:1302") {
@@ -19031,7 +19041,7 @@ function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
             // MI:0314 - interaction?, MI:0317 - complex? and its many subclasses
 
             let interactionExists = false;
-            for (let datum of miJson.data) {
+            for (let datum of inputObj.data) {
                 if (datum.object === "interaction" && datum.id === interactorRef) {
                     interactionExists = true;
                     break;
@@ -19042,7 +19052,7 @@ function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
                 participant = new _viz_interactor_complex__WEBPACK_IMPORTED_MODULE_6__.Complex(participantId, app, interactor, interactorRef);
                 complexes.set(participantId, participant);
             } else {
-                participant = new _viz_interactor_complex_symbol__WEBPACK_IMPORTED_MODULE_7__.ComplexSymbol(participantId, app, interactorRef, interactor);
+                participant = new _viz_interactor_complex_symbol__WEBPACK_IMPORTED_MODULE_7__.ComplexSymbol(participantId, app, interactorRef, interactor); //todo - param order
             }
         } else if (interactor.type.id === "MI:1304" //molecule set
             ||
@@ -19121,7 +19131,7 @@ function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
     function indexFeatures() {
         //create indexed collection of all features from interactions
         // - still seems like a good starting point?
-        for (let datum of miJson.data) {
+        for (let datum of inputObj.data) {
             if (datum.object === "interaction") {
                 for (let jsonParticipant of datum.participants) {
                     let features = new Array(0);
@@ -19148,18 +19158,18 @@ function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
         }
     }
 
-    function readStoichUnexpanded() {
+    function interactorBasedRead() {
         //get interactors
         for (let interactor of app.interactors.values()) {
             const participantId = interactor.id;
-            const participant = newParticipant(interactor, participantId);
+            const participant = newParticipant(interactor, participantId, participantId);
             app.participants.set(participantId, participant);
         }
 
         indexFeatures();
 
         //add naryLinks
-        for (let datum of miJson.data) {
+        for (let datum of inputObj.data) {
             if (datum.object === "interaction") {
                 const jsonParticipants = datum.participants;
                 const participantCount = jsonParticipants.length;
@@ -19182,11 +19192,10 @@ function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
 
                     if (typeof participant === "undefined") {
                         //must be a previously unencountered complex
-                        participant = new _viz_interactor_complex__WEBPACK_IMPORTED_MODULE_6__.Complex(intRef, app);
+                        participant = new _viz_interactor_complex__WEBPACK_IMPORTED_MODULE_6__.Complex(intRef, app, participant, intRef);
                         complexes.set(intRef, participant);
                         app.participants.set(intRef, participant);
                     }
-
 
                     participant.naryLinks.set(nLinkId, nLink);
                     if (nLink.participants.indexOf(participant) === -1) {
@@ -19225,7 +19234,7 @@ function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
         //make id
         for (let pi = 0; pi < participantCount; pi++) {
             let pID = jsonParticipants[pi].interactorRef;
-            if (expand) {
+            if (expand != "collapse") {
                 pID = `${pID}(${jsonParticipants[pi].id})`;
             }
             pIDs.add(pID);
@@ -19236,7 +19245,7 @@ function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
 
     function getNode(seqDatum) {
         let id = seqDatum.interactorRef;
-        if (expand) {
+        if (expand != "collapse") {
             id = `${id}(${seqDatum.participantRef})`;
         }
         return app.participants.get(id);
@@ -19249,7 +19258,7 @@ function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
             for (let s = 0; s < seqData.length; s++) {
                 const seq = seqData[s];
                 let id = seq.interactorRef;
-                if (expand) {
+                if (expand != "collapse") {
                     id = `${id}(${seq.participantRef})`;
                 }
                 id = `${id}:${seq.pos}`;
@@ -19363,14 +19372,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _viz_interactor_molecule_set__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./viz/interactor/molecule-set */ "./src/js/viz/interactor/molecule-set.js");
 /* harmony import */ var _viz_link_nary_link__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./viz/link/nary-link */ "./src/js/viz/link/nary-link.js");
 /* harmony import */ var _viz_link_feature_link__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./viz/link/feature-link */ "./src/js/viz/link/feature-link.js");
-/* harmony import */ var _viz_sequence_datum__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./viz/sequence-datum */ "./src/js/viz/sequence-datum.js");
+/* harmony import */ var _viz_xml_feature_range__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./viz/xml-feature-range */ "./src/js/viz/xml-feature-range.js");
 /* harmony import */ var _viz_link_binary_link__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./viz/link/binary-link */ "./src/js/viz/link/binary-link.js");
 /* harmony import */ var _viz_link_unary_link__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./viz/link/unary-link */ "./src/js/viz/link/unary-link.js");
-/* harmony import */ var _expand__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./expand */ "./src/js/expand.js");
-/* harmony import */ var _clone_complex_refs__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./clone-complex-refs */ "./src/js/clone-complex-refs.js");
-/* harmony import */ var _clone_complex_stoich__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./clone-complex-stoich */ "./src/js/clone-complex-stoich.js");
-/* harmony import */ var _viz_xml_feature_range__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./viz/xml-feature-range */ "./src/js/viz/xml-feature-range.js");
-
+/* harmony import */ var _xml_expand__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./xml-expand */ "./src/js/xml-expand.js");
+/* harmony import */ var _xml_clone_complex_refs__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./xml-clone-complex-refs */ "./src/js/xml-clone-complex-refs.js");
+/* harmony import */ var _xml_clone_complex_stoich__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./xml-clone-complex-stoich */ "./src/js/xml-clone-complex-stoich.js");
 
 
 
@@ -19390,23 +19397,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 // reads MI JSON format
-function readXml(jsObj, /*App*/ app, expand = true) {
-    app.stoichiometryExpanded = expand;
-    // miJson.data = miJson.data.reverse();
-    app.features = new Map();
+function readXml(inputObj, /*App*/ app, expand = "expand") {
+    preprocessInput();
     const complexes = new Map();
-
     // expand complexes based on stoichiometry
-    // if (expand) {
-    //     miJson = cloneComplexesStoich(miJson);
-    // }
-
+    if (expand === "expand") {
+        inputObj = (0,_xml_clone_complex_stoich__WEBPACK_IMPORTED_MODULE_16__.cloneComplexesStoich)(inputObj);
+    }
     // may be multiple references to a complex, we want different set of participants for each reference to same complex
-    // miJson = cloneComplexRefs(miJson);
-
-    //get interactors
+    inputObj = (0,_xml_clone_complex_refs__WEBPACK_IMPORTED_MODULE_15__.cloneComplexRefs)(inputObj);
+    //get interactors - this could prob be before cloning of complexes?
     app.interactors = new Map();
-
     function addInteractor(interactor) {
         const id = interactor._id;
         // console.log("Interactor ID:", id);
@@ -19416,21 +19417,31 @@ function readXml(jsObj, /*App*/ app, expand = true) {
             console.warn("DUPLICATE INTERACTOR ID FOUND:", id);
         }
     }
-
     visitInteractors(addInteractor);
+    expand != "collapse" ? participantBasedRead() : interactorBasedRead();
+    initLinks();
+    initComplexes();
+    makeMiFeaturesIntoAnnotations();
 
-    expand ? readStoichExpanded() : readStoichUnexpanded();
+    function preprocessInput() {
+	//still work if you pass in boolean for expand parameter
+        if (typeof expand === "boolean") {
+            expand = expand ? "expand" : "collapse";
+        }
+        app.stoichiometryExpanded = (expand == "expand");
+    }
 
-    // loop through participants and features
-    // init binary, unary and sequence links,
-    // and make needed associations between these and containing naryLink
-    visitBindingFeatures(function (linkedFeatureIDs, interaction) {
-        const linkedFeatureCount = linkedFeatureIDs.length;
-        for (let i = 0; i < linkedFeatureCount; i++) { //for each linked feature
-            for (let j = i + 1; j < linkedFeatureCount; j++) { //for each linked feature
-                const fromFeature = app.features.get(linkedFeatureIDs[i]);
-                const toFeature = app.features.get(linkedFeatureIDs[j]);
-        //         console.log("fromFeature", fromFeature, "toFeature", toFeature);
+    function initLinks() {
+        // loop through participants and features
+        // init binary, unary and sequence links,
+        // and make needed associations between these and containing naryLink
+        visitBindingFeatures(function (linkedFeatureIDs, interaction) {
+            const linkedFeatureCount = linkedFeatureIDs.length;
+            for (let i = 0; i < linkedFeatureCount; i++) { //for each linked feature
+                for (let j = i + 1; j < linkedFeatureCount; j++) { //for each linked feature
+                    const fromFeature = app.features.get(linkedFeatureIDs[i]);
+                    const toFeature = app.features.get(linkedFeatureIDs[j]);
+                    //         console.log("fromFeature", fromFeature, "toFeature", toFeature);
                     const fromSequenceData = fromFeature.featureRangeList.featureRange;
                     const toSequenceData = toFeature.featureRangeList.featureRange;
                     const fromInteractor = getNode(fromSequenceData[0]);
@@ -19447,96 +19458,101 @@ function readXml(jsObj, /*App*/ app, expand = true) {
                     link.sequenceLinks.set(sequenceLink.id, sequenceLink);
 
 
-        //         for (let fromFeatureRange of fromFeature.featureRangeList.featureRange) {
-        //             const fromSequenceData = fromFeatureRange;
-        //             // !! code can't deal with
-        //             // !! composite binding region across two different interactors
-        //             // break feature links to different nodes into separate binary links
-        //             const toSequenceData_indexedByNodeId = new Map();
-        //             for (let toFeatureRange of toFeature.featureRangeList.featureRange) {
-        //                 const seqData = toFeatureRange;
-        //                 let nodeId = seqData.interactorRef;
-        //                 if (expand) {
-        //                     nodeId = `${nodeId}(${seqData.participantRef})`;
-        //                 }
-        //                 let toSequenceData = toSequenceData_indexedByNodeId.get(nodeId);
-        //                 if (typeof toSequenceData === "undefined") {
-        //                     toSequenceData = [];
-        //                     toSequenceData_indexedByNodeId.set(nodeId, toSequenceData);
-        //                 }
-        //                 toSequenceData = toSequenceData.push(seqData);
-        //             }
-        //
-        //             for (let toSequenceData of toSequenceData_indexedByNodeId.values()) {
-        //                 const fromInteractor = getNode(fromSequenceData);
-        //                 const toInteractor = getNode(toSequenceData[0]);
-        //                 let link;
-        //                 if (fromInteractor === toInteractor) {
-        //                     link = getUnaryLink(fromInteractor, interaction);
-        //                 } else {
-        //                     link = getBinaryLink(fromInteractor, toInteractor, interaction);
-        //                 }
-        //                 const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, interaction);
-        //                 fromInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
-        //                 toInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
-        //                 link.sequenceLinks.set(sequenceLink.id, sequenceLink);
-        //             }
-        //         }
-            }
-        }
-    });
-
-    //init complexes
-    app.complexes = Array.from(complexes.values()); // todo - why not just keep it in map
-    for (let c = 0; c < app.complexes.length; c++) {
-        const complex = app.complexes[c];
-        let interactionId;
-        if (expand) {
-            interactionId = complex.id.substring(0, complex.id.indexOf("("));
-        } else {
-            interactionId = complex.id;
-        }
-        console.log("complex id", complex.id);
-        visitInteractions((interaction) => {
-            console.log("interaction id", interaction._id, "interactionId", interactionId, interaction._id == interactionId);
-            if (interaction._id == interactionId) {
-                alert("its happening");
-                const nLinkId = getNaryLinkIdFromInteraction(interaction);
-                const naryLink = app.allNaryLinks.get(nLinkId);
-                complex.initLink(naryLink);
-                naryLink.complex = complex;
+                    //         for (let fromFeatureRange of fromFeature.featureRangeList.featureRange) {
+                    //             const fromSequenceData = fromFeatureRange;
+                    //             // !! code can't deal with
+                    //             // !! composite binding region across two different interactors
+                    //             // break feature links to different nodes into separate binary links
+                    //             const toSequenceData_indexedByNodeId = new Map();
+                    //             for (let toFeatureRange of toFeature.featureRangeList.featureRange) {
+                    //                 const seqData = toFeatureRange;
+                    //                 let nodeId = seqData.interactorRef;
+                    //                 if (expand) {
+                    //                     nodeId = `${nodeId}(${seqData.participantRef})`;
+                    //                 }
+                    //                 let toSequenceData = toSequenceData_indexedByNodeId.get(nodeId);
+                    //                 if (typeof toSequenceData === "undefined") {
+                    //                     toSequenceData = [];
+                    //                     toSequenceData_indexedByNodeId.set(nodeId, toSequenceData);
+                    //                 }
+                    //                 toSequenceData = toSequenceData.push(seqData);
+                    //             }
+                    //
+                    //             for (let toSequenceData of toSequenceData_indexedByNodeId.values()) {
+                    //                 const fromInteractor = getNode(fromSequenceData);
+                    //                 const toInteractor = getNode(toSequenceData[0]);
+                    //                 let link;
+                    //                 if (fromInteractor === toInteractor) {
+                    //                     link = getUnaryLink(fromInteractor, interaction);
+                    //                 } else {
+                    //                     link = getBinaryLink(fromInteractor, toInteractor, interaction);
+                    //                 }
+                    //                 const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, interaction);
+                    //                 fromInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
+                    //                 toInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
+                    //                 link.sequenceLinks.set(sequenceLink.id, sequenceLink);
+                    //             }
+                    //         }
+                }
             }
         });
     }
 
-    //make mi features into annotations
-    for (let feature of app.features.values()) {
-        // add features to interactors/participants/nodes
-        // console.log(`FEATURE:${feature.name}`, feature.sequenceData);
-        let annotName = "";
-        if (feature.names) {
-            annotName += feature.names.shortLabel + " "; // toodo - whats this space
-        }
-        // the id info we need is inside sequenceData att
-        if (feature.featureRangeList) { // todo - still needed?
-            for (let seqDatum of feature.featureRangeList.featureRange) {
-                let mID = seqDatum.interactorRef;
-                if (expand) {
-                    mID = `${mID}(${seqDatum.participantRef})`;
+    function initComplexes() {
+        //init complexes
+        app.complexes = Array.from(complexes.values()); // todo - why not just keep it in map
+        for (let c = 0; c < app.complexes.length; c++) {
+            const complex = app.complexes[c];
+            let interactionId;
+            if (expand != "collapse") {
+                interactionId = complex.id.substring(0, complex.id.indexOf("("));
+            } else {
+                interactionId = complex.id;
+            }
+            console.log("complex id", complex.id);
+            visitInteractions((interaction) => {
+                console.log("interaction id", interaction._id, "interactionId", interactionId, interaction._id == interactionId);
+                if (interaction._id == interactionId) {
+                    console.warn("its happening");
+                    const nLinkId = getNaryLinkIdFromInteraction(interaction);
+                    const naryLink = app.allNaryLinks.get(nLinkId);
+                    complex.initLink(naryLink);
+                    naryLink.complex = complex;
                 }
-                // console.log("*", mID, seqDatum);
-                const molecule = app.participants.get(mID);
-                if (molecule) {
-                    const seqFeature = new _viz_xml_feature_range__WEBPACK_IMPORTED_MODULE_17__.XmlFeatureRange(molecule, seqDatum);
-                    const annotation = new _viz_interactor_annotation__WEBPACK_IMPORTED_MODULE_0__.Annotation(annotName, seqFeature);
-                    let miFeatures = molecule.annotationSets.get("MI Features");
-                    if (!miFeatures) {
-                        miFeatures = [];
-                        molecule.annotationSets.set("MI Features", miFeatures);
+            });
+        }
+    }
+
+    function makeMiFeaturesIntoAnnotations() {
+        //make mi features into annotations
+        for (let feature of app.features.values()) {
+            // add features to interactors/participants/nodes
+            // console.log(`FEATURE:${feature.name}`, feature.sequenceData);
+            let annotName = "";
+            if (feature.names) {
+                annotName += feature.names.shortLabel + " "; // toodo - whats this space
+            }
+            // the id info we need is inside sequenceData att
+            if (feature.featureRangeList) { // todo - still needed?
+                for (let seqDatum of feature.featureRangeList.featureRange) {
+                    let mID = seqDatum.interactorRef;
+                    if (expand != "collapse") {
+                        mID = `${mID}(${seqDatum.participantRef})`;
                     }
-                    miFeatures.push(annotation);
-                } else {
-                    console.log(`participant ${mID} not found!`);
+                    // console.log("*", mID, seqDatum);
+                    const molecule = app.participants.get(mID);
+                    if (molecule) {
+                        const seqFeature = new _viz_xml_feature_range__WEBPACK_IMPORTED_MODULE_11__.XmlFeatureRange(molecule, seqDatum);
+                        const annotation = new _viz_interactor_annotation__WEBPACK_IMPORTED_MODULE_0__.Annotation(annotName, seqFeature);
+                        let miFeatures = molecule.annotationSets.get("MI Features");
+                        if (!miFeatures) {
+                            miFeatures = [];
+                            molecule.annotationSets.set("MI Features", miFeatures);
+                        }
+                        miFeatures.push(annotation);
+                    } else {
+                        console.log(`participant ${mID} not found!`);
+                    }
                 }
             }
         }
@@ -19558,7 +19574,7 @@ function readXml(jsObj, /*App*/ app, expand = true) {
         return xmlId;
     }
 
-    function readStoichExpanded() {
+    function participantBasedRead() {
         //get maximum stoichiometry
         // let maxStoich = 0;
         // for (let datum of miJson.data) {
@@ -19757,11 +19773,11 @@ function readXml(jsObj, /*App*/ app, expand = true) {
         });
     }
 
-    function readStoichUnexpanded() {
+    function interactorBasedRead() {
         //get interactors
         for (let interactor of app.interactors.values()) {
             const participantId = interactor._id;
-            const participant = newParticipant(interactor, participantId);
+            const participant = newParticipant(interactor, participantId, participantId);
             app.participants.set(participantId, participant);
         }
 
@@ -19829,7 +19845,7 @@ function readXml(jsObj, /*App*/ app, expand = true) {
         //make id
         for (let pi = 0; pi < participantCount; pi++) {
             let pID = participants[pi].interactorRef || participants[pi].interactor._id;
-            if (expand) {
+            if (expand != "collapse") {
                 pID = `${pID}(${participants[pi]._id})`;
             }
             pIDs.add(pID);
@@ -19840,7 +19856,7 @@ function readXml(jsObj, /*App*/ app, expand = true) {
 
     function getNode(seqDatum) {
         let id = seqDatum.interactorRef;
-        if (expand) {
+        if (expand != "collapse") {
             id = `${id}(${seqDatum.participantRef})`;
         }
         return app.participants.get(id);
@@ -19853,7 +19869,7 @@ function readXml(jsObj, /*App*/ app, expand = true) {
             for (let s = 0; s < seqData.length; s++) {
                 const seq = seqData[s];
                 let id = seq.interactorRef;
-                if (expand) {
+                if (expand !== "collapse") {
                     id = `${id}(${seq.participantRef})`;
                 }
                 id = `${id}:${seq.pos}`;
@@ -19878,11 +19894,11 @@ function readXml(jsObj, /*App*/ app, expand = true) {
         if (typeof sequenceLink === "undefined") {
             const fromFeaturePositions = [];
             for (let fromSeqDatum of fromSeqData) {
-                fromFeaturePositions.push(new _viz_xml_feature_range__WEBPACK_IMPORTED_MODULE_17__.XmlFeatureRange(getNode(fromSeqDatum), fromSeqDatum));
+                fromFeaturePositions.push(new _viz_xml_feature_range__WEBPACK_IMPORTED_MODULE_11__.XmlFeatureRange(getNode(fromSeqDatum), fromSeqDatum));
             }
             const toFeaturePositions = [];
             for (let toSeqDatum of toSeqData) {
-                toFeaturePositions.push(new _viz_xml_feature_range__WEBPACK_IMPORTED_MODULE_17__.XmlFeatureRange(getNode(toSeqDatum), toSeqDatum));
+                toFeaturePositions.push(new _viz_xml_feature_range__WEBPACK_IMPORTED_MODULE_11__.XmlFeatureRange(getNode(toSeqDatum), toSeqDatum));
             }
             //~ if (endsSwapped === false) {
             sequenceLink = new _viz_link_feature_link__WEBPACK_IMPORTED_MODULE_10__.FeatureLink(seqLinkId, fromFeaturePositions, toFeaturePositions, app, interaction);
@@ -19942,22 +19958,24 @@ function readXml(jsObj, /*App*/ app, expand = true) {
     }
 
     function visitInteractions(interactionCallback) {
-        for (let entry of jsObj.entrySet.entry) {
+        for (let entry of inputObj.entrySet.entry) {
             // console.log("*entry*", entry);
             const interactions = [
                 ...(entry.interactionList?.abstractInteraction || []),
                 ...(entry.interactionList?.interaction || [])
             ];
 
-            for (let interaction of interactions) {
+            //iterate in reverse order
+            const interactionCount = interactions.length;
+            for (let i = interactionCount - 1; i >= 0; i--) {
                 // console.log("*interaction*", interaction);
-                interactionCallback(interaction);
+                interactionCallback(interactions[i]);
             }
         }
     }
 
     function visitInteractors(interactorCallback) {
-        for (let entry of jsObj.entrySet.entry) {
+        for (let entry of inputObj.entrySet.entry) {
             // console.log("*entry*", entry);
 
             // Visit top-level interactors
@@ -20454,6 +20472,7 @@ __webpack_require__.r(__webpack_exports__);
 class ComplexSymbol extends _interactor__WEBPACK_IMPORTED_MODULE_0__.Interactor {
     constructor(id, app, name, json) { //, name) {
         super();
+        console.log("ComplexSymbol constructor: ", id, app, name, json);
         this.init(id, app, json, name);
         this.upperGroup = document.createElementNS(_svgns__WEBPACK_IMPORTED_MODULE_1__.svgns, "g");
         this.initLabel();
@@ -20517,7 +20536,9 @@ class Complex extends _interactor__WEBPACK_IMPORTED_MODULE_0__.Interactor {
 
     initLink(naryLink) {
         this.naryLink = naryLink;
-        this.naryLink.path.classList.add("complex-outline");
+        if (this.app.stoichiometryExpanded) {
+            this.naryLink.path.classList.add("complex-outline");
+        }
     }
 
     setLinked() {
@@ -23075,6 +23096,408 @@ class XmlFeatureRange {
 //> positions of the feature are <8 but it could happen that you have a
 //> feature such as "<8->22" or "<8-22", etc.
 
+
+
+/***/ }),
+
+/***/ "./src/js/xml-clone-complex-refs.js":
+/*!******************************************!*\
+  !*** ./src/js/xml-clone-complex-refs.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   cloneComplexRefs: () => (/* binding */ cloneComplexRefs)
+/* harmony export */ });
+function cloneComplexRefs(json) {
+
+    const instanceCount = new Map();
+
+    // We'll need collections of our interactions and interactors for later..
+    // const interactions = json.data.filter(function (interaction) {
+    //     return interaction.object === "interaction";
+    // });
+    //
+    // cloneComplexRefsRecursively(json, interactions, interactions, instanceCount);
+
+    // After all the complexes and participants have been cloned due to stoichiometry,
+    // we need to check if any subcomplex needs to recursively also clone their participants.
+    return json;
+}
+
+function cloneComplexRefsRecursively(json, originalInteractions, interactionsToClone, instanceCount) {
+    const newInteractionsToClone = [];
+
+    // Loop through our interactions to clone
+    interactionsToClone.forEach(function (interaction) {
+
+        // Get a collection of participants with 'complex' in interactorRef - not ideal way to get complexes
+        const complexesToClone = interaction.participants.filter(function (participant) {
+            if (participant.interactorRef.indexOf("complex") !== -1) {
+                return participant;
+            }
+        });
+
+        // Loop through our participants that need expanding
+        complexesToClone.forEach(complexToClone => {
+            // Do we have an interaction with the same base identifier
+            const match = complexToClone.interactorRef.match(/^([0-9])_[0-9]+$/);
+            const baseInteractorRef = match ? match[1] : complexToClone.interactorRef;
+            const foundInteraction = findFirstObjWithAttr(originalInteractions, "id", baseInteractorRef);
+
+            // If we found an interaction then we need to clone it.
+            if (foundInteraction) {
+                let count = instanceCount.get(baseInteractorRef);
+                if (count) {
+                    count = count + 1;
+                } else {
+                    count = 1;
+                }
+                instanceCount.set(baseInteractorRef, count);
+                let i = count;
+
+                if (i > 1) {
+                    // If we haven't found a complex with the same reference, then we clone it
+                    if (!match || i > match[2]) {
+                        cloneComplexParticipant(complexToClone, i);
+                        const clonedComplex = cloneComplexInteraction(foundInteraction, i);
+                        json.data.push(clonedComplex);
+                        // We add the new cloned complex to this list to check
+                        // if any of its participants also needs cloning
+                        newInteractionsToClone.push(clonedComplex);
+                    }
+                }
+            }
+        });
+    });
+
+    // If we have cloned any complex, we need to recursively check the participants of these new cloned complexes,
+    // as they may require cloning too
+    if (newInteractionsToClone.length > 0) {
+        cloneComplexRefsRecursively(json, originalInteractions, newInteractionsToClone, instanceCount);
+    }
+}
+
+function cloneComplexParticipant(complexToClone, i) {
+    // this looks weird, don't think it'll work if more than 2 refs to complex?
+    complexToClone.interactorRef = `${complexToClone.interactorRef}_${i}`;
+
+    // update features of complex
+    if (complexToClone.features) {
+        complexToClone.features.forEach(function (feature) {
+            feature.copiedfrom = feature.id;
+            // feature.id = `${feature.id}_${i}`;
+            // Also, adjust our sequence data
+            feature.sequenceData.forEach(function (sequenceData) {
+
+                // Participant Ref may have already been updated, so we don't want to update it twice
+                const match = sequenceData.participantRef.match(/^(.*)_([0-9])+$/);
+                if (!match) {
+                    sequenceData.participantRef = `${sequenceData.participantRef}_${i}`;
+                }
+                //~ sequenceData.interactorRef = clonedInteractor.id;
+            });
+        });
+    }
+}
+
+function cloneComplexInteraction(interaction, i) {
+    const clonedInteraction = JSON.parse(JSON.stringify(interaction));
+    clonedInteraction.sourceId = clonedInteraction.id;
+    clonedInteraction.id = `${clonedInteraction.id}_${i}`;
+
+    for (let participant of clonedInteraction.participants) {
+        /********** PARTICIPANTS **********/
+        const clonedParticipant = participant;//JSON.parse(JSON.stringify(participant));
+
+        clonedParticipant.id = `${clonedParticipant.id}_${i}`;
+
+        // We need to relink to our binding site IDs:
+        if (clonedParticipant.features) {
+            clonedParticipant.features.forEach(function (feature) {
+
+                // feature.copiedfrom = feature.id;
+                feature.id = `${feature.id}_${i}`;
+                // Also, adjust our sequence data
+                feature.sequenceData.forEach(function (sequenceData) {
+                    // sequenceData.participantRef = clonedParticipant.id;
+                    //~ sequenceData.interactorRef = clonedInteractor.id;
+
+                    // Participant Ref may have already been updated, so we don't want to update it twice
+                    const match = sequenceData.participantRef.match(/^(.*)_([0-9])+$/);
+                    if (!match) {
+                        sequenceData.participantRef = `${sequenceData.participantRef}_${i}`;
+                    }
+                });
+
+                const lnCount = feature.linkedFeatures.length;
+                for (let ln = 0; ln < lnCount; ln++){
+                    // console.log(linkedFeature);
+                    feature.linkedFeatures[ln] = `${feature.linkedFeatures[ln]}_${i}`;
+                }
+
+            });
+        }
+    }
+
+    return clonedInteraction;
+}
+
+// Returns the first object in an array that has an attribute with a matching value.
+function findFirstObjWithAttr(collection, attribute, value) {
+    for (let i = 0; i < collection.length; i += 1) {
+        if (collection[i][attribute] === value) {
+            return collection[i];
+        }
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/js/xml-clone-complex-stoich.js":
+/*!********************************************!*\
+  !*** ./src/js/xml-clone-complex-stoich.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   cloneComplexesStoich: () => (/* binding */ cloneComplexesStoich)
+/* harmony export */ });
+function cloneComplexesStoich(json) {
+
+    // We'll need collections of our interactions and interactors for later..
+    // const interactions = json.data.filter(function (interaction) {
+    //     return interaction.object === "interaction";
+    // });
+    //
+    // // Loop through our interactions
+    // interactions.forEach(function (interaction) {
+    //
+    //     // Get a collection of complexes
+    //     const complexesToClone = interaction.participants.filter(function (participant) {
+    //         if (participant.interactorRef.indexOf("complex") !== -1) {
+    //             return participant;
+    //         }
+    //     });
+    //
+    //     // Loop through our participants that need expanding
+    //     complexesToClone.forEach(function (complexToClone) {
+    //
+    //         // Do we have an interactor? TODO: Will this affect complexes?
+    //         const foundInteraction = findFirstObjWithAttr(interactions, "id", complexToClone.interactorRef);
+    //
+    //         // If we found an interactor then we need to clone it.
+    //         if (foundInteraction) {
+    //
+    //             for (let i = 1; i < complexToClone.stoichiometry; i++) {
+    //                 // if (i > 0) {
+    //
+    //                     // update features of complex
+    //                     if (complexToClone.features) {
+    //                         complexToClone.features.forEach(function (feature) {
+    //                             feature.copiedfrom = feature.id;
+    //                             // feature.id = `${feature.id}_${i}`;
+    //                             // Also, adjust our sequence data
+    //                             feature.sequenceData.forEach(function (sequenceData) {
+    //                                 sequenceData.participantRef = `${sequenceData.participantRef}_${i}`;
+    //                                 //~ sequenceData.interactorRef = clonedInteractor.id;
+    //                             });
+    //                         });
+    //                     }
+    //
+    //                     const clonedInteraction = JSON.parse(JSON.stringify(foundInteraction));
+    //                     clonedInteraction.sourceId = clonedInteraction.id;
+    //                     clonedInteraction.id = `${clonedInteraction.id}_${i}`;
+    //                     clonedInteraction.interactorRef = `${complexToClone.interactorRef}_${i}`;
+    //
+    //                     json.data.push(clonedInteraction);
+    //
+    //                     for (let participant of clonedInteraction.participants) {
+    //                         /********** PARTICIPANTS **********/
+    //                         const clonedParticipant = participant;//JSON.parse(JSON.stringify(participant));
+    //
+    //                         clonedParticipant.id = `${clonedParticipant.id}_${i}`;
+    //
+    //                        //  // We need to relink to our binding site IDs:
+    //                         if (clonedParticipant.features) {
+    //                             clonedParticipant.features.forEach(function (feature) {
+    //
+    //                                 // feature.copiedfrom = feature.id;
+    //                                 feature.id = `${feature.id}_${i}`;
+    //                                 // Also, adjust our sequence data
+    //                                 feature.sequenceData.forEach(function (sequenceData) {
+    //                                     sequenceData.participantRef = clonedParticipant.id;
+    //                                     //~ sequenceData.interactorRef = clonedInteractor.id;
+    //                                 });
+    //
+    //                                 const lnCount = feature.linkedFeatures.length;
+    //                                 for (let ln = 0; ln < lnCount; ln++) {
+    //                                     // console.log(linkedFeature);
+    //                                     feature.linkedFeatures[ln] = `${feature.linkedFeatures[ln]}_${i}`;
+    //                                 }
+    //
+    //                             });
+    //                         }
+    //                     }
+    //                     interaction.participants.push(clonedInteraction);
+    //                 }
+    //             }
+    //         // }
+    //     });
+    //
+    // });
+
+    return json;
+}
+
+// Returns the first object in an array that has an attribute with a matching value.
+function findFirstObjWithAttr(collection, attribute, value) {
+    for (let i = 0; i < collection.length; i += 1) {
+        if (collection[i][attribute] === value) {
+            return collection[i];
+        }
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/js/xml-expand.js":
+/*!******************************!*\
+  !*** ./src/js/xml-expand.js ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   matrix: () => (/* binding */ matrix)
+/* harmony export */ });
+function matrix(json) {
+
+    // // We'll need collections of our interactions and interactors for later..
+    // const interactions = json.data.filter(function (interaction) {
+    //     return interaction.object === "interaction";
+    // });
+    //
+    // const interactors = json.data.filter(function (interactor) {
+    //     return interactor.object === "interactor";
+    // });
+    //
+    // // const newParticipants = [];
+    //
+    // // Loop through our interactions
+    // interactions.forEach(function (interaction) {
+    //
+    //     // Get a collection of participants where the stoichiometry is greater than one.
+    //     const participantsToExpand = interaction.participants.filter(function (participant) {
+    //         if (participant.stoichiometry > 1) {
+    //             return participant;
+    //         }
+    //     });
+    //
+    //     // Loop through our participants that need expanding
+    //     participantsToExpand.forEach(function (participant) {
+    //
+    //         // Do we have an interactor? TODO: Will this affect complexes?
+    //         const foundInteractor = findFirstObjWithAttr(interactors, "id", participant.interactorRef);
+    //
+    //         // If we found an interactor then we need to clone it.
+    //         if (foundInteractor) {
+    //
+    //             for (let i = 0; i < participant.stoichiometry - 1; i++) {
+    //                 /********** PARTICIPANTS **********/
+    //                 const clonedParticipant = JSON.parse(JSON.stringify(participant));
+    //
+    //                 //~ clonedParticipant.interactorRef = clonedInteractor.id;
+    //                 clonedParticipant.id = `${clonedParticipant.id}_${i}`;
+    //
+    //                 // Store a reference from where we were cloned
+    //                 clonedParticipant.cloneParentID = participant.id;
+    //                 clonedParticipant.cloneIteration = i;
+    //                 participant.cloned = true;
+    //
+    //                 // We need to relink to our binding site IDs:
+    //                 if (clonedParticipant.features) {
+    //                     clonedParticipant.features.forEach(function (feature) {
+    //
+    //                         feature.clonedfrom = feature.id;
+    //                         feature.id = `${feature.id}_${i}`;
+    //
+    //                         // Also, adjust our sequence data
+    //                         feature.sequenceData.forEach(function (sequenceData) {
+    //                             sequenceData.participantRef = clonedParticipant.id;
+    //                             //~ sequenceData.interactorRef = clonedInteractor.id;
+    //                         });
+    //                     });
+    //                 }
+    //
+    //                 interaction.participants.push(clonedParticipant);
+    //                 // newParticipants.push(clonedParticipant);
+    //
+    //             }
+    //         }
+    //     });
+    //
+    //     // Get ALL of our features.
+    //     const featureMap = new Map();
+    //     interaction.participants.forEach(function (participant) {
+    //         if (participant.features) {
+    //             participant.features.forEach(function (feature) {
+    //                 feature.parentParticipant = participant.id;
+    //                 featureMap.set(feature.id, feature);
+    //             });
+    //         }
+    //     });
+    //
+    //
+    //     const values = Array.from(featureMap.values());
+    //
+    //     values.forEach(function (feature) {
+    //         if (feature.clonedfrom) {
+    //             // Find all binding sites that have a linked feature to me and add the clone id
+    //             values.forEach(function (nFeature) {
+    //                 const linkedFeatures = nFeature.linkedFeatures;
+    //                 if (linkedFeatures) {
+    //                     if (linkedFeatures.indexOf(feature.clonedfrom) > -1) {
+    //                         const clonedFeature = JSON.parse(JSON.stringify(nFeature));
+    //                         clonedFeature.id = `${nFeature.id}_${feature.id}`;
+    //                         clonedFeature.linkedFeatures = [];
+    //                         clonedFeature.linkedFeatures.push(feature.id);
+    //
+    //                         const parts = findFirstObjWithAttr(interaction.participants, "id", clonedFeature.parentParticipant);
+    //                         parts.features.push(clonedFeature);
+    //                     }
+    //                 }
+    //             });
+    //         }
+    //     });
+    // });
+    //
+    //
+    // //clear stoichiometry info from participant?
+    // interactions.forEach(function (interaction) {
+    //     interaction.participants.forEach(function (participant) {
+    //         participant.stoichiometry = null;
+    //     });
+    // });
+
+    return json;
+}
+
+// Returns the first object in an array that has an attribute with a matching value.
+function findFirstObjWithAttr(collection, attribute, value) {
+    for (let i = 0; i < collection.length; i += 1) {
+        if (collection[i][attribute] === value) {
+            return collection[i];
+        }
+    }
+}
 
 
 /***/ }),
@@ -59579,6 +60002,7 @@ class App {
         this.allUnaryLinks = new Map();
         this.allSequenceLinks = new Map();
         this.complexes = [];
+        this.features = new Map();
 
         //lighten complex colors
         let complexColors = [];

@@ -10,6 +10,7 @@
     <link href="./css/style.css" rel="stylesheet" type='text/css'>
     <!--libraries-->
     <script src="./dist/complexviewer.js" type="text/javascript"></script>
+    <script src="./makeLegend.js" type="text/javascript"></script>
     <style>
         /*div {*/
         /*    border: 1px solid #091D42;*/
@@ -70,29 +71,10 @@
 
             <div id="stoichiometry">
                 Stoichiometery:
-                <input type="radio" name="choice" value="null" checked/>as curated
-                <input type="radio" name="choice" value="No" />collapse
-                <input type="radio" name="choice" value="yes" />expand
+                <input type="radio" name="choice" value="curated" checked/>as curated
+                <input type="radio" name="choice" value="collapse" />collapse
+                <input type="radio" name="choice" value="expand" />expand
             </div>
-
-<!--            <div class="features">-->
-<!--                <input type="checkbox" id="mifeatures" name="mifeatures" value="MI Features" checked-->
-<!--                       autocomplete="off"-->
-<!--                       onchange="setAnnotations(this);">-->
-<!--                <label for="mifeatures"> MI Features</label>-->
-<!--                <input type="checkbox" id="uniprotkb" name="uniprotkb" value="UniprotKB"-->
-<!--                       autocomplete="off"-->
-<!--                       onchange="setAnnotations(this);">-->
-<!--                <label for="uniprotkb"> UniprotKB Domains</label>-->
-<!--                <input type="checkbox" id="superfamily" name="superfamily" value="Superfamily"-->
-<!--                       autocomplete="off"-->
-<!--                       onchange="setAnnotations(this);">-->
-<!--                <label for="superfamily"> Superfamily</label>-->
-<!--                <input type="checkbox" id="interactor" name="interactor" value="Interactor"-->
-<!--                       autocomplete="off"-->
-<!--                       onchange="setAnnotations(this);">-->
-<!--                <label for="interactor"> Interactor</label>-->
-<!--            </div>-->
         </div>
     </div>
 
@@ -124,58 +106,10 @@
     const xmlNetworkTargetDiv = document.getElementById("xmlNetworkDiv");
     const xmlCv = new complexviewer.App(xmlNetworkTargetDiv);
 
-    function setAnnotations(checkbox) {
-        var json = cv.showAnnotations(checkbox.value, checkbox.checked);
-        console.log(json);
-        makeLegend(json);
-    }
-
-    // you can use code below as template to make legend from json
-    function makeLegend(json, divId) {
-        const div = document.getElementById(divId);
-        div.textContent = "";
-        const colorTable = document.createElement("table");
-        for (let majorClass in json) {
-            const tr = colorTable.insertRow();
-            const headerCell = tr.insertCell();
-            headerCell.textContent = majorClass;
-            headerCell.colSpan = 3;
-            for (let legendEntry of json[majorClass]) {
-                const tr = colorTable.insertRow();
-                if (legendEntry.certain && legendEntry.uncertain) {
-                    const tc1 = tr.insertCell();
-                    tc1.style.backgroundColor = legendEntry.certain.color;
-                    tc1.style.width = "45px";
-                    const tc2 = tr.insertCell();
-                    const color = legendEntry.uncertain.color
-                    tc2.style.background = "repeating-linear-gradient(45deg, #ffffff, #ffffff 6px, "+color+" 6px, "+color+" 12px)";
-                    tc2.style.width = "45px";
-                }
-                else if (legendEntry.certain) {
-                    const tc1 = tr.insertCell();
-                    tc1.style.backgroundColor = legendEntry.certain.color;
-                    tc1.style.width = "90px";
-                    tc1.colSpan = 2;
-                }
-                else if (legendEntry.uncertain) {
-                    const tc1 = tr.insertCell();
-                    const color = legendEntry.uncertain.color
-                    tc1.style.background = "repeating-linear-gradient(45deg, #ffffff, #ffffff 6px, "+color+" 6px, "+color+" 12px)";
-                    tc1.style.width = "90px";
-                    tc1.colSpan = 2;
-                }
-                const tc3 = tr.insertCell();
-                tc3.style.paddingLeft = "10px";
-                tc3.textContent = legendEntry.name;
-            }
-        }
-        div.appendChild(colorTable);
-    }
-
-    document.getElementById('accession').addEventListener('change', function (event) {
+    function clear() {
+        //clear the networks
         jsonCv.clear();
         xmlCv.clear();
-
         //clear counts and legend div
         const jsonSummaryDiv = document.getElementById("jsonSummaryDiv");
         jsonSummaryDiv.textContent = "";
@@ -185,9 +119,22 @@
         jsonLegendDiv.textContent = "";
         const xmlLegendDiv = document.getElementById("xmlLegendDiv");
         xmlLegendDiv.textContent = "";
+    }
 
+    //function to print summary stas into a div
+    function printSummaryStats(cv, divId) {
+        const div = document.getElementById(divId);
+        div.textContent = "";
+        const summaryStats = cv.getSummaryStats();
+        for (const [key, value] of Object.entries(summaryStats)) {
+            div.textContent += `${key}: ${value}, `;
+        }
+    }
+
+    function update() {
+        clear();
         let jsonUrl, xmlUrl;
-        const accession = event.target.value.toUpperCase();
+        const accession = document.getElementById("accession").value.trim().toUpperCase();
         if (accession.startsWith("CPX-")) {
             //example: https://www.ebi.ac.uk/intact/complex-ws/export/CPX-2158?filters=&format=json&filename=CPX-2158.json
             jsonUrl = `https://www.ebi.ac.uk/intact/complex-ws/export/${accession}?filters=&format=json&filename=${accession}.json`;
@@ -203,17 +150,7 @@
             return;
         }
 
-        const stoichiometry = document.querySelector('input[name="choice"]:checked').value;
-
-        //function to print summary stas into a div
-        function printSummaryStats(cv, divId) {
-            const div = document.getElementById(divId);
-            div.textContent = "";
-            const summaryStats = cv.getSummaryStats();
-            for (const [key, value] of Object.entries(summaryStats)) {
-                div.textContent += `${key}: ${value}, `;
-            }
-        }
+        const stoichiometry = document.querySelector("input[name=\"choice\"]:checked").value;
 
         //download json data
         fetch(jsonUrl)
@@ -223,7 +160,7 @@
                 makeLegend(jsonCv.getColorKeyJson(), "jsonLegendDiv");
                 printSummaryStats(jsonCv, "jsonSummaryDiv");
             })
-            .catch(error => console.error('Error fetching JSON:', error));
+            .catch(error => console.error("Error fetching JSON:", error));
 
         //download xml data
         fetch(xmlUrl)
@@ -233,8 +170,15 @@
                 makeLegend(xmlCv.getColorKeyJson(), "xmlLegendDiv");
                 printSummaryStats(xmlCv, "xmlSummaryDiv");
             })
-            .catch(error => console.error('Error fetching XML:', error));
+            .catch(error => console.error("Error fetching XML:", error));
+    }
 
+    document.getElementById('accession').addEventListener('change', function (event) {
+        update();
+    });
+
+    document.getElementById('stoichiometry').addEventListener('change', function (event) {
+        update();
     });
 
     //]]>

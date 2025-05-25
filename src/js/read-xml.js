@@ -9,32 +9,25 @@ import {ComplexSymbol} from "./viz/interactor/complex-symbol";
 import {MoleculeSet} from "./viz/interactor/molecule-set";
 import {NaryLink} from "./viz/link/nary-link";
 import {FeatureLink} from "./viz/link/feature-link";
-import {SequenceDatum} from "./viz/sequence-datum";
+import {XmlFeatureRange} from "./viz/xml-feature-range";
 import {BinaryLink} from "./viz/link/binary-link";
 import {UnaryLink} from "./viz/link/unary-link";
-import {matrix} from "./expand";
-import {cloneComplexRefs} from "./clone-complex-refs";
-import {cloneComplexesStoich} from "./clone-complex-stoich";
-import {XmlFeatureRange} from "./viz/xml-feature-range";
+import {matrix} from "./xml-expand";
+import {cloneComplexRefs} from "./xml-clone-complex-refs";
+import {cloneComplexesStoich} from "./xml-clone-complex-stoich";
 
 // reads MI JSON format
-export function readXml(jsObj, /*App*/ app, expand = true) {
-    app.stoichiometryExpanded = expand;
-    // miJson.data = miJson.data.reverse();
-    app.features = new Map();
+export function readXml(inputObj, /*App*/ app, expand = "expand") {
+    preprocessInput();
     const complexes = new Map();
-
     // expand complexes based on stoichiometry
-    // if (expand) {
-    //     miJson = cloneComplexesStoich(miJson);
-    // }
-
+    if (expand === "expand") {
+        inputObj = cloneComplexesStoich(inputObj);
+    }
     // may be multiple references to a complex, we want different set of participants for each reference to same complex
-    // miJson = cloneComplexRefs(miJson);
-
-    //get interactors
+    inputObj = cloneComplexRefs(inputObj);
+    //get interactors - this could prob be before cloning of complexes?
     app.interactors = new Map();
-
     function addInteractor(interactor) {
         const id = interactor._id;
         // console.log("Interactor ID:", id);
@@ -44,21 +37,31 @@ export function readXml(jsObj, /*App*/ app, expand = true) {
             console.warn("DUPLICATE INTERACTOR ID FOUND:", id);
         }
     }
-
     visitInteractors(addInteractor);
+    expand != "collapse" ? participantBasedRead() : interactorBasedRead();
+    initLinks();
+    initComplexes();
+    makeMiFeaturesIntoAnnotations();
 
-    expand ? readStoichExpanded() : readStoichUnexpanded();
+    function preprocessInput() {
+	//still work if you pass in boolean for expand parameter
+        if (typeof expand === "boolean") {
+            expand = expand ? "expand" : "collapse";
+        }
+        app.stoichiometryExpanded = (expand == "expand");
+    }
 
-    // loop through participants and features
-    // init binary, unary and sequence links,
-    // and make needed associations between these and containing naryLink
-    visitBindingFeatures(function (linkedFeatureIDs, interaction) {
-        const linkedFeatureCount = linkedFeatureIDs.length;
-        for (let i = 0; i < linkedFeatureCount; i++) { //for each linked feature
-            for (let j = i + 1; j < linkedFeatureCount; j++) { //for each linked feature
-                const fromFeature = app.features.get(linkedFeatureIDs[i]);
-                const toFeature = app.features.get(linkedFeatureIDs[j]);
-        //         console.log("fromFeature", fromFeature, "toFeature", toFeature);
+    function initLinks() {
+        // loop through participants and features
+        // init binary, unary and sequence links,
+        // and make needed associations between these and containing naryLink
+        visitBindingFeatures(function (linkedFeatureIDs, interaction) {
+            const linkedFeatureCount = linkedFeatureIDs.length;
+            for (let i = 0; i < linkedFeatureCount; i++) { //for each linked feature
+                for (let j = i + 1; j < linkedFeatureCount; j++) { //for each linked feature
+                    const fromFeature = app.features.get(linkedFeatureIDs[i]);
+                    const toFeature = app.features.get(linkedFeatureIDs[j]);
+                    //         console.log("fromFeature", fromFeature, "toFeature", toFeature);
                     const fromSequenceData = fromFeature.featureRangeList.featureRange;
                     const toSequenceData = toFeature.featureRangeList.featureRange;
                     const fromInteractor = getNode(fromSequenceData[0]);
@@ -75,96 +78,101 @@ export function readXml(jsObj, /*App*/ app, expand = true) {
                     link.sequenceLinks.set(sequenceLink.id, sequenceLink);
 
 
-        //         for (let fromFeatureRange of fromFeature.featureRangeList.featureRange) {
-        //             const fromSequenceData = fromFeatureRange;
-        //             // !! code can't deal with
-        //             // !! composite binding region across two different interactors
-        //             // break feature links to different nodes into separate binary links
-        //             const toSequenceData_indexedByNodeId = new Map();
-        //             for (let toFeatureRange of toFeature.featureRangeList.featureRange) {
-        //                 const seqData = toFeatureRange;
-        //                 let nodeId = seqData.interactorRef;
-        //                 if (expand) {
-        //                     nodeId = `${nodeId}(${seqData.participantRef})`;
-        //                 }
-        //                 let toSequenceData = toSequenceData_indexedByNodeId.get(nodeId);
-        //                 if (typeof toSequenceData === "undefined") {
-        //                     toSequenceData = [];
-        //                     toSequenceData_indexedByNodeId.set(nodeId, toSequenceData);
-        //                 }
-        //                 toSequenceData = toSequenceData.push(seqData);
-        //             }
-        //
-        //             for (let toSequenceData of toSequenceData_indexedByNodeId.values()) {
-        //                 const fromInteractor = getNode(fromSequenceData);
-        //                 const toInteractor = getNode(toSequenceData[0]);
-        //                 let link;
-        //                 if (fromInteractor === toInteractor) {
-        //                     link = getUnaryLink(fromInteractor, interaction);
-        //                 } else {
-        //                     link = getBinaryLink(fromInteractor, toInteractor, interaction);
-        //                 }
-        //                 const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, interaction);
-        //                 fromInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
-        //                 toInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
-        //                 link.sequenceLinks.set(sequenceLink.id, sequenceLink);
-        //             }
-        //         }
-            }
-        }
-    });
-
-    //init complexes
-    app.complexes = Array.from(complexes.values()); // todo - why not just keep it in map
-    for (let c = 0; c < app.complexes.length; c++) {
-        const complex = app.complexes[c];
-        let interactionId;
-        if (expand) {
-            interactionId = complex.id.substring(0, complex.id.indexOf("("));
-        } else {
-            interactionId = complex.id;
-        }
-        console.log("complex id", complex.id);
-        visitInteractions((interaction) => {
-            console.log("interaction id", interaction._id, "interactionId", interactionId, interaction._id == interactionId);
-            if (interaction._id == interactionId) {
-                alert("its happening");
-                const nLinkId = getNaryLinkIdFromInteraction(interaction);
-                const naryLink = app.allNaryLinks.get(nLinkId);
-                complex.initLink(naryLink);
-                naryLink.complex = complex;
+                    //         for (let fromFeatureRange of fromFeature.featureRangeList.featureRange) {
+                    //             const fromSequenceData = fromFeatureRange;
+                    //             // !! code can't deal with
+                    //             // !! composite binding region across two different interactors
+                    //             // break feature links to different nodes into separate binary links
+                    //             const toSequenceData_indexedByNodeId = new Map();
+                    //             for (let toFeatureRange of toFeature.featureRangeList.featureRange) {
+                    //                 const seqData = toFeatureRange;
+                    //                 let nodeId = seqData.interactorRef;
+                    //                 if (expand) {
+                    //                     nodeId = `${nodeId}(${seqData.participantRef})`;
+                    //                 }
+                    //                 let toSequenceData = toSequenceData_indexedByNodeId.get(nodeId);
+                    //                 if (typeof toSequenceData === "undefined") {
+                    //                     toSequenceData = [];
+                    //                     toSequenceData_indexedByNodeId.set(nodeId, toSequenceData);
+                    //                 }
+                    //                 toSequenceData = toSequenceData.push(seqData);
+                    //             }
+                    //
+                    //             for (let toSequenceData of toSequenceData_indexedByNodeId.values()) {
+                    //                 const fromInteractor = getNode(fromSequenceData);
+                    //                 const toInteractor = getNode(toSequenceData[0]);
+                    //                 let link;
+                    //                 if (fromInteractor === toInteractor) {
+                    //                     link = getUnaryLink(fromInteractor, interaction);
+                    //                 } else {
+                    //                     link = getBinaryLink(fromInteractor, toInteractor, interaction);
+                    //                 }
+                    //                 const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, interaction);
+                    //                 fromInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
+                    //                 toInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
+                    //                 link.sequenceLinks.set(sequenceLink.id, sequenceLink);
+                    //             }
+                    //         }
+                }
             }
         });
     }
 
-    //make mi features into annotations
-    for (let feature of app.features.values()) {
-        // add features to interactors/participants/nodes
-        // console.log(`FEATURE:${feature.name}`, feature.sequenceData);
-        let annotName = "";
-        if (feature.names) {
-            annotName += feature.names.shortLabel + " "; // toodo - whats this space
-        }
-        // the id info we need is inside sequenceData att
-        if (feature.featureRangeList) { // todo - still needed?
-            for (let seqDatum of feature.featureRangeList.featureRange) {
-                let mID = seqDatum.interactorRef;
-                if (expand) {
-                    mID = `${mID}(${seqDatum.participantRef})`;
+    function initComplexes() {
+        //init complexes
+        app.complexes = Array.from(complexes.values()); // todo - why not just keep it in map
+        for (let c = 0; c < app.complexes.length; c++) {
+            const complex = app.complexes[c];
+            let interactionId;
+            if (expand != "collapse") {
+                interactionId = complex.id.substring(0, complex.id.indexOf("("));
+            } else {
+                interactionId = complex.id;
+            }
+            console.log("complex id", complex.id);
+            visitInteractions((interaction) => {
+                console.log("interaction id", interaction._id, "interactionId", interactionId, interaction._id == interactionId);
+                if (interaction._id == interactionId) {
+                    console.warn("its happening");
+                    const nLinkId = getNaryLinkIdFromInteraction(interaction);
+                    const naryLink = app.allNaryLinks.get(nLinkId);
+                    complex.initLink(naryLink);
+                    naryLink.complex = complex;
                 }
-                // console.log("*", mID, seqDatum);
-                const molecule = app.participants.get(mID);
-                if (molecule) {
-                    const seqFeature = new XmlFeatureRange(molecule, seqDatum);
-                    const annotation = new Annotation(annotName, seqFeature);
-                    let miFeatures = molecule.annotationSets.get("MI Features");
-                    if (!miFeatures) {
-                        miFeatures = [];
-                        molecule.annotationSets.set("MI Features", miFeatures);
+            });
+        }
+    }
+
+    function makeMiFeaturesIntoAnnotations() {
+        //make mi features into annotations
+        for (let feature of app.features.values()) {
+            // add features to interactors/participants/nodes
+            // console.log(`FEATURE:${feature.name}`, feature.sequenceData);
+            let annotName = "";
+            if (feature.names) {
+                annotName += feature.names.shortLabel + " "; // toodo - whats this space
+            }
+            // the id info we need is inside sequenceData att
+            if (feature.featureRangeList) { // todo - still needed?
+                for (let seqDatum of feature.featureRangeList.featureRange) {
+                    let mID = seqDatum.interactorRef;
+                    if (expand != "collapse") {
+                        mID = `${mID}(${seqDatum.participantRef})`;
                     }
-                    miFeatures.push(annotation);
-                } else {
-                    console.log(`participant ${mID} not found!`);
+                    // console.log("*", mID, seqDatum);
+                    const molecule = app.participants.get(mID);
+                    if (molecule) {
+                        const seqFeature = new XmlFeatureRange(molecule, seqDatum);
+                        const annotation = new Annotation(annotName, seqFeature);
+                        let miFeatures = molecule.annotationSets.get("MI Features");
+                        if (!miFeatures) {
+                            miFeatures = [];
+                            molecule.annotationSets.set("MI Features", miFeatures);
+                        }
+                        miFeatures.push(annotation);
+                    } else {
+                        console.log(`participant ${mID} not found!`);
+                    }
                 }
             }
         }
@@ -186,7 +194,7 @@ export function readXml(jsObj, /*App*/ app, expand = true) {
         return xmlId;
     }
 
-    function readStoichExpanded() {
+    function participantBasedRead() {
         //get maximum stoichiometry
         // let maxStoich = 0;
         // for (let datum of miJson.data) {
@@ -385,11 +393,11 @@ export function readXml(jsObj, /*App*/ app, expand = true) {
         });
     }
 
-    function readStoichUnexpanded() {
+    function interactorBasedRead() {
         //get interactors
         for (let interactor of app.interactors.values()) {
             const participantId = interactor._id;
-            const participant = newParticipant(interactor, participantId);
+            const participant = newParticipant(interactor, participantId, participantId);
             app.participants.set(participantId, participant);
         }
 
@@ -457,7 +465,7 @@ export function readXml(jsObj, /*App*/ app, expand = true) {
         //make id
         for (let pi = 0; pi < participantCount; pi++) {
             let pID = participants[pi].interactorRef || participants[pi].interactor._id;
-            if (expand) {
+            if (expand != "collapse") {
                 pID = `${pID}(${participants[pi]._id})`;
             }
             pIDs.add(pID);
@@ -468,7 +476,7 @@ export function readXml(jsObj, /*App*/ app, expand = true) {
 
     function getNode(seqDatum) {
         let id = seqDatum.interactorRef;
-        if (expand) {
+        if (expand != "collapse") {
             id = `${id}(${seqDatum.participantRef})`;
         }
         return app.participants.get(id);
@@ -481,7 +489,7 @@ export function readXml(jsObj, /*App*/ app, expand = true) {
             for (let s = 0; s < seqData.length; s++) {
                 const seq = seqData[s];
                 let id = seq.interactorRef;
-                if (expand) {
+                if (expand !== "collapse") {
                     id = `${id}(${seq.participantRef})`;
                 }
                 id = `${id}:${seq.pos}`;
@@ -570,22 +578,24 @@ export function readXml(jsObj, /*App*/ app, expand = true) {
     }
 
     function visitInteractions(interactionCallback) {
-        for (let entry of jsObj.entrySet.entry) {
+        for (let entry of inputObj.entrySet.entry) {
             // console.log("*entry*", entry);
             const interactions = [
                 ...(entry.interactionList?.abstractInteraction || []),
                 ...(entry.interactionList?.interaction || [])
             ];
 
-            for (let interaction of interactions) {
+            //iterate in reverse order
+            const interactionCount = interactions.length;
+            for (let i = interactionCount - 1; i >= 0; i--) {
                 // console.log("*interaction*", interaction);
-                interactionCallback(interaction);
+                interactionCallback(interactions[i]);
             }
         }
     }
 
     function visitInteractors(interactorCallback) {
-        for (let entry of jsObj.entrySet.entry) {
+        for (let entry of inputObj.entrySet.entry) {
             // console.log("*entry*", entry);
 
             // Visit top-level interactors
