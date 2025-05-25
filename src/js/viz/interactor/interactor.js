@@ -72,6 +72,12 @@ export class Interactor {
         this.upperGroup.appendChild(this.outline);
     }
 
+    hide(){
+        this.upperGroup.style.display = "none";
+    }
+
+
+
     initListeners() {
         this.upperGroup.onmousedown = evt => this.mouseDown(evt);
         this.upperGroup.onmouseenter = evt => this.mouseOver(evt);

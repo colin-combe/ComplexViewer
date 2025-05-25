@@ -19409,7 +19409,7 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
     //get interactors - this could prob be before cloning of complexes?
     app.interactors = new Map();
     function addInteractor(interactor) {
-        const id = interactor._id;
+        const id = interactor.xref.primaryRef._id;
         // console.log("Interactor ID:", id);
         if (!app.interactors.has(id)) {
             app.interactors.set(id, interactor);
@@ -19422,6 +19422,7 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
     initLinks();
     initComplexes();
     makeMiFeaturesIntoAnnotations();
+    app.variableParameters = getVariableParameters(inputObj);
 
     function preprocessInput() {
 	//still work if you pass in boolean for expand parameter
@@ -19612,7 +19613,7 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
             for (let jsonParticipant of datum.participantList.participant) {
                 let intRef = jsonParticipant.interactorRef;
                 if (!intRef) {
-                    intRef = jsonParticipant.interactor._id;
+                    intRef = jsonParticipant.interactor.xref.primaryRef._id;
                 }
                 const partRef = jsonParticipant._id;
                 const participantId = `${intRef}(${partRef})`;
@@ -19760,7 +19761,7 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
                     // jami workaround, not entirely inline with mi-json schema, but looks like mi-json has redundant info here
                     for (let seqDatum of feature.featureRangeList.featureRange) {
                         if (!seqDatum.interactorRef) {
-                            seqDatum.interactorRef = participant.interactorRef || participant.interactor._id;
+                            seqDatum.interactorRef = participant.interactorRef || participant.interactor.xref.primaryRef._id;
                         }
                         if (!seqDatum.participantRef) {
                             seqDatum.participantRef = participant._id;//feature.parentParticipant;
@@ -19776,7 +19777,7 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
     function interactorBasedRead() {
         //get interactors
         for (let interactor of app.interactors.values()) {
-            const participantId = interactor._id;
+            const participantId = interactor.xref.primaryRef._id;
             const participant = newParticipant(interactor, participantId, participantId);
             app.participants.set(participantId, participant);
         }
@@ -19800,12 +19801,12 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
             //~ //init participants
             for (let pi = 0; pi < participantCount; pi++) {
                 const jsonParticipant = participants[pi];
-                const intRef = jsonParticipant.interactorRef;
+                const intRef = jsonParticipant.interactorRef || jsonParticipant.interactor.xref.primaryRef._id;
                 let participant = app.participants.get(intRef);
 
                 if (typeof participant === "undefined") {
                     //must be a previously unencountered complex
-                    participant = new _viz_interactor_complex__WEBPACK_IMPORTED_MODULE_6__.Complex(intRef, app);
+                        participant = new _viz_interactor_complex__WEBPACK_IMPORTED_MODULE_6__.Complex(intRef, app, participant, intRef);
                     complexes.set(intRef, participant);
                     app.participants.set(intRef, participant);
                 }
@@ -19844,7 +19845,7 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
         const pIDs = new Set(); //used to eliminate duplicates
         //make id
         for (let pi = 0; pi < participantCount; pi++) {
-            let pID = participants[pi].interactorRef || participants[pi].interactor._id;
+            let pID = participants[pi].interactorRef || participants[pi].interactor.xref.primaryRef._id;
             if (expand != "collapse") {
                 pID = `${pID}(${participants[pi]._id})`;
             }
@@ -19955,6 +19956,32 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
         nLink.binaryLinks.set(linkID, link);
         //link.addEvidence(interaction);
         return link;
+    }
+
+    function getVariableParameters(input) {
+        const varpars = new Map();
+        //todo - ask about variable parameters being differentn across interactions
+        // maybe they can be, lets assume varpars with same description are the same
+        visitInteractions((interaction) => {
+            if (interaction.experimentList?.experimentDescription) {
+                for (let experimentDescription of interaction.experimentList.experimentDescription) {
+                    if (experimentDescription.variableParameterList?.variableParameter) {
+                        for (let variableParameter of experimentDescription.variableParameterList.variableParameter) {
+                            // lets have a check to see if any duplicates are the same
+                            if (varpars.has(variableParameter.description)) {
+                                const existingVarPar = varpars.get(variableParameter.description);
+                                if (JSON.stringify(existingVarPar) != JSON.stringify(variableParameter)) { //todo - use lodash deep equal
+                                    console.warn(`Duplicate variable parameter found with different values: ${variableParameter.description}`);
+                                }
+                                continue; // skip adding this one, not that it really matters
+                            }
+                            varpars.set(variableParameter.description, variableParameter);
+                        }
+                    }
+                }
+            }
+        });
+        return varpars;
     }
 
     function visitInteractions(interactionCallback) {
@@ -20825,6 +20852,12 @@ class Interactor {
         this.outline.classList.add("outline");
         this.upperGroup.appendChild(this.outline);
     }
+
+    hide(){
+        this.upperGroup.style.display = "none";
+    }
+
+
 
     initListeners() {
         this.upperGroup.onmousedown = evt => this.mouseDown(evt);
@@ -60312,7 +60345,14 @@ class App {
                     "entrySet.entry.interactionList.interaction.bindingFeatureList.bindingFeatures",
                     "entrySet.entry.interactionList.abstractInteraction.inferredInteractionList.inferredInteraction",
                     "entrySet.entry.interactionList.interaction.inferredInteractionList.inferredInteraction",
-                    "entrySet.entry.interactionList.interaction.xref.secondaryRef"]
+                    "entrySet.entry.interactionList.interaction.xref.secondaryRef",
+                    "entrySet.entry.interactionList.abstractInteraction.experimentList.experimentDescription",
+                    "entrySet.entry.interactionList.interaction.experimentList.experimentDescription",
+                    "entrySet.entry.interactionList.abstractInteraction.experimentList.experimentDescription.variableParameterList.variableParameter",
+                    "entrySet.entry.interactionList.interaction.experimentList.experimentDescription.variableParameterList.variableParameter",
+                    "entrySet.entry.interactionList.abstractInteraction.experimentList.experimentDescription.variableParameterList.variableParameter.variableValueList.variableValue",
+                    "entrySet.entry.interactionList.interaction.experimentList.experimentDescription.variableParameterList.variableParameter.variableValueList.variableValue"
+                ]
                     .includes(jpath); // replace with your element names
             },
             ignoreAttributes: false,
@@ -60899,6 +60939,34 @@ class App {
         stats.unaryLinks = this.allUnaryLinks.size;
         stats.sequenceLinks = this.allSequenceLinks.size;
         return stats;
+    }
+
+    onlyShowInteractionWithId(id) {
+
+        this.participants.forEach((participant) => {
+            participant.hide();
+        });
+        // this.features.forEach((feature) => {
+        //     feature.hide();
+        // });
+        this.allBinaryLinks.forEach((link) => {
+            link.hide();
+        });
+        this.allNaryLinks.forEach((link) => {
+            link.hide();
+        });
+        this.allUnaryLinks.forEach((link) => {
+            link.hide();
+        });
+        this.allSequenceLinks.forEach((link) => {
+            link.hide();
+        });
+        //
+        // const interactor = this.interactors.get(id);
+        // if (interactor) {
+        //     interactor.show();
+        //     interactor.select();
+        // }
     }
 }
 

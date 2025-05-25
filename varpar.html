@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ComplexViewer Demo</title>
+    <meta content="ComplexViewer Demo" name="ComplexViewer Demo">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <!-- css -->
+    <link href="./css/reset.css" rel="stylesheet" type='text/css'>
+    <link href="./css/style.css" rel="stylesheet" type='text/css'>
+    <link href="./css/demo.css" rel="stylesheet" type='text/css'>
+    <!--libraries-->
+    <script src="./dist/complexviewer.js" type="text/javascript"></script>
+    <script src="./makeLegend.js" type="text/javascript"></script>
+    <script src="make-variable-parameters-controls.js" type="text/javascript"></script>
+</head>
+<body>
+<!-- Main -->
+<div class="main">
+
+    <div class="controls space-between">
+        <div class="top-bar">
+            <!--            <h1>-->
+            <i class="fa fa-github" onclick="window.location = 'https://github.com/MICommunity/ComplexViewer';"
+               title="GitHub project"></i>
+            <a href="https://doi.org/10.1093/bioinformatics/btx497" target="_blank"
+               title="Publication">ComplexViewer</a>
+            <!--            </h1>-->
+        </div>
+        <input type="file" id="xmlFileInput" accept=".xml" />
+    </div>
+
+    <div class="centre">
+        <div class="middleDiv">
+            <div class="innerMiddleDiv">
+                <div id="networkDiv"></div>
+                <div class="legend">
+                    <table class="symbols">
+                        <tr>
+                            <td>
+                                <img src="./src/imgs/key-svg/molecule-set.svg">
+                            </td>
+                            <td>Molecule Set</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="./src/imgs/key-svg/small-molecule.svg">
+                            </td>
+                            <td>Bioactive Entity</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="./src/imgs/key-svg/gene.svg">
+                            </td>
+                            <td>Gene</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="./src/imgs/key-svg/dna.svg">
+                            </td>
+                            <td>DNA</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="./src/imgs/key-svg/rna.svg">
+                            </td>
+                            <td>RNA</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="./src/imgs/key-svg/protein-circle.svg">
+                                <img src="./src/imgs/key-svg/protein-bar.svg">
+                            </td>
+                            <td>Protein <br> (click to toggle)</td>
+                        </tr>
+                    </table>
+                    <div class="controls protein-buttons"><p class="protein-expand-label">Proteins:&nbsp;</p>
+                        <button class="btn btn-1 btn-1a" onclick="cv.expandAll();">Expand All</button>
+                        <button class="btn btn-1 btn-1a" onclick="cv.collapseAll();">Collapse All</button>
+                    </div>
+                    <div id="colors"></div>
+                </div><!-- legend -->
+            </div> <!-- innerMiddleDiv -->
+
+            <div>
+                <div class="controls space-between">
+                    <div class="varpars"/>
+                    <div class="">
+                        <button class="btn btn-1 btn-1a" onclick="cv.autoLayout();" style="display:inline">Layout
+                        </button>
+                        <button class="btn btn-1 btn-1a" onclick="exportSVG();" style="display:inline">Export Graphic
+                        </button>
+                    </div>
+                </div>
+            </div> <!-- bottom bar -->
+        </div> <!-- middleDiv -->
+    </div> <!-- centreDiv -->
+</div><!-- main-->
+
+<script type="text/javascript">
+    //<![CDATA[
+
+    const networkTargetDiv = document.getElementById("networkDiv");
+    cv = new complexviewer.App(networkTargetDiv);
+
+    function setAnnotations(checkbox) {
+        var json = cv.showAnnotations(checkbox.value, checkbox.checked);
+        console.log(json);
+        makeLegend(json);
+    }
+
+    function exportSVG() {
+        const dataSetsSelect = document.getElementById("dataSets");
+        const fileName = dataSetsSelect.options[dataSetsSelect.selectedIndex].value + ".svg"
+        cv.downloadSVG(fileName);
+    }
+
+    document.getElementById('xmlFileInput').addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            cv.clear();
+            const xmlText = e.target.result;
+            cv.readXML(xmlText, "collapse");
+            makeLegend(cv.getColorKeyJson(), "colors");
+            makeVariableParametersControls(cv.variableParameters, ".varpars", cv);
+        };
+        reader.readAsText(file);
+    });
+
+    //]]>
+</script>
+
+</body>
+</html>

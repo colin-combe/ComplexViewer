@@ -513,7 +513,14 @@ export class App {
                     "entrySet.entry.interactionList.interaction.bindingFeatureList.bindingFeatures",
                     "entrySet.entry.interactionList.abstractInteraction.inferredInteractionList.inferredInteraction",
                     "entrySet.entry.interactionList.interaction.inferredInteractionList.inferredInteraction",
-                    "entrySet.entry.interactionList.interaction.xref.secondaryRef"]
+                    "entrySet.entry.interactionList.interaction.xref.secondaryRef",
+                    "entrySet.entry.interactionList.abstractInteraction.experimentList.experimentDescription",
+                    "entrySet.entry.interactionList.interaction.experimentList.experimentDescription",
+                    "entrySet.entry.interactionList.abstractInteraction.experimentList.experimentDescription.variableParameterList.variableParameter",
+                    "entrySet.entry.interactionList.interaction.experimentList.experimentDescription.variableParameterList.variableParameter",
+                    "entrySet.entry.interactionList.abstractInteraction.experimentList.experimentDescription.variableParameterList.variableParameter.variableValueList.variableValue",
+                    "entrySet.entry.interactionList.interaction.experimentList.experimentDescription.variableParameterList.variableParameter.variableValueList.variableValue"
+                ]
                     .includes(jpath); // replace with your element names
             },
             ignoreAttributes: false,
@@ -1100,6 +1107,31 @@ export class App {
         stats.unaryLinks = this.allUnaryLinks.size;
         stats.sequenceLinks = this.allSequenceLinks.size;
         return stats;
+    }
+
+    onlyShowInteractionWithId(id) {
+
+        this.participants.forEach((participant) => {
+            participant.hide();
+        });
+        this.allBinaryLinks.forEach((link) => {
+            link.hide();
+        });
+        this.allNaryLinks.forEach((link) => {
+            link.hide();
+        });
+        this.allUnaryLinks.forEach((link) => {
+            link.hide();
+        });
+        this.allSequenceLinks.forEach((link) => {
+            link.hide();
+        });
+        //
+        // const interactor = this.interactors.get(id);
+        // if (interactor) {
+        //     interactor.show();
+        //     interactor.select();
+        // }
     }
 }
 
