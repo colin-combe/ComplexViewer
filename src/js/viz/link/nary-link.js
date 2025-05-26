@@ -52,6 +52,11 @@ export class NaryLink extends Link {
         this.app.naryLinks.appendChild(this.path2);
     }
 
+    hide(){
+        this.path.remove();
+        this.path2.remove();
+    }
+
     setLinkCoordinates(dontPropogate) {
         // Uses d3.geom.hull to calculate a bounding path around an array of vertices
         const calculateHullPath = values => {

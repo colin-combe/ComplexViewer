@@ -1132,6 +1132,16 @@ export class App {
         //     interactor.show();
         //     interactor.select();
         // }
+        //const interaction = this.allNaryLinks.get(id);
+        let interaction;
+        for (const value of this.allNaryLinks.values()) {
+            if (value.sourceId == id) {
+                interaction = value;
+                break;
+            }
+        }
+        // console.log("interaction", interaction);
+        interaction.show();
     }
 }
 

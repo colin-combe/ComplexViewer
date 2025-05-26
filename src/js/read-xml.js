@@ -413,7 +413,7 @@ export function readXml(inputObj, /*App*/ app, expand = "expand") {
             let nLink = app.allNaryLinks.get(nLinkId);
             if (typeof nLink === "undefined") {
                 //doesn't already exist, make new nLink
-                nLink = new NaryLink(nLinkId, app);
+                nLink = new NaryLink(nLinkId, app, interaction._id);
                 app.allNaryLinks.set(nLinkId, nLink);
             }
             //nLink.addEvidence(datum);

@@ -19793,7 +19793,7 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
             let nLink = app.allNaryLinks.get(nLinkId);
             if (typeof nLink === "undefined") {
                 //doesn't already exist, make new nLink
-                nLink = new _viz_link_nary_link__WEBPACK_IMPORTED_MODULE_9__.NaryLink(nLinkId, app);
+                nLink = new _viz_link_nary_link__WEBPACK_IMPORTED_MODULE_9__.NaryLink(nLinkId, app, interaction._id);
                 app.allNaryLinks.set(nLinkId, nLink);
             }
             //nLink.addEvidence(datum);
@@ -22562,6 +22562,11 @@ class NaryLink extends _link__WEBPACK_IMPORTED_MODULE_0__.Link {
         // this.setLinkCoordinates(); // having this here slows down start up. instead see getPosition in complex.js
         this.app.naryLinks.appendChild(this.path);
         this.app.naryLinks.appendChild(this.path2);
+    }
+
+    hide(){
+        this.path.remove();
+        this.path2.remove();
     }
 
     setLinkCoordinates(dontPropogate) {
@@ -60946,9 +60951,6 @@ class App {
         this.participants.forEach((participant) => {
             participant.hide();
         });
-        // this.features.forEach((feature) => {
-        //     feature.hide();
-        // });
         this.allBinaryLinks.forEach((link) => {
             link.hide();
         });
@@ -60967,6 +60969,16 @@ class App {
         //     interactor.show();
         //     interactor.select();
         // }
+        //const interaction = this.allNaryLinks.get(id);
+        let interaction;
+        for (const value of this.allNaryLinks.values()) {
+            if (value.sourceId == id) {
+                interaction = value;
+                break;
+            }
+        }
+        // console.log("interaction", interaction);
+        interaction.show();
     }
 }
 
