@@ -76,7 +76,14 @@ export class Interactor {
         this.upperGroup.style.display = "none";
     }
 
-
+    show() {
+        this.upperGroup.style.display = "block";
+        if (this.labelSVG) {
+            this.labelSVG.style.display = "block";
+        }
+        // this.setPositionFromCola();
+        // this.setAllLinkCoordinates();
+    }
 
     initListeners() {
         this.upperGroup.onmousedown = evt => this.mouseDown(evt);

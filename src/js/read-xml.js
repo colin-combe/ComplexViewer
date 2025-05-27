@@ -472,7 +472,7 @@ export function readXml(inputObj, /*App*/ app, expand = "expand") {
             pIDs.add(pID);
         }
 
-        return Array.from(pIDs.values()).sort().join("-");
+        return interaction._id;//Array.from(pIDs.values()).sort().join("-");
     }
 
     function getNode(seqDatum) {
