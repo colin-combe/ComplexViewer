@@ -49600,6 +49600,191 @@ module.exports = /*#__PURE__*/JSON.parse('{"name":"complexviewer","version":"2.3
 
 /***/ }),
 
+/***/ "./src/abstract-mi-reader.js":
+/*!***********************************!*\
+  !*** ./src/abstract-mi-reader.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   AbstractMiReader: () => (/* binding */ AbstractMiReader)
+/* harmony export */ });
+/* harmony import */ var _js_viz_interactor_complex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./js/viz/interactor/complex */ "./src/js/viz/interactor/complex.js");
+/* harmony import */ var _js_viz_interactor_complex_symbol__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/viz/interactor/complex-symbol */ "./src/js/viz/interactor/complex-symbol.js");
+/* harmony import */ var _js_viz_interactor_molecule_set__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./js/viz/interactor/molecule-set */ "./src/js/viz/interactor/molecule-set.js");
+/* harmony import */ var _js_viz_interactor_bioactive_entity__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./js/viz/interactor/bioactive-entity */ "./src/js/viz/interactor/bioactive-entity.js");
+/* harmony import */ var _js_viz_interactor_protein__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./js/viz/interactor/protein */ "./src/js/viz/interactor/protein.js");
+/* harmony import */ var _js_viz_interactor_gene__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./js/viz/interactor/gene */ "./src/js/viz/interactor/gene.js");
+/* harmony import */ var _js_viz_interactor_rna__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./js/viz/interactor/rna */ "./src/js/viz/interactor/rna.js");
+/* harmony import */ var _js_viz_interactor_dna__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./js/viz/interactor/dna */ "./src/js/viz/interactor/dna.js");
+
+
+
+
+
+
+
+
+
+class AbstractMiReader {
+    constructor() {
+        if (this.constructor === AbstractMiReader) {
+            throw new Error("Abstract class cannot be instantiated directly.");
+        }
+    }
+
+    read() {
+        throw new Error("Method 'read()' must be implemented.");
+    }
+
+    visitInteractions() {
+        throw new Error("Method 'visitInteractions()' must be implemented.");
+    }
+
+    visitInteractors() {
+        throw new Error("Method 'visitInteractors()' must be implemented.");
+    }
+
+    // eslint-disable-next-line no-unused-vars
+    interactorId(interactor) {
+        throw new Error("Method 'interactorId()' must be implemented.");
+    }
+
+    // eslint-disable-next-line no-unused-vars
+    interactorTypeId(interactor) {
+        throw new Error("Method 'interactorTypeId()' must be implemented.");
+    }
+
+    // eslint-disable-next-line no-unused-vars
+    interactionId(interaction) {
+        throw new Error("Method 'interactionId()' must be implemented.");
+    }
+
+
+    initComplexes() {
+        //init complexes
+        this.app.complexes = Array.from(this.complexes.values()); // todo - why not just keep it in map
+        for (let c = 0; c < this.app.complexes.length; c++) {
+            const complex = this.app.complexes[c];
+            let interactionId;
+            if (this.expand !== "collapse") {
+                interactionId = complex.id.substring(0, complex.id.indexOf("("));
+            } else {
+                interactionId = complex.id;
+            }
+            for (let datum of this.inputObj.data) {
+                if (datum.object === "interaction" && datum.id === interactionId) {
+                    const nLinkId = this.getNaryLinkIdFromInteraction(datum);
+                    console.log("INIT*ING COMPLEX", complex.id, nLinkId);
+                    const naryLink = this.app.allNaryLinks.get(nLinkId);
+                    complex.initLink(naryLink);
+                    naryLink.complex = complex;
+                }
+            }
+        }
+    }
+
+    //todo -refactor to use switch / case
+    newParticipant(interactor, participantId, interactorRef) {
+        const self = this;
+        let participant;
+        if (typeof interactor == "undefined" || this.interactorTypeId(interactor) === "MI:1302") {
+            //must be a previously unencountered complex -
+            // MI:0314 - interaction?, MI:0317 - complex? and its many subclasses
+
+            let interactionExists = false;
+            this.visitInteractions(function (interaction) {
+                if (self.interactionId(interaction) === interactorRef) {
+                    interactionExists = true;
+                }
+            });
+
+            if (interactionExists) {
+                participant = new _js_viz_interactor_complex__WEBPACK_IMPORTED_MODULE_0__.Complex(participantId, this.app, interactor, interactorRef);
+                this.complexes.set(participantId, participant);
+            } else {
+                participant = new _js_viz_interactor_complex_symbol__WEBPACK_IMPORTED_MODULE_1__.ComplexSymbol(participantId, this.app, interactorRef, interactor); //todo - param order
+            }
+        } else if (this.interactorTypeId(interactor) === "MI:1304" //molecule set
+            ||
+            this.interactorTypeId(interactor) === "MI:1305" //molecule set - candidate set
+            ||
+            this.interactorTypeId(interactor) === "MI:1307" //molecule set - defined set
+            ||
+            this.interactorTypeId(interactor) === "MI:1306" //molecule set - open set
+        ) {
+            participant = new _js_viz_interactor_molecule_set__WEBPACK_IMPORTED_MODULE_2__.MoleculeSet(participantId, this.app, interactor, this.interactorLabel(interactor));
+        } else if (this.interactorTypeId(interactor) === "MI:1100" // bioactive entity
+            ||
+            this.interactorTypeId(interactor) === "MI:0904" // bioactive entity - polysaccharide
+            ||
+            this.interactorTypeId(interactor) === "MI:0328" //bioactive entity - small mol
+            ||
+            this.interactorTypeId(interactor) === "MI:2258" // bioactive entity - xenobiotic
+        ) {
+            participant = new _js_viz_interactor_bioactive_entity__WEBPACK_IMPORTED_MODULE_3__.BioactiveEntity(participantId, this.app, interactor, this.interactorLabel(interactor));
+        } else if (this.interactorTypeId(interactor) === "MI:0326"
+            ||
+            this.interactorTypeId(interactor) === "MI:0327") { // proteins, peptides
+            participant = new _js_viz_interactor_protein__WEBPACK_IMPORTED_MODULE_4__.Protein(participantId, this.app, interactor, this.interactorLabel(interactor), interactor.sequence);
+        } else if (this.interactorTypeId(interactor) === "MI:0250") { //genes
+            participant = new _js_viz_interactor_gene__WEBPACK_IMPORTED_MODULE_5__.Gene(participantId, this.app, interactor, this.interactorLabel(interactor));
+        } else if (this.interactorTypeId(interactor) === "MI:0320" // RNA
+            ||
+            this.interactorTypeId(interactor) === "MI:0321" // RNA - catalytic
+            ||
+            this.interactorTypeId(interactor) === "MI:0322" // RNA - guide
+            ||
+            this.interactorTypeId(interactor) === "MI:0323" // RNA - heterogeneous nuclear
+            ||
+            this.interactorTypeId(interactor) === "MI:2190" // RNA - long non-coding
+            ||
+            this.interactorTypeId(interactor) === "MI:0324" // RNA - messenger
+            ||
+            this.interactorTypeId(interactor) === "MI:0679" // RNA - poly adenine
+            ||
+            this.interactorTypeId(interactor) === "MI:0608" // RNA - ribosomal
+            ||
+            this.interactorTypeId(interactor) === "MI:0611" // RNA - signal recognition particle
+            ||
+            this.interactorTypeId(interactor) === "MI:0610" // RNA - small interfering
+            ||
+            this.interactorTypeId(interactor) === "MI:0607" // RNA - small nuclear
+            ||
+            this.interactorTypeId(interactor) === "MI:0609" // RNA - small nucleolar
+            ||
+            this.interactorTypeId(interactor) === "MI:0325" // RNA - transfer
+            ||
+            this.interactorTypeId(interactor) === "IA:2966" // RNA - double stranded ribonucleic acid (old)
+            ||
+            this.interactorTypeId(interactor) === "MI:2359" // RNA - double stranded ribonucleic acid
+            ||
+            this.interactorTypeId(interactor) === "MI:0318" // nucleic acid
+            ||
+            this.interactorTypeId(interactor) === "MI:2204" // micro RNA
+        ) {
+            participant = new _js_viz_interactor_rna__WEBPACK_IMPORTED_MODULE_6__.RNA(participantId, this.app, interactor, this.interactorLabel(interactor));
+        } else if (this.interactorTypeId(interactor) === "MI:0319" // DNA
+            ||
+            this.interactorTypeId(interactor) === "MI:0681" // DNA - double stranded
+            ||
+            this.interactorTypeId(interactor) === "MI:0680" // DNA - single stranded
+        ) {
+            participant = new _js_viz_interactor_dna__WEBPACK_IMPORTED_MODULE_7__.DNA(participantId, this.app, interactor, this.interactorLabel(interactor));
+        } else {
+            // MI:0329 - unknown participant ?
+            // MI:0383 - biopolymer ?
+            alert(`Unrecognised type:${interactor.type.name}`);
+        }
+        return participant;
+    }
+
+}
+
+/***/ }),
+
 /***/ "./src/css/xinet.css":
 /*!***************************!*\
   !*** ./src/css/xinet.css ***!
@@ -54683,7 +54868,7 @@ function rotatePointAboutPoint (p, o, theta) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   readMijson: () => (/* binding */ readMijson)
+/* harmony export */   ReadJson: () => (/* binding */ ReadJson)
 /* harmony export */ });
 /* harmony import */ var _viz_interactor_annotation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./viz/interactor/annotation */ "./src/js/viz/interactor/annotation.js");
 /* harmony import */ var _viz_interactor_protein__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./viz/interactor/protein */ "./src/js/viz/interactor/protein.js");
@@ -54702,6 +54887,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _expand__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./expand */ "./src/js/expand.js");
 /* harmony import */ var _clone_complex_refs__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./clone-complex-refs */ "./src/js/clone-complex-refs.js");
 /* harmony import */ var _clone_complex_stoich__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./clone-complex-stoich */ "./src/js/clone-complex-stoich.js");
+/* harmony import */ var _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../abstract-mi-reader */ "./src/abstract-mi-reader.js");
 
 
 
@@ -54720,44 +54906,73 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// reads MI JSON format
-function readMijson(inputObj, /*App*/ app, expand = "expand") {
-    preprocessInput();
-    const complexes = new Map();
-    // expand complexes based on stoichiometry
-    if (expand === "expand") {
-        inputObj = (0,_clone_complex_stoich__WEBPACK_IMPORTED_MODULE_16__.cloneComplexesStoich)(inputObj);
-    }
-    // may be multiple references to a complex, we want different set of participants for each reference to same complex
-    inputObj = (0,_clone_complex_refs__WEBPACK_IMPORTED_MODULE_15__.cloneComplexRefs)(inputObj);
-    //get interactors - this could prob be before cloning of complexes?
-    app.interactors = new Map();
-    for (let datum of inputObj.data) {
-        if (datum.object === "interactor") {
-            app.interactors.set(datum.id, datum);
+
+class ReadJson extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.AbstractMiReader {
+
+    read(inputObj, /*App*/ app, expand = "expand") {
+        this.inputObj = inputObj;
+        this.app = app;
+        this.expand = expand;
+        this.preprocessInput();
+        this.complexes = new Map();
+        // expand complexes based on stoichiometry
+        if (expand === "expand") {
+            inputObj = (0,_clone_complex_stoich__WEBPACK_IMPORTED_MODULE_16__.cloneComplexesStoich)(inputObj);
         }
-    }
-    expand != "collapse" ? participantBasedRead() : interactorBasedRead();
-    initLinks();
-    initComplexes();
-    makeMiFeaturesIntoAnnotations();
+        // may be multiple references to a complex, we want different set of participants for each reference to same complex
+        inputObj = (0,_clone_complex_refs__WEBPACK_IMPORTED_MODULE_15__.cloneComplexRefs)(inputObj);
+        //get interactors - this could prob be before cloning of complexes?
+        app.interactors = new Map();
+        const self = this;
+        function addInteractor(interactor) {
+            const id = self.interactorId(interactor);
+            if (!app.interactors.has(id)) {
+                app.interactors.set(id, interactor);
+            } else {
+                console.warn("DUPLICATE INTERACTOR ID FOUND:", id);
+            }
+        }
 
-    function preprocessInput() {
+        this.visitInteractors(addInteractor);
+        expand != "collapse" ? this.participantBasedRead() : this.interactorBasedRead();
+        this.initLinks();
+        this.initComplexes();
+        this.makeMiFeaturesIntoAnnotations();
+    }
+
+    interactorId(interactor) {
+        return interactor.id;
+    }
+
+    interactorTypeId(interactor) {
+        return interactor.type.id;
+    }
+
+    interactorLabel(interactor) {
+        return interactor.label;
+    }
+
+    interactionId(interaction) {
+        return interaction.id;
+    }
+
+    preprocessInput() {
         //still work if you pass in boolean for expand parameter (old way)
-        if (typeof expand === "boolean") {
-            expand = expand ? "expand" : "collapse";
+        if (typeof this.expand === "boolean") {
+            this.expand = this.expand ? "expand" : "collapse";
         }
-        app.stoichiometryExpanded = (expand == "expand");
+        this.app.stoichiometryExpanded = (this.expand == "expand");
         //check that we've got a parsed javascript object here, not a String
-        inputObj = (typeof inputObj === "object") ? inputObj : JSON.parse(inputObj);
-        inputObj.data = inputObj.data.reverse();
+        this.inputObj = (typeof this.inputObj === "object") ? this.inputObj : JSON.parse(this.inputObj);
+        this.inputObj.data = this.inputObj.data.reverse();
     }
 
-    function initLinks() {
+    initLinks() {
+        const self = this;
         // loop through participants and features
         // init binary, unary and sequence links,
         // and make needed associations between these and containing naryLink
-        for (let datum of inputObj.data) {
+        for (let datum of self.inputObj.data) {
             if (datum.object === "interaction") {
                 for (let jsonParticipant of datum.participants) {
                     let features = new Array(0);
@@ -54775,10 +54990,10 @@ function readMijson(inputObj, /*App*/ app, expand = "expand") {
                                 // break feature links to different nodes into separate binary links
                                 const toSequenceData_indexedByNodeId = new Map();
 
-                                const linkedFeature = app.features.get(linkedFeatureIDs[lfi]);
+                                const linkedFeature = self.app.features.get(linkedFeatureIDs[lfi]);
                                 for (let seqData of linkedFeature.sequenceData) {
                                     let nodeId = seqData.interactorRef;
-                                    if (expand != "collapse") {
+                                    if (self.expand != "collapse") {
                                         nodeId = `${nodeId}(${seqData.participantRef})`;
                                     }
                                     let toSequenceData = toSequenceData_indexedByNodeId.get(nodeId);
@@ -54790,15 +55005,15 @@ function readMijson(inputObj, /*App*/ app, expand = "expand") {
                                 }
 
                                 for (let toSequenceData of toSequenceData_indexedByNodeId.values()) {
-                                    const fromInteractor = getNode(fromSequenceData[0]);
-                                    const toInteractor = getNode(toSequenceData[0]);
+                                    const fromInteractor = self.getNode(fromSequenceData[0]);
+                                    const toInteractor = self.getNode(toSequenceData[0]);
                                     let link;
                                     if (fromInteractor === toInteractor) {
-                                        link = getUnaryLink(fromInteractor, datum);
+                                        link = self.getUnaryLink(fromInteractor, datum);
                                     } else {
-                                        link = getBinaryLink(fromInteractor, toInteractor, datum);
+                                        link = self.getBinaryLink(fromInteractor, toInteractor, datum);
                                     }
-                                    const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, datum);
+                                    const sequenceLink = self.getFeatureLink(fromSequenceData, toSequenceData, datum);
                                     fromInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
                                     toInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
                                     link.sequenceLinks.set(sequenceLink.id, sequenceLink);
@@ -54813,31 +55028,9 @@ function readMijson(inputObj, /*App*/ app, expand = "expand") {
         }
     }
 
-    function initComplexes() {
-        //init complexes
-        app.complexes = Array.from(complexes.values()); // todo - why not just keep it in map
-        for (let c = 0; c < app.complexes.length; c++) {
-            const complex = app.complexes[c];
-            let interactionId;
-            if (expand !== "collapse") {
-                interactionId = complex.id.substring(0, complex.id.indexOf("("));
-            } else {
-                interactionId = complex.id;
-            }
-            for (let datum of inputObj.data) {
-                if (datum.object === "interaction" && datum.id === interactionId) {
-                    const nLinkId = getNaryLinkIdFromInteraction(datum);
-                    const naryLink = app.allNaryLinks.get(nLinkId);
-                    complex.initLink(naryLink);
-                    naryLink.complex = complex;
-                }
-            }
-        }
-    }
-
-    function makeMiFeaturesIntoAnnotations() {
+    makeMiFeaturesIntoAnnotations() {
         //make mi features into annotations
-        for (let feature of app.features.values()) {
+        for (let feature of this.app.features.values()) {
             // add features to interactors/participants/nodes
             // console.log(`FEATURE:${feature.name}`, feature.sequenceData);
             let annotName = "";
@@ -54848,14 +55041,14 @@ function readMijson(inputObj, /*App*/ app, expand = "expand") {
                 annotName += ", " + feature.detmethod.name;
             }
             // the id info we need is inside sequenceData att
-            if (feature.sequenceData) { // todo - still needed?
+            if (feature.sequenceData) {
                 for (let seqDatum of feature.sequenceData) {
                     let mID = seqDatum.interactorRef;
-                    if (expand !== "collapse") {
+                    if (this.expand !== "collapse") {
                         mID = `${mID}(${seqDatum.participantRef})`;
                     }
                     // console.log("*", mID, seqDatum);
-                    const molecule = app.participants.get(mID);
+                    const molecule = this.app.participants.get(mID);
                     if (molecule) {
                         const seqFeature = new _viz_sequence_datum__WEBPACK_IMPORTED_MODULE_11__.SequenceDatum(molecule, seqDatum.pos);
                         const annotation = new _viz_interactor_annotation__WEBPACK_IMPORTED_MODULE_0__.Annotation(annotName, seqFeature);
@@ -54873,175 +55066,79 @@ function readMijson(inputObj, /*App*/ app, expand = "expand") {
         }
     }
 
-    function participantBasedRead() {
+    participantBasedRead() {
         //get maximum stoichiometry
-        let maxStoich = 0;
-        for (let datum of inputObj.data) {
-            if (datum.object === "interaction") {
-                for (let jsonParticipant of datum.participants) {
-                    if (jsonParticipant.stoichiometry && (jsonParticipant.stoichiometry - 0) > maxStoich) {
-                        maxStoich = (jsonParticipant.stoichiometry - 0);
-                    }
-                }
-            }
-        }
-        if (maxStoich < 20) {
-            inputObj = (0,_expand__WEBPACK_IMPORTED_MODULE_14__.matrix)(inputObj);
-        }
+        //todo - reinstate this
+        // let maxStoich = 0;
+        // for (let datum of this.inputObj.data) {
+        //     if (datum.object === "interaction") {
+        //         for (let jsonParticipant of datum.participants) {
+        //             if (jsonParticipant.stoichiometry && (jsonParticipant.stoichiometry - 0) > maxStoich) {
+        //                 maxStoich = (jsonParticipant.stoichiometry - 0);
+        //             }
+        //         }
+        //     }
+        // }
+        // if (maxStoich < 20) {
+        this.inputObj = (0,_expand__WEBPACK_IMPORTED_MODULE_14__.matrix)(this.inputObj);
+        // }
 
-        indexFeatures();
-
+        this.indexFeatures();
+        const self = this;
         //add naryLinks and participants
-        for (let datum of inputObj.data) {
-            if (datum.object === "interaction") {
-                //init n-ary link
-                const nLinkId = datum.id || getNaryLinkIdFromInteraction(datum);
-                let nLink = app.allNaryLinks.get(nLinkId);
-                if (typeof nLink === "undefined") {
-                    //doesn't already exist, make new nLink
-                    nLink = new _viz_link_nary_link__WEBPACK_IMPORTED_MODULE_9__.NaryLink(nLinkId, app, datum.sourceId);
-                    app.allNaryLinks.set(nLinkId, nLink);
-                    //alot of time is being spent on creating these IDs, stash them in the interaction object?
-                    datum.naryId = nLinkId;
+        this.visitInteractions(function (datum) {
+            //init n-ary link
+            const nLinkId = datum.id || this.getNaryLinkIdFromInteraction(datum);
+            let nLink = self.app.allNaryLinks.get(nLinkId);
+            if (typeof nLink === "undefined") {
+                //doesn't already exist, make new nLink
+                nLink = new _viz_link_nary_link__WEBPACK_IMPORTED_MODULE_9__.NaryLink(nLinkId, self.app, datum.sourceId);
+                self.app.allNaryLinks.set(nLinkId, nLink);
+                //alot of time is being spent on creating these IDs, stash them in the interaction object?
+                datum.naryId = nLinkId;
 
+            }
+            //nLink.addEvidence(datum);
+
+            //init participants
+            for (let jsonParticipant of datum.participants) {
+                const intRef = jsonParticipant.interactorRef;
+                const partRef = jsonParticipant.id;
+                const participantId = `${intRef}(${partRef})`;
+                let participant = self.app.participants.get(participantId);
+                if (typeof participant === "undefined") {
+                    const interactor = self.app.interactors.get(intRef);
+                    participant = self.newParticipant(interactor, participantId, intRef);
+                    self.app.participants.set(participantId, participant);
                 }
-                //nLink.addEvidence(datum);
 
-                //init participants
-                for (let jsonParticipant of datum.participants) {
-                    const intRef = jsonParticipant.interactorRef;
-                    const partRef = jsonParticipant.id;
-                    const participantId = `${intRef}(${partRef})`;
-                    let participant = app.participants.get(participantId);
-                    if (typeof participant === "undefined") {
-                        const interactor = app.interactors.get(intRef);
-                        participant = newParticipant(interactor, participantId, intRef);
-                        app.participants.set(participantId, participant);
+                participant.naryLinks.set(nLinkId, nLink);
+                if (nLink.participants.indexOf(participant) === -1) {
+                    nLink.participants.push(participant);
+                }
+
+                if (jsonParticipant.stoichiometry || jsonParticipant.minStoichiometry || jsonParticipant.maxStoichiometry) {
+                    let stoichString = "";
+                    if (jsonParticipant.stoichiometry) {
+                        stoichString += jsonParticipant.stoichiometry;
+
                     }
-
-                    participant.naryLinks.set(nLinkId, nLink);
-                    if (nLink.participants.indexOf(participant) === -1) {
-                        nLink.participants.push(participant);
-                    }
-
-                    if (jsonParticipant.stoichiometry || jsonParticipant.minStoichiometry || jsonParticipant.maxStoichiometry) {
-                        let stoichString = "";
+                    if (jsonParticipant.minStoichiometry || jsonParticipant.maxStoichiometry) {
                         if (jsonParticipant.stoichiometry) {
-                            stoichString += jsonParticipant.stoichiometry;
-
+                            stoichString += ";";
                         }
-                        if (jsonParticipant.minStoichiometry || jsonParticipant.maxStoichiometry) {
-                            if (jsonParticipant.stoichiometry) {
-                                stoichString += ";";
-                            }
-                            stoichString += jsonParticipant.minStoichiometry + "-" + jsonParticipant.maxStoichiometry;
-                        }
-                        participant.addStoichiometryLabel(stoichString);
+                        stoichString += jsonParticipant.minStoichiometry + "-" + jsonParticipant.maxStoichiometry;
                     }
+                    participant.addStoichiometryLabel(stoichString);
                 }
             }
-        }
+        });
     }
 
-    //todo -refactor to use switch / case
-    function newParticipant(interactor, participantId, interactorRef) {
-        let participant;
-        if (typeof interactor == "undefined" || interactor.type.id === "MI:1302") {
-            //must be a previously unencountered complex -
-            // MI:0314 - interaction?, MI:0317 - complex? and its many subclasses
-
-            let interactionExists = false;
-            for (let datum of inputObj.data) {
-                if (datum.object === "interaction" && datum.id === interactorRef) {
-                    interactionExists = true;
-                    break;
-                }
-            }
-
-            if (interactionExists) {
-                participant = new _viz_interactor_complex__WEBPACK_IMPORTED_MODULE_6__.Complex(participantId, app, interactor, interactorRef);
-                complexes.set(participantId, participant);
-            } else {
-                participant = new _viz_interactor_complex_symbol__WEBPACK_IMPORTED_MODULE_7__.ComplexSymbol(participantId, app, interactorRef, interactor); //todo - param order
-            }
-        } else if (interactor.type.id === "MI:1304" //molecule set
-            ||
-            interactor.type.id === "MI:1305" //molecule set - candidate set
-            ||
-            interactor.type.id === "MI:1307" //molecule set - defined set
-            ||
-            interactor.type.id === "MI:1306" //molecule set - open set
-        ) {
-            participant = new _viz_interactor_molecule_set__WEBPACK_IMPORTED_MODULE_8__.MoleculeSet(participantId, app, interactor, interactor.label);
-        } else if (interactor.type.id === "MI:1100" // bioactive entity
-            ||
-            interactor.type.id === "MI:0904" // bioactive entity - polysaccharide
-            ||
-            interactor.type.id === "MI:0328" //bioactive entity - small mol
-            ||
-            interactor.type.id === "MI:2258" // bioactive entity - xenobiotic
-        ) {
-            participant = new _viz_interactor_bioactive_entity__WEBPACK_IMPORTED_MODULE_2__.BioactiveEntity(participantId, app, interactor, interactor.label);
-        } else if (interactor.type.id === "MI:0326"
-            ||
-            interactor.type.id === "MI:0327") { // proteins, peptides
-            participant = new _viz_interactor_protein__WEBPACK_IMPORTED_MODULE_1__.Protein(participantId, app, interactor, interactor.label, interactor.sequence);
-        } else if (interactor.type.id === "MI:0250") { //genes
-            participant = new _viz_interactor_gene__WEBPACK_IMPORTED_MODULE_3__.Gene(participantId, app, interactor, interactor.label);
-        } else if (interactor.type.id === "MI:0320" // RNA
-            ||
-            interactor.type.id === "MI:0321" // RNA - catalytic
-            ||
-            interactor.type.id === "MI:0322" // RNA - guide
-            ||
-            interactor.type.id === "MI:0323" // RNA - heterogeneous nuclear
-            ||
-            interactor.type.id === "MI:2190" // RNA - long non-coding
-            ||
-            interactor.type.id === "MI:0324" // RNA - messenger
-            ||
-            interactor.type.id === "MI:0679" // RNA - poly adenine
-            ||
-            interactor.type.id === "MI:0608" // RNA - ribosomal
-            ||
-            interactor.type.id === "MI:0611" // RNA - signal recognition particle
-            ||
-            interactor.type.id === "MI:0610" // RNA - small interfering
-            ||
-            interactor.type.id === "MI:0607" // RNA - small nuclear
-            ||
-            interactor.type.id === "MI:0609" // RNA - small nucleolar
-            ||
-            interactor.type.id === "MI:0325" // RNA - transfer
-            ||
-            interactor.type.id === "IA:2966" // RNA - double stranded ribonucleic acid (old)
-            ||
-            interactor.type.id === "MI:2359" // RNA - double stranded ribonucleic acid
-            ||
-            interactor.type.id === "MI:0318" // nucleic acid
-            ||
-            interactor.type.id === "MI:2204" // micro RNA
-        ) {
-            participant = new _viz_interactor_rna__WEBPACK_IMPORTED_MODULE_5__.RNA(participantId, app, interactor, interactor.label);
-        } else if (interactor.type.id === "MI:0319" // DNA
-            ||
-            interactor.type.id === "MI:0681" // DNA - double stranded
-            ||
-            interactor.type.id === "MI:0680" // DNA - single stranded
-        ) {
-            participant = new _viz_interactor_dna__WEBPACK_IMPORTED_MODULE_4__.DNA(participantId, app, interactor, interactor.label);
-        } else {
-            // MI:0329 - unknown participant ?
-            // MI:0383 - biopolymer ?
-            alert(`Unrecognised type:${interactor.type.name}`);
-        }
-        return participant;
-    }
-
-    function indexFeatures() {
+    indexFeatures() {
         //create indexed collection of all features from interactions
         // - still seems like a good starting point?
-        for (let datum of inputObj.data) {
+        for (let datum of this.inputObj.data) {
             if (datum.object === "interaction") {
                 for (let jsonParticipant of datum.participants) {
                     let features = new Array(0);
@@ -55061,36 +55158,36 @@ function readMijson(inputObj, /*App*/ app, expand = "expand") {
                             }
                         }
 
-                        app.features.set(feature.id, feature);
+                        this.app.features.set(feature.id, feature);
                     }
                 }
             }
         }
     }
 
-    function interactorBasedRead() {
+    interactorBasedRead() {
         //get interactors
-        for (let interactor of app.interactors.values()) {
+        for (let interactor of this.app.interactors.values()) {
             const participantId = interactor.id;
-            const participant = newParticipant(interactor, participantId, participantId);
-            app.participants.set(participantId, participant);
+            const participant = this.newParticipant(interactor, participantId, participantId);
+            this.app.participants.set(participantId, participant);
         }
 
-        indexFeatures();
+        this.indexFeatures();
 
         //add naryLinks
-        for (let datum of inputObj.data) {
+        for (let datum of this.inputObj.data) {
             if (datum.object === "interaction") {
                 const jsonParticipants = datum.participants;
                 const participantCount = jsonParticipants.length;
 
                 //init n-ary link
-                const nLinkId = getNaryLinkIdFromInteraction(datum);
-                let nLink = app.allNaryLinks.get(nLinkId);
+                const nLinkId = this.getNaryLinkIdFromInteraction(datum);
+                let nLink = this.app.allNaryLinks.get(nLinkId);
                 if (typeof nLink === "undefined") {
                     //doesn't already exist, make new nLink
-                    nLink = new _viz_link_nary_link__WEBPACK_IMPORTED_MODULE_9__.NaryLink(nLinkId, app);
-                    app.allNaryLinks.set(nLinkId, nLink);
+                    nLink = new _viz_link_nary_link__WEBPACK_IMPORTED_MODULE_9__.NaryLink(nLinkId, this.app);
+                    this.app.allNaryLinks.set(nLinkId, nLink);
                 }
                 //nLink.addEvidence(datum);
 
@@ -55098,13 +55195,13 @@ function readMijson(inputObj, /*App*/ app, expand = "expand") {
                 for (let pi = 0; pi < participantCount; pi++) {
                     const jsonParticipant = jsonParticipants[pi];
                     const intRef = jsonParticipant.interactorRef;
-                    let participant = app.participants.get(intRef);
+                    let participant = this.app.participants.get(intRef);
 
                     if (typeof participant === "undefined") {
                         //must be a previously unencountered complex
-                        participant = new _viz_interactor_complex__WEBPACK_IMPORTED_MODULE_6__.Complex(intRef, app, participant, intRef);
-                        complexes.set(intRef, participant);
-                        app.participants.set(intRef, participant);
+                        participant = new _viz_interactor_complex__WEBPACK_IMPORTED_MODULE_6__.Complex(intRef, this.app, participant, intRef);
+                        this.complexes.set(intRef, participant);
+                        this.app.participants.set(intRef, participant);
                     }
 
                     participant.naryLinks.set(nLinkId, nLink);
@@ -55112,7 +55209,7 @@ function readMijson(inputObj, /*App*/ app, expand = "expand") {
                         nLink.participants.push(participant);
                     }
                     //temp - to give sensible info when stoich collapsed
-                    const interactor = app.participants.get(intRef);
+                    const interactor = this.app.participants.get(intRef);
                     interactor.stoich = interactor.stoich ? interactor.stoich : 0;
                     if (jsonParticipant.stoichiometry) {
                         interactor.stoich += +jsonParticipant.stoichiometry;
@@ -55121,7 +55218,7 @@ function readMijson(inputObj, /*App*/ app, expand = "expand") {
                     }
                 }
 
-                const interactorArr = app.participants.values();
+                const interactorArr = this.app.participants.values();
                 const iCount = interactorArr.length;
                 for (let ii = 0; ii < iCount; ii++) {
                     const int = interactorArr[ii];
@@ -55133,7 +55230,7 @@ function readMijson(inputObj, /*App*/ app, expand = "expand") {
 
     }
 
-    function getNaryLinkIdFromInteraction(interaction) {
+    getNaryLinkIdFromInteraction(interaction) {
         if (interaction.naryId) {
             return interaction.naryId;
         }
@@ -55144,7 +55241,7 @@ function readMijson(inputObj, /*App*/ app, expand = "expand") {
         //make id
         for (let pi = 0; pi < participantCount; pi++) {
             let pID = jsonParticipants[pi].interactorRef;
-            if (expand != "collapse") {
+            if (this.expand != "collapse") {
                 pID = `${pID}(${jsonParticipants[pi].id})`;
             }
             pIDs.add(pID);
@@ -55153,22 +55250,24 @@ function readMijson(inputObj, /*App*/ app, expand = "expand") {
         return Array.from(pIDs.values()).sort().join("-");
     }
 
-    function getNode(seqDatum) {
+    getNode(seqDatum) {
         let id = seqDatum.interactorRef;
-        if (expand != "collapse") {
+        if (this.expand != "collapse") {
             id = `${id}(${seqDatum.participantRef})`;
         }
-        return app.participants.get(id);
+        return this.app.participants.get(id);
     }
 
-    function getFeatureLink(fromSeqData, toSeqData, interaction) {
+    getFeatureLink(fromSeqData, toSeqData, interaction) {
+        const self = this;
+
         function seqDataToString(seqData) {
             const nodeIds = new Set(); //used to eliminate duplicates
             //make id
             for (let s = 0; s < seqData.length; s++) {
                 const seq = seqData[s];
                 let id = seq.interactorRef;
-                if (expand != "collapse") {
+                if (self.expand != "collapse") {
                     id = `${id}(${seq.participantRef})`;
                 }
                 id = `${id}:${seq.pos}`;
@@ -55189,47 +55288,47 @@ function readMijson(inputObj, /*App*/ app, expand = "expand") {
             seqLinkId = `${end}><${start}`;
             //endsSwapped = true;
         }
-        let sequenceLink = app.allSequenceLinks.get(seqLinkId);
+        let sequenceLink = this.app.allSequenceLinks.get(seqLinkId);
         if (typeof sequenceLink === "undefined") {
             const fromFeaturePositions = [];
             for (let fromSeqDatum of fromSeqData) {
-                fromFeaturePositions.push(new _viz_sequence_datum__WEBPACK_IMPORTED_MODULE_11__.SequenceDatum(getNode(fromSeqDatum), fromSeqDatum.pos));
+                fromFeaturePositions.push(new _viz_sequence_datum__WEBPACK_IMPORTED_MODULE_11__.SequenceDatum(this.getNode(fromSeqDatum), fromSeqDatum.pos));
             }
             const toFeaturePositions = [];
             for (let toSeqDatum of toSeqData) {
-                toFeaturePositions.push(new _viz_sequence_datum__WEBPACK_IMPORTED_MODULE_11__.SequenceDatum(getNode(toSeqDatum), toSeqDatum.pos));
+                toFeaturePositions.push(new _viz_sequence_datum__WEBPACK_IMPORTED_MODULE_11__.SequenceDatum(this.getNode(toSeqDatum), toSeqDatum.pos));
             }
             //~ if (endsSwapped === false) {
-            sequenceLink = new _viz_link_feature_link__WEBPACK_IMPORTED_MODULE_10__.FeatureLink(seqLinkId, fromFeaturePositions, toFeaturePositions, app, interaction);
+            sequenceLink = new _viz_link_feature_link__WEBPACK_IMPORTED_MODULE_10__.FeatureLink(seqLinkId, fromFeaturePositions, toFeaturePositions, this.app, interaction);
             //~ }else {
             //~ sequenceLink = new FeatureLink(seqLinkId, toFeaturePositions, fromFeaturePositions, util, interaction);
             //~ }
-            app.allSequenceLinks.set(seqLinkId, sequenceLink);
+            this.app.allSequenceLinks.set(seqLinkId, sequenceLink);
         }
 
         //sequenceLink.addEvidence(interaction);
-        const nLinkId = getNaryLinkIdFromInteraction(interaction);
-        const nLink = app.allNaryLinks.get(nLinkId);
+        const nLinkId = this.getNaryLinkIdFromInteraction(interaction);
+        const nLink = this.app.allNaryLinks.get(nLinkId);
         nLink.sequenceLinks.set(seqLinkId, sequenceLink);
         return sequenceLink;
     }
 
-    function getUnaryLink(interactor, interaction) {
+    getUnaryLink(interactor, interaction) {
         const linkID = `-${interactor.id}-${interactor.id}`;
-        let link = app.allUnaryLinks.get(linkID);
+        let link = this.app.allUnaryLinks.get(linkID);
         if (typeof link === "undefined") {
-            link = new _viz_link_unary_link__WEBPACK_IMPORTED_MODULE_13__.UnaryLink(linkID, app, interactor);
-            app.allUnaryLinks.set(linkID, link);
+            link = new _viz_link_unary_link__WEBPACK_IMPORTED_MODULE_13__.UnaryLink(linkID, this.app, interactor);
+            this.app.allUnaryLinks.set(linkID, link);
             interactor.appLink = link;
         }
-        const nLinkId = getNaryLinkIdFromInteraction(interaction);
-        const nLink = app.allNaryLinks.get(nLinkId);
+        const nLinkId = this.getNaryLinkIdFromInteraction(interaction);
+        const nLink = this.app.allNaryLinks.get(nLinkId);
         nLink.unaryLinks.set(linkID, link);
         //link.addEvidence(interaction);
         return link;
     }
 
-    function getBinaryLink(sourceInteractor, targetInteractor, interaction) {
+    getBinaryLink(sourceInteractor, targetInteractor, interaction) {
         let linkID, fi, ti;
         // these links are undirected and should have same ID regardless of which way round
         // source and target are
@@ -55242,18 +55341,34 @@ function readMijson(inputObj, /*App*/ app, expand = "expand") {
             fi = targetInteractor;
             ti = sourceInteractor;
         }
-        let link = app.allBinaryLinks.get(linkID);
+        let link = this.app.allBinaryLinks.get(linkID);
         if (typeof link === "undefined") {
-            link = new _viz_link_binary_link__WEBPACK_IMPORTED_MODULE_12__.BinaryLink(linkID, app, fi, ti);
+            link = new _viz_link_binary_link__WEBPACK_IMPORTED_MODULE_12__.BinaryLink(linkID, this.app, fi, ti);
             fi.binaryLinks.set(linkID, link);
             ti.binaryLinks.set(linkID, link);
-            app.allBinaryLinks.set(linkID, link);
+            this.app.allBinaryLinks.set(linkID, link);
         }
-        const nLinkId = getNaryLinkIdFromInteraction(interaction);
-        const nLink = app.allNaryLinks.get(nLinkId);
+        const nLinkId = this.getNaryLinkIdFromInteraction(interaction);
+        const nLink = this.app.allNaryLinks.get(nLinkId);
         nLink.binaryLinks.set(linkID, link);
         //link.addEvidence(interaction);
         return link;
+    }
+
+    visitInteractions(interactionCallback) {
+        for (let datum of this.inputObj.data) {
+            if (datum.object === "interaction") {
+                interactionCallback(datum);
+            }
+        }
+    }
+
+    visitInteractors(interactorCallback) {
+        for (let datum of this.inputObj.data) {
+            if (datum.object === "interactor") {
+                interactorCallback(datum);
+            }
+        }
     }
 }
 
@@ -55269,7 +55384,7 @@ function readMijson(inputObj, /*App*/ app, expand = "expand") {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   readXml: () => (/* binding */ readXml)
+/* harmony export */   ReadXml: () => (/* binding */ ReadXml)
 /* harmony export */ });
 /* harmony import */ var _viz_interactor_annotation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./viz/interactor/annotation */ "./src/js/viz/interactor/annotation.js");
 /* harmony import */ var _viz_interactor_protein__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./viz/interactor/protein */ "./src/js/viz/interactor/protein.js");
@@ -55288,6 +55403,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _xml_expand__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./xml-expand */ "./src/js/xml-expand.js");
 /* harmony import */ var _xml_clone_complex_refs__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./xml-clone-complex-refs */ "./src/js/xml-clone-complex-refs.js");
 /* harmony import */ var _xml_clone_complex_stoich__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./xml-clone-complex-stoich */ "./src/js/xml-clone-complex-stoich.js");
+/* harmony import */ var _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../abstract-mi-reader */ "./src/abstract-mi-reader.js");
 
 
 
@@ -55306,64 +55422,88 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// reads MI JSON format
-function readXml(inputObj, /*App*/ app, expand = "expand") {
-    preprocessInput();
-    const complexes = new Map();
-    // expand complexes based on stoichiometry
-    if (expand === "expand") {
-        inputObj = (0,_xml_clone_complex_stoich__WEBPACK_IMPORTED_MODULE_16__.cloneComplexesStoich)(inputObj);
-    }
-    // may be multiple references to a complex, we want different set of participants for each reference to same complex
-    inputObj = (0,_xml_clone_complex_refs__WEBPACK_IMPORTED_MODULE_15__.cloneComplexRefs)(inputObj);
-    //get interactors - this could prob be before cloning of complexes?
-    app.interactors = new Map();
-    function addInteractor(interactor) {
-        const id = interactor.xref.primaryRef._id;
-        // console.log("Interactor ID:", id);
-        if (!app.interactors.has(id)) {
-            app.interactors.set(id, interactor);
-        } else {
-            console.warn("DUPLICATE INTERACTOR ID FOUND:", id);
+
+class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.AbstractMiReader {
+
+    read(inputObj, /*App*/ app, expand = "expand") {
+        this.inputObj = inputObj;
+        this.app = app;
+        this.expand = expand;
+        this.preprocessInput();
+        this.complexes = new Map();
+        // expand complexes based on stoichiometry
+        if (expand === "expand") {
+            inputObj = (0,_xml_clone_complex_stoich__WEBPACK_IMPORTED_MODULE_16__.cloneComplexesStoich)(inputObj);
         }
-    }
-    visitInteractors(addInteractor);
-    expand != "collapse" ? participantBasedRead() : interactorBasedRead();
-    initLinks();
-    initComplexes();
-    makeMiFeaturesIntoAnnotations();
-    app.variableParameters = getVariableParameters(inputObj);
-
-    function preprocessInput() {
-	//still work if you pass in boolean for expand parameter
-        if (typeof expand === "boolean") {
-            expand = expand ? "expand" : "collapse";
+        // may be multiple references to a complex, we want different set of participants for each reference to same complex
+        inputObj = (0,_xml_clone_complex_refs__WEBPACK_IMPORTED_MODULE_15__.cloneComplexRefs)(inputObj);
+        //get interactors - this could prob be before cloning of complexes?
+        app.interactors = new Map();
+        const self = this;
+        function addInteractor(interactor) {
+            const id = self.interactorId(interactor);
+            if (!app.interactors.has(id)) {
+                app.interactors.set(id, interactor);
+            } else {
+                console.warn("DUPLICATE INTERACTOR ID FOUND:", id);
+            }
         }
-        app.stoichiometryExpanded = (expand == "expand");
+
+        this.visitInteractors(addInteractor);
+        expand != "collapse" ? this.participantBasedRead() : this.interactorBasedRead();
+        this.initLinks();
+        this.initComplexes();
+        this.makeMiFeaturesIntoAnnotations();
+        //app.variableParameters = getVariableParameters(inputObj);
     }
 
-    function initLinks() {
+    interactorId(interactor) {
+        return interactor._id;//xref.primaryRef._id;
+    }
+
+    interactorTypeId(interactor) {
+        return interactor.interactorType.xref.primaryRef._id;
+    }
+
+    interactorLabel(interactor) {
+        return interactor.names.shortLabel;
+    }
+
+    interactionId(interaction) {
+        return interaction._id;
+    }
+
+    preprocessInput() {
+        //still work if you pass in boolean for expand parameter (old way)
+        if (typeof this.expand === "boolean") {
+            this.expand = this.expand ? "expand" : "collapse";
+        }
+        this.app.stoichiometryExpanded = (this.expand == "expand");
+    }
+
+    initLinks() {
+        const self = this;
         // loop through participants and features
         // init binary, unary and sequence links,
         // and make needed associations between these and containing naryLink
-        visitBindingFeatures(function (linkedFeatureIDs, interaction) {
+        this.visitBindingFeatures(function (linkedFeatureIDs, interaction) {
             const linkedFeatureCount = linkedFeatureIDs.length;
             for (let i = 0; i < linkedFeatureCount; i++) { //for each linked feature
                 for (let j = i + 1; j < linkedFeatureCount; j++) { //for each linked feature
-                    const fromFeature = app.features.get(linkedFeatureIDs[i]);
-                    const toFeature = app.features.get(linkedFeatureIDs[j]);
+                    const fromFeature = self.app.features.get(linkedFeatureIDs[i]);
+                    const toFeature = self.app.features.get(linkedFeatureIDs[j]);
                     //         console.log("fromFeature", fromFeature, "toFeature", toFeature);
                     const fromSequenceData = fromFeature.featureRangeList.featureRange;
                     const toSequenceData = toFeature.featureRangeList.featureRange;
-                    const fromInteractor = getNode(fromSequenceData[0]);
-                    const toInteractor = getNode(toSequenceData[0]);
+                    const fromInteractor = self.getNode(fromSequenceData[0]);
+                    const toInteractor = self.getNode(toSequenceData[0]);
                     let link;
                     if (fromInteractor === toInteractor) {
-                        link = getUnaryLink(fromInteractor, interaction);
+                        link = self.getUnaryLink(fromInteractor, interaction);
                     } else {
-                        link = getBinaryLink(fromInteractor, toInteractor, interaction);
+                        link = self.getBinaryLink(fromInteractor, toInteractor, interaction);
                     }
-                    const sequenceLink = getFeatureLink(fromSequenceData, toSequenceData, interaction);
+                    const sequenceLink = self.getFeatureLink(fromSequenceData, toSequenceData, interaction);
                     fromInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
                     toInteractor.sequenceLinks.set(sequenceLink.id, sequenceLink);
                     link.sequenceLinks.set(sequenceLink.id, sequenceLink);
@@ -55409,49 +55549,24 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
         });
     }
 
-    function initComplexes() {
-        //init complexes
-        app.complexes = Array.from(complexes.values()); // todo - why not just keep it in map
-        for (let c = 0; c < app.complexes.length; c++) {
-            const complex = app.complexes[c];
-            let interactionId;
-            if (expand != "collapse") {
-                interactionId = complex.id.substring(0, complex.id.indexOf("("));
-            } else {
-                interactionId = complex.id;
-            }
-            console.log("complex id", complex.id);
-            visitInteractions((interaction) => {
-                console.log("interaction id", interaction._id, "interactionId", interactionId, interaction._id == interactionId);
-                if (interaction._id == interactionId) {
-                    console.warn("its happening");
-                    const nLinkId = getNaryLinkIdFromInteraction(interaction);
-                    const naryLink = app.allNaryLinks.get(nLinkId);
-                    complex.initLink(naryLink);
-                    naryLink.complex = complex;
-                }
-            });
-        }
-    }
-
-    function makeMiFeaturesIntoAnnotations() {
+    makeMiFeaturesIntoAnnotations() {
         //make mi features into annotations
-        for (let feature of app.features.values()) {
+        for (let feature of this.app.features.values()) {
             // add features to interactors/participants/nodes
             // console.log(`FEATURE:${feature.name}`, feature.sequenceData);
             let annotName = "";
             if (feature.names) {
-                annotName += feature.names.shortLabel + " "; // toodo - whats this space
+                annotName += feature.names.shortLabel + " "; // todo - whats this space
             }
             // the id info we need is inside sequenceData att
-            if (feature.featureRangeList) { // todo - still needed?
+            if (feature.featureRangeList) {
                 for (let seqDatum of feature.featureRangeList.featureRange) {
                     let mID = seqDatum.interactorRef;
-                    if (expand != "collapse") {
+                    if (this.expand !== "collapse") {
                         mID = `${mID}(${seqDatum.participantRef})`;
                     }
                     // console.log("*", mID, seqDatum);
-                    const molecule = app.participants.get(mID);
+                    const molecule = this.app.participants.get(mID);
                     if (molecule) {
                         const seqFeature = new _viz_xml_feature_range__WEBPACK_IMPORTED_MODULE_11__.XmlFeatureRange(molecule, seqDatum);
                         const annotation = new _viz_interactor_annotation__WEBPACK_IMPORTED_MODULE_0__.Annotation(annotName, seqFeature);
@@ -55469,26 +55584,11 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
         }
     }
 
-    function complexPortalAccFromXref(xref) {
-        let xmlId;
-        if (xref.secondaryRef) {
-            for (let ref of xref.secondaryRef) {
-                if (ref._db === "complex portal") {
-                    xmlId = ref._id;
-                    break;
-                }
-            }
-        }
-        if (!xmlId) {
-            xmlId = xref.primaryRef._id;
-        }
-        return xmlId;
-    }
-
-    function participantBasedRead() {
+    participantBasedRead() {
         //get maximum stoichiometry
+        //todo - reinstate this
         // let maxStoich = 0;
-        // for (let datum of miJson.data) {
+        // for (let datum of this.inputObj.data) {
         //     if (datum.object === "interaction") {
         //         for (let jsonParticipant of datum.participants) {
         //             if (jsonParticipant.stoichiometry && (jsonParticipant.stoichiometry - 0) > maxStoich) {
@@ -55498,21 +55598,21 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
         //     }
         // }
         // if (maxStoich < 20) {
-        //     miJson = matrix(miJson);
+        this.inputObj = (0,_xml_expand__WEBPACK_IMPORTED_MODULE_14__.matrix)(this.inputObj);
         // }
 
-        indexFeatures();
-
+        this.indexFeatures();
+        const self = this;
         //add naryLinks and participants
-        visitInteractions(function (datum) {
+        this.visitInteractions(function (datum) {
             //init n-ary link
-            let xmlId = complexPortalAccFromXref(datum.xref);
-            const nLinkId = xmlId || getNaryLinkIdFromInteraction(datum);
-            let nLink = app.allNaryLinks.get(nLinkId);
+            let xmlId = self.complexPortalAccFromXref(datum.xref);
+            const nLinkId = xmlId || self.getNaryLinkIdFromInteraction(datum);
+            let nLink = self.app.allNaryLinks.get(nLinkId);
             if (typeof nLink === "undefined") {
                 //doesn't already exist, make new nLink
-                nLink = new _viz_link_nary_link__WEBPACK_IMPORTED_MODULE_9__.NaryLink(nLinkId, app, datum.sourceId);
-                app.allNaryLinks.set(nLinkId, nLink);
+                nLink = new _viz_link_nary_link__WEBPACK_IMPORTED_MODULE_9__.NaryLink(nLinkId, self.app, datum.sourceId);
+                self.app.allNaryLinks.set(nLinkId, nLink);
                 //alot of time is being spent on creating these IDs, stash them in the interaction object?
                 datum.naryId = nLinkId;
 
@@ -55523,15 +55623,15 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
             for (let jsonParticipant of datum.participantList.participant) {
                 let intRef = jsonParticipant.interactorRef;
                 if (!intRef) {
-                    intRef = jsonParticipant.interactor.xref.primaryRef._id;
+                    intRef = jsonParticipant.interactor._id;//xref.primaryRef._id;
                 }
                 const partRef = jsonParticipant._id;
                 const participantId = `${intRef}(${partRef})`;
-                let participant = app.participants.get(participantId);
+                let participant = self.app.participants.get(participantId);
                 if (typeof participant === "undefined") {
-                    const interactor = app.interactors.get(intRef);
-                    participant = newParticipant(interactor, participantId, intRef);
-                    app.participants.set(participantId, participant);
+                    const interactor = self.app.interactors.get(intRef);
+                    participant = self.newParticipant(interactor, participantId, intRef);
+                    self.app.participants.set(participantId, participant);
                 }
 
                 participant.naryLinks.set(nLinkId, nLink);
@@ -55539,7 +55639,7 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
                     nLink.participants.push(participant);
                 }
 
-                if (jsonParticipant.stoichiometry?._value  || jsonParticipant.stoichiometryRange) {
+                if (jsonParticipant.stoichiometry?._value || jsonParticipant.stoichiometryRange) {
                     let stoichString = "";
                     if (jsonParticipant.stoichiometry?._value) {
                         stoichString += jsonParticipant.stoichiometry._value;
@@ -55556,98 +55656,92 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
         });
     }
 
-    function newParticipant(interactor, participantId, interactorRef) {
+    newParticipant(interactor, participantId, interactorRef) {
+        const self = this;
         let participant;
-        if (typeof interactor == "undefined" || interactor.interactorType.xref.primaryRef._id === "MI:1302") {
+        if (typeof interactor == "undefined" || this.interactorTypeId(interactor) === "MI:1302") {
             //must be a previously unencountered complex -
             // MI:0314 - interaction?, MI:0317 - complex? and its many subclasses
 
             let interactionExists = false;
-            // for (let datum of miJson.data) {
-            //     if (datum.object === "interaction" && datum.id === interactorRef) {
-            //         interactionExists = true;
-            //         break;
-            //     }
-            // }
-            visitInteractions(function (interaction) {
-                if (interaction._id === interactorRef) {
+            this.visitInteractions(function (interaction) {
+                if (self.interactionId(interaction) === interactorRef) {
                     interactionExists = true;
-                    // break;
                 }
             });
 
             if (interactionExists) {
-                participant = new _viz_interactor_complex__WEBPACK_IMPORTED_MODULE_6__.Complex(participantId, app, interactorRef);
-                complexes.set(participantId, participant);
+                participant = new _viz_interactor_complex__WEBPACK_IMPORTED_MODULE_6__.Complex(participantId, this.app, interactor, interactorRef);
+                this.complexes.set(participantId, participant);
             } else {
-                participant = new _viz_interactor_complex_symbol__WEBPACK_IMPORTED_MODULE_7__.ComplexSymbol(participantId, app, complexPortalAccFromXref(interactor.xref), interactor);
+                participant = new _viz_interactor_complex_symbol__WEBPACK_IMPORTED_MODULE_7__.ComplexSymbol(participantId, this.app, interactorRef, interactor); //todo - param order
             }
-        } else if (interactor.interactorType.xref.primaryRef._id === "MI:1304" //molecule set
+        } else if (this.interactorTypeId(interactor) === "MI:1304" //molecule set
             ||
-            interactor.interactorType.xref.primaryRef._id === "MI:1305" //molecule set - candidate set
+            this.interactorTypeId(interactor) === "MI:1305" //molecule set - candidate set
             ||
-            interactor.interactorType.xref.primaryRef._id === "MI:1307" //molecule set - defined set
+            this.interactorTypeId(interactor) === "MI:1307" //molecule set - defined set
             ||
-            interactor.interactorType.xref.primaryRef._id === "MI:1306" //molecule set - open set
+            this.interactorTypeId(interactor) === "MI:1306" //molecule set - open set
         ) {
-            participant = new _viz_interactor_molecule_set__WEBPACK_IMPORTED_MODULE_8__.MoleculeSet(participantId, app, interactor, interactor.names.shortLabel);
-        } else if (interactor.interactorType.xref.primaryRef._id === "MI:1100" // bioactive entity
+            participant = new _viz_interactor_molecule_set__WEBPACK_IMPORTED_MODULE_8__.MoleculeSet(participantId, this.app, interactor, this.interactorLabel(interactor));
+        } else if (this.interactorTypeId(interactor) === "MI:1100" // bioactive entity
             ||
-            interactor.interactorType.xref.primaryRef._id === "MI:0904" // bioactive entity - polysaccharide
+            this.interactorTypeId(interactor) === "MI:0904" // bioactive entity - polysaccharide
             ||
-            interactor.interactorType.xref.primaryRef._id === "MI:0328" //bioactive entity - small mol
+            this.interactorTypeId(interactor) === "MI:0328" //bioactive entity - small mol
             ||
-            interactor.interactorType.xref.primaryRef._id === "MI:2258" // bioactive entity - xenobiotic
+            this.interactorTypeId(interactor) === "MI:2258" // bioactive entity - xenobiotic
         ) {
-            participant = new _viz_interactor_bioactive_entity__WEBPACK_IMPORTED_MODULE_2__.BioactiveEntity(participantId, app, interactor, interactor.names.shortLabel);
-        } else if (interactor.interactorType.xref.primaryRef._id === "MI:0326"
+            participant = new _viz_interactor_bioactive_entity__WEBPACK_IMPORTED_MODULE_2__.BioactiveEntity(participantId, this.app, interactor, this.interactorLabel(interactor));
+        } else if (this.interactorTypeId(interactor) === "MI:0326"
             ||
-            interactor.interactorType.xref.primaryRef._id === "MI:0327") { // proteins, peptides
-            participant = new _viz_interactor_protein__WEBPACK_IMPORTED_MODULE_1__.Protein(participantId, app, interactor, interactor.names.shortLabel, interactor.sequence);
-        } else if (interactor.interactorType.xref.primaryRef._id === "MI:0250") { //genes
-            participant = new _viz_interactor_gene__WEBPACK_IMPORTED_MODULE_3__.Gene(participantId, app, interactor, interactor.names.shortLabel);
-        } else if (interactor.interactorType.xref.primaryRef._id === "MI:0320" // RNA
+            this.interactorTypeId(interactor) === "MI:0327") { // proteins, peptides
+            participant = new _viz_interactor_protein__WEBPACK_IMPORTED_MODULE_1__.Protein(participantId, this.app, interactor, this.interactorLabel(interactor), interactor.sequence);
+        } else if (this.interactorTypeId(interactor) === "MI:0250") { //genes
+            participant = new _viz_interactor_gene__WEBPACK_IMPORTED_MODULE_3__.Gene(participantId, this.app, interactor, this.interactorLabel(interactor));
+        } else if (this.interactorTypeId(interactor) === "MI:0320" // RNA
             ||
-            interactor.interactorType.xref.primaryRef._id === "MI:0321" // RNA - catalytic
+            this.interactorTypeId(interactor) === "MI:0321" // RNA - catalytic
             ||
-            interactor.interactorType.xref.primaryRef._id === "MI:0322" // RNA - guide
+            this.interactorTypeId(interactor) === "MI:0322" // RNA - guide
             ||
-            interactor.interactorType.xref.primaryRef._id === "MI:0323" // RNA - heterogeneous nuclear
+            this.interactorTypeId(interactor) === "MI:0323" // RNA - heterogeneous nuclear
             ||
-            interactor.interactorType.xref.primaryRef._id === "MI:2190" // RNA - long non-coding
+            this.interactorTypeId(interactor) === "MI:2190" // RNA - long non-coding
             ||
-            interactor.interactorType.xref.primaryRef._id === "MI:0324" // RNA - messenger
+            this.interactorTypeId(interactor) === "MI:0324" // RNA - messenger
             ||
-            interactor.interactorType.xref.primaryRef._id === "MI:0679" // RNA - poly adenine
+            this.interactorTypeId(interactor) === "MI:0679" // RNA - poly adenine
             ||
-            interactor.interactorType.xref.primaryRef._id === "MI:0608" // RNA - ribosomal
+            this.interactorTypeId(interactor) === "MI:0608" // RNA - ribosomal
             ||
-            interactor.interactorType.xref.primaryRef._id === "MI:0611" // RNA - signal recognition particle
+            this.interactorTypeId(interactor) === "MI:0611" // RNA - signal recognition particle
             ||
-            interactor.interactorType.xref.primaryRef._id === "MI:0610" // RNA - small interfering
+            this.interactorTypeId(interactor) === "MI:0610" // RNA - small interfering
             ||
-            interactor.interactorType.xref.primaryRef._id === "MI:0607" // RNA - small nuclear
+            this.interactorTypeId(interactor) === "MI:0607" // RNA - small nuclear
             ||
-            interactor.interactorType.xref.primaryRef._id === "MI:0609" // RNA - small nucleolar
+            this.interactorTypeId(interactor) === "MI:0609" // RNA - small nucleolar
             ||
-            interactor.interactorType.xref.primaryRef._id === "MI:0325" // RNA - transfer
+            this.interactorTypeId(interactor) === "MI:0325" // RNA - transfer
             ||
-            interactor.interactorType.xref.primaryRef._id === "IA:2966" // RNA - double stranded ribonucleic acid (old)
+            this.interactorTypeId(interactor) === "IA:2966" // RNA - double stranded ribonucleic acid (old)
             ||
-            interactor.interactorType.xref.primaryRef._id === "MI:2359" // RNA - double stranded ribonucleic acid
+            this.interactorTypeId(interactor) === "MI:2359" // RNA - double stranded ribonucleic acid
             ||
-            interactor.interactorType.xref.primaryRef._id === "MI:0318" // nucleic acid
+            this.interactorTypeId(interactor) === "MI:0318" // nucleic acid
             ||
-            interactor.interactorType.xref.primaryRef._id === "MI:2204" // micro RNA
+            this.interactorTypeId(interactor) === "MI:2204" // micro RNA
         ) {
-            participant = new _viz_interactor_rna__WEBPACK_IMPORTED_MODULE_5__.RNA(participantId, app, interactor, interactor.names.shortLabel);
-        } else if (interactor.interactorType.xref.primaryRef._id === "MI:0319" // DNA
+            participant = new _viz_interactor_rna__WEBPACK_IMPORTED_MODULE_5__.RNA(participantId, this.app, interactor, this.interactorLabel(interactor));
+        } else if (this.interactorTypeId(interactor) === "MI:0319" // DNA
             ||
-            interactor.interactorType.xref.primaryRef._id === "MI:0681" // DNA - double stranded
+            this.interactorTypeId(interactor) === "MI:0681" // DNA - double stranded
             ||
-            interactor.interactorType.xref.primaryRef._id === "MI:0680" // DNA - single stranded
+            this.interactorTypeId(interactor) === "MI:0680" // DNA - single stranded
         ) {
-            participant = new _viz_interactor_dna__WEBPACK_IMPORTED_MODULE_4__.DNA(participantId, app, interactor, interactor.names.shortLabel);
+            participant = new _viz_interactor_dna__WEBPACK_IMPORTED_MODULE_4__.DNA(participantId, this.app, interactor, this.interactorLabel(interactor));
         } else {
             // MI:0329 - unknown participant ?
             // MI:0383 - biopolymer ?
@@ -55656,10 +55750,10 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
         return participant;
     }
 
-    function indexFeatures() {
+    indexFeatures() {
         //create indexed collection of all features from interactions
         // - still seems like a good starting point?
-        visitInteractions((interaction) => {
+        this.visitInteractions((interaction) => {
             for (let participant of interaction.participantList.participant) {
                 let features = new Array(0);
                 if (participant.featureList?.feature) features = participant.featureList.feature;
@@ -55671,54 +55765,54 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
                     // jami workaround, not entirely inline with mi-json schema, but looks like mi-json has redundant info here
                     for (let seqDatum of feature.featureRangeList.featureRange) {
                         if (!seqDatum.interactorRef) {
-                            seqDatum.interactorRef = participant.interactorRef || participant.interactor.xref.primaryRef._id;
+                            seqDatum.interactorRef = participant.interactorRef || participant.interactor._id;//xref.primaryRef._id;
                         }
                         if (!seqDatum.participantRef) {
                             seqDatum.participantRef = participant._id;//feature.parentParticipant;
                         }
                     }
 
-                    app.features.set(feature._id, feature);
+                    this.app.features.set(feature._id, feature);
                 }
             }
         });
     }
 
-    function interactorBasedRead() {
+    interactorBasedRead() {
         //get interactors
-        for (let interactor of app.interactors.values()) {
-            const participantId = interactor.xref.primaryRef._id;
-            const participant = newParticipant(interactor, participantId, participantId);
-            app.participants.set(participantId, participant);
+        for (let interactor of this.app.interactors.values()) {
+            const participantId = interactor._id;//xref.primaryRef._id;
+            const participant = this.newParticipant(interactor, participantId, participantId);
+            this.app.participants.set(participantId, participant);
         }
 
-        indexFeatures();
+        this.indexFeatures();
 
-        visitInteractions((interaction) => {
+        this.visitInteractions((interaction) => {
             const participants = interaction.participantList.participant;
             const participantCount = participants.length;
 
             //init n-ary link
-            const nLinkId = getNaryLinkIdFromInteraction(interaction);
-            let nLink = app.allNaryLinks.get(nLinkId);
+            const nLinkId = this.getNaryLinkIdFromInteraction(interaction);
+            let nLink = this.app.allNaryLinks.get(nLinkId);
             if (typeof nLink === "undefined") {
                 //doesn't already exist, make new nLink
-                nLink = new _viz_link_nary_link__WEBPACK_IMPORTED_MODULE_9__.NaryLink(nLinkId, app, interaction._id);
-                app.allNaryLinks.set(nLinkId, nLink);
+                nLink = new _viz_link_nary_link__WEBPACK_IMPORTED_MODULE_9__.NaryLink(nLinkId, this.app);//, interaction._id);
+                this.app.allNaryLinks.set(nLinkId, nLink);
             }
             //nLink.addEvidence(datum);
 
             //~ //init participants
             for (let pi = 0; pi < participantCount; pi++) {
                 const jsonParticipant = participants[pi];
-                const intRef = jsonParticipant.interactorRef || jsonParticipant.interactor.xref.primaryRef._id;
-                let participant = app.participants.get(intRef);
+                const intRef = jsonParticipant.interactorRef;// || jsonParticipant.interactor.xref.primaryRef._id;
+                let participant = this.app.participants.get(intRef);
 
                 if (typeof participant === "undefined") {
                     //must be a previously unencountered complex
-                        participant = new _viz_interactor_complex__WEBPACK_IMPORTED_MODULE_6__.Complex(intRef, app, participant, intRef);
-                    complexes.set(intRef, participant);
-                    app.participants.set(intRef, participant);
+                    participant = new _viz_interactor_complex__WEBPACK_IMPORTED_MODULE_6__.Complex(intRef, this.app);//, participant, intRef);
+                    this.complexes.set(intRef, participant);
+                    this.app.participants.set(intRef, participant);
                 }
 
                 participant.naryLinks.set(nLinkId, nLink);
@@ -55726,7 +55820,7 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
                     nLink.participants.push(participant);
                 }
                 //temp - to give sensible info when stoich collapsed
-                const interactor = app.participants.get(intRef);
+                const interactor = this.app.participants.get(intRef);
                 interactor.stoich = interactor.stoich ? interactor.stoich : 0;
                 if (jsonParticipant.stoichiometry) {
                     interactor.stoich += +jsonParticipant.stoichiometry;
@@ -55735,7 +55829,7 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
                 }
             }
 
-            const interactorArr = app.participants.values();
+            const interactorArr = this.app.participants.values();
             const iCount = interactorArr.length;
             for (let ii = 0; ii < iCount; ii++) {
                 const int = interactorArr[ii];
@@ -55745,7 +55839,7 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
         });
     }
 
-    function getNaryLinkIdFromInteraction(interaction) {
+    getNaryLinkIdFromInteraction(interaction) {
         if (interaction.naryId) {
             return interaction.naryId;
         }
@@ -55755,32 +55849,34 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
         const pIDs = new Set(); //used to eliminate duplicates
         //make id
         for (let pi = 0; pi < participantCount; pi++) {
-            let pID = participants[pi].interactorRef || participants[pi].interactor.xref.primaryRef._id;
-            if (expand != "collapse") {
+            let pID = participants[pi].interactorRef || participants[pi].interactor._id;//xref.primaryRef._id;
+            if (this.expand != "collapse") {
                 pID = `${pID}(${participants[pi]._id})`;
             }
             pIDs.add(pID);
         }
 
-        return interaction._id;//Array.from(pIDs.values()).sort().join("-");
+        return Array.from(pIDs.values()).sort().join("-"); //interaction._id;//
     }
 
-    function getNode(seqDatum) {
+    getNode(seqDatum) {
         let id = seqDatum.interactorRef;
-        if (expand != "collapse") {
+        if (this.expand != "collapse") {
             id = `${id}(${seqDatum.participantRef})`;
         }
-        return app.participants.get(id);
+        return this.app.participants.get(id);
     }
 
-    function getFeatureLink(fromSeqData, toSeqData, interaction) {
+    getFeatureLink(fromSeqData, toSeqData, interaction) {
+        const self = this;
+
         function seqDataToString(seqData) {
             const nodeIds = new Set(); //used to eliminate duplicates
             //make id
             for (let s = 0; s < seqData.length; s++) {
                 const seq = seqData[s];
                 let id = seq.interactorRef;
-                if (expand !== "collapse") {
+                if (self.expand !== "collapse") {
                     id = `${id}(${seq.participantRef})`;
                 }
                 id = `${id}:${seq.pos}`;
@@ -55801,47 +55897,47 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
             seqLinkId = `${end}><${start}`;
             //endsSwapped = true;
         }
-        let sequenceLink = app.allSequenceLinks.get(seqLinkId);
+        let sequenceLink = this.app.allSequenceLinks.get(seqLinkId);
         if (typeof sequenceLink === "undefined") {
             const fromFeaturePositions = [];
             for (let fromSeqDatum of fromSeqData) {
-                fromFeaturePositions.push(new _viz_xml_feature_range__WEBPACK_IMPORTED_MODULE_11__.XmlFeatureRange(getNode(fromSeqDatum), fromSeqDatum));
+                fromFeaturePositions.push(new _viz_xml_feature_range__WEBPACK_IMPORTED_MODULE_11__.XmlFeatureRange(this.getNode(fromSeqDatum), fromSeqDatum));
             }
             const toFeaturePositions = [];
             for (let toSeqDatum of toSeqData) {
-                toFeaturePositions.push(new _viz_xml_feature_range__WEBPACK_IMPORTED_MODULE_11__.XmlFeatureRange(getNode(toSeqDatum), toSeqDatum));
+                toFeaturePositions.push(new _viz_xml_feature_range__WEBPACK_IMPORTED_MODULE_11__.XmlFeatureRange(this.getNode(toSeqDatum), toSeqDatum));
             }
             //~ if (endsSwapped === false) {
-            sequenceLink = new _viz_link_feature_link__WEBPACK_IMPORTED_MODULE_10__.FeatureLink(seqLinkId, fromFeaturePositions, toFeaturePositions, app, interaction);
+            sequenceLink = new _viz_link_feature_link__WEBPACK_IMPORTED_MODULE_10__.FeatureLink(seqLinkId, fromFeaturePositions, toFeaturePositions, this.app, interaction);
             //~ }else {
             //~ sequenceLink = new FeatureLink(seqLinkId, toFeaturePositions, fromFeaturePositions, util, interaction);
             //~ }
-            app.allSequenceLinks.set(seqLinkId, sequenceLink);
+            this.app.allSequenceLinks.set(seqLinkId, sequenceLink);
         }
 
         //sequenceLink.addEvidence(interaction);
-        const nLinkId = getNaryLinkIdFromInteraction(interaction);
-        const nLink = app.allNaryLinks.get(nLinkId);
+        const nLinkId = this.getNaryLinkIdFromInteraction(interaction);
+        const nLink = this.app.allNaryLinks.get(nLinkId);
         nLink.sequenceLinks.set(seqLinkId, sequenceLink);
         return sequenceLink;
     }
 
-    function getUnaryLink(interactor, interaction) {
+    getUnaryLink(interactor, interaction) {
         const linkID = `-${interactor.id}-${interactor.id}`;
-        let link = app.allUnaryLinks.get(linkID);
+        let link = this.app.allUnaryLinks.get(linkID);
         if (typeof link === "undefined") {
-            link = new _viz_link_unary_link__WEBPACK_IMPORTED_MODULE_13__.UnaryLink(linkID, app, interactor);
-            app.allUnaryLinks.set(linkID, link);
+            link = new _viz_link_unary_link__WEBPACK_IMPORTED_MODULE_13__.UnaryLink(linkID, this.app, interactor);
+            this.app.allUnaryLinks.set(linkID, link);
             interactor.appLink = link;
         }
-        const nLinkId = getNaryLinkIdFromInteraction(interaction);
-        const nLink = app.allNaryLinks.get(nLinkId);
+        const nLinkId = this.getNaryLinkIdFromInteraction(interaction);
+        const nLink = this.app.allNaryLinks.get(nLinkId);
         nLink.unaryLinks.set(linkID, link);
         //link.addEvidence(interaction);
         return link;
     }
 
-    function getBinaryLink(sourceInteractor, targetInteractor, interaction) {
+    getBinaryLink(sourceInteractor, targetInteractor, interaction) {
         let linkID, fi, ti;
         // these links are undirected and should have same ID regardless of which way round
         // source and target are
@@ -55854,25 +55950,25 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
             fi = targetInteractor;
             ti = sourceInteractor;
         }
-        let link = app.allBinaryLinks.get(linkID);
+        let link = this.app.allBinaryLinks.get(linkID);
         if (typeof link === "undefined") {
-            link = new _viz_link_binary_link__WEBPACK_IMPORTED_MODULE_12__.BinaryLink(linkID, app, fi, ti);
+            link = new _viz_link_binary_link__WEBPACK_IMPORTED_MODULE_12__.BinaryLink(linkID, this.app, fi, ti);
             fi.binaryLinks.set(linkID, link);
             ti.binaryLinks.set(linkID, link);
-            app.allBinaryLinks.set(linkID, link);
+            this.app.allBinaryLinks.set(linkID, link);
         }
-        const nLinkId = getNaryLinkIdFromInteraction(interaction);
-        const nLink = app.allNaryLinks.get(nLinkId);
+        const nLinkId = this.getNaryLinkIdFromInteraction(interaction);
+        const nLink = this.app.allNaryLinks.get(nLinkId);
         nLink.binaryLinks.set(linkID, link);
         //link.addEvidence(interaction);
         return link;
     }
 
-    function getVariableParameters(input) {
+    getVariableParameters(input) {
         const varpars = new Map();
         //todo - ask about variable parameters being differentn across interactions
         // maybe they can be, lets assume varpars with same description are the same
-        visitInteractions((interaction) => {
+        this.visitInteractions((interaction) => {
             if (interaction.experimentList?.experimentDescription) {
                 for (let experimentDescription of interaction.experimentList.experimentDescription) {
                     if (experimentDescription.variableParameterList?.variableParameter) {
@@ -55894,8 +55990,8 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
         return varpars;
     }
 
-    function visitInteractions(interactionCallback) {
-        for (let entry of inputObj.entrySet.entry) {
+    visitInteractions(interactionCallback) {
+        for (let entry of this.inputObj.entrySet.entry) {
             // console.log("*entry*", entry);
             const interactions = [
                 ...(entry.interactionList?.abstractInteraction || []),
@@ -55911,8 +56007,8 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
         }
     }
 
-    function visitInteractors(interactorCallback) {
-        for (let entry of inputObj.entrySet.entry) {
+    visitInteractors(interactorCallback) {
+        for (let entry of this.inputObj.entrySet.entry) {
             // console.log("*entry*", entry);
 
             // Visit top-level interactors
@@ -55924,7 +56020,7 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
             }
 
             // Visit interactors inside participantList
-            visitInteractions((interaction) => {
+            this.visitInteractions((interaction) => {
                 const participants = interaction.participantList?.participant || [];
                 for (let participant of participants) {
                     // console.log("*participant*", participant);
@@ -55937,8 +56033,8 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
     }
 
     //visits both binding features and inferred links
-    function visitBindingFeatures(bindingFeaturesCallback){
-        visitInteractions((interaction) => {
+    visitBindingFeatures(bindingFeaturesCallback) {
+        this.visitInteractions((interaction) => {
             if (interaction.bindingFeatureList?.bindingFeatures) {
                 for (let bindingFeatures of interaction.bindingFeatureList.bindingFeatures) {
                     const linkedFeatureIDs = bindingFeatures.participantFeatureRef;
@@ -55947,7 +56043,7 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
             }
         });
 
-        visitInteractions((interaction => {
+        this.visitInteractions((interaction => {
             if (interaction.inferredInteractionList?.inferredInteraction) {
                 for (let bindingFeatures of interaction.inferredInteractionList.inferredInteraction) {
                     const linkedFeatureIDs = bindingFeatures.participant.map(p => p.participantFeatureRef);
@@ -55956,6 +56052,23 @@ function readXml(inputObj, /*App*/ app, expand = "expand") {
             }
         }));
     }
+
+    complexPortalAccFromXref(xref) {
+        let xmlId;
+        if (xref.secondaryRef) {
+            for (let ref of xref.secondaryRef) {
+                if (ref._db === "complex portal") {
+                    xmlId = ref._id;
+                    break;
+                }
+            }
+        }
+        if (!xmlId) {
+            xmlId = xref.primaryRef._id;
+        }
+        return xmlId;
+    }
+
 }
 
 
@@ -56763,18 +56876,18 @@ class Interactor {
         this.upperGroup.appendChild(this.outline);
     }
 
-    hide(){
-        this.upperGroup.style.display = "none";
-    }
-
-    show() {
-        this.upperGroup.style.display = "block";
-        if (this.labelSVG) {
-            this.labelSVG.style.display = "block";
-        }
-        // this.setPositionFromCola();
-        // this.setAllLinkCoordinates();
-    }
+    // hide(){
+    //     this.upperGroup.style.display = "none";
+    // }
+    //
+    // show() {
+    //     this.upperGroup.style.display = "block";
+    //     if (this.labelSVG) {
+    //         this.labelSVG.style.display = "block";
+    //     }
+    //     // this.setPositionFromCola();
+    //     // this.setAllLinkCoordinates();
+    // }
 
     initListeners() {
         this.upperGroup.onmousedown = evt => this.mouseDown(evt);
@@ -58479,23 +58592,23 @@ class NaryLink extends _link__WEBPACK_IMPORTED_MODULE_0__.Link {
         // this.setLinkCoordinates(); // having this here slows down start up. instead see getPosition in complex.js
         this.app.naryLinks.appendChild(this.path);
         this.app.naryLinks.appendChild(this.path2);
-        // show participants
-        const participants = this.participants;
-        const pc = participants.length;
-        for (let i = 0; i < pc; i++) {
-            const participant = participants[i];
-            if (participant.type === "complex") {
-                participant.naryLink.show();
-            } else {
-                participant.show();
-            }
-        }
+        // // show participants
+        // const participants = this.participants;
+        // const pc = participants.length;
+        // for (let i = 0; i < pc; i++) {
+        //     const participant = participants[i];
+        //     if (participant.type === "complex") {
+        //         participant.naryLink.show();
+        //     } else {
+        //         participant.show();
+        //     }
+        // }
     }
 
-    hide(){
-        this.path.remove();
-        this.path2.remove();
-    }
+    // hide(){
+    //     this.path.remove();
+    //     this.path2.remove();
+    // }
 
     setLinkCoordinates(dontPropogate) {
         // Uses d3.geom.hull to calculate a bounding path around an array of vertices
@@ -60064,7 +60177,7 @@ class App {
 
     // reads MI JSON format
     readMIJSON(miJson, expand = true) {
-        (0,_read_mijson__WEBPACK_IMPORTED_MODULE_6__.readMijson)(miJson, this, expand);
+        new _read_mijson__WEBPACK_IMPORTED_MODULE_6__.ReadJson().read(miJson, this, expand);
         this.init();
     }
 
@@ -60106,7 +60219,8 @@ class App {
         const parser = new fast_xml_parser__WEBPACK_IMPORTED_MODULE_14__["default"](options);
         const jsObj = parser.parse(xmlText, options);
         console.log("jsObj", jsObj); //debug
-        (0,_read_xml__WEBPACK_IMPORTED_MODULE_11__.readXml)(jsObj, this, expand);
+        //readXml(jsObj, this, expand);
+        new _read_xml__WEBPACK_IMPORTED_MODULE_11__.ReadXml().read(jsObj, this, expand);
         this.init();
     }
 

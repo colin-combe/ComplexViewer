@@ -7,14 +7,14 @@ import * as cola from "./cola";
 import Rgb_color from "rgb-color";
 
 import {svgUtils} from "./svgexp";
-import {readMijson} from "./read-mijson";
+import {ReadJson, readMijson} from "./read-mijson";
 import {fetchAnnotations} from "./annotation-utils";
 
 import {NaryLink} from "./viz/link/nary-link";
 import {svgns} from "./svgns";
 
 import $ from "jquery";
-import {readXml} from "./read-xml";
+import {ReadXml, readXml} from "./read-xml";
 import {XMLParser} from "fast-xml-parser";
 
 export class App {
@@ -490,7 +490,7 @@ export class App {
 
     // reads MI JSON format
     readMIJSON(miJson, expand = true) {
-        readMijson(miJson, this, expand);
+        new ReadJson().read(miJson, this, expand);
         this.init();
     }
 
@@ -532,7 +532,8 @@ export class App {
         const parser = new XMLParser(options);
         const jsObj = parser.parse(xmlText, options);
         console.log("jsObj", jsObj); //debug
-        readXml(jsObj, this, expand);
+        //readXml(jsObj, this, expand);
+        new ReadXml().read(jsObj, this, expand);
         this.init();
     }
 

@@ -50,23 +50,23 @@ export class NaryLink extends Link {
         // this.setLinkCoordinates(); // having this here slows down start up. instead see getPosition in complex.js
         this.app.naryLinks.appendChild(this.path);
         this.app.naryLinks.appendChild(this.path2);
-        // show participants
-        const participants = this.participants;
-        const pc = participants.length;
-        for (let i = 0; i < pc; i++) {
-            const participant = participants[i];
-            if (participant.type === "complex") {
-                participant.naryLink.show();
-            } else {
-                participant.show();
-            }
-        }
+        // // show participants
+        // const participants = this.participants;
+        // const pc = participants.length;
+        // for (let i = 0; i < pc; i++) {
+        //     const participant = participants[i];
+        //     if (participant.type === "complex") {
+        //         participant.naryLink.show();
+        //     } else {
+        //         participant.show();
+        //     }
+        // }
     }
 
-    hide(){
-        this.path.remove();
-        this.path2.remove();
-    }
+    // hide(){
+    //     this.path.remove();
+    //     this.path2.remove();
+    // }
 
     setLinkCoordinates(dontPropogate) {
         // Uses d3.geom.hull to calculate a bounding path around an array of vertices
