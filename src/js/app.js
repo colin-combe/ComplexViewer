@@ -524,7 +524,7 @@ export class App {
                     .includes(jpath); // replace with your element names
             },
             ignoreAttributes: false,
-            attributeNamePrefix: "_",
+            attributeNamePrefix: "",
             parseTagValue: false,
             parseAttributeValue: false,
             trimValues: true,

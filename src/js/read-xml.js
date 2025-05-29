@@ -52,11 +52,11 @@ export class ReadXml extends AbstractMiReader {
     }
 
     interactorId(interactor) {
-        return interactor._id;//xref.primaryRef._id;
+        return interactor.id;//xref.primaryRef._id;
     }
 
     interactorTypeId(interactor) {
-        return interactor.interactorType.xref.primaryRef._id;
+        return interactor.interactorType.xref.primaryRef.id;
     }
 
     interactorLabel(interactor) {
@@ -64,7 +64,7 @@ export class ReadXml extends AbstractMiReader {
     }
 
     interactionId(interaction) {
-        return interaction._id;
+        return interaction.id;
     }
 
     preprocessInput() {
@@ -217,9 +217,9 @@ export class ReadXml extends AbstractMiReader {
             for (let jsonParticipant of datum.participantList.participant) {
                 let intRef = jsonParticipant.interactorRef;
                 if (!intRef) {
-                    intRef = jsonParticipant.interactor._id;//xref.primaryRef._id;
+                    intRef = jsonParticipant.interactor.id;//xref.primaryRef._id;
                 }
-                const partRef = jsonParticipant._id;
+                const partRef = jsonParticipant.id;
                 const participantId = `${intRef}(${partRef})`;
                 let participant = self.app.participants.get(participantId);
                 if (typeof participant === "undefined") {
@@ -233,16 +233,16 @@ export class ReadXml extends AbstractMiReader {
                     nLink.participants.push(participant);
                 }
 
-                if (jsonParticipant.stoichiometry?._value || jsonParticipant.stoichiometryRange) {
+                if (jsonParticipant.stoichiometry?.value || jsonParticipant.stoichiometryRange) {
                     let stoichString = "";
-                    if (jsonParticipant.stoichiometry?._value) {
-                        stoichString += jsonParticipant.stoichiometry._value;
+                    if (jsonParticipant.stoichiometry?.value) {
+                        stoichString += jsonParticipant.stoichiometry.value;
                     }
                     if (jsonParticipant.stoichiometryRange) {
                         if (stoichString !== "") {
                             stoichString += ";";
                         }
-                        stoichString += jsonParticipant.stoichiometryRange._minValue + "-" + jsonParticipant.stoichiometryRange._maxValue;
+                        stoichString += jsonParticipant.stoichiometryRange.minValue + "-" + jsonParticipant.stoichiometryRange.maxValue;
                     }
                     participant.addStoichiometryLabel(stoichString);
                 }
@@ -265,14 +265,14 @@ export class ReadXml extends AbstractMiReader {
                     // jami workaround, not entirely inline with mi-json schema, but looks like mi-json has redundant info here
                     for (let seqDatum of feature.featureRangeList.featureRange) {
                         if (!seqDatum.interactorRef) {
-                            seqDatum.interactorRef = participant.interactorRef || participant.interactor._id;//xref.primaryRef._id;
+                            seqDatum.interactorRef = participant.interactorRef || participant.interactor.id;//xref.primaryRef._id;
                         }
                         if (!seqDatum.participantRef) {
-                            seqDatum.participantRef = participant._id;//feature.parentParticipant;
+                            seqDatum.participantRef = participant.id;//feature.parentParticipant;
                         }
                     }
 
-                    this.app.features.set(feature._id, feature);
+                    this.app.features.set(feature.id, feature);
                 }
             }
         });
@@ -281,7 +281,7 @@ export class ReadXml extends AbstractMiReader {
     interactorBasedRead() {
         //get interactors
         for (let interactor of this.app.interactors.values()) {
-            const participantId = interactor._id;//xref.primaryRef._id;
+            const participantId = interactor.id;//xref.primaryRef._id;
             const participant = this.newParticipant(interactor, participantId, participantId);
             this.app.participants.set(participantId, participant);
         }
@@ -349,9 +349,9 @@ export class ReadXml extends AbstractMiReader {
         const pIDs = new Set(); //used to eliminate duplicates
         //make id
         for (let pi = 0; pi < participantCount; pi++) {
-            let pID = participants[pi].interactorRef || participants[pi].interactor._id;//xref.primaryRef._id;
+            let pID = participants[pi].interactorRef || participants[pi].interactor.id;//xref.primaryRef._id;
             if (this.expand != "collapse") {
-                pID = `${pID}(${participants[pi]._id})`;
+                pID = `${pID}(${participants[pi].id})`;
             }
             pIDs.add(pID);
         }
@@ -557,14 +557,14 @@ export class ReadXml extends AbstractMiReader {
         let xmlId;
         if (xref.secondaryRef) {
             for (let ref of xref.secondaryRef) {
-                if (ref._db === "complex portal") {
-                    xmlId = ref._id;
+                if (ref.db === "complex portal") {
+                    xmlId = ref.id;
                     break;
                 }
             }
         }
         if (!xmlId) {
-            xmlId = xref.primaryRef._id;
+            xmlId = xref.primaryRef.id;
         }
         return xmlId;
     }

@@ -29,16 +29,16 @@ export class XmlFeatureRange {
         //     <mif:participantRef>{0,1}</mif:participantRef>
         // </mif:featureRange>
 
-        const startStatus = featureRange.startStatus.xref.primaryRef._id;
+        const startStatus = featureRange.startStatus.xref.primaryRef.id;
         const startStatusName = featureRange.startStatus.names.shortLabel;
-        const endStatus = featureRange.endStatus.xref.primaryRef._id;
+        const endStatus = featureRange.endStatus.xref.primaryRef.id;
         const endStatusName = featureRange.endStatus.names.shortLabel;
-        const begin = featureRange.begin?._position;
-        const end = featureRange.end?._position;
-        const beginIntervalBegin = featureRange.beginInterval?._begin;
-        const beginIntervalEnd = featureRange.beginInterval?._end;
-        const endIntervalBegin = featureRange.endInterval?._begin;
-        const endIntervalEnd = featureRange.endInterval?._end;
+        const begin = featureRange.begin?.position;
+        const end = featureRange.end?.position;
+        const beginIntervalBegin = featureRange.beginInterval?.begin;
+        const beginIntervalEnd = featureRange.beginInterval?.end;
+        const endIntervalBegin = featureRange.endInterval?.begin;
+        const endIntervalEnd = featureRange.endInterval?.end;
 
         // console.log("startStatus", startStatus, startStatusName,
         //     "endStatus", endStatus, endStatusName,
