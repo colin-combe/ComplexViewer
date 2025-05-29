@@ -68,6 +68,10 @@ export class ReadXml extends AbstractMiReader {
         return interaction.id;
     }
 
+    participantInteractorId(participant) {
+        return participant.interactorRef || participant.interactionRef || participant.interactor.id;
+    }
+
     preprocessInput() {
         //still work if you pass in boolean for expand parameter (old way)
         if (typeof this.expand === "boolean") {
@@ -193,13 +197,14 @@ export class ReadXml extends AbstractMiReader {
         //     }
         // }
         // if (maxStoich < 20) {
+        if (this.expand != "curated") {
         this.inputObj = matrix(this.inputObj);
-        // }
+        }
 
         this.indexFeatures();
         const self = this;
         //add naryLinks and participants
-        this.visitInteractions(function (datum) {
+        this.visitInteractions((datum) => {
             //init n-ary link
             const nLinkId = datum.id || this.getNaryLinkIdFromInteraction(datum);
             let nLink = self.app.allNaryLinks.get(nLinkId);
@@ -214,12 +219,9 @@ export class ReadXml extends AbstractMiReader {
             //nLink.addEvidence(datum);
 
             //init participants
-            for (let jsonParticipant of datum.participantList.participant) {
-                let intRef = jsonParticipant.interactorRef || jsonParticipant.interactionRef;
-                if (!intRef) {
-                    intRef = jsonParticipant.interactor.id;//xref.primaryRef._id;
-                }
-                const partRef = jsonParticipant.id;
+            for (let inputParticipant of datum.participantList.participant) {
+                const intRef = this.participantInteractorId(inputParticipant);
+                const partRef = inputParticipant.id;
                 const participantId = `${intRef}(${partRef})`;
                 let participant = self.app.participants.get(participantId);
                 if (typeof participant === "undefined") {
@@ -233,16 +235,16 @@ export class ReadXml extends AbstractMiReader {
                     nLink.participants.push(participant);
                 }
 
-                if (jsonParticipant.stoichiometry?.value || jsonParticipant.stoichiometryRange) {
+                if (inputParticipant.stoichiometry?.value || inputParticipant.stoichiometryRange) {
                     let stoichString = "";
-                    if (jsonParticipant.stoichiometry?.value) {
-                        stoichString += jsonParticipant.stoichiometry.value;
+                    if (inputParticipant.stoichiometry?.value) {
+                        stoichString += inputParticipant.stoichiometry.value;
                     }
-                    if (jsonParticipant.stoichiometryRange) {
+                    if (inputParticipant.stoichiometryRange) {
                         if (stoichString !== "") {
                             stoichString += ";";
                         }
-                        stoichString += jsonParticipant.stoichiometryRange.minValue + "-" + jsonParticipant.stoichiometryRange.maxValue;
+                        stoichString += inputParticipant.stoichiometryRange.minValue + "-" + inputParticipant.stoichiometryRange.maxValue;
                     }
                     participant.addStoichiometryLabel(stoichString);
                 }
@@ -265,7 +267,7 @@ export class ReadXml extends AbstractMiReader {
                     // jami workaround, not entirely inline with mi-json schema, but looks like mi-json has redundant info here
                     for (let seqDatum of feature.featureRangeList.featureRange) {
                         if (!seqDatum.interactorRef) {
-                            seqDatum.interactorRef = participant.interactorRef || participant.interactor.id;//xref.primaryRef._id;
+                            seqDatum.interactorRef = this.participantInteractorId(participant);
                         }
                         if (!seqDatum.participantRef) {
                             seqDatum.participantRef = participant.id;//feature.parentParticipant;
@@ -305,8 +307,8 @@ export class ReadXml extends AbstractMiReader {
 
             //~ //init participants
             for (let pi = 0; pi < participantCount; pi++) {
-                const jsonParticipant = participants[pi];
-                const intRef = jsonParticipant.interactorRef;
+                const inputParticipant = participants[pi];
+                const intRef = this.participantInteractorId(inputParticipant);
                 let participant = this.app.participants.get(intRef);
 
                 if (typeof participant === "undefined") {
@@ -323,8 +325,8 @@ export class ReadXml extends AbstractMiReader {
                 //temp - to give sensible info when stoich collapsed
                 const interactor = this.app.participants.get(intRef);
                 interactor.stoich = interactor.stoich ? interactor.stoich : 0;
-                if (jsonParticipant.stoichiometry) {
-                    interactor.stoich += +jsonParticipant.stoichiometry;
+                if (inputParticipant.stoichiometry) {
+                    interactor.stoich += +inputParticipant.stoichiometry;
                 } else {
                     interactor.stoich += 1;
                 }
@@ -344,15 +346,15 @@ export class ReadXml extends AbstractMiReader {
         if (interaction.naryId) {
             return interaction.naryId;
         }
-        const participants = interaction.participantList.participant;
-        const participantCount = participants.length;
+        const inputParticipants = interaction.participantList.participant;
+        const participantCount = inputParticipants.length;
 
         const pIDs = new Set(); //used to eliminate duplicates
         //make id
         for (let pi = 0; pi < participantCount; pi++) {
-            let pID = participants[pi].interactorRef || participants[pi].interactionRef || participants[pi].interactor.id;//xref.primaryRef._id;
+            let pID = this.participantInteractorId(inputParticipants[pi]);
             if (this.expand != "collapse") {
-                pID = `${pID}(${participants[pi].id})`;
+                pID = `${pID}(${inputParticipants[pi].id})`;
             }
             pIDs.add(pID);
         }

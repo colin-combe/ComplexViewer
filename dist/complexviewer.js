@@ -19102,6 +19102,10 @@ class ReadJson extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstrac
         return interaction.id;
     }
 
+    participantInteractorId(participant) {
+        return participant.interactorRef;
+    }
+
     preprocessInput() {
         //still work if you pass in boolean for expand parameter (old way)
         if (typeof this.expand === "boolean") {
@@ -19226,13 +19230,14 @@ class ReadJson extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstrac
         //     }
         // }
         // if (maxStoich < 20) {
-        this.inputObj = (0,_expand__WEBPACK_IMPORTED_MODULE_14__.matrix)(this.inputObj);
-        // }
+        if (this.expand != "curated") {
+            this.inputObj = (0,_expand__WEBPACK_IMPORTED_MODULE_14__.matrix)(this.inputObj);
+        }
 
         this.indexFeatures();
         const self = this;
         //add naryLinks and participants
-        this.visitInteractions(function (datum) {
+        this.visitInteractions((datum) => {
             //init n-ary link
             const nLinkId = datum.id || this.getNaryLinkIdFromInteraction(datum);
             let nLink = self.app.allNaryLinks.get(nLinkId);
@@ -19247,9 +19252,9 @@ class ReadJson extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstrac
             //nLink.addEvidence(datum);
 
             //init participants
-            for (let jsonParticipant of datum.participants) {
-                const intRef = jsonParticipant.interactorRef;
-                const partRef = jsonParticipant.id;
+            for (let inputParticipant of datum.participants) {
+                const intRef = this.participantInteractorId(inputParticipant);
+                const partRef = inputParticipant.id;
                 const participantId = `${intRef}(${partRef})`;
                 let participant = self.app.participants.get(participantId);
                 if (typeof participant === "undefined") {
@@ -19263,17 +19268,17 @@ class ReadJson extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstrac
                     nLink.participants.push(participant);
                 }
 
-                if (jsonParticipant.stoichiometry || jsonParticipant.minStoichiometry || jsonParticipant.maxStoichiometry) {
+                if (inputParticipant.stoichiometry || inputParticipant.minStoichiometry || inputParticipant.maxStoichiometry) {
                     let stoichString = "";
-                    if (jsonParticipant.stoichiometry) {
-                        stoichString += jsonParticipant.stoichiometry;
+                    if (inputParticipant.stoichiometry) {
+                        stoichString += inputParticipant.stoichiometry;
 
                     }
-                    if (jsonParticipant.minStoichiometry || jsonParticipant.maxStoichiometry) {
-                        if (jsonParticipant.stoichiometry) {
+                    if (inputParticipant.minStoichiometry || inputParticipant.maxStoichiometry) {
+                        if (inputParticipant.stoichiometry) {
                             stoichString += ";";
                         }
-                        stoichString += jsonParticipant.minStoichiometry + "-" + jsonParticipant.maxStoichiometry;
+                        stoichString += inputParticipant.minStoichiometry + "-" + inputParticipant.maxStoichiometry;
                     }
                     participant.addStoichiometryLabel(stoichString);
                 }
@@ -19296,7 +19301,7 @@ class ReadJson extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstrac
                     // jami workaround, not entirely inline with mi-json schema, but looks like mi-json has redundant info here
                     for (let seqDatum of feature.sequenceData) {
                         if (!seqDatum.interactorRef) {
-                            seqDatum.interactorRef = participant.interactorRef;
+                            seqDatum.interactorRef = this.participantInteractorId(participant);
                         }
                         if (!seqDatum.participantRef) {
                             seqDatum.participantRef = feature.parentParticipant;
@@ -19336,8 +19341,8 @@ class ReadJson extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstrac
 
             //~ //init participants
             for (let pi = 0; pi < participantCount; pi++) {
-                const jsonParticipant = participants[pi];
-                const intRef = jsonParticipant.interactorRef;
+                const inputParticipant = participants[pi];
+                const intRef = this.participantInteractorId(inputParticipant);
                 let participant = this.app.participants.get(intRef);
 
                 if (typeof participant === "undefined") {
@@ -19354,8 +19359,8 @@ class ReadJson extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstrac
                 //temp - to give sensible info when stoich collapsed
                 const interactor = this.app.participants.get(intRef);
                 interactor.stoich = interactor.stoich ? interactor.stoich : 0;
-                if (jsonParticipant.stoichiometry) {
-                    interactor.stoich += +jsonParticipant.stoichiometry;
+                if (inputParticipant.stoichiometry) {
+                    interactor.stoich += +inputParticipant.stoichiometry;
                 } else {
                     interactor.stoich += 1;
                 }
@@ -19565,6 +19570,10 @@ class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstract
         return interaction.id;
     }
 
+    participantInteractorId(participant) {
+        return participant.interactorRef || participant.interactionRef || participant.interactor.id;
+    }
+
     preprocessInput() {
         //still work if you pass in boolean for expand parameter (old way)
         if (typeof this.expand === "boolean") {
@@ -19690,13 +19699,14 @@ class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstract
         //     }
         // }
         // if (maxStoich < 20) {
+        if (this.expand != "curated") {
         this.inputObj = (0,_xml_expand__WEBPACK_IMPORTED_MODULE_14__.matrix)(this.inputObj);
-        // }
+        }
 
         this.indexFeatures();
         const self = this;
         //add naryLinks and participants
-        this.visitInteractions(function (datum) {
+        this.visitInteractions((datum) => {
             //init n-ary link
             const nLinkId = datum.id || this.getNaryLinkIdFromInteraction(datum);
             let nLink = self.app.allNaryLinks.get(nLinkId);
@@ -19711,12 +19721,9 @@ class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstract
             //nLink.addEvidence(datum);
 
             //init participants
-            for (let jsonParticipant of datum.participantList.participant) {
-                let intRef = jsonParticipant.interactorRef || jsonParticipant.interactionRef;
-                if (!intRef) {
-                    intRef = jsonParticipant.interactor.id;//xref.primaryRef._id;
-                }
-                const partRef = jsonParticipant.id;
+            for (let inputParticipant of datum.participantList.participant) {
+                const intRef = this.participantInteractorId(inputParticipant);
+                const partRef = inputParticipant.id;
                 const participantId = `${intRef}(${partRef})`;
                 let participant = self.app.participants.get(participantId);
                 if (typeof participant === "undefined") {
@@ -19730,16 +19737,16 @@ class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstract
                     nLink.participants.push(participant);
                 }
 
-                if (jsonParticipant.stoichiometry?.value || jsonParticipant.stoichiometryRange) {
+                if (inputParticipant.stoichiometry?.value || inputParticipant.stoichiometryRange) {
                     let stoichString = "";
-                    if (jsonParticipant.stoichiometry?.value) {
-                        stoichString += jsonParticipant.stoichiometry.value;
+                    if (inputParticipant.stoichiometry?.value) {
+                        stoichString += inputParticipant.stoichiometry.value;
                     }
-                    if (jsonParticipant.stoichiometryRange) {
+                    if (inputParticipant.stoichiometryRange) {
                         if (stoichString !== "") {
                             stoichString += ";";
                         }
-                        stoichString += jsonParticipant.stoichiometryRange.minValue + "-" + jsonParticipant.stoichiometryRange.maxValue;
+                        stoichString += inputParticipant.stoichiometryRange.minValue + "-" + inputParticipant.stoichiometryRange.maxValue;
                     }
                     participant.addStoichiometryLabel(stoichString);
                 }
@@ -19762,7 +19769,7 @@ class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstract
                     // jami workaround, not entirely inline with mi-json schema, but looks like mi-json has redundant info here
                     for (let seqDatum of feature.featureRangeList.featureRange) {
                         if (!seqDatum.interactorRef) {
-                            seqDatum.interactorRef = participant.interactorRef || participant.interactor.id;//xref.primaryRef._id;
+                            seqDatum.interactorRef = this.participantInteractorId(participant);
                         }
                         if (!seqDatum.participantRef) {
                             seqDatum.participantRef = participant.id;//feature.parentParticipant;
@@ -19802,8 +19809,8 @@ class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstract
 
             //~ //init participants
             for (let pi = 0; pi < participantCount; pi++) {
-                const jsonParticipant = participants[pi];
-                const intRef = jsonParticipant.interactorRef;
+                const inputParticipant = participants[pi];
+                const intRef = this.participantInteractorId(inputParticipant);
                 let participant = this.app.participants.get(intRef);
 
                 if (typeof participant === "undefined") {
@@ -19820,8 +19827,8 @@ class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstract
                 //temp - to give sensible info when stoich collapsed
                 const interactor = this.app.participants.get(intRef);
                 interactor.stoich = interactor.stoich ? interactor.stoich : 0;
-                if (jsonParticipant.stoichiometry) {
-                    interactor.stoich += +jsonParticipant.stoichiometry;
+                if (inputParticipant.stoichiometry) {
+                    interactor.stoich += +inputParticipant.stoichiometry;
                 } else {
                     interactor.stoich += 1;
                 }
@@ -19841,15 +19848,15 @@ class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstract
         if (interaction.naryId) {
             return interaction.naryId;
         }
-        const participants = interaction.participantList.participant;
-        const participantCount = participants.length;
+        const inputParticipants = interaction.participantList.participant;
+        const participantCount = inputParticipants.length;
 
         const pIDs = new Set(); //used to eliminate duplicates
         //make id
         for (let pi = 0; pi < participantCount; pi++) {
-            let pID = participants[pi].interactorRef || participants[pi].interactionRef || participants[pi].interactor.id;//xref.primaryRef._id;
+            let pID = this.participantInteractorId(inputParticipants[pi]);
             if (this.expand != "collapse") {
-                pID = `${pID}(${participants[pi].id})`;
+                pID = `${pID}(${inputParticipants[pi].id})`;
             }
             pIDs.add(pID);
         }

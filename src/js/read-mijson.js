@@ -67,6 +67,10 @@ export class ReadJson extends AbstractMiReader {
         return interaction.id;
     }
 
+    participantInteractorId(participant) {
+        return participant.interactorRef;
+    }
+
     preprocessInput() {
         //still work if you pass in boolean for expand parameter (old way)
         if (typeof this.expand === "boolean") {
@@ -191,13 +195,14 @@ export class ReadJson extends AbstractMiReader {
         //     }
         // }
         // if (maxStoich < 20) {
-        this.inputObj = matrix(this.inputObj);
-        // }
+        if (this.expand != "curated") {
+            this.inputObj = matrix(this.inputObj);
+        }
 
         this.indexFeatures();
         const self = this;
         //add naryLinks and participants
-        this.visitInteractions(function (datum) {
+        this.visitInteractions((datum) => {
             //init n-ary link
             const nLinkId = datum.id || this.getNaryLinkIdFromInteraction(datum);
             let nLink = self.app.allNaryLinks.get(nLinkId);
@@ -212,9 +217,9 @@ export class ReadJson extends AbstractMiReader {
             //nLink.addEvidence(datum);
 
             //init participants
-            for (let jsonParticipant of datum.participants) {
-                const intRef = jsonParticipant.interactorRef;
-                const partRef = jsonParticipant.id;
+            for (let inputParticipant of datum.participants) {
+                const intRef = this.participantInteractorId(inputParticipant);
+                const partRef = inputParticipant.id;
                 const participantId = `${intRef}(${partRef})`;
                 let participant = self.app.participants.get(participantId);
                 if (typeof participant === "undefined") {
@@ -228,17 +233,17 @@ export class ReadJson extends AbstractMiReader {
                     nLink.participants.push(participant);
                 }
 
-                if (jsonParticipant.stoichiometry || jsonParticipant.minStoichiometry || jsonParticipant.maxStoichiometry) {
+                if (inputParticipant.stoichiometry || inputParticipant.minStoichiometry || inputParticipant.maxStoichiometry) {
                     let stoichString = "";
-                    if (jsonParticipant.stoichiometry) {
-                        stoichString += jsonParticipant.stoichiometry;
+                    if (inputParticipant.stoichiometry) {
+                        stoichString += inputParticipant.stoichiometry;
 
                     }
-                    if (jsonParticipant.minStoichiometry || jsonParticipant.maxStoichiometry) {
-                        if (jsonParticipant.stoichiometry) {
+                    if (inputParticipant.minStoichiometry || inputParticipant.maxStoichiometry) {
+                        if (inputParticipant.stoichiometry) {
                             stoichString += ";";
                         }
-                        stoichString += jsonParticipant.minStoichiometry + "-" + jsonParticipant.maxStoichiometry;
+                        stoichString += inputParticipant.minStoichiometry + "-" + inputParticipant.maxStoichiometry;
                     }
                     participant.addStoichiometryLabel(stoichString);
                 }
@@ -261,7 +266,7 @@ export class ReadJson extends AbstractMiReader {
                     // jami workaround, not entirely inline with mi-json schema, but looks like mi-json has redundant info here
                     for (let seqDatum of feature.sequenceData) {
                         if (!seqDatum.interactorRef) {
-                            seqDatum.interactorRef = participant.interactorRef;
+                            seqDatum.interactorRef = this.participantInteractorId(participant);
                         }
                         if (!seqDatum.participantRef) {
                             seqDatum.participantRef = feature.parentParticipant;
@@ -301,8 +306,8 @@ export class ReadJson extends AbstractMiReader {
 
             //~ //init participants
             for (let pi = 0; pi < participantCount; pi++) {
-                const jsonParticipant = participants[pi];
-                const intRef = jsonParticipant.interactorRef;
+                const inputParticipant = participants[pi];
+                const intRef = this.participantInteractorId(inputParticipant);
                 let participant = this.app.participants.get(intRef);
 
                 if (typeof participant === "undefined") {
@@ -319,8 +324,8 @@ export class ReadJson extends AbstractMiReader {
                 //temp - to give sensible info when stoich collapsed
                 const interactor = this.app.participants.get(intRef);
                 interactor.stoich = interactor.stoich ? interactor.stoich : 0;
-                if (jsonParticipant.stoichiometry) {
-                    interactor.stoich += +jsonParticipant.stoichiometry;
+                if (inputParticipant.stoichiometry) {
+                    interactor.stoich += +inputParticipant.stoichiometry;
                 } else {
                     interactor.stoich += 1;
                 }
