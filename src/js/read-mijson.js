@@ -34,6 +34,7 @@ export class ReadJson extends AbstractMiReader {
         //get interactors - this could prob be before cloning of complexes?
         app.interactors = new Map();
         const self = this;
+
         function addInteractor(interactor) {
             const id = self.interactorId(interactor);
             if (!app.interactors.has(id)) {
@@ -248,31 +249,29 @@ export class ReadJson extends AbstractMiReader {
     indexFeatures() {
         //create indexed collection of all features from interactions
         // - still seems like a good starting point?
-        for (let datum of this.inputObj.data) {
-            if (datum.object === "interaction") {
-                for (let jsonParticipant of datum.participants) {
-                    let features = new Array(0);
-                    if (jsonParticipant.features) features = jsonParticipant.features;
+        this.visitInteractions((interaction) => {
+            for (let participant of interaction.participants) {
+                let features = new Array(0);
+                if (participant.features) features = participant.features;
 
-                    const fCount = features.length;
-                    for (let f = 0; f < fCount; f++) {
-                        const feature = features[f];
+                const fCount = features.length;
+                for (let f = 0; f < fCount; f++) {
+                    const feature = features[f];
 
-                        // jami workaround, not entirely inline with mi-json schema, but looks like mi-json has redundant info here
-                        for (let seqDatum of feature.sequenceData) {
-                            if (!seqDatum.interactorRef) {
-                                seqDatum.interactorRef = jsonParticipant.interactorRef;
-                            }
-                            if (!seqDatum.participantRef) {
-                                seqDatum.participantRef = feature.parentParticipant;
-                            }
+                    // jami workaround, not entirely inline with mi-json schema, but looks like mi-json has redundant info here
+                    for (let seqDatum of feature.sequenceData) {
+                        if (!seqDatum.interactorRef) {
+                            seqDatum.interactorRef = participant.interactorRef;
                         }
-
-                        this.app.features.set(feature.id, feature);
+                        if (!seqDatum.participantRef) {
+                            seqDatum.participantRef = feature.parentParticipant;
+                        }
                     }
+
+                    this.app.features.set(feature.id, feature);
                 }
             }
-        }
+        });
     }
 
     interactorBasedRead() {
@@ -286,58 +285,55 @@ export class ReadJson extends AbstractMiReader {
         this.indexFeatures();
 
         //add naryLinks
-        for (let datum of this.inputObj.data) {
-            if (datum.object === "interaction") {
-                const jsonParticipants = datum.participants;
-                const participantCount = jsonParticipants.length;
+        this.visitInteractions((interaction) => {
+            const participants = interaction.participants;
+            const participantCount = participants.length;
 
-                //init n-ary link
-                const nLinkId = this.getNaryLinkIdFromInteraction(datum);
-                let nLink = this.app.allNaryLinks.get(nLinkId);
-                if (typeof nLink === "undefined") {
-                    //doesn't already exist, make new nLink
-                    nLink = new NaryLink(nLinkId, this.app);
-                    this.app.allNaryLinks.set(nLinkId, nLink);
-                }
-                //nLink.addEvidence(datum);
-
-                //~ //init participants
-                for (let pi = 0; pi < participantCount; pi++) {
-                    const jsonParticipant = jsonParticipants[pi];
-                    const intRef = jsonParticipant.interactorRef;
-                    let participant = this.app.participants.get(intRef);
-
-                    if (typeof participant === "undefined") {
-                        //must be a previously unencountered complex
-                        participant = new Complex(intRef, this.app, participant, intRef);
-                        this.complexes.set(intRef, participant);
-                        this.app.participants.set(intRef, participant);
-                    }
-
-                    participant.naryLinks.set(nLinkId, nLink);
-                    if (nLink.participants.indexOf(participant) === -1) {
-                        nLink.participants.push(participant);
-                    }
-                    //temp - to give sensible info when stoich collapsed
-                    const interactor = this.app.participants.get(intRef);
-                    interactor.stoich = interactor.stoich ? interactor.stoich : 0;
-                    if (jsonParticipant.stoichiometry) {
-                        interactor.stoich += +jsonParticipant.stoichiometry;
-                    } else {
-                        interactor.stoich += 1;
-                    }
-                }
-
-                const interactorArr = this.app.participants.values();
-                const iCount = interactorArr.length;
-                for (let ii = 0; ii < iCount; ii++) {
-                    const int = interactorArr[ii];
-                    int.addStoichiometryLabel(int.stoich);
-                }
-
+            //init n-ary link
+            const nLinkId = this.getNaryLinkIdFromInteraction(interaction);
+            let nLink = this.app.allNaryLinks.get(nLinkId);
+            if (typeof nLink === "undefined") {
+                //doesn't already exist, make new nLink
+                nLink = new NaryLink(nLinkId, this.app);
+                this.app.allNaryLinks.set(nLinkId, nLink);
             }
-        }
+            //nLink.addEvidence(datum);
 
+            //~ //init participants
+            for (let pi = 0; pi < participantCount; pi++) {
+                const jsonParticipant = participants[pi];
+                const intRef = jsonParticipant.interactorRef;
+                let participant = this.app.participants.get(intRef);
+
+                if (typeof participant === "undefined") {
+                    //must be a previously unencountered complex
+                    participant = new Complex(intRef, this.app, participant, intRef);
+                    this.complexes.set(intRef, participant);
+                    this.app.participants.set(intRef, participant);
+                }
+
+                participant.naryLinks.set(nLinkId, nLink);
+                if (nLink.participants.indexOf(participant) === -1) {
+                    nLink.participants.push(participant);
+                }
+                //temp - to give sensible info when stoich collapsed
+                const interactor = this.app.participants.get(intRef);
+                interactor.stoich = interactor.stoich ? interactor.stoich : 0;
+                if (jsonParticipant.stoichiometry) {
+                    interactor.stoich += +jsonParticipant.stoichiometry;
+                } else {
+                    interactor.stoich += 1;
+                }
+            }
+
+            const interactorArr = this.app.participants.values();
+            const iCount = interactorArr.length;
+            for (let ii = 0; ii < iCount; ii++) {
+                const int = interactorArr[ii];
+                int.addStoichiometryLabel(int.stoich);
+            }
+
+        });
     }
 
     getNaryLinkIdFromInteraction(interaction) {

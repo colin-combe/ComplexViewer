@@ -13786,6 +13786,7 @@ class AbstractMiReader {
 
 
     initComplexes() {
+        const self = this;
         //init complexes
         this.app.complexes = Array.from(this.complexes.values()); // todo - why not just keep it in map
         for (let c = 0; c < this.app.complexes.length; c++) {
@@ -13796,15 +13797,15 @@ class AbstractMiReader {
             } else {
                 interactionId = complex.id;
             }
-            for (let datum of this.inputObj.data) {
-                if (datum.object === "interaction" && datum.id === interactionId) {
-                    const nLinkId = this.getNaryLinkIdFromInteraction(datum);
+            this.visitInteractions(function (datum) {
+                if (datum.id === interactionId) {
+                    const nLinkId = self.getNaryLinkIdFromInteraction(datum);
                     console.log("INIT*ING COMPLEX", complex.id, nLinkId);
-                    const naryLink = this.app.allNaryLinks.get(nLinkId);
+                    const naryLink = self.app.allNaryLinks.get(nLinkId);
                     complex.initLink(naryLink);
                     naryLink.complex = complex;
                 }
-            }
+            });
         }
     }
 
@@ -19068,6 +19069,7 @@ class ReadJson extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstrac
         //get interactors - this could prob be before cloning of complexes?
         app.interactors = new Map();
         const self = this;
+
         function addInteractor(interactor) {
             const id = self.interactorId(interactor);
             if (!app.interactors.has(id)) {
@@ -19282,31 +19284,29 @@ class ReadJson extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstrac
     indexFeatures() {
         //create indexed collection of all features from interactions
         // - still seems like a good starting point?
-        for (let datum of this.inputObj.data) {
-            if (datum.object === "interaction") {
-                for (let jsonParticipant of datum.participants) {
-                    let features = new Array(0);
-                    if (jsonParticipant.features) features = jsonParticipant.features;
+        this.visitInteractions((interaction) => {
+            for (let participant of interaction.participants) {
+                let features = new Array(0);
+                if (participant.features) features = participant.features;
 
-                    const fCount = features.length;
-                    for (let f = 0; f < fCount; f++) {
-                        const feature = features[f];
+                const fCount = features.length;
+                for (let f = 0; f < fCount; f++) {
+                    const feature = features[f];
 
-                        // jami workaround, not entirely inline with mi-json schema, but looks like mi-json has redundant info here
-                        for (let seqDatum of feature.sequenceData) {
-                            if (!seqDatum.interactorRef) {
-                                seqDatum.interactorRef = jsonParticipant.interactorRef;
-                            }
-                            if (!seqDatum.participantRef) {
-                                seqDatum.participantRef = feature.parentParticipant;
-                            }
+                    // jami workaround, not entirely inline with mi-json schema, but looks like mi-json has redundant info here
+                    for (let seqDatum of feature.sequenceData) {
+                        if (!seqDatum.interactorRef) {
+                            seqDatum.interactorRef = participant.interactorRef;
                         }
-
-                        this.app.features.set(feature.id, feature);
+                        if (!seqDatum.participantRef) {
+                            seqDatum.participantRef = feature.parentParticipant;
+                        }
                     }
+
+                    this.app.features.set(feature.id, feature);
                 }
             }
-        }
+        });
     }
 
     interactorBasedRead() {
@@ -19320,58 +19320,55 @@ class ReadJson extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstrac
         this.indexFeatures();
 
         //add naryLinks
-        for (let datum of this.inputObj.data) {
-            if (datum.object === "interaction") {
-                const jsonParticipants = datum.participants;
-                const participantCount = jsonParticipants.length;
+        this.visitInteractions((interaction) => {
+            const participants = interaction.participants;
+            const participantCount = participants.length;
 
-                //init n-ary link
-                const nLinkId = this.getNaryLinkIdFromInteraction(datum);
-                let nLink = this.app.allNaryLinks.get(nLinkId);
-                if (typeof nLink === "undefined") {
-                    //doesn't already exist, make new nLink
-                    nLink = new _viz_link_nary_link__WEBPACK_IMPORTED_MODULE_9__.NaryLink(nLinkId, this.app);
-                    this.app.allNaryLinks.set(nLinkId, nLink);
-                }
-                //nLink.addEvidence(datum);
-
-                //~ //init participants
-                for (let pi = 0; pi < participantCount; pi++) {
-                    const jsonParticipant = jsonParticipants[pi];
-                    const intRef = jsonParticipant.interactorRef;
-                    let participant = this.app.participants.get(intRef);
-
-                    if (typeof participant === "undefined") {
-                        //must be a previously unencountered complex
-                        participant = new _viz_interactor_complex__WEBPACK_IMPORTED_MODULE_6__.Complex(intRef, this.app, participant, intRef);
-                        this.complexes.set(intRef, participant);
-                        this.app.participants.set(intRef, participant);
-                    }
-
-                    participant.naryLinks.set(nLinkId, nLink);
-                    if (nLink.participants.indexOf(participant) === -1) {
-                        nLink.participants.push(participant);
-                    }
-                    //temp - to give sensible info when stoich collapsed
-                    const interactor = this.app.participants.get(intRef);
-                    interactor.stoich = interactor.stoich ? interactor.stoich : 0;
-                    if (jsonParticipant.stoichiometry) {
-                        interactor.stoich += +jsonParticipant.stoichiometry;
-                    } else {
-                        interactor.stoich += 1;
-                    }
-                }
-
-                const interactorArr = this.app.participants.values();
-                const iCount = interactorArr.length;
-                for (let ii = 0; ii < iCount; ii++) {
-                    const int = interactorArr[ii];
-                    int.addStoichiometryLabel(int.stoich);
-                }
-
+            //init n-ary link
+            const nLinkId = this.getNaryLinkIdFromInteraction(interaction);
+            let nLink = this.app.allNaryLinks.get(nLinkId);
+            if (typeof nLink === "undefined") {
+                //doesn't already exist, make new nLink
+                nLink = new _viz_link_nary_link__WEBPACK_IMPORTED_MODULE_9__.NaryLink(nLinkId, this.app);
+                this.app.allNaryLinks.set(nLinkId, nLink);
             }
-        }
+            //nLink.addEvidence(datum);
 
+            //~ //init participants
+            for (let pi = 0; pi < participantCount; pi++) {
+                const jsonParticipant = participants[pi];
+                const intRef = jsonParticipant.interactorRef;
+                let participant = this.app.participants.get(intRef);
+
+                if (typeof participant === "undefined") {
+                    //must be a previously unencountered complex
+                    participant = new _viz_interactor_complex__WEBPACK_IMPORTED_MODULE_6__.Complex(intRef, this.app, participant, intRef);
+                    this.complexes.set(intRef, participant);
+                    this.app.participants.set(intRef, participant);
+                }
+
+                participant.naryLinks.set(nLinkId, nLink);
+                if (nLink.participants.indexOf(participant) === -1) {
+                    nLink.participants.push(participant);
+                }
+                //temp - to give sensible info when stoich collapsed
+                const interactor = this.app.participants.get(intRef);
+                interactor.stoich = interactor.stoich ? interactor.stoich : 0;
+                if (jsonParticipant.stoichiometry) {
+                    interactor.stoich += +jsonParticipant.stoichiometry;
+                } else {
+                    interactor.stoich += 1;
+                }
+            }
+
+            const interactorArr = this.app.participants.values();
+            const iCount = interactorArr.length;
+            for (let ii = 0; ii < iCount; ii++) {
+                const int = interactorArr[ii];
+                int.addStoichiometryLabel(int.stoich);
+            }
+
+        });
     }
 
     getNaryLinkIdFromInteraction(interaction) {
@@ -19534,6 +19531,7 @@ class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstract
         //get interactors - this could prob be before cloning of complexes?
         app.interactors = new Map();
         const self = this;
+
         function addInteractor(interactor) {
             const id = self.interactorId(interactor);
             if (!app.interactors.has(id)) {
@@ -19700,8 +19698,7 @@ class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstract
         //add naryLinks and participants
         this.visitInteractions(function (datum) {
             //init n-ary link
-            let xmlId = self.complexPortalAccFromXref(datum.xref);
-            const nLinkId = xmlId || self.getNaryLinkIdFromInteraction(datum);
+            const nLinkId = datum.id || this.getNaryLinkIdFromInteraction(datum);
             let nLink = self.app.allNaryLinks.get(nLinkId);
             if (typeof nLink === "undefined") {
                 //doesn't already exist, make new nLink
@@ -19715,7 +19712,7 @@ class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstract
 
             //init participants
             for (let jsonParticipant of datum.participantList.participant) {
-                let intRef = jsonParticipant.interactorRef;
+                let intRef = jsonParticipant.interactorRef || jsonParticipant.interactionRef;
                 if (!intRef) {
                     intRef = jsonParticipant.interactor.id;//xref.primaryRef._id;
                 }
@@ -19781,13 +19778,14 @@ class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstract
     interactorBasedRead() {
         //get interactors
         for (let interactor of this.app.interactors.values()) {
-            const participantId = interactor.id;//xref.primaryRef._id;
+            const participantId = interactor.id;
             const participant = this.newParticipant(interactor, participantId, participantId);
             this.app.participants.set(participantId, participant);
         }
 
         this.indexFeatures();
 
+        //add naryLinks
         this.visitInteractions((interaction) => {
             const participants = interaction.participantList.participant;
             const participantCount = participants.length;
@@ -19797,7 +19795,7 @@ class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstract
             let nLink = this.app.allNaryLinks.get(nLinkId);
             if (typeof nLink === "undefined") {
                 //doesn't already exist, make new nLink
-                nLink = new _viz_link_nary_link__WEBPACK_IMPORTED_MODULE_9__.NaryLink(nLinkId, this.app);//, interaction._id);
+                nLink = new _viz_link_nary_link__WEBPACK_IMPORTED_MODULE_9__.NaryLink(nLinkId, this.app);
                 this.app.allNaryLinks.set(nLinkId, nLink);
             }
             //nLink.addEvidence(datum);
@@ -19805,12 +19803,12 @@ class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstract
             //~ //init participants
             for (let pi = 0; pi < participantCount; pi++) {
                 const jsonParticipant = participants[pi];
-                const intRef = jsonParticipant.interactorRef;// || jsonParticipant.interactor.xref.primaryRef._id;
+                const intRef = jsonParticipant.interactorRef;
                 let participant = this.app.participants.get(intRef);
 
                 if (typeof participant === "undefined") {
                     //must be a previously unencountered complex
-                    participant = new _viz_interactor_complex__WEBPACK_IMPORTED_MODULE_6__.Complex(intRef, this.app);//, participant, intRef);
+                    participant = new _viz_interactor_complex__WEBPACK_IMPORTED_MODULE_6__.Complex(intRef, this.app, participant, intRef);
                     this.complexes.set(intRef, participant);
                     this.app.participants.set(intRef, participant);
                 }
@@ -19849,14 +19847,14 @@ class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstract
         const pIDs = new Set(); //used to eliminate duplicates
         //make id
         for (let pi = 0; pi < participantCount; pi++) {
-            let pID = participants[pi].interactorRef || participants[pi].interactor.id;//xref.primaryRef._id;
+            let pID = participants[pi].interactorRef || participants[pi].interactionRef || participants[pi].interactor.id;//xref.primaryRef._id;
             if (this.expand != "collapse") {
                 pID = `${pID}(${participants[pi].id})`;
             }
             pIDs.add(pID);
         }
 
-        return Array.from(pIDs.values()).sort().join("-"); //interaction._id;//
+        return Array.from(pIDs.values()).sort().join("-");
     }
 
     getFeatureLink(fromSeqData, toSeqData, interaction) {
@@ -20525,8 +20523,8 @@ __webpack_require__.r(__webpack_exports__);
 class Complex extends _interactor__WEBPACK_IMPORTED_MODULE_0__.Interactor {
     constructor(id, app, interactor, interactorRef) {
         super();
-        const complexIdMatch = interactorRef.match(/^.*(CPX-[0-9]+).*$/);
-        const complexId = complexIdMatch ? complexIdMatch[1] : "";
+        const complexIdMatch = interactorRef.toString().match(/^.*(CPX-[0-9]+).*$/);
+        const complexId = complexIdMatch ? complexIdMatch[1] : interactorRef;
         this.init(id, app, interactor, complexId);
         this.type = "complex";
         this.upperGroup = document.createElementNS(_svgns__WEBPACK_IMPORTED_MODULE_3__.svgns, "g");

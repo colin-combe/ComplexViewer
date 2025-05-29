@@ -45,6 +45,7 @@ export class AbstractMiReader {
 
 
     initComplexes() {
+        const self = this;
         //init complexes
         this.app.complexes = Array.from(this.complexes.values()); // todo - why not just keep it in map
         for (let c = 0; c < this.app.complexes.length; c++) {
@@ -55,15 +56,15 @@ export class AbstractMiReader {
             } else {
                 interactionId = complex.id;
             }
-            for (let datum of this.inputObj.data) {
-                if (datum.object === "interaction" && datum.id === interactionId) {
-                    const nLinkId = this.getNaryLinkIdFromInteraction(datum);
+            this.visitInteractions(function (datum) {
+                if (datum.id === interactionId) {
+                    const nLinkId = self.getNaryLinkIdFromInteraction(datum);
                     console.log("INIT*ING COMPLEX", complex.id, nLinkId);
-                    const naryLink = this.app.allNaryLinks.get(nLinkId);
+                    const naryLink = self.app.allNaryLinks.get(nLinkId);
                     complex.initLink(naryLink);
                     naryLink.complex = complex;
                 }
-            }
+            });
         }
     }
 

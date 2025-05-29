@@ -34,6 +34,7 @@ export class ReadXml extends AbstractMiReader {
         //get interactors - this could prob be before cloning of complexes?
         app.interactors = new Map();
         const self = this;
+
         function addInteractor(interactor) {
             const id = self.interactorId(interactor);
             if (!app.interactors.has(id)) {
@@ -200,8 +201,7 @@ export class ReadXml extends AbstractMiReader {
         //add naryLinks and participants
         this.visitInteractions(function (datum) {
             //init n-ary link
-            let xmlId = self.complexPortalAccFromXref(datum.xref);
-            const nLinkId = xmlId || self.getNaryLinkIdFromInteraction(datum);
+            const nLinkId = datum.id || this.getNaryLinkIdFromInteraction(datum);
             let nLink = self.app.allNaryLinks.get(nLinkId);
             if (typeof nLink === "undefined") {
                 //doesn't already exist, make new nLink
@@ -215,7 +215,7 @@ export class ReadXml extends AbstractMiReader {
 
             //init participants
             for (let jsonParticipant of datum.participantList.participant) {
-                let intRef = jsonParticipant.interactorRef;
+                let intRef = jsonParticipant.interactorRef || jsonParticipant.interactionRef;
                 if (!intRef) {
                     intRef = jsonParticipant.interactor.id;//xref.primaryRef._id;
                 }
@@ -281,13 +281,14 @@ export class ReadXml extends AbstractMiReader {
     interactorBasedRead() {
         //get interactors
         for (let interactor of this.app.interactors.values()) {
-            const participantId = interactor.id;//xref.primaryRef._id;
+            const participantId = interactor.id;
             const participant = this.newParticipant(interactor, participantId, participantId);
             this.app.participants.set(participantId, participant);
         }
 
         this.indexFeatures();
 
+        //add naryLinks
         this.visitInteractions((interaction) => {
             const participants = interaction.participantList.participant;
             const participantCount = participants.length;
@@ -297,7 +298,7 @@ export class ReadXml extends AbstractMiReader {
             let nLink = this.app.allNaryLinks.get(nLinkId);
             if (typeof nLink === "undefined") {
                 //doesn't already exist, make new nLink
-                nLink = new NaryLink(nLinkId, this.app);//, interaction._id);
+                nLink = new NaryLink(nLinkId, this.app);
                 this.app.allNaryLinks.set(nLinkId, nLink);
             }
             //nLink.addEvidence(datum);
@@ -305,12 +306,12 @@ export class ReadXml extends AbstractMiReader {
             //~ //init participants
             for (let pi = 0; pi < participantCount; pi++) {
                 const jsonParticipant = participants[pi];
-                const intRef = jsonParticipant.interactorRef;// || jsonParticipant.interactor.xref.primaryRef._id;
+                const intRef = jsonParticipant.interactorRef;
                 let participant = this.app.participants.get(intRef);
 
                 if (typeof participant === "undefined") {
                     //must be a previously unencountered complex
-                    participant = new Complex(intRef, this.app);//, participant, intRef);
+                    participant = new Complex(intRef, this.app, participant, intRef);
                     this.complexes.set(intRef, participant);
                     this.app.participants.set(intRef, participant);
                 }
@@ -349,14 +350,14 @@ export class ReadXml extends AbstractMiReader {
         const pIDs = new Set(); //used to eliminate duplicates
         //make id
         for (let pi = 0; pi < participantCount; pi++) {
-            let pID = participants[pi].interactorRef || participants[pi].interactor.id;//xref.primaryRef._id;
+            let pID = participants[pi].interactorRef || participants[pi].interactionRef || participants[pi].interactor.id;//xref.primaryRef._id;
             if (this.expand != "collapse") {
                 pID = `${pID}(${participants[pi].id})`;
             }
             pIDs.add(pID);
         }
 
-        return Array.from(pIDs.values()).sort().join("-"); //interaction._id;//
+        return Array.from(pIDs.values()).sort().join("-");
     }
 
     getFeatureLink(fromSeqData, toSeqData, interaction) {
