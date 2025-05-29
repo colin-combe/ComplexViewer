@@ -11,7 +11,7 @@
  *              "123->256" = feature sequence w uncertain end between 256 and interactor.sequence.length
  */
 
-export class XmlFeatureRange {
+export class SequenceDatum {
     constructor(participant, featureRange) {
         this.participant = participant;
         this.sequenceDatumString = JSON.stringify(featureRange);//sequenceDatumString.trim();

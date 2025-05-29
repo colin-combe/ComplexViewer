@@ -13718,10 +13718,10 @@ module.exports = function (list, options) {
 
 /***/ }),
 
-/***/ "./src/abstract-mi-reader.js":
-/*!***********************************!*\
-  !*** ./src/abstract-mi-reader.js ***!
-  \***********************************/
+/***/ "./src/js/abstract-mi-reader.js":
+/*!**************************************!*\
+  !*** ./src/js/abstract-mi-reader.js ***!
+  \**************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -13729,14 +13729,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   AbstractMiReader: () => (/* binding */ AbstractMiReader)
 /* harmony export */ });
-/* harmony import */ var _js_viz_interactor_complex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./js/viz/interactor/complex */ "./src/js/viz/interactor/complex.js");
-/* harmony import */ var _js_viz_interactor_complex_symbol__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/viz/interactor/complex-symbol */ "./src/js/viz/interactor/complex-symbol.js");
-/* harmony import */ var _js_viz_interactor_molecule_set__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./js/viz/interactor/molecule-set */ "./src/js/viz/interactor/molecule-set.js");
-/* harmony import */ var _js_viz_interactor_bioactive_entity__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./js/viz/interactor/bioactive-entity */ "./src/js/viz/interactor/bioactive-entity.js");
-/* harmony import */ var _js_viz_interactor_protein__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./js/viz/interactor/protein */ "./src/js/viz/interactor/protein.js");
-/* harmony import */ var _js_viz_interactor_gene__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./js/viz/interactor/gene */ "./src/js/viz/interactor/gene.js");
-/* harmony import */ var _js_viz_interactor_rna__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./js/viz/interactor/rna */ "./src/js/viz/interactor/rna.js");
-/* harmony import */ var _js_viz_interactor_dna__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./js/viz/interactor/dna */ "./src/js/viz/interactor/dna.js");
+/* harmony import */ var _viz_interactor_complex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./viz/interactor/complex */ "./src/js/viz/interactor/complex.js");
+/* harmony import */ var _viz_interactor_complex_symbol__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./viz/interactor/complex-symbol */ "./src/js/viz/interactor/complex-symbol.js");
+/* harmony import */ var _viz_interactor_molecule_set__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./viz/interactor/molecule-set */ "./src/js/viz/interactor/molecule-set.js");
+/* harmony import */ var _viz_interactor_bioactive_entity__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./viz/interactor/bioactive-entity */ "./src/js/viz/interactor/bioactive-entity.js");
+/* harmony import */ var _viz_interactor_protein__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./viz/interactor/protein */ "./src/js/viz/interactor/protein.js");
+/* harmony import */ var _viz_interactor_gene__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./viz/interactor/gene */ "./src/js/viz/interactor/gene.js");
+/* harmony import */ var _viz_interactor_rna__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./viz/interactor/rna */ "./src/js/viz/interactor/rna.js");
+/* harmony import */ var _viz_interactor_dna__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./viz/interactor/dna */ "./src/js/viz/interactor/dna.js");
+/* harmony import */ var _viz_link_unary_link__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./viz/link/unary-link */ "./src/js/viz/link/unary-link.js");
+/* harmony import */ var _viz_link_binary_link__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./viz/link/binary-link */ "./src/js/viz/link/binary-link.js");
+
+
 
 
 
@@ -13820,10 +13824,10 @@ class AbstractMiReader {
             });
 
             if (interactionExists) {
-                participant = new _js_viz_interactor_complex__WEBPACK_IMPORTED_MODULE_0__.Complex(participantId, this.app, interactor, interactorRef);
+                participant = new _viz_interactor_complex__WEBPACK_IMPORTED_MODULE_0__.Complex(participantId, this.app, interactor, interactorRef);
                 this.complexes.set(participantId, participant);
             } else {
-                participant = new _js_viz_interactor_complex_symbol__WEBPACK_IMPORTED_MODULE_1__.ComplexSymbol(participantId, this.app, interactorRef, interactor); //todo - param order
+                participant = new _viz_interactor_complex_symbol__WEBPACK_IMPORTED_MODULE_1__.ComplexSymbol(participantId, this.app, interactorRef, interactor); //todo - param order
             }
         } else if (this.interactorTypeId(interactor) === "MI:1304" //molecule set
             ||
@@ -13833,7 +13837,7 @@ class AbstractMiReader {
             ||
             this.interactorTypeId(interactor) === "MI:1306" //molecule set - open set
         ) {
-            participant = new _js_viz_interactor_molecule_set__WEBPACK_IMPORTED_MODULE_2__.MoleculeSet(participantId, this.app, interactor, this.interactorLabel(interactor));
+            participant = new _viz_interactor_molecule_set__WEBPACK_IMPORTED_MODULE_2__.MoleculeSet(participantId, this.app, interactor, this.interactorLabel(interactor));
         } else if (this.interactorTypeId(interactor) === "MI:1100" // bioactive entity
             ||
             this.interactorTypeId(interactor) === "MI:0904" // bioactive entity - polysaccharide
@@ -13842,13 +13846,13 @@ class AbstractMiReader {
             ||
             this.interactorTypeId(interactor) === "MI:2258" // bioactive entity - xenobiotic
         ) {
-            participant = new _js_viz_interactor_bioactive_entity__WEBPACK_IMPORTED_MODULE_3__.BioactiveEntity(participantId, this.app, interactor, this.interactorLabel(interactor));
+            participant = new _viz_interactor_bioactive_entity__WEBPACK_IMPORTED_MODULE_3__.BioactiveEntity(participantId, this.app, interactor, this.interactorLabel(interactor));
         } else if (this.interactorTypeId(interactor) === "MI:0326"
             ||
             this.interactorTypeId(interactor) === "MI:0327") { // proteins, peptides
-            participant = new _js_viz_interactor_protein__WEBPACK_IMPORTED_MODULE_4__.Protein(participantId, this.app, interactor, this.interactorLabel(interactor), interactor.sequence);
+            participant = new _viz_interactor_protein__WEBPACK_IMPORTED_MODULE_4__.Protein(participantId, this.app, interactor, this.interactorLabel(interactor), interactor.sequence);
         } else if (this.interactorTypeId(interactor) === "MI:0250") { //genes
-            participant = new _js_viz_interactor_gene__WEBPACK_IMPORTED_MODULE_5__.Gene(participantId, this.app, interactor, this.interactorLabel(interactor));
+            participant = new _viz_interactor_gene__WEBPACK_IMPORTED_MODULE_5__.Gene(participantId, this.app, interactor, this.interactorLabel(interactor));
         } else if (this.interactorTypeId(interactor) === "MI:0320" // RNA
             ||
             this.interactorTypeId(interactor) === "MI:0321" // RNA - catalytic
@@ -13883,20 +13887,70 @@ class AbstractMiReader {
             ||
             this.interactorTypeId(interactor) === "MI:2204" // micro RNA
         ) {
-            participant = new _js_viz_interactor_rna__WEBPACK_IMPORTED_MODULE_6__.RNA(participantId, this.app, interactor, this.interactorLabel(interactor));
+            participant = new _viz_interactor_rna__WEBPACK_IMPORTED_MODULE_6__.RNA(participantId, this.app, interactor, this.interactorLabel(interactor));
         } else if (this.interactorTypeId(interactor) === "MI:0319" // DNA
             ||
             this.interactorTypeId(interactor) === "MI:0681" // DNA - double stranded
             ||
             this.interactorTypeId(interactor) === "MI:0680" // DNA - single stranded
         ) {
-            participant = new _js_viz_interactor_dna__WEBPACK_IMPORTED_MODULE_7__.DNA(participantId, this.app, interactor, this.interactorLabel(interactor));
+            participant = new _viz_interactor_dna__WEBPACK_IMPORTED_MODULE_7__.DNA(participantId, this.app, interactor, this.interactorLabel(interactor));
         } else {
             // MI:0329 - unknown participant ?
             // MI:0383 - biopolymer ?
             alert(`Unrecognised type:${interactor.type.name}`);
         }
         return participant;
+    }
+
+    getNode(seqDatum) {
+        let id = seqDatum.interactorRef;
+        if (this.expand != "collapse") {
+            id = `${id}(${seqDatum.participantRef})`;
+        }
+        return this.app.participants.get(id);
+    }
+
+    getUnaryLink(interactor, interaction) {
+        const linkID = `-${interactor.id}-${interactor.id}`;
+        let link = this.app.allUnaryLinks.get(linkID);
+        if (typeof link === "undefined") {
+            link = new _viz_link_unary_link__WEBPACK_IMPORTED_MODULE_8__.UnaryLink(linkID, this.app, interactor);
+            this.app.allUnaryLinks.set(linkID, link);
+            interactor.appLink = link;
+        }
+        const nLinkId = this.getNaryLinkIdFromInteraction(interaction);
+        const nLink = this.app.allNaryLinks.get(nLinkId);
+        nLink.unaryLinks.set(linkID, link);
+        //link.addEvidence(interaction);
+        return link;
+    }
+
+    getBinaryLink(sourceInteractor, targetInteractor, interaction) {
+        let linkID, fi, ti;
+        // these links are undirected and should have same ID regardless of which way round
+        // source and target are
+        if (sourceInteractor.id < targetInteractor.id) {
+            linkID = `-${sourceInteractor.id}-${targetInteractor.id}`;
+            fi = sourceInteractor;
+            ti = targetInteractor;
+        } else {
+            linkID = `-${targetInteractor.id}-${sourceInteractor.id}`;
+            fi = targetInteractor;
+            ti = sourceInteractor;
+        }
+        let link = this.app.allBinaryLinks.get(linkID);
+        if (typeof link === "undefined") {
+            link = new _viz_link_binary_link__WEBPACK_IMPORTED_MODULE_9__.BinaryLink(linkID, this.app, fi, ti);
+            fi.binaryLinks.set(linkID, link);
+            ti.binaryLinks.set(linkID, link);
+            this.app.allBinaryLinks.set(linkID, link);
+        }
+        const nLinkId = this.getNaryLinkIdFromInteraction(interaction);
+        const nLink = this.app.allNaryLinks.get(nLinkId);
+        nLink.binaryLinks.set(linkID, link);
+        //link.addEvidence(interaction);
+        return link;
     }
 
 }
@@ -18977,7 +19031,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _expand__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./expand */ "./src/js/expand.js");
 /* harmony import */ var _clone_complex_refs__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./clone-complex-refs */ "./src/js/clone-complex-refs.js");
 /* harmony import */ var _clone_complex_stoich__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./clone-complex-stoich */ "./src/js/clone-complex-stoich.js");
-/* harmony import */ var _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../abstract-mi-reader */ "./src/abstract-mi-reader.js");
+/* harmony import */ var _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./abstract-mi-reader */ "./src/js/abstract-mi-reader.js");
 
 
 
@@ -19340,14 +19394,6 @@ class ReadJson extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstrac
         return Array.from(pIDs.values()).sort().join("-");
     }
 
-    getNode(seqDatum) {
-        let id = seqDatum.interactorRef;
-        if (this.expand != "collapse") {
-            id = `${id}(${seqDatum.participantRef})`;
-        }
-        return this.app.participants.get(id);
-    }
-
     getFeatureLink(fromSeqData, toSeqData, interaction) {
         const self = this;
 
@@ -19357,7 +19403,7 @@ class ReadJson extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstrac
             for (let s = 0; s < seqData.length; s++) {
                 const seq = seqData[s];
                 let id = seq.interactorRef;
-                if (self.expand != "collapse") {
+                if (self.expand !== "collapse") {
                     id = `${id}(${seq.participantRef})`;
                 }
                 id = `${id}:${seq.pos}`;
@@ -19401,48 +19447,6 @@ class ReadJson extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstrac
         const nLink = this.app.allNaryLinks.get(nLinkId);
         nLink.sequenceLinks.set(seqLinkId, sequenceLink);
         return sequenceLink;
-    }
-
-    getUnaryLink(interactor, interaction) {
-        const linkID = `-${interactor.id}-${interactor.id}`;
-        let link = this.app.allUnaryLinks.get(linkID);
-        if (typeof link === "undefined") {
-            link = new _viz_link_unary_link__WEBPACK_IMPORTED_MODULE_13__.UnaryLink(linkID, this.app, interactor);
-            this.app.allUnaryLinks.set(linkID, link);
-            interactor.appLink = link;
-        }
-        const nLinkId = this.getNaryLinkIdFromInteraction(interaction);
-        const nLink = this.app.allNaryLinks.get(nLinkId);
-        nLink.unaryLinks.set(linkID, link);
-        //link.addEvidence(interaction);
-        return link;
-    }
-
-    getBinaryLink(sourceInteractor, targetInteractor, interaction) {
-        let linkID, fi, ti;
-        // these links are undirected and should have same ID regardless of which way round
-        // source and target are
-        if (sourceInteractor.id < targetInteractor.id) {
-            linkID = `-${sourceInteractor.id}-${targetInteractor.id}`;
-            fi = sourceInteractor;
-            ti = targetInteractor;
-        } else {
-            linkID = `-${targetInteractor.id}-${sourceInteractor.id}`;
-            fi = targetInteractor;
-            ti = sourceInteractor;
-        }
-        let link = this.app.allBinaryLinks.get(linkID);
-        if (typeof link === "undefined") {
-            link = new _viz_link_binary_link__WEBPACK_IMPORTED_MODULE_12__.BinaryLink(linkID, this.app, fi, ti);
-            fi.binaryLinks.set(linkID, link);
-            ti.binaryLinks.set(linkID, link);
-            this.app.allBinaryLinks.set(linkID, link);
-        }
-        const nLinkId = this.getNaryLinkIdFromInteraction(interaction);
-        const nLink = this.app.allNaryLinks.get(nLinkId);
-        nLink.binaryLinks.set(linkID, link);
-        //link.addEvidence(interaction);
-        return link;
     }
 
     visitInteractions(interactionCallback) {
@@ -19493,7 +19497,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _xml_expand__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./xml-expand */ "./src/js/xml-expand.js");
 /* harmony import */ var _xml_clone_complex_refs__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./xml-clone-complex-refs */ "./src/js/xml-clone-complex-refs.js");
 /* harmony import */ var _xml_clone_complex_stoich__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./xml-clone-complex-stoich */ "./src/js/xml-clone-complex-stoich.js");
-/* harmony import */ var _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../abstract-mi-reader */ "./src/abstract-mi-reader.js");
+/* harmony import */ var _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./abstract-mi-reader */ "./src/js/abstract-mi-reader.js");
 
 
 
@@ -19658,7 +19662,7 @@ class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstract
                     // console.log("*", mID, seqDatum);
                     const molecule = this.app.participants.get(mID);
                     if (molecule) {
-                        const seqFeature = new _viz_xml_feature_range__WEBPACK_IMPORTED_MODULE_11__.XmlFeatureRange(molecule, seqDatum);
+                        const seqFeature = new _viz_xml_feature_range__WEBPACK_IMPORTED_MODULE_11__.SequenceDatum(molecule, seqDatum);
                         const annotation = new _viz_interactor_annotation__WEBPACK_IMPORTED_MODULE_0__.Annotation(annotName, seqFeature);
                         let miFeatures = molecule.annotationSets.get("MI Features");
                         if (!miFeatures) {
@@ -19855,14 +19859,6 @@ class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstract
         return Array.from(pIDs.values()).sort().join("-"); //interaction._id;//
     }
 
-    getNode(seqDatum) {
-        let id = seqDatum.interactorRef;
-        if (this.expand != "collapse") {
-            id = `${id}(${seqDatum.participantRef})`;
-        }
-        return this.app.participants.get(id);
-    }
-
     getFeatureLink(fromSeqData, toSeqData, interaction) {
         const self = this;
 
@@ -19897,11 +19893,11 @@ class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstract
         if (typeof sequenceLink === "undefined") {
             const fromFeaturePositions = [];
             for (let fromSeqDatum of fromSeqData) {
-                fromFeaturePositions.push(new _viz_xml_feature_range__WEBPACK_IMPORTED_MODULE_11__.XmlFeatureRange(this.getNode(fromSeqDatum), fromSeqDatum));
+                fromFeaturePositions.push(new _viz_xml_feature_range__WEBPACK_IMPORTED_MODULE_11__.SequenceDatum(this.getNode(fromSeqDatum), fromSeqDatum));
             }
             const toFeaturePositions = [];
             for (let toSeqDatum of toSeqData) {
-                toFeaturePositions.push(new _viz_xml_feature_range__WEBPACK_IMPORTED_MODULE_11__.XmlFeatureRange(this.getNode(toSeqDatum), toSeqDatum));
+                toFeaturePositions.push(new _viz_xml_feature_range__WEBPACK_IMPORTED_MODULE_11__.SequenceDatum(this.getNode(toSeqDatum), toSeqDatum));
             }
             //~ if (endsSwapped === false) {
             sequenceLink = new _viz_link_feature_link__WEBPACK_IMPORTED_MODULE_10__.FeatureLink(seqLinkId, fromFeaturePositions, toFeaturePositions, this.app, interaction);
@@ -19916,48 +19912,6 @@ class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstract
         const nLink = this.app.allNaryLinks.get(nLinkId);
         nLink.sequenceLinks.set(seqLinkId, sequenceLink);
         return sequenceLink;
-    }
-
-    getUnaryLink(interactor, interaction) {
-        const linkID = `-${interactor.id}-${interactor.id}`;
-        let link = this.app.allUnaryLinks.get(linkID);
-        if (typeof link === "undefined") {
-            link = new _viz_link_unary_link__WEBPACK_IMPORTED_MODULE_13__.UnaryLink(linkID, this.app, interactor);
-            this.app.allUnaryLinks.set(linkID, link);
-            interactor.appLink = link;
-        }
-        const nLinkId = this.getNaryLinkIdFromInteraction(interaction);
-        const nLink = this.app.allNaryLinks.get(nLinkId);
-        nLink.unaryLinks.set(linkID, link);
-        //link.addEvidence(interaction);
-        return link;
-    }
-
-    getBinaryLink(sourceInteractor, targetInteractor, interaction) {
-        let linkID, fi, ti;
-        // these links are undirected and should have same ID regardless of which way round
-        // source and target are
-        if (sourceInteractor.id < targetInteractor.id) {
-            linkID = `-${sourceInteractor.id}-${targetInteractor.id}`;
-            fi = sourceInteractor;
-            ti = targetInteractor;
-        } else {
-            linkID = `-${targetInteractor.id}-${sourceInteractor.id}`;
-            fi = targetInteractor;
-            ti = sourceInteractor;
-        }
-        let link = this.app.allBinaryLinks.get(linkID);
-        if (typeof link === "undefined") {
-            link = new _viz_link_binary_link__WEBPACK_IMPORTED_MODULE_12__.BinaryLink(linkID, this.app, fi, ti);
-            fi.binaryLinks.set(linkID, link);
-            ti.binaryLinks.set(linkID, link);
-            this.app.allBinaryLinks.set(linkID, link);
-        }
-        const nLinkId = this.getNaryLinkIdFromInteraction(interaction);
-        const nLink = this.app.allNaryLinks.get(nLinkId);
-        nLink.binaryLinks.set(linkID, link);
-        //link.addEvidence(interaction);
-        return link;
     }
 
     getVariableParameters(input) {
@@ -22924,7 +22878,7 @@ class SequenceDatum {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   XmlFeatureRange: () => (/* binding */ XmlFeatureRange)
+/* harmony export */   SequenceDatum: () => (/* binding */ SequenceDatum)
 /* harmony export */ });
 /* constructor parameter sequenceDatumString is string with following format:
  *
@@ -22939,7 +22893,7 @@ __webpack_require__.r(__webpack_exports__);
  *              "123->256" = feature sequence w uncertain end between 256 and interactor.sequence.length
  */
 
-class XmlFeatureRange {
+class SequenceDatum {
     constructor(participant, featureRange) {
         this.participant = participant;
         this.sequenceDatumString = JSON.stringify(featureRange);//sequenceDatumString.trim();

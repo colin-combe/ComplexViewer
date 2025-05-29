@@ -15,7 +15,7 @@ import {UnaryLink} from "./viz/link/unary-link";
 import {matrix} from "./expand";
 import {cloneComplexRefs} from "./clone-complex-refs";
 import {cloneComplexesStoich} from "./clone-complex-stoich";
-import {AbstractMiReader} from "../abstract-mi-reader";
+import {AbstractMiReader} from "./abstract-mi-reader";
 
 export class ReadJson extends AbstractMiReader {
 
@@ -360,14 +360,6 @@ export class ReadJson extends AbstractMiReader {
         return Array.from(pIDs.values()).sort().join("-");
     }
 
-    getNode(seqDatum) {
-        let id = seqDatum.interactorRef;
-        if (this.expand != "collapse") {
-            id = `${id}(${seqDatum.participantRef})`;
-        }
-        return this.app.participants.get(id);
-    }
-
     getFeatureLink(fromSeqData, toSeqData, interaction) {
         const self = this;
 
@@ -377,7 +369,7 @@ export class ReadJson extends AbstractMiReader {
             for (let s = 0; s < seqData.length; s++) {
                 const seq = seqData[s];
                 let id = seq.interactorRef;
-                if (self.expand != "collapse") {
+                if (self.expand !== "collapse") {
                     id = `${id}(${seq.participantRef})`;
                 }
                 id = `${id}:${seq.pos}`;
@@ -421,48 +413,6 @@ export class ReadJson extends AbstractMiReader {
         const nLink = this.app.allNaryLinks.get(nLinkId);
         nLink.sequenceLinks.set(seqLinkId, sequenceLink);
         return sequenceLink;
-    }
-
-    getUnaryLink(interactor, interaction) {
-        const linkID = `-${interactor.id}-${interactor.id}`;
-        let link = this.app.allUnaryLinks.get(linkID);
-        if (typeof link === "undefined") {
-            link = new UnaryLink(linkID, this.app, interactor);
-            this.app.allUnaryLinks.set(linkID, link);
-            interactor.appLink = link;
-        }
-        const nLinkId = this.getNaryLinkIdFromInteraction(interaction);
-        const nLink = this.app.allNaryLinks.get(nLinkId);
-        nLink.unaryLinks.set(linkID, link);
-        //link.addEvidence(interaction);
-        return link;
-    }
-
-    getBinaryLink(sourceInteractor, targetInteractor, interaction) {
-        let linkID, fi, ti;
-        // these links are undirected and should have same ID regardless of which way round
-        // source and target are
-        if (sourceInteractor.id < targetInteractor.id) {
-            linkID = `-${sourceInteractor.id}-${targetInteractor.id}`;
-            fi = sourceInteractor;
-            ti = targetInteractor;
-        } else {
-            linkID = `-${targetInteractor.id}-${sourceInteractor.id}`;
-            fi = targetInteractor;
-            ti = sourceInteractor;
-        }
-        let link = this.app.allBinaryLinks.get(linkID);
-        if (typeof link === "undefined") {
-            link = new BinaryLink(linkID, this.app, fi, ti);
-            fi.binaryLinks.set(linkID, link);
-            ti.binaryLinks.set(linkID, link);
-            this.app.allBinaryLinks.set(linkID, link);
-        }
-        const nLinkId = this.getNaryLinkIdFromInteraction(interaction);
-        const nLink = this.app.allNaryLinks.get(nLinkId);
-        nLink.binaryLinks.set(linkID, link);
-        //link.addEvidence(interaction);
-        return link;
     }
 
     visitInteractions(interactionCallback) {
