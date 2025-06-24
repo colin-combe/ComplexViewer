@@ -9,13 +9,13 @@ import {ComplexSymbol} from "./viz/interactor/complex-symbol";
 import {MoleculeSet} from "./viz/interactor/molecule-set";
 import {NaryLink} from "./viz/link/nary-link";
 import {FeatureLink} from "./viz/link/feature-link";
-import {XmlFeatureRange} from "./viz/xml-feature-range";
+import {SequenceDatum} from "./viz/xml-feature-range";
 import {BinaryLink} from "./viz/link/binary-link";
 import {UnaryLink} from "./viz/link/unary-link";
 import {matrix} from "./xml-expand";
 import {cloneComplexRefs} from "./xml-clone-complex-refs";
 import {cloneComplexesStoich} from "./xml-clone-complex-stoich";
-import {AbstractMiReader} from "../abstract-mi-reader";
+import {AbstractMiReader} from "./abstract-mi-reader";
 
 export class ReadXml extends AbstractMiReader {
 
@@ -34,6 +34,7 @@ export class ReadXml extends AbstractMiReader {
         //get interactors - this could prob be before cloning of complexes?
         app.interactors = new Map();
         const self = this;
+
         function addInteractor(interactor) {
             const id = self.interactorId(interactor);
             if (!app.interactors.has(id)) {
@@ -52,11 +53,11 @@ export class ReadXml extends AbstractMiReader {
     }
 
     interactorId(interactor) {
-        return interactor._id;//xref.primaryRef._id;
+        return interactor.id;//xref.primaryRef._id;
     }
 
     interactorTypeId(interactor) {
-        return interactor.interactorType.xref.primaryRef._id;
+        return interactor.interactorType.xref.primaryRef.id;
     }
 
     interactorLabel(interactor) {
@@ -64,7 +65,11 @@ export class ReadXml extends AbstractMiReader {
     }
 
     interactionId(interaction) {
-        return interaction._id;
+        return interaction.id;
+    }
+
+    participantInteractorId(participant) {
+        return participant.interactorRef || participant.interactionRef || participant.interactor.id;
     }
 
     preprocessInput() {
@@ -188,7 +193,7 @@ initComplexes() {
                     // console.log("*", mID, seqDatum);
                     const molecule = this.app.participants.get(mID);
                     if (molecule) {
-                        const seqFeature = new XmlFeatureRange(molecule, seqDatum);
+                        const seqFeature = new SequenceDatum(molecule, seqDatum);
                         const annotation = new Annotation(annotName, seqFeature);
                         let miFeatures = molecule.annotationSets.get("MI Features");
                         if (!miFeatures) {
@@ -218,16 +223,16 @@ initComplexes() {
         //     }
         // }
         // if (maxStoich < 20) {
+        if (this.expand != "curated") {
         this.inputObj = matrix(this.inputObj);
-        // }
+        }
 
         this.indexFeatures();
         const self = this;
         //add naryLinks and participants
-        this.visitInteractions(function (datum) {
+        this.visitInteractions((datum) => {
             //init n-ary link
-            let xmlId = self.complexPortalAccFromXref(datum.xref);
-            const nLinkId = xmlId || self.getNaryLinkIdFromInteraction(datum);
+            const nLinkId = datum.id || this.getNaryLinkIdFromInteraction(datum);
             let nLink = self.app.allNaryLinks.get(nLinkId);
             if (typeof nLink === "undefined") {
                 //doesn't already exist, make new nLink
@@ -240,12 +245,9 @@ initComplexes() {
             //nLink.addEvidence(datum);
 
             //init participants
-            for (let jsonParticipant of datum.participantList.participant) {
-                let intRef = jsonParticipant.interactorRef;
-                if (!intRef) {
-                    intRef = jsonParticipant.interactor._id;//xref.primaryRef._id;
-                }
-                const partRef = jsonParticipant._id;
+            for (let inputParticipant of datum.participantList.participant) {
+                const intRef = this.participantInteractorId(inputParticipant);
+                const partRef = inputParticipant.id;
                 const participantId = `${intRef}(${partRef})`;
                 let participant = self.app.participants.get(participantId);
                 if (typeof participant === "undefined") {
@@ -259,16 +261,16 @@ initComplexes() {
                     nLink.participants.push(participant);
                 }
 
-                if (jsonParticipant.stoichiometry?._value || jsonParticipant.stoichiometryRange) {
+                if (inputParticipant.stoichiometry?.value || inputParticipant.stoichiometryRange) {
                     let stoichString = "";
-                    if (jsonParticipant.stoichiometry?._value) {
-                        stoichString += jsonParticipant.stoichiometry._value;
+                    if (inputParticipant.stoichiometry?.value) {
+                        stoichString += inputParticipant.stoichiometry.value;
                     }
-                    if (jsonParticipant.stoichiometryRange) {
+                    if (inputParticipant.stoichiometryRange) {
                         if (stoichString !== "") {
                             stoichString += ";";
                         }
-                        stoichString += jsonParticipant.stoichiometryRange._minValue + "-" + jsonParticipant.stoichiometryRange._maxValue;
+                        stoichString += inputParticipant.stoichiometryRange.minValue + "-" + inputParticipant.stoichiometryRange.maxValue;
                     }
                     participant.addStoichiometryLabel(stoichString);
                 }
@@ -291,14 +293,18 @@ initComplexes() {
                     // jami workaround, not entirely inline with mi-json schema, but looks like mi-json has redundant info here
                     for (let seqDatum of feature.featureRangeList.featureRange) {
                         if (!seqDatum.interactorRef) {
+<<<<<<< HEAD
                             seqDatum.interactorRef = participant.interactorRef || participant.interactor.xref.primaryRef._id;
+=======
+                            seqDatum.interactorRef = this.participantInteractorId(participant);
+>>>>>>> 6cbf30f78837a5138a25ea15c9b740b6750ff104
                         }
                         if (!seqDatum.participantRef) {
-                            seqDatum.participantRef = participant._id;//feature.parentParticipant;
+                            seqDatum.participantRef = participant.id;//feature.parentParticipant;
                         }
                     }
 
-                    this.app.features.set(feature._id, feature);
+                    this.app.features.set(feature.id, feature);
                 }
             }
         });
@@ -307,13 +313,14 @@ initComplexes() {
     interactorBasedRead() {
         //get interactors
         for (let interactor of this.app.interactors.values()) {
-            const participantId = interactor._id;//xref.primaryRef._id;
+            const participantId = interactor.id;
             const participant = this.newParticipant(interactor, participantId, participantId);
             this.app.participants.set(participantId, participant);
         }
 
         this.indexFeatures();
 
+        //add naryLinks
         this.visitInteractions((interaction) => {
             const participants = interaction.participantList.participant;
             const participantCount = participants.length;
@@ -323,15 +330,20 @@ initComplexes() {
             let nLink = this.app.allNaryLinks.get(nLinkId);
             if (typeof nLink === "undefined") {
                 //doesn't already exist, make new nLink
-                nLink = new NaryLink(nLinkId, this.app);//, interaction._id);
+                nLink = new NaryLink(nLinkId, this.app);
                 this.app.allNaryLinks.set(nLinkId, nLink);
             }
             //nLink.addEvidence(datum);
 
             //~ //init participants
             for (let pi = 0; pi < participantCount; pi++) {
+<<<<<<< HEAD
                 const jsonParticipant = participants[pi];
                 const intRef = jsonParticipant.interactorRef || jsonParticipant.interactor.xref.primaryRef._id;
+=======
+                const inputParticipant = participants[pi];
+                const intRef = this.participantInteractorId(inputParticipant);
+>>>>>>> 6cbf30f78837a5138a25ea15c9b740b6750ff104
                 let participant = this.app.participants.get(intRef);
 
                 if (typeof participant === "undefined") {
@@ -348,8 +360,8 @@ initComplexes() {
                 //temp - to give sensible info when stoich collapsed
                 const interactor = this.app.participants.get(intRef);
                 interactor.stoich = interactor.stoich ? interactor.stoich : 0;
-                if (jsonParticipant.stoichiometry) {
-                    interactor.stoich += +jsonParticipant.stoichiometry;
+                if (inputParticipant.stoichiometry) {
+                    interactor.stoich += +inputParticipant.stoichiometry;
                 } else {
                     interactor.stoich += 1;
                 }
@@ -369,19 +381,20 @@ initComplexes() {
         if (interaction.naryId) {
             return interaction.naryId;
         }
-        const participants = interaction.participantList.participant;
-        const participantCount = participants.length;
+        const inputParticipants = interaction.participantList.participant;
+        const participantCount = inputParticipants.length;
 
         const pIDs = new Set(); //used to eliminate duplicates
         //make id
         for (let pi = 0; pi < participantCount; pi++) {
-            let pID = participants[pi].interactorRef || participants[pi].interactor._id;//xref.primaryRef._id;
+            let pID = this.participantInteractorId(inputParticipants[pi]);
             if (this.expand != "collapse") {
-                pID = `${pID}(${participants[pi]._id})`;
+                pID = `${pID}(${inputParticipants[pi].id})`;
             }
             pIDs.add(pID);
         }
 
+<<<<<<< HEAD
         return interaction._id;//Array.from(pIDs.values()).sort().join("-");
     }
 
@@ -391,6 +404,9 @@ initComplexes() {
             id = `${id}(${seqDatum.participantRef})`;
         }
         return this.app.participants.get(id);
+=======
+        return Array.from(pIDs.values()).sort().join("-");
+>>>>>>> 6cbf30f78837a5138a25ea15c9b740b6750ff104
     }
 
     getFeatureLink(fromSeqData, toSeqData, interaction) {
@@ -427,11 +443,11 @@ initComplexes() {
         if (typeof sequenceLink === "undefined") {
             const fromFeaturePositions = [];
             for (let fromSeqDatum of fromSeqData) {
-                fromFeaturePositions.push(new XmlFeatureRange(this.getNode(fromSeqDatum), fromSeqDatum));
+                fromFeaturePositions.push(new SequenceDatum(this.getNode(fromSeqDatum), fromSeqDatum));
             }
             const toFeaturePositions = [];
             for (let toSeqDatum of toSeqData) {
-                toFeaturePositions.push(new XmlFeatureRange(this.getNode(toSeqDatum), toSeqDatum));
+                toFeaturePositions.push(new SequenceDatum(this.getNode(toSeqDatum), toSeqDatum));
             }
             //~ if (endsSwapped === false) {
             sequenceLink = new FeatureLink(seqLinkId, fromFeaturePositions, toFeaturePositions, this.app, interaction);
@@ -446,48 +462,6 @@ initComplexes() {
         const nLink = this.app.allNaryLinks.get(nLinkId);
         nLink.sequenceLinks.set(seqLinkId, sequenceLink);
         return sequenceLink;
-    }
-
-    getUnaryLink(interactor, interaction) {
-        const linkID = `-${interactor.id}-${interactor.id}`;
-        let link = this.app.allUnaryLinks.get(linkID);
-        if (typeof link === "undefined") {
-            link = new UnaryLink(linkID, this.app, interactor);
-            this.app.allUnaryLinks.set(linkID, link);
-            interactor.appLink = link;
-        }
-        const nLinkId = this.getNaryLinkIdFromInteraction(interaction);
-        const nLink = this.app.allNaryLinks.get(nLinkId);
-        nLink.unaryLinks.set(linkID, link);
-        //link.addEvidence(interaction);
-        return link;
-    }
-
-    getBinaryLink(sourceInteractor, targetInteractor, interaction) {
-        let linkID, fi, ti;
-        // these links are undirected and should have same ID regardless of which way round
-        // source and target are
-        if (sourceInteractor.id < targetInteractor.id) {
-            linkID = `-${sourceInteractor.id}-${targetInteractor.id}`;
-            fi = sourceInteractor;
-            ti = targetInteractor;
-        } else {
-            linkID = `-${targetInteractor.id}-${sourceInteractor.id}`;
-            fi = targetInteractor;
-            ti = sourceInteractor;
-        }
-        let link = this.app.allBinaryLinks.get(linkID);
-        if (typeof link === "undefined") {
-            link = new BinaryLink(linkID, this.app, fi, ti);
-            fi.binaryLinks.set(linkID, link);
-            ti.binaryLinks.set(linkID, link);
-            this.app.allBinaryLinks.set(linkID, link);
-        }
-        const nLinkId = this.getNaryLinkIdFromInteraction(interaction);
-        const nLink = this.app.allNaryLinks.get(nLinkId);
-        nLink.binaryLinks.set(linkID, link);
-        //link.addEvidence(interaction);
-        return link;
     }
 
     getVariableParameters(input) {
@@ -583,14 +557,14 @@ initComplexes() {
         let xmlId;
         if (xref.secondaryRef) {
             for (let ref of xref.secondaryRef) {
-                if (ref._db === "complex portal") {
-                    xmlId = ref._id;
+                if (ref.db === "complex portal") {
+                    xmlId = ref.id;
                     break;
                 }
             }
         }
         if (!xmlId) {
-            xmlId = xref.primaryRef._id;
+            xmlId = xref.primaryRef.id;
         }
         return xmlId;
     }

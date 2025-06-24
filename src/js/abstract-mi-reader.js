@@ -1,11 +1,13 @@
-import {Complex} from "./js/viz/interactor/complex";
-import {ComplexSymbol} from "./js/viz/interactor/complex-symbol";
-import {MoleculeSet} from "./js/viz/interactor/molecule-set";
-import {BioactiveEntity} from "./js/viz/interactor/bioactive-entity";
-import {Protein} from "./js/viz/interactor/protein";
-import {Gene} from "./js/viz/interactor/gene";
-import {RNA} from "./js/viz/interactor/rna";
-import {DNA} from "./js/viz/interactor/dna";
+import {Complex} from "./viz/interactor/complex";
+import {ComplexSymbol} from "./viz/interactor/complex-symbol";
+import {MoleculeSet} from "./viz/interactor/molecule-set";
+import {BioactiveEntity} from "./viz/interactor/bioactive-entity";
+import {Protein} from "./viz/interactor/protein";
+import {Gene} from "./viz/interactor/gene";
+import {RNA} from "./viz/interactor/rna";
+import {DNA} from "./viz/interactor/dna";
+import {UnaryLink} from "./viz/link/unary-link";
+import {BinaryLink} from "./viz/link/binary-link";
 
 export class AbstractMiReader {
     constructor() {
@@ -43,6 +45,7 @@ export class AbstractMiReader {
 
 
     initComplexes() {
+        const self = this;
         //init complexes
         this.app.complexes = Array.from(this.complexes.values()); // todo - why not just keep it in map
         for (let c = 0; c < this.app.complexes.length; c++) {
@@ -53,15 +56,15 @@ export class AbstractMiReader {
             } else {
                 interactionId = complex.id;
             }
-            for (let datum of this.inputObj.data) {
-                if (datum.object === "interaction" && datum.id === interactionId) {
-                    const nLinkId = this.getNaryLinkIdFromInteraction(datum);
+            this.visitInteractions(function (datum) {
+                if (datum.id === interactionId) {
+                    const nLinkId = self.getNaryLinkIdFromInteraction(datum);
                     console.log("INIT*ING COMPLEX", complex.id, nLinkId);
-                    const naryLink = this.app.allNaryLinks.get(nLinkId);
+                    const naryLink = self.app.allNaryLinks.get(nLinkId);
                     complex.initLink(naryLink);
                     naryLink.complex = complex;
                 }
-            }
+            });
         }
     }
 
@@ -158,6 +161,56 @@ export class AbstractMiReader {
             alert(`Unrecognised type:${interactor.type.name}`);
         }
         return participant;
+    }
+
+    getNode(seqDatum) {
+        let id = seqDatum.interactorRef;
+        if (this.expand != "collapse") {
+            id = `${id}(${seqDatum.participantRef})`;
+        }
+        return this.app.participants.get(id);
+    }
+
+    getUnaryLink(interactor, interaction) {
+        const linkID = `-${interactor.id}-${interactor.id}`;
+        let link = this.app.allUnaryLinks.get(linkID);
+        if (typeof link === "undefined") {
+            link = new UnaryLink(linkID, this.app, interactor);
+            this.app.allUnaryLinks.set(linkID, link);
+            interactor.appLink = link;
+        }
+        const nLinkId = this.getNaryLinkIdFromInteraction(interaction);
+        const nLink = this.app.allNaryLinks.get(nLinkId);
+        nLink.unaryLinks.set(linkID, link);
+        //link.addEvidence(interaction);
+        return link;
+    }
+
+    getBinaryLink(sourceInteractor, targetInteractor, interaction) {
+        let linkID, fi, ti;
+        // these links are undirected and should have same ID regardless of which way round
+        // source and target are
+        if (sourceInteractor.id < targetInteractor.id) {
+            linkID = `-${sourceInteractor.id}-${targetInteractor.id}`;
+            fi = sourceInteractor;
+            ti = targetInteractor;
+        } else {
+            linkID = `-${targetInteractor.id}-${sourceInteractor.id}`;
+            fi = targetInteractor;
+            ti = sourceInteractor;
+        }
+        let link = this.app.allBinaryLinks.get(linkID);
+        if (typeof link === "undefined") {
+            link = new BinaryLink(linkID, this.app, fi, ti);
+            fi.binaryLinks.set(linkID, link);
+            ti.binaryLinks.set(linkID, link);
+            this.app.allBinaryLinks.set(linkID, link);
+        }
+        const nLinkId = this.getNaryLinkIdFromInteraction(interaction);
+        const nLink = this.app.allNaryLinks.get(nLinkId);
+        nLink.binaryLinks.set(linkID, link);
+        //link.addEvidence(interaction);
+        return link;
     }
 
 }
