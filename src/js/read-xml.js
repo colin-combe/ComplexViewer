@@ -48,7 +48,7 @@ export class ReadXml extends AbstractMiReader {
         this.initLinks();
         this.initComplexes();
         this.makeMiFeaturesIntoAnnotations();
-        //app.variableParameters = getVariableParameters(inputObj);
+        app.variableParameters = this.getVariableParameters(inputObj);
     }
 
     interactorId(interactor) {
@@ -142,6 +142,32 @@ export class ReadXml extends AbstractMiReader {
             }
         });
     }
+
+initComplexes() {
+        //init complexes
+        this.app.complexes = Array.from(this.complexes.values()); // todo - why not just keep it in map
+        for (let c = 0; c < this.app.complexes.length; c++) {
+            const complex = this.app.complexes[c];
+            let interactionId;
+            if (this.expand != "collapse") {
+                interactionId = complex.id.substring(0, complex.id.indexOf("("));
+            } else {
+                interactionId = complex.id;
+            }
+            console.log("complex id", complex.id);
+            this.visitInteractions((interaction) => {
+                console.log("interaction id", interaction._id, "interactionId", interactionId, interaction._id == interactionId);
+                if (interaction._id == interactionId) {
+                    console.warn("its happening");
+                    const nLinkId = this.getNaryLinkIdFromInteraction(interaction);
+                    const naryLink = this.app.allNaryLinks.get(nLinkId);
+                    complex.initLink(naryLink);
+                    naryLink.complex = complex;
+                }
+            });
+        }
+    }
+
 
     makeMiFeaturesIntoAnnotations() {
         //make mi features into annotations
@@ -265,7 +291,7 @@ export class ReadXml extends AbstractMiReader {
                     // jami workaround, not entirely inline with mi-json schema, but looks like mi-json has redundant info here
                     for (let seqDatum of feature.featureRangeList.featureRange) {
                         if (!seqDatum.interactorRef) {
-                            seqDatum.interactorRef = participant.interactorRef || participant.interactor._id;//xref.primaryRef._id;
+                            seqDatum.interactorRef = participant.interactorRef || participant.interactor.xref.primaryRef._id;
                         }
                         if (!seqDatum.participantRef) {
                             seqDatum.participantRef = participant._id;//feature.parentParticipant;
@@ -305,12 +331,12 @@ export class ReadXml extends AbstractMiReader {
             //~ //init participants
             for (let pi = 0; pi < participantCount; pi++) {
                 const jsonParticipant = participants[pi];
-                const intRef = jsonParticipant.interactorRef;// || jsonParticipant.interactor.xref.primaryRef._id;
+                const intRef = jsonParticipant.interactorRef || jsonParticipant.interactor.xref.primaryRef._id;
                 let participant = this.app.participants.get(intRef);
 
                 if (typeof participant === "undefined") {
                     //must be a previously unencountered complex
-                    participant = new Complex(intRef, this.app);//, participant, intRef);
+                    participant = new Complex(intRef, this.app, participant, intRef);
                     this.complexes.set(intRef, participant);
                     this.app.participants.set(intRef, participant);
                 }
@@ -356,7 +382,7 @@ export class ReadXml extends AbstractMiReader {
             pIDs.add(pID);
         }
 
-        return Array.from(pIDs.values()).sort().join("-"); //interaction._id;//
+        return interaction._id;//Array.from(pIDs.values()).sort().join("-");
     }
 
     getNode(seqDatum) {
