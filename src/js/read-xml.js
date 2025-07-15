@@ -53,7 +53,7 @@ export class ReadXml extends AbstractMiReader {
     }
 
     interactorId(interactor) {
-        return interactor.id;//xref.primaryRef._id;
+        return interactor.id;//xref.primaryRef.id;
     }
 
     interactorTypeId(interactor) {
@@ -161,8 +161,8 @@ initComplexes() {
             }
             console.log("complex id", complex.id);
             this.visitInteractions((interaction) => {
-                console.log("interaction id", interaction._id, "interactionId", interactionId, interaction._id == interactionId);
-                if (interaction._id == interactionId) {
+                console.log("interaction id", interaction.id, "interactionId", interactionId, interaction.id == interactionId);
+                if (interaction.id == interactionId) {
                     console.warn("its happening");
                     const nLinkId = this.getNaryLinkIdFromInteraction(interaction);
                     const naryLink = this.app.allNaryLinks.get(nLinkId);
@@ -293,11 +293,11 @@ initComplexes() {
                     // jami workaround, not entirely inline with mi-json schema, but looks like mi-json has redundant info here
                     for (let seqDatum of feature.featureRangeList.featureRange) {
                         if (!seqDatum.interactorRef) {
-<<<<<<< HEAD
-                            seqDatum.interactorRef = participant.interactorRef || participant.interactor.xref.primaryRef._id;
-=======
-                            seqDatum.interactorRef = this.participantInteractorId(participant);
->>>>>>> 6cbf30f78837a5138a25ea15c9b740b6750ff104
+// <<<<<<< HEAD
+                            seqDatum.interactorRef = participant.interactorRef || participant.interactor.xref.primaryRef.id;
+// =======
+//                             seqDatum.interactorRef = this.participantInteractorId(participant);
+// >>>>>>> 6cbf30f78837a5138a25ea15c9b740b6750ff104
                         }
                         if (!seqDatum.participantRef) {
                             seqDatum.participantRef = participant.id;//feature.parentParticipant;
@@ -313,7 +313,7 @@ initComplexes() {
     interactorBasedRead() {
         //get interactors
         for (let interactor of this.app.interactors.values()) {
-            const participantId = interactor.id;
+            const participantId = interactor.xref.primaryRef.id;
             const participant = this.newParticipant(interactor, participantId, participantId);
             this.app.participants.set(participantId, participant);
         }
@@ -330,20 +330,20 @@ initComplexes() {
             let nLink = this.app.allNaryLinks.get(nLinkId);
             if (typeof nLink === "undefined") {
                 //doesn't already exist, make new nLink
-                nLink = new NaryLink(nLinkId, this.app);
+                nLink = new NaryLink(nLinkId, this.app, interaction.id);
                 this.app.allNaryLinks.set(nLinkId, nLink);
             }
             //nLink.addEvidence(datum);
 
             //~ //init participants
             for (let pi = 0; pi < participantCount; pi++) {
-<<<<<<< HEAD
-                const jsonParticipant = participants[pi];
-                const intRef = jsonParticipant.interactorRef || jsonParticipant.interactor.xref.primaryRef._id;
-=======
+// <<<<<<< HEAD
                 const inputParticipant = participants[pi];
-                const intRef = this.participantInteractorId(inputParticipant);
->>>>>>> 6cbf30f78837a5138a25ea15c9b740b6750ff104
+                const intRef = inputParticipant.interactor.xref.primaryRef.id;// interactorRef || inputParticipant.interactor.id;
+// =======
+//                 const inputParticipant = participants[pi];
+//                 const intRef = this.participantInteractorId(inputParticipant);
+// >>>>>>> 6cbf30f78837a5138a25ea15c9b740b6750ff104
                 let participant = this.app.participants.get(intRef);
 
                 if (typeof participant === "undefined") {
@@ -394,19 +394,11 @@ initComplexes() {
             pIDs.add(pID);
         }
 
-<<<<<<< HEAD
-        return interaction._id;//Array.from(pIDs.values()).sort().join("-");
-    }
-
-    getNode(seqDatum) {
-        let id = seqDatum.interactorRef;
-        if (this.expand != "collapse") {
-            id = `${id}(${seqDatum.participantRef})`;
-        }
-        return this.app.participants.get(id);
-=======
-        return Array.from(pIDs.values()).sort().join("-");
->>>>>>> 6cbf30f78837a5138a25ea15c9b740b6750ff104
+// <<<<<<< HEAD
+        return interaction.id;//Array.from(pIDs.values()).sort().join("-");
+// =======
+//         return Array.from(pIDs.values()).sort().join("-");
+// >>>>>>> 6cbf30f78837a5138a25ea15c9b740b6750ff104
     }
 
     getFeatureLink(fromSeqData, toSeqData, interaction) {

@@ -51,7 +51,7 @@ function makeVariableParametersControls(varpars, divSelector, app) {
             radio.type = 'radio';
             radio.name = 'varpar-value';
             radio.value = value.value;
-            radio.dataset.id = value._id;
+            radio.dataset.id = value.id;
 
             radio.addEventListener('change', () => {
                 // Example: call your app handler

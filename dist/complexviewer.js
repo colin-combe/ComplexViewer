@@ -19551,11 +19551,11 @@ class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstract
         this.initLinks();
         this.initComplexes();
         this.makeMiFeaturesIntoAnnotations();
-        //app.variableParameters = getVariableParameters(inputObj);
+        app.variableParameters = this.getVariableParameters(inputObj);
     }
 
     interactorId(interactor) {
-        return interactor.id;//xref.primaryRef._id;
+        return interactor.id;//xref.primaryRef.id;
     }
 
     interactorTypeId(interactor) {
@@ -19649,6 +19649,32 @@ class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstract
             }
         });
     }
+
+initComplexes() {
+        //init complexes
+        this.app.complexes = Array.from(this.complexes.values()); // todo - why not just keep it in map
+        for (let c = 0; c < this.app.complexes.length; c++) {
+            const complex = this.app.complexes[c];
+            let interactionId;
+            if (this.expand != "collapse") {
+                interactionId = complex.id.substring(0, complex.id.indexOf("("));
+            } else {
+                interactionId = complex.id;
+            }
+            console.log("complex id", complex.id);
+            this.visitInteractions((interaction) => {
+                console.log("interaction id", interaction.id, "interactionId", interactionId, interaction.id == interactionId);
+                if (interaction.id == interactionId) {
+                    console.warn("its happening");
+                    const nLinkId = this.getNaryLinkIdFromInteraction(interaction);
+                    const naryLink = this.app.allNaryLinks.get(nLinkId);
+                    complex.initLink(naryLink);
+                    naryLink.complex = complex;
+                }
+            });
+        }
+    }
+
 
     makeMiFeaturesIntoAnnotations() {
         //make mi features into annotations
@@ -19769,7 +19795,11 @@ class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstract
                     // jami workaround, not entirely inline with mi-json schema, but looks like mi-json has redundant info here
                     for (let seqDatum of feature.featureRangeList.featureRange) {
                         if (!seqDatum.interactorRef) {
-                            seqDatum.interactorRef = this.participantInteractorId(participant);
+// <<<<<<< HEAD
+                            seqDatum.interactorRef = participant.interactorRef || participant.interactor.xref.primaryRef.id;
+// =======
+//                             seqDatum.interactorRef = this.participantInteractorId(participant);
+// >>>>>>> 6cbf30f78837a5138a25ea15c9b740b6750ff104
                         }
                         if (!seqDatum.participantRef) {
                             seqDatum.participantRef = participant.id;//feature.parentParticipant;
@@ -19785,7 +19815,7 @@ class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstract
     interactorBasedRead() {
         //get interactors
         for (let interactor of this.app.interactors.values()) {
-            const participantId = interactor.id;
+            const participantId = interactor.xref.primaryRef.id;
             const participant = this.newParticipant(interactor, participantId, participantId);
             this.app.participants.set(participantId, participant);
         }
@@ -19802,15 +19832,20 @@ class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstract
             let nLink = this.app.allNaryLinks.get(nLinkId);
             if (typeof nLink === "undefined") {
                 //doesn't already exist, make new nLink
-                nLink = new _viz_link_nary_link__WEBPACK_IMPORTED_MODULE_9__.NaryLink(nLinkId, this.app);
+                nLink = new _viz_link_nary_link__WEBPACK_IMPORTED_MODULE_9__.NaryLink(nLinkId, this.app, interaction.id);
                 this.app.allNaryLinks.set(nLinkId, nLink);
             }
             //nLink.addEvidence(datum);
 
             //~ //init participants
             for (let pi = 0; pi < participantCount; pi++) {
+// <<<<<<< HEAD
                 const inputParticipant = participants[pi];
-                const intRef = this.participantInteractorId(inputParticipant);
+                const intRef = inputParticipant.interactor.xref.primaryRef.id;// interactorRef || inputParticipant.interactor.id;
+// =======
+//                 const inputParticipant = participants[pi];
+//                 const intRef = this.participantInteractorId(inputParticipant);
+// >>>>>>> 6cbf30f78837a5138a25ea15c9b740b6750ff104
                 let participant = this.app.participants.get(intRef);
 
                 if (typeof participant === "undefined") {
@@ -19861,7 +19896,11 @@ class ReadXml extends _abstract_mi_reader__WEBPACK_IMPORTED_MODULE_17__.Abstract
             pIDs.add(pID);
         }
 
-        return Array.from(pIDs.values()).sort().join("-");
+// <<<<<<< HEAD
+        return interaction.id;//Array.from(pIDs.values()).sort().join("-");
+// =======
+//         return Array.from(pIDs.values()).sort().join("-");
+// >>>>>>> 6cbf30f78837a5138a25ea15c9b740b6750ff104
     }
 
     getFeatureLink(fromSeqData, toSeqData, interaction) {
@@ -20831,18 +20870,18 @@ class Interactor {
         this.upperGroup.appendChild(this.outline);
     }
 
-    // hide(){
-    //     this.upperGroup.style.display = "none";
-    // }
-    //
-    // show() {
-    //     this.upperGroup.style.display = "block";
-    //     if (this.labelSVG) {
-    //         this.labelSVG.style.display = "block";
-    //     }
-    //     // this.setPositionFromCola();
-    //     // this.setAllLinkCoordinates();
-    // }
+    hide(){
+        this.upperGroup.style.display = "none";
+    }
+
+    show() {
+        this.upperGroup.style.display = "block";
+        if (this.labelSVG) {
+            this.labelSVG.style.display = "block";
+        }
+        // this.setPositionFromCola();
+        // this.setAllLinkCoordinates();
+    }
 
     initListeners() {
         this.upperGroup.onmousedown = evt => this.mouseDown(evt);
@@ -22547,23 +22586,23 @@ class NaryLink extends _link__WEBPACK_IMPORTED_MODULE_0__.Link {
         // this.setLinkCoordinates(); // having this here slows down start up. instead see getPosition in complex.js
         this.app.naryLinks.appendChild(this.path);
         this.app.naryLinks.appendChild(this.path2);
-        // // show participants
-        // const participants = this.participants;
-        // const pc = participants.length;
-        // for (let i = 0; i < pc; i++) {
-        //     const participant = participants[i];
-        //     if (participant.type === "complex") {
-        //         participant.naryLink.show();
-        //     } else {
-        //         participant.show();
-        //     }
-        // }
+        // show participants
+        const participants = this.participants;
+        const pc = participants.length;
+        for (let i = 0; i < pc; i++) {
+            const participant = participants[i];
+            if (participant.type === "complex") {
+                participant.naryLink.show();
+            } else {
+                participant.show();
+            }
+        }
     }
 
-    // hide(){
-    //     this.path.remove();
-    //     this.path2.remove();
-    // }
+    hide(){
+        this.path.remove();
+        this.path2.remove();
+    }
 
     setLinkCoordinates(dontPropogate) {
         // Uses d3.geom.hull to calculate a bounding path around an array of vertices
