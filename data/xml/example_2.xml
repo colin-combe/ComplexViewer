@@ -15,7 +15,7 @@
       </attributeList>
     </source>
     <interactionList>
-      <interaction id="3">
+      <interaction id="1">
         <names>
           <shortLabel>tnf-chuk-5</shortLabel>
         </names>
@@ -4437,7 +4437,7 @@
           <attribute name="figure legend" nameAc="MI:0599">Fig 4F</attribute>
         </attributeList>
       </interaction>
-      <interaction id="4">
+      <interaction id="51">
         <names>
           <shortLabel>tnf-azi2-1</shortLabel>
         </names>
@@ -9018,7 +9018,7 @@
           <attribute name="figure legend" nameAc="MI:0599">Fig 4F</attribute>
         </attributeList>
       </interaction>
-      <interaction id="5">
+      <interaction id="100">
         <names>
           <shortLabel>tnf-azi2-2</shortLabel>
         </names>

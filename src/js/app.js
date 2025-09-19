@@ -519,7 +519,9 @@ export class App {
                     "entrySet.entry.interactionList.abstractInteraction.experimentList.experimentDescription.variableParameterList.variableParameter",
                     "entrySet.entry.interactionList.interaction.experimentList.experimentDescription.variableParameterList.variableParameter",
                     "entrySet.entry.interactionList.abstractInteraction.experimentList.experimentDescription.variableParameterList.variableParameter.variableValueList.variableValue",
-                    "entrySet.entry.interactionList.interaction.experimentList.experimentDescription.variableParameterList.variableParameter.variableValueList.variableValue"
+                    "entrySet.entry.interactionList.interaction.experimentList.experimentDescription.variableParameterList.variableParameter.variableValueList.variableValue",
+                    "entrySet.entry.interactionList.abstractInteraction.experimentalVariableValueList.experimentalVariableValues.variableValue",
+                    "entrySet.entry.interactionList.interaction.experimentalVariableValueList.experimentalVariableValues.variableValue"
                 ]
                     .includes(jpath); // replace with your element names
             },
@@ -1136,7 +1138,8 @@ export class App {
         //const interaction = this.allNaryLinks.get(id);
         let interaction;
         for (const value of this.allNaryLinks.values()) {
-            if (value.sourceId == id) {
+            // console.log("*",value.interaction.experimentalVariableValueList.experimentalVariableValues.variableValueRef);
+            if (value.interaction.experimentalVariableValueList.experimentalVariableValues.variableValueRef.indexOf(id) > -1) {
                 interaction = value;
                 break;
             }

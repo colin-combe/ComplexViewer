@@ -15,7 +15,7 @@
       </attributeList>
     </source>
     <interactionList>
-      <interaction id="3">
+      <interaction id="1">
         <names>
           <shortLabel>tnf-16</shortLabel>
         </names>
@@ -1081,7 +1081,7 @@
           <attribute name="figure legend" nameAc="MI:0599">Fig 3G</attribute>
         </attributeList>
       </interaction>
-      <interaction id="4">
+      <interaction id="15">
         <names>
           <shortLabel>tnf-ripk1-2</shortLabel>
         </names>
@@ -3123,7 +3123,7 @@
           <attribute name="figure legend" nameAc="MI:0599">Fig 3G</attribute>
         </attributeList>
       </interaction>
-      <interaction id="5">
+      <interaction id="37">
         <names>
           <shortLabel>tnf-chuk-3</shortLabel>
         </names>
@@ -5178,7 +5178,7 @@
           <attribute name="figure legend" nameAc="MI:0599">Fig 3G</attribute>
         </attributeList>
       </interaction>
-      <interaction id="6">
+      <interaction id="59">
         <names>
           <shortLabel>tnf-chuk-4</shortLabel>
         </names>

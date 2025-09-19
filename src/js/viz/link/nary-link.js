@@ -3,8 +3,8 @@ import {Link} from "./link";
 import {rotatePointAboutPoint} from "../../geom";
 
 export class NaryLink extends Link {
-    constructor(id, app, sourceId) {
-        super(id, app);
+    constructor(id, app, sourceId, interaction) {
+        super(id, app, interaction);
         if (sourceId) {
             this.sourceId = sourceId;
         }

@@ -330,7 +330,7 @@ initComplexes() {
             let nLink = this.app.allNaryLinks.get(nLinkId);
             if (typeof nLink === "undefined") {
                 //doesn't already exist, make new nLink
-                nLink = new NaryLink(nLinkId, this.app, interaction.id);
+                nLink = new NaryLink(nLinkId, this.app, interaction.id, interaction);
                 this.app.allNaryLinks.set(nLinkId, nLink);
             }
             //nLink.addEvidence(datum);

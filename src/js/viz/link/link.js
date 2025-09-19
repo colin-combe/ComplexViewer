@@ -1,12 +1,13 @@
 import {svgns} from "../../svgns";
 
 export class Link {
-    constructor(id, app) {
+    constructor(id, app, interaction) {
         this.id = id;
         this.app = app;
         this.participants = [];
         this.sequenceLinks = new Map();
         // this.evidences = d3.map();
+        this.interaction = interaction;
     }
 
 
