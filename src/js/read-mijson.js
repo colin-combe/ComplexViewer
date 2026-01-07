@@ -165,7 +165,7 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
         const varpars = new Map();
         for (let datum of miJson.data) {
             if (datum.object === "interaction") {
-                if (datum.experiment.variableParameterList) {
+                if (datum.experiment?.variableParameterList) {
                     for (let variableParameter of datum.experiment.variableParameterList) {
                         // lets have a check to see if any duplicates are the same
                         if (varpars.has(variableParameter.description)) {

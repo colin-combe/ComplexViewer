@@ -52812,7 +52812,7 @@ function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
         const varpars = new Map();
         for (let datum of miJson.data) {
             if (datum.object === "interaction") {
-                if (datum.experiment.variableParameterList) {
+                if (datum.experiment?.variableParameterList) {
                     for (let variableParameter of datum.experiment.variableParameterList) {
                         // lets have a check to see if any duplicates are the same
                         if (varpars.has(variableParameter.description)) {
@@ -52827,26 +52827,6 @@ function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
                 }
             }
         }
-
-        // this.visitInteractions((interaction) => {
-        //     if (interaction.experimentList?.experimentDescription) {
-        //         for (let experimentDescription of interaction.experimentList.experimentDescription) {
-        //             if (experimentDescription.variableParameterList?.variableParameter) {
-        //                 for (let variableParameter of experimentDescription.variableParameterList.variableParameter) {
-        //                     // lets have a check to see if any duplicates are the same
-        //                     if (varpars.has(variableParameter.description)) {
-        //                         const existingVarPar = varpars.get(variableParameter.description);
-        //                         if (JSON.stringify(existingVarPar) != JSON.stringify(variableParameter)) { //todo - use lodash deep equal
-        //                             console.warn(`Duplicate variable parameter found with different values: ${variableParameter.description}`);
-        //                         }
-        //                         continue; // skip adding this one, not that it really matters
-        //                     }
-        //                     varpars.set(variableParameter.description, variableParameter);
-        //                 }
-        //             }
-        //         }
-        //     }
-        // });
         return varpars;
     }
 
