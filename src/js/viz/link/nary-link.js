@@ -3,11 +3,12 @@ import {Link} from "./link";
 import {rotatePointAboutPoint} from "../../geom";
 
 export class NaryLink extends Link {
-    constructor(id, app, sourceId) {
+    constructor(id, app, sourceId, interaction) {
         super(id, app);
         if (sourceId) {
             this.sourceId = sourceId;
         }
+        this.interaction = interaction;
         this.binaryLinks = new Map();
         this.unaryLinks = new Map();
     }
@@ -50,6 +51,22 @@ export class NaryLink extends Link {
         // this.setLinkCoordinates(); // having this here slows down start up. instead see getPosition in complex.js
         this.app.naryLinks.appendChild(this.path);
         this.app.naryLinks.appendChild(this.path2);
+        // show participants
+        const participants = this.participants;
+        const pc = participants.length;
+        for (let i = 0; i < pc; i++) {
+            const participant = participants[i];
+            if (participant.type === "complex") {
+                participant.naryLink.show();
+            } else {
+                participant.show();
+            }
+        }
+    }
+
+    hide(){
+        this.path.remove();
+        this.path2.remove();
     }
 
     setLinkCoordinates(dontPropogate) {

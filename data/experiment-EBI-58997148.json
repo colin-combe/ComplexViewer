@@ -1,0 +1,1237 @@
+{
+  "data": [
+    {
+      "object": "interactor",
+      "id": "uniprotkb_Q13546",
+      "sequence": "MQPDMSLNVIKMKSSDFLESAELDSGGFGKVSLCFHRTQGLMIMKTVYKGPNCIEHNEALLEEAKMMNRLRHSRVVKLLGVIIEEGKYSLVMEYMEKGNLMHVLKAEMSTPLSVKGRIILEIIEGMCYLHGKGVIHKDLKPENILVDNDFHIKIADLGLASFKMWSKLNNEEHNELREVDGTAKKNGGTLYYMAPEHLNDVNAKPTEKSDVYSFAVVLWAIFANKEPYENAICEQQLIMCIKSGNRPDVDDITEYCPREIISLMKLCWEANPEARPTFPGIEEKFRPFYLSQLEESVEEDVKSLKKEYSNENAVVKRMQSLQLDCVAVPSSRSNSATEQPGSLHSSQGLGMGPVEESWFAPSLEHPQEENEPSLQSKLQDEANYHLYGSRMDRQTKQQPRQNVAYNREEERRRRVSHDPFAQQRPYENFQNTEGKGTAYSSAASHGNAVHQPSGLTSQPQVLYQNNGLYSSHGFGTRPLDPGTAGPRVWYRPIPSHMPSLHNIPVPETNYLGNTPTMPFSSLPPTDESIKYTIYNSTGIQIGAYNYMEIGGTSSSLLDSTNTNFKEEPAAKYQAIFDNTTSLTDKHLDPIRENLGKHWKNCARKLGFTQSQIDEIDHDYERDGLKEKVYQMLQKWVMREGIKGATVGKLAQALHQCSRIDLLSSLIYVSQN",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "Q13546"
+      },
+      "label": "RIPK1"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P01375",
+      "sequence": "MSTESMIRDVELAEEALPKKTGGPQGSRRCLFLSLFSFLIVAGATTLFCLLHFGVIGPQREEFPRDLSLISPLAQAVRSSSRTPSDKPVAHVVANPQAEGQLQWLNRRANALLANGVELRDNQLVVPSEGLYLIYSQVLFKGQGCPSTHVLLTHTISRIAVSYQTKVNLLSAIKSPCQRETPEGAEAKPWYEPIYLGGVFQLEKGDRLSAEINRPDYLDFAESGQVYFGIIAL",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P01375"
+      },
+      "label": "TNF"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P19438",
+      "sequence": "MGLSTVPDLLLPLVLLELLVGIYPSGVIGLVPHLGDREKRDSVCPQGKYIHPQNNSICCTKCHKGTYLYNDCPGPGQDTDCRECESGSFTASENHLRHCLSCSKCRKEMGQVEISSCTVDRDTVCGCRKNQYRHYWSENLFQCFNCSLCLNGTVHLSCQEKQNTVCTCHAGFFLRENECVSCSNCKKSLECTKLCLPQIENVKGTEDSGTTVLLPLVIFFGLCLLSLLFIGLMYRYQRWKSKLYSIVCGKSTPEKEGELEGTTTKPLAPNPSFSPTPGFTPTLGFSPVPSSTFTSSSTYTPGDCPNFAAPRREVAPPYQGADPILATALASDPIPNPLQKWEDSAHKPQSLDTDDPATLYAVVENVPPLRWKEFVRRLGLSDHEIDRLELQNGRCLREAQYSMLATWRRRTPRREATLELLGRVLRDMDLLGCLEDIEEALCGPAALPPAPSLLR",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P19438"
+      },
+      "label": "TNFRSF1A"
+    },
+    {
+      "object": "interaction",
+      "id": "intact_EBI-58997155",
+      "interactionType": {
+        "id": "MI:0914",
+        "name": "association"
+      },
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0007",
+          "name": "anti tag coimmunoprecipitation"
+        },
+        "host": {
+          "taxid": "9606",
+          "common": "human-ht1080",
+          "scientific": "Homo sapiens HT1080 fibrosarcoma cell",
+          "cellType": {
+            "id": "ACC 315",
+            "name": "confirmed as human with IEF of AST, LDH, NP established from the biopsy from a fibrosarcoma of a 35-year-old Caucasian man in 1972"
+          }
+        },
+        "pubid": [
+          {
+            "db": "pubmed",
+            "id": "36179048"
+          },
+          {
+            "db": "intact",
+            "id": "EBI-58996876"
+          },
+          {
+            "db": "imex",
+            "id": "IM-30203"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0486",
+          "name": "UniProt"
+        },
+        "experimentModifications": [
+          "HT1080 cells treated with purified TNFA prior to lysis."
+        ],
+        "figures": [
+          "Fig 3G"
+        ],
+        "variableParameterList": [
+          {
+            "variableValueList": [
+              {
+                "value": "0",
+                "order": "1"
+              },
+              {
+                "value": "600",
+                "order": "2"
+              },
+              {
+                "value": "900",
+                "order": "3"
+              },
+              {
+                "value": "1800",
+                "order": "4"
+              }
+            ],
+            "description": "TNF-alpha",
+            "unit": "second"
+          }
+        ]
+      },
+      "experimentalVariableValueList": [
+        {
+          "experimentalVariableValues": [
+            {
+              "value": "0",
+              "order": "1",
+              "description": "TNF-alpha",
+              "unit": "second"
+            }
+          ]
+        }
+      ],
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-58997155"
+        },
+        {
+          "db": "imex",
+          "id": "IM-30203-29"
+        }
+      ],
+      "participants": [
+        {
+          "id": "1",
+          "interactorRef": "uniprotkb_Q13546",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ],
+          "features": [
+            {
+              "id": "2",
+              "name": "lys-?",
+              "category": "ptms",
+              "type": {
+                "id": "MOD:01148",
+                "name": "ubiquitinylated lysine"
+              },
+              "role": {
+                "id": "MI:0925",
+                "name": "observed-ptm"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_Q13546",
+                  "participantRef": "1"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "3",
+          "interactorRef": "uniprotkb_P01375",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0496",
+            "name": "bait"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ],
+          "features": [
+            {
+              "id": "4",
+              "name": "c-terminal",
+              "category": "experimentalFeatures",
+              "type": {
+                "id": "MI:0518",
+                "name": "flag tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "c-c",
+                  "interactorRef": "uniprotkb_P01375",
+                  "participantRef": "3"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "5",
+          "interactorRef": "uniprotkb_P19438",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_Q96S55",
+      "sequence": "MEVSGPEDDPFLSQLHQVQCPVCQQMMPAAHINSHLDRCLLLHPAGHAEPAAGSHRAGERAKGPSPPGAKRRRLSESSALKQPATPTAAESSEGEGEEGDDGGETESRESYDAPPTPSGARLIPDFPVARSSSPGRKGSGKRPAAAAAAGSASPRSWDEAEAQEEEEAVGDGDGDGDADADGEDDPGHWDADAAEAATAFGASGGGRPHPRALAAEEIRQMLQGKPLADTMRPDTLQDYFGQSKAVGQDTLLRSLLETNEIPSLILWGPPGCGKTTLAHIIASNSKKHSIRFVTLSATNAKTNDVRDVIKQAQNEKSFFKRKTILFIDEIHRFNKSQQDTFLPHVECGTITLIGATTENPSFQVNAALLSRCRVIVLEKLPVEAMVTILMRAINSLGIHVLDSSRPTDPLSHSSNSSSEPAMFIEDKAVDTLAYLSDGDARAGLNGLQLAVLARLSSRKMFCKKSGQSYSPSRVLITENDVKEGLQRSHILYDRAGEEHYNCISALHKSMRGSDQNASLYWLARMLEGGEDPLYVARRLVRFASEDIGLADPSALTQAVAAYQGCHFIGMPECEVLLAQCVVYFARAPKSIEVYSAYNNVKACLRNHQGPLPPVPLHLRNAPTRLMKDLGYGKGYKYNPMYSEPVDQEYLPEELRGVDFFKQRRC",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "Q96S55"
+      },
+      "label": "WRNIP1"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_Q8TF42",
+      "sequence": "MAQYGHPSPLGMAAREELYSKVTPRRNRQQRPGTIKHGSALDVLLSMGFPRARAQKALASTGGRSVQAACDWLFSHVGDPFLDDPLPREYVLYLRPTGPLAQKLSDFWQQSKQICGKNKAHNIFPHITLCQFFMCEDSKVDALGEALQTTVSRWKCKFSAPLPLELYTSSNFIGLFVKEDSAEVLKKFAADFAAEAASKTEVHVEPHKKQLHVTLAYHFQASHLPTLEKLAQNIDVKLGCDWVATIFSRDIRFANHETLQVIYPYTPQNDDELELVPGDFIFMSPMEQTSTSEGWIYGTSLTTGCSGLLPENYITKADECSTWIFHGSYSILNTSSSNSLTFGDGVLERRPYEDQGLGETTPLTIICQPMQPLRVNSQPGPQKRCLFVCRHGERMDVVFGKYWLSQCFDAKGRYIRTNLNMPHSLPQRSGGFRDYEKDAPITVFGCMQARLVGEALLESNTIIDHVYCSPSLRCVQTAHNILKGLQQENHLKIRVEPGLFEWTKWVAGSTLPAWIPPSELAAANLSVDTTYRPHIPISKLVVSESYDTYISRSFQVTKEIISECKSKGNNILIVAHASSLEACTCQLQGLSPQNSKDFVQMVRKIPYLGFCSCEELGETGIWQLTDPPILPLTHGPTGGFNWRETLLQE",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "Q8TF42"
+      },
+      "label": "UBASH3B"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_Q96EP0",
+      "sequence": "MPGEEEERAFLVAREELASALRRDSGQAFSLEQLRPLLASSLPLAARYLQLDAARLVRCNAHGEPRNYLNTLSTALNILEKYGRNLLSPQRPRYWRGVKFNNPVFRSTVDAVQGGRDVLRLYGYTEEQPDGLSFPEGQEEPDEHQVATVTLEVLLLRTELSLLLQNTHPRQQALEQLLEDKVEDDMLQLSEFDPLLREIAPGPLTTPSVPGSTPGPCFLCGSAPGTLHCPSCKQALCPACDHLFHGHPSRAHHLRQTLPGVLQGTHLSPSLPASAQPRPQSTSLLALGDSSLSSPNPASAHLPWHCAACAMLNEPWAVLCVACDRPRGCKGLGLGTEGPQGTGGLEPDLARGRWACQSCTFENEAAAVLCSICERPRLAQPPSLVVDSRDAGICLQPLQQGDALLASAQSQVWYCIHCTFCNSSPGWVCVMCNRTSSPIPAQHAPRPYASSLEKGPPKPGPPRRLSAPLPSSCGDPEKQRQDKMREEGLQLVSMIREGEAAGACPEEIFSALQYSGTEVPLQWLRSELPYVLEMVAELAGQQDPGLGAFSCQEARRAWLDRHGNLDEAVEECVRTRRRKVQELQSLGFGPEEGSLQALFQHGGDVSRALTELQRQRLEPFRQRLWDSGPEPTPSWDGPDKQSLVRRLLAVYALPSWGRAELALSLLQETPRNYELGDVVEAVRHSQDRAFLRRLLAQECAVCGWALPHNRMQALTSCECTICPDCFRQHFTIALKEKHITDMVCPACGRPDLTDDTQLLSYFSTLDIQLRESLEPDAYALFHKKLTEGVLMRDPKFLWCAQCSFGFIYEREQLEATCPQCHQTFCVRCKRQWEEQHRGRSCEDFQNWKRMNDPEYQAQGLAMYLQENGIDCPKCKFSYALARGGCMHFHCTQCRHQFCSGCYNAFYAKNKCPEPNCRVKKSLHGHHPRDCLFYLRDWTALRLQKLLQDNNVMFNTEPPAGARAVPGGGCRVIEQKEVPNGLRDEACGKETPAGYAGLCQAHYKEYLVSLINAHSLDPATLYEVEELETATERYLHVRPQPLAGEDPPAYQARLLQKLTEEVPLGQSIPRRRK",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "Q96EP0"
+      },
+      "label": "RNF31"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_Q9H0F6",
+      "sequence": "MAPPAGGAAAAASDLGSAAVLLAVHAAVRPLGAGPDAEAQLRRLQLSADPERPGRFRLELLGAGPGAVNLEWPLESVSYTIRGPTQHELQPPPGGPGTLSLHFLNPQEAQRWAVLVRGATVEGQNGSKSNSPPALGPEACPVSLPSPPEASTLKGPPPEADLPRSPGNLTEREELAGSLARAIAGGDEKGAAQVAAVLAQHRVALSVQLQEACFPPGPIRLQVTLEDAASAASAASSAHVALQVHPHCTVAALQEQVFSELGFPPAVQRWVIGRCLCVPERSLASYGVRQDGDPAFLYLLSAPREAPATGPSPQHPQKMDGELGRLFPPSLGLPPGPQPAASSLPSPLQPSWSCPSCTFINAPDRPGCEMCSTQRPCTWDPLAAAST",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "Q9H0F6"
+      },
+      "label": "SHARPIN"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_O15111",
+      "sequence": "MERPPGLRPGAGGPWEMRERLGTGGFGNVCLYQHRELDLKIAIKSCRLELSTKNRERWCHEIQIMKKLNHANVVKACDVPEELNILIHDVPLLAMEYCSGGDLRKLLNKPENCCGLKESQILSLLSDIGSGIRYLHENKIIHRDLKPENIVLQDVGGKIIHKIIDLGYAKDVDQGSLCTSFVGTLQYLAPELFENKPYTATVDYWSFGTMVFECIAGYRPFLHHLQPFTWHEKIKKKDPKCIFACEEMSGEVRFSSHLPQPNSLCSLVVEPMENWLQLMLNWDPQQRGGPVDLTLKQPRCFVLMDHILNLKIVHILNMTSAKIISFLLPPDESLHSLQSRIERETGINTGSQELLSETGISLDPRKPASQCVLDGVRGCDSYMVYLFDKSKTVYEGPFASRSLSDCVNYIVQDSKIQLPIIQLRKVWAEAVHYVSGLKEDYSRLFQGQRAAMLSLLRYNANLTKMKNTLISASQQLKAKLEFFHKSIQLDLERYSEQMTYGISSEKMLKAWKEMEEKAIHYAEVGVIGYLEDQIMSLHAEIMELQKSPYGRRQGDLMESLEQRAIDLYKQLKHRPSDHSYSDSTEMVKIIVHTVQSQDRVLKELFGHLSKLLGCKQKIIDLLPKVEVALSNIKEADNTVMFMQGKRQKEIWHLLKIACTQSSARSLVGSSLEGAVTPQTSAWLPPTSAEHDHSLSCVVTPQDGETSAQMIEENLNCLGHLSTIIHEANEEQGNSMMNLDWSWLTE",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "O15111"
+      },
+      "label": "CHUK"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_Q9NQC7",
+      "sequence": "MSSGLWSQEKVTSPYWEERIFYLLLQECSVTDKQTQKLLKVPKGSIGQYIQDRSVGHSRIPSAKGKKNQIGLKILEQPHAVLFVDEKDVVEINEKFTELLLAITNCEERFSLFKNRNRLSKGLQIDVGCPVKVQLRSGEEKFPGVVRFRGPLLAERTVSGIFFGVELLEEGRGQGFTDGVYQGKQLFQCDEDCGVFVALDKLELIEDDDTALESDYAGPGDTMQVELPPLEINSRVSLKVGETIESGTVIFCDVLPGKESLGYFVGVDMDNPIGNWDGRFDGVQLCSFACVESTILLHINDIIPALSESVTQERRPPKLAFMSRGVGDKGSSSHNKPKATGSTSDPGNRNRSELFYTLNGSSVDSQPQSKSKNTWYIDEVAEDPAKSLTEISTDFDRSSPPLQPPPVNSLTTENRFHSLPFSLTKMPNTNGSIGHSPLSLSAQSVMEELNTAPVQESPPLAMPPGNSHGLEVGSLAEVKENPPFYGVIRWIGQPPGLNEVLAGLELEDECAGCTDGTFRGTRYFTCALKKALFVKLKSCRPDSRFASLQPVSNQIERCNSLAFGGYLSEVVEENTPPKMEKEGLEIMIGKKKGIQGHYNSCYLDSTLFCLFAFSSVLDTVLLRPKEKNDVEYYSETQELLRTEIVNPLRIYGYVCATKIMKLRKILEKVEAASGFTSEEKDPEEFLNILFHHILRVEPLLKIRSAGQKVQDCYFYQIFMEKNEKVGVPTIQQLLEWSFINSNLKFAEAPSCLIIQMPRFGKDFKLFKKIFPSLELNITDLLEDTPRQCRICGGLAMYECRECYDDPDISAGKIKQFCKTCNTQVHLHPKRLNHKYNPVSLPKDLPDWDWRHGCIPCQNMELFAVLCIETSHYVAFVKYGKDDSAWLFFDSMADRDGGQNGFNIPQVTPCPEVGEYLKMSLEDLHSLDSRRIQGCARRLLCDAYMCMYQSPTMSLYK",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "Q9NQC7"
+      },
+      "label": "CYLD"
+    },
+    {
+      "object": "interaction",
+      "id": "intact_EBI-58997164",
+      "interactionType": {
+        "id": "MI:0914",
+        "name": "association"
+      },
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0007",
+          "name": "anti tag coimmunoprecipitation"
+        },
+        "host": {
+          "taxid": "9606",
+          "common": "human-ht1080",
+          "scientific": "Homo sapiens HT1080 fibrosarcoma cell",
+          "cellType": {
+            "id": "ACC 315",
+            "name": "confirmed as human with IEF of AST, LDH, NP established from the biopsy from a fibrosarcoma of a 35-year-old Caucasian man in 1972"
+          }
+        },
+        "pubid": [
+          {
+            "db": "pubmed",
+            "id": "36179048"
+          },
+          {
+            "db": "intact",
+            "id": "EBI-58996876"
+          },
+          {
+            "db": "imex",
+            "id": "IM-30203"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0486",
+          "name": "UniProt"
+        },
+        "experimentModifications": [
+          "HT1080 cells treated with purified TNFA prior to lysis."
+        ],
+        "figures": [
+          "Fig 3G"
+        ],
+        "variableParameterList": [
+          {
+            "variableValueList": [
+              {
+                "value": "0",
+                "order": "1"
+              },
+              {
+                "value": "600",
+                "order": "2"
+              },
+              {
+                "value": "900",
+                "order": "3"
+              },
+              {
+                "value": "1800",
+                "order": "4"
+              }
+            ],
+            "description": "TNF-alpha",
+            "unit": "second"
+          }
+        ]
+      },
+      "experimentalVariableValueList": [
+        {
+          "experimentalVariableValues": [
+            {
+              "value": "600",
+              "order": "2",
+              "description": "TNF-alpha",
+              "unit": "second"
+            }
+          ]
+        }
+      ],
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-58997164"
+        },
+        {
+          "db": "imex",
+          "id": "IM-30203-31"
+        }
+      ],
+      "participants": [
+        {
+          "id": "6",
+          "interactorRef": "uniprotkb_P01375",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0496",
+            "name": "bait"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ],
+          "features": [
+            {
+              "id": "7",
+              "name": "c-terminal",
+              "category": "experimentalFeatures",
+              "type": {
+                "id": "MI:0518",
+                "name": "flag tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "c-c",
+                  "interactorRef": "uniprotkb_P01375",
+                  "participantRef": "6"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "8",
+          "interactorRef": "uniprotkb_Q13546",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ],
+          "features": [
+            {
+              "id": "9",
+              "name": "lys-?",
+              "category": "ptms",
+              "type": {
+                "id": "MOD:01148",
+                "name": "ubiquitinylated lysine"
+              },
+              "role": {
+                "id": "MI:0925",
+                "name": "observed-ptm"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_Q13546",
+                  "participantRef": "8"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "10",
+          "interactorRef": "uniprotkb_P19438",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ]
+        },
+        {
+          "id": "11",
+          "interactorRef": "uniprotkb_Q96S55",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ]
+        },
+        {
+          "id": "12",
+          "interactorRef": "uniprotkb_Q8TF42",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ]
+        },
+        {
+          "id": "13",
+          "interactorRef": "uniprotkb_Q96EP0",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ]
+        },
+        {
+          "id": "14",
+          "interactorRef": "uniprotkb_Q9H0F6",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ]
+        },
+        {
+          "id": "15",
+          "interactorRef": "uniprotkb_O15111",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ]
+        },
+        {
+          "id": "16",
+          "interactorRef": "uniprotkb_Q9NQC7",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "object": "interaction",
+      "id": "intact_EBI-58997179",
+      "interactionType": {
+        "id": "MI:0914",
+        "name": "association"
+      },
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0007",
+          "name": "anti tag coimmunoprecipitation"
+        },
+        "host": {
+          "taxid": "9606",
+          "common": "human-ht1080",
+          "scientific": "Homo sapiens HT1080 fibrosarcoma cell",
+          "cellType": {
+            "id": "ACC 315",
+            "name": "confirmed as human with IEF of AST, LDH, NP established from the biopsy from a fibrosarcoma of a 35-year-old Caucasian man in 1972"
+          }
+        },
+        "pubid": [
+          {
+            "db": "pubmed",
+            "id": "36179048"
+          },
+          {
+            "db": "intact",
+            "id": "EBI-58996876"
+          },
+          {
+            "db": "imex",
+            "id": "IM-30203"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0486",
+          "name": "UniProt"
+        },
+        "experimentModifications": [
+          "HT1080 cells treated with purified TNFA prior to lysis."
+        ],
+        "figures": [
+          "Fig 3G"
+        ],
+        "variableParameterList": [
+          {
+            "variableValueList": [
+              {
+                "value": "0",
+                "order": "1"
+              },
+              {
+                "value": "600",
+                "order": "2"
+              },
+              {
+                "value": "900",
+                "order": "3"
+              },
+              {
+                "value": "1800",
+                "order": "4"
+              }
+            ],
+            "description": "TNF-alpha",
+            "unit": "second"
+          }
+        ]
+      },
+      "experimentalVariableValueList": [
+        {
+          "experimentalVariableValues": [
+            {
+              "value": "900",
+              "order": "3",
+              "description": "TNF-alpha",
+              "unit": "second"
+            }
+          ]
+        }
+      ],
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-58997179"
+        },
+        {
+          "db": "imex",
+          "id": "IM-30203-33"
+        }
+      ],
+      "participants": [
+        {
+          "id": "17",
+          "interactorRef": "uniprotkb_Q13546",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ],
+          "features": [
+            {
+              "id": "18",
+              "name": "lys-?",
+              "category": "ptms",
+              "type": {
+                "id": "MOD:01148",
+                "name": "ubiquitinylated lysine"
+              },
+              "role": {
+                "id": "MI:0925",
+                "name": "observed-ptm"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_Q13546",
+                  "participantRef": "17"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "19",
+          "interactorRef": "uniprotkb_P01375",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0496",
+            "name": "bait"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ],
+          "features": [
+            {
+              "id": "20",
+              "name": "c-terminal",
+              "category": "experimentalFeatures",
+              "type": {
+                "id": "MI:0518",
+                "name": "flag tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "c-c",
+                  "interactorRef": "uniprotkb_P01375",
+                  "participantRef": "19"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "21",
+          "interactorRef": "uniprotkb_P19438",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ]
+        },
+        {
+          "id": "22",
+          "interactorRef": "uniprotkb_Q96S55",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ]
+        },
+        {
+          "id": "23",
+          "interactorRef": "uniprotkb_Q8TF42",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ]
+        },
+        {
+          "id": "24",
+          "interactorRef": "uniprotkb_Q96EP0",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ]
+        },
+        {
+          "id": "25",
+          "interactorRef": "uniprotkb_Q9H0F6",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ]
+        },
+        {
+          "id": "26",
+          "interactorRef": "uniprotkb_O15111",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ]
+        },
+        {
+          "id": "27",
+          "interactorRef": "uniprotkb_Q9NQC7",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "object": "interaction",
+      "id": "intact_EBI-58997194",
+      "interactionType": {
+        "id": "MI:0914",
+        "name": "association"
+      },
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0007",
+          "name": "anti tag coimmunoprecipitation"
+        },
+        "host": {
+          "taxid": "9606",
+          "common": "human-ht1080",
+          "scientific": "Homo sapiens HT1080 fibrosarcoma cell",
+          "cellType": {
+            "id": "ACC 315",
+            "name": "confirmed as human with IEF of AST, LDH, NP established from the biopsy from a fibrosarcoma of a 35-year-old Caucasian man in 1972"
+          }
+        },
+        "pubid": [
+          {
+            "db": "pubmed",
+            "id": "36179048"
+          },
+          {
+            "db": "intact",
+            "id": "EBI-58996876"
+          },
+          {
+            "db": "imex",
+            "id": "IM-30203"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0486",
+          "name": "UniProt"
+        },
+        "experimentModifications": [
+          "HT1080 cells treated with purified TNFA prior to lysis."
+        ],
+        "figures": [
+          "Fig 3G"
+        ],
+        "variableParameterList": [
+          {
+            "variableValueList": [
+              {
+                "value": "0",
+                "order": "1"
+              },
+              {
+                "value": "600",
+                "order": "2"
+              },
+              {
+                "value": "900",
+                "order": "3"
+              },
+              {
+                "value": "1800",
+                "order": "4"
+              }
+            ],
+            "description": "TNF-alpha",
+            "unit": "second"
+          }
+        ]
+      },
+      "experimentalVariableValueList": [
+        {
+          "experimentalVariableValues": [
+            {
+              "value": "1800",
+              "order": "4",
+              "description": "TNF-alpha",
+              "unit": "second"
+            }
+          ]
+        }
+      ],
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-58997194"
+        },
+        {
+          "db": "imex",
+          "id": "IM-30203-35"
+        }
+      ],
+      "participants": [
+        {
+          "id": "28",
+          "interactorRef": "uniprotkb_P01375",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0496",
+            "name": "bait"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ],
+          "features": [
+            {
+              "id": "29",
+              "name": "c-terminal",
+              "category": "experimentalFeatures",
+              "type": {
+                "id": "MI:0518",
+                "name": "flag tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "c-c",
+                  "interactorRef": "uniprotkb_P01375",
+                  "participantRef": "28"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "30",
+          "interactorRef": "uniprotkb_P19438",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ]
+        },
+        {
+          "id": "31",
+          "interactorRef": "uniprotkb_Q8TF42",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ]
+        },
+        {
+          "id": "32",
+          "interactorRef": "uniprotkb_Q96EP0",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ]
+        },
+        {
+          "id": "33",
+          "interactorRef": "uniprotkb_Q9H0F6",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ]
+        },
+        {
+          "id": "34",
+          "interactorRef": "uniprotkb_O15111",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ]
+        },
+        {
+          "id": "35",
+          "interactorRef": "uniprotkb_Q9NQC7",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ]
+        },
+        {
+          "id": "36",
+          "interactorRef": "uniprotkb_Q13546",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0498",
+            "name": "prey"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0113",
+              "name": "western blot"
+            }
+          ],
+          "features": [
+            {
+              "id": "37",
+              "name": "lys-?",
+              "category": "ptms",
+              "type": {
+                "id": "MOD:01148",
+                "name": "ubiquitinylated lysine"
+              },
+              "role": {
+                "id": "MI:0925",
+                "name": "observed-ptm"
+              },
+              "sequenceData": [
+                {
+                  "pos": "?-?",
+                  "interactorRef": "uniprotkb_Q13546",
+                  "participantRef": "36"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

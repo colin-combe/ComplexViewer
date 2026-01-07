@@ -1049,6 +1049,28 @@ export class App {
         blob = null;
     }
 
+    onlyShowInteractionWithId(order) {
+        this.participants.forEach((participant) => {
+            participant.hide();
+        });
+        this.allBinaryLinks.forEach((link) => {
+            link.hide();
+        });
+        this.allNaryLinks.forEach((link) => {
+            link.hide();
+        });
+        this.allUnaryLinks.forEach((link) => {
+            link.hide();
+        });
+        this.allSequenceLinks.forEach((link) => {
+            link.hide();
+        });
+        for (const nlink of this.allNaryLinks.values()) {
+            if (nlink.interaction.experimentalVariableValueList[0].experimentalVariableValues[0].order === order || !order) {
+                nlink.show();
+            }
+        }
+    }
 }
 
 //static values signifying Controller's status

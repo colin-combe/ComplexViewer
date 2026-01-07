@@ -160,6 +160,29 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
         }
     }
 
+    app.variableParameters = getVariableParameters(miJson);
+    function getVariableParameters(input) {
+        const varpars = new Map();
+        for (let datum of miJson.data) {
+            if (datum.object === "interaction") {
+                if (datum.experiment.variableParameterList) {
+                    for (let variableParameter of datum.experiment.variableParameterList) {
+                        // lets have a check to see if any duplicates are the same
+                        if (varpars.has(variableParameter.description)) {
+                            const existingVarPar = varpars.get(variableParameter.description);
+                            if (JSON.stringify(existingVarPar) !== JSON.stringify(variableParameter)) {
+                                console.warn(`Variable parameter description "${variableParameter.description}" appears multiple times with different definitions.`);
+                            }
+                        } else {
+                            varpars.set(variableParameter.description, variableParameter);
+                        }
+                    }
+                }
+            }
+        }
+        return varpars;
+    }
+
     function readStoichExpanded() {
         //get maximum stoichiometry
         let maxStoich = 0;
@@ -375,7 +398,7 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
                 let nLink = app.allNaryLinks.get(nLinkId);
                 if (typeof nLink === "undefined") {
                     //doesn't already exist, make new nLink
-                    nLink = new NaryLink(nLinkId, app);
+                    nLink = new NaryLink(nLinkId, app, datum.sourceId, datum);
                     app.allNaryLinks.set(nLinkId, nLink);
                 }
                 //nLink.addEvidence(datum);
@@ -424,20 +447,24 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
         if (interaction.naryId) {
             return interaction.naryId;
         }
-        const jsonParticipants = interaction.participants;
-        const participantCount = jsonParticipants.length;
+        if (app.stoichiometryExpanded) {
+            const jsonParticipants = interaction.participants;
+            const participantCount = jsonParticipants.length;
 
-        const pIDs = new Set(); //used to eliminate duplicates
-        //make id
-        for (let pi = 0; pi < participantCount; pi++) {
-            let pID = jsonParticipants[pi].interactorRef;
-            if (expand) {
-                pID = `${pID}(${jsonParticipants[pi].id})`;
+            const pIDs = new Set(); //used to eliminate duplicates
+            //make id
+            for (let pi = 0; pi < participantCount; pi++) {
+                let pID = jsonParticipants[pi].interactorRef;
+                if (expand) {
+                    pID = `${pID}(${jsonParticipants[pi].id})`;
+                }
+                pIDs.add(pID);
             }
-            pIDs.add(pID);
-        }
 
-        return Array.from(pIDs.values()).sort().join("-");
+            return Array.from(pIDs.values()).sort().join("-");
+        } else {
+            return interaction.id;
+        }
     }
 
     function getNode(seqDatum) {
