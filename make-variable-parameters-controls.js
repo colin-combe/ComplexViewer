@@ -31,5 +31,5 @@ function makeVariableParametersControls(varpars, divSelector, app) {
     }
     
     varparsDiv.appendChild(makeRadioButton(null, "ALL INTERACTIONS"));
-    
+
 }
