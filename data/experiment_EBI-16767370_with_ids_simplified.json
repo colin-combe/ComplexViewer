@@ -1,0 +1,659 @@
+{
+  "data": [
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P29066",
+      "sequence": "MGDKGTRVFKKASPNGKLTVYLGKRDFVDHIDLVDPVDGVVLVDPEYLKERRVYVTLTCAFRYGREDLDVLGLTFRKDLFVANVQSFPPAPEDKKPLTRLQERLIKKLGEHAYPFTFEIPPNLPCSVTLQPGPEDTGKACGVDYEVKAFCAENLEEKIHKRNSVRLVIRKVQYAPERPGPQPTAETTRQFLMSDKPLHLEASLDKEIYYHGEPISVNVHVTNNTNKTVKKIKISVRQYADICLFNTAQYKCPVAMEEADDTVAPSSTFCKVYTLTPFLANNREKRGLALDGKLKHEDTNLASSTLLREGANREILGIIVSYKVKVKLVVSRGGLLGDLASSDVAVELPFTLMHPKPKEEPPHREVPESETPVDTNLIELDTNDDDIVFEDFARQRLKGMKDDKDEEDDGTGSPHLNNR",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "10116",
+        "common": "rat",
+        "scientific": "Rattus norvegicus (Rat)"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P29066"
+      },
+      "label": "Arrb1"
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P55085",
+      "sequence": "MRSPSAAWLLGAAILLAASLSCSGTIQGTNRSSKGRSLIGKVDGTSHVTGKGVTVETVFSVDEFSASVLTGKLTTVFLPIVYTIVFVVGLPSNGMALWVFLFRTKKKHPAVIYMANLALADLLSVIWFPLKIAYHIHGNNWIYGEALCNVLIGFFYGNMYCSILFMTCLSVQRYWVIVNPMGHSRKKANIAIGISLAIWLLILLVTIPLYVVKQTIFIPALNITTCHDVLPEQLLVGDMFNYFLSLAIGVFLFPAFLTASAYVLMIRMLRSSAMDENSEKKRKRAIKLIVTVLAMYLICFTPSNLLLVVHYFLIKSQGQSHVYALYIVALCLSTLNSCIDPFVYYFVSHDFRDHAKNALLCRSVRTVKQMQVSLTSKKHSRKSSSYSSSSTTVKTSY",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "9606",
+        "common": "human",
+        "scientific": "Homo sapiens"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P55085"
+      },
+      "label": "F2RL1"
+    },
+    {
+      "object": "interaction",
+      "id": "intact_EBI-16767376",
+      "interactionType": {
+        "id": "MI:0403",
+        "name": "colocalization"
+      },
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0663",
+          "name": "confocal microscopy"
+        },
+        "host": {
+          "taxid": "10116",
+          "common": "rat-nrk",
+          "scientific": "Rattus norvegicus kidney fibroblast cell line NRK",
+          "cellType": {
+            "id": "ECACC 86032002",
+            "name": "Rat kidney fibroblast cell line NRK"
+          }
+        },
+        "pubid": [
+          {
+            "db": "pubmed",
+            "id": "10725339"
+          },
+          {
+            "db": "intact",
+            "id": "EBI-16767361"
+          },
+          {
+            "db": "imex",
+            "id": "IM-26340"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0469",
+          "name": "European Bioinformatics Institute"
+        },
+        "figures": [
+          "Fig. 3B-C"
+        ],
+        "variableParameterList": [
+          {
+            "variableValueList": [
+              {
+                "id": "1",
+                "value": "300",
+                "order": ""
+              },
+              {
+                "id": "2",
+                "value": "1800",
+                "order": ""
+              }
+            ],
+            "description": "Trypsin",
+            "unit": "second"
+          },
+          {
+            "variableValueList": [
+              {
+                "id": "3",
+                "value": "50uM",
+                "order": ""
+              },
+              {
+                "id": "4",
+                "value": "50nM",
+                "order": ""
+              }
+            ],
+            "description": "Trypsin",
+            "unit": "molar"
+          }
+        ]
+      },
+      "experimentalVariableValueList": [
+        {
+          "experimentalVariableValues": [
+            {
+              "id": "2"
+            },
+            {
+              "id": "3"
+            }
+          ]
+        }
+      ],
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-16767376"
+        },
+        {
+          "db": "imex",
+          "id": "IM-26340-1"
+        }
+      ],
+      "participants": [
+        {
+          "id": "1",
+          "interactorRef": "uniprotkb_P29066",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "features": [
+            {
+              "id": "2",
+              "name": "gfp tag",
+              "category": "experimentalFeatures",
+              "type": {
+                "id": "MI:0367",
+                "name": "green fluorescent protein tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "c-c",
+                  "interactorRef": "uniprotkb_P29066",
+                  "participantRef": "1"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "3",
+          "interactorRef": "uniprotkb_P55085",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0422",
+              "name": "immunostaining"
+            },
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "features": [
+            {
+              "id": "4",
+              "name": "flag tag",
+              "category": "experimentalFeatures",
+              "type": {
+                "id": "MI:0518",
+                "name": "flag tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "n-n",
+                  "interactorRef": "uniprotkb_P55085",
+                  "participantRef": "3"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "object": "interaction",
+      "id": "intact_EBI-16767390",
+      "interactionType": {
+        "id": "MI:0403",
+        "name": "colocalization"
+      },
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0663",
+          "name": "confocal microscopy"
+        },
+        "host": {
+          "taxid": "10116",
+          "common": "rat-nrk",
+          "scientific": "Rattus norvegicus kidney fibroblast cell line NRK",
+          "cellType": {
+            "id": "ECACC 86032002",
+            "name": "Rat kidney fibroblast cell line NRK"
+          }
+        },
+        "pubid": [
+          {
+            "db": "pubmed",
+            "id": "10725339"
+          },
+          {
+            "db": "intact",
+            "id": "EBI-16767361"
+          },
+          {
+            "db": "imex",
+            "id": "IM-26340"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0469",
+          "name": "European Bioinformatics Institute"
+        },
+        "figures": [
+          "Fig. 3B-C"
+        ],
+        "variableParameterList": [
+          {
+            "variableValueList": [
+              {
+                "id": "1",
+                "value": "300",
+                "order": ""
+              },
+              {
+                "id": "2",
+                "value": "1800",
+                "order": ""
+              }
+            ],
+            "description": "Trypsin",
+            "unit": "second"
+          },
+          {
+            "variableValueList": [
+              {
+                "id": "3",
+                "value": "50uM",
+                "order": ""
+              },
+              {
+                "id": "4",
+                "value": "50nM",
+                "order": ""
+              }
+            ],
+            "description": "Trypsin",
+            "unit": "molar"
+          }
+        ]
+      },
+      "experimentalVariableValueList": [
+        {
+          "experimentalVariableValues": [
+            {
+              "id": "1"
+            },
+            {
+              "id": "3"
+            }
+          ]
+        }
+      ],
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-16767390"
+        },
+        {
+          "db": "imex",
+          "id": "IM-26340-3"
+        }
+      ],
+      "participants": [
+        {
+          "id": "5",
+          "interactorRef": "uniprotkb_P29066",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "features": [
+            {
+              "id": "6",
+              "name": "gfp tag",
+              "category": "experimentalFeatures",
+              "type": {
+                "id": "MI:0367",
+                "name": "green fluorescent protein tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "c-c",
+                  "interactorRef": "uniprotkb_P29066",
+                  "participantRef": "5"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "7",
+          "interactorRef": "uniprotkb_P55085",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0422",
+              "name": "immunostaining"
+            },
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "features": [
+            {
+              "id": "8",
+              "name": "flag tag",
+              "category": "experimentalFeatures",
+              "type": {
+                "id": "MI:0518",
+                "name": "flag tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "n-n",
+                  "interactorRef": "uniprotkb_P55085",
+                  "participantRef": "7"
+                }
+              ]
+            },
+            {
+              "id": "9",
+              "name": "P55085:p.[Ser363Ala;Thr366Ala]",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1128",
+                "name": "mutation disrupting interaction strength"
+              },
+              "sequenceData": [
+                {
+                  "pos": "363-363",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P55085",
+                  "participantRef": "7"
+                },
+                {
+                  "pos": "366-366",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P55085",
+                  "participantRef": "7"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "object": "interactor",
+      "id": "uniprotkb_P11345",
+      "sequence": "MEHIQGAWKTISNGFGLKDAVFDGSSCISPTIVQQFGYQRRASDDGKLTDSSKTSNTIRVFLPNKQRTVVNVRNGMSLHDCLMKALKVRGLQPECCAVFRLLQEHKGKKARLDWNTDAASLIGEELQVDFLDHVPLTTHNFARKTFLKLAFCDICQKFLLNGFRCQTCGYKFHEHCSTKVPTMCVDWSNIRQLLLFPNSTASDSGVPAPPSFTMRRMRESVSRMPASSQHRYSTPHAFTFNTSSPSSEGSLSQRQRSTSTPNVHMVSTTLPVDSRMIEDAIRSHSESASPSALSSSPNNLSPTGWSQPKTPVPAQRERAPGSGTQEKNKIRPRGQRDSSYYWEIEASEVMLSTRIGSGSFGTVYKGKWHGDVAVKILKVVDPTPEQLQAFRNEVAVLRKTRHVNILLFMGYMTKDNLAIVTQWCEGSSLYKHLHVQETKFQMFQLIDIARQTAQGMDYLHAKNIIHRDMKSNNIFLHEGLTVKIGDFGLATVKSRWSGSQQVEQPTGSVLWMAPEVIRMQDNNPFSFQSDVYSYGIVLYELMTGELPYSHINNRDQIIFMVGRGYASPDLSRLYKNCPKAMKRLVADCVKKVKEERPLFPQILSSIELLQHSLPKINRSASEPSLHRAAHTEDINACTLTTSPRLPVF",
+      "type": {
+        "id": "MI:0326",
+        "name": "protein"
+      },
+      "organism": {
+        "taxid": "10116",
+        "common": "rat",
+        "scientific": "Rattus norvegicus (Rat)"
+      },
+      "identifier": {
+        "db": "uniprotkb",
+        "id": "P11345"
+      },
+      "label": "Raf1"
+    },
+    {
+      "object": "interaction",
+      "id": "intact_EBI-16767425",
+      "interactionType": {
+        "id": "MI:0403",
+        "name": "colocalization"
+      },
+      "experiment": {
+        "detmethod": {
+          "id": "MI:0663",
+          "name": "confocal microscopy"
+        },
+        "host": {
+          "taxid": "10116",
+          "common": "rat-nrk",
+          "scientific": "Rattus norvegicus kidney fibroblast cell line NRK",
+          "cellType": {
+            "id": "ECACC 86032002",
+            "name": "Rat kidney fibroblast cell line NRK"
+          }
+        },
+        "pubid": [
+          {
+            "db": "pubmed",
+            "id": "10725339"
+          },
+          {
+            "db": "intact",
+            "id": "EBI-16767361"
+          },
+          {
+            "db": "imex",
+            "id": "IM-26340"
+          }
+        ],
+        "sourceDatabase": {
+          "id": "MI:0469",
+          "name": "European Bioinformatics Institute"
+        },
+        "figures": [
+          "Fig. 7A-B"
+        ],
+        "variableParameterList": [
+          {
+            "variableValueList": [
+              {
+                "id": "1",
+                "value": "300",
+                "order": ""
+              },
+              {
+                "id": "2",
+                "value": "1800",
+                "order": ""
+              }
+            ],
+            "description": "Trypsin",
+            "unit": "second"
+          },
+          {
+            "variableValueList": [
+              {
+                "id": "3",
+                "value": "50uM",
+                "order": ""
+              },
+              {
+                "id": "4",
+                "value": "50nM",
+                "order": ""
+              }
+            ],
+            "description": "Trypsin",
+            "unit": "molar"
+          }
+        ]
+      },
+      "experimentalVariableValueList": [
+        {
+          "experimentalVariableValues": [
+            {
+              "id": "1"
+            },
+            {
+              "id": "4"
+            }
+          ]
+        }
+      ],
+      "identifiers": [
+        {
+          "db": "intact",
+          "id": "EBI-16767425"
+        },
+        {
+          "db": "imex",
+          "id": "IM-26340-5"
+        }
+      ],
+      "participants": [
+        {
+          "id": "10",
+          "interactorRef": "uniprotkb_P29066",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "features": [
+            {
+              "id": "11",
+              "name": "gfp tag",
+              "category": "experimentalFeatures",
+              "type": {
+                "id": "MI:0367",
+                "name": "green fluorescent protein tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "c-c",
+                  "interactorRef": "uniprotkb_P29066",
+                  "participantRef": "10"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "12",
+          "interactorRef": "uniprotkb_P55085",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0684",
+            "name": "ancillary"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ],
+          "features": [
+            {
+              "id": "13",
+              "name": "flag tag",
+              "category": "experimentalFeatures",
+              "type": {
+                "id": "MI:0518",
+                "name": "flag tag"
+              },
+              "sequenceData": [
+                {
+                  "pos": "n-n",
+                  "interactorRef": "uniprotkb_P55085",
+                  "participantRef": "12"
+                }
+              ]
+            },
+            {
+              "id": "14",
+              "name": "P55085:p.[Ser363Ala;Thr366Ala]",
+              "category": "pointMutations",
+              "type": {
+                "id": "MI:1128",
+                "name": "mutation disrupting interaction strength"
+              },
+              "sequenceData": [
+                {
+                  "pos": "363-363",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P55085",
+                  "participantRef": "12"
+                },
+                {
+                  "pos": "366-366",
+                  "resultingSequence": "A",
+                  "interactorRef": "uniprotkb_P55085",
+                  "participantRef": "12"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "15",
+          "interactorRef": "uniprotkb_P11345",
+          "bioRole": {
+            "id": "MI:0499",
+            "name": "unspecified role"
+          },
+          "expRole": {
+            "id": "MI:0497",
+            "name": "neutral component"
+          },
+          "identificationMethods": [
+            {
+              "id": "MI:0422",
+              "name": "immunostaining"
+            },
+            {
+              "id": "MI:0867",
+              "name": "tag visualisation by fluorescence"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

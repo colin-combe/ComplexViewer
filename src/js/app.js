@@ -1049,7 +1049,7 @@ export class App {
         blob = null;
     }
 
-    onlyShowInteractionWithId(order) {
+    onlyShowInteractionWithId(id) {
         this.participants.forEach((participant) => {
             participant.hide();
         });
@@ -1066,7 +1066,15 @@ export class App {
             link.hide();
         });
         for (const nlink of this.allNaryLinks.values()) {
-            if (nlink.interaction.experimentalVariableValueList[0].experimentalVariableValues[0].order === order || !order) {
+            let label = "";
+            for (const experimentalVariable of nlink.interaction.experimentalVariableValueList) {
+                for (const experimentalVariableValue of experimentalVariable.experimentalVariableValues) {
+                    // ids.push(experimentalVariableValue.id);
+                    label += experimentalVariableValue.description + " " + experimentalVariableValue.value + " "
+                        + experimentalVariableValue.unit + " ";
+                }
+            }
+            if (label === id || !id) {
                 nlink.show();
             }
         }

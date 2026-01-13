@@ -165,18 +165,30 @@ export function readMijson(/*miJson*/miJson, /*App*/ app, expand = true) {
         const varpars = new Map();
         for (let datum of miJson.data) {
             if (datum.object === "interaction") {
-                if (datum.experiment?.variableParameterList) {
-                    for (let variableParameter of datum.experiment.variableParameterList) {
-                        // lets have a check to see if any duplicates are the same
-                        if (varpars.has(variableParameter.description)) {
-                            const existingVarPar = varpars.get(variableParameter.description);
-                            if (JSON.stringify(existingVarPar) !== JSON.stringify(variableParameter)) {
-                                console.warn(`Variable parameter description "${variableParameter.description}" appears multiple times with different definitions.`);
-                            }
-                        } else {
-                            varpars.set(variableParameter.description, variableParameter);
+                // if (datum.experiment?.variableParameterList) {
+                //     for (let variableParameter of datum.experiment.variableParameterList) {
+                //         // lets have a check to see if any duplicates are the same
+                //         if (varpars.has(variableParameter.description)) {
+                //             const existingVarPar = varpars.get(variableParameter.description);
+                //             if (JSON.stringify(existingVarPar) !== JSON.stringify(variableParameter)) {
+                //                 console.warn(`Variable parameter description "${variableParameter.description}" appears multiple times with different definitions.`);
+                //             }
+                //         } else {
+                //             varpars.set(variableParameter.description, variableParameter);
+                //         }
+                //     }
+                // }
+                if (datum.experimentalVariableValueList) {
+                    // const ids = [];
+                    let label = "";
+                    for (const experimentalVariable of datum.experimentalVariableValueList) {
+                        for (const experimentalVariableValue of experimentalVariable.experimentalVariableValues) {
+                            // ids.push(experimentalVariableValue.id);
+                            label += experimentalVariableValue.description + " " + experimentalVariableValue.value + " "
+                                + experimentalVariableValue.unit + " ";
                         }
                     }
+                    varpars.set(label, label);
                 }
             }
         }
