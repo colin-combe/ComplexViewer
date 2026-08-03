@@ -198,5 +198,25 @@ const exampleIndex = [
         "ac": "EBI-29795992",
         "name": "EBI-29795992",
         "url": "",
+    },
+    {
+        "ac": "EBI-7778189",
+        "name": "EBI-7778189",
+        "url": "https://www.ebi.ac.uk/intact/complex/detail/EBI-7778189"
+    },
+    {
+        "ac": "EBI-25475756",
+        "name": "EBI-25475756",
+        "url": "https://www.ebi.ac.uk/intact/complex/detail/EBI-25475756"
+    },
+    {
+        "ac": "EBI-1162695",
+        "name": "EBI-1162695",
+        "url": "https://www.ebi.ac.uk/intact/complex/detail/EBI-1162695"
+    },
+    {
+        "ac": "EBI-25475174",
+        "name": "EBI-25475174",
+        "url": "https://www.ebi.ac.uk/intact/complex/detail/EBI-25475174"
     }
 ];
